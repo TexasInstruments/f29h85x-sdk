@@ -1,0 +1,44 @@
+%%{
+let 	device_common   					= system.getScript("/driverlib/.meta/device/functions_c/device_common.js");
+let 	Common   						= system.getScript("/driverlib/Common.js");
+var	Include							= device_common.Include;
+var	Initialization					= device_common.Initialization;
+var	VerifyXTAL						= device_common.VerifyXTAL;
+var	Error_Handling						= device_common.Error_Handling;
+var	Boot_Cpu_2_3						= device_common.Boot_Cpu_2_3;
+var	Workaround						    = device_common.Workaround;
+
+const 	multi_core 						= device_common.multi_core;
+const 	device  						= device_common.device;
+
+var cpu2 = system.modules['/driverlib/cpu2.js'];
+let cpu2instance;
+var cpu3 = system.modules['/driverlib/cpu3.js'];
+let cpu3instance;
+%%}
+`Include()`
+
+#ifdef _FLASH
+#if (!defined(__CPU2__) && !defined(__CPU3__))
+    //
+    //  Dummy certificate section which is updated when actual certitifcate is generated
+    //  as part of the post build steps
+    //
+    __attribute__((retain, section("cert"))) const uint8_t certificate[4096U] = {0U};
+#endif
+#endif
+
+%if(cpu2 != null) {
+%   cpu2instance = cpu2.$static;
+__attribute__((retain, section("cpu2app"))) const uint8_t cpu2App[`cpu2instance.appsize`] = {0U};
+%}
+%if(cpu3 != null) {
+%   cpu3instance = cpu3.$static;
+__attribute__((retain, section("cpu3app"))) const uint8_t cpu3App[`cpu3instance.appsize`] = {0U};
+%}
+
+`Initialization()`
+`VerifyXTAL()`
+`Boot_Cpu_2_3()`
+`Workaround()`
+`Error_Handling()`

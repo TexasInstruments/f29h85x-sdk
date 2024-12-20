@@ -1,0 +1,48 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --device "F29H85x" --package "256ZEX" --part "F29H85x_256ZEX" --context "CPU1" --product "MCU_SDK_F29H85x@1.00.00.00"
+ * @v2CliArgs --device "F29H850TU" --package "256ZEX" --variant "TMS320F29H850TU9" --context "CPU1" --product "MCU_SDK_F29H85x@1.00.00.00"
+ * @versions {"tool":"1.22.0+3877"}
+ */
+
+const divider15       = system.clockTree["PLL_REFDIV"];
+divider15.divideValue = 1;
+
+const multiplier1         = system.clockTree["PLL_IMULT"];
+multiplier1.multiplyValue = 40;
+
+const mux7       = system.clockTree["OSCCLKSRCSEL"];
+mux7.inputSelect = "INTOSC2";
+
+/**
+ * Import the modules used in this configuration.
+ */
+const cmpss       = scripting.addModule("/driverlib/cmpss.js", {}, false);
+const cmpss1      = cmpss.addInstance();
+const epwm        = scripting.addModule("/driverlib/epwm.js", {}, false);
+const epwm1       = epwm.addInstance();
+const outputxbar  = scripting.addModule("/driverlib/outputxbar.js", {}, false);
+const outputxbar1 = outputxbar.addInstance();
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+cmpss1.$name               = "myCMPSS0";
+cmpss1.dacValHigh          = 2048;
+cmpss1.asysCMPHPMXSELValue = "6";
+cmpss1.enableModule        = true;
+cmpss1.periphClock.$name   = "driverlib_perClock0";
+cmpss1.periphConfig.$name  = "driverlib_perConfig0";
+
+epwm1.$name                  = "myEPWM0";
+epwm1.epwm.$assign           = "EPWM1";
+epwm1.epwm.epwm_aPin.$assign = "GPIO0";
+epwm1.epwm.epwm_bPin.$assign = "GPIO1";
+epwm1.periphClock.$name      = "driverlib_perClock1";
+epwm1.periphConfig.$name     = "driverlib_perConfig1";
+
+outputxbar1.$name                            = "myOUTPUTXBAR0";
+outputxbar1.sourceSignals                    = ["CMPSS1_CTRIPOUTH"];
+outputxbar1.outputxbar.$assign               = "OUTPUTXBAR3";
+outputxbar1.outputxbar.outputxbarPin.$assign = "GPIO4";

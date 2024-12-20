@@ -1,0 +1,50 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --device "F29H85x" --package "256ZEX" --part "F29H85x_256ZEX" --context "CPU1" --product "MCU_SDK_F29H85x@1.00.00.00"
+ * @v2CliArgs --device "F29H850TU" --package "256ZEX" --variant "TMS320F29H850TU9" --context "CPU1" --product "MCU_SDK_F29H85x@1.00.00.00"
+ * @versions {"tool":"1.22.0+3877"}
+ */
+
+const divider15       = system.clockTree["PLL_REFDIV"];
+divider15.divideValue = 1;
+
+const multiplier1         = system.clockTree["PLL_IMULT"];
+multiplier1.multiplyValue = 40;
+
+const mux7       = system.clockTree["OSCCLKSRCSEL"];
+mux7.inputSelect = "INTOSC2";
+
+/**
+ * Import the modules used in this configuration.
+ */
+const rtdma1      = scripting.addModule("/driverlib/rtdma1.js");
+const rtdma11     = rtdma1.addInstance();
+const jtag  = scripting.addModule("/driverlib/jtag.js");
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+rtdma1.enableSoftwarePriority = true;
+rtdma1.lockDMAConfig          = true;
+
+rtdma11.$name                = "myRTDMA1Ch0";
+rtdma11.enableTriggers       = true;
+rtdma11.channelPriority      = "DMA_CHPRIORITY2";
+rtdma11.useInterrupts        = true;
+rtdma11.registerInterrupts   = true;
+rtdma11.enableInterrupts     = true;
+rtdma11.databusWidthConfig   = "DMA_CFG_READ_SIZE_32BIT";
+rtdma11.writeDatasizeConfig  = "DMA_CFG_WRT_SIZE_32BIT";
+rtdma11.interruptMode        = "DMA_INT_AT_END";
+rtdma11.burstSize            = 4;
+rtdma11.transferSize         = 16;
+rtdma11.srcAddressInputMode  = "VARIABLE";
+rtdma11.srcAddressVariable   = "srcAddr";
+rtdma11.srcBurstStep         = 4;
+rtdma11.srcTransferStep      = 4;
+rtdma11.destAddressInputMode = "VARIABLE";
+rtdma11.destAddressVariable  = "destAddr";
+rtdma11.destBurstStep        = 4;
+rtdma11.destTransferStep     = 4;
+

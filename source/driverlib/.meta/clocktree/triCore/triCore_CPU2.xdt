@@ -1,0 +1,24 @@
+%%{
+let clocktree_common   = system.getScript("../clocktree_common.js");
+
+var TriCore_CPU2_SYSPLL 	= system.getTemplate('./triCore_CPU2_SYSPLL.xdt');
+var TriCore_CPU2_AUXPLL		= system.getTemplate('./triCore_CPU2_AUXPLL.xdt');
+var TriCore_CPU2_domain		= system.getTemplate('./triCore_CPU2_domain.xdt');
+
+const PLL_type1 = clocktree_common.PLL_type1;
+const PLL_type2 = clocktree_common.PLL_type2;
+
+const AUXPLL_Support 		= clocktree_common.AUXPLL_Support;
+const EPWM_div_support 		= clocktree_common.EPWM_div_support;
+
+const device  = clocktree_common.device
+
+%%}
+`TriCore_CPU2_SYSPLL()`
+
+	% if(AUXPLL_Support.includes(device))
+	% {
+`TriCore_CPU2_AUXPLL()`
+	% }
+
+`TriCore_CPU2_domain()`

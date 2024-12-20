@@ -1,0 +1,15 @@
+% var module = system.modules['/driverlib/xclkout.js'];
+% let Common   = system.getScript("/driverlib/Common.js");
+%
+//*****************************************************************************
+//
+// SYSCTL Configurations
+//
+//*****************************************************************************
+void XCLKOUT_init(){
+% if (module != null)
+% {
+%   var inst = module.$instances[0];
+    SysCtl_setXClk(`inst.xclkOutSource`, `inst.xclkOutDiv`);
+% }
+}

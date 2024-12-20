@@ -1,0 +1,58 @@
+% var nameOfModule = "dlt";
+% var module = system.modules['/driverlib/' + nameOfModule + '.js'];
+% let Common   = system.getScript("/driverlib/Common.js");
+% var nameOfPeripheral = module.peripheralName;
+% var inst = module.$static;
+//*****************************************************************************
+//
+// DLT Configurations
+//
+//*****************************************************************************
+void `nameOfPeripheral`_init(){
+	DLT_enableModule();
+	DLT_enableLinkPermission(SSU_LINK2);
+%   if(inst.enableERADFilter) {
+	DLT_enableERADFilter();
+	% var startEvents = 0;
+	% var endEvents = 0;
+	% if (inst.startEvent.length != 0) {
+		% startEvents =  inst.startEvent[0];
+		% for (var j = 0; j < inst.startEvent.length - 1; j++)
+		% {
+			% startEvents = startEvents + " | " + inst.startEvent[j+1];
+		% }
+	% }
+	% if (inst.endEvent.length != 0) {
+		% endEvents =  inst.endEvent[0];
+		% for (var j = 0; j < inst.endEvent.length - 1; j++)
+		% {
+			% endEvents = endEvents + " | " + inst.endEvent[j+1];
+		% }
+	% }
+	DLT_configERADFilter(`startEvents`, `endEvents`);
+%   }
+%
+%   if(inst.enableTagFilter) {
+	DLT_enableTagFilter();
+	DLT_ConfigTagFilterParams configParams;
+	configParams.startReference = `inst.startTagReference`;
+	configParams.startMask = `inst.startTagMask`;
+	configParams.endReference = `inst.endTagReference`;
+	configParams.endMask = `inst.endTagMask`;
+	DLT_configTagFilter(&configParams);
+%   }
+	DLT_setCaptureMode(`inst.setCaptureMode`);
+	DLT_setFIFOTriggerLevel(`inst.setFIFOTriggerLevel`);
+%   if(inst.enableDMA) {
+	DLT_enableDMA();
+%   }
+%   if(inst.enableInterrupt.length > 0) {
+	% var events =  inst.enableInterrupt[0];
+	% for (var j = 0; j < inst.enableInterrupt.length - 1; j++)
+	% {
+		% events = events + " | " + inst.enableInterrupt[j+1];
+	% }
+	DLT_enableInterrupt(`events`);
+%   }
+	DLT_resetTimer();
+}

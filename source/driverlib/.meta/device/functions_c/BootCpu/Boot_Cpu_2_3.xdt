@@ -1,0 +1,89 @@
+//*****************************************************************************
+//
+// An equivalent function of copy_in (temporary)
+//
+//*****************************************************************************
+void Device_copy_in(COPY_TABLE *tp)
+{
+   unsigned short i;
+
+   for (i = 0; i < tp->num_recs; i++)
+   {
+      COPY_RECORD crp = tp->recs[i];
+      char *load_addr = (char*)crp.load_addr;
+      char *run_addr = (char *)crp.run_addr;
+
+      if (crp.size)
+      {
+         /*------------------------------------------------------------------*/
+         /* Copy record has a non-zero size so the data is not compressed.   */
+         /* Just copy the data.                                              */
+         /*------------------------------------------------------------------*/
+         memcpy(run_addr, load_addr, crp.size);
+      }
+   }
+}
+
+#if ((!defined(__CPU2__)) && (!defined(__CPU3__)))
+//*****************************************************************************
+//
+// Function to boot CPU2
+//
+//*****************************************************************************
+void Device_bootCPU2(COPY_TABLE *copyTable, uint32_t reset_vector,
+                     SSU_Link link)
+{
+#ifdef _FLASH
+    //
+    // Copy the CPU2 application code from FLASH to CPU2 RAM
+    // The copyTable is created by the linker. Please see the CPU2 linker
+    // command file for its definition.
+    //
+    Device_copy_in(copyTable);
+#endif //FLASH
+
+    //
+    // Set the address and link to which CPU2 Boots
+    //
+    SSU_configBootAddress(SSU_CPU2, reset_vector, link);
+
+    //
+    // Bring CPU2 out of reset. Wait for CPU2 to go out of reset.
+    //
+    SSU_controlCPUReset(SSU_CPU2, SSU_CORE_RESET_DEACTIVE);
+    while(SysCtl_isCPU2Reset() == 0x1U);
+}
+
+//*****************************************************************************
+//
+// Function to boot CPU3
+//
+//*****************************************************************************
+void Device_bootCPU3(COPY_TABLE *copyTable, uint32_t reset_vector,
+                     SSU_Link link)
+{
+#ifdef _FLASH
+    //
+    // When CPU3 does not have dedicated FLASH region, copy the CPU3
+    // application code from CPU1 FLASH to CPU3 RAM.
+    // The copyTable is created by the linker. Please see the CPU3 linker
+    // command file for its definition.
+    //
+    if(copyTable != 0U)
+    {
+        Device_copy_in(copyTable);
+    }
+#endif //FLASH
+
+    //
+    // Set the address and link to which CPU3 Boots
+    //
+    SSU_configBootAddress(SSU_CPU3, reset_vector, link);
+
+    //
+    // Bring CPU3 out of reset. Wait for CPU3 to go out of reset.
+    //
+    SSU_controlCPUReset(SSU_CPU3, SSU_CORE_RESET_DEACTIVE);
+    while(SysCtl_isCPU3Reset() == 0x1U);
+}
+#endif

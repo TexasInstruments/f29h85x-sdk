@@ -1,0 +1,351 @@
+%%{
+    const Common    = system.getScript('/ti/security/Common.js');
+    const ssuData   = system.getScript('/ti/security/device_specific_information/ssu_data.js');
+
+    const links     = Common.modInstances('/ti/security/Link');
+    const stacks    = Common.modInstances('/ti/security/Stack');
+    const zones     = Common.modInstances('/ti/security/Zone');
+    const sysSec    = Common.modStaticByCPU('/ti/security/System_Security', "CPU1");
+    //const sysSecCur = Common.modStaticByCPU('/ti/security/System_Security', system.context);
+
+    const total_aprs   = ssuData.instanceCount.APR
+    const total_links  = ssuData.instanceCount.LINK
+    const total_stacks = ssuData.instanceCount.STACK
+    const total_zones  = ssuData.instanceCount.ZONE
+    
+    const memAllocFinal = Common.allocateAllMemoryRegions()
+    const flashSpace    = memAllocFinal["flashSpace"]
+    const weprotValues = Common.calcWeprotValues(flashSpace);
+
+    function getWEProtRegValue(reg)
+    {
+        //TODO
+        return 0
+    }
+
+    function getPassword_L(debugCfg, Password)
+    {
+        var password = '5555555555555555'
+        if((sysSec.ssumode == 3) && (debugCfg == 2))
+            password = Password.substring(16)
+        return "0x" + password
+    }
+    function getPassword_H(debugCfg, Password)
+    {
+        var password = '5555555555555555'
+        if((sysSec.ssumode == 3) && (debugCfg == 2))
+            password = Password.substring(0,16)
+        return "0x" + password
+    }
+
+    var linkID = Common.assignLinkID()
+    var stackID = Common.assignStackID()
+    
+%%}
+
+#include <stdint.h>
+#include "ssu_config.h"
+
+%%{
+    let existingContexts = Common.getCoreList().map(o => {return o.name});
+    existingContexts.forEach(currCore => {
+        let seccfgLocation = Common.getSeccfgLocation(currCore) //!! error case
+        let sysSecCur = Common.modStaticByCPU('/ti/security/System_Security', currCore);
+%%}
+
+__attribute__((retain, location(0x`Common.toHex(seccfgLocation, 8)`)))
+const SSU_SECCFG `currCore`_Cfg =
+{
+    // APR Configuration
+    
+%                                                                                                   var idx = 0
+%                                                                                                   let aprsAll = memAllocFinal[currCore]
+%                                                                                                   if(aprsAll){
+%                                                                                                       aprsAll.forEach(x => {
+%                                                                                                       if(sysSec.ssumode != 1){
+    // `x.name` => `idx`
+    .AP_REGS[`idx`].START      = 0x`Common.toHex(x.startAddr >> 12, 5)`,
+    .AP_REGS[`idx`].END        = 0x`Common.toHex((x.endAddr - 1)  >> 12, 5)`,
+    .AP_REGS[`idx`].ACCESS     = `Common.getLinkAccess(x)`,
+%                                                                                                       if ((x.type == "Code") && Common.getExeLink(x))  {
+    .AP_REGS[`idx`].XE         = 1,
+    .AP_REGS[`idx`].LINKID     = `Common.getExeLink(x).$name`,
+%                                                                                                       } else {
+    .AP_REGS[`idx`].LINKID     = 2,
+%                                                                                                       }
+%                                                                                                       if (Common.getAPILink(x)) {
+    .AP_REGS[`idx`].APILINKE   = 1,
+    .AP_REGS[`idx`].APILINK    = `Common.getAPILink(x).$name`,
+%                                                                                                       }
+    .AP_REGS[`idx`].DISABLE    = `sysSec.disableAPR.includes(x.name)?1:0`,
+    .AP_REGS[`idx`].LOCK       = `sysSec.lockAPR.includes(x.name)?1:0`,
+    .AP_REGS[`idx`].COMMIT     = `sysSec.commitAPR.includes(x.name)?1:0`,
+
+%                                                                                                       idx++;
+%                                                                                                       }
+%                                                                                                   });
+%                                                                                                   }
+%                                                                                                   for(; idx<total_aprs; idx++) {
+    .AP_REGS[`idx`].LINKID     = 2,
+    .AP_REGS[`idx`].DISABLE    = 1,
+    .AP_REGS[`idx`].LOCK       = `sysSec.LockUnusedAPRs?1:0`,
+    .AP_REGS[`idx`].COMMIT     = `sysSec.CommitUnusedAPRs?1:0`,
+
+%                                                                                                   }
+%                                                                                                   if(currCore == "CPU1"){
+
+    // WEPROT Configuration for Code banks
+    .WEPROT_CODE_BANKS     = `sysSec.WEPROT_CODE_BANKS?1:0`,
+    .WEPROT_CODE_LOCK      = `sysSec.lockWEPROTRegs.includes("WEPROT_CODE_BANKS")?1:0`,
+    .WEPROT_CODE_COMMIT    = `sysSec.commitWEPROTRegs.includes("WEPROT_CODE_BANKS")?1:0`,
+
+    // WEPROT Configuration for Data banks
+    .WEPROT_DATA_BANKS     = `sysSec.WEPROT_DATA_BANKS?1:0`,
+    .WEPROT_DATA_LOCK      = `sysSec.lockWEPROTRegs.includes("WEPROT_DATA_BANKS")?1:0`,
+    .WEPROT_DATA_COMMIT    = `sysSec.commitWEPROTRegs.includes("WEPROT_DATA_BANKS")?1:0`,
+
+    // WEPROT Configuration for FLC1_B0
+    .WEPROT_FLC1_B0_A      = 0x`weprotValues["flc1_b0"]["a"].toString(16)`,
+    .WEPROT_FLC1_B0_B      = 0x`weprotValues["flc1_b0"]["b"].toString(16)`,
+    .WEPROT_FLC1_B0_LOCK   = `sysSec.lockWEPROTRegs.includes("WEPROT_FLC1_B0")?1:0`,
+    .WEPROT_FLC1_B0_COMMIT = `sysSec.commitWEPROTRegs.includes("WEPROT_FLC1_B0")?1:0`,
+
+    // WEPROT Configuration for FLC1_B2
+    .WEPROT_FLC1_B2_A      = 0x`weprotValues["flc1_b2"]["a"].toString(16)`,
+    .WEPROT_FLC1_B2_B      = 0x`weprotValues["flc1_b2"]["b"].toString(16)`,
+    .WEPROT_FLC1_B2_LOCK   = `sysSec.lockWEPROTRegs.includes("WEPROT_FLC1_B2")?1:0`,
+    .WEPROT_FLC1_B2_COMMIT = `sysSec.commitWEPROTRegs.includes("WEPROT_FLC1_B2")?1:0`,
+
+    // WEPROT Configuration for FLC2_B0
+    .WEPROT_FLC2_B0_A      = 0x`weprotValues["flc2_b0"]["a"].toString(16)`,
+    .WEPROT_FLC2_B0_B      = 0x`weprotValues["flc2_b0"]["b"].toString(16)`,
+    .WEPROT_FLC2_B0_LOCK   = `sysSec.lockWEPROTRegs.includes("WEPROT_FLC2_B0")?1:0`,
+    .WEPROT_FLC2_B0_COMMIT = `sysSec.commitWEPROTRegs.includes("WEPROT_FLC2_B0")?1:0`,
+
+    // WEPROT Configuration for FLC2_B2
+    .WEPROT_FLC2_B2_A      = 0x`weprotValues["flc2_b2"]["a"].toString(16)`,
+    .WEPROT_FLC2_B2_B      = 0x`weprotValues["flc2_b2"]["b"].toString(16)`,
+    .WEPROT_FLC2_B2_LOCK   = `sysSec.lockWEPROTRegs.includes("WEPROT_FLC2_B2")?1:0`,
+    .WEPROT_FLC2_B2_COMMIT = `sysSec.commitWEPROTRegs.includes("WEPROT_FLC2_B2")?1:0`,
+
+    // Zone 1 Configuration
+    .ZONE1_CFG.LINK      = `sysSec.ZONE1_UPDATE_LINK ? sysSec.ZONE1_UPDATE_LINK.$name : '0x2'`,
+    .ZONE1_CFG.CPU       = `sysSec.ZONE1_UPDATE_CPU`,
+    .ZONE1_CFG.UPDATE_EN = `sysSec.ZONE1_UPDATE_EN?'0xC':'0x3'`,
+
+    // Zone 2 Configuration
+    .ZONE2_CFG.LINK      = `sysSec.ZONE2_UPDATE_LINK ? sysSec.ZONE2_UPDATE_LINK.$name : '0x2'`,
+    .ZONE2_CFG.CPU       = `sysSec.ZONE2_UPDATE_CPU`,
+    .ZONE2_CFG.UPDATE_EN = `sysSec.ZONE2_UPDATE_EN?'0xC':'0x3'`,
+
+    // Zone 3 Configuration
+    .ZONE3_CFG.LINK      = `sysSec.ZONE3_UPDATE_LINK ? sysSec.ZONE3_UPDATE_LINK.$name : '0x2'`,
+    .ZONE3_CFG.CPU       = `sysSec.ZONE3_UPDATE_CPU`,
+    .ZONE3_CFG.UPDATE_EN = `sysSec.ZONE3_UPDATE_EN?'0xC':'0x3'`,
+
+    // SECCFG Update Configuration
+    .SECCFG_UPDATE_CFG.LINK      = `sysSec.SECCFG_UPDATE_LINK?sysSec.SECCFG_UPDATE_LINK.$name:'0x2'`,
+    .SECCFG_UPDATE_CFG.CPU       = `sysSec.SECCFG_UPDATE_CPU`,
+    .SECCFG_UPDATE_CFG.UPDATE_EN = `sysSec.SECCFG_UPDATE_EN?'0xC':'0x3'`,
+
+    // Zone1 Debug Password
+    .ZONE1_PDBGPSWD_L       = `getPassword_L(sysSec.ZONE1_DEBUG_CFG, sysSec.ZONE1_PDBGPSWD)`,
+    .ZONE1_PDBGPSWD_H       = `getPassword_H(sysSec.ZONE1_DEBUG_CFG, sysSec.ZONE1_PDBGPSWD)`,
+    .ZONE1_FDBGPSWD_L       = `getPassword_L(sysSec.ZONE1_DEBUG_CFG, sysSec.ZONE1_FDBGPSWD)`,
+    .ZONE1_FDBGPSWD_H       = `getPassword_H(sysSec.ZONE1_DEBUG_CFG, sysSec.ZONE1_FDBGPSWD)`,
+
+    // Zone2 Debug Password
+    .ZONE2_PDBGPSWD_L       = `getPassword_L(sysSec.ZONE2_DEBUG_CFG, sysSec.ZONE2_PDBGPSWD)`,
+    .ZONE2_PDBGPSWD_H       = `getPassword_H(sysSec.ZONE2_DEBUG_CFG, sysSec.ZONE2_PDBGPSWD)`,
+    .ZONE2_FDBGPSWD_L       = `getPassword_L(sysSec.ZONE2_DEBUG_CFG, sysSec.ZONE2_FDBGPSWD)`,
+    .ZONE2_FDBGPSWD_H       = `getPassword_H(sysSec.ZONE2_DEBUG_CFG, sysSec.ZONE2_FDBGPSWD)`,
+
+    // Zone3 Debug Password
+    .ZONE3_PDBGPSWD_L       = `getPassword_L(sysSec.ZONE3_DEBUG_CFG, sysSec.ZONE3_PDBGPSWD)`,
+    .ZONE3_PDBGPSWD_H       = `getPassword_H(sysSec.ZONE3_DEBUG_CFG, sysSec.ZONE3_PDBGPSWD)`,
+    .ZONE3_FDBGPSWD_L       = `getPassword_L(sysSec.ZONE3_DEBUG_CFG, sysSec.ZONE3_FDBGPSWD)`,
+    .ZONE3_FDBGPSWD_H       = `getPassword_H(sysSec.ZONE3_DEBUG_CFG, sysSec.ZONE3_FDBGPSWD)`,
+
+    // C29 Debug Password
+    .C29DBGEN_PSWD_L        = `getPassword_L(sysSec.C29DBGEN_CFG, sysSec.C29DBGEN_PSWD)`,
+    .C29DBGEN_PSWD_H        = `getPassword_H(sysSec.C29DBGEN_CFG, sysSec.C29DBGEN_PSWD)`,
+
+    // Debug Configuration
+    .DEBUG_CFG.C29DBGEN_CFG = `(sysSec.ssumode == 3) ? sysSec.C29DBGEN_CFG : 2`,
+    .DEBUG_CFG.ZONE1        = `(sysSec.ssumode == 3) ? sysSec.ZONE1_DEBUG_CFG : 2`,
+    .DEBUG_CFG.ZONE2        = `(sysSec.ssumode == 3) ? sysSec.ZONE2_DEBUG_CFG : 2`,
+    .DEBUG_CFG.ZONE3        = `(sysSec.ssumode == 3) ? sysSec.ZONE3_DEBUG_CFG : 2`,
+
+    // DEBUG_CFG Register Lock
+    .DEBUG_CFG_LOCK         = `sysSec.DEBUG_CFG_LOCK?1:0`,
+    .DEBUG_CFG_COMMIT       = `sysSec.DEBUG_CFG_COMMIT?1:0`,
+
+    // Boot Configuration
+    .HSM_LOCKOUT      = 0, //TODO
+    .ENABLE_XTAL      = `sysSec.ENABLE_XTAL`,
+%                                                                                                   if(sysSec.defaultBootmode) {
+    .BOOTPIN_CONFIG   = 0,
+    .BOOTDEF_LOW      = 0,
+    .BOOTDEF_HIGH     = 0,
+%                                                                                                   } else {
+%                                                                                                       var BMSP0 = (sysSec.bootPinCount == 0) ? "FF" : Common.toHex(sysSec.BMSP0,2)
+%                                                                                                       var BMSP1 = (sysSec.bootPinCount <= 1) ? "FF" : Common.toHex(sysSec.BMSP1,2)
+%                                                                                                       var BMSP2 = (sysSec.bootPinCount <= 2) ? "FF" : Common.toHex(sysSec.BMSP2,2)
+%
+    .BOOTPIN_CONFIG   = 0x5A`BMSP2``BMSP1``BMSP0`,
+    .BOOTDEF_LOW      = 0x`sysSec.BOOTDEF3``sysSec.BOOTDEF2``sysSec.BOOTDEF1``sysSec.BOOTDEF0`,
+    .BOOTDEF_HIGH     = 0x`sysSec.BOOTDEF7``sysSec.BOOTDEF6``sysSec.BOOTDEF5``sysSec.BOOTDEF4`,
+%                                                                                                   }
+    .LPOST_MPOST_EN   = 0b`sysSec.MPOST_EN``sysSec.LPOST_COVER``sysSec.LPOST_EN`,
+    .ERROR_STS_PIN    = `sysSec.ERROR_STS_PIN`,
+    .BOOT_LOADER_LOCK = `sysSec.BOOT_LOADER_LOCK?"0xC9":"0xFF"`,
+    .EMU_BOOTEN       = `sysSec.EMU_BOOTEN?1:0`,
+    .RAMOPEN_LOCK     = `sysSec.RAMOPEN_LOCK?0x5A:0xA5`,
+    .RAMOPEN_COMMIT   = `sysSec.RAMOPEN_COMMIT?1:0`,
+
+%                                                                                                   } else { //Default configs for other cores
+    // WEPROT Configuration for Code banks
+    .WEPROT_CODE_BANKS     = 0,
+    .WEPROT_CODE_LOCK      = 0,
+    .WEPROT_CODE_COMMIT    = 0,
+
+    // WEPROT Configuration for Data banks
+    .WEPROT_DATA_BANKS     = 0,
+    .WEPROT_DATA_LOCK      = 0,
+    .WEPROT_DATA_COMMIT    = 0,
+
+    // WEPROT Configuration for FLC1_B0
+    .WEPROT_FLC1_B0_A      = 0xffffffff,
+    .WEPROT_FLC1_B0_B      = 0xffffffff,
+    .WEPROT_FLC1_B0_LOCK   = 0,
+    .WEPROT_FLC1_B0_COMMIT = 0,
+
+    // WEPROT Configuration for FLC1_B2
+    .WEPROT_FLC1_B2_A      = 0xffffffff,
+    .WEPROT_FLC1_B2_B      = 0xffffffff,
+    .WEPROT_FLC1_B2_LOCK   = 0,
+    .WEPROT_FLC1_B2_COMMIT = 0,
+
+    // WEPROT Configuration for FLC2_B0
+    .WEPROT_FLC2_B0_A      = 0xffffffff,
+    .WEPROT_FLC2_B0_B      = 0xffffffff,
+    .WEPROT_FLC2_B0_LOCK   = 0,
+    .WEPROT_FLC2_B0_COMMIT = 0,
+
+    // WEPROT Configuration for FLC2_B2
+    .WEPROT_FLC2_B2_A      = 0xffffffff,
+    .WEPROT_FLC2_B2_B      = 0xffffffff,
+    .WEPROT_FLC2_B2_LOCK   = 0,
+    .WEPROT_FLC2_B2_COMMIT = 0,
+
+    // Zone 1 Configuration
+    .ZONE1_CFG.LINK      = 0x2,
+    .ZONE1_CFG.CPU       = 0,
+    .ZONE1_CFG.UPDATE_EN = 0x3,
+
+    // Zone 2 Configuration
+    .ZONE2_CFG.LINK      = 0x2,
+    .ZONE2_CFG.CPU       = 0,
+    .ZONE2_CFG.UPDATE_EN = 0x3,
+
+    // Zone 3 Configuration
+    .ZONE3_CFG.LINK      = 0x2,
+    .ZONE3_CFG.CPU       = 0,
+    .ZONE3_CFG.UPDATE_EN = 0x3,
+
+    // SECCFG Update Configuration
+    .SECCFG_UPDATE_CFG.LINK      = 0x2,
+    .SECCFG_UPDATE_CFG.CPU       = 0,
+    .SECCFG_UPDATE_CFG.UPDATE_EN = 0x3,
+
+    // Zone1 Debug Password
+    .ZONE1_PDBGPSWD_L       = 0x5555555555555555,
+    .ZONE1_PDBGPSWD_H       = 0x5555555555555555,
+    .ZONE1_FDBGPSWD_L       = 0x5555555555555555,
+    .ZONE1_FDBGPSWD_H       = 0x5555555555555555,
+
+    // Zone2 Debug Password
+    .ZONE2_PDBGPSWD_L       = 0x5555555555555555,
+    .ZONE2_PDBGPSWD_H       = 0x5555555555555555,
+    .ZONE2_FDBGPSWD_L       = 0x5555555555555555,
+    .ZONE2_FDBGPSWD_H       = 0x5555555555555555,
+
+    // Zone3 Debug Password
+    .ZONE3_PDBGPSWD_L       = 0x5555555555555555,
+    .ZONE3_PDBGPSWD_H       = 0x5555555555555555,
+    .ZONE3_FDBGPSWD_L       = 0x5555555555555555,
+    .ZONE3_FDBGPSWD_H       = 0x5555555555555555,
+
+    // C29 Debug Password
+    .C29DBGEN_PSWD_L        = 0x5555555555555555,
+    .C29DBGEN_PSWD_H        = 0x5555555555555555,
+
+    // Debug Configuration
+    .DEBUG_CFG.C29DBGEN_CFG = 2,
+    .DEBUG_CFG.ZONE1        = 2,
+    .DEBUG_CFG.ZONE2        = 2,
+    .DEBUG_CFG.ZONE3        = 2,
+
+    // DEBUG_CFG Register Lock
+    .DEBUG_CFG_LOCK         = 0,
+    .DEBUG_CFG_COMMIT       = 0,
+
+    // Boot Configuration
+    .HSM_LOCKOUT      = 0, //TODO
+    .ENABLE_XTAL      = 0xFF,
+    .BOOTPIN_CONFIG   = 0,
+    .BOOTDEF_LOW      = 0,
+    .BOOTDEF_HIGH     = 0,
+    .LPOST_MPOST_EN   = 0b000100,
+    .ERROR_STS_PIN    = 79,
+    .BOOT_LOADER_LOCK = 0xFF,
+    .EMU_BOOTEN       = 0,
+    .RAMOPEN_LOCK     = 165,
+    .RAMOPEN_COMMIT   = 0,
+
+%                                                                                                   }                                                                                                   
+
+    // Stack Configuration
+%                                                                                                   var stkCfg = [0,0,0]
+%                                                                                                   var idx = 3;
+%                                                                                                   stacks.filter(x => (x.$name!="STACK2_STACK") && (x.$name!="STACK1_STACK")).forEach(x => {
+    .STACK`idx`_CFG = SSU_`Common.getZone(x)`,
+%                                                                                                       stkCfg.push(parseInt(Common.getZone(x).replace("ZONE", "")))
+%                                                                                                       idx++;
+%                                                                                                   });
+%                                                                                                   for(; idx<total_stacks; idx++) {
+    .STACK`idx`_CFG = 0x1,
+%                                                                                                   stkCfg.push(1)
+%                                                                                                   }
+
+    // Link Configuration
+%                                                                                                   var lnkCfg = [0,0,0]
+%                                                                                                   var idx = 3;
+%                                                                                                   links.filter(x => (!x.isLink1 && !x.isLink2)).forEach(x => {
+    .LINK`idx`_CFG = `Common.getStack(x)?Common.getStack(x).$name : '0x2'`,
+%                                                                                                       if(Common.getStack(x))
+%                                                                                                           lnkCfg.push(stackID[Common.getStack(x).$name])
+%                                                                                                       else
+%                                                                                                           lnkCfg.push(2)
+%                                                                                                       idx++;
+%                                                                                                   });
+%                                                                                                   for(; idx<total_links; idx++) {
+    .LINK`idx`_CFG = 0x2,
+%                                                                                                   lnkCfg.push(2)
+%                                                                                                   }
+%                                                                                                   if(currCore == "CPU1"){
+
+
+    .SECCFG_FORMAT_VER = 0,
+    .SSU_MODE          = `(sysSec.ssumode == 1)? 0x30 : (sysSec.ssumode == 2)? 0x0C : 0x03`,
+    .UPP_REVISION      = `sysSec.uppRev`,
+%                                                                                                   } else {
+
+    .SECCFG_FORMAT_VER = 0,
+    .SSU_MODE          = `0x30`,
+    .UPP_REVISION      = 0,
+%                                                                                                   }
+};
+%%{
+    })
+%%}

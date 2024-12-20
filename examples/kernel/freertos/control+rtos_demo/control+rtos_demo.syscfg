@@ -1,0 +1,104 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --device "F29H85x" --package "256ZEX" --part "F29H85x_256ZEX" --context "CPU1" --product "MCU_SDK_F29H85x@1.00.00.00"
+ * @v2CliArgs --device "F29H850TU" --package "256ZEX" --variant "TMS320F29H850TU9" --context "CPU1" --product "MCU_SDK_F29H85x@1.00.00.00"
+ * @versions {"tool":"1.22.0+3877"}
+ */
+
+const divider15       = system.clockTree["PLL_REFDIV"];
+divider15.divideValue = 1;
+
+const multiplier1         = system.clockTree["PLL_IMULT"];
+multiplier1.multiplyValue = 40;
+
+const mux7       = system.clockTree["OSCCLKSRCSEL"];
+mux7.inputSelect = "INTOSC2";
+
+/**
+ * Import the modules used in this configuration.
+ */
+const cputimer  = scripting.addModule("/driverlib/cputimer.js", {}, false);
+const cputimer1 = cputimer.addInstance();
+const epwm      = scripting.addModule("/driverlib/epwm.js", {}, false);
+const epwm1     = epwm.addInstance();
+const gpio      = scripting.addModule("/driverlib/gpio.js", {}, false);
+const gpio1     = gpio.addInstance();
+const gpio2     = gpio.addInstance();
+const gpio3     = gpio.addInstance();
+const gpio4     = gpio.addInstance();
+const interrupt = scripting.addModule("/driverlib/interrupt.js");
+const jtag      = scripting.addModule("/driverlib/jtag.js");
+const FREERTOS  = scripting.addModule("/kernel/freertos_tool/FREERTOS", {}, false);
+const FREERTOS1 = FREERTOS.addInstance();
+
+cputimer1.$name                     = "timer1";
+cputimer1.startTimer                = true;
+cputimer1.enableInterrupt           = true;
+cputimer1.registerInterrupts        = true;
+cputimer1.timerPeriod               = 2000000;
+cputimer1.periphClock.$name         = "driverlib_perClock1";
+cputimer1.timerInt.interruptHandler = "timer1_ISR";
+
+epwm1.epwmTimebase_hsClockDiv                                    = "EPWM_HSCLOCK_DIVIDER_1";
+epwm1.epwmTimebase_counterMode                                   = "EPWM_COUNTER_MODE_UP_DOWN";
+epwm1.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_UP_CMPA   = "EPWM_AQ_OUTPUT_HIGH";
+epwm1.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_DOWN_CMPA = "EPWM_AQ_OUTPUT_LOW";
+epwm1.epwmActionQualifier_EPWM_AQ_OUTPUT_B_ON_TIMEBASE_UP_CMPB   = "EPWM_AQ_OUTPUT_HIGH";
+epwm1.epwmActionQualifier_EPWM_AQ_OUTPUT_B_ON_TIMEBASE_DOWN_CMPB = "EPWM_AQ_OUTPUT_LOW";
+epwm1.$name                                                      = "myEPWM1";
+epwm1.epwmEventTrigger_enableInterrupt                           = true;
+epwm1.epwmEventTrigger_interruptSource                           = "EPWM_INT_TBCTR_ZERO";
+epwm1.epwmEventTrigger_registerInterrupts                        = true;
+epwm1.useCase                                                    = "CUSTOM";
+epwm1.useInterfacePins                                           = ["EPWM#_A"];
+epwm1.epwmCounterCompare_cmpA                                    = 50;
+epwm1.epwmCounterCompare_cmpB                                    = 950;
+epwm1.epwmTimebase_period                                        = 1000;
+epwm1.epwmEventTrigger_interruptEventCount                       = "3";
+epwm1.periphClock.$name                                          = "driverlib_perClock0_COPY";
+epwm1.periphConfig.$name                                         = "driverlib_perConfig0_COPY";
+epwm1.epwmInt.interruptHandler                                   = "epwm1ISR";
+epwm1.epwmInt.interruptPriority                                  = 20;
+epwm1.epwm.$assign                                               = "EPWM1";
+epwm1.epwm.epwm_aPin.$assign                                     = "GPIO0";
+
+gpio1.direction       = "GPIO_DIR_MODE_OUT";
+gpio1.$name           = "myGPIOisrRTINT";
+gpio1.gpioPin.$assign = "GPIO1";
+
+gpio2.$name           = "myGPIOTask1";
+gpio2.direction       = "GPIO_DIR_MODE_OUT";
+gpio2.gpioPin.$assign = "GPIO2";
+
+gpio3.$name           = "myGPIOTask2";
+gpio3.direction       = "GPIO_DIR_MODE_OUT";
+gpio3.gpioPin.$assign = "GPIO3";
+
+gpio4.$name           = "myGPIOTask3";
+gpio4.direction       = "GPIO_DIR_MODE_OUT";
+gpio4.gpioPin.$assign = "GPIO4";
+
+interrupt.RTINT_Threshold = 50;
+
+
+FREERTOS1.$name                                        = "myFREERTOS0";
+FREERTOS1.USE_PORT_OPTIMISED_TASK_SELECTION            = true;
+FREERTOS1.enableROV                                    = true;
+FREERTOS1.START_SCHEDULER                              = false;
+FREERTOS1.tasks.create(3);
+FREERTOS1.tasks[0].taskPointer                         = "Task1";
+FREERTOS1.tasks[0].$name                               = "CounterTask";
+FREERTOS1.tasks[0].createDynamicTask                   = true;
+FREERTOS1.tasks[0].taskPriority                        = 3;
+FREERTOS1.tasks[1].taskPointer                         = "Task2";
+FREERTOS1.tasks[1].taskPriority                        = 4;
+FREERTOS1.tasks[1].$name                               = "SemaphoreTask";
+FREERTOS1.tasks[2].taskPointer                         = "Task3";
+FREERTOS1.tasks[2].$name                               = "ERADTask";
+FREERTOS1.tasks[2].taskPriority                        = 2;
+FREERTOS1.semaphores.create(1);
+FREERTOS1.semaphores[0].$name                          = "binarySemaphore0";
+FREERTOS1.tickTimer.periphClock.pinmuxPeripheralModule = scripting.forceWrite("");
+FREERTOS1.tickTimer.periphClock.$name                  = "driverlib_perClock0";
+

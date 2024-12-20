@@ -1,0 +1,21 @@
+% var module = system.modules['/driverlib/esm_system.js'];
+% let Common   = system.getScript("/driverlib/Common.js");
+% var stat = module.$static
+//*****************************************************************************
+//
+// ESMSYSTEM Configurations
+//
+//*****************************************************************************
+%if (module != null)
+%{
+    % for(var i = 0; i < module.$instances.length; i++) {
+        % var instance = module.$instances[i];
+void `instance.$name`_init();
+        % if(instance.typeEventSource) {
+#define `instance.$name` `instance.eventSourceTyped`
+        % }
+        % else {
+#define `instance.$name` `instance.eventSource`
+        % }
+	% }
+%}

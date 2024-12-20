@@ -1,0 +1,71 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --device "F29H85x" --package "256ZEX" --part "F29H85x_256ZEX" --context "CPU1" --product "MCU_SDK_F29H85x@1.00.00.00"
+ * @v2CliArgs --device "F29H850TU" --package "256ZEX" --variant "TMS320F29H850TU9" --context "CPU1" --product "MCU_SDK_F29H85x@1.00.00.00"
+ * @versions {"tool":"1.22.0+3877"}
+ */
+
+const divider15       = system.clockTree["PLL_REFDIV"];
+divider15.divideValue = 1;
+
+const multiplier1         = system.clockTree["PLL_IMULT"];
+multiplier1.multiplyValue = 40;
+
+const mux7       = system.clockTree["OSCCLKSRCSEL"];
+mux7.inputSelect = "INTOSC2";
+
+/**
+ * Import the modules used in this configuration.
+ */
+
+const jtag   = scripting.addModule("/driverlib/jtag.js");
+const rtdma1 = scripting.addModule("/driverlib/rtdma1.js");
+const spi    = scripting.addModule("/driverlib/spi.js", {}, false);
+const spi1   = spi.addInstance();
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+rtdma1.periphClock.$name  = "driverlib_perClock1";
+rtdma1.periphConfig.$name = "driverlib_perConfig1";
+
+spi1.$name                         = "mySPI0";
+spi1.mode                          = "SPI_MODE_CONTROLLER";
+spi1.loopback                      = true;
+spi1.useDMARX                      = true;
+spi1.useDMATX                      = true;
+spi1.bitRate                       = 2000000;
+spi1.rxFifo                        = "SPI_FIFO_RX8";
+spi1.txFifo                        = "SPI_FIFO_TX8";
+spi1.spi.$assign                   = "SPIA";
+spi1.spi.spi_picoPin.$assign       = "GPIO16";
+spi1.spi.spi_pociPin.$assign       = "B8, GPIO232";
+spi1.spi.spi_clkPin.$assign        = "GPIO60";
+spi1.spi.spi_ptePin.$assign        = "GPIO61";
+spi1.periphClock.$name             = "driverlib_perClock0";
+spi1.periphConfig.$name            = "driverlib_perConfig0";
+spi1.spiRXDMA.chBase               = "RTDMA1CH6_BASE";
+spi1.spiRXDMA.destAddressInputMode = "VARIABLE";
+spi1.spiRXDMA.destAddressVariable  = "destAddr";
+spi1.spiRXDMA.useInterrupts        = true;
+spi1.spiRXDMA.interruptMode        = "DMA_INT_AT_END";
+spi1.spiRXDMA.enableTriggers       = true;
+spi1.spiRXDMA.enableInterrupts     = true;
+spi1.spiRXDMA.registerInterrupts   = true;
+spi1.spiRXDMA.destBurstStep        = 2;
+spi1.spiRXDMA.destTransferStep     = 2;
+spi1.spiRXDMA.transferSize         = 16;
+spi1.spiRXDMA.burstSize            = 16;
+spi1.spiTXDMA.srcAddressInputMode  = "VARIABLE";
+spi1.spiTXDMA.srcAddressVariable   = "srcAddr";
+spi1.spiTXDMA.chBase               = "RTDMA1CH5_BASE";
+spi1.spiTXDMA.useInterrupts        = true;
+spi1.spiTXDMA.interruptMode        = "DMA_INT_AT_END";
+spi1.spiTXDMA.enableTriggers       = true;
+spi1.spiTXDMA.registerInterrupts   = true;
+spi1.spiTXDMA.enableInterrupts     = true;
+spi1.spiTXDMA.srcBurstStep         = 2;
+spi1.spiTXDMA.srcTransferStep      = 2;
+spi1.spiTXDMA.transferSize         = 16;
+spi1.spiTXDMA.burstSize            = 16;

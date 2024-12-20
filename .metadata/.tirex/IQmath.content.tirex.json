@@ -1,0 +1,25 @@
+[
+	{
+		"mainCategories": [["Devices"]],
+		"subCategories": ["Source","RTLibraries","IQmath"],
+		"name": "Explore Directory",
+		"resourceType": "folder",
+		"resourceClass": ["other"],
+		"devices": ["F29H85x"],
+		"location": "$(rtlibs_source_path)/iqmath/",
+		"description": ""
+	},
+	{
+		"mainCategories": [["Devices","Examples"]],
+		"subCategories": ["RTLibraries","IQmath"],
+		"name": "$(f29h85x_sdk_rtlib_examples_set_iqmath.name)",
+		"resourceType": "project.ccs",
+		"resourceClass": ["example"],
+		"resourceSubClass": ["example.general"],
+		"devices": ["F29H85x"],
+		"location": "$(f29h85x_sdk_rtlib_examples_set_iqmath.location)",
+		"description": "$(f29h85x_sdk_rtlib_examples_set_iqmath.description)",
+		"devtools": "$(f29h85x_sdk_rtlib_examples_set_iqmath.boards)"
+
+	}
+]

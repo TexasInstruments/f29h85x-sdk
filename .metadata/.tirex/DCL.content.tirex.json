@@ -1,0 +1,25 @@
+[
+	{
+		"mainCategories": [["Devices"]],
+		"subCategories": ["Source","RTLibraries","DCL"],
+		"name": "Explore Directory",
+		"resourceType": "folder",
+		"resourceClass": ["other"],
+		"devices": ["F29H85x"],
+		"location": "$(rtlibs_source_path)/dcl",
+		"description": "This section contains information relating to the C2000 Digital Control Library (DCL). Here you will find technical descriptions of the library functions and how to use them."
+	},
+	{
+		"mainCategories": [["Devices","Examples"]],
+		"subCategories": ["RTLibraries","DCL"],
+		"name": "$(f29h85x_sdk_rtlib_examples_set_dcl.name)",
+		"resourceType": "project.ccs",
+		"resourceClass": ["example"],
+		"resourceSubClass": ["example.general"],
+		"devices": ["F29H85x"],
+		"location": "$(f29h85x_sdk_rtlib_examples_set_dcl.location)",
+		"description": "$(f29h85x_sdk_rtlib_examples_set_dcl.description)",
+		"devtools": "$(f29h85x_sdk_rtlib_examples_set_dcl.boards)"
+
+	}
+]

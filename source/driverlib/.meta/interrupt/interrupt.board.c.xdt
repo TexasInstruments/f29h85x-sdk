@@ -1,0 +1,68 @@
+%%{
+var module = system.modules['/driverlib/interrupt.js'];
+let interrupt_common = system.getScript("/driverlib/interrupt/interrupt_common.js");
+let Common   = system.getScript("/driverlib/Common.js");
+var nameOfModule = "interrupt";
+var nameOfPeripheral = "INTERRUPT";
+let device_driverlib_peripheral = 
+    system.getScript("/driverlib/device_driverlib_peripherals/" + 
+        Common.getDeviceName().toLowerCase() + "_interrupt.js");
+%%}
+//*****************************************************************************
+//
+// INTERRUPT Configurations
+//
+//*****************************************************************************
+void `nameOfPeripheral`_init(){
+%%{
+if (module != null)
+{
+%%}
+	Interrupt_setThreshold(`module.$static.RTINT_Threshold`);
+    Interrupt_setGroupMask(`module.$static.groupMask`);
+    Interrupt_setRTINTSPWarning(`module.$static.WARNRTISP`, `module.$static.WARNRTISP_PRIO_LEVEL`);
+%   if(module.$static.SUP_IGN_INTE_EN) {
+    Interrupt_enableSupervisorIgnoreINTE();
+%   }
+%%{
+    for(var i = 0; i < module.$instances.length; i++) {
+        var instance = module.$instances[i];
+        let owner = instance.$ownedBy;
+        //console.log("Interrupt OWNER")
+        //console.log(owner.$name);
+        //while(owner.$ownedBy)
+        //{
+	    //    //console.log("OWNER's Owner:")
+        //	owner = owner.$ownedBy;
+        //	//console.log(owner.$name);
+        //}
+        var driverlibInt = instance.driverlibInt;
+        if (instance.pinmuxPeripheralModule)
+        {
+	        let ownerSolution = owner[instance.pinmuxPeripheralModule].$solution;
+	        var ownerPeripheral = ownerSolution.peripheralName;
+            ownerPeripheral = interrupt_common.renameInterrupt(instance.pinmuxPeripheralModule, ownerPeripheral)
+	        driverlibInt = driverlibInt.replace("#", ownerPeripheral);
+        }
+        var interruptInfo = device_driverlib_peripheral.interrupts.find((input) => {
+			if (driverlibInt == input.int_define_name)
+				return input
+		})
+		var interrupt_handler = instance.interruptHandler
+		var interrupt_enable_disable = instance.enableInterrupt? "Interrupt_enable" : "Interrupt_disable";
+%%}
+
+% if(!instance.typeInterruptName) {
+	// Interrupt Settings for `instance.$name` -> `instance.driverlibIntList`
+% } else {
+	// Interrupt Settings for `instance.$name` -> `driverlibInt`
+% }
+	Interrupt_register(`instance.$name`, &`interrupt_handler`);
+	`interrupt_enable_disable`(`instance.$name`);
+	Interrupt_setPriority(`instance.$name`, `instance.interruptPriority`);
+	Interrupt_setContextID(`instance.$name`, `instance.contextID`);
+%%{
+	}
+}
+%%}
+}

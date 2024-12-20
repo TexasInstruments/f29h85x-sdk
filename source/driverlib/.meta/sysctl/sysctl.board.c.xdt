@@ -1,0 +1,47 @@
+% var module = system.modules['/driverlib/sysctl.js'];
+% let Common   = system.getScript("/driverlib/Common.js");
+% var inst = module.$static;
+% let device_driverlib_peripheral =
+%    system.getScript("/driverlib/device_driverlib_peripherals/" +
+%        Common.getDeviceName().toLowerCase() + "_sysctl.js");
+%
+% var esmResetCausesEnable = []
+% var esmResetCausesDisable = []
+% device_driverlib_peripheral.SYSCTL_ESM.forEach (x => {
+% var esmConfig = x.name.replace("SYSCTL_", "")
+%    if(inst[esmConfig]) esmResetCausesEnable.push(x.name)
+%    else esmResetCausesDisable.push(x.name)
+% })
+%
+//*****************************************************************************
+//
+// SYSCTL Configurations
+//
+//*****************************************************************************
+void SYSCTL_init(){
+% if(Common.isContextCPU1() && inst.LSConfig == "SplitLock") {
+    //
+    // Disable LockStep
+    //
+    SysCtl_disableLockStep();
+% }
+
+    //
+    // Enable/Disable the ESM events to cause XRSn
+    //
+% if(esmResetCausesEnable.length > 0) {
+    SysCtl_enableESMResetCauses(`esmResetCausesEnable.join(" | ")`);
+% }
+% if(esmResetCausesDisable.length > 0) {
+    SysCtl_disableESMResetCauses(`esmResetCausesDisable.join(" | ")`);
+% }
+
+    //
+    // Configure the LPM Wakeup pins
+    //
+% inst.lpmWakeUpPin.forEach (x => {
+    SysCtl_enableLPMWakeupPin(`x`);
+% })
+    SysCtl_setStandbyQualificationPeriod(`inst.standbyQualificationPeriod`);
+
+}

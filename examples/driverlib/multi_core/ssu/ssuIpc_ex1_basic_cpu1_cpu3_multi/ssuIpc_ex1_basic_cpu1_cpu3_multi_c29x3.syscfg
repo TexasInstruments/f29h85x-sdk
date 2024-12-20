@@ -1,0 +1,128 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --device "F29H85x" --part "F29H85x_256ZEX" --package "256ZEX" --context "CPU3" --product "MCU_SDK_F29H85x@1.00.00.00"
+ * @v2CliArgs --device "F29H850TU" --package "256ZEX" --variant "TMS320F29H850TU9" --context "CPU3" --product "MCU_SDK_F29H85x@1.00.00.00"
+ * @versions {"tool":"1.22.0+3893"}
+ */
+
+/**
+ * Import the modules used in this configuration.
+ */
+const interrupt       = scripting.addModule("/driverlib/interrupt.js");
+const ipc             = scripting.addModule("/driverlib/ipc.js");
+const System_Security = scripting.addModule("/ti/security/System_Security");
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+interrupt.RTINT_Threshold = 50;
+
+ipc.registerInterrupts0        = ["0"];
+ipc.ipcInt11.interruptPriority = 10;
+
+System_Security.module.create(1);
+System_Security.module[0].$name                      = "ipcCpu3";
+System_Security.module[0].fileNames                  = "ipcCpu3";
+System_Security.module[0].codesizeFlash              = 4;
+System_Security.module[0].codesizeRAM                = 0;
+System_Security.module[0].rodatasize                 = 4;
+System_Security.module[0].periphs_rw                 = ["IPC_CPU3_RECV_REGS_CPU1_CH0_CH1","IPC_CPU3_SEND_REGS_CPU1_CH0_CH1"];
+System_Security.module[0].dataAPR_RW.memType         = scripting.forceWrite("RAM");
+System_Security.module[0].dataAPR_RW.memSize         = scripting.forceWrite(4);
+System_Security.module[0].Link.isLink1               = scripting.forceWrite(false);
+System_Security.module[0].Link.isLink2               = scripting.forceWrite(false);
+System_Security.module[0].Link.readAPRs              = ["ipc_shared_SHARED_CPU1"];
+System_Security.LINK2.codesizeFlash                  = 24;
+System_Security.LINK2.codesizeRAM                    = 12;
+System_Security.LINK2.rodatasize                     = 4;
+System_Security.LINK2.libs                           = "driverlib.lib<sysctl.o>,driverlib.lib<interrupt.o>";
+System_Security.LINK2.fileNames                      = "ssuIpc_ex1_basic_cpu1_cpu3_multi_c29x3,device,board,ssu_config";
+System_Security.LINK2.periphs_rw                     = ["CPU_SYS_REGS","DCC1_REGS","ERR_AGG_REGS","ESM_CPU1_REGS","ESM_CPU2_REGS","ESM_CPU3_REGS","ESM_SAFETY_AGG_REGS","ESM_SYS_REGS","PER_CFG_REGS_WD_REGS"];
+System_Security.LINK2.codeAPR_RAM.type               = scripting.forceWrite("Code");
+System_Security.LINK2.codeAPR_RAM.memType            = scripting.forceWrite("RAM");
+System_Security.LINK2.dataAPR_RW.memType             = scripting.forceWrite("RAM");
+System_Security.LINK2.dataAPR_RW.memSize             = scripting.forceWrite(4);
+System_Security.LINK2.Link.isLink1                   = scripting.forceWrite(false);
+System_Security.CommonCodeModule.libs                = "libc.a, libclang_rt.builtins.a, driverlib.lib";
+System_Security.CommonCodeModule.codesizeFlash       = 32;
+System_Security.CommonCodeModule.rodatasize          = 4;
+System_Security.CommonCodeModule.secGroupAttr        = "PUBLIC";
+System_Security.CommonCodeModule.codeAPR_RAM.type    = scripting.forceWrite("Code");
+System_Security.CommonCodeModule.codeAPR_RAM.memType = scripting.forceWrite("RAM");
+System_Security.CommonCodeModule.codeAPR_RAM.memSize = scripting.forceWrite(4);
+System_Security.CommonCodeModule.dataAPR_RW.memType  = scripting.forceWrite("RAM");
+System_Security.CommonCodeModule.dataAPR_RW.memSize  = scripting.forceWrite(4);
+System_Security.CommonCodeModule.Link.isLink1        = scripting.forceWrite(false);
+System_Security.CommonCodeModule.Link.isLink2        = scripting.forceWrite(false);
+System_Security.LINK1.Link.isLink2                   = scripting.forceWrite(false);
+System_Security.STACK1.secGroupAttr                  = "PUBLIC";
+System_Security.STACK1.stackMem.type                 = scripting.forceWrite("RAM");
+System_Security.STACK1.stackMem.datasize             = scripting.forceWrite(4);
+System_Security.STACK1.stack.size                    = scripting.forceWrite(256);
+System_Security.STACK1.stack.zone                    = scripting.forceWrite("ZONE1");
+System_Security.STACK1.stack.stackAPR.memType        = scripting.forceWrite("RAM");
+System_Security.STACK2.secGroupAttr                  = "PUBLIC";
+System_Security.STACK2.stackMem.type                 = scripting.forceWrite("RAM");
+System_Security.STACK2.stackMem.datasize             = scripting.forceWrite(4);
+System_Security.STACK2.stack.size                    = scripting.forceWrite(256);
+System_Security.STACK2.stack.zone                    = scripting.forceWrite("ZONE1");
+System_Security.STACK2.stack.stackAPR.memType        = scripting.forceWrite("RAM");
+System_Security.sandbox.create(3);
+System_Security.sandbox[0].$name                     = "Sandbox0";
+System_Security.sandbox[0].secGroupAttr              = "PUBLIC";
+System_Security.sandbox[0].stack.size                = scripting.forceWrite(256);
+System_Security.sandbox[0].stack.zone                = scripting.forceWrite("ZONE1");
+System_Security.sandbox[0].stack.stackAPR.memType    = scripting.forceWrite("RAM");
+System_Security.sandbox[1].$name                     = "sbox_ipc";
+System_Security.sandbox[1].secGroupAttr              = "PUBLIC";
+System_Security.sandbox[1].modules                   = ["ipcCpu3_Link"];
+System_Security.sandbox[1].stackMem.type             = scripting.forceWrite("RAM");
+System_Security.sandbox[1].stackMem.datasize         = scripting.forceWrite(4);
+System_Security.sandbox[1].stack.size                = scripting.forceWrite(256);
+System_Security.sandbox[1].stack.zone                = scripting.forceWrite("ZONE1");
+System_Security.sandbox[1].stack.stackAPR.memType    = scripting.forceWrite("RAM");
+System_Security.sandbox[2].$name                     = "sbox_CommonCode";
+System_Security.sandbox[2].secGroupAttr              = "PUBLIC";
+System_Security.sandbox[2].modules                   = ["CommonCodeModule_Link"];
+System_Security.sandbox[2].stackMem.type             = scripting.forceWrite("RAM");
+System_Security.sandbox[2].stackMem.datasize         = scripting.forceWrite(4);
+System_Security.sandbox[2].stack.size                = scripting.forceWrite(256);
+System_Security.sandbox[2].stack.zone                = scripting.forceWrite("ZONE1");
+System_Security.sandbox[2].stack.stackAPR.memType    = scripting.forceWrite("RAM");
+
+/**
+ * References between modules
+ */
+System_Security.SECCFG_UPDATE_LINK                  = null;
+System_Security.ZONE1_UPDATE_LINK                   = null;
+System_Security.ZONE2_UPDATE_LINK                   = null;
+System_Security.ZONE3_UPDATE_LINK                   = null;
+System_Security.dltLinks                            = [];
+System_Security.module[0].interrupts                = [ipc.ipcInt11];
+System_Security.module[0].Link.interrupts           = [];
+System_Security.module[0].Link.interruptsAPI        = [];
+System_Security.LINK2.interrupts                    = [];
+System_Security.LINK2.Link.interrupts               = [];
+System_Security.LINK2.Link.interruptsAPI            = [];
+System_Security.CommonCodeModule.interrupts         = [];
+System_Security.CommonCodeModule.Link.interrupts    = [];
+System_Security.CommonCodeModule.Link.interruptsAPI = [];
+System_Security.LINK1.interrupts                    = [];
+System_Security.LINK1.Link.interrupts               = [];
+System_Security.LINK1.Link.interruptsAPI            = [];
+System_Security.STACK1.stackMem.module_ro           = [];
+System_Security.STACK1.stackMem.module_rw           = [];
+System_Security.STACK1.stack.links                  = [];
+System_Security.STACK2.stackMem.module_ro           = [];
+System_Security.STACK2.stackMem.module_rw           = [];
+System_Security.STACK2.stack.links                  = [];
+System_Security.sandbox[0].stackMem.module_ro       = [];
+System_Security.sandbox[0].stackMem.module_rw       = [];
+System_Security.sandbox[0].stack.links              = [];
+System_Security.sandbox[1].stackMem.module_ro       = [];
+System_Security.sandbox[1].stackMem.module_rw       = [];
+System_Security.sandbox[1].stack.links              = [];
+System_Security.sandbox[2].stackMem.module_ro       = [];
+System_Security.sandbox[2].stackMem.module_rw       = [];
+System_Security.sandbox[2].stack.links              = [];

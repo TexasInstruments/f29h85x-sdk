@@ -1,0 +1,32 @@
+% var moduleName = "flash"
+% var module = system.modules['/driverlib/' + moduleName + '.js'];
+% let Common   = system.getScript("/driverlib/Common.js");
+%if (module != null)
+%{
+//*****************************************************************************
+//
+// FLASH Configurations
+//
+//*****************************************************************************
+% for(var i = 0; i < module.$instances.length; i++) {
+    % var instance = module.$instances[i];
+    % let modInst  = instance[moduleName];
+    % var waitstateConfig = instance.waitStates
+    % if (["F29H85x"].includes(Common.getDeviceName()) & (waitstateConfig == 0)){
+    % // 
+    % // Waitstate of 0x0 not supported.
+    % //
+    %     waitstateConfig = 3
+    % }
+    % var waitstateConfigName = "waitStates"
+    % if (instance.calcWaitStates)
+    % {
+    %     waitstateConfig = instance.calculatedWaitStates
+    %     waitstateConfigName = "calculatedWaitStates"
+    % }
+#define `instance.$name`_BASE `instance.flashBase`
+#define `instance.$name`_WAITSTATES `waitstateConfig`
+
+% }
+%}
+%

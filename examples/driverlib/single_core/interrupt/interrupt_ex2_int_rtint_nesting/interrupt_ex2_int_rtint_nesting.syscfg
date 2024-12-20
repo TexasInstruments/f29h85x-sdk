@@ -1,0 +1,60 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --device "F29H85x" --package "256ZEX" --part "F29H85x_256ZEX" --context "CPU1" --product "MCU_SDK_F29H85x@1.00.00.00"
+ * @v2CliArgs --device "F29H850TU" --package "256ZEX" --variant "TMS320F29H850TU9" --context "CPU1" --product "MCU_SDK_F29H85x@1.00.00.00"
+ * @versions {"tool":"1.22.0+3877"}
+ */
+
+const divider15       = system.clockTree["PLL_REFDIV"];
+divider15.divideValue = 1;
+
+const multiplier1         = system.clockTree["PLL_IMULT"];
+multiplier1.multiplyValue = 40;
+
+const mux7       = system.clockTree["OSCCLKSRCSEL"];
+mux7.inputSelect = "INTOSC2";
+
+/**
+ * Import the modules used in this configuration.
+ */
+const interrupt  = scripting.addModule("/driverlib/interrupt.js");
+const interrupt1 = interrupt.addInstance();
+const interrupt2 = interrupt.addInstance();
+const interrupt3 = interrupt.addInstance();
+const interrupt4 = interrupt.addInstance();
+const interrupt5 = interrupt.addInstance();
+const interrupt6 = interrupt.addInstance();
+const jtag       = scripting.addModule("/driverlib/jtag.js");
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+
+interrupt.groupMask       = "0xFE";
+interrupt.RTINT_Threshold = 20;
+
+interrupt1.driverlibIntList  = "INT_SW1";
+interrupt1.$name             = "INT1";
+interrupt1.interruptPriority = 50;
+
+interrupt2.driverlibIntList  = "INT_SW2";
+interrupt2.$name             = "INT2";
+interrupt2.interruptPriority = 51;
+
+interrupt3.driverlibIntList  = "INT_SW3";
+interrupt3.$name             = "INT3";
+interrupt3.interruptPriority = 49;
+
+interrupt4.driverlibIntList  = "INT_SW4";
+interrupt4.$name             = "RTINT1";
+interrupt4.interruptPriority = 10;
+
+interrupt5.driverlibIntList  = "INT_SW5";
+interrupt5.$name             = "RTINT2";
+interrupt5.interruptPriority = 11;
+
+interrupt6.driverlibIntList  = "INT_SW6";
+interrupt6.$name             = "RTINT3";
+interrupt6.interruptPriority = 9;
+

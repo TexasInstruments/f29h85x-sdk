@@ -1,0 +1,43 @@
+{
+    "name": "MCU_SDK_F29H85x",
+    "displayName": "F29H85x-SDK",
+    "version": "1.00.00.00",
+    "documentationPath": "../tools/clb_tool/clb_syscfg/doc",
+    "includePaths": [
+        "../source",
+        "../tools",
+        "../tools/clb_tool",
+        "../tools/ssu/source"
+    ],
+    "templates": [],
+    "components": [
+        "/driverlib/PeripheralComponents.js",
+        "/kernel/freertos_tool/FREERTOSToolComponents.js",
+        "/driverlib/clocktree/clockTreeComponents.js",
+        "/kernel/dpl/dpl_c29_sdk.syscfg.js",
+        "/ti/security/security.component.js",
+        "/transfer/TransferComponents.js",
+        "/clb_syscfg/source/CLBToolComponents.js",
+        "/driverlib/multicore.js"
+    ],
+    "devices": [
+        "F29H85x"
+    ],
+    "contexts": {
+        "F29H85x": [
+            {
+                "name": "CPU1",
+                "targetdbId": "C29xx_CPU1"
+            },
+            {
+                "name": "CPU2",
+                "targetdbId": "C29xx_CPU2"
+            },
+            {
+                "name": "CPU3",
+                "targetdbId": "C29xx_CPU3"
+            }
+        ]
+    },
+    "minToolVersion": "1.22.0"
+}

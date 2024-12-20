@@ -1,0 +1,84 @@
+<projectSpec>
+  <project
+        name="ssuIpc_ex1_basic_cpu1_cpu3_multi"
+        device="F29H850TU9"
+        outputType="system"
+        cgtVersion="1.0.0"
+        toolChain="TICLANG"
+        >
+    <file path="../system.xml" action="copy" openOnCreation="true"/>
+    <configuration name="FLASH_HSFS"/>
+    <configuration name="FLASH_HSSE"/>
+  </project>
+
+  <project
+        name="ssuIpc_ex1_basic_cpu1_cpu3_multi_c29x1"
+        device="F29H850TU9"
+        cgtVersion="1.0.0"
+        toolChain="TICLANG"
+        products="sysconfig;f29h85x-sdk"
+        launchWizard="False"
+        enableSysConfigTool="true"
+        connection   = "TIXDS110_Connection.xml"
+        >
+    <configuration name="FLASH_HSFS" compilerBuildOptions="-O1 -g -DDEBUG -Qunused-arguments -D_FLASH -DHSFS" linkerBuildOptions="--stack_size=0x400 --heap_size=0x400 --diag_suppress=10325-D --diag_suppress=10063-D --diag_suppress=10068-D --diag_suppress=10261-D"
+    preBuildStep=
+       "$(PYTHON) ${COM_TI_MCU_SDK_INSTALL_DIR}/tools/misc/updateSysCfg.py ../${ProjName}.syscfg ../../cpu3App.bin 3"
+    postBuildStep=
+       "${CG_TOOL_OBJCOPY} --remove-section=cert --remove-section=.TI.bound:CPU1_Cfg --remove-section=.TI.bound:CPU2_Cfg --remove-section=.TI.bound:CPU3_Cfg --remove-section=.TI.bound:CPU4_Cfg --remove-section=cpu3app -O binary ${ProjName}.out ${ProjName}.bin;
+        $(PYTHON) ${COM_TI_MCU_SDK_INSTALL_DIR}/tools/boot/signing/mcu_rom_image_gen.py --image-bin ${ProjName}.bin --core C29 --swrv 1 --loadaddr 0x10001000 --sign-key ${COM_TI_MCU_SDK_INSTALL_DIR}/tools/boot/signing/mcu_gpkey.pem --out-image ${ProjName}_cert.bin --device f29h85x --boot FLASH --img_integ no;
+        ${CG_TOOL_OBJCOPY} --update-section cert=C29-cert-pad.bin ${ProjName}.out ${ProjName}_cert.out;
+        ${CG_TOOL_OBJCOPY} --update-section cpu3app=../../cpu3App.bin --update-section .TI.bound:CPU3_Cfg=../../seccfgCpu3.bin ${ProjName}_cert.out ${ProjName}.out;
+        $(DELETE) ${ProjName}_cert.out $(CPU3APP_REL_PATH) $(SECCFGCPU3_REL_PATH) C29-cert-pad.bin;
+        $(PYTHON) ${COM_TI_MCU_SDK_INSTALL_DIR}/tools/misc/seccfgChecker.py ${CG_TOOL_OBJCOPY} ${ProjName}.out"
+    />
+    <configuration name="FLASH_HSSE" compilerBuildOptions="-O1 -g -DDEBUG -Qunused-arguments -D_FLASH -DHSSE" linkerBuildOptions="--stack_size=0x400 --heap_size=0x400 --diag_suppress=10325-D --diag_suppress=10063-D --diag_suppress=10068-D --diag_suppress=10261-D"
+    preBuildStep=
+       "$(PYTHON) ${COM_TI_MCU_SDK_INSTALL_DIR}/tools/misc/updateSysCfg.py ../${ProjName}.syscfg ../../cpu3App.bin 3"
+    postBuildStep=
+       "${CG_TOOL_OBJCOPY} --remove-section=cert --remove-section=.TI.bound:CPU1_Cfg --remove-section=.TI.bound:CPU2_Cfg --remove-section=.TI.bound:CPU3_Cfg --remove-section=.TI.bound:CPU4_Cfg --remove-section=cpu3app -O binary --gap-fill=0xFF ${ProjName}.out ${ProjName}.bin;
+        $(PYTHON) ${COM_TI_MCU_SDK_INSTALL_DIR}/tools/boot/signing/mcu_rom_image_gen.py --image-bin ${ProjName}.bin --core C29 --swrv 1 --loadaddr 0x10001000 --sign-key ${COM_TI_MCU_SDK_INSTALL_DIR}/tools/boot/signing/mcu_custMpk.pem --out-image ${ProjName}_cert.bin --device f29h85x --boot FLASH --debug DBG_PUBLIC_ENABLE;
+        ${CG_TOOL_OBJCOPY} --update-section cert=C29-cert-pad.bin ${ProjName}.out ${ProjName}_cert.out;
+        ${CG_TOOL_OBJCOPY} --update-section cpu3app=../../cpu3App.bin --update-section .TI.bound:CPU3_Cfg=../../seccfgCpu3.bin ${ProjName}_cert.out ${ProjName}.out;
+        $(DELETE) ${ProjName}_cert.out ..\\..\\cpu3App.bin ..\\..\\seccfgCpu3.bin C29-cert-pad.bin;
+        $(PYTHON) ${COM_TI_MCU_SDK_INSTALL_DIR}/tools/misc/seccfgChecker.py ${CG_TOOL_OBJCOPY} ${ProjName}.out;
+        $(PYTHON) ${COM_TI_MCU_SDK_INSTALL_DIR}/tools/misc/genSeccfgBin.py ${CG_TOOL_OBJCOPY} ${ProjName}.out ${COM_TI_MCU_SDK_INSTALL_DIR}/tools/boot/signing/mcu_rom_image_gen.py ${COM_TI_MCU_SDK_INSTALL_DIR}/tools/boot/signing/mcu_custMpk.pem $(PYTHON)"
+    />
+
+    <file action="link" path="${COM_TI_MCU_SDK_INSTALL_DIR}/examples/device_support/source/codestartbranch.asm"              targetDirectory="device" />
+    <file action="link" path="${COM_TI_MCU_SDK_INSTALL_DIR}/examples/device_support/include/driverlib.h"                     targetDirectory="device" />
+    <file action="copy" path="${COM_TI_MCU_SDK_INSTALL_DIR}/examples/device_support/makefile.defs"                           targetDirectory="" />
+    <file action="copy" path="../ssuIpc_ex1_basic_cpu1_cpu3_multi_c29x1.c"      targetDirectory="" />
+    <file action="copy" path="../ipcCpu1.c"                                     targetDirectory="" />
+    <file action="copy" path="../ssuIpc_ex1_basic_cpu1_cpu3_multi_c29x1.syscfg" targetDirectory="" />
+  </project>
+
+  <project
+        name="ssuIpc_ex1_basic_cpu1_cpu3_multi_c29x3"
+        device="F29H850TU9"
+        cgtVersion="1.0.0"
+        toolChain="TICLANG"
+        products="sysconfig;f29h85x-sdk"
+        launchWizard="False"
+        enableSysConfigTool="true"
+        connection   = "TIXDS110_Connection.xml"
+        >
+    <configuration name="FLASH_HSFS" compilerBuildOptions="-O1 -g -DDEBUG -Qunused-arguments -D_FLASH -D__CPU3__ -DHSFS" linkerBuildOptions="--stack_size=0x400 --heap_size=0x400 --diag_suppress=10325-D --diag_suppress=10063-D --diag_suppress=10068-D --diag_suppress=10261-D"
+    postBuildStep=
+        "${CG_TOOL_OBJCOPY} --remove-section=.TI.bound:CPU1_Cfg --remove-section=.TI.bound:CPU2_Cfg --remove-section=.TI.bound:CPU3_Cfg --remove-section=.TI.bound:CPU4_Cfg -O binary ${ProjName}.out ../../cpu3App.bin;
+         ${CG_TOOL_OBJCOPY} -O binary --only-section=.TI.bound:CPU3_Cfg ${ProjName}.out ../../seccfgCpu3.bin"
+    />
+    <configuration name="FLASH_HSSE" compilerBuildOptions="-O1 -g -DDEBUG -Qunused-arguments -D_FLASH -D__CPU3__ -DHSSE" linkerBuildOptions="--stack_size=0x400 --heap_size=0x400 --diag_suppress=10325-D --diag_suppress=10063-D --diag_suppress=10068-D --diag_suppress=10261-D"
+    postBuildStep=
+        "${CG_TOOL_OBJCOPY} --remove-section=.TI.bound:CPU1_Cfg --remove-section=.TI.bound:CPU2_Cfg --remove-section=.TI.bound:CPU3_Cfg --remove-section=.TI.bound:CPU4_Cfg -O binary ${ProjName}.out ../../cpu3App.bin;
+         ${CG_TOOL_OBJCOPY} -O binary --only-section=.TI.bound:CPU3_Cfg ${ProjName}.out ../../seccfgCpu3.bin"
+    />
+
+    <file action="link" path="${COM_TI_MCU_SDK_INSTALL_DIR}/examples/device_support/source/codestartbranch.asm"              targetDirectory="device" />
+    <file action="link" path="${COM_TI_MCU_SDK_INSTALL_DIR}/examples/device_support/include/driverlib.h"                     targetDirectory="device" />
+    <file action="copy" path="${COM_TI_MCU_SDK_INSTALL_DIR}/examples/device_support/makefile.defs"                           targetDirectory="" />
+    <file action="copy" path="../ssuIpc_ex1_basic_cpu1_cpu3_multi_c29x3.c"      targetDirectory="" />
+    <file action="copy" path="../ipcCpu3.c"                                     targetDirectory="" />
+    <file action="copy" path="../ssuIpc_ex1_basic_cpu1_cpu3_multi_c29x3.syscfg" targetDirectory="" />
+  </project>
+</projectSpec>

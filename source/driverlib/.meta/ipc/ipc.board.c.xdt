@@ -1,0 +1,35 @@
+% var nameOfModule = "ipc";
+% var module = system.modules['/driverlib/' + nameOfModule + '.js'];
+% let Common   = system.getScript("/driverlib/Common.js");
+% var nameOfPeripheral = module.peripheralName;
+//*****************************************************************************
+//
+// IPC Configurations
+//
+//*****************************************************************************
+void `nameOfPeripheral`_SYSCFG_init(){
+%   for(var i = 0; i < module.$instances.length; i++) 
+%   {
+%      var instance = module.$instances[i];
+	`instance.$name`_init();
+%   }
+%if (module != null)
+%{
+% 	var stat = module.$static
+%	var configs=[]
+%	module.moduleStatic.config.forEach((element, index) =>
+%	{
+%    	configs[element.name] = element.config
+%	});
+%
+%   if(Common.isContextCPU1()) {
+    //
+    // Use the following SSU APIs if you would like CPU2/ CPU3 to boot
+    // SSU_configCPUBoot(<cpu>, <reset_vector>, <link>);
+    // SSU_controlCPUReset(<cpu>, <reset_control>);    
+    //
+%       
+%   }
+%
+%}
+}

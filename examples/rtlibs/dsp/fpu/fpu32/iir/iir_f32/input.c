@@ -1,0 +1,82 @@
+//#############################################################################
+//
+// FILE:   input.c
+//
+// TITLE:  
+//
+//
+//#############################################################################
+//
+//
+// $Copyright:
+// Copyright (C) 2024 Texas Instruments Incorporated - http://www.ti.com
+//
+// Redistribution and use in source and binary forms, with or without 
+// modification, are permitted provided that the following conditions 
+// are met:
+// 
+//   Redistributions of source code must retain the above copyright 
+//   notice, this list of conditions and the following disclaimer.
+// 
+//   Redistributions in binary form must reproduce the above copyright
+//   notice, this list of conditions and the following disclaimer in the 
+//   documentation and/or other materials provided with the   
+//   distribution.
+// 
+//   Neither the name of Texas Instruments Incorporated nor the names of
+//   its contributors may be used to endorse or promote products derived
+//   from this software without specific prior written permission.
+// 
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS 
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT 
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT 
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, 
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT 
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT 
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE 
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// $
+//#############################################################################
+#include "iir_f32_example.h"
+#include <iir_f32.h>
+
+__attribute__((location(0x20120000))) float32_t test_input[100] = {
+ 13.75029107143F, 17.59708602026F, 14.43180800119F,  9.20033274583F,
+     5.53068619237F,  1.72325885305F, -3.36242670840F, -6.82618752354F,
+    -7.05060948184F, -6.81667580176F, -7.99266348056F, -8.16954397118F,
+    -5.49184169101F, -2.13159765300F, -0.30711807280F,  0.75075487273F,
+     1.74462335904F,  1.72819724676F,  1.29909138985F,  2.62728103116F,
+     4.84230182203F,  4.50740379621F,  2.00250602883F,  1.73345177279F,
+     4.38145161870F,  5.06228816770F,  1.42847076023F, -2.45055027973F,
+    -3.01409533834F, -2.30252886781F, -3.14046789910F, -4.45847557950F,
+    -4.44929879585F, -3.74380426656F, -2.81103210553F, -0.58445898535F,
+     2.21980759533F,  2.91529468449F,  1.68531696473F,  1.85751283191F,
+     3.90595308030F,  4.34757198311F,  2.02317122882F, -0.11532931132F,
+    -1.01324275824F, -3.22381457833F, -6.57248372228F, -6.40734504243F,
+    -1.10073037976F,  4.34227916541F,  5.29290236439F,  3.17948576449F,
+     1.45817945028F,  0.73811500285F,  0.50276810875F,  1.06390831072F,
+     1.42673173028F, -0.43842203426F, -3.41729567845F, -3.89741250887F,
+    -1.85130152438F, -1.10770704931F, -2.35789873174F, -1.77331666720F,
+     1.69843174152F,  3.82409534582F,  2.23200737463F,  0.16441004384F,
+     0.40902931182F,  1.07676680496F,  0.26685906609F, -0.35401924462F,
+     0.42390098618F,  0.59443800032F, -1.02310554304F, -2.37768289625F,
+    -2.06714625688F, -1.33149105049F, -0.57885116567F,  1.37026259366F,
+     3.29303416244F,  2.13333706063F, -1.04006438238F, -1.37466831856F,
+     1.77775594348F,  3.22785807500F,  0.44689379308F, -2.37030205916F,
+    -1.45000619163F,  1.04554182383F,  1.63205969500F,  0.47729252859F,
+    -1.09910058579F, -3.27755404591F, -5.22055427541F, -4.44091478200F,
+    -1.05553680778F,  1.57783461491F,  2.12406569069F,  2.60592512756F,
+    };
+
+
+// b0, b1, b2
+// a0 = 1, a1, a2
+__attribute__((location(0x200F4000))) float32_t filt_coeffs[6] = {    
+1.00000000000F,  0.20023400000F,  0.05201300000F,  
+1.00000000000F,  -1.40000000000F, 0.81000000000F,
+ }; 
+
+// End of File

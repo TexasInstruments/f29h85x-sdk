@@ -1,0 +1,25 @@
+% var module = system.modules['/driverlib/esm_cpu.js'];
+% let Common   = system.getScript("/driverlib/Common.js");
+% var stat = module.$static
+//*****************************************************************************
+//
+// ESMCPU Configurations
+//
+//*****************************************************************************
+%if (module != null)
+%{
+    % for(var i = 0; i < module.$instances.length; i++) {
+        % var instance = module.$instances[i];
+void `instance.$name`_init();
+        % if(instance.typeEventSource) {
+#define `instance.$name` `instance.eventSourceTyped`
+        % }
+        % else {
+#define `instance.$name` `instance.eventSource`
+        % }
+    % }
+%}
+% if(stat.registerNMI){
+// NMI settings for INT_NMI
+__attribute__((interrupt("RTINT"))) extern void `stat.NMIHandler`(void);
+% }

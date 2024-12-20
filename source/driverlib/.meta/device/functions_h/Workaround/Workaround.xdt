@@ -1,0 +1,21 @@
+//*****************************************************************************
+//!
+//!
+//! @brief Errata Workaround for System: Pending Misaligned Reads in the
+//! Pipeline After CPU Goes to Fault State Preventing NMI Vector Fetch.
+//!
+//! @param None
+//!
+//! This function is a workaround for the issue mentioned in the Errata under
+//! the title "System: Pending Misaligned Reads in the Pipeline After CPU Goes
+//! to Fault State Preventing NMI Vector Fetch". It is called by default in the
+//! Device_init function. This is necessary for the NMI handler to execute as
+//! expected in case of three or more back-to-back C29 CPU faults caused by
+//! misaligned reads.
+//!
+//! @return None
+//
+//*****************************************************************************
+extern void
+Device_errataWorkaroundNMIVectorFetch(void);
+

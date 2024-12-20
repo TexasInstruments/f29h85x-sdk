@@ -1,0 +1,25 @@
+[
+	{
+		"mainCategories": [["Devices"]],
+		"subCategories": ["Source","RTLibraries","DSP","FPU","FPU32"],
+		"name": "Explore Directory",
+		"resourceType": "folder",
+		"resourceClass": ["other"],
+		"devices": ["F29H85x"],
+		"location": "$(rtlibs_source_path)/dsp/fpu/fpu32",
+		"description": ""
+	},
+	{
+		"mainCategories": [["Devices","Examples"]],
+		"subCategories": ["RTLibraries","DSP","FPU","FPU32"],
+		"name": "$(f29h85x_sdk_rtlib_examples_set_dsp_fpu32.name)",
+		"resourceType": "project.ccs",
+		"resourceClass": ["example"],
+		"resourceSubClass": ["example.general"],
+		"devices": ["F29H85x"],
+		"location": "$(f29h85x_sdk_rtlib_examples_set_dsp_fpu32.location)",
+		"description": "$(f29h85x_sdk_rtlib_examples_set_dsp_fpu32.description)",
+		"devtools": "$(f29h85x_sdk_rtlib_examples_set_dsp_fpu32.boards)"
+
+	}
+]

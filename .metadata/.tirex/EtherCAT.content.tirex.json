@@ -1,0 +1,25 @@
+[
+	{
+		"mainCategories": [["Devices"]],
+		"subCategories": ["Source","Communication","Ethercat"],
+		"name": "Explore Directory",
+		"resourceType": "folder",
+		"resourceClass": ["other"],
+		"devices": ["F29H85x"],
+		"location": "$(communicationlibs_source_path)/Ethercat",
+		"description": "This section contains information relating to the C2000 Digital Control Library (DCL). Here you will find technical descriptions of the library functions and how to use them."
+	},
+	{
+		"mainCategories": [["Devices","Examples"]],
+		"subCategories": ["Communication","Ethercat"],
+		"name": "$(f29h85x_sdk_ethercat_examples_set.name)",
+		"resourceType": "project.ccs",
+		"resourceClass": ["example"],
+		"resourceSubClass": ["example.general"],
+		"devices": ["F29H85x"],
+		"location": "$(f29h85x_sdk_ethercat_examples_set.location)",
+		"description": "$(f29h85x_sdk_ethercat_examples_set.description)",
+		"devtools": "$(f29h85x_sdk_ethercat_examples_set.boards)"
+
+	}
+]

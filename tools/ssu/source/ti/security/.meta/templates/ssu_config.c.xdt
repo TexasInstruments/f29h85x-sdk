@@ -1,0 +1,41 @@
+#include "ssu_config.h"
+#include "board.h"
+
+% const Common = system.getScript('/ti/security/Common.js');
+% const Cmn    = system.getScript("/driverlib/Common.js");
+% const sysSec = Common.modStatic('/ti/security/System_Security');
+% const sysSecMain = Common.modStaticByCPU('/ti/security/System_Security', "CPU1")
+% let ssumode = (sysSecMain) ? sysSecMain.ssumode : 1;
+% //aprList.forEach(x=> {
+% // `x.aprEntry.$name` `x.aprEntry.ramMem`
+% //})
+
+void Interrupt_SSU_Init()
+{
+% if(sysSec && ssumode > 1){
+%   Common.modInstances('/ti/security/Link').forEach(link => {
+%       link.interrupts.forEach(int => {
+    Interrupt_setLinkOwner(`int.$name`, `link.$name`);
+%       })
+%       link.interruptsEasy.forEach(int => {
+    Interrupt_setLinkOwner(`int`, `link.$name`);
+%       })
+%       link.interruptsAPI.forEach(int => {
+    Interrupt_setAPILink(`int.$name`, `link.$name`);
+%       })
+%       link.interruptsAPIEasy.forEach(int => {
+    Interrupt_setAPILink(`int`, `link.$name`);
+%       })
+%   })
+% }
+}
+
+void DLT_SSU_EnableLinkPermissions()
+{
+% if(sysSec && ssumode > 1){
+%   let dltLinks = sysSec.dltLinks
+%   dltLinks.forEach(link => {
+    DLT_enableLinkPermission(`link.$name`)
+%   })
+% }
+}

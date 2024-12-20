@@ -1,0 +1,61 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --device "F29H85x" --package "256ZEX" --part "F29H85x_256ZEX" --context "CPU1" --product "MCU_SDK_F29H85x@1.00.00.00"
+ * @v2CliArgs --device "F29H850TU" --package "256ZEX" --variant "TMS320F29H850TU9" --context "CPU1" --product "MCU_SDK_F29H85x@1.00.00.00"
+ * @versions {"tool":"1.22.0+3877"}
+ */
+
+const divider15       = system.clockTree["PLL_REFDIV"];
+divider15.divideValue = 1;
+
+const multiplier1         = system.clockTree["PLL_IMULT"];
+multiplier1.multiplyValue = 40;
+
+const mux7       = system.clockTree["OSCCLKSRCSEL"];
+mux7.inputSelect = "INTOSC2";
+
+/**
+ * Import the modules used in this configuration.
+ */
+const cputimer  = scripting.addModule("/driverlib/cputimer.js", {}, false);
+const cputimer1 = cputimer.addInstance();
+const interrupt = scripting.addModule("/driverlib/interrupt.js");
+const FREERTOS  = scripting.addModule("/kernel/freertos_tool/FREERTOS", {}, false);
+const FREERTOS1 = FREERTOS.addInstance();
+
+
+cputimer1.cputimerBase                       = "CPUTIMER1_BASE";
+cputimer1.$name                              = "timer1";
+cputimer1.enableInterrupt                    = true;
+cputimer1.registerInterrupts                 = true;
+cputimer1.startTimer                         = true;
+cputimer1.timerPeriod                        = 2000000;
+cputimer1.periphClock.pinmuxPeripheralModule = scripting.forceWrite("");
+cputimer1.periphClock.$name                  = "driverlib_perClock1";
+cputimer1.timerInt.interruptHandler          = "timer1_ISR";
+cputimer1.timerInt.interruptPriority         = 40;
+
+interrupt.RTINT_Threshold = 20;
+
+FREERTOS1.$name                                        = "myFREERTOS0";
+FREERTOS1.TICK_RATE_HZ                                 = 1000;
+FREERTOS1.MAX_PRIORITIES                               = 10;
+FREERTOS1.vTaskDelayUntil                              = false;
+FREERTOS1.vTaskSuspend                                 = false;
+FREERTOS1.TOTAL_HEAP_SIZE                              = 2000;
+FREERTOS1.tasks.create(2);
+FREERTOS1.tasks[0].$name                               = "myTask1";
+FREERTOS1.tasks[0].taskPointer                         = "Task1";
+FREERTOS1.tasks[0].taskStackSize                       = 256;
+FREERTOS1.tasks[0].createDynamicTask                   = true;
+FREERTOS1.tasks[0].taskPriority                        = 2;
+FREERTOS1.tasks[1].$name                               = "myTask2";
+FREERTOS1.tasks[1].taskPointer                         = "Task2";
+FREERTOS1.tasks[1].taskStackSize                       = 256;
+FREERTOS1.tasks[1].taskPriority                        = 4;
+FREERTOS1.semaphores.create(1);
+FREERTOS1.semaphores[0].$name                          = "binarySemaphore0";
+FREERTOS1.semaphores[0].createDynamicSem               = true;
+FREERTOS1.tickTimer.periphClock.pinmuxPeripheralModule = scripting.forceWrite("");
+FREERTOS1.tickTimer.periphClock.$name                  = "driverlib_perClock0";

@@ -1,0 +1,76 @@
+%%{
+let clocktree_common   = system.getScript("/driverlib/.meta/clocktree/clocktree_common.js");
+
+var TriCore 	= clocktree_common.TriCore;
+var DualCore 	= clocktree_common.DualCore;
+var SingleCore  = clocktree_common.SingleCore;
+
+const multi_core = clocktree_common.multi_core;
+const dual_core = clocktree_common.dual_core;
+const tri_core = clocktree_common.tri_core;
+const PLL_type1  = clocktree_common.PLL_type1;
+const PLL_type2  = clocktree_common.PLL_type2;
+
+const device  = clocktree_common.device;
+%%}
+//#############################################################################
+//
+// FILE:   clockTree.h
+//
+// TITLE:  Setups device clocking for examples.
+//
+//#############################################################################
+// $Copyright:
+// Copyright (C) `new Date().getFullYear()` Texas Instruments Incorporated - http://www.ti.com
+//
+// Redistribution and use in source and binary forms, with or without 
+// modification, are permitted provided that the following conditions 
+// are met:
+// 
+//   Redistributions of source code must retain the above copyright 
+//   notice, this list of conditions and the following disclaimer.
+// 
+//   Redistributions in binary form must reproduce the above copyright
+//   notice, this list of conditions and the following disclaimer in the 
+//   documentation and/or other materials provided with the   
+//   distribution.
+// 
+//   Neither the name of Texas Instruments Incorporated nor the names of
+//   its contributors may be used to endorse or promote products derived
+//   from this software without specific prior written permission.
+// 
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS 
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT 
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT 
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, 
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT 
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT 
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE 
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// $
+//###########################################################################
+
+#ifndef CLOCKTREE_H
+#define CLOCKTREE_H
+%
+% if(multi_core.includes(device))
+%{
+%    if(dual_core.includes(device)) 
+%    {
+`DualCore()`
+%    }
+%    else if(tri_core.includes(device)) 
+%    {
+`TriCore()`
+%    }
+%}
+%
+%
+% if(!multi_core.includes(device) && (PLL_type1.includes(device) || PLL_type2.includes(device)))
+%{
+`SingleCore()`
+%}
+#endif // CLOCKTREE_H

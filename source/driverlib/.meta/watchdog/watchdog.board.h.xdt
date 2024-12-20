@@ -1,0 +1,13 @@
+% var moduleName = "watchdog"
+% var module = system.modules['/driverlib/' + moduleName + '.js'];
+%if (module != null)
+%{
+//*****************************************************************************
+//
+// WATCHDOG Configurations
+//
+//*****************************************************************************
+% var instance = module.$static;
+#define WATCHDOG_PREDIVIDER `instance.wdPredivider`
+#define WATCHDOG_PRESCALAR `instance.wdPrescalar`
+%}

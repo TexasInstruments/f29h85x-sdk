@@ -1,0 +1,25 @@
+[
+	{
+		"mainCategories": [["Devices"]],
+		"subCategories": ["Source","RTLibraries","FastMath"],
+		"name": "Explore Directory",
+		"resourceType": "folder",
+		"resourceClass": ["other"],
+		"devices": ["F29H85x"],
+		"location": "$(rtlibs_source_path)/fastmath",
+		"description": "This section contains information relating to the C2000 Digital Control Library (DCL). Here you will find technical descriptions of the library functions and how to use them."
+	},
+	{
+		"mainCategories": [["Devices","Examples"]],
+		"subCategories": ["RTLibraries","FastMath"],
+		"name": "$(f29h85x_sdk_rtlib_examples_set_fastmath.name)",
+		"resourceType": "project.ccs",
+		"resourceClass": ["example"],
+		"resourceSubClass": ["example.general"],
+		"devices": ["F29H85x"],
+		"location": "$(f29h85x_sdk_rtlib_examples_set_fastmath.location)",
+		"description": "$(f29h85x_sdk_rtlib_examples_set_fastmath.description)",
+		"devtools": "$(f29h85x_sdk_rtlib_examples_set_fastmath.boards)"
+
+	}
+]

@@ -1,0 +1,57 @@
+<projectSpec>
+  <project
+        name                = "HwiP_rtint"
+        device       = "F29H850TU9"
+        cgtVersion   = "1.0.0"
+        toolChain    = "TICLANG"
+        products     = "sysconfig;f29h85x-sdk"
+        connection   = "TIXDS110_Connection.xml"
+        >
+    <configuration name="RAM"   compilerBuildOptions="-O1 -g -DDEBUG -Qunused-arguments" linkerBuildOptions="--stack_size=0x2000 --heap_size=0x400 --diag_suppress=10325-D --diag_suppress=10063-D"
+     postBuildStep=
+       "${CG_TOOL_OBJCOPY} -O binary ${ProjName}.out ${ProjName}.bin;
+        $(PYTHON) ${COM_TI_MCU_SDK_INSTALL_DIR}/tools/boot/signing/mcu_rom_image_gen.py --image-bin ${ProjName}.bin --core C29 --swrv 1 --loadaddr 0x200E1000 --sign-key ${COM_TI_MCU_SDK_INSTALL_DIR}/tools/boot/signing/mcu_gpkey.pem --out-image ${ProjName}_cert.bin --device f29h85x --boot RAM --img_integ no;
+        $(DELETE) C29-cert-pad.bin"
+    />
+    <configuration name="FLASH" compilerBuildOptions="-O1 -g -DDEBUG -Qunused-arguments -D_FLASH" linkerBuildOptions="--stack_size=0x2000 --heap_size=0x400 --diag_suppress=10325-D --diag_suppress=10063-D"
+     postBuildStep=
+       "${CG_TOOL_OBJCOPY} --remove-section=cert -O binary ${ProjName}.out ${ProjName}.bin;
+        $(PYTHON) ${COM_TI_MCU_SDK_INSTALL_DIR}/tools/boot/signing/mcu_rom_image_gen.py --image-bin ${ProjName}.bin --core C29 --swrv 1 --loadaddr 0x10001000 --sign-key ${COM_TI_MCU_SDK_INSTALL_DIR}/tools/boot/signing/mcu_gpkey.pem --out-image ${ProjName}_cert.bin --device f29h85x --boot FLASH --img_integ no;
+        ${CG_TOOL_OBJCOPY} --update-section cert=C29-cert-pad.bin ${ProjName}.out ${ProjName}_cert.out;
+        $(DELETE) ${ProjName}.out C29-cert-pad.bin;
+        $(RENAME) ${ProjName}_cert.out ${ProjName}.out"
+    />
+
+    <file action="link" path="${COM_TI_MCU_SDK_INSTALL_DIR}/examples/device_support/source/codestartbranch.asm" targetDirectory="device" />
+    <file action="link" path="${COM_TI_MCU_SDK_INSTALL_DIR}/examples/device_support/include/driverlib.h"        targetDirectory="device" />
+    <file action="link" path="${COM_TI_MCU_SDK_INSTALL_DIR}/source/bitfields/bitfield_structs.c"                targetDirectory="device" />
+    <file action="copy" path="${COM_TI_MCU_SDK_INSTALL_DIR}/examples/device_support/makefile.defs"              targetDirectory="" />
+
+    <file action="copy" path="${COM_TI_MCU_SDK_GENERIC_LNK_CMD_RAM}"  targetDirectory="" applicableConfigurations="RAM" />
+    <file action="copy" path="${COM_TI_MCU_SDK_GENERIC_LNK_CMD_FLASH}"  targetDirectory="" applicableConfigurations="FLASH" />
+	<file path="${COM_TI_MCU_SDK_INSTALL_DIR}/docs/html/EXAMPLES_DPL_NORTOS_HWIP_RTINT.html"
+         openOnCreation="false" excludeFromBuild="false" targetName="README.html" action="link">
+    </file>
+
+    <!-- DPL files specific for C29 no RTOS -->
+    <file action="copy" path="${COM_TI_MCU_SDK_INSTALL_DIR}/source/kernel/nortos/dpl/c29/"                          targetDirectory="kernel/nortos/dpl/" />
+
+    <!-- DPL files common for no RTOS -->
+    <file action="copy" path="${COM_TI_MCU_SDK_INSTALL_DIR}/source/kernel/nortos/dpl/common/printf.c"               targetDirectory="kernel/nortos/dpl/common/" />
+    <file action="copy" path="${COM_TI_MCU_SDK_INSTALL_DIR}/source/kernel/nortos/dpl/common/printf.h"               targetDirectory="kernel/nortos/dpl/common/" />
+    <file action="copy" path="${COM_TI_MCU_SDK_INSTALL_DIR}/source/kernel/nortos/dpl/common/DebugP_log.c"           targetDirectory="kernel/nortos/dpl/common/" />
+    <file action="copy" path="${COM_TI_MCU_SDK_INSTALL_DIR}/source/kernel/nortos/dpl/common/DebugP_nortos.c"        targetDirectory="kernel/nortos/dpl/common/" />
+    <file action="copy" path="${COM_TI_MCU_SDK_INSTALL_DIR}/source/kernel/nortos/dpl/common/ClockP_nortos.c"        targetDirectory="kernel/nortos/dpl/common/" />
+    <file action="copy" path="${COM_TI_MCU_SDK_INSTALL_DIR}/source/kernel/nortos/dpl/common/ClockP_nortos_priv.h"   targetDirectory="kernel/nortos/dpl/common/" />
+    <file action="copy" path="${COM_TI_MCU_SDK_INSTALL_DIR}/source/kernel/nortos/dpl/common/TimerP.c"               targetDirectory="kernel/nortos/dpl/common/" />
+    <file action="copy" path="${COM_TI_MCU_SDK_INSTALL_DIR}/source/kernel/nortos/dpl/common/SemaphoreP_nortos.c"    targetDirectory="kernel/nortos/dpl/common/" />
+    <file action="copy" path="${COM_TI_MCU_SDK_INSTALL_DIR}/source/kernel/nortos/dpl/common/CycleCounterP.c"        targetDirectory="kernel/nortos/dpl/common/" />
+
+    <!-- DPL header files -->
+    <file action="copy" path="${COM_TI_MCU_SDK_INSTALL_DIR}/source/kernel/dpl/"                                     targetDirectory="kernel/" />
+
+    <file action="copy" path="../HwiP_rtint_main.c"                                                                 targetDirectory="" />
+    <file action="copy" path="../HwiP_rtint.syscfg"                                                                 targetDirectory="" />
+    <file action="copy" path="../../dpl_test.h"                                                                     targetDirectory="" />
+  </project>
+</projectSpec>

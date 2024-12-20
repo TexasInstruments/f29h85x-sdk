@@ -1,0 +1,134 @@
+[
+    {
+        "rootMacroName": "COM_TI_F29H85X_SDK_INSTALL_DIR",
+        "compilerIncludePath": [
+            "source",
+            "source/security",
+            "source/driverlib",
+            "source/calibration/hrpwm/include",
+            "source/bitfields",
+            "examples/device_support/include",
+            "source/rtlibs/dcl",
+            "source/rtlibs/dcl/common",
+            "source/rtlibs/dcl/df",
+            "source/rtlibs/dcl/misc",
+            "source/rtlibs/dcl/pi",
+            "source/rtlibs/dcl/pid",
+            "source/rtlibs/dsp/fpu/fpu32/fft",
+            "source/rtlibs/dsp/fpu/fpu32/fir",
+            "source/rtlibs/dsp/fpu/fpu32/iir",
+            "source/rtlibs/fastmath/crc",
+            "source/rtlibs/iqmath",
+            "source/kernel/freertos/Source/include",
+            "source/kernel/freertos/Source/portable/CCS/C2000_C29x",
+            "source/flash_api/include/FlashAPI"
+        ],
+        "linkerSearchPath": [
+            "source/driverlib/ccs",
+            "source/flash_api/lib",
+            "source/calibration/hrpwm/lib",
+            "source/security/ccs"
+        ],
+        "linkerLibraries": [
+            "driverlib.lib",
+            "sfo.lib",
+            "F29H85x_NWFlashAPI_v21.00.00.00.lib",
+            "security_drivers.lib"
+        ],
+        "sysConfigManifest": ".metadata/sdk.json",
+        "exports": [
+            {
+                "macroName": "COM_TI_MCU_SDK_INSTALL_DIR",
+                "location": ""
+            },
+            {
+                "macroName": "COM_TI_MCU_SDK_GENERIC_LNK_CMD_RAM",
+                "location": "examples/device_support/cmd/f29h85x_ram_lnk.cmd"
+            },
+            {
+                "macroName": "COM_TI_MCU_SDK_GENERIC_LNK_CMD_FLASH",
+                "location": "examples/device_support/cmd/f29h85x_flash_lnk.cmd"
+            },
+            {
+                "macroName": "COM_TI_MCU_SDK_GENERIC_LNK_HSM_CMD_RAM",
+                "location": "examples/device_support/cmd/f29h85x_ram_lnk_hsm.cmd"
+            }
+        ],
+        "migrationSpecs": [
+            {
+                "applicability": {
+                    "deviceFilter": "TMS320C28XX\\.TMS320F28.*",
+                    "toolChain": "TI",
+                    "products": [
+                        {
+                            "id": "C2000WARE"
+                        },
+                        {
+                            "id": "c2000ware_software_package"
+                        },
+                        {
+                            "id": "digital_power_c2000ware_sdk_software_package"
+                        },
+                        {
+                            "id": "motor_control_c2000ware_sdk_software_package"
+                        }
+                    ]
+                },
+                "goal": {
+                    "deviceFilter": "TMS320C29XX\\.F29.*",
+                    "toolChain": "TICLANG",
+                    "change": {
+                        "toolFlagValues": [
+                            {
+                                "find": "^\\$\\{(COM_TI_)?C2000WARE_.*$",
+                                "replaceWith": ""
+                            },
+                            {
+                                "find": "^c2000ware_.*$",
+                                "replaceWith": ""
+                            }
+                        ],
+                        "files": [
+                            {
+                                "pathFilter": "(.+/)?(?i)f28\\w+_codestartbranch.asm",
+                                "removeAction": "delete",
+                                "replaceWithLocation": "examples/device_support/source/codestartbranch.asm"
+                            }
+                        ]
+                    },
+                    "remove": {
+                        "products": [
+                            {
+                                "id": "C2000WARE"
+                            },
+                            {
+                                "id": "c2000ware_software_package"
+                            },
+                            {
+                                "id": "digital_power_c2000ware_sdk_software_package"
+                            },
+                            {
+                                "id": "motor_control_c2000ware_sdk_software_package"
+                            }
+                        ],
+                        "variables": [
+                            {
+                                "nameFilter": "C2000WARE_.*"
+                            }
+                        ],
+                        "files": [
+                            {
+                                "locationFilter": "COM_TI_C2000WARE_.*",
+                                "action": "delete"
+                            },
+                            {
+                                "pathFilter": "28\\w+_generic_\\w+_lnk\\.cmd",
+                                "action": "delete"
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+]

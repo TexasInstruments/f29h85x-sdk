@@ -1,0 +1,77 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --device "F29H85x" --package "256ZEX" --part "F29H85x_256ZEX" --context "CPU1" --product "MCU_SDK_F29H85x@1.00.00.00"
+ * @v2CliArgs --device "F29H850TU" --package "256ZEX" --variant "TMS320F29H850TU9" --context "CPU1" --product "MCU_SDK_F29H85x@1.00.00.00"
+ * @versions {"tool":"1.22.0+3877"}
+ */
+
+const divider15       = system.clockTree["PLL_REFDIV"];
+divider15.divideValue = 1;
+
+const multiplier1         = system.clockTree["PLL_IMULT"];
+multiplier1.multiplyValue = 40;
+
+const mux7       = system.clockTree["OSCCLKSRCSEL"];
+mux7.inputSelect = "INTOSC2";
+
+/**
+ * Import the modules used in this configuration.
+ */
+const jtag  = scripting.addModule("/driverlib/jtag.js");
+const uart  = scripting.addModule("/driverlib/uart.js", {}, false);
+const uart1 = uart.addInstance();
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+
+const rtdma1              = scripting.addModule("/driverlib/rtdma1.js", {}, false);
+rtdma1.periphClock.$name  = "driverlib_perClock1";
+rtdma1.periphConfig.$name = "driverlib_perConfig1";
+
+uart1.$name                          = "myUART0";
+uart1.fen                            = true;
+uart1.loopback                       = true;
+uart1.useDMARX                       = true;
+uart1.useDMATX                       = true;
+uart1.uart.$assign                   = "UARTA";
+uart1.uart.uart_txPin.$assign        = "GPIO2";
+uart1.uart.uart_rxPin.$assign        = "GPIO3";
+uart1.periphClock.$name              = "driverlib_perClock0";
+uart1.periphConfig.$name             = "driverlib_perConfig0";
+uart1.uartRXDMA.databusWidthConfig   = scripting.forceWrite("DMA_CFG_READ_SIZE_8BIT");
+uart1.uartRXDMA.writeDatasizeConfig  = scripting.forceWrite("DMA_CFG_WRT_SIZE_8BIT");
+uart1.uartRXDMA.chBase               = "RTDMA1CH6_BASE";
+uart1.uartRXDMA.transferSize         = 16;
+uart1.uartRXDMA.enableTriggers       = true;
+uart1.uartRXDMA.useInterrupts        = true;
+uart1.uartRXDMA.registerInterrupts   = true;
+uart1.uartRXDMA.enableInterrupts     = true;
+uart1.uartRXDMA.interruptMode        = "DMA_INT_AT_END";
+uart1.uartRXDMA.destAddressInputMode = "VARIABLE";
+uart1.uartRXDMA.destAddressVariable  = "destAddr";
+uart1.uartRXDMA.destBurstStep        = 1;
+uart1.uartRXDMA.destTransferStep     = 1;
+uart1.uartTXDMA.databusWidthConfig   = scripting.forceWrite("DMA_CFG_READ_SIZE_8BIT");
+uart1.uartTXDMA.writeDatasizeConfig  = scripting.forceWrite("DMA_CFG_WRT_SIZE_8BIT");
+uart1.uartTXDMA.chBase               = "RTDMA1CH5_BASE";
+uart1.uartTXDMA.transferSize         = 16;
+uart1.uartTXDMA.enableTriggers       = true;
+uart1.uartTXDMA.useInterrupts        = true;
+uart1.uartTXDMA.registerInterrupts   = true;
+uart1.uartTXDMA.enableInterrupts     = true;
+uart1.uartTXDMA.interruptMode        = "DMA_INT_AT_END";
+uart1.uartTXDMA.srcAddressInputMode  = "VARIABLE";
+uart1.uartTXDMA.srcAddressVariable   = "srcAddr";
+uart1.uartTXDMA.srcBurstStep         = 1;
+uart1.uartTXDMA.srcTransferStep      = 1;
+
+/**
+ * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
+ * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
+ * re-solve from scratch.
+ */
+jtag.JTAG.$suggestSolution        = "JTAG";
+jtag.JTAG.tdoPin.$suggestSolution = "GPIO223_TDO";
+jtag.JTAG.tdiPin.$suggestSolution = "GPIO222_TDI";

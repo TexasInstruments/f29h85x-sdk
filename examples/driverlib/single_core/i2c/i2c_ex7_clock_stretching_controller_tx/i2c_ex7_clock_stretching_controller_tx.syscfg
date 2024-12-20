@@ -1,0 +1,40 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --device "F29H85x" --package "256ZEX" --part "F29H85x_256ZEX" --context "CPU1" --product "MCU_SDK_F29H85x@1.00.00.00"
+ * @v2CliArgs --device "F29H850TU" --package "256ZEX" --variant "TMS320F29H850TU9" --context "CPU1" --product "MCU_SDK_F29H85x@1.00.00.00"
+ * @versions {"tool":"1.22.0+3877"}
+ */
+
+const divider15       = system.clockTree["PLL_REFDIV"];
+divider15.divideValue = 1;
+
+const multiplier1         = system.clockTree["PLL_IMULT"];
+multiplier1.multiplyValue = 40;
+
+const mux7       = system.clockTree["OSCCLKSRCSEL"];
+mux7.inputSelect = "INTOSC2";
+
+/**
+ * Import the modules used in this configuration.
+ */
+const i2c   = scripting.addModule("/driverlib/i2c.js", {}, false);
+const i2c1  = i2c.addInstance();
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+i2c1.$name                  = "myI2C0";
+i2c1.registerInterrupts     = true;
+i2c1.duty                   = "I2C_DUTYCYCLE_50";
+i2c1.bitCount               = "I2C_BITCOUNT_8";
+i2c1.dataCount              = 4;
+i2c1.targetAddress          = 0x3C;
+i2c1.useFifo                = false;
+i2c1.emulationMode          = "I2C_EMULATION_FREE_RUN";
+i2c1.enabledInterrupts      = ["I2C_INT_TX_DATA_RDY"];
+i2c1.i2c.$assign            = "I2CA";
+i2c1.i2c.i2c_sdaPin.$assign = "GPIO42";
+i2c1.i2c.i2c_sclPin.$assign = "GPIO43";
+i2c1.periphClock.$name      = "driverlib_perClock0";
+i2c1.periphConfig.$name     = "driverlib_perConfig0";

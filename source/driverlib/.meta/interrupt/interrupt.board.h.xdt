@@ -1,0 +1,63 @@
+%%{
+let interrupt_common = system.getScript("/driverlib/interrupt/interrupt_common.js");
+var moduleName = "interrupt";
+var module = system.modules['/driverlib/' + moduleName + '.js'];
+let Common   = system.getScript("/driverlib/Common.js");
+let device_driverlib_peripheral = 
+    system.getScript("/driverlib/device_driverlib_peripherals/" + 
+        Common.getDeviceName().toLowerCase() + "_interrupt.js");
+if (module != null)
+{
+%%}
+//*****************************************************************************
+//
+// INTERRUPT Configurations
+//
+//*****************************************************************************
+%%{
+    for(var i = 0; i < module.$instances.length; i++) {
+        var instance = module.$instances[i];
+        let modInst  = instance[moduleName];
+        let owner = instance.$ownedBy
+        // console.log("Interrupt OWNER")
+        // console.log(owner.$name)
+        //while(owner.$ownedBy)
+        //{
+        //    //console.log("OWNER's Owner:")
+        //    owner = owner.$ownedBy;
+        //    //console.log(owner.$name);
+        //}
+        var driverlibInt = instance.driverlibInt;
+        if (instance.pinmuxPeripheralModule)
+        {
+            let ownerSolution = owner[instance.pinmuxPeripheralModule].$solution;
+            var ownerPeripheral = ownerSolution.peripheralName;
+            ownerPeripheral = interrupt_common.renameInterrupt(instance.pinmuxPeripheralModule, ownerPeripheral)
+            driverlibInt = driverlibInt.replace("#", ownerPeripheral);
+        }
+        var interruptInfo = device_driverlib_peripheral.interrupts.find((input) => {
+            if (driverlibInt == input.int_define_name)
+            {
+                return input
+            }
+        })
+        var interrupt_handler = instance.interruptHandler
+%%}
+
+% if(!instance.typeInterruptName) {
+// Interrupt Settings for `instance.$name` -> `instance.driverlibIntList`
+#define `instance.$name` `instance.driverlibIntList`
+% }
+% else {
+// Interrupt Settings for `instance.$name` -> `driverlibInt`
+#define `instance.$name` `driverlibInt`
+% }
+% if(instance.interruptPriority >= module.$static.RTINT_Threshold) {
+__attribute__((interrupt("INT"))) extern void `interrupt_handler`(void);
+% } else {
+__attribute__((interrupt("RTINT"))) extern void `interrupt_handler`(void);
+% }
+%%{
+    }
+}
+%%}

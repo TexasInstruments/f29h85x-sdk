@@ -1,0 +1,242 @@
+%%{
+/////////////////////////////////////////////////////////////////////////////////////////
+let Common             = system.getScript("/driverlib/Common.js");
+let clocktree_common   = system.getScript("../clocktree_common.js");
+
+const PLL_type1 = clocktree_common.PLL_type1;
+const PLL_type2 = clocktree_common.PLL_type2;
+
+const AUXPLL_Support 		= clocktree_common.AUXPLL_Support;
+const EPWM_div_support 		= clocktree_common.EPWM_div_support;
+const xtal_x1_macro 		= clocktree_common.xtal_x1_macro;
+var XTAL_OR_X1 				= clocktree_common.XTAL_OR_X1;
+
+const device  = clocktree_common.device
+
+//////////////////////////////////////////////////
+// OSCCLK source
+//////////////////////////////////////////////////
+
+var OSCCLKSRCSEL	= system.clockTree.OSCCLKSRCSEL
+
+var oscclkSrc = "SYSCTL_OSCSRC_OSC2"
+var oscclksource
+var oscclk = 10
+
+//
+// XTAL Single-Ended replaces X1 for F29H85x
+//
+switch(OSCCLKSRCSEL.inputSelect){
+	case "INTOSC1":
+		oscclkSrc 		= "SYSCTL_OSCSRC_OSC1"
+		oscclksource 	= OSCCLKSRCSEL.inputSelect
+		oscclk = 10
+		break
+	case "INTOSC2":
+		oscclkSrc 	 	= "SYSCTL_OSCSRC_OSC2"
+		oscclksource 	= OSCCLKSRCSEL.inputSelect
+		oscclk = 10
+		break
+	case "X1_XTAL":
+		if((XTAL_OR_X1.inputSelect == "XTAL") || xtal_x1_macro.includes(device))
+		{
+			oscclkSrc 	 	= "SYSCTL_OSCSRC_XTAL"
+		}
+		else
+		{
+			oscclkSrc 	 	= "SYSCTL_OSCSRC_XTAL_SE"
+		}
+			oscclksource 	= XTAL_OR_X1.inputSelect
+			oscclk 			= XTAL_OR_X1.External_Clock
+			var xtalFreq 	= oscclk
+			break
+}
+
+//////////////////////////////////////////////////
+// IMULT, FMULT (PLLRAWCLK) source
+//////////////////////////////////////////////////
+
+var SYSPLLCTL1		= system.clockTree.SYSPLLCTL1
+
+var PLL_IMULT_mv  	= system.clockTree.PLL_IMULT.multiplyValue
+var PLL_IMULT 		= "SYSCTL_IMULT_" + PLL_IMULT_mv
+
+var SYSCLKDIVSEL_dv = system.clockTree.SYSCLKDIVSEL.divideValue
+var PLL_DIVSEL		= "SYSCTL_SYSDIV_" + SYSCLKDIVSEL_dv
+
+var PLL_STS 	= 'SYSCTL_PLL_ENABLE'
+
+if(SYSPLLCTL1.inputSelect == 'OSCCLK')
+{
+	PLL_STS 	= 'SYSCTL_PLL_DISABLE'
+}
+else
+{
+	PLL_STS = 'SYSCTL_PLL_ENABLE'
+}
+
+if(PLL_type2.includes(device))
+{
+	var PLL_REFDIV_dv = system.clockTree.PLL_REFDIV.divideValue
+	var PLL_REFDIV    = "SYSCTL_REFDIV_" + PLL_REFDIV_dv
+
+	var PLL_ODIV_dv = system.clockTree.PLL_ODIV.divideValue
+	var PLL_ODIV    = "SYSCTL_ODIV_" + PLL_ODIV_dv
+}
+
+//////////////////////////////////////////////////
+// Clock Domains
+//////////////////////////////////////////////////
+var TIMER2_divide_dv = system.clockTree.TMR2CLKPRESCALE.divideValue
+var TIMER2_divide    = "SYSCTL_TIMER2CLK_DIV_" + TIMER2_divide_dv 
+var TIMER2_source = "SYSCTL_TIMER2CLK_SOURCE_SYSCLK"
+switch(system.clockTree.TMR2CLKSRCSEL.inputSelect){
+	case "CPU1_CPUCLK":
+		TIMER2_source 		= "SYSCTL_TIMER2CLK_SOURCE_SYSCLK"
+		break
+	case "INTOSC1":
+		TIMER2_source 		= "SYSCTL_TIMER2CLK_SOURCE_INTOSC1"
+		break
+	case "INTOSC2":
+		TIMER2_source 	 	= "SYSCTL_TIMER2CLK_SOURCE_INTOSC2"
+		break
+	case "X1_XTAL":
+		TIMER2_source 	 	= "SYSCTL_TIMER2CLK_SOURCE_XTAL"
+		break
+} 
+var EPWM_divide_dv = system.clockTree.EPWMCLKDIV.divideValue
+var EPWM_divide    = "SYSCTL_EPWMCLK_DIV_" + EPWM_divide_dv   
+var EMIF1_divide_dv = system.clockTree.EMIF1CLKDIV.divideValue
+var EMIF1_divide    = "SYSCTL_EMIFCLK_DIV_" + EMIF1_divide_dv
+var LINA_divide_dv = system.clockTree.LINACLKDIV.divideValue
+var LINA_divide    = "SYSCTL_LINCLK_DIV_" + LINA_divide_dv
+var LINB_divide_dv = system.clockTree.LINBCLKDIV.divideValue
+var LINB_divide    = "SYSCTL_LINCLK_DIV_" + LINB_divide_dv
+var ECAT_divide_dv = system.clockTree.ECATDIV.divideValue
+var ECAT_divide    = "SYSCTL_ECATCLKOUT_DIV_" + ECAT_divide_dv
+var ECAT_enable    = "SYSCTL_ECAT_PHYCLK_ENABLE" 
+var HSM_divide_dv = system.clockTree.HSMCLKDIV.divideValue
+var HSM_divide    = "SYSCTL_HSMCLK_DIV_" + HSM_divide_dv
+
+var MCANA_divide_dv = system.clockTree.MCANACLKDIV.divideValue
+var MCANA_divide = "SYSCTL_MCANCLK_DIV_" + MCANA_divide_dv
+var MCANA_source = "SYSCTL_MCANCLK_SOURCE_SYS"
+switch(system.clockTree.MCANABCLKSEL.inputSelect){
+	case "AUXCLKIN":
+		MCANA_source 		= "SYSCTL_MCANCLK_SOURCE_AUXIN"
+		break
+	case "PERx.SYSCLK":
+		MCANA_source 	 	= "SYSCTL_MCANCLK_SOURCE_SYS"
+		break
+	case "PLLCLK":
+		MCANA_source 	 	= "SYSCTL_MCANCLK_SOURCE_PLLCLK"
+		break
+}
+var MCANB_divide_dv = system.clockTree.MCANBCLKDIV.divideValue
+var MCANB_divide = "SYSCTL_MCANCLK_DIV_" + MCANB_divide_dv
+var MCANB_source = "SYSCTL_MCANCLK_SOURCE_SYS"
+switch(system.clockTree.MCANBBCLKSEL.inputSelect){
+	case "AUXCLKIN":
+		MCANB_source 		= "SYSCTL_MCANCLK_SOURCE_AUXIN"
+		break
+	case "PERx.SYSCLK":
+		MCANB_source 	 	= "SYSCTL_MCANCLK_SOURCE_SYS"
+		break
+	case "PLLCLK":
+		MCANB_source 	 	= "SYSCTL_MCANCLK_SOURCE_PLLCLK"
+		break
+}
+var MCANC_divide_dv = system.clockTree.MCANCCLKDIV.divideValue
+var MCANC_divide = "SYSCTL_MCANCLK_DIV_" + MCANC_divide_dv
+var MCANC_source = "SYSCTL_MCANCLK_SOURCE_SYS"
+switch(system.clockTree.MCANCBCLKSEL.inputSelect){
+	case "AUXCLKIN":
+		MCANC_source 		= "SYSCTL_MCANCLK_SOURCE_AUXIN"
+		break
+	case "PERx.SYSCLK":
+		MCANC_source 	 	= "SYSCTL_MCANCLK_SOURCE_SYS"
+		break
+	case "PLLCLK":
+		MCANC_source 	 	= "SYSCTL_MCANCLK_SOURCE_PLLCLK"
+		break
+}
+var MCAND_divide_dv = system.clockTree.MCANDCLKDIV.divideValue
+var MCAND_divide = "SYSCTL_MCANCLK_DIV_" + MCAND_divide_dv
+var MCAND_source = "SYSCTL_MCANCLK_SOURCE_SYS"
+switch(system.clockTree.MCANDBCLKSEL.inputSelect){
+	case "AUXCLKIN":
+		MCAND_source 		= "SYSCTL_MCANCLK_SOURCE_AUXIN"
+		break
+	case "PERx.SYSCLK":
+		MCAND_source 	 	= "SYSCTL_MCANCLK_SOURCE_SYS"
+		break
+	case "PLLCLK":
+		MCAND_source 	 	= "SYSCTL_MCANCLK_SOURCE_PLLCLK"
+		break
+}
+var MCANE_divide_dv = system.clockTree.MCANECLKDIV.divideValue
+var MCANE_divide = "SYSCTL_MCANCLK_DIV_" + MCANE_divide_dv
+var MCANE_source = "SYSCTL_MCANCLK_SOURCE_SYS"
+switch(system.clockTree.MCANEBCLKSEL.inputSelect){
+	case "AUXCLKIN":
+		MCANE_source 		= "SYSCTL_MCANCLK_SOURCE_AUXIN"
+		break
+	case "PERx.SYSCLK":
+		MCANE_source 	 	= "SYSCTL_MCANCLK_SOURCE_SYS"
+		break
+	case "PLLCLK":
+		MCANE_source 	 	= "SYSCTL_MCANCLK_SOURCE_PLLCLK"
+		break
+}
+var MCANF_divide_dv = system.clockTree.MCANFCLKDIV.divideValue
+var MCANF_divide = "SYSCTL_MCANCLK_DIV_" + MCANF_divide_dv
+var MCANF_source = "SYSCTL_MCANCLK_SOURCE_SYS"
+switch(system.clockTree.MCANFBCLKSEL.inputSelect){
+	case "AUXPLLRAWCLK":
+		MCANF_source 		= "SYSCTL_MCANCLK_SOURCE_AUXIN"
+		break
+	case "PERx.SYSCLK":
+		MCANF_source 	 	= "SYSCTL_MCANCLK_SOURCE_SYS"
+		break
+	case "PLLCLK":
+		MCANF_source 	 	= "SYSCTL_MCANCLK_SOURCE_PLLCLK"
+		break
+}
+%%}
+% if(PLL_STS != "SYSCTL_PLL_DISABLE") {
+% }	
+	//	
+    // From ClockTree Configurations
+	//
+
+	//
+    // Set up PLL control and clock dividers
+    //
+	SysCtl_setClock(`oscclkSrc`, `PLL_STS`, `PLL_REFDIV`, 
+					`PLL_IMULT`, `PLL_ODIV`, `PLL_DIVSEL`, DCC1_BASE);
+
+	//
+	// Initialize peripheral clocks
+	//
+    SysCtl_setCputimer2Clock(`TIMER2_source`, `TIMER2_divide`);
+    SysCtl_setEPWMClock(`EPWM_divide`);
+    SysCtl_setEMIF1Clock(`EMIF1_divide`);
+    SysCtl_setLINAClock(`LINA_divide`);
+    SysCtl_setLINBClock(`LINB_divide`);
+    SysCtl_setECatClock(`ECAT_divide`, `ECAT_enable`);
+    SysCtl_setHSMClock(`HSM_divide`);
+
+    SysCtl_setMCANClock(SYSCTL_MCAN_A, `MCANA_source`, `MCANA_divide`);
+    SysCtl_setMCANClock(SYSCTL_MCAN_B, `MCANB_source`, `MCANB_divide`);
+    SysCtl_setMCANClock(SYSCTL_MCAN_C, `MCANC_source`, `MCANC_divide`);
+    SysCtl_setMCANClock(SYSCTL_MCAN_D, `MCAND_source`, `MCAND_divide`);
+    SysCtl_setMCANClock(SYSCTL_MCAN_E, `MCANE_source`, `MCANE_divide`);
+    SysCtl_setMCANClock(SYSCTL_MCAN_F, `MCANF_source`, `MCANF_divide`);
+
+	//
+    // These asserts will check that the #defines for the clock rates in
+    // device.h match the actual rates that have been configured. If they do
+    // not match, check that the calculations of DEVICE_SYSCLK_FREQ are accurate
+    // Some examples will not perform as expected if these are not correct.
+    //
+	ASSERT(SysCtl_getClock(DEVICE_OSCSRC_FREQ) == DEVICE_SYSCLK_FREQ);

@@ -1,0 +1,110 @@
+%let clocktree_common   	= system.getScript("/driverlib/.meta/clocktree/clocktree_common.js");
+%let Common                 = system.getScript("/driverlib/Common.js");
+% var Clock_tree_template0 = system.getTemplate("/driverlib/device/functions_c/Clocktree/Device_clocktree_c.xdt");
+% var Clock_tree_template_CPU1  = system.getTemplate("/driverlib/clocktree/clocktree_device_c.xdt");
+% var Clock_tree_template_CPU2  = system.getTemplate("/driverlib/clocktree/clocktree_device_c_cpu2.xdt");
+% var Clock_tree_template_CPU3  = system.getTemplate("/driverlib/clocktree/clocktree_device_c_cpu3.xdt");
+% var perClockContent = system.getTemplate("/driverlib/perClock/perClock.board.c.xdt");
+%var Asserts				        = system.getTemplate('/driverlib/device/functions_c/Clocktree/Asserts.xdt');
+
+%var clockTree 	= Common.getClockTree();
+%var DualCore 	= clocktree_common.DualCore_CPU2;
+%var TriCore 	= clocktree_common.TriCore_CPU2;
+
+%const multi_core 	= clocktree_common.multi_core;
+%const dual_core = clocktree_common.dual_core;
+%const tri_core = clocktree_common.tri_core;
+%const PLL_type1  	= clocktree_common.PLL_type1;
+%const PLL_type2  	= clocktree_common.PLL_type2;
+%const device  		= clocktree_common.device;
+
+//*****************************************************************************
+//
+// Function to initialize the device. Primarily initializes system control to a
+// known state by disabling the watchdog, setting up the SYSCLKOUT frequency,
+// and enabling the clocks to the peripherals.
+// To configure these pins as analog pins, use the function GPIO_setAnalogMode
+//
+// Note : In case XTAL is used as the PLL source, it is recommended to invoke
+// the Device_verifyXTAL() before configuring PLL
+//
+//
+//*****************************************************************************
+void Device_init(void)
+{
+    //
+    // Disable the watchdog
+    //
+    SysCtl_disableWatchdog();
+    
+    //
+    // Errata workaround
+    //
+    Device_errataWorkaroundNMIVectorFetch();
+%if (Common.isContextCPU1()){
+    
+    //
+    // Initialize system clock
+    //
+    CLOCK_init();
+%}
+%else {
+%}
+
+% if (!system.modules['/driverlib/clocktree.js'] || system.modules['/driverlib/clocktree.js'].$static.enable_all_peripheral_clocks)
+% {
+    //
+    // Turn on all peripherals
+    //
+    Device_enableAllPeripherals();
+% }
+% else
+% {
+    //
+    // Enable peripheral clocks
+    //
+    PERCLOCK_init();
+% }
+
+    //
+    // Initialize PIPE and clear PIPE registers. Disables CPU interrupts.
+    //
+    Interrupt_initModule();
+
+    //
+    // Initialize the PIPE vector table with pointers to the shell Interrupt
+    // Service Routines (ISR).
+    //
+    Interrupt_initVectorTable();
+}
+
+%if (Common.isContextCPU1()){
+`Clock_tree_template_CPU1()`
+%}
+%if (Common.isContextCPU2()){
+
+%}
+%if (Common.isContextCPU3()){
+
+%}
+
+`perClockContent("")`
+
+#if (defined(__CPU2__) || defined(__CPU3__))
+__attribute__((interrupt("RTINT"), section("nmivector")))
+void nmi_vector(void)
+{
+    //
+    //  Clear ESM and EA error flags
+    //
+    Interrupt_clearEsmEaFlags();
+
+    //
+    //  Spin forever
+    //
+    for(;;)
+    {
+        ;
+    }
+}
+#endif

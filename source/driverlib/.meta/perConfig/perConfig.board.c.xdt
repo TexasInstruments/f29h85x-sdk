@@ -1,0 +1,67 @@
+%%{
+var perConfig = system.modules['/driverlib/perConfig.js'];
+let Common   = system.getScript("/driverlib/Common.js");
+%%}
+//*****************************************************************************
+//
+// Peripheral Configurations
+//
+//*****************************************************************************
+void PERCONFIG_init()
+{
+% var contextNames = Common.getContextNames()
+% for (var cntx of contextNames)
+% {
+	//
+	// Configuration for modules assigned to `Common.getContextDisplayName(cntx)`
+	//
+	% let module = Common.getModuleForCore("/driverlib/perConfig.js", cntx);
+%%{
+if (module != null)
+{
+    for(var i = 0; i < module.$instances.length; i++) {
+        var instance = module.$instances[i];
+        let owner = instance.$ownedBy;
+
+        var peripheralInst = instance.peripheralInst;
+        if (instance.pinmuxPeripheralModule)
+        {
+	        let ownerSolution = owner[instance.pinmuxPeripheralModule].$solution;
+	        var ownerPeripheral = ownerSolution.peripheralName;
+	        peripheralInst = ownerPeripheral;
+        }
+%%}
+%   if(!instance.removeCpuSelStandbyDbgHalt)
+%   {
+    SysCtl_selectCPUForPeripheral(SYSCTL_PERIPH_CONFIG_`peripheralInst`, SYSCTL_CPUSEL_`instance.cpuSel`);
+%   }
+%   if(!instance.removeFrameSel)
+%   {
+    SysCtl_selectFrameForPeripheral(SYSCTL_PERIPH_CONFIG_`peripheralInst`, SYSCTL_FRAMESEL_`instance.frameSel.replace("FRAME","")`);
+%   }
+%%{
+    if(!instance.removeCpuSelStandbyDbgHalt)
+    {
+        if(!instance.standbyEn)
+        {
+%%}
+    SysCtl_disableStandbyForPeripheral(SYSCTL_PERIPH_CONFIG_`peripheralInst`);
+%%{
+        }
+        if(!instance.dbgHaltEn)
+        {
+%%}
+    SysCtl_disableDebugHaltForPeripheral(SYSCTL_PERIPH_CONFIG_`peripheralInst`);
+%%{
+        }
+    }
+}
+}
+%%}
+
+	//
+	// Inserting some delay for frame updates to take effect
+	//
+    SysCtl_delay(100);
+% }
+}

@@ -1,0 +1,21 @@
+% var moduleName = "outputxbar"
+% let Common   = system.getScript("/driverlib/Common.js");
+% var module = system.modules['/driverlib/' + moduleName + '.js'];
+%if (module != null)
+%{
+//*****************************************************************************
+//
+// OUTPUTXBAR Configurations
+//
+//*****************************************************************************
+    % for(var i = 0; i < module.$instances.length; i++) {
+        % var instance = module.$instances[i];
+        % let modInst  = instance[moduleName];
+        % let solution    = modInst.$solution;
+        % let peripheral  = system.deviceData.peripherals[solution.peripheralName];
+        % let driverlibName = "XBAR_OUTPUT" + peripheral.name.replace("OUTPUTXBAR", "");
+void `instance.$name`_init();
+#define `instance.$name` `driverlibName`
+#define ESM_EVENT_`instance.$name` ESM_EVENT_`peripheral.name`
+    % }
+%}

@@ -1,0 +1,201 @@
+%%{
+let clocktree_common   = system.getScript("../clocktree_common.js");
+
+const PLL_type1 = clocktree_common.PLL_type1;
+const PLL_type2 = clocktree_common.PLL_type2;
+
+const EPWM_div_support = clocktree_common.EPWM_div_support;
+
+const device  = clocktree_common.device;
+
+const PLLSYSCLK_d	= system.clockTree.PLLSYSCLK.in
+const PERx_SYSCLK_d	= system.clockTree.PERx_CPU_PLLSYSCLK_GATE.out
+const HSMCLK_d	 	= system.clockTree.HSMCLKDIV.out
+const MCANACLK_d	= system.clockTree.MCANABITCLK.in
+const MCANBCLK_d	= system.clockTree.MCANBBITCLK.in
+const MCANCCLK_d	= system.clockTree.MCANCBITCLK.in
+const MCANDCLK_d	= system.clockTree.MCANDBITCLK.in
+const MCANECLK_d	= system.clockTree.MCANEBITCLK.in
+const MCANFCLK_d	= system.clockTree.MCANFBITCLK.in
+const ECATCLK_d	 	= system.clockTree.ECATDIV.out
+const EMIFCLK_d	 	= system.clockTree.EMIF1CLKDIV.out
+const WDCLK_d	 	= system.clockTree.INTOSC1.out
+const LINACLK_d		= system.clockTree.LINACLK.in
+const LINBCLK_d		= system.clockTree.LINBCLK.in
+const CPU1_CPUCLK_d	= system.clockTree.CPU1_CPUCLK.in
+const CPU2_CPUCLK_d	= system.clockTree.CPU2_CPUCLK.in
+const CPU3_CPUCLK_d	= system.clockTree.CPU3_CPUCLK.in
+%%}
+	%
+	%if(EPWM_div_support.includes(device))
+	%{
+	% var   EPWMCLK_d       = system.clockTree.PLLSYSCLK.in / system.clockTree.EPWMCLKDIV.divideValue
+	%}
+//*****************************************************************************
+//
+// CPU1 CPUCLK Domain (`CPU1_CPUCLK_d` MHz)
+//
+//*****************************************************************************
+% var max, i
+% max = system.clockTree.CPU1_CPUCLK_domain.$ipInstance.modulePins.length
+% for(i=0; i<max; i++)
+	% {
+// `system.clockTree.CPU1_CPUCLK_domain.$ipInstance.modulePins[i].name`
+	% }
+//
+
+//*****************************************************************************
+//
+// CPU2 CPUCLK Domain (`CPU1_CPUCLK_d` MHz)
+//
+//*****************************************************************************
+% max = system.clockTree.CPU2_CPUCLK_domain.$ipInstance.modulePins.length
+% for(i=0; i<max; i++)
+	% {
+// `system.clockTree.CPU2_CPUCLK_domain.$ipInstance.modulePins[i].name`
+	% }
+//
+
+//*****************************************************************************
+//
+// CPU3 CPUCLK Domain (`CPU1_CPUCLK_d` MHz)
+//
+//*****************************************************************************
+% max = system.clockTree.CPU3_CPUCLK_domain.$ipInstance.modulePins.length
+% for(i=0; i<max; i++)
+	% {
+// `system.clockTree.CPU3_CPUCLK_domain.$ipInstance.modulePins[i].name`
+	% }
+//
+//*****************************************************************************
+//
+// PLLSYSCLK Domain (`PLLSYSCLK_d` MHz) 
+//
+//*****************************************************************************
+% max = system.clockTree.PLLSYSCLK_domain.$ipInstance.modulePins.length
+% for(i=0; i<max; i++)
+	% {
+// `system.clockTree.PLLSYSCLK_domain.$ipInstance.modulePins[i].name`
+	% }
+//
+//*****************************************************************************
+//
+// Gated Peripheral SYSCLK Domain (`PERx_SYSCLK_d` MHz) 
+//
+//*****************************************************************************
+% max = system.clockTree.PERx_SYSCLK_domain.$ipInstance.modulePins.length
+% for(i=0; i<max; i++)
+	% {
+// `system.clockTree.PERx_SYSCLK_domain.$ipInstance.modulePins[i].name`
+	% }
+//
+//*****************************************************************************
+//
+// HSM Domain (`HSMCLK_d` MHz) 
+//
+//*****************************************************************************
+% max = system.clockTree.HSM_CLOCK_domain.$ipInstance.modulePins.length
+% for(i=0; i<max; i++)
+	% {
+// `system.clockTree.HSM_CLOCK_domain.$ipInstance.modulePins[i].name`
+	% }
+//
+//*****************************************************************************
+//
+// EPWM Domain (`EPWMCLK_d` MHz) 
+//
+//*****************************************************************************
+% max = system.clockTree.EPWM_Clock_domain.$ipInstance.modulePins.length
+% for(i=0; i<max; i++)
+	% {
+// `system.clockTree.EPWM_Clock_domain.$ipInstance.modulePins[i].name`
+	% }
+//
+//*****************************************************************************
+//
+// MCANA Domain (`MCANACLK_d` MHz) 
+//
+//*****************************************************************************
+// `system.clockTree.MCANA_CLOCK_domain.$ipInstance.modulePins[0].name`
+//
+//*****************************************************************************
+//
+//*****************************************************************************
+//
+// MCANB Domain (`MCANBCLK_d` MHz) 
+//
+//*****************************************************************************
+// `system.clockTree.MCANB_CLOCK_domain.$ipInstance.modulePins[0].name`
+//
+//*****************************************************************************
+//
+//*****************************************************************************
+//
+// MCANC Domain (`MCANCCLK_d` MHz) 
+//
+//*****************************************************************************
+// `system.clockTree.MCANC_CLOCK_domain.$ipInstance.modulePins[0].name`
+//
+//*****************************************************************************
+//
+//*****************************************************************************
+//
+// MCAND Domain (`MCANDCLK_d` MHz) 
+//
+//*****************************************************************************
+// `system.clockTree.MCAND_CLOCK_domain.$ipInstance.modulePins[0].name`
+//
+//*****************************************************************************
+//
+//*****************************************************************************
+//
+// MCANE Domain (`MCANECLK_d` MHz) 
+//
+//*****************************************************************************
+// `system.clockTree.MCANE_CLOCK_domain.$ipInstance.modulePins[0].name`
+//
+//*****************************************************************************
+//
+//*****************************************************************************
+//
+// MCANF Domain (`MCANFCLK_d` MHz) 
+//
+//*****************************************************************************
+// `system.clockTree.MCANF_CLOCK_domain.$ipInstance.modulePins[0].name`
+//
+//*****************************************************************************
+//
+//*****************************************************************************
+//
+// LINA Domain (`LINACLK_d` MHz) 
+//
+//*****************************************************************************
+// `system.clockTree.LINCLKA_domain.$ipInstance.modulePins[0].name`
+//
+//*****************************************************************************
+//
+// LINB Domain (`LINBCLK_d` MHz) 
+//
+//*****************************************************************************
+// `system.clockTree.LINCLKB_domain.$ipInstance.modulePins[0].name`
+//
+//*****************************************************************************
+//
+// Ethercat Domain (`ECATCLK_d` MHz) 
+//
+//*****************************************************************************
+// `system.clockTree.EtherCAT_domain.$ipInstance.modulePins[0].name`
+//
+//*****************************************************************************
+//
+// EMIF Domain (`EMIFCLK_d` MHz) 
+//
+//*****************************************************************************
+// `system.clockTree.EMIF1_Clock_domain.$ipInstance.modulePins[0].name`
+//
+//*****************************************************************************
+//
+// Watchdog Domain (`WDCLK_d` MHz) 
+//
+//*****************************************************************************
+// `system.clockTree.Watchdog_domain.$ipInstance.modulePins[0].name`

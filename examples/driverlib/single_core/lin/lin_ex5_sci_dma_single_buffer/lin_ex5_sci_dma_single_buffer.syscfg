@@ -1,0 +1,69 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --device "F29H85x" --package "256ZEX" --part "F29H85x_256ZEX" --context "CPU1" --product "MCU_SDK_F29H85x@1.00.00.00"
+ * @v2CliArgs --device "F29H850TU" --package "256ZEX" --variant "TMS320F29H850TU9" --context "CPU1" --product "MCU_SDK_F29H85x@1.00.00.00"
+ * @versions {"tool":"1.22.0+3877"}
+ */
+
+const divider15       = system.clockTree["PLL_REFDIV"];
+divider15.divideValue = 1;
+
+const multiplier1         = system.clockTree["PLL_IMULT"];
+multiplier1.multiplyValue = 40;
+
+const mux7       = system.clockTree["OSCCLKSRCSEL"];
+mux7.inputSelect = "INTOSC2";
+
+/**
+ * Import the modules used in this configuration.
+ */
+const jtag = scripting.addModule("/driverlib/jtag.js");
+const lin  = scripting.addModule("/driverlib/lin.js", {}, false);
+const lin1 = lin.addInstance();
+
+
+lin1.$name                               = "myLIN0";
+lin1.opMode                              = "SCI";
+lin1.enableLoopback                      = true;
+lin1.enableInterrupt                     = true;
+lin1.sciInterruptLine                    = ["LIN_INTERRUPT_LINE0"];
+lin1.sciInterruptPriorityLine0           = ["LIN_SCI_INT_RX_DMA","LIN_SCI_INT_TX_DMA"];
+lin1.useDMATX                            = true;
+lin1.useDMARX                            = true;
+lin1.sciFrameLength                      = 8;
+lin1.sciInterruptFlags                   = ["LIN_SCI_INT_RX_DMA","LIN_SCI_INT_RX_DMA_ALL","LIN_SCI_INT_TX_DMA"];
+lin1.periphClock.$name                   = "driverlib_perClock0";
+lin1.periphConfig.$name                  = "driverlib_perConfig0";
+lin1.linTXDMA.databusWidthConfig         = scripting.forceWrite("DMA_CFG_READ_SIZE_8BIT");
+lin1.linTXDMA.writeDatasizeConfig        = scripting.forceWrite("DMA_CFG_WRT_SIZE_8BIT");
+lin1.linTXDMA.chBase                     = "RTDMA1CH5_BASE";
+lin1.linTXDMA.enableTriggers             = true;
+lin1.linTXDMA.useInterrupts              = true;
+lin1.linTXDMA.registerInterrupts         = true;
+lin1.linTXDMA.interruptMode              = "DMA_INT_AT_END";
+lin1.linTXDMA.srcBurstStep               = 1;
+lin1.linTXDMA.srcTransferStep            = 1;
+lin1.linTXDMA.srcAddressInputMode        = "VARIABLE";
+lin1.linTXDMA.srcAddressVariable         = "srcAddr";
+lin1.linTXDMA.enableInterrupts           = true;
+lin1.linTXDMA.transferSize               = 128;
+lin1.linTXDMA.rtdma1Int.interruptHandler = "dmaTxIsr";
+lin1.linRXDMA.databusWidthConfig         = scripting.forceWrite("DMA_CFG_READ_SIZE_8BIT");
+lin1.linRXDMA.writeDatasizeConfig        = scripting.forceWrite("DMA_CFG_WRT_SIZE_8BIT");
+lin1.linRXDMA.chBase                     = "RTDMA1CH6_BASE";
+lin1.linRXDMA.enableTriggers             = true;
+lin1.linRXDMA.useInterrupts              = true;
+lin1.linRXDMA.registerInterrupts         = true;
+lin1.linRXDMA.interruptMode              = "DMA_INT_AT_END";
+lin1.linRXDMA.destAddressInputMode       = "VARIABLE";
+lin1.linRXDMA.destAddressVariable        = "destAddr";
+lin1.linRXDMA.destBurstStep              = 1;
+lin1.linRXDMA.destTransferStep           = 1;
+lin1.linRXDMA.enableInterrupts           = true;
+lin1.linRXDMA.transferSize               = 128;
+lin1.linRXDMA.rtdma1Int.interruptHandler = "dmaRxIsr";
+
+const rtdma1              = scripting.addModule("/driverlib/rtdma1.js", {}, false);
+rtdma1.periphClock.$name  = "driverlib_perClock1";
+rtdma1.periphConfig.$name = "driverlib_perConfig1";

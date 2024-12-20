@@ -1,0 +1,82 @@
+% var nameOfModule = "rtdma2_mpu";
+% var mpuBaseAddress = 'RTDMA2_MPU_BASE'
+% let Common   = system.getScript("/driverlib/Common.js");
+% var module = Common.getModuleForCore("/driverlib/rtdma2_mpu.js", "CPU1");
+% var contextNames = Common.getContextNames()
+//*****************************************************************************
+//
+// RTDMA2 MPU Configurations
+//
+//*****************************************************************************
+void RTDMA2_MPU_init(){
+% if (module != null)
+% {
+    % var stat = module.$static;
+    % if (!stat.lockMPUConfig) {
+    DMA_unlockMPUConfig(`mpuBaseAddress`);
+    % }
+    % if (stat.enableMPU) {
+    DMA_enableMPU(`mpuBaseAddress`);
+    % } else {
+    DMA_disableMPU(`mpuBaseAddress`);
+    % }
+    %
+    % if (stat.lockMPUConfig) {
+    DMA_lockMPUConfig(`mpuBaseAddress`);
+    % } 
+    % if (stat.commitMPUConfig) {
+    DMA_commitMPUConfig(`mpuBaseAddress`);
+    % }
+% }
+    DMA_MPUConfigParams configParams;
+% for (var cntx of contextNames)
+% {
+    % module = Common.getModuleForCore("/driverlib/rtdma2_mpu.js", cntx);
+    % if (module != null) {
+	//
+	// Configuration for MPU Regions added in `Common.getContextDisplayName(cntx)` context
+    //
+      % for(var i = 0; i < module.$instances.length; i++) {
+        % var instance = module.$instances[i];
+    //
+    // `instance.$name` Initialization
+    // 
+        %
+        % var startAddress = 0;
+        % var endAddress = 0;
+        % if (instance.startAddressInputMode == "MANUAL") {
+        %   startAddress = instance.$name + "_STARTADDRESS"
+        % } if (instance.startAddressInputMode == "VARIABLE") {
+        %   startAddress = instance.startAddressVariable;           
+        % } if (instance.endAddressInputMode == "MANUAL") {
+        %   endAddress = instance.$name + "_ENDADDRESS"
+        % } if (instance.endAddressInputMode == "VARIABLE") {
+        %   endAddress = instance.endAddressVariable;      
+        % } 
+    configParams.startAddr = `startAddress`;
+    configParams.endAddr = `endAddress`;
+        % if (instance.channelMask.length != 0) {
+            % var chMask =  instance.channelMask[0];
+            % for (var j = 0; j < instance.channelMask.length - 1; j++)
+            % {
+                % chMask = chMask + " | " + instance.channelMask[j+1];
+            % }
+    configParams.channelMask = `chMask`;
+            % }
+            % else {
+    configParams.channelMask = 0;
+            % }
+    configParams.accessPermission = `instance.accessPermission`;
+    DMA_configMPURegion(`mpuBaseAddress`, `instance.$name`, &configParams);
+            % if (instance.lockMPURegion) {
+    DMA_lockMPURegion(`mpuBaseAddress`, `instance.$name`);
+            % } else {
+    DMA_unlockMPURegion(`mpuBaseAddress`, `instance.$name`);
+            % }
+            % if (instance.commitMPURegion) {
+    DMA_commitMPURegion(`mpuBaseAddress`, `instance.$name`);
+            % }
+        % }
+    % }
+% }
+}

@@ -1,0 +1,48 @@
+% var module = system.modules['/driverlib/esm_cpu.js'];
+% let Common   = system.getScript("/driverlib/Common.js");
+% var stat = module.$static
+//*****************************************************************************
+//
+// ESMCPU Configurations
+//
+//*****************************************************************************
+void `module.peripheralName`_init(){
+% if(stat.registerNMI){
+	Interrupt_register(INT_NMI, &`stat.NMIHandler`);
+% }
+    ESM_enableGlobal(`stat.esmBase`_BASE);
+% if(stat.enableHighPriorityWatchdog) {
+	ESM_enableHighPriorityWatchdog(`stat.esmBase`_BASE);
+	ESM_setWatchdogCounterPreload(`stat.esmBase`_BASE, `stat.watchdogCounterValue`);
+% }
+%   for(var i = 0; i < module.$instances.length; i++) 
+%   {
+%      var instance = module.$instances[i];
+	`instance.$name`_init();
+%   }
+}
+
+%if (module != null)
+%{
+    % for(var i = 0; i < module.$instances.length; i++) {
+        % var instance = module.$instances[i];
+		% var eventSource = instance.eventSource;
+void `instance.$name`_init(){
+		% if(instance.typeEventSource){
+		%	eventSource = instance.eventSourceTyped;
+		% }
+		% if(instance.enableInterrupt || instance.enableNMI) {
+	ESM_enableInterrupt(`stat.esmBase`_BASE, `eventSource`);
+		% }
+		% if(instance.enableInterrupt) {
+	ESM_setInterruptPriorityLevel(`stat.esmBase`_BASE, `eventSource`, ESM_INTERRUPT_PRIORITY_LEVEL_LOW);
+		% }
+		% if(instance.enableNMI) {
+	ESM_setInterruptPriorityLevel(`stat.esmBase`_BASE, `eventSource`, ESM_INTERRUPT_PRIORITY_LEVEL_HIGH);
+		% }
+		% if(instance.enableCriticalEvent){
+	ESM_setCriticalPriorityInterruptInfluence(`stat.esmBase`_BASE, `eventSource`, true);
+		% }
+}
+	% }
+%}

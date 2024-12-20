@@ -1,0 +1,40 @@
+% var nameOfModule = "rtdma2_mpu";
+% var module = system.modules['/driverlib/' + nameOfModule + '.js'];
+% let Common   = system.getScript("/driverlib/Common.js");
+//*****************************************************************************
+//
+// RTDMA2 MPU Configurations
+//
+//*****************************************************************************
+% var contextNames = Common.getContextNames()
+% for (var cntx of contextNames)
+% {
+    % module = Common.getModuleForCore("/driverlib/rtdma2_mpu.js", cntx);
+    % if (module != null) {
+        % for(var i = 0; i < module.$instances.length; i++) {
+            % var instance = module.$instances[i];
+#define `instance.$name` `instance.mpuRegion`
+            % if(!instance.memoryTiedRegion){
+                % if (instance.startAddressInputMode == "MANUAL") {
+#define `instance.$name`_STARTADDRESS 0x`instance.startAddressManual.toString(16)`
+                % } if (instance.endAddressInputMode == "MANUAL") {
+#define `instance.$name`_ENDADDRESS 0x`instance.endAddressManual.toString(16)`
+                % }
+                % if (instance.startAddressInputMode == "VARIABLE") {
+extern const void *`instance.startAddressVariable`;
+                % } if (instance.endAddressInputMode == "VARIABLE") {
+extern const void *`instance.endAddressVariable`;
+                % }
+            % }
+            % else {
+            % let aprName   = instance.$name.replace("_MPU_REGION","")
+            % let aprInst   = Common_Sec.findAPRbyName(aprName)[0]
+            % console.log(aprInst)
+            % let startAddress  = "0x" + aprInst.startAddr.toString(16)
+            % let endAddress    = "0x" + (aprInst.endAddr - 1).toString(16)
+#define `instance.$name`_STARTADDRESS `startAddress`
+#define `instance.$name`_ENDADDRESS `endAddress`
+            %  }
+        % }
+    % }
+% }

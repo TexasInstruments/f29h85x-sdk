@@ -1,0 +1,42 @@
+% var moduleName = "erad"
+% var module = system.modules['/driverlib/' + moduleName + '.js'];
+%
+% var usedCounters = module.$static.erad_counter;
+% var usedBusComps = module.$static.erad_buscomp;
+% var usedANDMasks = module.$static.erad_and_mask;
+% var usedORMasks = module.$static.erad_or_mask;
+% if ((usedCounters.length | usedBusComps.length | usedANDMasks.length | usedORMasks.length) != 0)
+% {
+//*****************************************************************************
+//
+// ERAD Configurations
+//
+//*****************************************************************************
+% for (var BusCompInstanceIndex = 0; BusCompInstanceIndex < usedBusComps.length; BusCompInstanceIndex++)
+% {
+%    var BusCompInstance = usedBusComps[BusCompInstanceIndex];
+#define `BusCompInstance.$name` `BusCompInstance.instance`
+    % if (BusCompInstance.ebcAddressInputMode == "CODE"){
+extern void* `BusCompInstance.ebcRefCodeName`;
+    % }
+% }
+
+% for (var CounterInstanceIndex = 0; CounterInstanceIndex < usedCounters.length; CounterInstanceIndex++)
+% {
+%    var CounterInstance = usedCounters[CounterInstanceIndex];
+#define `CounterInstance.$name` `CounterInstance.instance`
+% }
+
+% for (var ANDMaskInstanceIndex = 0; ANDMaskInstanceIndex < usedANDMasks.length; ANDMaskInstanceIndex++)
+% {
+%    var ANDMaskInstance = usedANDMasks[ANDMaskInstanceIndex];
+#define `ANDMaskInstance.$name` `ANDMaskInstance.instance`
+% }
+
+% for (var ORMaskInstanceIndex = 0; ORMaskInstanceIndex < usedORMasks.length; ORMaskInstanceIndex++)
+% {
+%    var ORMaskInstance = usedORMasks[ORMaskInstanceIndex];
+#define `ORMaskInstance.$name` `ORMaskInstance.instance`
+% }
+
+% }

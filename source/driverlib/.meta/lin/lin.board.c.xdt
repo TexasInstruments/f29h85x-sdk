@@ -1,0 +1,198 @@
+% var module = system.modules['/driverlib/lin.js'];
+% let Common   = system.getScript("/driverlib/Common.js");
+% var nameOfModule = "lin";
+% var nameOfPeripheral = module.peripheralName;
+//*****************************************************************************
+//
+// LIN Configurations
+//
+//*****************************************************************************
+void `nameOfPeripheral`_init(){
+%   for(var i = 0; i < module.$instances.length; i++) 
+%   {
+%      var instance = module.$instances[i];
+	`instance.$name`_init();
+%   }
+}
+
+%if (module != null)
+%{
+	% for(var i = 0; i < module.$instances.length; i++) {
+	    % var instance = module.$instances[i];
+void `instance.$name`_init(){
+    % if (instance.opMode == "LIN"){
+    LIN_initModule(`instance.$name`_BASE);
+     % if (!instance.useDefaultLin){
+	//
+    // Enter Software Reset State
+    //
+    LIN_enterSoftwareReset(`instance.$name`_BASE);
+
+    LIN_setLINMode(`instance.$name`_BASE, `instance.linMode`);
+        % if (instance.linMode == "LIN_MODE_LIN_RESPONDER" && instance.setResponderID)
+	% {
+    LIN_setIDResponderTask(`instance.$name`_BASE, (uint16_t)(0x`instance.responderIdByte`U));
+	%}
+    LIN_setCommMode(`instance.$name`_BASE, `instance.linCommMode`);
+    LIN_setDebugSuspendMode(`instance.$name`_BASE, `instance.linDebugMode`);
+    LIN_setChecksumType(`instance.$name`_BASE, `instance.linChecksumType`);
+    LIN_setMessageFiltering(`instance.$name`_BASE, `instance.linMessageFilter`);
+    % if (instance.autoBaudRate)
+	% {
+    LIN_enableAutomaticBaudrate(`instance.$name`_BASE);
+    LIN_setMaximumBaudRate(`instance.$name`_BASE, `instance.mbrVal`);
+	%} else {
+	LIN_setBaudRatePrescaler(`instance.$name`_BASE, `instance.brPrescaler`U, `instance.brDivider`U);
+	%}
+    LIN_setFrameLength(`instance.$name`_BASE, `instance.linFrameLength`U);
+    LIN_setSyncFields(`instance.$name`_BASE, `instance.syncBreak`U, `instance.delimiter`U);
+    LIN_setTxMask(`instance.$name`_BASE, (uint16_t)(0x`instance.txMask`U));
+    LIN_setRxMask(`instance.$name`_BASE, (uint16_t)(0x`instance.rxMask`U));
+	% if (instance.enableParity)
+	% {
+    LIN_enableParity(`instance.$name`_BASE);
+	%} else {
+	LIN_disableParity(`instance.$name`_BASE);
+	%}
+    % if (instance.enableMultibuffer)
+	% {
+    LIN_enableMultibufferMode(`instance.$name`_BASE);
+	%} else {
+	LIN_disableMultibufferMode(`instance.$name`_BASE);
+	%}
+    //
+    // Finally exit SW reset and enter LIN ready state
+    //
+    LIN_exitSoftwareReset(`instance.$name`_BASE);
+     %}
+        % if (instance.enableLoopback){
+    //
+    // Enable LIN test mode
+    	% if (instance.loopbackMode == "LIN_TEST_INTERNAL")
+    	% {
+    //
+    // Enable Internal Loopback mode
+    //
+    LIN_enableIntLoopback(`instance.$name`_BASE);
+    	%} else {
+    //
+    // Enable External Loopback mode
+    //
+	LIN_enableExtLoopback(`instance.$name`_BASE, `instance.loopbackType`, `instance.analogLoopbackPath`);
+    	%}
+        %}
+      % if (instance.enableInterrupt){
+    //
+    // Enable LIN Interrupts
+    //
+        % let x = String(instance.interruptFlags).split(",").join("|");
+        % if (!x) { x = "0";}
+    LIN_enableInterrupt(`instance.$name`_BASE, `x`);
+            % for (var int_index in instance.interruptLine)
+               %{
+    //
+    // Set the interrupt priority line
+    //
+               % if (instance.interruptLine[int_index] == "LIN_INTERRUPT_LINE0")
+               %{
+               % let y = String(instance.interruptPriorityLine0).split(",").join("|");
+        	   % if (!y) { y = "LIN_INT_ALL";}
+    LIN_setInterruptLevel0(`instance.$name`_BASE, `y`);           
+               %}
+               %else if (instance.interruptLine[int_index] == "LIN_INTERRUPT_LINE1")
+               %{
+               % let y = String(instance.interruptPriorityLine1).split(",").join("|");
+        	   % if (!y) { y = "0";}
+    LIN_setInterruptLevel1(`instance.$name`_BASE, `y`);           
+               %}
+    LIN_enableGlobalInterrupt(`instance.$name`_BASE, `instance.interruptLine[int_index]`);
+    LIN_clearGlobalInterruptStatus(`instance.$name`_BASE, `instance.interruptLine[int_index]`);            
+               %}
+            %}   
+    % }
+    % else{
+    LIN_initSCIModule(`instance.$name`_BASE);
+      % if (!instance.useDefaultLin){
+	//
+    // Enter Software Reset State
+    //
+    LIN_enterSoftwareReset(`instance.$name`_BASE);
+
+    LIN_setSCICommMode(`instance.$name`_BASE, `instance.sciCommMode`);
+    % if (instance.sleepMode)
+	% {
+    LIN_enableSCISleepMode(`instance.$name`_BASE);
+	%}
+    LIN_setDebugSuspendMode(`instance.$name`_BASE, `instance.linDebugMode`);
+    LIN_setBaudRatePrescaler(`instance.$name`_BASE, `instance.brPrescaler`U, `instance.brDivider`U);
+    LIN_setSCIFrameLength(`instance.$name`_BASE, `instance.sciFrameLength`U);
+    LIN_setSCICharLength(`instance.$name`_BASE, `instance.sciCharLength`U);
+    LIN_setSCIStopBits(`instance.$name`_BASE, `instance.sciStopBits`);
+    % if (instance.enableSCIParity != "disabled")
+	% {
+    LIN_enableSCIParity(`instance.$name`_BASE, `instance.enableSCIParity`);
+	%} else {
+	LIN_disableSCIParity(`instance.$name`_BASE);
+	%}
+    % if (instance.enableMultibuffer)
+	% {
+    LIN_enableMultibufferMode(`instance.$name`_BASE);
+	%} else {
+	LIN_disableMultibufferMode(`instance.$name`_BASE);
+	%}
+    //
+    // Finally exit SW reset and enter LIN ready state
+    //
+    LIN_exitSoftwareReset(`instance.$name`_BASE);
+     %} 
+        % if (instance.enableLoopback){
+    //
+    // Enable SCI test mode
+    	% if (instance.loopbackMode == "LIN_TEST_INTERNAL")
+    	% {
+    //
+    // Enable Internal Loopback mode
+    //
+    LIN_enableIntLoopback(`instance.$name`_BASE);
+    	%} else {
+    //
+    // Enable External Loopback mode
+    //
+	LIN_enableExtLoopback(`instance.$name`_BASE, `instance.loopbackType`, `instance.analogLoopbackPath`);
+    	%}
+        %}
+      % if (instance.enableInterrupt){
+    //
+    // Enable SCI Interrupts
+    //
+        % let x = String(instance.sciInterruptFlags).split(",").join("|");
+        % if (!x) { x = "0";}
+    LIN_enableSCIInterrupt(`instance.$name`_BASE, `x`);
+            % for (var int_index in instance.sciInterruptLine)
+               %{
+    //
+    // Set the interrupt priority line
+    //
+               % if (instance.sciInterruptLine[int_index] == "LIN_INTERRUPT_LINE0")
+               %{
+               % let y = String(instance.sciInterruptPriorityLine0).split(",").join("|");
+        	   % if (!y) { y = "LIN_INT_ALL";}
+    LIN_setSCIInterruptLevel0(`instance.$name`_BASE, `y`);           
+               %}
+               %else if (instance.sciInterruptLine[int_index] == "LIN_INTERRUPT_LINE1")
+               %{
+               % let y = String(instance.sciInterruptPriorityLine1).split(",").join("|");
+        	   % if (!y) { y = "0";}
+    LIN_setSCIInterruptLevel1(`instance.$name`_BASE, `y`);           
+               %}
+    LIN_enableGlobalInterrupt(`instance.$name`_BASE, `instance.sciInterruptLine[int_index]`);
+    LIN_clearGlobalInterruptStatus(`instance.$name`_BASE, `instance.sciInterruptLine[int_index]`);            
+               %}
+            %}   
+    % }
+        % let instancePinmux = instance[nameOfModule];
+		% let solution    = instancePinmux.$solution;
+		% let peripheral  = system.deviceData.peripherals[solution.peripheralName];
+}
+	%}
+%}

@@ -1,0 +1,65 @@
+<projectSpec>
+  <project
+        name="freertos_port_validation_tests"
+        device       = "F29H850TU9"
+        cgtVersion   = "1.0.0"
+        toolChain    = "TICLANG"
+        products     = "sysconfig;f29h85x-sdk"
+        connection   = "TIXDS110_Connection.xml"
+        >
+    <configuration name="RAM"   compilerBuildOptions="-I${DLIB_ROOT} -I${PROJECT_ROOT}/device -I${PROJECT_ROOT}/FullDemo/include -I${PROJECT_ROOT}/FullDemo -I${BITFIELDS_ROOT} -I${FreeRTOS_ROOT}/include -I${FreeRTOS_ROOT}/portable/CCS/C2000_C29x -I -O1 -g -DDEBUG"           linkerBuildOptions="--stack_size=0x400 --diag_suppress=10325-D --diag_suppress=10063-D"
+     postBuildStep=
+       "${CG_TOOL_OBJCOPY} -O binary ${ProjName}.out ${ProjName}.bin;
+        $(PYTHON) ${COM_TI_MCU_SDK_INSTALL_DIR}/tools/boot/signing/mcu_rom_image_gen.py --image-bin ${ProjName}.bin --core C29 --swrv 1 --loadaddr 0x200E1000 --sign-key ${COM_TI_MCU_SDK_INSTALL_DIR}/tools/boot/signing/mcu_gpkey.pem --out-image ${ProjName}_cert.bin --device f29h85x --boot RAM --img_integ no;
+        $(DELETE) C29-cert-pad.bin"
+    />
+    <configuration name="FLASH" compilerBuildOptions="-I${DLIB_ROOT} -I${PROJECT_ROOT}/device -I${PROJECT_ROOT}/FullDemo/include -I${PROJECT_ROOT}/FullDemo -I${BITFIELDS_ROOT} -I${FreeRTOS_ROOT}/include -I${FreeRTOS_ROOT}/portable/CCS/C2000_C29x -I -O1 -g -DDEBUG -D_FLASH"  linkerBuildOptions="--stack_size=0x400 --diag_suppress=10325-D --diag_suppress=10063-D"
+     postBuildStep=
+       "${CG_TOOL_OBJCOPY} --remove-section=cert -O binary ${ProjName}.out ${ProjName}.bin;
+        $(PYTHON) ${COM_TI_MCU_SDK_INSTALL_DIR}/tools/boot/signing/mcu_rom_image_gen.py --image-bin ${ProjName}.bin --core C29 --swrv 1 --loadaddr 0x10001000 --sign-key ${COM_TI_MCU_SDK_INSTALL_DIR}/tools/boot/signing/mcu_gpkey.pem --out-image ${ProjName}_cert.bin --device f29h85x --boot FLASH --img_integ no;
+        ${CG_TOOL_OBJCOPY} --update-section cert=C29-cert-pad.bin ${ProjName}.out ${ProjName}_cert.out;
+        $(DELETE) ${ProjName}.out C29-cert-pad.bin;
+        $(RENAME) ${ProjName}_cert.out ${ProjName}.out"
+    />
+
+
+    <pathVariable name="DLIB_ROOT"      path="${COM_TI_MCU_SDK_INSTALL_DIR}/source/driverlib/f29h85x/" scope="project"/>
+    <pathVariable name="BITFIELDS_ROOT" path="${COM_TI_MCU_SDK_INSTALL_DIR}/source/bitfields/f29h85x/" scope="project"/>
+    <pathVariable name="FreeRTOS_ROOT"  path="${COM_TI_MCU_SDK_INSTALL_DIR}/source/kernel/freertos/Source" scope="project" />
+
+
+    <file action="copy" path="${COM_TI_MCU_SDK_INSTALL_DIR}/examples/device_support/source/codestartbranch.asm" targetDirectory="" />
+    <file action="copy" path="${COM_TI_MCU_SDK_INSTALL_DIR}/examples/device_support/source/device.c"                         targetDirectory="device" />
+    <file action="copy" path="${COM_TI_MCU_SDK_INSTALL_DIR}/examples/device_support/include/device.h"                        targetDirectory="device" />
+    <file action="copy" path="${COM_TI_MCU_SDK_INSTALL_DIR}/examples/device_support/include/driverlib.h"                     targetDirectory="device" />
+    <file action="copy" path="${COM_TI_MCU_SDK_INSTALL_DIR}/examples/device_support/makefile.defs"                           targetDirectory="" />
+
+    <file action="link" path="${FreeRTOS_ROOT}/include" targetDirectory="FreeRTOS/Source" />
+    <file action="link" path="${FreeRTOS_ROOT}/portable/CCS/C2000_C29x" targetDirectory="FreeRTOS/Source/portable/CCS" />
+    <file action="link" path="${FreeRTOS_ROOT}/portable/MemMang/heap_4.c" targetDirectory="FreeRTOS/Source/portable/MemMang" />
+    <file action="link" path="${FreeRTOS_ROOT}/croutine.c" targetDirectory="FreeRTOS/Source" />
+    <file action="link" path="${FreeRTOS_ROOT}/event_groups.c" targetDirectory="FreeRTOS/Source" />
+    <file action="link" path="${FreeRTOS_ROOT}/list.c" targetDirectory="FreeRTOS/Source" />
+    <file action="link" path="${FreeRTOS_ROOT}/queue.c" targetDirectory="FreeRTOS/Source" />
+    <file action="link" path="${FreeRTOS_ROOT}/stream_buffer.c" targetDirectory="FreeRTOS/Source" />
+    <file action="link" path="${FreeRTOS_ROOT}/tasks.c" targetDirectory="FreeRTOS/Source" />
+    <file action="link" path="${FreeRTOS_ROOT}/timers.c" targetDirectory="FreeRTOS/Source" />
+
+    <file action="copy" path="../include" targetDirectory="FullDemo" />
+    <file action="copy" path="../Minimal" targetDirectory="FullDemo" />
+
+    <file action="copy" path="../FreeRTOSConfig.h" targetDirectory="" targetName="FreeRTOSConfig.h" />
+    <file action="copy" path="../TestRunner.c" targetDirectory="FullDemo" />
+    <file action="copy" path="../TestRunner.h" targetDirectory="FullDemo" />
+    <file action="copy" path="../RegTests.c" targetDirectory="FullDemo" />
+    <file action="copy" path="../RegTests.h" targetDirectory="FullDemo" />
+    <file action="copy" path="../IntQueueTimer.c" targetDirectory="FullDemo" />
+    <file action="copy" path="../IntQueueTimer.h" targetDirectory="FullDemo" />
+
+    <file action="copy" path="../main.c" targetDirectory="" />
+    <file action="copy" path="../f29h85x_port_val_ram.cmd" targetDirectory="" applicableConfigurations="RAM" />
+    <file action="copy" path="../f29h85x_port_val_flash.cmd" targetDirectory="" applicableConfigurations="FLASH" />
+
+
+  </project>
+</projectSpec>

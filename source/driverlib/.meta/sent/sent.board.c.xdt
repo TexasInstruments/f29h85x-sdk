@@ -1,0 +1,188 @@
+% var module = system.modules['/driverlib/sent.js'];
+% let Common   = system.getScript("/driverlib/Common.js");
+%let device_driverlib_peripheral = 
+%    system.getScript("/driverlib/device_driverlib_peripherals/" + 
+%        Common.getDeviceName().toLowerCase() + "_sent.js");
+//*****************************************************************************
+//
+// SENT Configurations
+//
+//*****************************************************************************
+void `module.peripheralName`_init(){
+%   for(var i = 0; i < module.$instances.length; i++) 
+%   {
+%      var instance = module.$instances[i];
+	`instance.$name`_init();
+%   }
+}
+
+%if (module != null)
+%{
+	% for(var i = 0; i < module.$instances.length; i++) {
+		% var instance = module.$instances[i];
+        % var baseName = instance.$name + "_BASE";
+void `instance.$name`_init(){
+	SENT_disableSENTReceiver(`baseName`);
+    SENT_setTTClock(`baseName`, `instance.$name`_TTCLK);
+    SENT_setGFILTClockCycle(`baseName`, `instance.$name`_GFILT);
+        % if(instance.enablePausePulse){
+    SENT_enableSENTPausePulse(`baseName`);
+        % }
+        % else {
+    SENT_disableSENTPausePulse(`baseName`);
+        % }
+        % if(instance.enableFIFO == "SENT_FIFOMODE_MEMMAPPED"){
+    SENT_configureFIFOMode(`baseName`, `instance.enableFIFO`);
+        % }
+        % else {
+    SENT_configureFIFOMode(`baseName`, `instance.enableFIFO`);
+    SENT_setRFIFOTriggerLevel(`baseName`, `instance.setFIFOLevel`);
+        % }
+        % if(instance.disableTS){
+    SENT_disableTimeStamp(`baseName`);
+        % }
+        % else {
+    SENT_enableTimeStamp(`baseName`);
+        % }
+        % if(instance.disableERRData){
+    SENT_disableERRDATAwrite(`baseName`);
+        % }
+        % else {
+    SENT_enableERRDATAwrite(`baseName`);
+        % }
+    SENT_configureTimeout(`baseName`, `instance.$name`_TIMEOUT);
+        % if (instance.useInterrupts){
+        % var interrupts = "";
+            % for (var int_index in instance.interruptSource)
+            % {
+            %	interrupts += ((interrupts == "")?"":" | ") + instance.interruptSource[int_index];
+            % }
+        % }
+        % if (interrupts != ""){
+	SENT_clearInterruptFlag(`baseName`, `interrupts`);
+    SENT_enableInterrupt(`baseName`, `interrupts`);
+		% }
+
+    //
+    // Data0 Nibble Configurations
+    //
+        % if(instance.dataNibble) {
+    SENT_setDataNibble(`baseName`,`instance.dataNibble`);
+            % for(var nibIndex in device_driverlib_peripheral.SENT_NibbleNumber){
+                % var currentNIB = device_driverlib_peripheral.SENT_NibbleNumber[nibIndex].name
+                % var nibNumber = (currentNIB).replace(/[^0-9]/g,'')
+                % if (instance["d0Nibble"+nibNumber] != "SENT_NO_NIBBLE"){
+    SENT_setDataSortingFormat(`baseName`, SENT_RECEIVER_DATA0, SENT_DATAX_NIB`nibNumber`, `instance["d0Nibble"+nibNumber]`);
+                %}
+            % }
+
+    //
+    // Data1 Nibble Configurations
+    //
+            % for(var nib1Index in device_driverlib_peripheral.SENT_NibbleNumber){
+                % var currentNIB1 = device_driverlib_peripheral.SENT_NibbleNumber[nib1Index].name
+                % var nib1Number = (currentNIB1).replace(/[^0-9]/g,'')
+                % if (instance["d1Nibble"+nib1Number] != "SENT_NO_NIBBLE"){
+    SENT_setDataSortingFormat(`baseName`, SENT_RECEIVER_DATA1, SENT_DATAX_NIB`nib1Number`, `instance["d1Nibble"+nib1Number]`);
+                %}
+            % }
+        % }
+
+        % if(instance.enableCRC) {
+    //
+    // CRC Configurations
+    //
+    SENT_enableSENTCRC(`baseName`);
+    SENT_setCRCType(`baseName`, `instance.setCRCType`);
+    SENT_setCRCWidth(`baseName`, `instance.setCRCWidth`);
+    SENT_setRxCRC(`baseName`, `instance.enableCRCStatus`);
+        % }
+
+        % if(instance.enableMTP) {
+    //
+    // MTPG Configurations
+    //
+    SENT_setMTPWaitTime(`baseName`,`instance.waitTime`);
+
+            % if(instance.enableBroadcastCh) {
+    //
+    // Broadcast Channel Configurations
+    //
+    SENT_enableMTPChannel(`baseName`, `instance.$name`_BROADCAST_CHANNEL);
+    SENT_setMTPPeriod(`baseName`, `instance.$name`_BROADCAST_CHANNEL, `instance.broadcastChPeriod`);
+    SENT_setMTPTriggerSelect(`baseName`, `instance.$name`_BROADCAST_CHANNEL, `instance.broadcastChTrigger`);
+
+                % for(var cmpIndex in device_driverlib_peripheral.SENT_CompareNumber){ 
+                    % var currentCMP = device_driverlib_peripheral.SENT_CompareNumber[cmpIndex].name
+                    % let cmpNumber = (currentCMP).replace(/[^0-9]/g,'')
+                    % if (instance["broadcastcmp"+cmpNumber+"TT"] != 0) {
+    //
+    // Broadcast Channel Toggle Time for compare registers
+    //
+    SENT_setBroadcastChMTPToggleTime(`baseName`, SENT_MTP_CMP_`cmpNumber`, `instance["broadcastcmp"+cmpNumber+"TT"]`);
+                    % }
+                %}
+            % }
+
+            % for(var channelIndex in device_driverlib_peripheral.SENT_SensorNumber){ 
+                % var currentCh = device_driverlib_peripheral.SENT_SensorNumber[channelIndex].name
+                % let chlNumber = (currentCh).replace(/[^0-9]/g,'')
+                % if(instance["enableSensor"+chlNumber]) {
+    //
+    // Sensor `chlNumber` Channel Configurations
+    //
+    SENT_enableMTPChannel(`baseName`, `instance.$name`_SENSOR`chlNumber`);
+    SENT_setMTPPeriod(`baseName`, `instance.$name`_SENSOR`chlNumber`, `instance["sensor"+chlNumber+"Period"]`);
+    SENT_setMTPTriggerSelect(`baseName`, `instance.$name`_SENSOR`chlNumber`, `instance["sensor"+chlNumber+"Trigger"]`);
+
+                % }
+            % }
+            % for(var cmpIndex in device_driverlib_peripheral.SENT_CompareNumber){ 
+                % var currentCMP = device_driverlib_peripheral.SENT_CompareNumber[cmpIndex].name
+                % let cmpNumber = (currentCMP).replace(/[^0-9]/g,'')
+                % if (instance["sensor1cmp"+cmpNumber+"TT"] != 0) {
+    //
+    // Sensor 1 Channel Toggle Time for compare registers
+    //
+    SENT_setSensor1MTPToggleTime(`baseName`, SENT_MTP_CMP_`cmpNumber`, `instance["sensor1cmp"+cmpNumber+"TT"]`);
+                % }
+            %}
+
+            % for(var cmpIndex in device_driverlib_peripheral.SENT_CompareNumber){ 
+                % var currentCMP = device_driverlib_peripheral.SENT_CompareNumber[cmpIndex].name
+                % let cmpNumber = (currentCMP).replace(/[^0-9]/g,'')
+                % if (instance["sensor2cmp"+cmpNumber+"TT"] != 0) {
+    //
+    // Sensor 2 Channel Toggle Time for compare registers
+    //
+    SENT_setSensor2MTPToggleTime(`baseName`, SENT_MTP_CMP_`cmpNumber`, `instance["sensor2cmp"+cmpNumber+"TT"]`);
+                % }
+            %}
+
+            % for(var cmpIndex in device_driverlib_peripheral.SENT_CompareNumber){ 
+                % var currentCMP = device_driverlib_peripheral.SENT_CompareNumber[cmpIndex].name
+                % let cmpNumber = (currentCMP).replace(/[^0-9]/g,'')
+                % if (instance["sensor3cmp"+cmpNumber+"TT"] != 0) {
+    //
+    // Sensor 3 Channel Toggle Time for compare registers
+    //
+    SENT_setSensor3MTPToggleTime(`baseName`, SENT_MTP_CMP_`cmpNumber`, `instance["sensor3cmp"+cmpNumber+"TT"]`);
+                % }
+            %}
+    
+            % for(var cmpIndex in device_driverlib_peripheral.SENT_CompareNumber){ 
+                % var currentCMP = device_driverlib_peripheral.SENT_CompareNumber[cmpIndex].name
+                % let cmpNumber = (currentCMP).replace(/[^0-9]/g,'')
+                % if (instance["sensor4cmp"+cmpNumber+"TT"] != 0) {
+    //
+    // Sensor 4 Channel Toggle Time for compare registers
+    //
+    SENT_setSensor4MTPToggleTime(`baseName`, SENT_MTP_CMP_`cmpNumber`, `instance["sensor4cmp"+cmpNumber+"TT"]`);
+                % }
+            %}
+
+        % }
+
+}
+	%}
+%}

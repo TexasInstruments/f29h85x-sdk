@@ -1,0 +1,30 @@
+%%{
+let 	device_common   					= system.getScript("/driverlib/.meta/device/functions_h/device_common.js");
+let clocktree_common                        = system.getScript("/driverlib/.meta/clocktree/clocktree_common.js");
+
+let 	Common   						= system.getScript("/driverlib/Common.js");
+var	Include_Headers_SingleCore				= system.getTemplate('./Include_Headers_SingleCore.xdt');
+var	Include_Headers_DualCore				= system.getTemplate('./Include_Headers_DualCore.xdt');
+var	Include_Headers_TriCore				= system.getTemplate('./Include_Headers_TriCore.xdt');
+
+const 	multi_core 						= device_common.multi_core;
+const   dual_core                       = clocktree_common.dual_core;
+const   tri_core                        = clocktree_common.tri_core;
+const 	device  						= device_common.device;
+%%}
+% if(multi_core.includes(device))
+%{
+%    if(dual_core.includes(device)) 
+%    {
+`Include_Headers_DualCore()`
+%    }
+%    else if(tri_core.includes(device)) 
+%    {
+`Include_Headers_TriCore()`
+%    }
+%}
+% else
+%{
+`Include_Headers_SingleCore()`
+%}
+

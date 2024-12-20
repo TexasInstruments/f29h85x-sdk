@@ -1,0 +1,100 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --device "F29H85x" --package "256ZEX" --part "F29H85x_256ZEX" --context "CPU1" --product "MCU_SDK_F29H85x@1.00.00.00"
+ * @v2CliArgs --device "F29H850TU" --package "256ZEX" --variant "TMS320F29H850TU9" --context "CPU1" --product "MCU_SDK_F29H85x@1.00.00.00"
+ * @versions {"tool":"1.22.0+3877"}
+ */
+
+const divider15       = system.clockTree["PLL_REFDIV"];
+divider15.divideValue = 1;
+
+const multiplier1         = system.clockTree["PLL_IMULT"];
+multiplier1.multiplyValue = 40;
+
+const mux7       = system.clockTree["OSCCLKSRCSEL"];
+mux7.inputSelect = "INTOSC2";
+
+/**
+ * Import the modules used in this configuration.
+ */
+const adc              = scripting.addModule("/driverlib/adc.js", {}, false);
+const adc1             = adc.addInstance();
+const asysctl          = scripting.addModule("/driverlib/asysctl.js");
+const ecap             = scripting.addModule("/driverlib/ecap.js", {}, false);
+const ecap1            = ecap.addInstance();
+const epwm             = scripting.addModule("/driverlib/epwm.js", {}, false);
+const epwm1            = epwm.addInstance();
+const epwm2            = epwm.addInstance();
+const gpio             = scripting.addModule("/driverlib/gpio.js", {}, false);
+const gpio1            = gpio.addInstance();
+const inputxbar_input  = scripting.addModule("/driverlib/inputxbar_input.js", {}, false);
+const inputxbar_input1 = inputxbar_input.addInstance();
+const jtag             = scripting.addModule("/driverlib/jtag.js");
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+adc1.$name                          = "myADC0";
+adc1.adcClockPrescaler              = "ADC_CLK_DIV_4_0";
+adc1.enabledSOCs                    = ["ADC_SOC_NUMBER0"];
+adc1.soc0Trigger                    = "ADC_TRIGGER_EPWM2_SOCA";
+adc1.enabledInts                    = ["ADC_INT_NUMBER1"];
+adc1.enableInterrupt1               = true;
+adc1.enableInterrupt1ContinuousMode = true;
+adc1.registerInterrupts             = ["1"];
+adc1.periphClock.$name              = "driverlib_perClock3";
+adc1.periphConfig.$name             = "driverlib_perConfig3";
+
+const analog  = scripting.addModule("/driverlib/analog.js", {}, false);
+const analog1 = analog.addInstance({}, false);
+analog1.$name = "myANALOGPinMux0";
+adc1.analog   = analog1;
+
+asysctl.analogReferenceAB  = "INTERNAL_3_3_V";
+asysctl.analogReferenceCDE = "INTERNAL_3_3_V";
+
+
+ecap1.$name                  = "myECAP0";
+ecap1.eventStop              = "ECAP_EVENT_4";
+ecap1.registerInterrupts     = true;
+ecap1.enableInterrupt        = true;
+ecap1.enableLoadCounter      = true;
+ecap1.ecapInput              = "ECAP_INPUT_INPUTXBAR7";
+ecap1.eventTwoPolarity       = "ECAP_EVNT_FALLING_EDGE";
+ecap1.eventFourPolarity      = "ECAP_EVNT_FALLING_EDGE";
+ecap1.interruptSourceCapture = ["ECAP_ISR_SOURCE_CAPTURE_EVENT_3"];
+ecap1.periphClock.$name      = "driverlib_perClock0";
+ecap1.periphConfig.$name     = "driverlib_perConfig0";
+
+epwm1.$name                                                      = "myEPWM0";
+epwm1.epwmTimebase_hsClockDiv                                    = "EPWM_HSCLOCK_DIVIDER_1";
+epwm1.epwmTimebase_period                                        = 25000;
+epwm1.epwmTimebase_counterMode                                   = "EPWM_COUNTER_MODE_UP_DOWN";
+epwm1.epwmCounterCompare_cmpA                                    = 18750;
+epwm1.epwmActionQualifier_EPWM_AQ_OUTPUT_A_shadowMode            = true;
+epwm1.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_UP_CMPA   = "EPWM_AQ_OUTPUT_HIGH";
+epwm1.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_DOWN_CMPA = "EPWM_AQ_OUTPUT_LOW";
+epwm1.epwm.$assign                                               = "EPWM1";
+epwm1.periphClock.$name                                          = "driverlib_perClock1";
+epwm1.periphConfig.$name                                         = "driverlib_perConfig1";
+scripting.suppress("It is recommended to use a non-zero counter compare value when using shadow to active load of action qualifier A/B control register on TBCTR=0 boundary", epwm1, "epwmCounterCompare_cmpB");
+scripting.suppress("It is recommended to use a non-zero counter compare value when using shadow to active load of action qualifier A/B control register on TBCTR=0 boundary", epwm1, "epwmCounterCompare_cmpA");
+
+epwm2.$name                                             = "myEPWM1";
+epwm2.epwmTimebase_hsClockDiv                           = "EPWM_HSCLOCK_DIVIDER_1";
+epwm2.epwmTimebase_period                               = 1999;
+epwm2.epwmEventTrigger_EPWM_SOC_A_triggerEnable         = true;
+epwm2.epwmEventTrigger_EPWM_SOC_A_triggerSource         = "EPWM_SOC_TBCTR_ETSOCAMIX";
+epwm2.epwmEventTrigger_EPWM_SOC_A_triggerEventPrescalar = "1";
+epwm2.epwm.epwm_bPin.$assign                            = "GPIO3";
+epwm2.periphClock.$name                                 = "driverlib_perClock2";
+epwm2.periphConfig.$name                                = "driverlib_perConfig2";
+
+gpio1.qualMode        = "GPIO_QUAL_ASYNC";
+gpio1.$name           = "myBoardLED0_GPIO";
+gpio1.gpioPin.$assign = "GPIO16";
+
+inputxbar_input1.$name          = "myINPUTXBARINPUT0";
+inputxbar_input1.inputxbarInput = "XBAR_INPUT7";
+inputxbar_input1.inputxbarGpio  = "GPIO0";

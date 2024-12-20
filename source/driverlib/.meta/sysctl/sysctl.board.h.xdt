@@ -1,0 +1,10 @@
+% var moduleName = "sysctl"
+% var module = system.modules['/driverlib/' + moduleName + '.js'];
+%if (module != null)
+%{
+//*****************************************************************************
+//
+// SYSCTL Configurations
+//
+//*****************************************************************************
+%}

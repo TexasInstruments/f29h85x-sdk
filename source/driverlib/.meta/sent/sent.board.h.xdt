@@ -1,0 +1,41 @@
+% var moduleName = "sent"
+% var module = system.modules['/driverlib/' + moduleName + '.js'];
+% let Common   = system.getScript("/driverlib/Common.js");
+%let device_driverlib_peripheral = 
+%    system.getScript("/driverlib/device_driverlib_peripherals/" + 
+%        Common.getDeviceName().toLowerCase() + "_sent.js");
+%if (module != null)
+% {
+//*****************************************************************************
+//
+// SENT Configurations
+//
+//*****************************************************************************
+% for(var inst of module.$instances) {
+        % let modInst  = inst[moduleName];
+        % let solution    = modInst.$solution;
+        % let peripheral  = system.deviceData.peripherals[solution.peripheralName];
+//
+// `inst.$name` Configuration
+//
+#define `inst.$name`_BASE `peripheral.name`_BASE
+#define `inst.$name`_TTCLK `inst.clockTickTime`
+#define `inst.$name`_GFILT `inst.gFilt`
+#define `inst.$name`_TIMEOUT `inst.timeOut`
+
+    % if (inst.enableMTP) {
+    % if (inst.enableBroadcastCh) {
+#define `inst.$name`_BROADCAST_CHANNEL SENT_BROADCAST_CHANNEL
+    % }
+    % for(var channelIndex in device_driverlib_peripheral.SENT_SensorNumber){ 
+        % var currentCh = device_driverlib_peripheral.SENT_SensorNumber[channelIndex].name
+        % let chlNumber = (currentCh).replace(/[^0-9]/g,'')
+        % if(inst["enableSensor"+chlNumber])
+        % {
+#define `inst.$name`_SENSOR`chlNumber` SENT_SENSOR_`chlNumber`_CHANNEL
+        % }
+    % }
+    % }
+void    `inst.$name`_init();
+% }
+% }

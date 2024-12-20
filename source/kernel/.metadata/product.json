@@ -1,0 +1,20 @@
+{
+    "name"       : "FREERTOS Tool",
+    "displayName": "FREERTOS Tool",
+    "version"    : "0.0.1",
+    "documentationPath": "../docs",
+
+    "includePaths":
+    [
+        "../../"
+    ],
+
+    "components": [
+        "/kernel/freertos_tool/FREERTOSToolComponents.js"
+    ],
+
+    "devices":
+    [
+        "F29H85x"
+    ]
+}

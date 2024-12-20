@@ -1,0 +1,57 @@
+%%{
+let perConfig = system.modules['/driverlib/perConfig.js'];
+let Common   = system.getScript("/driverlib/Common.js");
+%%}
+//*****************************************************************************
+//
+// Base Address mapping for peripherals with Framsel support
+//
+//*****************************************************************************
+%%{
+if (perConfig != null)
+{
+    for(let i = 0; i < perConfig.$instances.length; i++) {
+        let instance = perConfig.$instances[i];
+        let owner = instance.$ownedBy;
+
+        let peripheralInst = instance.peripheralInst;
+        if (instance.pinmuxPeripheralModule)
+        {
+	        let ownerSolution = owner[instance.pinmuxPeripheralModule].$solution;
+	        let ownerPeripheral = ownerSolution.peripheralName;
+	        peripheralInst = ownerPeripheral;
+        }
+        if((peripheralInst == "RTDMA1CH") || (peripheralInst == "RTDMA2CH"))
+        {
+            // Add for all 10 channels
+            for(let k=1; k<=10; k++){
+%%}
+#define `peripheralInst``k`_BASE  `peripheralInst``k`_BASE_FRAME(`instance.frameSel.replace("FRAME","")`)
+%%{
+            }
+        }
+        else if(peripheralInst == "OUTPUTXBARFLAGS")
+        {
+            // Add for all 15 output xbars
+            for(let k=1; k<=15; k++)
+            {
+%%}
+#define OUTPUTXBAR`k`_FLAGS_BASE  OUTPUTXBAR`k`_FLAGS_BASE_FRAME(`instance.frameSel.replace("FRAME","")`)
+%%{
+            }
+        }
+        else if(peripheralInst == "INPUTXBARFLAGS ")
+        {
+%%}
+#define XBAR_BASE  XBAR_BASE_FRAME(`instance.frameSel.replace("FRAME","")`)
+%%{
+        }
+        else
+        {
+%%}
+#define `peripheralInst`_BASE  `peripheralInst`_BASE_FRAME(`instance.frameSel.replace("FRAME","")`)
+%%{
+        }
+    }
+}
+%%}

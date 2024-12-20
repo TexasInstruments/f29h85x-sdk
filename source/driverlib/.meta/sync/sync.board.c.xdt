@@ -1,0 +1,53 @@
+% var module = system.modules['/driverlib/sync.js'];
+% let Common   = system.getScript("/driverlib/Common.js");
+% var nameOfModule = "sync";
+% var nameOfPeripheral = module.peripheralName;
+//*****************************************************************************
+//
+// SYNC Scheme Configurations
+//
+//*****************************************************************************
+void `nameOfPeripheral`_init(){
+%if (module != null)
+%{
+%	var stat = module.$instances[0]
+%	
+%
+%	if(stat.syncOutSource.length > 0) {
+%   	var syncOutSourceMacro = []
+% 		stat.syncOutSource.forEach(x => {
+%			syncOutSourceMacro.push(x)
+% 		})
+	SysCtl_setSyncOutputConfig(`syncOutSourceMacro.join(" | ")`);
+%	}
+%
+%
+%	if (stat.ADCSOCAOutputSelect.length > 0) {
+%		var SOCAMacro  = []
+%		stat.ADCSOCAOutputSelect.forEach(x => {
+%			SOCAMacro.push(x)
+%		})
+	SysCtl_enableExtADCSOCSource(`SOCAMacro.join(" | ")`);
+%	}
+%
+%
+%	if (stat.ADCSOCBOutputSelect.length > 0) {
+%		var SOCBMacro  = []
+%		stat.ADCSOCBOutputSelect.forEach(x => {
+%			SOCBMacro.push(x)
+%		})
+	SysCtl_enableExtADCSOCSource(`SOCBMacro.join(" | ")`);
+%	}
+%
+%
+%	if (stat.ADCSOCOutputLock) {
+	SysCtl_lockRegister(SYSCTL_LOCK_ADCSOCOUTSELECT);
+	SysCtl_lockRegister(SYSCTL_LOCK_ADCSOCOUTSELECT1);
+%	}
+%
+%
+% 	if (stat.syncOutLock) {
+	SysCtl_lockRegister(SYSCTL_LOCK_SYNCSELECT);
+% 	}
+%}
+}

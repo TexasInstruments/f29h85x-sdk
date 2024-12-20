@@ -1,0 +1,18 @@
+% var moduleName = "iclxbar"
+% let Common   = system.getScript("/driverlib/Common.js");
+% var module = system.modules['/driverlib/' + moduleName + '.js'];
+%if (module != null)
+%{
+//*****************************************************************************
+//
+// ICLXBAR Configurations
+//
+//*****************************************************************************
+    % for(var i = 0; i < module.$instances.length; i++) {
+        % var instance = module.$instances[i];
+        % let modInst  = instance[moduleName];
+        % let driverlibName = instance.xbarOutput;
+void `instance.$name`_init();
+#define `instance.$name` `driverlibName`
+    % }
+%}

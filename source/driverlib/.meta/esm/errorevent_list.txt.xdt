@@ -1,0 +1,95 @@
+% let esm_cpu_module = system.modules["/driverlib/esm_cpu.js"];
+% let esm_system_module = system.modules["/driverlib/esm_system.js"];
+% 
+% var esmcpu = []
+% var esmcpu_lpint = []
+% var esmcpu_nmi = []
+% var esmcpu_cpevent = []
+% var esmsystem = []
+% var esmsystem_xbar = []
+% var esmsystem_cpevent = []
+% var esmsystem_errpin = []
+% 
+% if (esm_cpu_module != null)
+% {
+%     esmcpu       = esm_cpu_module.$instances
+%     esmcpu_lpint = esmcpu.filter(x=> x.enableInterrupt == true)
+%     esmcpu_nmi   = esmcpu.filter(x=> x.enableNMI == true)
+%     esmcpu_cpevent = esmcpu.filter(x=> x.enableCriticalEvent == true)
+==========================================================================
+        List of error events configured in the ESM `system.context` module
+==========================================================================
+
+=============================================================
+Events configured to cause Low priority interrupt
+=============================================================
+Error event name     | Event source
+-------------------------------------------------------------
+%   esmcpu_lpint.forEach(event => {
+`event.$name`    | `event.eventSource`
+%   })
+=============================================================
+
+=============================================================
+Events configured to cause High priority NMI
+=============================================================
+Error event name     | Event source
+-------------------------------------------------------------
+%   esmcpu_nmi.forEach(event => {
+`event.$name`    | `event.eventSource`
+%   })
+=============================================================
+
+=============================================================
+Events configured to influence the Critical Priority Event
+=============================================================
+Error event name     | Event source
+-------------------------------------------------------------
+%   esmcpu_cpevent.forEach(event => {
+`event.$name`    | `event.eventSource`
+%   })
+=============================================================
+% }
+
+
+% if (esm_system_module != null)
+% {
+%     esmsystem   = esm_system_module.$instances
+%     esmsystem_xbar = esmsystem.filter(x=> x.enableGenEvent == true)
+%     esmsystem_cpevent = esmsystem.filter(x=> x.enableCriticalEvent == true)
+%     esmsystem_errpin = esmsystem.filter(x=> x.enableInfluenceOnErrorPin == true)
+
+==========================================================================
+        List of error events configured in the ESM SYSTEM module
+==========================================================================
+
+=============================================================
+Events configured to influence the event to XBAR
+=============================================================
+Error event name        | Event source
+-------------------------------------------------------------
+%   esmsystem_xbar.forEach(event => {
+`event.$name`    | `event.eventSource`
+%   })
+=============================================================
+
+=============================================================
+Events configured to influence the Critical Priority Event
+=============================================================
+Error event name        | Event source
+-------------------------------------------------------------
+%   esmsystem_cpevent.forEach(event => {
+`event.$name`    | `event.eventSource`
+%   })
+=============================================================
+
+=============================================================
+Events configured to influence the Error Pin
+=============================================================
+Error event name        | Event source
+-------------------------------------------------------------
+%   esmsystem_errpin.forEach(event => {
+`event.$name`    | `event.eventSource`
+%   })
+=============================================================
+%}

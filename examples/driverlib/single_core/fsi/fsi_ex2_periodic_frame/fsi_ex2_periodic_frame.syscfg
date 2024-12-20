@@ -1,0 +1,73 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --device "F29H85x" --package "256ZEX" --part "F29H85x_256ZEX" --context "CPU1" --product "MCU_SDK_F29H85x@1.00.00.00"
+ * @v2CliArgs --device "F29H850TU" --package "256ZEX" --variant "TMS320F29H850TU9" --context "CPU1" --product "MCU_SDK_F29H85x@1.00.00.00"
+ * @versions {"tool":"1.22.0+3877"}
+ */
+
+const divider15       = system.clockTree["PLL_REFDIV"];
+divider15.divideValue = 1;
+
+const multiplier1         = system.clockTree["PLL_IMULT"];
+multiplier1.multiplyValue = 40;
+
+const mux7       = system.clockTree["OSCCLKSRCSEL"];
+mux7.inputSelect = "INTOSC2";
+
+/**
+ * Import the modules used in this configuration.
+ */
+const cputimer  = scripting.addModule("/driverlib/cputimer.js", {}, false);
+const cputimer1 = cputimer.addInstance();
+const fsirx     = scripting.addModule("/driverlib/fsirx.js", {}, false);
+const fsirx1    = fsirx.addInstance();
+const fsitx     = scripting.addModule("/driverlib/fsitx.js", {}, false);
+const fsitx1    = fsitx.addInstance();
+const jtag      = scripting.addModule("/driverlib/jtag.js");
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+cputimer1.$name                     = "myCPUTIMER0";
+cputimer1.enableInterrupt           = true;
+cputimer1.registerInterrupts        = true;
+cputimer1.timerPeriod               = 20000;
+cputimer1.periphClock.$name         = "driverlib_perClock2";
+cputimer1.timerInt.interruptHandler = "cpuTimer0ISR";
+
+fsirx1.$name                      = "myFSIRX0";
+fsirx1.enableLoopback             = true;
+fsirx1.softwareFrameSize          = "13";
+fsirx1.enableRxFrameWd            = true;
+fsirx1.pingTimeout                = true;
+fsirx1.enableInterrupt            = true;
+fsirx1.useInterrupts              = ["FSI_INT1","FSI_INT2"];
+fsirx1.registerInterruptLine1     = true;
+fsirx1.registerInterruptLine2     = true;
+fsirx1.enabledINT2Interrupts      = ["FSI_RX_EVT_CRC_ERR","FSI_RX_EVT_EOF_ERR","FSI_RX_EVT_FRAME_WD_TIMEOUT","FSI_RX_EVT_PING_WD_TIMEOUT","FSI_RX_EVT_TYPE_ERR"];
+fsirx1.enabledINT1Interrupts      = ["FSI_RX_EVT_DATA_FRAME"];
+fsirx1.timeoutDelay               = 1310720;
+fsirx1.fsirx.$assign              = "FSIRXA";
+fsirx1.periphClock.$name          = "driverlib_perClock0";
+fsirx1.periphConfig.$name         = "driverlib_perConfig0";
+fsirx1.fsiRxInt1.interruptHandler = "fsiRxInt1ISR";
+fsirx1.fsiRxInt2.interruptHandler = "fsiRxInt2ISR";
+
+fsitx1.$name                      = "myFSITX0";
+fsitx1.clkPres                    = 2;
+fsitx1.softwareFrameSize          = "13";
+fsitx1.pingTimeout                = true;
+fsitx1.timeoutDelay               = 1048576;
+fsitx1.frameTag                   = "FSI_FRAME_TAG15";
+fsitx1.enableInterrupt            = true;
+fsitx1.useInterrupts              = ["FSI_INT1","FSI_INT2"];
+fsitx1.registerInterruptLine1     = true;
+fsitx1.registerInterruptLine2     = true;
+fsitx1.enabledINT1Interrupts      = ["FSI_TX_EVT_FRAME_DONE"];
+fsitx1.enabledINT2Interrupts      = ["FSI_TX_EVT_BUF_OVERRUN","FSI_TX_EVT_BUF_UNDERRUN"];
+fsitx1.fsitx.$assign              = "FSITXA";
+fsitx1.periphClock.$name          = "driverlib_perClock1";
+fsitx1.periphConfig.$name         = "driverlib_perConfig1";
+fsitx1.fsiTxInt1.interruptHandler = "fsiTxInt1ISR";
+fsitx1.fsiTxInt2.interruptHandler = "fsiTxInt2ISR";

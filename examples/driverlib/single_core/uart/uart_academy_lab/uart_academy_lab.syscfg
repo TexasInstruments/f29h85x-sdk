@@ -1,0 +1,67 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --device "F29H85x" --package "256ZEX" --part "F29H85x_256ZEX" --context "CPU1" --product "MCU_SDK_F29H85x@1.00.00.00"
+ * @v2CliArgs --device "F29H850TU" --package "256ZEX" --variant "TMS320F29H850TU9" --context "CPU1" --product "MCU_SDK_F29H85x@1.00.00.00"
+ * @versions {"tool":"1.22.0+3877"}
+ */
+
+const divider15       = system.clockTree["PLL_REFDIV"];
+divider15.divideValue = 1;
+
+const multiplier1         = system.clockTree["PLL_IMULT"];
+multiplier1.multiplyValue = 40;
+
+const mux7       = system.clockTree["OSCCLKSRCSEL"];
+mux7.inputSelect = "INTOSC2";
+
+/**
+ * Import the modules used in this configuration.
+ */
+const clocktree = scripting.addModule("/driverlib/clocktree.js");
+const cputimer  = scripting.addModule("/driverlib/cputimer.js", {}, false);
+const cputimer1 = cputimer.addInstance();
+const gpio      = scripting.addModule("/driverlib/gpio.js", {}, false);
+const gpio1     = gpio.addInstance();
+const jtag      = scripting.addModule("/driverlib/jtag.js");
+const uart      = scripting.addModule("/driverlib/uart.js");
+const uart1     = uart.addInstance();
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+const pinFunction3     = system.clockTree["XTAL"];
+pinFunction3.XTAL_Freq = 20;
+
+cputimer1.$name                      = "myCPUTIMER0";
+cputimer1.timerPrescaler             = 1;
+cputimer1.enableInterrupt            = true;
+cputimer1.registerInterrupts         = true;
+cputimer1.timerPeriod                = 20000000;
+cputimer1.periphClock.$name          = "driverlib_perClock1";
+cputimer1.timerInt.interruptPriority = 10;
+
+gpio1.$name           = "myBoardLED0_GPIO";
+gpio1.direction       = "GPIO_DIR_MODE_OUT";
+gpio1.gpioPin.$assign = "GPIO9";
+
+
+uart1.$name                   = "myUART0";
+uart1.enabledInterrupts       = [];
+uart1.enInterrupt             = false;
+uart1.uart.$assign            = "UARTA";
+uart1.uart.uart_txPin.$assign = "GPIO42";
+uart1.uart.uart_rxPin.$assign = "GPIO43";
+uart1.txQual.$name            = "myGPIOQUAL0";
+uart1.rxQual.$name            = "myGPIOQUAL1";
+uart1.periphClock.$name       = "driverlib_perClock0";
+uart1.periphConfig.$name      = "driverlib_perConfig0";
+
+/**
+ * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
+ * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
+ * re-solve from scratch.
+ */
+jtag.JTAG.$suggestSolution        = "JTAG";
+jtag.JTAG.tdoPin.$suggestSolution = "GPIO223/TDO";
+jtag.JTAG.tdiPin.$suggestSolution = "GPIO222/TDI";

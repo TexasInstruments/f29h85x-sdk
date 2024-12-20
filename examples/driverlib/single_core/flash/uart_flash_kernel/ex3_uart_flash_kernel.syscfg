@@ -1,0 +1,76 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --device "F29H85x" --part "F29H85x_256ZEX" --package "256ZEX" --context "CPU1" --product "MCU_SDK_F29H85x@1.00.00.00"
+ * @v2CliArgs --device "F29H859DM-Q1" --package "256ZEX" --variant "TMS320F29H859DM6" --context "CPU1" --product "MCU_SDK_F29H85x@1.00.00.00"
+ * @versions {"tool":"1.22.0+3893"}
+ */
+
+/**
+ * Import the modules used in this configuration.
+ */
+const clocktree     = scripting.addModule("/driverlib/clocktree.js");
+const gpio          = scripting.addModule("/driverlib/gpio.js", {}, false);
+const gpio1         = gpio.addInstance();
+const gpio2         = gpio.addInstance();
+const hsmclient     = scripting.addModule("/driverlib/hsmclient/hsmclient", {}, false);
+const hsmclient1    = hsmclient.addInstance();
+const jtag          = scripting.addModule("/driverlib/jtag.js");
+const uart          = scripting.addModule("/driverlib/uart.js", {}, false);
+const uart1         = uart.addInstance();
+const clock_c29_sdk = scripting.addModule("/kernel/dpl/clock_c29_sdk");
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+const divider15       = system.clockTree["PLL_REFDIV"];
+divider15.divideValue = 1;
+
+const multiplier1         = system.clockTree["PLL_IMULT"];
+multiplier1.multiplyValue = 40;
+
+const mux7       = system.clockTree["OSCCLKSRCSEL"];
+mux7.inputSelect = "INTOSC2";
+
+const mux10       = system.clockTree["XTAL_OR_X1"];
+mux10.inputSelect = "XTAL";
+
+const pinFunction3     = system.clockTree["XTAL"];
+pinFunction3.XTAL_Freq = 20;
+
+gpio1.$name           = "LED1";
+gpio1.gpioPin.$assign = "GPIO9";
+
+gpio2.$name           = "LED2";
+gpio2.gpioPin.$assign = "GPIO23";
+
+hsmclient1.$name          = "CONFIG_HSMCLIENT0";
+hsmclient1.sipc_que_depth = 77;
+
+
+uart1.baudSelect              = "115200";
+uart1.fen                     = true;
+uart1.enInterrupt             = false;
+uart1.$name                   = "UART_BOOT_UARTA_ALT2";
+uart1.uart.$assign            = "UARTA";
+uart1.uart.uart_txPin.$assign = "GPIO42";
+uart1.uart.uart_rxPin.$assign = "GPIO43";
+uart1.txQual.$name            = "myGPIOQUAL0";
+uart1.rxQual.$name            = "myGPIOQUAL1";
+uart1.periphClock.$name       = "driverlib_perClock0";
+uart1.periphConfig.$name      = "driverlib_perConfig0";
+
+clock_c29_sdk.intlinkowner                                = "SSU_LINK1";
+clock_c29_sdk.intsp                                       = "SSU_STACK1";
+clock_c29_sdk.dplTimer.periphClock.$name                  = "driverlib_perClock1";
+clock_c29_sdk.dplTimer.periphClock.pinmuxPeripheralModule = scripting.forceWrite("");
+clock_c29_sdk.nortos_source.$name                         = "kernel_dpl_nortos_source0";
+
+/**
+ * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
+ * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
+ * re-solve from scratch.
+ */
+jtag.JTAG.$suggestSolution        = "JTAG";
+jtag.JTAG.tdoPin.$suggestSolution = "GPIO223/TDO";
+jtag.JTAG.tdiPin.$suggestSolution = "GPIO222/TDI";

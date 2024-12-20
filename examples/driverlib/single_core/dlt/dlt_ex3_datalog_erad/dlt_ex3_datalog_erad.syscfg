@@ -1,0 +1,40 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --device "F29H85x" --package "256ZEX" --part "F29H85x_256ZEX" --context "CPU1" --product "MCU_SDK_F29H85x@1.00.00.00"
+ * @v2CliArgs --device "F29H850TU" --package "256ZEX" --variant "TMS320F29H850TU9" --context "CPU1" --product "MCU_SDK_F29H85x@1.00.00.00"
+ * @versions {"tool":"1.22.0+3877"}
+ */
+
+const divider15       = system.clockTree["PLL_REFDIV"];
+divider15.divideValue = 1;
+
+const multiplier1         = system.clockTree["PLL_IMULT"];
+multiplier1.multiplyValue = 40;
+
+const mux7       = system.clockTree["OSCCLKSRCSEL"];
+mux7.inputSelect = "INTOSC2";
+
+/**
+ * Import the modules used in this configuration.
+ */
+const dlt  = scripting.addModule("/driverlib/dlt.js");
+const erad = scripting.addModule("/driverlib/erad.js");
+
+dlt.enableERADFilter    = true;
+dlt.startEvent          = ["DLT_EVENT_CPUx_ERAD_EBC_EVT1"];
+dlt.endEvent            = ["DLT_EVENT_CPUx_ERAD_EBC_EVT2"];
+dlt.periphClock.$name   = "driverlib_perClock4";
+dlt.periphConfig.$name  = "driverlib_perConfig3";
+
+erad.periphClock.$name                   = "driverlib_perClock0";
+erad.erad_buscomp.create(2);
+erad.erad_buscomp[0].$name               = "myERAD_BUSCOMP0";
+erad.erad_buscomp[0].ebcAddressInputMode = "CODE";
+erad.erad_buscomp[0].ebcRefCodeName      = "addr_func1Start";
+erad.erad_buscomp[0].ebcBusSel           = "ERAD_BUSCOMP_BUS_VPC_I_ALIGNED";
+erad.erad_buscomp[1].$name               = "myERAD_BUSCOMP5";
+erad.erad_buscomp[1].ebcAddressInputMode = "CODE";
+erad.erad_buscomp[1].ebcRefCodeName      = "addr_func3End";
+erad.erad_buscomp[1].instance            = "ERAD_BUSCOMP1";
+erad.erad_buscomp[1].ebcBusSel           = "ERAD_BUSCOMP_BUS_VPC_I_ALIGNED";

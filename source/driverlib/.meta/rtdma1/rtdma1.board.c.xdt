@@ -1,0 +1,139 @@
+% var nameOfModule = "rtdma1";
+% var module = system.modules['/driverlib/' + nameOfModule + '.js'];
+% let Common = system.getScript("/driverlib/Common.js");
+% var stat = module.$static
+% var dmaBase = "RTDMA1"
+//*****************************************************************************
+//
+// RTDMA1 Configurations
+//
+//*****************************************************************************
+void `module.peripheralName`_init(){
+    %   if (Common.isContextCPU1())
+    %   {
+    `module.peripheralName`_global_init();
+    `module.peripheralName`_MPU_init();
+    %   }
+    %   for(var i = 0; i < module.$instances.length; i++) 
+    %   {
+    %      var instance = module.$instances[i];
+    `instance.$name`_init();
+    %   }
+}
+
+% if (Common.isContextCPU1())
+% {
+void `module.peripheralName`_global_init(){
+    DMA_initController(`stat.dmaBase`_BASE);
+        % if (stat.lockDMAConfig == 0) {
+    DMA_unlockDMAConfig(`stat.dmaBase`_BASE);
+        % }
+    DMA_setEmulationMode(`stat.dmaBase`_BASE, `stat.emulationMode`);
+        % if (stat.enableSoftwarePriority) {
+    DMA_setPriorityMode(`stat.dmaBase`_BASE, DMA_PRIORITY_SOFTWARE_CONFIG);
+        % } else {
+    DMA_setPriorityMode(`stat.dmaBase`_BASE, DMA_PRIORITY_ROUND_ROBIN);
+        % }
+        % if (stat.enableMPU) {
+    DMA_enableMPU(`stat.dmaBase`_MPU_BASE);
+        % } else {
+    DMA_disableMPU(`stat.dmaBase`_MPU_BASE);
+        % }
+        % if (stat.enableSoftwarePriority) {
+        % var contextNames = Common.getContextNames()
+            % for (var cntx of contextNames)
+            % {
+            % module = Common.getModuleForCore('/driverlib/' + nameOfModule + '.js', cntx);
+            % if (module != null) {
+                % for(var i = 0; i < module.$instances.length; i++) {
+                    % var instance = module.$instances[i];
+    DMA_setChannelPriority(`dmaBase`_BASE, DMA_`instance.chBase.split('_')[0].slice(6,)`, `instance.channelPriority`);
+                % }
+            % }
+        % }
+        %}
+        % if (stat.lockDMAConfig) {
+    DMA_lockDMAConfig(`stat.dmaBase`_BASE);
+        % }
+        % if (stat.commitDMAConfig) {
+    DMA_commitDMAConfig(`stat.dmaBase`_BASE); 
+        % }
+}
+% }
+
+% var module = system.modules['/driverlib/' + nameOfModule + '.js'];
+%if (module != null)
+%{
+    %
+    % for(var i = 0; i < module.$instances.length; i++) {
+        % var instance = module.$instances[i];
+void `instance.$name`_init(){
+            %
+            % var srcAddress = 0;
+            % var destAddress = 0;
+            % if (instance.srcAddressInputMode == "MANUAL") {
+            %   srcAddress = "(const void *)" + instance.srcAddressManual;
+            % } if (instance.srcAddressInputMode == "VARIABLE") {
+            %   srcAddress = instance.srcAddressVariable;      
+            % } if (instance.srcAddressInputMode == "LINKED") {
+            %   srcAddress = instance.$name + "_ADDRESS" ;      
+            % } if (instance.destAddressInputMode == "MANUAL") {
+            %   destAddress = "(const void *)" + instance.destAddressManual;
+            % } if (instance.destAddressInputMode == "VARIABLE") {
+            %   destAddress = instance.destAddressVariable;      
+            % } if (instance.destAddressInputMode == "LINKED") {  
+            %   destAddress = instance.$name + "_ADDRESS"; 
+            % }
+    DMA_configAddresses(`instance.$name`_BASE, `destAddress`, `srcAddress`);
+            %
+    DMA_configBurst(`instance.$name`_BASE, `instance.burstSize`U, `instance.srcBurstStep`, `instance.destBurstStep`);
+            %
+    DMA_configTransfer(`instance.$name`_BASE, `instance.transferSize`U, `instance.srcTransferStep`, `instance.destTransferStep`);
+            %
+    DMA_configWrap(`instance.$name`_BASE, `instance.srcWrapSize`U, `instance.srcWrapStep`, `instance.destWrapSize`U, `instance.destWrapStep`);
+            %
+            % var config = instance.oneShotConfig + " | " + instance.continuousModeConfig + " | " + instance.databusWidthConfig + " | " + instance.writeDatasizeConfig;
+            % if (instance.triggerSource == "DMA_TRIGGER_LINKED") {
+            %   var linkedTrigger = instance.$name + "_TRIGGER";
+    DMA_configMode(`instance.$name`_BASE, `linkedTrigger`, `config`);
+            % } else {
+    DMA_configMode(`instance.$name`_BASE, `instance.triggerSource`, `config`);
+            % }
+            %
+            %
+    DMA_setBurstSignalingMode(`instance.$name`_BASE, `instance.burstSignalingModeConfig`);
+            % if (instance.useInterrupts) {
+    DMA_setInterruptMode(`instance.$name`_BASE, `instance.interruptMode`);
+                % if (instance.enableInterrupts) {
+    DMA_enableInterrupt(`instance.$name`_BASE);
+                % } else {
+    DMA_disableInterrupt(`instance.$name`_BASE);
+                % }
+                % if (instance.enableOverrunInterrupt) {
+    DMA_enableOverrunInterrupt(`instance.$name`_BASE);
+                % } else {
+    DMA_disableOverrunInterrupt(`instance.$name`_BASE);
+                % }
+            % }
+            %
+            % if (instance.enableTriggers) {
+    DMA_enableTrigger(`instance.$name`_BASE);
+            % } else {
+    DMA_disableTrigger(`instance.$name`_BASE);
+            % }
+            % 
+            % if (instance.startChannel) {
+    DMA_startChannel(`instance.$name`_BASE);
+            % } else {
+    DMA_stopChannel(`instance.$name`_BASE);
+            % }
+            % if (instance.lockChannelConfig) {
+    DMA_lockChannelConfig(`instance.$name`_BASE);
+            % } 
+            % if (instance.commitChannelConfig) {
+    DMA_commitChannelConfig(`instance.$name`_BASE); 
+            % }
+}
+    %}
+%}
+

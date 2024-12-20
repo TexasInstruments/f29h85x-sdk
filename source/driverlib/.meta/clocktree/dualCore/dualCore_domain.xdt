@@ -1,0 +1,95 @@
+%%{
+let clocktree_common   = system.getScript("../clocktree_common.js");
+
+const PLL_type1 = clocktree_common.PLL_type1;
+const PLL_type2 = clocktree_common.PLL_type2;
+
+const EPWM_div_support = clocktree_common.EPWM_div_support;
+
+const device  = clocktree_common.device;
+
+const PLLSYSCLK_d	 = system.clockTree.PLLSYSCLK.in
+const LSPCLK_d 		 = system.clockTree.LSPCLK.in
+const CPU1_SYSCLK_d	 = system.clockTree.CPU1_SYSCLK.in
+const CPU2_SYSCLK_d	 = system.clockTree.CPU2_SYSCLK.in
+%%}
+	%
+	%if(EPWM_div_support.includes(device))
+	%{
+	% var   EPWMCLK_d       = system.clockTree.PLLSYSCLK.in / system.clockTree.EPWMCLKDIV.divideValue
+	%}
+//*****************************************************************************
+//
+// CPU1 SYSCLK Domain (`CPU1_SYSCLK_d` MHz)
+//
+//*****************************************************************************
+% max = system.clockTree.CPU1_SYSCLK_domain.$ipInstance.modulePins.length
+% for(i=0; i<max; i++)
+	% {
+// `system.clockTree.CPU1_SYSCLK_domain.$ipInstance.modulePins[i].name`
+	% }
+//	
+
+/////////////////////	
+// Gated CPU1 SYSCLK
+/////////////////////
+% max = system.clockTree.CPU1_PERx_SYSCLK_domain.$ipInstance.modulePins.length
+% for(i=0; i<max; i++)
+	% {
+// `system.clockTree.CPU1_PERx_SYSCLK_domain.$ipInstance.modulePins[i].name`
+	% }
+//
+
+//*****************************************************************************
+//
+// CPU2 SYSCLK Domain (`CPU1_SYSCLK_d` MHz)
+//
+//*****************************************************************************
+% max = system.clockTree.CPU2_SYSCLK_domain.$ipInstance.modulePins.length
+% for(i=0; i<max; i++)
+	% {
+// `system.clockTree.CPU2_SYSCLK_domain.$ipInstance.modulePins[i].name`
+	% }
+//
+	
+/////////////////////	
+// Gated CPU2 SYSCLK
+/////////////////////
+% max = system.clockTree.CPU2_PERx_SYSCLK_domain.$ipInstance.modulePins.length
+% for(i=0; i<max; i++)
+	% {
+// `system.clockTree.CPU2_PERx_SYSCLK_domain.$ipInstance.modulePins[i].name`
+	% }
+//
+//*****************************************************************************
+//
+// Gated Peripheral EPWM Domain (`EPWMCLK_d` MHz) 
+//
+//*****************************************************************************
+% max = system.clockTree.EPWM_Clock_domain.$ipInstance.modulePins.length
+% for(i=0; i<max; i++)
+	% {
+// `system.clockTree.EPWM_Clock_domain.$ipInstance.modulePins[i].name`
+	% }
+//
+//*****************************************************************************
+//
+// Gated Peripheral SYSCLK Domain (`PLLSYSCLK_d` MHz) 
+//
+//*****************************************************************************
+% max = system.clockTree.PERx_SYSCLK_domain.$ipInstance.modulePins.length
+% for(i=0; i<max; i++)
+	% {
+// `system.clockTree.PERx_SYSCLK_domain.$ipInstance.modulePins[i].name`
+	% }
+//	
+//*****************************************************************************
+//
+// Gated LSPCLK Domain (`LSPCLK_d` MHz) 
+//
+//*****************************************************************************
+% max = system.clockTree.LSPCLK_domain.$ipInstance.modulePins.length
+% for(i=0; i<max; i++)
+	% {
+// `system.clockTree.LSPCLK_domain.$ipInstance.modulePins[i].name`
+	% }

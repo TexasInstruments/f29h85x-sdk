@@ -1,0 +1,37 @@
+% let Common   = system.getScript("/driverlib/Common.js");
+% var nameOfModule = "iclxbar";
+% var module = system.modules['/driverlib/' + nameOfModule + '.js'];
+% var nameOfPeripheral = module.peripheralName;
+% var baseAddress = nameOfPeripheral + "_BASE";
+//*****************************************************************************
+//
+// ICLXBAR Configurations
+//
+//*****************************************************************************
+void `nameOfPeripheral`_init(){
+%   for(var i = 0; i < module.$instances.length; i++) 
+%   {
+%      var instance = module.$instances[i];
+	`instance.$name`_init();
+%   }
+%   if (module.$static.lockConfiguration){
+	XBAR_lockConfiguration(`baseAddress`);
+%   }
+}
+
+%if (module != null)
+%{
+	% for(var i = 0; i < module.$instances.length; i++) {
+		% var instance = module.$instances[i];
+		% let instancePinmux = instance[nameOfModule];
+void `instance.$name`_init(){
+		% for (var j = 0; j < instance.sourceSignals.length; j++){
+		% var sourceSignal = "XBAR_ICL_" + instance.sourceSignals[j]
+	XBAR_selectIclXbarInputSource(`instance.$name`, `sourceSignal`);
+		%}
+		% if(instance.invertMode){
+	XBAR_invertOutputSignal(`baseAddress`, `instance.$name`, true);
+		%}
+}
+	%}
+%}

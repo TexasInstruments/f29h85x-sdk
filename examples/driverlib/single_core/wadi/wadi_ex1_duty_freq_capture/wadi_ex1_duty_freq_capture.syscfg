@@ -1,0 +1,80 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --device "F29H85x" --package "256ZEX" --part "F29H85x_256ZEX" --context "CPU1" --product "MCU_SDK_F29H85x@1.00.00.00"
+ * @v2CliArgs --device "F29H850TU" --package "256ZEX" --variant "TMS320F29H850TU9" --context "CPU1" --product "MCU_SDK_F29H85x@1.00.00.00"
+ * @versions {"tool":"1.22.0+3877"}
+ */
+
+const divider15       = system.clockTree["PLL_REFDIV"];
+divider15.divideValue = 1;
+
+const multiplier1         = system.clockTree["PLL_IMULT"];
+multiplier1.multiplyValue = 40;
+
+const mux7       = system.clockTree["OSCCLKSRCSEL"];
+mux7.inputSelect = "INTOSC2";
+
+/**
+ * Import the modules used in this configuration.
+ */
+const ecap             = scripting.addModule("/driverlib/ecap.js", {}, false);
+const ecap1            = ecap.addInstance();
+const epwm             = scripting.addModule("/driverlib/epwm.js", {}, false);
+const epwm1            = epwm.addInstance();
+const inputxbar_input  = scripting.addModule("/driverlib/inputxbar_input.js", {}, false);
+const inputxbar_input1 = inputxbar_input.addInstance();
+const inputxbar_input2 = inputxbar_input.addInstance();
+const inputxbar_input3 = inputxbar_input.addInstance();
+
+ecap1.$name                  = "myECAP0";
+ecap1.eventTwoPolarity       = "ECAP_EVNT_FALLING_EDGE";
+ecap1.eventFourPolarity      = "ECAP_EVNT_FALLING_EDGE";
+ecap1.registerInterrupts     = true;
+ecap1.enableInterrupt        = true;
+ecap1.eventStop              = "ECAP_EVENT_4";
+ecap1.interruptSourceCapture = ["ECAP_ISR_SOURCE_CAPTURE_EVENT_4"];
+ecap1.counterResetOnEvent    = ["ECAP_EVENT_1","ECAP_EVENT_2","ECAP_EVENT_3","ECAP_EVENT_4"];
+ecap1.periphClock.$name      = "driverlib_perClock1";
+ecap1.periphConfig.$name     = "driverlib_perConfig1";
+
+epwm1.$name                                                    = "myEPWM0";
+epwm1.epwmTimebase_syncOutPulseMode                            = ["EPWM_SYNC_OUT_PULSE_ON_CNTR_ZERO"];
+epwm1.epwmTimebase_hsClockDiv                                  = "EPWM_HSCLOCK_DIVIDER_1";
+epwm1.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_ZERO    = "EPWM_AQ_OUTPUT_HIGH";
+epwm1.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_UP_CMPA = "EPWM_AQ_OUTPUT_LOW";
+epwm1.epwmActionQualifier_EPWM_AQ_OUTPUT_B_ON_TIMEBASE_UP_CMPA = "EPWM_AQ_OUTPUT_HIGH";
+epwm1.epwmActionQualifier_EPWM_AQ_OUTPUT_B_ON_TIMEBASE_ZERO    = "EPWM_AQ_OUTPUT_LOW";
+epwm1.epwmDeadband_polarityFED                                 = "EPWM_DB_POLARITY_ACTIVE_LOW";
+epwm1.epwmDeadband_enableRED                                   = true;
+epwm1.epwmDeadband_enableFED                                   = true;
+epwm1.epwmDeadband_redShadowMode                               = true;
+epwm1.epwmDeadband_fedShadowMode                               = true;
+epwm1.epwmDeadband_controlShadowMode                           = true;
+epwm1.epwmDeadband_delayRED                                    = 10;
+epwm1.epwmDeadband_delayFED                                    = 10;
+epwm1.epwmCounterCompare_cmpB                                  = 125;
+epwm1.epwmTimebase_period                                      = 1000;
+epwm1.epwmCounterCompare_cmpA                                  = 500;
+epwm1.epwm.$assign                                             = "EPWM1";
+epwm1.periphClock.$name                                        = "driverlib_perClock0";
+epwm1.periphConfig.$name                                       = "driverlib_perConfig0";
+
+inputxbar_input1.$name          = "myINPUTXBARINPUT0";
+inputxbar_input1.inputxbarInput = "XBAR_INPUT33";
+inputxbar_input1.inputxbarGpio  = "GPIO0";
+
+inputxbar_input2.$name          = "myINPUTXBARINPUT1";
+inputxbar_input2.inputxbarInput = "XBAR_INPUT34";
+inputxbar_input2.inputxbarGpio  = "GPIO1";
+
+inputxbar_input3.$name         = "myINPUTXBARINPUT2";
+inputxbar_input3.inputxbarGpio = "GPIO0";
+
+/**
+ * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
+ * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
+ * re-solve from scratch.
+ */
+epwm1.epwm.epwm_aPin.$suggestSolution = "GPIO0";
+epwm1.epwm.epwm_bPin.$suggestSolution = "GPIO1";

@@ -1,0 +1,50 @@
+<projectSpec>
+  <project
+        name="clb_ex3_auxiliary_pwm"
+        device       = "F29H850TU9"
+        cgtVersion   = "1.0.0"
+        toolChain    = "TICLANG"
+        products     = "sysconfig;f29h85x-sdk"
+        connection   = "TIXDS110_Connection.xml"
+        >
+
+    <configuration name="RAM"   compilerBuildOptions="-O1 -g -DDEBUG -Qunused-arguments" linkerBuildOptions="--stack_size=0x2000 --heap_size=0x400 --diag_suppress=10325-D --diag_suppress=10063-D"
+     postBuildStep=
+       '${CG_TOOL_OBJCOPY} -O binary ${ProjName}.out ${ProjName}.bin;
+        $(PYTHON) ${COM_TI_MCU_SDK_INSTALL_DIR}/tools/boot/signing/mcu_rom_image_gen.py --image-bin ${ProjName}.bin --core C29 --swrv 1 --loadaddr 0x200E1000 --sign-key ${COM_TI_MCU_SDK_INSTALL_DIR}/tools/boot/signing/mcu_gpkey.pem --out-image ${ProjName}_cert.bin --device f29h85x --boot RAM --img_integ no;
+        $(DELETE) C29-cert-pad.bin;
+        ;if ${GENERATE_DIAGRAM} == 1  ${NODE_TOOL} &quot;${COM_TI_MCU_SDK_INSTALL_DIR}/tools/clb_tool/clb_syscfg/dot_file_libraries/clbDotUtility.js&quot;  &quot;${COM_TI_MCU_SDK_INSTALL_DIR}/tools/clb_tool/clb_syscfg/&quot; &quot;${BuildDirectory}/syscfg&quot; &quot;${BuildDirectory}/syscfg/clb.dot&quot;
+        ;if ${GENERATE_DIAGRAM} == 1  mkdir &quot;${BuildDirectory}/diagrams&quot;
+        ;if ${GENERATE_DIAGRAM} == 1  ${NODE_TOOL} &quot;${COM_TI_MCU_SDK_INSTALL_DIR}/source/driverlib/.meta/generate_diagrams.js&quot; &quot;${COM_TI_MCU_SDK_INSTALL_DIR}&quot; &quot;${BuildDirectory}/diagrams&quot; &quot;${BuildDirectory}/syscfg&quot;'
+    />
+    <configuration name="FLASH" compilerBuildOptions="-O1 -g -DDEBUG -Qunused-arguments -D_FLASH" linkerBuildOptions="--stack_size=0x2000 --heap_size=0x400 --diag_suppress=10325-D --diag_suppress=10063-D"
+     postBuildStep=
+       '${CG_TOOL_OBJCOPY} --remove-section=cert -O binary ${ProjName}.out ${ProjName}.bin;
+        $(PYTHON) ${COM_TI_MCU_SDK_INSTALL_DIR}/tools/boot/signing/mcu_rom_image_gen.py --image-bin ${ProjName}.bin --core C29 --swrv 1 --loadaddr 0x10001000 --sign-key ${COM_TI_MCU_SDK_INSTALL_DIR}/tools/boot/signing/mcu_gpkey.pem --out-image ${ProjName}_cert.bin --device f29h85x --boot FLASH --img_integ no;
+        ${CG_TOOL_OBJCOPY} --update-section cert=C29-cert-pad.bin ${ProjName}.out ${ProjName}_cert.out;
+        $(DELETE) ${ProjName}.out C29-cert-pad.bin;
+        $(RENAME) ${ProjName}_cert.out ${ProjName}.out;
+        ;if ${GENERATE_DIAGRAM} == 1  ${NODE_TOOL} &quot;${COM_TI_MCU_SDK_INSTALL_DIR}/tools/clb_tool/clb_syscfg/dot_file_libraries/clbDotUtility.js&quot;  &quot;${COM_TI_MCU_SDK_INSTALL_DIR}/tools/clb_tool/clb_syscfg/&quot; &quot;${BuildDirectory}/syscfg&quot; &quot;${BuildDirectory}/syscfg/clb.dot&quot;
+        ;if ${GENERATE_DIAGRAM} == 1  mkdir &quot;${BuildDirectory}/diagrams&quot;
+        ;if ${GENERATE_DIAGRAM} == 1  ${NODE_TOOL} &quot;${COM_TI_MCU_SDK_INSTALL_DIR}/source/driverlib/.meta/generate_diagrams.js&quot; &quot;${COM_TI_MCU_SDK_INSTALL_DIR}&quot; &quot;${BuildDirectory}/diagrams&quot; &quot;${BuildDirectory}/syscfg&quot;'
+    />
+
+    <file action="link" path="${COM_TI_MCU_SDK_INSTALL_DIR}/examples/device_support/source/codestartbranch.asm" targetDirectory="device" />
+    <file action="link" path="${COM_TI_MCU_SDK_INSTALL_DIR}/examples/device_support/include/driverlib.h"        targetDirectory="device" />
+    <file action="link" path="${COM_TI_MCU_SDK_INSTALL_DIR}/source/bitfields/bitfield_structs.c"                targetDirectory="device" />
+    <file action="copy" path="${COM_TI_MCU_SDK_INSTALL_DIR}/examples/device_support/makefile.defs"              targetDirectory="" />
+
+    <file action="copy" path="${COM_TI_MCU_SDK_GENERIC_LNK_CMD_RAM}"  targetDirectory="" applicableConfigurations="RAM" />
+    <file action="copy" path="${COM_TI_MCU_SDK_GENERIC_LNK_CMD_FLASH}"  targetDirectory="" applicableConfigurations="FLASH" />
+	
+
+    <pathVariable name="CLB_SYSCFG_ROOT" path="../../../../../../tools/clb_tool/clb_syscfg/" scope="project" />
+    <pathVariable name="SYSTEMC_INSTALL" path="../../../../../../tools/clb_tool/clb_syscfg/systemc-2.3.3" scope="project" />
+    <pathVariable name="CLB_SIM_COMPILER" path="C:/TDM-GCC-64/bin" scope="project" />
+    <buildVariable name="CLB_DEBUG" value="0" scope="project" />
+    <buildVariable name="GENERATE_DIAGRAM" value="0" scope="project" />
+
+    <file action="copy" path="../clb_ex3_auxiliary_pwm.c" targetDirectory="" />
+    <file action="copy" path="../clb_ex3_auxiliary_pwm.syscfg" targetDirectory="" />
+  </project>
+</projectSpec>

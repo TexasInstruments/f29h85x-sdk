@@ -1,0 +1,373 @@
+%%{
+    const Common    = system.getScript('/ti/security/Common.js');
+    const ssuData   = system.getScript('/ti/security/device_specific_information/ssu_data.js');
+
+    const links     = Common.modInstances('/ti/security/Link');
+    const stacks    = Common.modInstances('/ti/security/Stack');
+    const zones     = Common.modInstances('/ti/security/Zone');
+    const sysSec    = Common.modStaticByCPU('/ti/security/System_Security', "CPU1");
+    //const sysSecCur = Common.modStaticByCPU('/ti/security/System_Security', system.context);
+
+    const total_aprs   = ssuData.instanceCount.APR
+    const total_links  = ssuData.instanceCount.LINK
+    const total_stacks = ssuData.instanceCount.STACK
+    const total_zones  = ssuData.instanceCount.ZONE
+
+    const memAllocFinal = Common.allocateAllMemoryRegions()
+    const flashSpace    = memAllocFinal["flashSpace"]
+    const weprotValues = Common.calcWeprotValues(flashSpace);
+
+    function getWEProtRegValue(reg)
+    {
+        //TODO
+        return 0
+    }
+
+    function getPassword_L(debugCfg, Password)
+    {
+        var password = '5555555555555555'
+        if((sysSec.ssumode == 3) && (debugCfg == 2))
+            password = Password.substring(16)
+        return "0x" + password
+    }
+    function getPassword_H(debugCfg, Password)
+    {
+        var password = '5555555555555555'
+        if((sysSec.ssumode == 3) && (debugCfg == 2))
+            password = Password.substring(0,16)
+        return "0x" + password
+    }
+
+
+    var linkID = Common.assignLinkID()
+    //console.log("linkID:", linkID)
+    var stackID = Common.assignStackID()
+    //console.log("stackID:", stackID)
+
+    var crcList = []
+
+    //const currCore = system.context
+
+%%}
+
+#include <stdint.h>
+#include "ssu_config.h"
+
+%%{
+    let existingContexts = Common.getCoreList().map(o => {return o.name});
+    existingContexts.forEach(currCore => {
+        //console.log(currCore)
+        let seccfgLocation = Common.getSeccfgLocation(currCore) //!! error case
+        let seccfgLocationDummy = Common.getSeccfgLocationDummy(currCore) //!! error case
+        let sysSecCur = Common.modStaticByCPU('/ti/security/System_Security', currCore);
+%%}
+
+#ifdef HSSE
+    __attribute__((retain, location(0x`Common.toHex(seccfgLocationDummy, 8)`)))
+#else
+    __attribute__((retain, location(0x`Common.toHex(seccfgLocation, 8)`)))
+#endif
+const SSU_SECCFG `currCore`_Cfg =
+{
+    // APR Configuration
+
+%                                                                                                   var idx = 0
+%                                                                                                   let aprsAll = memAllocFinal[currCore]
+%                                                                                                   if(aprsAll){
+%                                                                                                       aprsAll.forEach(x => {
+%                                                                                                       if(sysSec.ssumode != 1){
+%                                                                                                       var cfgReg = 0
+%                                                                                                       var accessReg = 0
+%                                                                                                       Common.getLinkAccess(x, sysSecCur).split("|").forEach(x => {
+%                                                                                                           var linkName = x.match(/\((.+)\)/)
+%                                                                                                           if(linkName) linkName = linkName[1]
+%                                                                                                           if(x.includes("RW_ACCESS")) accessReg |= 3 << 2*linkID[linkName]
+%                                                                                                           if(x.includes("RD_ACCESS")) accessReg |= 1 << 2*linkID[linkName]
+%                                                                                                       })
+    // `x.name` => `idx`
+    .AP_REGS[`idx`].START      = 0x`Common.toHex(x.startAddr >> 12, 5)`,
+    .AP_REGS[`idx`].END        = 0x`Common.toHex((x.endAddr - 1)  >> 12, 5)`,
+    .AP_REGS[`idx`].ACCESS     = `Common.getLinkAccess(x, sysSecCur)`,
+%                                                                                                       if ((x.type == "Code") && Common.getExeLink(x))  {
+%                                                                                                           cfgReg |= 1 << 7
+%                                                                                                           cfgReg |= linkID[Common.getExeLink(x).$name] << 0
+    .AP_REGS[`idx`].XE         = 1,
+    .AP_REGS[`idx`].LINKID     = `Common.getExeLink(x).$name`,
+%                                                                                                       } else {
+%                                                                                                           cfgReg |= 2 << 0
+    .AP_REGS[`idx`].LINKID     = 2,
+%                                                                                                       }
+%                                                                                                       if (Common.getAPILink(x)) {
+%                                                                                                           cfgReg |= 1 << 14
+%                                                                                                           cfgReg |= linkID[Common.getAPILink(x).$name] << 8
+    .AP_REGS[`idx`].APILINKE   = 1,
+    .AP_REGS[`idx`].APILINK    = `Common.getAPILink(x).$name`,
+%                                                                                                       }
+    .AP_REGS[`idx`].DISABLE    = `sysSec.disableAPR.includes(x.name)?1:0`,
+    .AP_REGS[`idx`].LOCK       = `sysSec.lockAPR.includes(x.name)?1:0`,
+    .AP_REGS[`idx`].COMMIT     = `sysSec.commitAPR.includes(x.name)?1:0`,
+
+%                                                                                                       crcList.push(x.startAddr | (sysSec.lockAPR.includes(x.name) ? 1 : 0))
+%                                                                                                       crcList.push(((x.endAddr - 1) >>> 12) << 12 | (sysSec.commitAPR.includes(x.name) ? 1 : 0))
+%                                                                                                       crcList.push(accessReg)
+%                                                                                                       crcList.push(cfgReg << 16)
+%                                                                                                       idx++;
+%                                                                                                       }
+%                                                                                                   });
+%                                                                                                   }
+%                                                                                                   for(; idx<total_aprs; idx++) {
+    .AP_REGS[`idx`].LINKID     = 2,
+    .AP_REGS[`idx`].DISABLE    = 1,
+    .AP_REGS[`idx`].LOCK       = `sysSec.LockUnusedAPRs?1:0`,
+    .AP_REGS[`idx`].COMMIT     = `sysSec.CommitUnusedAPRs?1:0`,
+
+%                                                                                                         crcList.push((sysSec.LockUnusedAPRs ? 1 : 0))
+%                                                                                                         crcList.push((sysSec.CommitUnusedAPRs ? 1 : 0))
+%                                                                                                         crcList.push(0)
+%                                                                                                         crcList.push(((1 << 6) | (2 << 0))<< 16)
+%                                                                                                   }
+%                                                                                                   for(var i=0; i<154; i++) crcList.push(0)
+
+    // WEPROT Configuration for Code banks
+    .WEPROT_CODE_BANKS     = `sysSec.WEPROT_CODE_BANKS?0:1`,
+    .WEPROT_CODE_LOCK      = `sysSec.lockWEPROTRegs.includes("WEPROT_CODE_BANKS")?0:1`,
+    .WEPROT_CODE_COMMIT    = `sysSec.commitWEPROTRegs.includes("WEPROT_CODE_BANKS")?0:1`,
+%                                                                                                   crcList.push((sysSec.WEPROT_CODE_BANKS ? 0 : 1) |
+%                                                                                                                (sysSec.lockWEPROTRegs.includes("WEPROT_CODE_BANKS") ? 0 : 1 << 8) |
+%                                                                                                                (sysSec.commitWEPROTRegs.includes("WEPROT_CODE_BANKS") ? 0 : 1 << 16))
+
+    // WEPROT Configuration for Data banks
+    .WEPROT_DATA_BANKS     = `sysSec.WEPROT_DATA_BANKS?0:1`,
+    .WEPROT_DATA_LOCK      = `sysSec.lockWEPROTRegs.includes("WEPROT_DATA_BANKS")?0:1`,
+    .WEPROT_DATA_COMMIT    = `sysSec.commitWEPROTRegs.includes("WEPROT_DATA_BANKS")?0:1`,
+%                                                                                                   crcList.push((sysSec.WEPROT_DATA_BANKS ? 0 : 1) |
+%                                                                                                                (sysSec.lockWEPROTRegs.includes("WEPROT_DATA_BANKS") ? 0 : 1<<8) |
+%                                                                                                                (sysSec.commitWEPROTRegs.includes("WEPROT_DATA_BANKS") ? 0 : 1<<16))
+
+    // WEPROT Configuration for FLC1_B0
+    .WEPROT_FLC1_B0_A      = 0x`Common.toHex(weprotValues["flc1_b0"]["a"], 8)`,
+    .WEPROT_FLC1_B0_B      = 0x`Common.toHex(weprotValues["flc1_b0"]["b"], 8)`,
+    .WEPROT_FLC1_B0_LOCK   = `sysSec.lockWEPROTRegs.includes("WEPROT_FLC1_B0")?0:1`,
+    .WEPROT_FLC1_B0_COMMIT = `sysSec.commitWEPROTRegs.includes("WEPROT_FLC1_B0")?0:1`,
+%                                                                                                   crcList.push(weprotValues["flc1_b0"]["a"])
+%                                                                                                   crcList.push((sysSec.lockWEPROTRegs.includes("WEPROT_FLC1_B0") ? 0 : 1 << 16) |
+%                                                                                                                (sysSec.commitWEPROTRegs.includes("WEPROT_FLC1_B0") ? 0 : 1 << 24))
+%                                                                                                   crcList.push(weprotValues["flc1_b0"]["b"])
+%                                                                                                   crcList.push(0)
+
+    // WEPROT Configuration for FLC1_B2
+    .WEPROT_FLC1_B2_A      = 0x`Common.toHex(weprotValues["flc1_b2"]["a"], 8)`,
+    .WEPROT_FLC1_B2_B      = 0x`Common.toHex(weprotValues["flc1_b2"]["b"], 8)`,
+    .WEPROT_FLC1_B2_LOCK   = `sysSec.lockWEPROTRegs.includes("WEPROT_FLC1_B2")?0:1`,
+    .WEPROT_FLC1_B2_COMMIT = `sysSec.commitWEPROTRegs.includes("WEPROT_FLC1_B2")?0:1`,
+%                                                                                                   crcList.push(weprotValues["flc1_b2"]["a"])
+%                                                                                                   crcList.push((sysSec.lockWEPROTRegs.includes("WEPROT_FLC1_B2") ? 0 : 1 << 16) |
+%                                                                                                                (sysSec.commitWEPROTRegs.includes("WEPROT_FLC1_B2") ? 0 : 1 << 24))
+%                                                                                                   crcList.push(weprotValues["flc1_b2"]["b"])
+%                                                                                                   crcList.push(0)
+
+    // WEPROT Configuration for FLC2_B0
+    .WEPROT_FLC2_B0_A      = 0x`Common.toHex(weprotValues["flc2_b0"]["a"], 8)`,
+    .WEPROT_FLC2_B0_B      = 0x`Common.toHex(weprotValues["flc2_b0"]["b"], 8)`,
+    .WEPROT_FLC2_B0_LOCK   = `sysSec.lockWEPROTRegs.includes("WEPROT_FLC2_B0")?0:1`,
+    .WEPROT_FLC2_B0_COMMIT = `sysSec.commitWEPROTRegs.includes("WEPROT_FLC2_B0")?0:1`,
+%                                                                                                   crcList.push(weprotValues["flc2_b0"]["a"])
+%                                                                                                   crcList.push((sysSec.lockWEPROTRegs.includes("WEPROT_FLC2_B0") ? 0 : 1 << 16) |
+%                                                                                                                (sysSec.commitWEPROTRegs.includes("WEPROT_FLC2_B0") ? 0 : 1 << 24))
+%                                                                                                   crcList.push(weprotValues["flc2_b0"]["b"])
+%                                                                                                   crcList.push(0)
+
+    // WEPROT Configuration for FLC2_B2
+    .WEPROT_FLC2_B2_A      = 0x`Common.toHex(weprotValues["flc2_b2"]["a"], 8)`,
+    .WEPROT_FLC2_B2_B      = 0x`Common.toHex(weprotValues["flc2_b2"]["b"], 8)`,
+    .WEPROT_FLC2_B2_LOCK   = `sysSec.lockWEPROTRegs.includes("WEPROT_FLC2_B2")?0:1`,
+    .WEPROT_FLC2_B2_COMMIT = `sysSec.commitWEPROTRegs.includes("WEPROT_FLC2_B2")?0:1`,
+%                                                                                                   crcList.push(weprotValues["flc2_b2"]["a"])
+%                                                                                                   crcList.push((sysSec.lockWEPROTRegs.includes("WEPROT_FLC2_B2") ? 0 : 1 << 16) |
+%                                                                                                                (sysSec.commitWEPROTRegs.includes("WEPROT_FLC2_B2") ? 0 : 1 << 24))
+%                                                                                                   crcList.push(weprotValues["flc2_b2"]["b"])
+%                                                                                                   crcList.push(0)
+%
+%                                                                                                   crcList.push(0)
+%                                                                                                   crcList.push(0)
+
+    // Zone 1 Configuration
+    .ZONE1_CFG.LINK      = `sysSec.ZONE1_UPDATE_LINK ? sysSec.ZONE1_UPDATE_LINK.$name : '0x2'`,
+    .ZONE1_CFG.CPU       = `sysSec.ZONE1_UPDATE_CPU`,
+    .ZONE1_CFG.UPDATE_EN = `sysSec.ZONE1_UPDATE_EN?'0xC':'0x3'`,
+
+    // Zone 2 Configuration
+    .ZONE2_CFG.LINK      = `sysSec.ZONE2_UPDATE_LINK ? sysSec.ZONE2_UPDATE_LINK.$name : '0x2'`,
+    .ZONE2_CFG.CPU       = `sysSec.ZONE2_UPDATE_CPU`,
+    .ZONE2_CFG.UPDATE_EN = `sysSec.ZONE2_UPDATE_EN?'0xC':'0x3'`,
+
+    // Zone 3 Configuration
+    .ZONE3_CFG.LINK      = `sysSec.ZONE3_UPDATE_LINK ? sysSec.ZONE3_UPDATE_LINK.$name : '0x2'`,
+    .ZONE3_CFG.CPU       = `sysSec.ZONE3_UPDATE_CPU`,
+    .ZONE3_CFG.UPDATE_EN = `sysSec.ZONE3_UPDATE_EN?'0xC':'0x3'`,
+
+    // SECCFG Update Configuration
+    .SECCFG_UPDATE_CFG.LINK      = `sysSec.SECCFG_UPDATE_LINK?sysSec.SECCFG_UPDATE_LINK.$name:'0x2'`,
+    .SECCFG_UPDATE_CFG.CPU       = `sysSec.SECCFG_UPDATE_CPU`,
+    .SECCFG_UPDATE_CFG.UPDATE_EN = `sysSec.SECCFG_UPDATE_EN?'0xC':'0x3'`,
+%                                                                                                   var zone1Cfg, zone2Cfg, zone3Cfg, secCfg = 0
+%                                                                                                   zone1Cfg |= sysSec.ZONE1_UPDATE_LINK ? linkID[sysSec.ZONE1_UPDATE_LINK.$name] : 2
+%                                                                                                   zone1Cfg |= sysSec.ZONE1_UPDATE_CPU << 8
+%                                                                                                   zone1Cfg |= (sysSec.ZONE1_UPDATE_EN ? 0xC : 0x3) << 12
+%                                                                                                   zone2Cfg |= sysSec.ZONE2_UPDATE_LINK ? linkID[sysSec.ZONE2_UPDATE_LINK.$name] : 2
+%                                                                                                   zone2Cfg |= sysSec.ZONE2_UPDATE_CPU << 8
+%                                                                                                   zone2Cfg |= (sysSec.ZONE2_UPDATE_EN ? 0xC : 0x3) << 12
+%                                                                                                   zone3Cfg |= sysSec.ZONE3_UPDATE_LINK ? linkID[sysSec.ZONE3_UPDATE_LINK.$name] : 2
+%                                                                                                   zone3Cfg |= sysSec.ZONE3_UPDATE_CPU << 8
+%                                                                                                   zone3Cfg |= (sysSec.ZONE3_UPDATE_EN ? 0xC : 0x3) << 12
+%                                                                                                   secCfg |= sysSec.SECCFG_UPDATE_LINK ? linkID[sysSec.SECCFG_UPDATE_LINK.$name] : 2
+%                                                                                                   secCfg |= sysSec.SECCFG_UPDATE_CPU << 8
+%                                                                                                   secCfg |= (sysSec.SECCFG_UPDATE_EN ? 0xC : 0x3) << 12
+%
+%                                                                                                   crcList.push(zone1Cfg | zone2Cfg << 16)
+%                                                                                                   crcList.push(zone3Cfg | secCfg << 16)
+
+    // Zone1 Debug Password
+    .ZONE1_PDBGPSWD_L       = `getPassword_L(sysSec.ZONE1_DEBUG_CFG, sysSec.ZONE1_PDBGPSWD)`,
+    .ZONE1_PDBGPSWD_H       = `getPassword_H(sysSec.ZONE1_DEBUG_CFG, sysSec.ZONE1_PDBGPSWD)`,
+    .ZONE1_FDBGPSWD_L       = `getPassword_L(sysSec.ZONE1_DEBUG_CFG, sysSec.ZONE1_FDBGPSWD)`,
+    .ZONE1_FDBGPSWD_H       = `getPassword_H(sysSec.ZONE1_DEBUG_CFG, sysSec.ZONE1_FDBGPSWD)`,
+
+    // Zone2 Debug Password
+    .ZONE2_PDBGPSWD_L       = `getPassword_L(sysSec.ZONE2_DEBUG_CFG, sysSec.ZONE2_PDBGPSWD)`,
+    .ZONE2_PDBGPSWD_H       = `getPassword_H(sysSec.ZONE2_DEBUG_CFG, sysSec.ZONE2_PDBGPSWD)`,
+    .ZONE2_FDBGPSWD_L       = `getPassword_L(sysSec.ZONE2_DEBUG_CFG, sysSec.ZONE2_FDBGPSWD)`,
+    .ZONE2_FDBGPSWD_H       = `getPassword_H(sysSec.ZONE2_DEBUG_CFG, sysSec.ZONE2_FDBGPSWD)`,
+
+    // Zone3 Debug Password
+    .ZONE3_PDBGPSWD_L       = `getPassword_L(sysSec.ZONE3_DEBUG_CFG, sysSec.ZONE3_PDBGPSWD)`,
+    .ZONE3_PDBGPSWD_H       = `getPassword_H(sysSec.ZONE3_DEBUG_CFG, sysSec.ZONE3_PDBGPSWD)`,
+    .ZONE3_FDBGPSWD_L       = `getPassword_L(sysSec.ZONE3_DEBUG_CFG, sysSec.ZONE3_FDBGPSWD)`,
+    .ZONE3_FDBGPSWD_H       = `getPassword_H(sysSec.ZONE3_DEBUG_CFG, sysSec.ZONE3_FDBGPSWD)`,
+
+    // C29 Debug Password
+    .C29DBGEN_PSWD_L        = `getPassword_L(sysSec.C29DBGEN_CFG, sysSec.C29DBGEN_PSWD)`,
+    .C29DBGEN_PSWD_H        = `getPassword_H(sysSec.C29DBGEN_CFG, sysSec.C29DBGEN_PSWD)`,
+
+    // Debug Configuration
+    .DEBUG_CFG.C29DBGEN_CFG = `(sysSec.ssumode == 3) ? sysSec.C29DBGEN_CFG : 2`,
+    .DEBUG_CFG.ZONE1        = `(sysSec.ssumode == 3) ? sysSec.ZONE1_DEBUG_CFG : 2`,
+    .DEBUG_CFG.ZONE2        = `(sysSec.ssumode == 3) ? sysSec.ZONE2_DEBUG_CFG : 2`,
+    .DEBUG_CFG.ZONE3        = `(sysSec.ssumode == 3) ? sysSec.ZONE3_DEBUG_CFG : 2`,
+
+    // DEBUG_CFG Register Lock
+    .DEBUG_CFG_LOCK         = `sysSec.DEBUG_CFG_LOCK?1:0`,
+    .DEBUG_CFG_COMMIT       = `sysSec.DEBUG_CFG_COMMIT?1:0`,
+%                                                                                                   if(sysSec.ssumode == 3)
+%                                                                                                    crcList.push((sysSec.C29DBGEN_CFG << 0) | (sysSec.ZONE1_DEBUG_CFG << 4) |
+%                                                                                                                 (sysSec.ZONE2_DEBUG_CFG << 8) | (sysSec.ZONE3_DEBUG_CFG << 12) |
+%                                                                                                                 (sysSec.DEBUG_CFG_LOCK << 16) | (sysSec.DEBUG_CFG_COMMIT << 24))
+%                                                                                                   else
+%                                                                                                    crcList.push(0x2222 |
+%                                                                                                                 (sysSec.DEBUG_CFG_LOCK << 16) | (sysSec.DEBUG_CFG_COMMIT << 24))
+
+    // Boot Configuration
+    .HSM_LOCKOUT      = 0, //TODO
+    .ENABLE_XTAL      = `sysSec.ENABLE_XTAL`,
+%                                                                                                   if(sysSec.defaultBootmode) {
+    .BOOTPIN_CONFIG   = 0,
+    .BOOTDEF_LOW      = 0,
+    .BOOTDEF_HIGH     = 0,
+%                                                                                                   } else {
+%                                                                                                       var BMSP0 = (sysSec.bootPinCount == 0) ? "FF" : Common.toHex(sysSec.BMSP0,2)
+%                                                                                                       var BMSP1 = (sysSec.bootPinCount <= 1) ? "FF" : Common.toHex(sysSec.BMSP1,2)
+%                                                                                                       var BMSP2 = (sysSec.bootPinCount <= 2) ? "FF" : Common.toHex(sysSec.BMSP2,2)
+%
+    .BOOTPIN_CONFIG   = 0x5A`BMSP2``BMSP1``BMSP0`,
+    .BOOTDEF_LOW      = 0x`sysSec.BOOTDEF3``sysSec.BOOTDEF2``sysSec.BOOTDEF1``sysSec.BOOTDEF0`,
+    .BOOTDEF_HIGH     = 0x`sysSec.BOOTDEF7``sysSec.BOOTDEF6``sysSec.BOOTDEF5``sysSec.BOOTDEF4`,
+%                                                                                                   }
+    .LPOST_MPOST_EN   = 0b`sysSec.MPOST_EN``sysSec.LPOST_COVER``sysSec.LPOST_EN`,
+    .ERROR_STS_PIN    = `sysSec.ERROR_STS_PIN`,
+    .BOOT_LOADER_LOCK = `sysSec.BOOT_LOADER_LOCK?"0xC9":"0xFF"`,
+    .EMU_BOOTEN       = `sysSec.EMU_BOOTEN?1:0`,
+    .RAMOPEN_LOCK     = `sysSec.RAMOPEN_LOCK?0x5A:0xA5`,
+    .RAMOPEN_COMMIT   = `sysSec.RAMOPEN_COMMIT?1:0`,
+    .SECT_STATUS      = 0x5555555555555555,
+%                                                                                                   let updCtrVal = "FFFFFFFFFFFFFFFF"
+%                                                                                                   //if(sysSecCur && sysSecCur.updateCtr && currCore!="CPU1") updCtrVal = sysSecCur.updateCtr
+%                                                                                                   //if(sysSecCur && sysSecCur.updateCtr && currCore=="CPU1") updCtrVal = sysSec.updateCtr
+    .SECT_UPDATE_CTR  = 0x`updCtrVal`,
+%                                                                                                   crcList.push(sysSec.ENABLE_XTAL << 8)
+%                                                                                                   crcList.push(sysSec.defaultBootmode ? 0 : ((0x5A << 24) | (parseInt(BMSP2,16) << 16) | (parseInt(BMSP1,16) << 8) | parseInt(BMSP0,16)))
+%                                                                                                   crcList.push((parseInt(sysSec.LPOST_EN,2)<<0) | (parseInt(sysSec.LPOST_COVER,2)<<2) | (parseInt(sysSec.MPOST_EN,2)<<4) |
+%                                                                                                                (sysSec.ERROR_STS_PIN<<8) | ((sysSec.BOOT_LOADER_LOCK? 0xC9:0xFF)<<16))
+%                                                                                                   crcList.push(((sysSec.EMU_BOOTEN ? 1:0)<< 8) |
+%                                                                                                                ((sysSec.RAMOPEN_LOCK ? 0x5A:0xA5) << 16) |
+%                                                                                                                ((sysSec.RAMOPEN_COMMIT ? 1:0) << 24))
+%                                                                                                   crcList.push(0)
+%                                                                                                   crcList.push(0x55555555) // SECCFG_STATUS
+%                                                                                                   crcList.push(0x55555555) // SECCFG_STATUS
+%                                                                                                   crcList.push(parseInt(updCtrVal.substring(8),16)) // SECCFG_UPDATE_CTR
+%                                                                                                   crcList.push(parseInt(updCtrVal.substring(0,8),16))
+%                                                                                                   crcList.push(sysSec.defaultBootmode ? 0 : ((parseInt(sysSec.BOOTDEF3,16) << 24) | (parseInt(sysSec.BOOTDEF2,16) << 16) |
+%                                                                                                                (parseInt(sysSec.BOOTDEF1,16) << 8) | (parseInt(sysSec.BOOTDEF0,16) << 0)))
+%                                                                                                   crcList.push(sysSec.defaultBootmode ? 0 : ((parseInt(sysSec.BOOTDEF7,16) << 24) | (parseInt(sysSec.BOOTDEF6,16) << 16) |
+%                                                                                                                (parseInt(sysSec.BOOTDEF5,16) << 8) | (parseInt(sysSec.BOOTDEF4,16) << 0)))
+
+    // Stack Configuration
+%                                                                                                   var stkCfg = [0,0,0]
+%                                                                                                   var idx = 3;
+%                                                                                                   stacks.filter(x => (x.$name!="STACK2_STACK") && (x.$name!="STACK1_STACK")).forEach(x => {
+    .STACK`idx`_CFG = SSU_`Common.getZone(x)`,
+%                                                                                                       stkCfg.push(parseInt(Common.getZone(x).replace("ZONE", "")))
+%                                                                                                       idx++;
+%                                                                                                   });
+%                                                                                                   for(; idx<total_stacks; idx++) {
+    .STACK`idx`_CFG = 0x1,
+%                                                                                                   stkCfg.push(1)
+%                                                                                                   }
+%                                                                                                   crcList.push(stkCfg[0] | stkCfg[1]<<8 | stkCfg[2]<<16 | stkCfg[3]<<24)
+%                                                                                                   crcList.push(stkCfg[4] | stkCfg[5]<<8 | stkCfg[6]<<16 | stkCfg[7]<<24)
+
+    // Link Configuration
+%                                                                                                   var lnkCfg = [0,0,0]
+%                                                                                                   var idx = 3;
+%                                                                                                   links.filter(x => (!x.isLink1 && !x.isLink2)).forEach(x => {
+    .LINK`idx`_CFG = `Common.getStack(x)?Common.getStack(x).$name : '0x2'`,
+%                                                                                                       if(Common.getStack(x))
+%                                                                                                           lnkCfg.push(stackID[Common.getStack(x).$name])
+%                                                                                                       else
+%                                                                                                           lnkCfg.push(2)
+%                                                                                                       idx++;
+%                                                                                                   });
+%                                                                                                   for(; idx<total_links; idx++) {
+    .LINK`idx`_CFG = 0x2,
+%                                                                                                   lnkCfg.push(2)
+%                                                                                                   }
+%                                                                                                   crcList.push(lnkCfg[0] | lnkCfg[1]<<8 | lnkCfg[2]<<16 | lnkCfg[3]<<24)
+%                                                                                                   crcList.push(lnkCfg[4] | lnkCfg[5]<<8 | lnkCfg[6]<<16 | lnkCfg[7]<<24)
+%                                                                                                   crcList.push(lnkCfg[8] | lnkCfg[9]<<8 | lnkCfg[10]<<16 | lnkCfg[11]<<24)
+%                                                                                                   crcList.push(lnkCfg[12] | lnkCfg[13]<<8 | lnkCfg[14]<<16 | lnkCfg[15]<<24)
+%
+%                                                                                                   crcList.push(0)
+%                                                                                                   crcList.push(0)
+
+    .SECCFG_FORMAT_VER = 0,
+    .SSU_MODE          = `(sysSec.ssumode == 1)? 0x30 : (sysSec.ssumode == 2)? 0x0C : 0x03`,
+    .UPP_REVISION      = `sysSec.uppRev`,
+%                                                                                                   crcList.push(0)
+%                                                                                                   crcList.push((sysSec.ssumode == 1)? 0x30 : (sysSec.ssumode == 2)? 0x0C : 0x03)
+%                                                                                                   crcList.push(sysSec.uppRev)
+%                                                                                                   let crcVal = Common.getSeccfgCrc(crcList);
+
+    .SECCFG_CRC        = 0x`crcVal.toString(16).toUpperCase()`
+};
+%%{
+    })
+%%}
+
+% let cpu4SeccfgLocation = Common.getSeccfgLocation("CPU4")
+% let cpu4SeccfgLocationDummy = Common.getSeccfgLocationDummy("CPU4")
+%   let cpu4FilledSeccfg = system.getTemplate("/ti/security/templates/cpu4_seccfg.c.xdt");
+#ifdef HSSE
+    __attribute__((retain, location(0x`Common.toHex(cpu4SeccfgLocationDummy, 8)`)))
+#else
+    __attribute__((retain, location(0x`Common.toHex(cpu4SeccfgLocation, 8)`)))
+#endif
+`cpu4FilledSeccfg("")`

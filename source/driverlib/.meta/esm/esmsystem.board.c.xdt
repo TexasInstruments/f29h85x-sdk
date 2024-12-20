@@ -1,0 +1,55 @@
+% var module = system.modules['/driverlib/esm_system.js'];
+% let Common   = system.getScript("/driverlib/Common.js");
+% var stat = module.$static
+//*****************************************************************************
+//
+// ESMSYSTEM Configurations
+//
+//*****************************************************************************
+void `module.peripheralName`_init(){
+% if (Common.isContextCPU1())
+% {
+    ESM_enableGlobal(`stat.esmBase`_BASE);
+% }
+% if (Common.isContextCPU1() && stat.useErrorPin)
+% {
+	ESM_setErrorPinCounterPreload(`stat.errorPinCounterValue`);
+	ESM_setOutputPinMode(`stat.outputPinMode`);
+%   if(stat.outputPinMode == "ESM_OUTPUT_LEVEL_MODE"){
+	ESM_setLevelModePolarity(`stat.levelModePolarity`);
+%	}
+%   else if(stat.outputPinMode == "ESM_OUTPUT_PWM_MODE"){
+	ESM_setPWMCounterPreload(`stat.pwmHighCounterValue`, `stat.pwmLowCounterValue`);
+%	}
+%   if(stat.errorPinMonitoring){
+	ESM_enableErrorPinMonitor();
+%   }
+% }
+%   for(var i = 0; i < module.$instances.length; i++) 
+%   {
+%      var instance = module.$instances[i];
+	`instance.$name`_init();
+%   }
+}
+
+%if (module != null)
+%{
+    % for(var i = 0; i < module.$instances.length; i++) {
+        % var instance = module.$instances[i];
+		% var eventSource = instance.eventSource;
+void `instance.$name`_init(){
+		% if(instance.typeEventSource){
+		%	eventSource = instance.eventSourceTyped;
+		% }
+		% if(instance.enableGenEvent) {
+	ESM_enableInterrupt(`stat.esmBase`_BASE, `eventSource`);
+		% }
+		% if(instance.enableCriticalEvent){
+	ESM_setCriticalPriorityInterruptInfluence(`stat.esmBase`_BASE, `eventSource`, true);
+		% }
+		% if(instance.enableInfluenceOnErrorPin){
+	ESM_setInfluenceOnErrorPin(`eventSource`, true);
+		% }
+}
+	% }
+%}

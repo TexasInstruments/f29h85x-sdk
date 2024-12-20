@@ -1,0 +1,39 @@
+% var moduleName = "clock"
+% var module = system.modules['/driverlib/' + moduleName + '.js'];
+% let Common   = system.getScript("/driverlib/Common.js");
+% let clockConfig = system.getScript("/driverlib/device_driverlib_peripherals/" +
+%        Common.getDeviceName().toLowerCase() + "_clockconfig.js");
+%
+% if (module != null) {
+%   var inst = module.$static
+%
+//*****************************************************************************
+//
+// CLOCK Configurations
+//
+//*****************************************************************************
+void CLOCK_init()
+{
+% if(inst.pllConfig != "SYSCTL_PLL_DISABLE") {
+    //
+    // Configure PLL
+    //
+    SysCtl_setClock(`inst.pllSource`, `inst.pllConfig`,
+                    `inst.refDiv`, `inst.imult`, `inst.odiv`, `inst.sysDiv`,
+                    DCC1_BASE);
+% }
+
+    SysCtl_setCputimer2Clock(`inst.timer2ClkSrc`, `inst.timer2ClkDiv`);
+    SysCtl_setEPWMClock(`inst.epwmClkDiv`);
+    SysCtl_setEMIF1Clock(`inst.emif1ClkDiv`);
+    SysCtl_setLINAClock(`inst.linAClkDiv`);
+    SysCtl_setLINBClock(`inst.linBClkDiv`);
+    SysCtl_setECatClock(`inst.ecatClkDiv`, SYSCTL_ECAT_PHYCLK_`inst.ecatPhyEnable?"ENABLE":"DISABLE"`);
+    SysCtl_setHSMClock(`inst.hsmClkDiv`);
+
+% clockConfig.SysCtl_MCANInstance.forEach(x=> {
+%       var mcanInst = x.name.replace("SYSCTL_MCAN_", "")
+    SysCtl_setMCANClock(`x.name`, `inst["mcan" + mcanInst + "ClkSrc"]`, `inst["mcan" + mcanInst + "ClkDiv"]`);
+% })
+}
+% }

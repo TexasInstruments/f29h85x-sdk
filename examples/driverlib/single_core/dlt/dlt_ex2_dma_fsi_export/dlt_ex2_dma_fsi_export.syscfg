@@ -1,0 +1,161 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --device "F29H85x" --package "256ZEX" --part "F29H85x_256ZEX" --context "CPU1" --product "MCU_SDK_F29H85x@1.00.00.00"
+ * @v2CliArgs --device "F29H850TU" --package "256ZEX" --variant "TMS320F29H850TU9" --context "CPU1" --product "MCU_SDK_F29H85x@1.00.00.00"
+ * @versions {"tool":"1.22.0+3877"}
+ */
+
+const divider15       = system.clockTree["PLL_REFDIV"];
+divider15.divideValue = 1;
+
+const multiplier1         = system.clockTree["PLL_IMULT"];
+multiplier1.multiplyValue = 40;
+
+const mux7       = system.clockTree["OSCCLKSRCSEL"];
+mux7.inputSelect = "INTOSC2";
+
+/**
+ * Import the modules used in this configuration.
+ */
+const clocktree = scripting.addModule("/driverlib/clocktree.js");
+const cputimer  = scripting.addModule("/driverlib/cputimer.js", {}, false);
+const cputimer1 = cputimer.addInstance();
+const dlt       = scripting.addModule("/driverlib/dlt.js");
+const fsirx     = scripting.addModule("/driverlib/fsirx.js", {}, false);
+const fsirx1    = fsirx.addInstance();
+const fsitx     = scripting.addModule("/driverlib/fsitx.js", {}, false);
+const fsitx1    = fsitx.addInstance();
+const rtdma1    = scripting.addModule("/driverlib/rtdma1.js");
+const rtdma11   = rtdma1.addInstance();
+const sysctl    = scripting.addModule("/driverlib/sysctl.js");
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+
+cputimer1.$name                      = "myCPUTIMER0";
+cputimer1.enableInterrupt            = true;
+cputimer1.registerInterrupts         = true;
+cputimer1.timerPeriod                = 10000000;
+cputimer1.periphClock.$name          = "driverlib_perClock3";
+cputimer1.timerInt.interruptPriority = 50;
+
+dlt.enableTagFilter                    = true;
+dlt.startTagReference                  = 0x5;
+dlt.endTagReference                    = 0x2;
+dlt.enableDMA                          = true;
+dlt.useDMA                             = true;
+dlt.startTagMask                       = 0xFFFF;
+dlt.endTagMask                         = 0xFFFF;
+dlt.setFIFOTriggerLevel                = 3;
+dlt.periphClock.$name                  = "driverlib_perClock4";
+dlt.periphConfig.$name                 = "driverlib_perConfig3";
+dlt.dltDMA.destAddressInputMode        = "VARIABLE";
+dlt.dltDMA.oneShotConfig               = "DMA_CFG_ONESHOT_ENABLE";
+dlt.dltDMA.continuousModeConfig        = "DMA_CFG_CONTINUOUS_ENABLE";
+dlt.dltDMA.writeDatasizeConfig         = "DMA_CFG_WRT_SIZE_32BIT";
+dlt.dltDMA.transferSize                = 8;
+dlt.dltDMA.srcBurstStep                = 4;
+dlt.dltDMA.srcTransferStep             = 4;
+dlt.dltDMA.srcWrapSize                 = 2;
+dlt.dltDMA.destAddressVariable         = "txBufAddr";
+dlt.dltDMA.destBurstStep               = 4;
+dlt.dltDMA.destTransferStep            = 4;
+dlt.dltDMA.useInterrupts               = true;
+dlt.dltDMA.registerInterrupts          = true;
+dlt.dltDMA.enableInterrupts            = true;
+dlt.dltDMA.interruptMode               = "DMA_INT_AT_END";
+dlt.dltDMA.chBase                      = "RTDMA1CH5_BASE";
+dlt.dltDMA.rtdma1Int.interruptHandler  = "INT_DLT_TO_FSITX_ISR";
+dlt.dltDMA.rtdma1Int.interruptPriority = 252;
+
+fsirx1.$name                                    = "myFSIRX0";
+fsirx1.softwareFrameSize                        = "16";
+fsirx1.enableInterrupt                          = true;
+fsirx1.useInterrupts                            = ["FSI_INT1"];
+fsirx1.registerInterruptLine1                   = true;
+fsirx1.enableLoopback                           = true;
+fsirx1.useDMARX                                 = true;
+fsirx1.DMARXInstData                            = "RTDMA2_BASE";
+fsirx1.fsirx.$assign                            = "FSIRXA";
+fsirx1.fsirx.fsirx_d0Pin.$assign                = "GPIO3";
+fsirx1.fsirx.fsirx_d1Pin.$assign                = "GPIO4";
+fsirx1.fsirx.fsirx_clkPin.$assign               = "GPIO5";
+fsirx1.periphClock.$name                        = "driverlib_perClock1";
+fsirx1.periphConfig.$name                       = "driverlib_perConfig1";
+fsirx1.fsiRxInt1.interruptPriority              = 41;
+fsirx1.fsiRXDMAInfo.chBase                      = "RTDMA1CH3_BASE";
+fsirx1.fsiRXDMAData.oneShotConfig               = "DMA_CFG_ONESHOT_ENABLE";
+fsirx1.fsiRXDMAData.continuousModeConfig        = "DMA_CFG_CONTINUOUS_ENABLE";
+fsirx1.fsiRXDMAData.transferSize                = 16;
+fsirx1.fsiRXDMAData.srcWrapSize                 = 16;
+fsirx1.fsiRXDMAData.destBurstStep               = 2;
+fsirx1.fsiRXDMAData.destTransferStep            = 2;
+fsirx1.fsiRXDMAData.destAddressInputMode        = "VARIABLE";
+fsirx1.fsiRXDMAData.destAddressVariable         = "DLTLoggingBufferAddr";
+fsirx1.fsiRXDMAData.useInterrupts               = true;
+fsirx1.fsiRXDMAData.registerInterrupts          = true;
+fsirx1.fsiRXDMAData.enableInterrupts            = true;
+fsirx1.fsiRXDMAData.enableTriggers              = true;
+fsirx1.fsiRXDMAData.interruptMode               = "DMA_INT_AT_END";
+fsirx1.fsiRXDMAData.rtdma2Int.interruptHandler  = "INT_FSIRX_TO_BUFFER_ISR";
+fsirx1.fsiRXDMAData.rtdma2Int.interruptPriority = 50;
+
+fsitx1.$name                       = "myFSITX0";
+fsitx1.softwareFrameSize           = "16";
+fsitx1.enableInterrupt             = true;
+fsitx1.useInterrupts               = ["FSI_INT1"];
+fsitx1.enabledINT1Interrupts       = ["FSI_TX_EVT_BUF_OVERRUN","FSI_TX_EVT_BUF_UNDERRUN"];
+fsitx1.registerInterruptLine1      = true;
+fsitx1.startOfTransmissionMode     = "FSI_TX_START_EXT_TRIG";
+fsitx1.extTriggerSource            = "FSI_EXT_TRIGSRC_RTDMA1_CH1";
+fsitx1.frameType                   = "FSI_FRAME_TYPE_NWORD_DATA";
+fsitx1.clkPres                     = 5;
+fsitx1.fsitx.$assign               = "FSITXA";
+fsitx1.periphClock.$name           = "driverlib_perClock2";
+fsitx1.periphConfig.$name          = "driverlib_perConfig2";
+fsitx1.fsiTxInt1.interruptPriority = 43;
+
+rtdma1.emulationMode      = "DMA_EMULATION_FREE_RUN";
+rtdma1.periphClock.$name  = "driverlib_perClock0";
+rtdma1.periphConfig.$name = "driverlib_perConfig0";
+
+rtdma11.$name                       = "DLT_TO_FSITX";
+rtdma11.oneShotConfig               = "DMA_CFG_ONESHOT_ENABLE";
+rtdma11.srcAddressInputMode         = "VARIABLE";
+rtdma11.srcAddressVariable          = "cpu1_dlt_addr";
+rtdma11.destAddressInputMode        = "VARIABLE";
+rtdma11.useInterrupts               = true;
+rtdma11.registerInterrupts          = true;
+rtdma11.interruptMode               = "DMA_INT_AT_END";
+rtdma11.continuousModeConfig        = "DMA_CFG_CONTINUOUS_ENABLE";
+rtdma11.databusWidthConfig          = "DMA_CFG_READ_SIZE_32BIT";
+rtdma11.writeDatasizeConfig         = "DMA_CFG_WRT_SIZE_32BIT";
+rtdma11.burstSize                   = 4;
+rtdma11.srcBurstStep                = 4;
+rtdma11.srcTransferStep             = 4;
+rtdma11.destBurstStep               = 4;
+rtdma11.destTransferStep            = 4;
+rtdma11.srcWrapSize                 = 2;
+rtdma11.destAddressVariable         = "txBufAddr";
+rtdma11.transferSize                = 8;
+rtdma11.triggerSource               = "DMA_TRIGGER_CPU1_DLT";
+rtdma11.enableTriggers              = true;
+rtdma11.enableInterrupts            = true;
+rtdma11.rtdma1Int.interruptPriority = 42;
+
+const rtdma2              = scripting.addModule("/driverlib/rtdma2.js", {}, false);
+rtdma2.periphClock.$name  = "driverlib_perClock5";
+rtdma2.periphConfig.$name = "driverlib_perConfig4";
+
+sysctl.LSConfig = "SplitLock";
+
+/**
+ * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
+ * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
+ * re-solve from scratch.
+ */
+fsitx1.fsitx.fsitx_d0Pin.$suggestSolution  = "GPIO0";
+fsitx1.fsitx.fsitx_d1Pin.$suggestSolution  = "GPIO1";
+fsitx1.fsitx.fsitx_clkPin.$suggestSolution = "GPIO2";

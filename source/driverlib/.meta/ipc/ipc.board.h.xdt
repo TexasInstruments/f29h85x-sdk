@@ -1,0 +1,12 @@
+% var moduleName = "ipc"
+% var module = system.modules['/driverlib/' + moduleName + '.js'];
+% let Common   = system.getScript("/driverlib/Common.js");
+% var nameOfPeripheral = module.peripheralName;
+%if (module != null)
+%{
+//*****************************************************************************
+//
+// IPC Configurations
+//
+//*****************************************************************************
+%}

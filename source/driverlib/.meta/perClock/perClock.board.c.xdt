@@ -1,0 +1,34 @@
+%%{
+var perClock  = system.modules['/driverlib/perClock.js'];
+let Common   = system.getScript("/driverlib/Common.js");
+%%}
+//*****************************************************************************
+//
+// Peripheral Clocks
+//
+//*****************************************************************************
+void PERCLOCK_init(){
+%%{
+if (perClock != null)
+{
+    for(var i = 0; i < perClock.$instances.length; i++) {
+        var instance = perClock.$instances[i];
+        let owner = instance.$ownedBy;
+
+        var peripheralInst = instance.peripheralInst;
+        if (instance.pinmuxPeripheralModule)
+        {
+	        let ownerSolution = owner[instance.pinmuxPeripheralModule].$solution;
+	        var ownerPeripheral = ownerSolution.peripheralName;
+	        peripheralInst = ownerPeripheral;
+        }
+   		if(instance.enable)
+        {
+%%}
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_`peripheralInst`);
+%%{
+        }
+    }
+}
+%%}
+}

@@ -1,0 +1,47 @@
+% let Common = system.getScript("/driverlib/Common.js");
+
+//*****************************************************************************
+//!
+//! Errata Workaround for System: Pending Misaligned Reads in the
+//! Pipeline After CPU Goes to Fault State Preventing NMI Vector Fetch.
+//!
+//*****************************************************************************
+void Device_errataWorkaroundNMIVectorFetch()
+{
+% if (Common.isContextCPU1()){
+    ESM_triggerSoftReset(ESMCPU1_BASE);
+    ESM_triggerSoftReset(ESMSYSTEM_BASE);
+
+    // Enable the global interrupt for SYSESM
+    ESM_enableGlobal(ESMSYSTEM_BASE);
+
+    // Enable group 0 errors to generate low priority Interrupt (GEN EVT)
+    HWREG(ESMSYSTEM_BASE + ESM_SYS_O_INTR_EN_SET(0U)) |= 0x3FU;
+    HWREG(ESMSYSTEM_BASE + ESM_SYS_O_INT_PRIO(0U)) &= ~(0x3FU);
+
+    // Route ESM SYS GEN EVENT to EPWMXBAR TRIP signal
+    XBAR_selectEpwmXbarInputSource(XBAR_TRIP1, XBAR_EPWM_ESM_GEN_EVENT);
+
+    // Configuring SEC3 in START STOP mode, counting SYSCLK. StartInp = EPWMXBAR1 event, StopInp = SEC3 event
+    ERAD_Counter_Config counter_params;
+    ERAD_setCounterOwnership(ERAD_COUNTER3, ERAD_OWNER_APPLICATION);
+    ERAD_disableCounterModule(ERAD_COUNTER3);
+    counter_params.enable_stop = false;
+    counter_params.enable_int = true;
+    counter_params.enable_nmi = true;
+    counter_params.event = ERAD_EVENT_NO_EVENT;
+	counter_params.event_mode = ERAD_COUNTER_MODE_RISING_EDGE;
+    counter_params.rst_on_match = true;
+    counter_params.reference = 0x32U;
+    ERAD_configCounterInStartStopMode(ERAD_COUNTER3, counter_params, ERAD_EVENT_EPWMXBAR_OUT1, ERAD_EVENT_COUNTER3_EVENT);
+	ERAD_enableCounterModule(ERAD_COUNTER3);
+
+% }
+    // Configure `system.context`_ESM to generate an NMI on CPU1_ERAD_NMI event
+    ESM_enableGlobal(ESM`system.context`_BASE);
+    ESM_setInterruptPriorityLevel(ESM`system.context`_BASE, ESM_EVENT_CPU1_ERAD_NMI, ESM_INTERRUPT_PRIORITY_LEVEL_HIGH);
+    ESM_enableInterrupt(ESM`system.context`_BASE, ESM_EVENT_CPU1_ERAD_NMI);
+
+    // Disable group 0 NMI generation in `system.context` ESM
+    HWREG(ESM`system.context`_BASE + ESM_CPU_O_INTR_EN_CLR(0U)) |= 0x3FU;
+}

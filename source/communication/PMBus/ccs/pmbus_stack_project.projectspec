@@ -1,0 +1,34 @@
+<projectSpec>
+    <project 
+        name="PMBus_Communication_Stack"
+        device       = "F29H850TU9"
+        cgtVersion   = "0.1.0"
+        toolChain="TICLANG"
+        launchWizard="False"
+        outputType="staticLibrary"
+        enableSysConfigTool="true"
+        >
+        <pathVariable name="C29SDK_ROOT"                path="../../../../"                             scope="project" />
+        <pathVariable name="DLIB_ROOT"                  path="../../../../source/driverlib/"    scope="project"/>
+        <pathVariable name="BITFIELDS_ROOT"             path="../../../../source/bitfields/"    scope="project"/>
+        <pathVariable name="PMBUS_ROOT"                 path="../../../../source/communication/PMBus/"  scope="project"/>
+
+        <file action="copy" path="../include/pmbus_stack_assert.h" targetDirectory="" />
+        <file action="copy" path="../include/pmbus_stack_compatibility.h" targetDirectory="" />
+        <file action="copy" path="../include/pmbus_stack_config.h" targetDirectory="" />
+        <file action="copy" path="../include/pmbus_stack_handler.h" targetDirectory="" />
+
+        <file action="copy" path="../source/pmbus_stack_config.c" targetDirectory="" />
+        <file action="copy" path="../source/pmbus_stack_handler.c" targetDirectory="" />
+        
+        <file action="copy" path="../source/target/pmbus_stack_handler_extended_command.c" targetDirectory="" />
+        <file action="copy" path="../source/target/pmbus_stack_handler_target_block_write_process_call.c" targetDirectory="" />
+        <file action="copy" path="../source/target/pmbus_stack_handler_target_idle.c" targetDirectory="" />
+        <file action="copy" path="../source/target/pmbus_stack_handler_target_read_block.c" targetDirectory="" />
+        <file action="copy" path="../source/target/pmbus_stack_handler_target_read_wait_for_eom.c" targetDirectory="" />
+        <file action="copy" path="../source/target/pmbus_stack_handler_target_receive_byte_wait_for_eom.c" targetDirectory="" />
+
+    <configuration name="F29H85x_Debug" compilerBuildOptions="-O1 -g -I${PMBUS_ROOT}/include -I${DLIB_ROOT} -I${BITFIELDS_ROOT} -DDEBUG -D__PMBUS_SW_VERSION__=0x01020000U" archiverBuildOptions="F29H85x_PMBus_Communication_Stack.lib" />
+    <configuration name="F29H85x_Release" compilerBuildOptions="-O1 -g -I${PMBUS_ROOT}/include -I${DLIB_ROOT} -I${BITFIELDS_ROOT} -D__PMBUS_SW_VERSION__=0x01020000U" archiverBuildOptions="F29H85x_PMBus_Communication_Stack.lib" />
+    </project>
+</projectSpec>

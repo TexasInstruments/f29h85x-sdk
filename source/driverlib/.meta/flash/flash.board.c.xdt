@@ -1,0 +1,185 @@
+% var nameOfModule = "flash";
+% var module = system.modules['/driverlib/' + nameOfModule + '.js'];
+% let Common   = system.getScript("/driverlib/Common.js");
+% var nameOfPeripheral = module.peripheralName;
+% let device_driverlib_peripheral =
+%       system.getScript("/driverlib/device_driverlib_peripherals/" +
+%                Common.getDeviceName().toLowerCase() + "_flash.js");
+//*****************************************************************************
+//
+// FLASH Configurations
+//
+//*****************************************************************************
+__attribute__((section(".TI.ramfunc.link2")))
+void `nameOfPeripheral`_init(){
+%if (module != null)
+%{
+    % for(var i = 0; i < module.$instances.length; i++) {
+        % var instance = module.$instances[i];
+        %
+    //
+    // `instance.$name` Initialization
+    // 
+    
+    //
+    // Disable data cache, code cache, prefetch, and data preread before changing wait states
+    //
+    Flash_configFRI(FLASH_FRI1, FLASH_DATAPREREAD_DISABLE | FLASH_CODECACHE_DISABLE | FLASH_DATACACHE_DISABLE | FLASH_PREFETCH_DISABLE);
+    Flash_configFRI(FLASH_FRI2, FLASH_DATAPREREAD_DISABLE | FLASH_CODECACHE_DISABLE | FLASH_DATACACHE_DISABLE | FLASH_PREFETCH_DISABLE);
+    Flash_configFRI(FLASH_FRI3, FLASH_DATAPREREAD_DISABLE | FLASH_CODECACHE_DISABLE | FLASH_DATACACHE_DISABLE | FLASH_PREFETCH_DISABLE);
+    Flash_configFRI(FLASH_FRI4, FLASH_DATAPREREAD_DISABLE | FLASH_CODECACHE_DISABLE | FLASH_DATACACHE_DISABLE | FLASH_PREFETCH_DISABLE);
+
+
+    //
+    // This function sets the number of wait states for a flash read access. The
+    // waitstates parameter is a number between 1 and 15. It is important
+    // to look at your device's datasheet for information about what the required
+    // minimum flash wait-state is for your selected SYSCLK frequency.
+    //
+    // By default the wait state amount is configured to the maximum 15. 
+    //
+    // Set flash wait states
+    //
+    Flash_setWaitstates(`instance.$name`_WAITSTATES); 
+
+    //
+    // Configure TRIMCOMMITREAD and TRIMCOMMITOTHER in TRIMCOMMIT register
+    //
+    Flash_writeTrims(ASYSCTL_O_FLASHTRIMCOMMIT, ASYSCTL_FLASHTRIMCOMMIT_FLC0TRIMCOMMITREAD,
+                     0, ASYSCTL_FLASHTRIMCOMMIT_FLC0TRIMCOMMITREAD);
+    Flash_writeTrims(ASYSCTL_O_FLASHTRIMCOMMIT, ASYSCTL_FLASHTRIMCOMMIT_FLC0TRIMCOMMITOTHER,
+                     0, ASYSCTL_FLASHTRIMCOMMIT_FLC0TRIMCOMMITOTHER);
+
+    Flash_writeTrims(ASYSCTL_O_FLASHTRIMCOMMIT, ASYSCTL_FLASHTRIMCOMMIT_FLC1TRIMCOMMITREAD,
+                     0, ASYSCTL_FLASHTRIMCOMMIT_FLC1TRIMCOMMITREAD);
+    Flash_writeTrims(ASYSCTL_O_FLASHTRIMCOMMIT, ASYSCTL_FLASHTRIMCOMMIT_FLC1TRIMCOMMITOTHER,
+                     0, ASYSCTL_FLASHTRIMCOMMIT_FLC1TRIMCOMMITOTHER);
+
+    Flash_writeTrims(ASYSCTL_O_FLASHTRIMCOMMIT, ASYSCTL_FLASHTRIMCOMMIT_FLC2TRIMCOMMITREAD,
+                     0, ASYSCTL_FLASHTRIMCOMMIT_FLC2TRIMCOMMITREAD);
+    Flash_writeTrims(ASYSCTL_O_FLASHTRIMCOMMIT, ASYSCTL_FLASHTRIMCOMMIT_FLC2TRIMCOMMITOTHER,
+                     0, ASYSCTL_FLASHTRIMCOMMIT_FLC2TRIMCOMMITOTHER);
+
+    uint32_t FRI1ConfigOptions = 0x0U;
+    uint32_t FRI2ConfigOptions = 0x0U;
+    uint32_t FRI3ConfigOptions = 0x0U;
+    uint32_t FRI4ConfigOptions = 0x0U;
+
+    //
+    // Configure FRI options as configured in Sysconfig
+    //
+
+            % if (instance.enablePrefetch){
+    //
+    // Enable FRI1 options
+    //
+    FRI1ConfigOptions |= FLASH_PREFETCH_ENABLE;
+    FRI2ConfigOptions |= FLASH_PREFETCH_ENABLE;
+    FRI3ConfigOptions |= FLASH_PREFETCH_ENABLE;
+    FRI4ConfigOptions |= FLASH_PREFETCH_ENABLE;
+            % } else{
+
+                % if (instance.enableFRI1Prefetch) {
+    FRI1ConfigOptions |= FLASH_PREFETCH_ENABLE;
+                %}
+                % if (instance.enableFRI2Prefetch) {
+    FRI2ConfigOptions |= FLASH_PREFETCH_ENABLE;
+                %}
+                % if (instance.enableFRI3Prefetch) {
+    FRI3ConfigOptions |= FLASH_PREFETCH_ENABLE;
+                %}
+                % if (instance.enableFRI4Prefetch) {
+    FRI4ConfigOptions |= FLASH_PREFETCH_ENABLE;
+                %}
+        
+            % }
+            %
+
+            % if (instance.enableDataCache){
+    //
+    // Enable data cache
+    //
+    FRI1ConfigOptions |= FLASH_DATACACHE_ENABLE;
+    FRI2ConfigOptions |= FLASH_DATACACHE_ENABLE;
+    FRI3ConfigOptions |= FLASH_DATACACHE_ENABLE;
+    FRI4ConfigOptions |= FLASH_DATACACHE_ENABLE;
+            % } else{
+
+                % if (instance.enableFRI1DataCache) {
+    FRI1ConfigOptions |= FLASH_DATACACHE_ENABLE;
+                %}
+                % if (instance.enableFRI2DataCache) {
+    FRI2ConfigOptions |= FLASH_DATACACHE_ENABLE;
+                %}
+                % if (instance.enableFRI3DataCache) {
+    FRI3ConfigOptions |= FLASH_DATACACHE_ENABLE;
+                %}
+                % if (instance.enableFRI4DataCache) {
+    FRI4ConfigOptions |= FLASH_DATACACHE_ENABLE;
+                %}          
+            % }  
+            %
+
+            % if (instance.enableCodeCache){
+    //
+    // Enable code cache
+    //
+    FRI1ConfigOptions |= FLASH_CODECACHE_ENABLE;
+    FRI2ConfigOptions |= FLASH_CODECACHE_ENABLE;
+    FRI3ConfigOptions |= FLASH_CODECACHE_ENABLE;
+    FRI4ConfigOptions |= FLASH_CODECACHE_ENABLE;
+            % } else{
+
+                % if (instance.enableFRI1CodeCache) {
+    FRI1ConfigOptions |= FLASH_CODECACHE_ENABLE;
+                %}
+                % if (instance.enableFRI2CodeCache) {
+    FRI2ConfigOptions |= FLASH_CODECACHE_ENABLE;
+                %}
+                % if (instance.enableFRI3CodeCache) {
+    FRI3ConfigOptions |= FLASH_CODECACHE_ENABLE;
+                %}
+                % if (instance.enableFRI4CodeCache) {
+    FRI4ConfigOptions |= FLASH_CODECACHE_ENABLE;
+                %}            
+            % }  
+
+            % if (instance.enableDataPreread){
+    //
+    // Enable data preread
+    //
+    FRI1ConfigOptions |= FLASH_DATAPREREAD_ENABLE;
+    FRI2ConfigOptions |= FLASH_DATAPREREAD_ENABLE;
+    FRI3ConfigOptions |= FLASH_DATAPREREAD_ENABLE;
+    FRI4ConfigOptions |= FLASH_DATAPREREAD_ENABLE;
+            % } else{
+                % if (instance.enableFRI1DataPreread) {
+    FRI1ConfigOptions |= FLASH_DATAPREREAD_ENABLE;
+                %}
+                % if (instance.enableFRI2DataPreread) {
+    FRI2ConfigOptions |= FLASH_DATAPREREAD_ENABLE;
+                %}
+                % if (instance.enableFRI3DataPreread) {
+    FRI3ConfigOptions |= FLASH_DATAPREREAD_ENABLE;
+                %}
+                % if (instance.enableFRI4DataPreread) {
+    FRI4ConfigOptions |= FLASH_DATAPREREAD_ENABLE;
+                %}          
+            % }  
+
+    //
+    // Configure FRIs as specified
+    //
+    Flash_configFRI(FLASH_FRI1, FRI1ConfigOptions);
+    Flash_configFRI(FLASH_FRI2, FRI2ConfigOptions);
+    Flash_configFRI(FLASH_FRI3, FRI3ConfigOptions);
+    Flash_configFRI(FLASH_FRI4, FRI4ConfigOptions);
+
+    //
+    // Force a pipeline flush to ensure that the write to the last register
+    // configured occurs before returning.
+    //
+    FLASH_DELAY_CONFIG;
+    % }
+% }
+}

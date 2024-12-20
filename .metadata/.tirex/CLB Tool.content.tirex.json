@@ -1,0 +1,48 @@
+[
+	{
+		"mainCategories": [["Devices"]],
+		"subCategories": ["Tools","clb_tool"],
+		"name": "Explore Directory",
+		"resourceType": "folder",
+		"resourceClass": ["other"],
+		"devices": ["F29H85x"],
+		"location": "$(tools_path)/clb_tool/clb_syscfg",
+		"description": ""
+	},
+	{
+		"mainCategories": [["Devices"]],
+		"subCategories": ["Tools","clb_tool"],
+		"mainCategories": [["Devices"]],
+		"subCategories": ["Tools","clb_tool","Documents"],
+		"name": "CLB Tool Users Guide",
+		"resourceType": "web.page",
+		"resourceClass": ["other"],
+		"devices": ["F29H85x"],
+		"location": "https://www.ti.com/lit/pdf/spruir8",
+		"description": "This user's guide describes the structure and use of the Configurable Logic Block (CLB) tool. It is assumed that the reader is already familiar with the architecture of the CLB and with the CCS IDE."
+	},
+	{
+		"mainCategories": [["Devices"]],
+		"subCategories": ["Tools","clb_tool"],
+		"mainCategories": [["Devices"]],
+		"subCategories": ["Tools","clb_tool","Documents"],
+		"name": "Designing With the C2000 CLB",
+		"resourceType": "web.page",
+		"resourceClass": ["other"],
+		"devices": ["F29H85x"],
+		"location": "https://www.ti.com/lit/an/spracl3/spracl3.pdf",
+		"description": "The C2000 configurable logic block (CLB) is a collection of configurable blocks that interconnect through software to implement custom digital logic functions. In this application report, a simple custom digital logic system is designed and tested. Each configurable block inside the CLB module is examined and set up to implement the desired custom system"
+	},
+	{
+		"mainCategories": [["Devices"]],
+		"subCategories": ["Tools","clb_tool"],
+		"mainCategories": [["Devices"]],
+		"subCategories": ["Tools","clb_tool","Documents"],
+		"name": "Migrate Custom Logic FPGA CPLD",
+		"resourceType": "web.page",
+		"resourceClass": ["other"],
+		"devices": ["F29H85x"],
+		"location": "https://www.ti.com/lit/an/spraco2a/spraco2a.pdf",
+		"description": "The Configurable Logic Block (CLB) reduces total system cost and enhances functionality by absorbing external logic into C2000™ microcontrollers. CLB uses function calls and a GUI-based programming tool called SysConfig to absorb external logic into the microcontroller without having to learn Hardware Description Language like VHDL or Verilog. This Report shows programmers, hardware engineers and system designers how to translate FPGA- or CPLD-based custom logic (that has been originally defined in HDL) to a CLB form that can be programmed into C2000 MCUs."
+	}
+]

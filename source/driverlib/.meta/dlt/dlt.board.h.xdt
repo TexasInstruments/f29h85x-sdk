@@ -1,0 +1,18 @@
+% var moduleName = "dlt"
+% var module = system.modules['/driverlib/' + moduleName + '.js'];
+% var inst = module.$static;
+%if (module != null)
+%{
+//*****************************************************************************
+//
+// DLT Configurations
+//
+//*****************************************************************************
+    % if (inst.useDMA) {
+//
+// Rx Defines
+// Pointer to be declared in example code before use
+//
+#define myDLT_`system.context`FIFO_DMA_ADDRESS ((uint32_t *)(`system.context`DLTFIFO_BASE + DLT_O_FIFO_MEM(0U)))
+    % }
+%}

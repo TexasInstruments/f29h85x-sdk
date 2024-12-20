@@ -1,0 +1,47 @@
+//*****************************************************************************
+//
+// An equivalent function of copy_in (temporary)
+//
+//*****************************************************************************
+extern void Device_copy_in(COPY_TABLE *tp);
+
+//*****************************************************************************
+//!
+//!
+//! @brief Function to boot CPU2.
+//!
+//! @param copyTable is the copy table created by the CPU2 linker.
+//! @param reset_vector is the address to which the CPU2 should boot.
+//! Loaded by CPU1.LINK2 application code prior to releasing this CPU's reset.
+//! @param link is the SSU link to which the CPU2 should boot.
+//! Loaded by CPU1.LINK2 application code prior to releasing this CPU's reset.
+//!
+//! This function must be called after Device_init function.
+//!
+//! @return None
+//
+//*****************************************************************************
+extern void
+Device_bootCPU2(COPY_TABLE *copyTable, uint32_t reset_vector, SSU_Link link);
+
+//*****************************************************************************
+//!
+//!
+//! @brief Function to boot CPU3.
+//!
+//! @param copyTable is the copy table created by the CPU3 linker. When the
+//! FLASH bank Mode 2/3 is used, CPU3 has dedicated FLASH region where its
+//! application code is loaded. In such a case, pass the value '0' to the
+//! \e copyTable parameter.
+//! @param reset_vector is the address to which the CPU3 should boot.
+//! Loaded by CPU1.LINK2 application code prior to releasing this CPU's reset.
+//! @param link is the SSU link to which the CPU3 should boot.
+//! Loaded by CPU1.LINK2 application code prior to releasing this CPU's reset.
+//!
+//! This function must be called after Device_init function.
+//!
+//! @return None
+//
+//*****************************************************************************
+extern void
+Device_bootCPU3(COPY_TABLE *copyTable, uint32_t reset_vector, SSU_Link link);

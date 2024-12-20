@@ -1,0 +1,13 @@
+[
+	{
+		"id": "f29h85x-sdk",
+		"name": "F29H85X-SDK  ",
+		"version": "1.00.00.00",
+		"type": "software",
+		"license": "./license.html",
+		"image": "./images/F29x-sdk.png",
+		"description": "F29H85x-SDK is the Foundational SDK for C2000™ F29x real time MCUs. It is a collection of software components which enable easy use of the various hardware modules. It consists of cohesive set of development tools including device-specific drivers, libraries (Math, DSP, Control), peripheral examples, RTOS, utilities, hardware files, and documentation. Some of these software components can be directly used in customer code as building blocks – drivers, libraries. It also contains a rich set of examples to help unlock the full potential of the core and its peripherals. It also supports Sysconfig tool which provide an intuitive GUI for system and peripheral initialization.",
+		"devices": ["F29H85x"],
+		"metadataVersion": "3.1.0"
+	}
+]

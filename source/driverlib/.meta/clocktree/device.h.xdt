@@ -1,0 +1,44 @@
+% var moduleName = "clock"
+% var module = system.modules['/driverlib/' + moduleName + '.js'];
+% let Common   = system.getScript("/driverlib/Common.js");
+% let clockConfig = system.getScript("/driverlib/device_driverlib_peripherals/" +
+%        Common.getDeviceName().toLowerCase() + "_clockconfig.js");
+%
+%if (module != null) {
+% var inst = module.$static
+%
+//*****************************************************************************
+//
+// SYSCTL Configurations
+//
+//*****************************************************************************
+
+#define DEVICE_INTOSC2_FREQ  `inst.intOsc2Freq`
+#define DEVICE_INTOSC1_FREQ  `inst.intOsc1Freq`
+% if(inst.useXTAL) {
+#define DEVICE_XTAL_FREQ     `inst.intOsc1Freq`
+% }
+% if(inst.useAuxClkIn) {
+#define DEVICE_AUXCLKIN_FREQ `inst.auxClkFreq`
+% }
+
+#define DEVICE_PLLRAW_FREQ   `inst.pllrawClk`
+#define DEVICE_SYSCLK_FREQ   `inst.sysClk`
+
+#define DEVICE_TIMER2_FREQ   `inst.timer2Clk`
+#define DEVICE_EPWM_FREQ     `inst.epwmClk`
+#define DEVICE_EMIF1_FREQ    `inst.emif1Clk`
+#define DEVICE_LINA_FREQ     `inst.linAClk`
+#define DEVICE_LINB_FREQ     `inst.linBClk`
+#define DEVICE_ECAT_FREQ     `inst.ecatClk`
+#define DEVICE_HSM_FREQ      `inst.hsmClk`
+
+% clockConfig.SysCtl_MCANInstance.forEach(x=> {
+%       var mcanInst = x.name.replace("SYSCTL_MCAN_", "")
+#define DEVICE_MCAN`mcanInst`_FREQ `inst["mcan" + mcanInst + "Clk"]`
+% })
+
+#define DEVICE_DELAY_US(x) SysCtl_delay(((((long double)(x)) / (1000000.0L /  \
+                              (long double)DEVICE_SYSCLK_FREQ)) - 11.0L) / 4.0L)
+
+%}

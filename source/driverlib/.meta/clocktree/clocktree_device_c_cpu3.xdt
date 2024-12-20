@@ -1,0 +1,42 @@
+%%{
+let clocktree_common                        = system.getScript("/driverlib/.meta/clocktree/clocktree_common.js");
+let Common                                  = system.getScript("/driverlib/Common.js");
+
+var TriCore_CPU3 	= clocktree_common.TriCore;
+let TriCore_Clock_CPU3 = system.getTemplate("/driverlib/clocktree/triCore/triCore_SetClock_CPU3.xdt");
+
+var DualCore_CPU3 	= clocktree_common.DualCore;
+var SingleCore_CPU3  = clocktree_common.SingleCore;
+
+const multi_core = clocktree_common.multi_core;
+const dual_core = clocktree_common.dual_core;
+const tri_core = clocktree_common.tri_core;
+const PLL_type1  = clocktree_common.PLL_type1;
+const PLL_type2  = clocktree_common.PLL_type2;
+
+const device  = clocktree_common.device;
+%%}
+%
+//*****************************************************************************
+//
+// CLOCK Configurations
+//
+//*****************************************************************************
+void CLOCK_init()
+{
+% if(multi_core.includes(device))
+%{
+%    if(dual_core.includes(device)) 
+%    {
+%    }
+%    else if(tri_core.includes(device)) 
+%    {
+    `TriCore_Clock_CPU3("")`
+%    }
+%}
+%
+%
+% if(!multi_core.includes(device) && (PLL_type1.includes(device) || PLL_type2.includes(device)))
+%{
+%}
+}

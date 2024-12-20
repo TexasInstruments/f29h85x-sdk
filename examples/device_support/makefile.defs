@@ -1,0 +1,31 @@
+ifeq ($(CCS_HOST_OS),linux)
+    CHECK_PYTHON3 = $(shell command -v python3 2>/dev/null)
+    ifeq ($(CHECK_PYTHON3), )
+        PYTHON := python
+    else
+        PYTHON := python3
+    endif
+	RENAME  := mv
+    DELETE  := rm
+    COPY    := cp
+else ifeq ($(CCS_HOST_OS),win32)
+	PYTHON  := py
+    RENAME  := ren
+    DELETE  := del
+    COPY    := copy
+else
+    PYTHON  := python3
+	RENAME  := mv
+    DELETE  := rm
+    COPY    := cp
+endif
+
+ifeq ($(CCS_HOST_OS),win32)
+    CPU2APP_REL_PATH := ..\\..\\cpu2App.bin
+    CPU3APP_REL_PATH := ..\\..\\cpu3App.bin
+    SECCFGCPU3_REL_PATH := ..\\..\\seccfgCpu3.bin
+else
+    CPU2APP_REL_PATH := ../../cpu2App.bin
+    CPU3APP_REL_PATH := ../../cpu3App.bin
+    SECCFGCPU3_REL_PATH := ../../seccfgCpu3.bin
+endif

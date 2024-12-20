@@ -1,0 +1,59 @@
+% let Common        = system.getScript("/ti/security/Common.js");
+% let currCore      = system.context
+% let memAllocFinal = Common.allocateAllMemoryRegions()
+% let result        = memAllocFinal[currCore]
+% let flashSpace    = memAllocFinal["flashSpace"]
+
+% if(result && result.length){
+**Total Memory Region Count: `result.length`**
+
+% result = result.sort((a,b) => a.startAddr - b.startAddr)
+% let periphRegions = result.filter(x => x.type == "Peripheral")
+% if(periphRegions.length){
+**Peripheral Allocation**
+Memory Region | Start Address | Size (kB) | Peripherals Included
+--- | --- | --- | ---
+% periphRegions.forEach((a) => {
+% let regionLink = a.autoPeriphRegion ? a.name : "[" + a.name + "](" + system.getReference(a.memRegion) + ")"
+`regionLink` | 0x`a.startAddr.toString(16)` | `(a.endAddr - a.startAddr)/1024` | `a.peripheralList.join(", ")`
+% })
+%}
+
+% let ramRegions = result.filter(x => x.memType == "RAM")
+% let compiledListRam = Common.getSummaryList(ramRegions, "RAM")
+% if(compiledListRam.length){
+**RAM Allocation**
+Memory Region | Start Address | Size (kB) | Type
+--- | --- | --- | ---
+% compiledListRam.forEach((a) => {
+%   if(a.name == null){
+_Unused_ | 0x`a.startAddr.toString(16)` | `(a.endAddr - a.startAddr)/1024` | -
+%   } else {
+%       let regionLink = a.implicitRegion ? a.name : "[" + a.name + "](" + system.getReference(a.memRegion) + ")"
+`regionLink` | 0x`a.startAddr.toString(16)` | `(a.endAddr - a.startAddr)/1024` | `a.type`
+%   } 
+% })
+%}
+
+% let flashRegions = result.filter(x => x.memType == "Flash")
+% let compiledListFlash = Common.getSummaryList(flashRegions, "Flash", flashSpace)
+% if(compiledListFlash.length){
+**Flash Allocation**
+Memory Region | Start Address | Size (kB) | Type
+--- | --- | --- | --- 
+% compiledListFlash.forEach((a) => {
+%   if(a.name == null){
+_Unused_ | 0x`a.startAddr.toString(16)` | `(a.endAddr - a.startAddr)/1024` | - 
+%   } else {
+%       let regionLink = a.memRegion ? "[" + a.name + "](" + system.getReference(a.memRegion) + ")" : a.name 
+`regionLink` | 0x`a.startAddr.toString(16)` | `(a.endAddr - a.startAddr)/1024` | `a.type`
+%   } 
+% })
+%}
+
+% } else {
+
+**No memory regions on this core**
+% }
+
+

@@ -1,0 +1,46 @@
+<projectSpec>
+  <project
+        name="transfer_epwm_dlt"
+        device       = "F29H850TU9"
+        cgtVersion   = "1.0.0"
+        toolChain    = "TICLANG"
+        products     = "sysconfig;f29h85x-sdk"
+        connection   = "TIXDS110_Connection.xml"
+        >
+
+    <configuration name="RAM"   compilerBuildOptions="-O1 -g -DDEBUG -Qunused-arguments" linkerBuildOptions="--stack_size=0x2000 --heap_size=0x400 --diag_suppress=10325-D --diag_suppress=10063-D"
+     postBuildStep=
+       '${CG_TOOL_OBJCOPY} -O binary ${ProjName}.out ${ProjName}.bin;
+        $(PYTHON) ${COM_TI_MCU_SDK_INSTALL_DIR}/tools/boot/signing/mcu_rom_image_gen.py --image-bin ${ProjName}.bin --core C29 --swrv 1 --loadaddr 0x200E1000 --sign-key ${COM_TI_MCU_SDK_INSTALL_DIR}/tools/boot/signing/mcu_gpkey.pem --out-image ${ProjName}_cert.bin --device f29h85x --boot RAM --img_integ no;
+        $(DELETE) C29-cert-pad.bin;
+        ;if ${DLT_SUPPORT} == 1 ${NODE_TOOL} ${BuildDirectory}\syscfg\dlt\generate_assoc_table_v1.01.00.js "${CG_TOOL_ROOT}/bin/c29clang.exe -Xclang -ast-dump=json" "-c -I"${COM_TI_F29H85X_SDK_INSTALL_DIR}/source" -I"${COM_TI_F29H85X_SDK_INSTALL_DIR}/source/driverlib" -I"${COM_TI_F29H85X_SDK_INSTALL_DIR}/source/bitfields" -I"${COM_TI_F29H85X_SDK_INSTALL_DIR}/examples/device_support/include" -I"${COM_TI_F29H85X_SDK_INSTALL_DIR}/source/rtlibs/dcl" -I"${COM_TI_F29H85X_SDK_INSTALL_DIR}/source/rtlibs/dsp/fpu/fpu32/fft" -I"${COM_TI_F29H85X_SDK_INSTALL_DIR}/source/rtlibs/iqmath" -I"${COM_TI_F29H85X_SDK_INSTALL_DIR}/source/kernel/freertos/Source/include" -I"${COM_TI_F29H85X_SDK_INSTALL_DIR}/source/kernel/freertos/Source/portable/CCS/C2000_C29x" -I"${PROJECT_ROOT}/" -I"${CG_TOOL_INCLUDE_PATH}" -I"${PROJECT_ROOT}/RAM/syscfg" -I"${CG_TOOL_INCLUDE_PATH}" -DDEBUG -g";
+        ;if ${GUI_SUPPORT} == 1 ${BuildDirectory}\syscfg\gui_setup.bat;'
+    />
+    <configuration name="FLASH" compilerBuildOptions="-O1 -g -DDEBUG -Qunused-arguments -D_FLASH" linkerBuildOptions="--stack_size=0x2000 --heap_size=0x400 --diag_suppress=10325-D --diag_suppress=10063-D"
+     postBuildStep=
+       '${CG_TOOL_OBJCOPY} --remove-section=cert -O binary ${ProjName}.out ${ProjName}.bin;
+        $(PYTHON) ${COM_TI_MCU_SDK_INSTALL_DIR}/tools/boot/signing/mcu_rom_image_gen.py --image-bin ${ProjName}.bin --core C29 --swrv 1 --loadaddr 0x10001000 --sign-key ${COM_TI_MCU_SDK_INSTALL_DIR}/tools/boot/signing/mcu_gpkey.pem --out-image ${ProjName}_cert.bin --device f29h85x --boot FLASH --img_integ no;
+        ${CG_TOOL_OBJCOPY} --update-section cert=C29-cert-pad.bin ${ProjName}.out ${ProjName}_cert.out;
+        $(DELETE) ${ProjName}.out C29-cert-pad.bin;
+        $(RENAME) ${ProjName}_cert.out ${ProjName}.out;
+        ;if ${DLT_SUPPORT} == 1 ${NODE_TOOL} ${BuildDirectory}\syscfg\dlt\generate_assoc_table_v1.01.00.js "${CG_TOOL_ROOT}/bin/c29clang.exe -Xclang -ast-dump=json" "-c -I"${COM_TI_F29H85X_SDK_INSTALL_DIR}/source" -I"${COM_TI_F29H85X_SDK_INSTALL_DIR}/source/driverlib" -I"${COM_TI_F29H85X_SDK_INSTALL_DIR}/source/bitfields" -I"${COM_TI_F29H85X_SDK_INSTALL_DIR}/examples/device_support/include" -I"${COM_TI_F29H85X_SDK_INSTALL_DIR}/source/rtlibs/dcl" -I"${COM_TI_F29H85X_SDK_INSTALL_DIR}/source/rtlibs/dsp/fpu/fpu32/fft" -I"${COM_TI_F29H85X_SDK_INSTALL_DIR}/source/rtlibs/iqmath" -I"${COM_TI_F29H85X_SDK_INSTALL_DIR}/source/kernel/freertos/Source/include" -I"${COM_TI_F29H85X_SDK_INSTALL_DIR}/source/kernel/freertos/Source/portable/CCS/C2000_C29x" -I"${PROJECT_ROOT}/" -I"${CG_TOOL_INCLUDE_PATH}" -I"${PROJECT_ROOT}/RAM/syscfg" -I"${CG_TOOL_INCLUDE_PATH}" -DDEBUG -g";
+        ;if ${GUI_SUPPORT} == 1 ${BuildDirectory}\syscfg\gui_setup.bat;'
+    />
+    <buildVariable name="DLT_SUPPORT" value="0" scope="project" />
+    <buildVariable name="GUI_SUPPORT" value="0" scope="project" />
+
+    <file action="link" path="${COM_TI_MCU_SDK_INSTALL_DIR}/examples/device_support/source/codestartbranch.asm" targetDirectory="device" />
+    <file action="link" path="${COM_TI_MCU_SDK_INSTALL_DIR}/examples/device_support/include/driverlib.h"        targetDirectory="device" />
+    <file action="link" path="${COM_TI_MCU_SDK_INSTALL_DIR}/source/bitfields/bitfield_structs.c"                targetDirectory="device" />
+    <file action="copy" path="${COM_TI_MCU_SDK_INSTALL_DIR}/examples/device_support/makefile.defs"              targetDirectory="" />
+
+    <file action="copy" path="${COM_TI_MCU_SDK_GENERIC_LNK_CMD_RAM}"  targetDirectory="" applicableConfigurations="RAM" />
+    <file action="copy" path="${COM_TI_MCU_SDK_GENERIC_LNK_CMD_FLASH}"  targetDirectory="" applicableConfigurations="FLASH" />
+	<file path="${COM_TI_MCU_SDK_INSTALL_DIR}/docs/html/EXAMPLES_DRIVERS_TRANSFER_EPWM_DLT.html"
+         openOnCreation="false" excludeFromBuild="false" targetName="README.html" action="link">
+    </file>
+
+    <file action="copy" path="../transfer_epwm_dlt.c" targetDirectory="" />
+    <file action="copy" path="../transfer_epwm_dlt.syscfg" targetDirectory="" />
+  </project>
+</projectSpec>

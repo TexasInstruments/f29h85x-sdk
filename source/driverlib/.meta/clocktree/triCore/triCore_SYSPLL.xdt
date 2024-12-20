@@ -1,0 +1,209 @@
+%%{
+/////////////////////////////////////////////////////////////////////////////////////////
+let clocktree_common   = system.getScript("../clocktree_common.js");
+
+const PLL_type1 = clocktree_common.PLL_type1;
+const PLL_type2 = clocktree_common.PLL_type2;
+
+const AUXPLL_Support 		= clocktree_common.AUXPLL_Support;
+const EPWM_div_support 		= clocktree_common.EPWM_div_support;
+const xtal_x1_macro 		= clocktree_common.xtal_x1_macro;
+var XTAL_OR_X1 				= clocktree_common.XTAL_OR_X1;
+
+const device  = clocktree_common.device
+
+//////////////////////////////////////////////////
+// Frequency labels
+//////////////////////////////////////////////////
+const OSCCLK_d 		 = system.clockTree.OSCCLK.in
+const PLLRAWCLK_d	 = system.clockTree.PLLRAWCLK.in
+const PLLSYSCLK_d	 = system.clockTree.PLLSYSCLK.in
+const CPU1_CPUCLK_d	 = system.clockTree.CPU1_CPUCLK.in
+const CPU2_CPUCLK_d	 = system.clockTree.CPU2_CPUCLK.in
+const CPU3_CPUCLK_d	 = system.clockTree.CPU3_CPUCLK.in
+
+const INTOSC2	= system.clockTree.INTOSC2.out
+const INTOSC1	= system.clockTree.INTOSC1.out
+const AUXCLK 	= system.clockTree.AUXCLK.AUXCLKIN
+
+//////////////////////////////////////////////////
+// OSCCLK source
+//////////////////////////////////////////////////
+
+var OSCCLKSRCSEL	= system.clockTree.OSCCLKSRCSEL
+
+var oscclkSrc = "SYSCTL_OSCSRC_OSC2"
+var oscclksource
+var oscclk = 10
+
+//
+// XTAL Single-Ended replaces X1 for F29H85x
+//
+switch(OSCCLKSRCSEL.inputSelect){
+	case "INTOSC1":
+		oscclkSrc 		= "SYSCTL_OSCSRC_OSC1"
+		oscclksource 	= OSCCLKSRCSEL.inputSelect
+		oscclk = 10
+		break
+	case "INTOSC2":
+		oscclkSrc 	 	= "SYSCTL_OSCSRC_OSC2"
+		oscclksource 	= OSCCLKSRCSEL.inputSelect
+		oscclk = 10
+		break
+	case "X1_XTAL":
+		if((XTAL_OR_X1.inputSelect == "XTAL") || xtal_x1_macro.includes(device))
+		{
+			oscclkSrc 	 	= "SYSCTL_OSCSRC_XTAL"
+		}
+		else
+		{
+			oscclkSrc 	 	= "SYSCTL_OSCSRC_XTAL_SE"
+		}
+			oscclksource 	= XTAL_OR_X1.inputSelect
+			oscclk 			= XTAL_OR_X1.External_Clock
+			var xtalFreq 	= oscclk
+			break
+}
+
+//////////////////////////////////////////////////
+// IMULT, FMULT (PLLRAWCLK) source
+//////////////////////////////////////////////////
+
+var SYSPLLCTL1		= system.clockTree.SYSPLLCTL1
+
+var PLL_IMULT_mv  	= system.clockTree.PLL_IMULT.multiplyValue
+var PLL_IMULT 		= "SYSCTL_IMULT(" + PLL_IMULT_mv + ")"
+
+var SYSCLKDIVSEL_dv = system.clockTree.SYSCLKDIVSEL.divideValue
+
+var PLL_DIVSEL		= "SYSCTL_SYSDIV(" + SYSCLKDIVSEL_dv + ")"
+
+var PLL_FMULT
+if(PLL_type1.includes(device))
+{
+var PLL_FMULT_mv    = system.clockTree.PLL_FMULT.multiplyValue
+	switch(PLL_FMULT_mv){
+		case 0:
+			PLL_FMULT = "SYSCTL_FMULT_NONE"
+			break
+		case 0.25:
+			PLL_FMULT = "SYSCTL_FMULT_1_4"
+			break
+		case 0.5:
+			PLL_FMULT = "SYSCTL_FMULT_1_2"
+			break
+		case 0.75:
+			PLL_FMULT = "SYSCTL_FMULT_3_4"
+			break
+	}
+}
+
+var PLL_STS 	= 'SYSCTL_PLL_ENABLE'
+var SYSPLL_STS 	= 'DISABLED'
+
+if(SYSPLLCTL1.inputSelect == 'OSCCLK')
+{
+	PLL_STS 	= 'SYSCTL_PLL_DISABLE'
+	SYSPLL_STS	= 'DISABLED'
+}
+else
+{
+	PLL_STS = 'SYSCTL_PLL_ENABLE'
+	SYSPLL_STS	= 'ENABLED'
+}
+
+
+if(PLL_type2.includes(device))
+{
+	var PLL_REFDIV_dv = system.clockTree.PLL_REFDIV.divideValue
+	var PLL_REFDIV    = "SYSCTL_REFDIV(" + PLL_REFDIV_dv + ")"
+	
+	var PLL_ODIV_dv = system.clockTree.PLL_ODIV.divideValue
+	var PLL_ODIV    = "SYSCTL_ODIV(" + PLL_ODIV_dv + ")"
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+%%}
+
+//*****************************************************************************
+//
+// Summary of SYSPLL related clock configuration
+//
+//*****************************************************************************
+//
+#define DEVICE_INTOSC2_FREQ  	`INTOSC2`000000
+#define DEVICE_INTOSC1_FREQ  	`INTOSC1`000000
+% if(OSCCLKSRCSEL.inputSelect == "X1_XTAL") {
+	% xtalFreq *= Math.pow(10,6)
+#define DEVICE_XTAL_FREQ     	`xtalFreq`
+% }  
+% var AUXCLK_dv =  AUXCLK * Math.pow(10,6)
+#define DEVICE_AUXCLKIN_FREQ	`AUXCLK_dv`
+% var PLLRAWCLK_dv =  PLLRAWCLK_d * Math.pow(10,6)
+#define DEVICE_PLLRAW_FREQ   	`PLLRAWCLK_dv`
+
+% if(PLL_type2.includes(device))
+% {
+	%if(PLL_STS == 'SYSCTL_PLL_ENABLE')
+		%	{
+// SYSPLL ENABLED
+% var PLLSYSCLK_dv =  PLLSYSCLK_d * Math.pow(10,6)
+#define DEVICE_SYSCLK_FREQ		`PLLSYSCLK_dv`
+		%   }
+		%else
+		%	{
+// SYSPLL DISABLED
+% var OSCCLK_dv =  OSCCLK_d * Math.pow(10,6)
+#define DEVICE_SYSCLK_FREQ		`OSCCLK_dv`
+		%   }	
+% }
+% var OSCCLK_dvv =  OSCCLK_d * Math.pow(10,6)
+#define DEVICE_OSCSRC_FREQ		`OSCCLK_dvv`
+
+% let   TIMER2CLK_d       = system.clockTree.TIMER2CLK.in
+% TIMER2CLK_d *= Math.pow(10,6)
+#define DEVICE_TIMER2_FREQ   	`TIMER2CLK_d`
+%if(EPWM_div_support.includes(device)) {
+% let   EPWMCLK_d       = system.clockTree.PLLSYSCLK.in / system.clockTree.EPWMCLKDIV.divideValue
+% EPWMCLK_d *= Math.pow(10,6)
+#define DEVICE_EPWM_FREQ     	`EPWMCLK_d`
+%}
+% let   EMIF1_d       = system.clockTree.PLLSYSCLK.in / system.clockTree.EMIF1CLKDIV.divideValue
+% EMIF1_d *= Math.pow(10,6)
+#define DEVICE_EMIF1_FREQ     	`EMIF1_d`
+% var   LINA_d       = system.clockTree.PLLSYSCLK.in / system.clockTree.LINACLKDIV.divideValue
+% LINA_d *= Math.pow(10,6)
+#define DEVICE_LINA_FREQ     	`LINA_d`
+% var   LINB_d       = system.clockTree.PLLSYSCLK.in / system.clockTree.LINBCLKDIV.divideValue
+% LINB_d *= Math.pow(10,6)
+#define DEVICE_LINB_FREQ     	`LINB_d`
+% var   ECAT_d       = system.clockTree.PLLCLK.in / system.clockTree.ECATDIV.divideValue
+% ECAT_d *= Math.pow(10,6)
+#define DEVICE_ECAT_FREQ     	`ECAT_d`
+% var   HSM_d       = system.clockTree.PLLSYSCLK.in / system.clockTree.HSMCLKDIV.divideValue
+% HSM_d *= Math.pow(10,6)
+#define DEVICE_HSM_FREQ     	`HSM_d`
+
+% var   MCANA_d       = system.clockTree.MCANABITCLK.in
+% MCANA_d *= Math.pow(10,6)
+#define DEVICE_MCANA_FREQ		`MCANA_d`
+% var   MCANB_d       = system.clockTree.MCANBBITCLK.in
+% MCANB_d *= Math.pow(10,6)
+#define DEVICE_MCANB_FREQ		`MCANB_d`
+% var   MCANC_d       = system.clockTree.MCANCBITCLK.in
+% MCANC_d *= Math.pow(10,6)
+#define DEVICE_MCANC_FREQ		`MCANC_d`
+% var   MCAND_d       = system.clockTree.MCANDBITCLK.in
+% MCAND_d *= Math.pow(10,6)
+#define DEVICE_MCAND_FREQ		`MCAND_d`
+% var   MCANE_d       = system.clockTree.MCANEBITCLK.in
+% MCANE_d *= Math.pow(10,6)
+#define DEVICE_MCANE_FREQ		`MCANE_d`
+% var   MCANF_d       = system.clockTree.MCANFBITCLK.in
+% MCANF_d *= Math.pow(10,6)
+#define DEVICE_MCANF_FREQ		`MCANF_d`
+
+
+
+															 		
+

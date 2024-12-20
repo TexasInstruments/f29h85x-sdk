@@ -1,0 +1,39 @@
+% var nameOfModule = "watchdog";
+% var module = system.modules['/driverlib/' + nameOfModule + '.js'];
+% let Common   = system.getScript("/driverlib/Common.js");
+% var nameOfPeripheral = module.peripheralName;
+//*****************************************************************************
+//
+// WATCHDOG Configurations
+//
+//*****************************************************************************
+void `nameOfPeripheral`_init(){
+
+%if (module != null)
+%{
+% var instance = module.$static;
+	SysCtl_disableWatchdog();
+	SysCtl_setWatchdogMode(`instance.wdMode`);
+	% if (instance.wdPredivider){
+	SysCtl_setWatchdogPredivider(`instance.wdPredivider`);
+	% }
+	SysCtl_setWatchdogPrescaler(`instance.wdPrescalar`);
+	SysCtl_setWatchdogWindowValue(`instance.wdWindowThreshold`);
+	% if (instance.wdStandbyWakeup) {
+	SysCtl_enableWatchdogStandbyWakeup();
+	% }
+	% if (instance.wdHaltEnable) {
+	SysCtl_enableWatchdogInHalt();
+	% }
+	% if (instance.enableModule) {
+	SysCtl_delay(6);
+	SysCtl_enableWatchdog();
+	% } else{
+	//
+	// This Watchdog is not started in this function.
+	// The application SW must call the WATCHDOG_enableModule function when needed.
+	// WATCHDOG_enableModule_enableModule(`instance.$name`_BASE);
+	//
+	% }
+}
+%}

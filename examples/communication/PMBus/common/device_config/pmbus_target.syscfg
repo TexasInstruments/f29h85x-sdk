@@ -1,0 +1,66 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --device "F29H85x" --part "F29H85x_100PZS" --package "100PZS" --context "CPU1" --product "MCU_SDK_F29H85x@1.00.00.00_EA2"
+ * @v2CliArgs --device "TMS320F29H859TU-Q1" --package "100PZS" --variant "TMS320F29H859TU8" --context "CPU1" --product "MCU_SDK_F29H85x@1.00.00.00_EA2"
+ * @versions {"tool":"1.21.1+3772"}
+ */
+
+/**
+ * Import the modules used in this configuration.
+ */
+const clocktree = scripting.addModule("/driverlib/clocktree.js");
+const jtag      = scripting.addModule("/driverlib/jtag.js");
+const pmbus     = scripting.addModule("/driverlib/pmbus.js", {}, false);
+const pmbus1    = pmbus.addInstance();
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+const divider14       = system.clockTree["PLL_ODIV"];
+divider14.divideValue = 3;
+
+const divider15       = system.clockTree["PLL_REFDIV"];
+divider15.divideValue = 1;
+
+const multiplier1         = system.clockTree["PLL_IMULT"];
+multiplier1.multiplyValue = 30;
+
+const mux10       = system.clockTree["XTAL_OR_X1"];
+mux10.inputSelect = "XTAL";
+
+const pinFunction3     = system.clockTree["XTAL"];
+pinFunction3.XTAL_Freq = 20;
+
+
+pmbus1.$name                      = "myPMBUS0";
+pmbus1.useInterrupts              = true;
+pmbus1.mode                       = "Target";
+pmbus1.OwnAddress                 = 0x6A;
+pmbus1.TargetAddress              = 0x1A;
+pmbus1.enabledInterrupts          = ["PMBUS_INT_DATA_READY","PMBUS_INT_DATA_REQUEST","PMBUS_INT_EOM","PMBUS_INT_TARGET_ADDR_READY"];
+pmbus1.registerInterrupts         = true;
+pmbus1.configTarget               = ["PMBUS_TARGET_AUTO_ACK_4_BYTES","PMBUS_TARGET_ENABLE_MANUAL_ACK","PMBUS_TARGET_ENABLE_PEC_PROCESSING"];
+pmbus1.BaudRate                   = 9000000;
+pmbus1.alertQual.padConfig        = "OD";
+pmbus1.ctlQual.padConfig          = "OD";
+pmbus1.sclQual.padConfig          = "OD";
+pmbus1.sdaQual.padConfig          = "OD";
+pmbus1.periphClock.$name          = "driverlib_perClock0";
+pmbus1.periphConfig.$name         = "driverlib_perConfig0";
+pmbus1.pmbusInt.interruptPriority = 40;
+pmbus1.pmbusInt.contextID         = "INTERRUPT_CONTEXT_AGNOSTIC";
+
+/**
+ * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
+ * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
+ * re-solve from scratch.
+ */
+jtag.JTAG.$suggestSolution                   = "JTAG";
+jtag.JTAG.tdoPin.$suggestSolution            = "GPIO223/TDO";
+jtag.JTAG.tdiPin.$suggestSolution            = "GPIO222/TDI";
+pmbus1.pmbus.$suggestSolution                = "PMBUSA";
+pmbus1.pmbus.pmbus_alertPin.$suggestSolution = "GPIO11";
+pmbus1.pmbus.pmbus_ctlPin.$suggestSolution   = "GPIO12";
+pmbus1.pmbus.pmbus_sclPin.$suggestSolution   = "GPIO10";
+pmbus1.pmbus.pmbus_sdaPin.$suggestSolution   = "GPIO22";

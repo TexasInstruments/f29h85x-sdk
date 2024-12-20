@@ -1,0 +1,20 @@
+%%{
+let device_common   				= system.getScript("/driverlib/.meta/device/functions_c/device_common.js");
+let clocktree_common                        = system.getScript("/driverlib/.meta/clocktree/clocktree_common.js");
+let Common   					= system.getScript("/driverlib/Common.js");
+
+const clocktree_PLL_Ctl_Dividers_Type3 		= device_common.clocktree_PLL_Ctl_Dividers_Type3;
+const device  					= device_common.device;
+ 
+%%}
+//*****************************************************************************
+//
+// CLOCK Configurations
+//
+//*****************************************************************************
+void CLOCK_init()
+{
+% if(clocktree_PLL_Ctl_Dividers_Type3.includes(device))
+	% {
+	% }
+}

@@ -1,0 +1,147 @@
+% var moduleName = "erad"
+% var module = system.modules['/driverlib/' + moduleName + '.js'];
+% let Common   = system.getScript("/driverlib/Common.js");
+% var nameOfPeripheral = module.peripheralName;
+%
+% var usedCounters = module.$static.erad_counter;
+% var usedBusComps = module.$static.erad_buscomp;
+% var usedANDMasks = module.$static.erad_and_mask;
+% var usedORMasks = module.$static.erad_or_mask;
+% if ((usedCounters.length | usedBusComps.length | usedANDMasks.length | usedORMasks.length) != 0)
+% {
+//*****************************************************************************
+//
+// ERAD Configurations
+//
+//*****************************************************************************
+void `nameOfPeripheral`_init(){
+    % var modulesEnable = ""
+    //
+    // Bus Comparator initialization
+    //
+    ERAD_BusComp_Config buscomp_params;
+% for (var BusCompInstanceIndex = 0; BusCompInstanceIndex < usedBusComps.length; BusCompInstanceIndex++)
+% {
+%   var BusCompInstance = usedBusComps[BusCompInstanceIndex];
+    //
+    // `BusCompInstance.$name` initialization
+    //
+    ERAD_setBusCompOwnership(`BusCompInstance.$name`, ERAD_OWNER_APPLICATION);
+    ERAD_disableBusCompModule(`BusCompInstance.$name`);
+    buscomp_params.bus_sel = `BusCompInstance.ebcBusSel`;
+    buscomp_params.comp_mode = `BusCompInstance.ebcMode`;
+    % if (BusCompInstance.ebcAddressInputMode == "MANUAL"){
+        % if(BusCompInstance.ebcMode == "ERAD_BUSCOMP_COMPMODE_EQ"){
+    buscomp_params.mask = `BusCompInstance.ebcMask`;
+        % }
+	buscomp_params.reference = `BusCompInstance.ebcRef`;
+    % }
+    % else{
+    buscomp_params.mask = 0x0;
+	buscomp_params.reference = (uint64_t)`BusCompInstance.ebcRefCodeName`;
+    % }
+    buscomp_params.enable_stop = `BusCompInstance.haltCPU`;
+    buscomp_params.enable_int = `BusCompInstance.interrupt`;
+    buscomp_params.enable_nmi = `BusCompInstance.NMI`;
+    % if(BusCompInstance.stackQual) {
+    buscomp_params.enable_stack_qual = `BusCompInstance.stackQual`;
+    % }
+    % if(BusCompInstance.spselEnable) {
+    buscomp_params.enable_spsel = `BusCompInstance.spselEnable`;
+    buscomp_params.spsel_match = `BusCompInstance.spsel`;
+    % }
+    ERAD_configBusComp(`BusCompInstance.$name`, buscomp_params);
+    % modulesEnable = modulesEnable + "\tERAD_enableBusCompModule(" + BusCompInstance.$name + ");\n"
+
+% }
+
+    //
+    // Counter initialization
+    //
+    ERAD_Counter_Config counter_params;
+% for (var CounterInstanceIndex = 0; CounterInstanceIndex < usedCounters.length; CounterInstanceIndex++)
+% {
+%   var CounterInstance = usedCounters[CounterInstanceIndex];
+    //
+    // `CounterInstance.$name` initialization
+    //
+    ERAD_setCounterOwnership(`CounterInstance.$name`, ERAD_OWNER_APPLICATION);
+    ERAD_disableCounterModule(`CounterInstance.$name`);
+    counter_params.enable_stop = `CounterInstance.haltCPU`;
+    counter_params.enable_int = `CounterInstance.interrupt`;
+    counter_params.enable_nmi = `CounterInstance.NMI`;
+    % if(CounterInstance.useExternalResetSource){
+    ERAD_enableCounterResetInput(`CounterInstance.$name`, `CounterInstance.externalResetSource`);
+    % }
+    % if(CounterInstance.clockSource == 1){
+    counter_params.event = `CounterInstance.externalClockSource`;
+    % }
+    % else {
+    counter_params.event = ERAD_EVENT_NO_EVENT;
+    % }
+	counter_params.event_mode = `CounterInstance.countMode`;
+    % if(CounterInstance.secMode == 0) {
+    counter_params.rst_on_match = `CounterInstance.counterMode`;
+    counter_params.reference = `CounterInstance.counterPeriod`;
+	ERAD_configCounterInCountingMode(`CounterInstance.$name`, counter_params);
+    % }
+    % else {
+    counter_params.rst_on_match = false;
+    counter_params.reference = `CounterInstance.swReferenceCount`;
+        % if(CounterInstance.secMode == 1) {
+    ERAD_configCounterInStartStopMode(`CounterInstance.$name`, counter_params, `CounterInstance.swStart`, `CounterInstance.swStop`);
+        % }
+        % else {
+    ERAD_configCounterInCumulativeMode(`CounterInstance.$name`, counter_params, `CounterInstance.swStart`, `CounterInstance.swStop`);
+        % }
+    % }
+    % modulesEnable = modulesEnable + "\tERAD_enableCounterModule(" + CounterInstance.$name + ");\n"
+    
+% }
+
+    //
+    // AND MASK initialization
+    //
+% for (var ANDMaskInstanceIndex = 0; ANDMaskInstanceIndex < usedANDMasks.length; ANDMaskInstanceIndex++)
+% {
+%   var ANDMaskInstance = usedANDMasks[ANDMaskInstanceIndex];
+    //
+    // `ANDMaskInstance.$name` initialization
+    //
+    ERAD_setMaskOwnership(`ANDMaskInstance.$name`, ERAD_OWNER_APPLICATION);
+    % if(ANDMaskInstance.busComptoAND.length > 0) {
+    % var andMaskList = "";
+    % for (var buscomp in ANDMaskInstance.busComptoAND)
+    % {
+        % andMaskList +=  Common.stringOrEmpty(andMaskList, " | ") + ANDMaskInstance.busComptoAND[buscomp]
+    % }
+    ERAD_configMask(`ANDMaskInstance.$name`, `andMaskList`, `ANDMaskInstance.interrupt`, `ANDMaskInstance.NMI`);
+    % }
+% }
+
+    //
+    // OR MASK initialization
+    //
+% for (var ORMaskInstanceIndex = 0; ORMaskInstanceIndex < usedORMasks.length; ORMaskInstanceIndex++)
+% {
+%   var ORMaskInstance = usedORMasks[ORMaskInstanceIndex];
+    //
+    // `ORMaskInstance.$name` initialization
+    //
+    ERAD_setMaskOwnership(`ORMaskInstance.$name`, ERAD_OWNER_APPLICATION);
+    % if(ORMaskInstance.busComptoOR.length > 0) {
+    % var orMaskList = "";
+    % for (var buscomp in ORMaskInstance.busComptoOR)
+    % {
+        % orMaskList +=  Common.stringOrEmpty(orMaskList, " | ") + ORMaskInstance.busComptoOR[buscomp]
+    % }
+    ERAD_configMask(`ORMaskInstance.$name`, `orMaskList`, `ORMaskInstance.interrupt`, `ORMaskInstance.NMI`);
+    % }
+% }
+
+    //
+    // Enable the modules
+    //
+`modulesEnable`
+}
+% }

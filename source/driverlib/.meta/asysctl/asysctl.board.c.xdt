@@ -1,0 +1,45 @@
+% var module = system.modules['/driverlib/asysctl.js'];
+% let Common   = system.getScript("/driverlib/Common.js");
+% var nameOfModule = "asysctl";
+% var nameOfPeripheral = module.peripheralName;
+//*****************************************************************************
+//
+// ASYSCTL Configurations
+//
+//*****************************************************************************
+void `nameOfPeripheral`_init(){
+%if (module != null)
+%{
+% var stat = module.$static
+	//
+	// `nameOfModule` initialization
+%		if(stat.enableTemperatureSensor){
+	//
+	// Enables the temperature sensor output to the ADC.
+	//
+	ASysCtl_enableTemperatureSensor();
+	DEVICE_DELAY_US(500);
+%		}
+%		else{
+	//
+	// Disables the temperature sensor output to the ADC.
+	//
+	ASysCtl_disableTemperatureSensor();
+%		}
+%		if(stat.lockTemperatureSensor){
+	//
+	// Locks the temperature sensor control register.
+	//
+	ASysCtl_lockTemperatureSensor();
+%		}
+
+	//
+	// Set the analog voltage reference
+	//
+	ASysCtl_setVREF(ASYSCTL_VREFHIAB, ASYSCTL_VREF_`stat.analogReferenceAB`);
+	ASysCtl_setVREF(ASYSCTL_VREFHICDE, ASYSCTL_VREF_`stat.analogReferenceCDE`);
+	ASysCtl_selectInternalTestNode(ASYSCTL_TEST_NODE_`stat.SelectTestNode`);
+
+%}
+
+}

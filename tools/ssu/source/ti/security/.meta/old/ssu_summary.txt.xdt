@@ -1,0 +1,41 @@
+%%{
+    const Common = system.getScript('/ti/security/Common.js');
+    let sysSec   = Common.modStatic('/ti/security/System_Security');
+
+    function spaces(x)
+    {
+        return ' '.repeat(25-x.toString().length)
+    }
+
+    var codeList =""
+    Common.modInstances('/ti/security/APR').filter(x => x.type == "Code").forEach(x => {
+        codeList += x.$name + spaces(x.$name) + "| "
+    })
+
+    var dataAPR =""
+    Common.modInstances('/ti/security/APR').filter(x => x.type != "Code").forEach(x => {
+        dataAPR += x.$name + spaces(x.$name) + "| "
+        Common.modInstances('/ti/security/APR').filter(codeApr => codeApr.type == "Code").forEach(codeApr => {
+            if(Common.getExeLink(codeApr))
+            {
+                if(Common.getStack(Common.getExeLink(codeApr)) && x == Common.getStack(Common.getExeLink(codeApr)).stackAPR)
+                    dataAPR += "RW" + spaces("RW") + "| "
+                else if(Common.getExeLink(codeApr).readwriteAPRs.includes(x))
+                    dataAPR += "RW" + spaces("RW") + "| "
+                else if(Common.getExeLink(codeApr).readAPRs.includes(x))
+                    dataAPR += "R" + spaces("R") + "| "
+                else if(Common.getExeLink(codeApr).APIAPRs.includes(x))
+                    dataAPR += "Inherited" + spaces("Inherited") + "| "
+                else
+                    dataAPR += "NA" + spaces("NA") + "| "
+            }
+            else
+                dataAPR += "NA" + spaces("NA") + "| "
+        })
+        dataAPR += "\n"
+    })
+%%}
+
+                         | `codeList`
+-------------------------`'-'.repeat(codeList.length)`
+`dataAPR`

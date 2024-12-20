@@ -1,0 +1,128 @@
+%%{
+let interrupt_common = system.getScript("/driverlib/interrupt/interrupt_common.js");
+var moduleName = "interrupt";
+var module = system.modules['/driverlib/' + moduleName + '.js'];
+let Common   = system.getScript("/driverlib/Common.js");
+let device_driverlib_peripheral = 
+    system.getScript("/driverlib/device_driverlib_peripherals/" + 
+        Common.getDeviceName().toLowerCase() + "_interrupt.js");
+
+function spaces(x)
+{
+    return ' '.repeat(10-x.toString().length)
+}
+if (module != null)
+{
+    var ints_sorted = module.$instances.sort((a,b) => a.interruptPriority - b.interruptPriority)
+
+    var driverlibInt_mapping = []
+    ints_sorted.forEach(int => {
+        let owner = int.$ownedBy;
+        var driverlibInt = ""
+        if (int.typeInterruptName == false) {
+            driverlibInt = int.driverlibIntList
+        }
+        else {
+            driverlibInt = int.driverlibInt;
+            if (int.pinmuxPeripheralModule)
+            {
+                let ownerSolution = owner[int.pinmuxPeripheralModule].$solution;
+                var ownerPeripheral = ownerSolution.peripheralName;
+                ownerPeripheral = interrupt_common.renameInterrupt(int.pinmuxPeripheralModule, ownerPeripheral)
+                driverlibInt = driverlibInt.replace("#", ownerPeripheral);
+            }
+        }
+        driverlibInt_mapping[int.$name] = driverlibInt
+    })
+
+    var rtints      = ints_sorted.filter(x=> x.interruptPriority < module.$static.RTINT_Threshold)
+    var ints        = ints_sorted.filter(x=> x.interruptPriority >= module.$static.RTINT_Threshold)
+
+    var groupMask   = Number(module.$static.groupMask)
+    var groupSize   = 256 - groupMask
+
+    var noContext   = ints_sorted.filter(x=> x.contextID == "INTERRUPT_CONTEXT_AGNOSTIC")
+    var context0    = ints_sorted.filter(x=> x.contextID == "INTERRUPT_CONTEXTID_0")
+    var context1    = ints_sorted.filter(x=> x.contextID == "INTERRUPT_CONTEXTID_1")
+    var context2    = ints_sorted.filter(x=> x.contextID == "INTERRUPT_CONTEXTID_2")
+%%}
+
+=================================================================
+Interrupts List in the order of priority
+Interrupts within the group will not preempt each other
+=================================================================
+
+=============================================================
+                    RTINTs
+=============================================================
+Group      | Priority   | Interrupt Name
+=============================================================
+%   var prevGroup = -1
+%   rtints.forEach(int => {
+%       var prio        = int.interruptPriority
+%       var group       = (prio & groupMask) / groupSize
+%       if(group != prevGroup) {
+%           if(prevGroup != -1) {
+-------------------------------------------------------------
+%           }
+%           prevGroup = group
+%       }
+`group``spaces(group)` | `prio``spaces(prio)` | `int.$name` (`driverlibInt_mapping[int.$name]`)
+%   })
+=============================================================
+
+
+=============================================================
+                    INTs
+=============================================================
+Group      | Priority   | Interrupt Name
+=============================================================
+%   var prevGroup = -1
+%   ints.forEach(int => {
+%       var prio        = int.interruptPriority
+%       var group       = (prio & groupMask) / groupSize
+%       var superVisor  = ""
+%       if((prio == module.$static.RTINT_Threshold) && (module.$static.SUP_IGN_INTE_EN))
+%           superVisor = " (Supervisor Interrupt)"
+%       if(group != prevGroup) {
+%           if(prevGroup != -1) {
+-------------------------------------------------------------
+%           }
+%           prevGroup = group
+%       }
+`group``spaces(group)` | `prio``spaces(prio)` | `int.$name` (`driverlibInt_mapping[int.$name]`)`superVisor`
+%   })
+=============================================================
+
+
+
+=================================================================
+Interrupts in different Contexts
+=================================================================
+
+Context Agnostic Interrupts
+----------------------------
+%   noContext.forEach(int => {
+`int.$name` (`driverlibInt_mapping[int.$name]`)
+%   })
+
+Context0 Interrupts
+-------------------
+%   context0.forEach(int => {
+`int.$name` (`driverlibInt_mapping[int.$name]`)
+%   })
+
+Context1 Interrupts
+-------------------
+%   context1.forEach(int => {
+`int.$name` (`driverlibInt_mapping[int.$name]`)
+%   })
+
+Context2 Interrupts
+-------------------
+%   context2.forEach(int => {
+`int.$name` (`driverlibInt_mapping[int.$name]`)
+%   })
+
+
+% }

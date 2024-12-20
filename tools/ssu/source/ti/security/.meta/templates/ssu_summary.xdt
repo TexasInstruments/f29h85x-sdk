@@ -1,0 +1,59 @@
+% let Common        = system.getScript("/ti/security/Common.js");
+% let currCore      = system.context
+% let sysSec        = Common.modStatic('/ti/security/System_Security');
+% let memAllocFinal = Common.allocateAllMemoryRegions()
+% let result        = memAllocFinal[currCore]
+% if(result && result.length && sysSec){
+%%{
+    let linksList = ["Data Region\\Link"]
+    let separatorList = ["---"]
+    let links = Common.modInstancesByCPU('/ti/security/Link', system.context)
+    links.forEach(x => {
+        linksList.push(x.$name)
+        separatorList.push("---")
+    })
+
+    let dataAPR = []
+    result
+    .filter(x => x.type != "Code")
+    .sort((a,b) => {return a.name.localeCompare(b.name)})
+    .forEach(x => {
+        let dataRowElem = []
+        dataRowElem.push(x.name)
+        links.forEach(link => {
+            if(link)
+            {
+                if(Common.getStack(link) && x.name == Common.getStack(link).stackAPR.name)
+                    dataRowElem.push("RW")
+                else if(link.readwriteAPRs.includes(x.name) || link.readwriteAPRsEasy.includes(x.name))
+                    dataRowElem.push("RW")
+                else if(link.readAPRs.includes(x.name) || link.readAPRsEasy.includes(x.name))
+                    dataRowElem.push("RO")
+                else if(link.APIAPRs.includes(x.name) || link.APIAPRsEasy.includes(x.name))
+                    dataRowElem.push("INH")
+                else
+                    dataRowElem.push("NA")
+            }
+            else
+                dataRowElem.push("NA")
+        })
+        dataAPR.push(dataRowElem.join(" | "))
+    })
+
+%%}
+The below table contains a summary of the access permissions configured for this core
+
+- Rows - Data Memory Regions
+- Columns - LINKs
+- Each cell indicates whether the code regions in the LINK have Read-Only (RO), Read-Write (RW),
+ Inherited (INH) or No Access (NA) to the corresponding data region
+
+`linksList.join(" | ")`
+`separatorList.join(" | ")`
+% dataAPR.forEach(aprString => {
+`aprString`
+% })
+% } else {
+
+**System Security is not configured on this core**
+% }

@@ -1,0 +1,72 @@
+[
+	{
+		"mainCategories": [["Documents"]],
+		"subCategories": ["Documentation"],
+		"name": "Documentation",
+		"image": "images/documentation_image.png",
+		"icon": "images/Documentation.png",
+		"description": "F29H85x SDK package documentation and release notes.",
+		"resourceType": "categoryInfo",
+		"resourceClass": ["other"]
+	},
+	{
+		"mainCategories": [["Documents"]],
+		"subCategories": ["Documentation"],
+		"name": "F29H85x SDK Docs",
+		"resourceType": "file",
+		"resourceClass": ["other"],
+		"devices": [],
+		"location": "$(docs_path)/html/index.html",
+		"description": ""
+	},
+	{
+		"mainCategories": [["Documents"]],
+		"subCategories": ["Documentation"],
+		"name": "Driverlib API Guide",
+		"resourceType": "file",
+		"resourceClass": ["other"],
+		"devices": [],
+		"location": "$(docs_path)/Driverlib_API_Guide.html",
+		"description": ""
+	},
+	{
+		"mainCategories": [["Documents"]],
+		"subCategories": ["Documentation"],
+		"name": "Getting Started Guide",
+		"resourceType": "file",
+		"resourceClass": ["other"],
+		"devices": [],
+		"location": "$(docs_path)/Getting_Started.html",
+		"description": ""
+	},
+	{
+		"mainCategories": [["Documents"]],
+		"subCategories": ["Documentation"],
+		"name": "Migration Guide",
+		"resourceType": "file",
+		"resourceClass": ["other"],
+		"devices": [],
+		"location": "$(docs_path)/Migration_Guide.html",
+		"description": ""
+	},
+	{
+		"mainCategories": [["Documents"]],
+		"subCategories": ["Documentation"],
+		"name": "Release Notes",
+		"resourceType": "file",
+		"resourceClass": ["other"],
+		"devices": [],
+		"location": "../../Release_Notes.html",
+		"description": ""
+	},
+	{
+		"mainCategories": [["Documents"]],
+		"subCategories": ["Documentation"],
+		"name": "Manifest",
+		"resourceType": "file",
+		"resourceClass": ["other"],
+		"devices": [],
+		"location": "../../F29H85X-SDK_1.00.00.00_manifest.html",
+		"description": ""
+	}
+]

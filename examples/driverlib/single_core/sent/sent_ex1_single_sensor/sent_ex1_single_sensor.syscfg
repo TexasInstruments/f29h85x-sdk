@@ -1,0 +1,54 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --device "F29H85x" --package "256ZEX" --part "F29H85x_256ZEX" --context "CPU1" --product "MCU_SDK_F29H85x@1.00.00.00"
+ * @v2CliArgs --device "F29H850TU" --package "256ZEX" --variant "TMS320F29H850TU9" --context "CPU1" --product "MCU_SDK_F29H85x@1.00.00.00"
+ * @versions {"tool":"1.22.0+3877"}
+ */
+
+const divider15       = system.clockTree["PLL_REFDIV"];
+divider15.divideValue = 1;
+
+const multiplier1         = system.clockTree["PLL_IMULT"];
+multiplier1.multiplyValue = 40;
+
+const mux7       = system.clockTree["OSCCLKSRCSEL"];
+mux7.inputSelect = "INTOSC2";
+
+/**
+ * Import the modules used in this configuration.
+ */
+const jtag  = scripting.addModule("/driverlib/jtag.js");
+const sent  = scripting.addModule("/driverlib/sent.js", {}, false);
+const sent1 = sent.addInstance();
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+sent1.$name                    = "mySENT1";
+sent1.clockTickTime            = 600;
+sent1.dataNibble               = "SENT_RX_DNIB6";
+sent1.d0Nibble0                = "SENT_DATA_NIBBLE6";
+sent1.d0Nibble1                = "SENT_DATA_NIBBLE5";
+sent1.d0Nibble2                = "SENT_DATA_NIBBLE4";
+sent1.d0Nibble3                = "SENT_DATA_NIBBLE3";
+sent1.d0Nibble4                = "SENT_DATA_NIBBLE2";
+sent1.d0Nibble5                = "SENT_DATA_NIBBLE1";
+sent1.registerInterrupts       = true;
+sent1.enableInterrupt          = true;
+sent1.interruptSource          = ["SENT_INT_RFAST_S1DV"];
+sent1.sent.$assign             = "SENT1";
+sent1.sent.sentPin.$assign     = "GPIO58";
+sent1.Qual.qualMode            = "GPIO_QUAL_ASYNC";
+sent1.periphClock.$name        = "driverlib_perClock0";
+sent1.periphConfig.$name       = "driverlib_perConfig0";
+sent1.sentInt.interruptHandler = "sent1ISR";
+
+/**
+ * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
+ * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
+ * re-solve from scratch.
+ */
+jtag.JTAG.$suggestSolution        = "JTAG";
+jtag.JTAG.tdoPin.$suggestSolution = "GPIO223/TDO";
+jtag.JTAG.tdiPin.$suggestSolution = "GPIO222/TDI";
