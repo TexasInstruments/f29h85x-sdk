@@ -121,6 +121,9 @@ if (Common.onlyPinmux())
 var cpu2_unavailable_peripherals = {
     "F29H85x" : [
         { peripheralName: "AIO", moduleFile : "/driverlib/aio.js"},
+        { peripheralName: "ANALOG", moduleFile : "/driverlib/analog.js"},
+        { peripheralName: "ASYSCTL", moduleFile : "/driverlib/asysctl.js" },
+        { peripheralName: "SYNC", moduleFile : "/driverlib/sync.js" },
         { peripheralName: "GPIO", moduleFile : "/driverlib/gpio.js"},
         { peripheralName: "INPUTXBAR INPUT", moduleFile : "/driverlib/inputxbar_input.js"},
         { peripheralName: "OUTPUTXBAR", moduleFile : "/driverlib/outputxbar.js" },
@@ -135,6 +138,9 @@ var cpu2_unavailable_peripherals = {
 var cpu3_unavailable_peripherals = {
     "F29H85x" : [
         { peripheralName: "AIO", moduleFile : "/driverlib/aio.js"},
+        { peripheralName: "ANALOG", moduleFile : "/driverlib/analog.js"},
+        { peripheralName: "ASYSCTL", moduleFile : "/driverlib/asysctl.js" },
+        { peripheralName: "SYNC", moduleFile : "/driverlib/sync.js" },
         { peripheralName: "GPIO", moduleFile : "/driverlib/gpio.js"},
         { peripheralName: "INPUTXBAR INPUT", moduleFile : "/driverlib/inputxbar_input.js"},
         { peripheralName: "OUTPUTXBAR", moduleFile : "/driverlib/outputxbar.js" },
