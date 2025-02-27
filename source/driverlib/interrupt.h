@@ -163,6 +163,7 @@ typedef struct
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((section(".text.link2.Interrupt_defaultHandler")))
 extern void
 Interrupt_defaultHandler(void);
 
@@ -181,6 +182,7 @@ Interrupt_defaultHandler(void);
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((section(".text.link2.Interrupt_defaultNMIHandler")))
 extern void
 Interrupt_defaultNMIHandler(void);
 
@@ -192,8 +194,9 @@ Interrupt_defaultNMIHandler(void);
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((section(".text.link2.Interrupt_clearEsmEaFlags")))
 extern void
-Interrupt_clearEsmEaFlags(void);
+Interrupt_clearEsmEaFlags(Interrupt_NmiStatus *nmiStatus);
 
 //*****************************************************************************
 //
@@ -202,6 +205,7 @@ Interrupt_clearEsmEaFlags(void);
 //! \return None
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 Interrupt_enableGlobal(void)
 {
@@ -215,6 +219,7 @@ Interrupt_enableGlobal(void)
 //! \return None
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 Interrupt_disableGlobal(void)
 {
@@ -237,6 +242,7 @@ Interrupt_disableGlobal(void)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 Interrupt_enable(uint32_t intNum)
 {
@@ -260,6 +266,7 @@ Interrupt_enable(uint32_t intNum)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 Interrupt_disable(uint32_t intNum)
 {
@@ -279,6 +286,7 @@ Interrupt_disable(uint32_t intNum)
 //! \return None
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 Interrupt_force(uint32_t intNum)
 {
@@ -298,6 +306,7 @@ Interrupt_force(uint32_t intNum)
 //! \return None
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 Interrupt_clearFlag(uint32_t intNum)
 {
@@ -317,6 +326,7 @@ Interrupt_clearFlag(uint32_t intNum)
 //! \return None
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 Interrupt_clearOverflowFlag(uint32_t intNum)
 {
@@ -346,6 +356,7 @@ Interrupt_clearOverflowFlag(uint32_t intNum)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 Interrupt_register(uint32_t intNum, void (*handler)(void))
 {
@@ -385,6 +396,7 @@ Interrupt_register(uint32_t intNum, void (*handler)(void))
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 Interrupt_unregister(uint32_t intNum)
 {
@@ -414,6 +426,7 @@ Interrupt_unregister(uint32_t intNum)
 //! \return None
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 Interrupt_setThreshold(uint8_t threshold)
 {
@@ -429,6 +442,7 @@ Interrupt_setThreshold(uint8_t threshold)
 //! \return None
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 Interrupt_setGroupMask(uint8_t groupMask)
 {
@@ -445,6 +459,7 @@ Interrupt_setGroupMask(uint8_t groupMask)
 //! \return None
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 Interrupt_setPriority(uint32_t intNum, uint8_t priority)
 {
@@ -467,6 +482,7 @@ Interrupt_setPriority(uint32_t intNum, uint8_t priority)
 //! \return None
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 Interrupt_setContextID(uint32_t intNum, Interrupt_Context contextID)
 {
@@ -485,6 +501,7 @@ Interrupt_setContextID(uint32_t intNum, Interrupt_Context contextID)
 //! \return None
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 Interrupt_setLinkOwner(uint32_t intNum, SSU_Link linkOwner)
 {
@@ -516,6 +533,7 @@ Interrupt_setLinkOwner(uint32_t intNum, SSU_Link linkOwner)
 //! \return None
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 Interrupt_setAPILink(uint32_t intNum, SSU_APILink apiLinkID)
 {
@@ -546,6 +564,7 @@ Interrupt_setAPILink(uint32_t intNum, SSU_APILink apiLinkID)
 //! \return None
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 Interrupt_setActiveContextID(Interrupt_Context contextID)
 {
@@ -564,6 +583,7 @@ Interrupt_setActiveContextID(Interrupt_Context contextID)
 //! \return None
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 Interrupt_enableSupervisorIgnoreINTE(void)
 {
@@ -581,6 +601,7 @@ Interrupt_enableSupervisorIgnoreINTE(void)
 //! \return None
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 Interrupt_disableSupervisorIgnoreINTE(void)
 {
@@ -603,6 +624,7 @@ Interrupt_disableSupervisorIgnoreINTE(void)
 //! \return None
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 Interrupt_setRTINTSPWarning(uint8_t level, uint8_t priority)
 {
@@ -625,6 +647,7 @@ Interrupt_setRTINTSPWarning(uint8_t level, uint8_t priority)
 //! \return None
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 Interrupt_setINTSP(SSU_Stack stack)
 {
@@ -638,6 +661,7 @@ Interrupt_setINTSP(SSU_Stack stack)
 //! \return None
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 Interrupt_lockBootLinkUpdates(void)
 {
@@ -658,6 +682,7 @@ Interrupt_lockBootLinkUpdates(void)
 //! \return None
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 Interrupt_lockRegister(uint32_t registers)
 {
@@ -678,6 +703,7 @@ Interrupt_lockRegister(uint32_t registers)
 //! \return None
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 Interrupt_unlockRegister(uint32_t registers)
 {
@@ -698,6 +724,7 @@ Interrupt_unlockRegister(uint32_t registers)
 //! \return None
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 Interrupt_commitRegister(uint32_t registers)
 {
@@ -717,6 +744,7 @@ Interrupt_commitRegister(uint32_t registers)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((section(".text.link2.Interrupt_initModule")))
 extern void
 Interrupt_initModule(void);
 
@@ -728,6 +756,7 @@ Interrupt_initModule(void);
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((section(".text.link2.Interrupt_initVectorTable")))
 extern void
 Interrupt_initVectorTable(void);
 
@@ -742,6 +771,7 @@ Interrupt_initVectorTable(void);
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((section(".text.link2.Interrupt_configChannel")))
 extern void
 Interrupt_configChannel(uint32_t intNum, Interrupt_Config config);
 
@@ -755,6 +785,7 @@ Interrupt_configChannel(uint32_t intNum, Interrupt_Config config);
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((section(".text.link2.Interrupt_configNMI")))
 extern void
 Interrupt_configNMI(void (*handler)(void), SSU_Link linkOwner);
 

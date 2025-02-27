@@ -160,6 +160,12 @@ typedef enum
                                      //! Read Returns ECC bits.
 } Memss_ROMTestMode;
 
+typedef enum
+{
+    MEMSS_CPU_ID_1  = 0,    //! ID for CPU1
+    MEMSS_CPU_ID_2  = 1,    //! ID for CPU2
+    MEMSS_CPU_ID_3  = 2     //! ID for CPU3
+} Memss_CpuId;
 
 //*****************************************************************************
 //
@@ -180,6 +186,7 @@ typedef enum
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.Memss_initMemory")))
+__attribute__((always_inline))
 static inline void
 Memss_initMemory(Memss_RAM ram)
 {
@@ -198,6 +205,7 @@ Memss_initMemory(Memss_RAM ram)
 //! \return true if initialization is complete, false if not
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline bool
 Memss_getInitStatus(Memss_RAM ram)
 {
@@ -217,6 +225,7 @@ Memss_getInitStatus(Memss_RAM ram)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.Memss_setRAMTestMode")))
+__attribute__((always_inline))
 static inline void
 Memss_setRAMTestMode(Memss_RAM ram, Memss_RAMTestMode testMode)
 {
@@ -238,6 +247,7 @@ Memss_setRAMTestMode(Memss_RAM ram, Memss_RAMTestMode testMode)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.Memss_setROMTestMode")))
+__attribute__((always_inline))
 static inline void
 Memss_setROMTestMode(Memss_ROM rom, Memss_ROMTestMode testMode)
 {
@@ -259,6 +269,7 @@ Memss_setROMTestMode(Memss_ROM rom, Memss_ROMTestMode testMode)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.Memss_lockConfig")))
+__attribute__((always_inline))
 static inline void
 Memss_lockConfig(uint32_t mem)
 {
@@ -278,6 +289,7 @@ Memss_lockConfig(uint32_t mem)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.Memss_unlockConfig")))
+__attribute__((always_inline))
 static inline void
 Memss_unlockConfig(uint32_t mem)
 {
@@ -297,10 +309,49 @@ Memss_unlockConfig(uint32_t mem)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.Memss_commitConfig")))
+__attribute__((always_inline))
 static inline void
 Memss_commitConfig(uint32_t mem)
 {
     HWREG(mem + 8U) = 1U;
+}
+
+//*****************************************************************************
+//
+//! Enable DLB for CPU ID
+//!
+//! \param cpuId is CPU ID for which DLB is enabled
+//!
+//! This function enables Data Line Buffer for CPU ID.
+//!
+//! \return None.
+//
+//*****************************************************************************
+__attribute__((section(".text.link2.Memss_enableDlb")))
+__attribute__((always_inline))
+static inline void
+Memss_enableDlb(Memss_CpuId cpuId)
+{
+    HWREG(MEMSSMISCI_BASE + MEMSS_O_MEM_DLB_CONFIG) |= (uint32_t)(1U << cpuId);
+}
+
+//*****************************************************************************
+//
+//! Disable DLB for CPU ID
+//!
+//! \param cpuId is CPU ID for which DLB is disabled
+//!
+//! This function disables Data Line Buffer for CPU ID.
+//!
+//! \return None.
+//
+//*****************************************************************************
+__attribute__((section(".text.link2.Memss_disableDlb")))
+__attribute__((always_inline))
+static inline void
+Memss_disableDlb(Memss_CpuId cpuId)
+{
+    HWREG(MEMSSMISCI_BASE + MEMSS_O_MEM_DLB_CONFIG) &= ~((uint32_t)(1U << cpuId));
 }
 
 //*****************************************************************************

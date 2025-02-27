@@ -394,6 +394,7 @@ typedef enum
 //
 //*****************************************************************************
 #ifdef DEBUG
+__attribute__((always_inline))
 static inline bool
 EPG_isBaseValid(uint32_t base)
 {
@@ -417,6 +418,7 @@ EPG_isBaseValid(uint32_t base)
 //
 //*****************************************************************************
 #ifdef DEBUG
+__attribute__((always_inline))
 static inline bool
 EPG_isMUXBaseValid(uint32_t muxbase)
 {
@@ -437,6 +439,7 @@ EPG_isMUXBaseValid(uint32_t muxbase)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 EPG_enableGlobal(uint32_t base)
 {
@@ -456,6 +459,7 @@ EPG_enableGlobal(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 EPG_disableGlobal(uint32_t base)
 {
@@ -481,6 +485,7 @@ EPG_disableGlobal(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 EPG_selectEPGOutput(uint32_t base, EPG_OUT gPinNum,
                        EPG_OutputSelect gPinOutSel)
@@ -519,6 +524,7 @@ EPG_selectEPGOutput(uint32_t base, EPG_OUT gPinNum,
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 EPG_selectSignalOutput(uint32_t base, EPG_OUT gPinNum,
                        EPG_SignalGenOut sigGenOutput)
@@ -560,6 +566,7 @@ EPG_selectSignalOutput(uint32_t base, EPG_OUT gPinNum,
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 EPG_selectClkOutput(uint32_t base, EPG_OUT gPinNum,
                     EPG_ClockGenOut clkGenOutput)
@@ -602,6 +609,7 @@ EPG_selectClkOutput(uint32_t base, EPG_OUT gPinNum,
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 EPG_selectSigGenClkSource(uint32_t base, EPG_SIGGEN sigGenNum,
                           EPG_ClockGenGclkOut clkGenOutput)
@@ -640,6 +648,7 @@ EPG_selectSigGenClkSource(uint32_t base, EPG_SIGGEN sigGenNum,
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 EPG_setClkGenPeriod(uint32_t base, EPG_CLKGEN clkGenNum,
                          uint32_t periodValue)
@@ -677,6 +686,7 @@ EPG_setClkGenPeriod(uint32_t base, EPG_CLKGEN clkGenNum,
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 EPG_setClkGenStopEdge(uint32_t base, EPG_CLKGEN clkGenNum,
                       EPG_ClockStopEdge stopEdge)
@@ -716,6 +726,7 @@ EPG_setClkGenStopEdge(uint32_t base, EPG_CLKGEN clkGenNum,
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 EPG_setClkGenOffset(uint32_t base, EPG_CLKGEN clkGenNum,
                     uint32_t clkGenOutputNum, uint32_t offsetValue)
@@ -755,6 +766,7 @@ EPG_setClkGenOffset(uint32_t base, EPG_CLKGEN clkGenNum,
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 EPG_enableSignalGen(uint32_t base, EPG_SIGGEN sigGenNum)
 {
@@ -787,6 +799,7 @@ EPG_enableSignalGen(uint32_t base, EPG_SIGGEN sigGenNum)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 EPG_disableSignalGen(uint32_t base, EPG_SIGGEN sigGenNum)
 {
@@ -829,6 +842,7 @@ EPG_disableSignalGen(uint32_t base, EPG_SIGGEN sigGenNum)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 EPG_setSignalGenMode(uint32_t base, EPG_SIGGEN sigGenNum,
                      EPG_SignalGenMode sigGenMode)
@@ -862,6 +876,7 @@ EPG_setSignalGenMode(uint32_t base, EPG_SIGGEN sigGenNum,
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 EPG_enableBitRevOnDataIn(uint32_t base, EPG_SIGGEN sigGenNum)
 {
@@ -891,6 +906,7 @@ EPG_enableBitRevOnDataIn(uint32_t base, EPG_SIGGEN sigGenNum)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 EPG_disableBitRevOnDataIn(uint32_t base, EPG_SIGGEN sigGenNum)
 {
@@ -920,6 +936,7 @@ EPG_disableBitRevOnDataIn(uint32_t base, EPG_SIGGEN sigGenNum)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 EPG_enableBitRevOnDataOut(uint32_t base, EPG_SIGGEN sigGenNum)
 {
@@ -948,6 +965,7 @@ EPG_enableBitRevOnDataOut(uint32_t base, EPG_SIGGEN sigGenNum)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 EPG_disableBitRevOnDataOut(uint32_t base, EPG_SIGGEN sigGenNum)
 {
@@ -980,6 +998,7 @@ EPG_disableBitRevOnDataOut(uint32_t base, EPG_SIGGEN sigGenNum)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 EPG_setDataBitLen(uint32_t base, EPG_SIGGEN sigGenNum, uint32_t bitLength)
 {
@@ -1017,6 +1036,7 @@ EPG_setDataBitLen(uint32_t base, EPG_SIGGEN sigGenNum, uint32_t bitLength)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 EPG_setData0In(uint32_t base, EPG_SIGGEN sigGenNum,
                EPG_SignalGenData0In data0Input)
@@ -1055,6 +1075,7 @@ EPG_setData0In(uint32_t base, EPG_SIGGEN sigGenNum,
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 EPG_setData63In(uint32_t base, EPG_SIGGEN sigGenNum,
                 EPG_SignalGenData63In data63Input)
@@ -1091,6 +1112,7 @@ EPG_setData63In(uint32_t base, EPG_SIGGEN sigGenNum,
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 EPG_setData0Word(uint32_t base, EPG_SIGGEN sigGenNum, uint32_t data0)
 {
@@ -1117,6 +1139,7 @@ EPG_setData0Word(uint32_t base, EPG_SIGGEN sigGenNum, uint32_t data0)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 EPG_setData1Word(uint32_t base, EPG_SIGGEN sigGenNum, uint32_t data1)
 {
@@ -1141,6 +1164,7 @@ EPG_setData1Word(uint32_t base, EPG_SIGGEN sigGenNum, uint32_t data1)
 //! \return Returns the Data 0 Active register value.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline uint32_t
 EPG_getData0ActiveReg(uint32_t base, EPG_SIGGEN sigGenNum)
 {
@@ -1165,6 +1189,7 @@ EPG_getData0ActiveReg(uint32_t base, EPG_SIGGEN sigGenNum)
 //! \return Returns the Data 1 Active register value.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline uint32_t
 EPG_getData1ActiveReg(uint32_t base, EPG_SIGGEN sigGenNum)
 {
@@ -1191,6 +1216,7 @@ EPG_getData1ActiveReg(uint32_t base, EPG_SIGGEN sigGenNum)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 EPG_enableInterruptFlag(uint32_t base, uint32_t intFlags)
 {
@@ -1216,6 +1242,7 @@ EPG_enableInterruptFlag(uint32_t base, uint32_t intFlags)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 EPG_disableInterruptFlag(uint32_t base, uint32_t intFlags)
 {
@@ -1236,6 +1263,7 @@ EPG_disableInterruptFlag(uint32_t base, uint32_t intFlags)
 //!         triggered.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline uint32_t
 EPG_getInterruptStatus(uint32_t base)
 {
@@ -1263,6 +1291,7 @@ EPG_getInterruptStatus(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 EPG_clearInterruptFlag(uint32_t base, uint32_t intFlags)
 {
@@ -1288,6 +1317,7 @@ EPG_clearInterruptFlag(uint32_t base, uint32_t intFlags)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 EPG_forceInterruptFlag(uint32_t base, uint32_t intFlags)
 {
@@ -1313,6 +1343,7 @@ EPG_forceInterruptFlag(uint32_t base, uint32_t intFlags)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 EPG_lockReg(uint32_t base, uint32_t regFlags)
 {
@@ -1338,6 +1369,7 @@ EPG_lockReg(uint32_t base, uint32_t regFlags)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 EPG_releaseLockReg(uint32_t base, uint32_t regFlags)
 {
@@ -1364,6 +1396,7 @@ EPG_releaseLockReg(uint32_t base, uint32_t regFlags)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 EPG_commitRegLock(uint32_t base, uint32_t regFlags)
 {
@@ -1386,6 +1419,7 @@ EPG_commitRegLock(uint32_t base, uint32_t regFlags)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 EPG_lockMXSelReg(uint32_t muxbase, uint32_t regFlags)
 {
@@ -1409,6 +1443,7 @@ EPG_lockMXSelReg(uint32_t muxbase, uint32_t regFlags)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 EPG_releaseLockMXSelReg(uint32_t muxbase, uint32_t regFlags)
 {
@@ -1432,6 +1467,7 @@ EPG_releaseLockMXSelReg(uint32_t muxbase, uint32_t regFlags)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 EPG_commitMXSelRegLock(uint32_t muxbase, uint32_t regFlags)
 {

@@ -50,7 +50,7 @@ void `nameOfPeripheral`_init(){
     buscomp_params.enable_spsel = `BusCompInstance.spselEnable`;
     buscomp_params.spsel_match = `BusCompInstance.spsel`;
     % }
-    ERAD_configBusComp(`BusCompInstance.$name`, buscomp_params);
+    ERAD_configBusComp(`BusCompInstance.$name`, &buscomp_params);
     % modulesEnable = modulesEnable + "\tERAD_enableBusCompModule(" + BusCompInstance.$name + ");\n"
 
 % }
@@ -83,16 +83,16 @@ void `nameOfPeripheral`_init(){
     % if(CounterInstance.secMode == 0) {
     counter_params.rst_on_match = `CounterInstance.counterMode`;
     counter_params.reference = `CounterInstance.counterPeriod`;
-	ERAD_configCounterInCountingMode(`CounterInstance.$name`, counter_params);
+	ERAD_configCounterInCountingMode(`CounterInstance.$name`, &counter_params);
     % }
     % else {
     counter_params.rst_on_match = false;
     counter_params.reference = `CounterInstance.swReferenceCount`;
         % if(CounterInstance.secMode == 1) {
-    ERAD_configCounterInStartStopMode(`CounterInstance.$name`, counter_params, `CounterInstance.swStart`, `CounterInstance.swStop`);
+    ERAD_configCounterInStartStopMode(`CounterInstance.$name`, &counter_params, `CounterInstance.swStart`, `CounterInstance.swStop`);
         % }
         % else {
-    ERAD_configCounterInCumulativeMode(`CounterInstance.$name`, counter_params, `CounterInstance.swStart`, `CounterInstance.swStop`);
+    ERAD_configCounterInCumulativeMode(`CounterInstance.$name`, &counter_params, `CounterInstance.swStart`, `CounterInstance.swStop`);
         % }
     % }
     % modulesEnable = modulesEnable + "\tERAD_enableCounterModule(" + CounterInstance.$name + ");\n"

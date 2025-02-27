@@ -504,6 +504,7 @@ typedef enum
 //
 //*****************************************************************************
 #ifdef DEBUG
+__attribute__((always_inline))
 static inline bool
 FSI_isTxBaseValid(uint32_t base)
 {
@@ -529,6 +530,7 @@ FSI_isTxBaseValid(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 FSI_sendTxFlush(uint32_t base)
 {
@@ -555,6 +557,7 @@ FSI_sendTxFlush(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 FSI_stopTxFlush(uint32_t base)
 {
@@ -578,6 +581,7 @@ FSI_stopTxFlush(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 FSI_selectTxPLLClock(uint32_t base)
 {
@@ -601,6 +605,7 @@ FSI_selectTxPLLClock(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 FSI_enableTxClock(uint32_t base)
 {
@@ -625,6 +630,7 @@ FSI_enableTxClock(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 FSI_disableTxClock(uint32_t base)
 {
@@ -652,6 +658,7 @@ FSI_disableTxClock(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 FSI_configPrescalar(uint32_t base, uint16_t preScaleValue)
 {
@@ -685,6 +692,7 @@ FSI_configPrescalar(uint32_t base, uint16_t preScaleValue)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 FSI_setTxDataWidth(uint32_t base, FSI_DataWidth dataWidth)
 {
@@ -713,6 +721,7 @@ FSI_setTxDataWidth(uint32_t base, FSI_DataWidth dataWidth)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 FSI_enableTxSPIMode(uint32_t base)
 {
@@ -734,6 +743,7 @@ FSI_enableTxSPIMode(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 FSI_disableTxSPIMode(uint32_t base)
 {
@@ -755,6 +765,7 @@ FSI_disableTxSPIMode(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 FSI_setTxStartMode(uint32_t base, FSI_TxStartMode txStartMode)
 {
@@ -779,6 +790,7 @@ FSI_setTxStartMode(uint32_t base, FSI_TxStartMode txStartMode)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 FSI_setTxPingTimeoutMode(uint32_t base, FSI_PingTimeoutMode pingTimeoutMode)
 {
@@ -809,6 +821,7 @@ FSI_setTxPingTimeoutMode(uint32_t base, FSI_PingTimeoutMode pingTimeoutMode)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 FSI_enableTxTDMMode(uint32_t base)
 {
@@ -832,6 +845,7 @@ FSI_enableTxTDMMode(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 FSI_disableTxTDMMode(uint32_t base)
 {
@@ -852,6 +866,7 @@ FSI_disableTxTDMMode(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 FSI_enableRxTDMMode(uint32_t base)
 {
@@ -875,6 +890,7 @@ FSI_enableRxTDMMode(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 FSI_disableRxTDMMode(uint32_t base)
 {
@@ -897,6 +913,7 @@ FSI_disableRxTDMMode(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 FSI_setTxExtFrameTrigger(uint32_t base, uint16_t extInputNum)
 {
@@ -926,6 +943,7 @@ FSI_setTxExtFrameTrigger(uint32_t base, uint16_t extInputNum)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 FSI_enableTxCRCForceError(uint32_t base)
 {
@@ -946,6 +964,7 @@ FSI_enableTxCRCForceError(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 FSI_disableTxCRCForceError(uint32_t base)
 {
@@ -967,6 +986,7 @@ FSI_disableTxCRCForceError(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 FSI_setTxECCComputeWidth(uint32_t base, FSI_ECCComputeWidth eccComputeWidth)
 {
@@ -995,6 +1015,7 @@ FSI_setTxECCComputeWidth(uint32_t base, FSI_ECCComputeWidth eccComputeWidth)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 FSI_setTxFrameType(uint32_t base, FSI_FrameType frameType)
 {
@@ -1018,6 +1039,7 @@ FSI_setTxFrameType(uint32_t base, FSI_FrameType frameType)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 FSI_setTxSoftwareFrameSize(uint32_t base, uint16_t nWords)
 {
@@ -1042,6 +1064,7 @@ FSI_setTxSoftwareFrameSize(uint32_t base, uint16_t nWords)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 FSI_startTxTransmit(uint32_t base)
 {
@@ -1063,6 +1086,7 @@ FSI_startTxTransmit(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 FSI_setTxFrameTag(uint32_t base, FSI_FrameTag frameTag)
 {
@@ -1088,6 +1112,7 @@ FSI_setTxFrameTag(uint32_t base, FSI_FrameTag frameTag)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 FSI_setTxUserDefinedData(uint32_t base, uint16_t userDefData)
 {
@@ -1114,6 +1139,7 @@ FSI_setTxUserDefinedData(uint32_t base, uint16_t userDefData)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 FSI_setTxBufferPtr(uint32_t base, uint16_t bufPtrOff)
 {
@@ -1138,6 +1164,7 @@ FSI_setTxBufferPtr(uint32_t base, uint16_t bufPtrOff)
 //!         only when no current transmission is happening
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline uint16_t
 FSI_getTxBufferPtr(uint32_t base)
 {
@@ -1163,6 +1190,7 @@ FSI_getTxBufferPtr(uint32_t base)
 //!         only when no current transmission is happening
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline uint16_t
 FSI_getTxWordCount(uint32_t base)
 {
@@ -1188,6 +1216,7 @@ FSI_getTxWordCount(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 FSI_enableTxPingTimer(uint32_t base, uint32_t refValue,
                 FSI_FrameTag pingFrameTag)
@@ -1215,6 +1244,7 @@ FSI_enableTxPingTimer(uint32_t base, uint32_t refValue,
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 FSI_setTxPingTag(uint32_t base, FSI_FrameTag frameTag)
 {
@@ -1235,6 +1265,7 @@ FSI_setTxPingTag(uint32_t base, FSI_FrameTag frameTag)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 FSI_disableTxPingTimer(uint32_t base)
 {
@@ -1256,6 +1287,7 @@ FSI_disableTxPingTimer(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 FSI_enableTxExtPingTrigger(uint32_t base, uint16_t extTrigSel)
 {
@@ -1287,6 +1319,7 @@ FSI_enableTxExtPingTrigger(uint32_t base, uint16_t extTrigSel)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 FSI_disableTxExtPingTrigger(uint32_t base)
 {
@@ -1307,6 +1340,7 @@ FSI_disableTxExtPingTrigger(uint32_t base)
 //! \return Current value of counter is returned
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline uint32_t
 FSI_getTxCurrentPingTimeoutCounter(uint32_t base)
 {
@@ -1327,6 +1361,7 @@ FSI_getTxCurrentPingTimeoutCounter(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 FSI_enableTxDMAEvent(uint32_t base)
 {
@@ -1347,6 +1382,7 @@ FSI_enableTxDMAEvent(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 FSI_disableTxDMAEvent(uint32_t base)
 {
@@ -1370,6 +1406,7 @@ FSI_disableTxDMAEvent(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 FSI_lockTxCtrl(uint32_t base)
 {
@@ -1399,6 +1436,7 @@ FSI_lockTxCtrl(uint32_t base)
 //!     FSI_TX_EVT_OVERRUN and FSI_TX_EVT_PING_HW_TRIG flags are set
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline uint16_t
 FSI_getTxEventStatus(uint32_t base)
 {
@@ -1431,6 +1469,7 @@ FSI_getTxEventStatus(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 FSI_forceTxEvents(uint32_t base, uint16_t evtFlags)
 {
@@ -1456,6 +1495,7 @@ FSI_forceTxEvents(uint32_t base, uint16_t evtFlags)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 FSI_clearTxEvents(uint32_t base, uint16_t evtFlags)
 {
@@ -1478,6 +1518,7 @@ FSI_clearTxEvents(uint32_t base, uint16_t evtFlags)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 FSI_enableTxUserCRC(uint32_t base, uint16_t userCRCValue)
 {
@@ -1501,6 +1542,7 @@ FSI_enableTxUserCRC(uint32_t base, uint16_t userCRCValue)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 FSI_disableTxUserCRC(uint32_t base)
 {
@@ -1522,6 +1564,7 @@ FSI_disableTxUserCRC(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 FSI_setTxECCdata(uint32_t base, uint32_t data)
 {
@@ -1542,6 +1585,7 @@ FSI_setTxECCdata(uint32_t base, uint32_t data)
 //! \return ECC value for input data
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline uint16_t
 FSI_getTxECCValue(uint32_t base)
 {
@@ -1574,6 +1618,7 @@ FSI_getTxECCValue(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 FSI_enableTxInterrupt(uint32_t base, FSI_InterruptNum intNum,
                       uint16_t intFlags)
@@ -1608,6 +1653,7 @@ FSI_enableTxInterrupt(uint32_t base, FSI_InterruptNum intNum,
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 FSI_disableTxInterrupt(uint32_t base, FSI_InterruptNum intNum,
                        uint16_t intFlags)
@@ -1639,6 +1685,7 @@ FSI_disableTxInterrupt(uint32_t base, FSI_InterruptNum intNum,
 //! \return Tx data buffer address
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline uint32_t
 FSI_getTxBufferAddress(uint32_t base)
 {
@@ -1717,6 +1764,7 @@ FSI_writeTxBuffer(uint32_t base, const uint16_t array[], uint16_t length,
 //
 //*****************************************************************************
 #ifdef DEBUG
+__attribute__((always_inline))
 static inline bool
 FSI_isRxBaseValid(uint32_t base)
 {
@@ -1739,6 +1787,7 @@ FSI_isRxBaseValid(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 FSI_enableRxInternalLoopback(uint32_t base)
 {
@@ -1762,6 +1811,7 @@ FSI_enableRxInternalLoopback(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 FSI_disableRxInternalLoopback(uint32_t base)
 {
@@ -1786,6 +1836,7 @@ FSI_disableRxInternalLoopback(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 FSI_enableRxSPIPairing(uint32_t base)
 {
@@ -1808,6 +1859,7 @@ FSI_enableRxSPIPairing(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 FSI_disableRxSPIPairing(uint32_t base)
 {
@@ -1832,6 +1884,7 @@ FSI_disableRxSPIPairing(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 FSI_setRxDataWidth(uint32_t base, FSI_DataWidth dataWidth)
 {
@@ -1854,6 +1907,7 @@ FSI_setRxDataWidth(uint32_t base, FSI_DataWidth dataWidth)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 FSI_enableRxSPIMode(uint32_t base)
 {
@@ -1874,6 +1928,7 @@ FSI_enableRxSPIMode(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 FSI_disableRxSPIMode(uint32_t base)
 {
@@ -1895,6 +1950,7 @@ FSI_disableRxSPIMode(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 FSI_setRxSoftwareFrameSize(uint32_t base, uint16_t nWords)
 {
@@ -1920,6 +1976,7 @@ FSI_setRxSoftwareFrameSize(uint32_t base, uint16_t nWords)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 FSI_setRxECCComputeWidth(uint32_t base, FSI_ECCComputeWidth eccComputeWidth)
 {
@@ -1948,6 +2005,7 @@ FSI_setRxECCComputeWidth(uint32_t base, FSI_ECCComputeWidth eccComputeWidth)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 FSI_setRxPingTimeoutMode(uint32_t base, FSI_PingTimeoutMode pingTimeoutMode)
 {
@@ -1975,6 +2033,7 @@ FSI_setRxPingTimeoutMode(uint32_t base, FSI_PingTimeoutMode pingTimeoutMode)
 //! \return value of Frame type received on last successful frame
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline FSI_FrameType
 FSI_getRxFrameType(uint32_t base)
 {
@@ -1997,6 +2056,7 @@ FSI_getRxFrameType(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 FSI_enableRxDMAEvent(uint32_t base)
 {
@@ -2018,6 +2078,7 @@ FSI_enableRxDMAEvent(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 FSI_disableRxDMAEvent(uint32_t base)
 {
@@ -2038,6 +2099,7 @@ FSI_disableRxDMAEvent(uint32_t base)
 //! \return Frame tag value.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline uint16_t
 FSI_getRxFrameTag(uint32_t base)
 {
@@ -2060,6 +2122,7 @@ FSI_getRxFrameTag(uint32_t base)
 //! \return User data field value.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline uint16_t
 FSI_getRxUserDefinedData(uint32_t base)
 {
@@ -2090,6 +2153,7 @@ FSI_getRxUserDefinedData(uint32_t base)
 //!     FSI_RX_EVT_CRC_ERR flags are set
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline uint16_t
 FSI_getRxEventStatus(uint32_t base)
 {
@@ -2117,6 +2181,7 @@ FSI_getRxEventStatus(uint32_t base)
 //!     FSI_RX_ERR_TYPE_ERR events
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 FSI_forceRxEvents(uint32_t base, uint16_t evtFlags)
 {
@@ -2138,6 +2203,7 @@ FSI_forceRxEvents(uint32_t base, uint16_t evtFlags)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 FSI_clearRxEvents(uint32_t base, uint16_t evtFlags)
 {
@@ -2158,6 +2224,7 @@ FSI_clearRxEvents(uint32_t base, uint16_t evtFlags)
 //! \return  CRC value received in data frame
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline uint16_t
 FSI_getRxReceivedCRC(uint32_t base)
 {
@@ -2178,6 +2245,7 @@ FSI_getRxReceivedCRC(uint32_t base)
 //! \return CRC value computed on received data
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline uint16_t
 FSI_getRxComputedCRC(uint32_t base)
 {
@@ -2201,6 +2269,7 @@ FSI_getRxComputedCRC(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 FSI_setRxBufferPtr(uint32_t base, uint16_t bufPtrOff)
 {
@@ -2225,6 +2294,7 @@ FSI_setRxBufferPtr(uint32_t base, uint16_t bufPtrOff)
 //!         only when no current reception is happening
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline uint16_t
 FSI_getRxBufferPtr(uint32_t base)
 {
@@ -2251,6 +2321,7 @@ FSI_getRxBufferPtr(uint32_t base)
 //!         only when no current reception is happening
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline uint16_t
 FSI_getRxWordCount(uint32_t base)
 {
@@ -2275,6 +2346,7 @@ FSI_getRxWordCount(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 FSI_enableRxFrameWatchdog(uint32_t base, uint32_t wdRef)
 {
@@ -2296,6 +2368,7 @@ FSI_enableRxFrameWatchdog(uint32_t base, uint32_t wdRef)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 FSI_disableRxFrameWatchdog(uint32_t base)
 {
@@ -2316,6 +2389,7 @@ FSI_disableRxFrameWatchdog(uint32_t base)
 //! \return Current value of frame watchdog counter
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline uint32_t
 FSI_getRxFrameWatchdogCounter(uint32_t base)
 {
@@ -2338,6 +2412,7 @@ FSI_getRxFrameWatchdogCounter(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 FSI_enableRxPingWatchdog(uint32_t base, uint32_t wdRef)
 {
@@ -2359,6 +2434,7 @@ FSI_enableRxPingWatchdog(uint32_t base, uint32_t wdRef)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 FSI_disableRxPingWatchdog(uint32_t base)
 {
@@ -2379,6 +2455,7 @@ FSI_disableRxPingWatchdog(uint32_t base)
 //! \return Current value(32 bit) of ping watchdog counter
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline uint32_t
 FSI_getRxPingWatchdogCounter(uint32_t base)
 {
@@ -2399,6 +2476,7 @@ FSI_getRxPingWatchdogCounter(uint32_t base)
 //! \return Tag Value received for last ping frame
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline uint16_t
 FSI_getRxPingTag(uint32_t base)
 {
@@ -2422,6 +2500,7 @@ FSI_getRxPingTag(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 FSI_lockRxCtrl(uint32_t base)
 {
@@ -2445,6 +2524,7 @@ FSI_lockRxCtrl(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 FSI_setRxECCData(uint32_t base, uint32_t rxECCdata)
 {
@@ -2466,6 +2546,7 @@ FSI_setRxECCData(uint32_t base, uint32_t rxECCdata)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 FSI_setRxReceivedECCValue(uint32_t base, uint16_t rxECCvalue)
 {
@@ -2490,6 +2571,7 @@ FSI_setRxReceivedECCValue(uint32_t base, uint16_t rxECCvalue)
 //! \return 32 bit ECC corrected data
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline uint32_t
 FSI_getRxECCCorrectedData(uint32_t base)
 {
@@ -2510,6 +2592,7 @@ FSI_getRxECCCorrectedData(uint32_t base)
 //! \return ECC Log value(8 bit)
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline uint16_t
 FSI_getRxECCLog(uint32_t base)
 {
@@ -2543,6 +2626,7 @@ FSI_getRxECCLog(uint32_t base)
 //!     FSI_RX_INT_PING_WD_TIMEOUT and FSI_RX_INT_TYPE_ERR
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 FSI_enableRxInterrupt(uint32_t base, FSI_InterruptNum intNum,
                       uint16_t intFlags)
@@ -2577,6 +2661,7 @@ FSI_enableRxInterrupt(uint32_t base, FSI_InterruptNum intNum,
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 FSI_disableRxInterrupt(uint32_t base, FSI_InterruptNum intNum,
                        uint16_t intFlags)
@@ -2609,6 +2694,7 @@ FSI_disableRxInterrupt(uint32_t base, FSI_InterruptNum intNum,
 //! \return Rx data buffer address
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline uint32_t
 FSI_getRxBufferAddress(uint32_t base)
 {
@@ -2633,6 +2719,7 @@ FSI_getRxBufferAddress(uint32_t base)
 //! \return None
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 FSI_setRxFrameTagRef(uint32_t base, uint16_t refVal)
 {
@@ -2662,6 +2749,7 @@ FSI_setRxFrameTagRef(uint32_t base, uint16_t refVal)
 //! \return Rx frame reference tag
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline uint16_t
 FSI_getRxFrameTagRef(uint32_t base)
 {
@@ -2691,6 +2779,7 @@ FSI_getRxFrameTagRef(uint32_t base)
 //! \return None
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 FSI_setRxFrameTagMask(uint32_t base, uint16_t maskVal)
 {
@@ -2721,6 +2810,7 @@ FSI_setRxFrameTagMask(uint32_t base, uint16_t maskVal)
 //! \return Rx frame tag mask
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline uint16_t
 FSI_getRxFrameTagMask(uint32_t base)
 {
@@ -2745,6 +2835,7 @@ FSI_getRxFrameTagMask(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 FSI_enableRxFrameTagCompare(uint32_t base)
 {
@@ -2768,6 +2859,7 @@ FSI_enableRxFrameTagCompare(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 FSI_disableRxFrameTagCompare(uint32_t base)
 {
@@ -2792,6 +2884,7 @@ FSI_disableRxFrameTagCompare(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 FSI_enableRxFrameBroadcast(uint32_t base)
 {
@@ -2815,6 +2908,7 @@ FSI_enableRxFrameBroadcast(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 FSI_disableRxFrameBroadcast(uint32_t base)
 {
@@ -2847,6 +2941,7 @@ FSI_disableRxFrameBroadcast(uint32_t base)
 //! \return None
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 FSI_setRxPingTagRef(uint32_t base, uint16_t refVal)
 {
@@ -2876,6 +2971,7 @@ FSI_setRxPingTagRef(uint32_t base, uint16_t refVal)
 //! \return Rx ping frame reference tag
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline uint16_t
 FSI_getRxPingTagRef(uint32_t base)
 {
@@ -2905,6 +3001,7 @@ FSI_getRxPingTagRef(uint32_t base)
 //! \return Rx ping tag mask
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 FSI_setRxPingTagMask(uint32_t base, uint16_t maskVal)
 {
@@ -2935,6 +3032,7 @@ FSI_setRxPingTagMask(uint32_t base, uint16_t maskVal)
 //! \return Rx ping frame reference tag mask
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline uint16_t
 FSI_getRxPingTagMask(uint32_t base)
 {
@@ -2959,6 +3057,7 @@ FSI_getRxPingTagMask(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 FSI_enableRxPingTagCompare(uint32_t base)
 {
@@ -2982,6 +3081,7 @@ FSI_enableRxPingTagCompare(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 FSI_disableRxPingTagCompare(uint32_t base)
 {
@@ -3006,6 +3106,7 @@ FSI_disableRxPingTagCompare(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 FSI_enableRxPingBroadcast(uint32_t base)
 {
@@ -3029,6 +3130,7 @@ FSI_enableRxPingBroadcast(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 FSI_disableRxPingBroadcast(uint32_t base)
 {

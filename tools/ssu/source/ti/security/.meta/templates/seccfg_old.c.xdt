@@ -192,35 +192,35 @@ const SSU_SECCFG `currCore`_Cfg =
 %                                                                                                   crcList.push(0)
 
     // Zone 1 Configuration
-    .ZONE1_CFG.LINK      = `sysSec.ZONE1_UPDATE_LINK ? sysSec.ZONE1_UPDATE_LINK.$name : '0x2'`,
+    .ZONE1_CFG.LINK      = `sysSec.ZONE1_UPDATE_LINK ? sysSec.ZONE1_UPDATE_LINK.$name : '0x1'`,
     .ZONE1_CFG.CPU       = `sysSec.ZONE1_UPDATE_CPU`,
     .ZONE1_CFG.UPDATE_EN = `sysSec.ZONE1_UPDATE_EN?'0xC':'0x3'`,
 
     // Zone 2 Configuration
-    .ZONE2_CFG.LINK      = `sysSec.ZONE2_UPDATE_LINK ? sysSec.ZONE2_UPDATE_LINK.$name : '0x2'`,
+    .ZONE2_CFG.LINK      = `sysSec.ZONE2_UPDATE_LINK ? sysSec.ZONE2_UPDATE_LINK.$name : '0x1'`,
     .ZONE2_CFG.CPU       = `sysSec.ZONE2_UPDATE_CPU`,
     .ZONE2_CFG.UPDATE_EN = `sysSec.ZONE2_UPDATE_EN?'0xC':'0x3'`,
 
     // Zone 3 Configuration
-    .ZONE3_CFG.LINK      = `sysSec.ZONE3_UPDATE_LINK ? sysSec.ZONE3_UPDATE_LINK.$name : '0x2'`,
+    .ZONE3_CFG.LINK      = `sysSec.ZONE3_UPDATE_LINK ? sysSec.ZONE3_UPDATE_LINK.$name : '0x1'`,
     .ZONE3_CFG.CPU       = `sysSec.ZONE3_UPDATE_CPU`,
     .ZONE3_CFG.UPDATE_EN = `sysSec.ZONE3_UPDATE_EN?'0xC':'0x3'`,
 
     // SECCFG Update Configuration
-    .SECCFG_UPDATE_CFG.LINK      = `sysSec.SECCFG_UPDATE_LINK?sysSec.SECCFG_UPDATE_LINK.$name:'0x2'`,
+    .SECCFG_UPDATE_CFG.LINK      = `sysSec.SECCFG_UPDATE_LINK?sysSec.SECCFG_UPDATE_LINK.$name:'0x1'`,
     .SECCFG_UPDATE_CFG.CPU       = `sysSec.SECCFG_UPDATE_CPU`,
     .SECCFG_UPDATE_CFG.UPDATE_EN = `sysSec.SECCFG_UPDATE_EN?'0xC':'0x3'`,
 %                                                                                                   var zone1Cfg, zone2Cfg, zone3Cfg, secCfg = 0
-%                                                                                                   zone1Cfg |= sysSec.ZONE1_UPDATE_LINK ? linkID[sysSec.ZONE1_UPDATE_LINK.$name] : 2
+%                                                                                                   zone1Cfg |= sysSec.ZONE1_UPDATE_LINK ? linkID[sysSec.ZONE1_UPDATE_LINK.$name] : 1
 %                                                                                                   zone1Cfg |= sysSec.ZONE1_UPDATE_CPU << 8
 %                                                                                                   zone1Cfg |= (sysSec.ZONE1_UPDATE_EN ? 0xC : 0x3) << 12
-%                                                                                                   zone2Cfg |= sysSec.ZONE2_UPDATE_LINK ? linkID[sysSec.ZONE2_UPDATE_LINK.$name] : 2
+%                                                                                                   zone2Cfg |= sysSec.ZONE2_UPDATE_LINK ? linkID[sysSec.ZONE2_UPDATE_LINK.$name] : 1
 %                                                                                                   zone2Cfg |= sysSec.ZONE2_UPDATE_CPU << 8
 %                                                                                                   zone2Cfg |= (sysSec.ZONE2_UPDATE_EN ? 0xC : 0x3) << 12
-%                                                                                                   zone3Cfg |= sysSec.ZONE3_UPDATE_LINK ? linkID[sysSec.ZONE3_UPDATE_LINK.$name] : 2
+%                                                                                                   zone3Cfg |= sysSec.ZONE3_UPDATE_LINK ? linkID[sysSec.ZONE3_UPDATE_LINK.$name] : 1
 %                                                                                                   zone3Cfg |= sysSec.ZONE3_UPDATE_CPU << 8
 %                                                                                                   zone3Cfg |= (sysSec.ZONE3_UPDATE_EN ? 0xC : 0x3) << 12
-%                                                                                                   secCfg |= sysSec.SECCFG_UPDATE_LINK ? linkID[sysSec.SECCFG_UPDATE_LINK.$name] : 2
+%                                                                                                   secCfg |= sysSec.SECCFG_UPDATE_LINK ? linkID[sysSec.SECCFG_UPDATE_LINK.$name] : 1
 %                                                                                                   secCfg |= sysSec.SECCFG_UPDATE_CPU << 8
 %                                                                                                   secCfg |= (sysSec.SECCFG_UPDATE_EN ? 0xC : 0x3) << 12
 %

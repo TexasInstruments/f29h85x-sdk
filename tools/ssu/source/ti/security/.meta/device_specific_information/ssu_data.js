@@ -28,11 +28,14 @@ const aprTags = [
     {
         name: "flash_load_CPU3"
     },
-    {  
+    {
         name: "ram_cover_CPU2"  // Can be multiple
     },
     {
         name: "ram_cover_CPU3"
+    },
+    {
+        name: "link2_ram_code"
     },
     //autoperiph
     //implicit ?
@@ -77,6 +80,18 @@ const link1BootPeripherals = {
     "61" : bootPeriphMap["UART"],
     "81" : bootPeriphMap["UART"],
 }
+
+const link2RequiredAprs = [
+    'CPU_SYS_REGS',
+    'PER_CFG_REGS_WD_REGS',
+    'DCC1_REGS',
+    'ERR_AGG_REGS',
+    'ESM_CPU1_REGS',
+    'ESM_CPU2_REGS',
+    'ESM_CPU3_REGS',
+    'ESM_SYS_REGS',
+    'ESM_SAFETY_AGG_REGS'
+]
 
 const seccfgAddressMapping = {
     "CPU1": {
@@ -147,5 +162,6 @@ exports = {
     seccfgAddressMapping,
     crc32Table,
     bootPeriphMap,
-    link1BootPeripherals
+    link1BootPeripherals,
+    link2RequiredAprs
 }

@@ -243,6 +243,7 @@ static uint32_t objSize[8] = {4, 5, 6, 7, 8, 10, 14, 18};
 /* ========================================================================== */
 
 #ifdef DEBUG
+__attribute__((always_inline))
 static inline bool
 MCAN_isBaseValid(uint32_t baseAddr)
 {

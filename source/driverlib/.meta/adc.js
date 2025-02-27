@@ -577,7 +577,6 @@ config = config.concat([
         default     : device_driverlib_peripheral.ADC_Resolution[0].name,
         hidden      : false,
         options     : device_driverlib_peripheral.ADC_Resolution,
-        
     },
     {
         name: "adcSignalMode",
@@ -997,7 +996,7 @@ var adcextchConfigs =
                             }
                             return ""
                         }
-                        if (Common.isContextCPU2() || Common.isContextCPU3()) {
+                        if (Common.isContextCPU2()) {
                             if (Common.isMultiCoreSysConfig())
                             {
                                 let outputxbar = system.contexts.CPU1.system.modules["/driverlib/outputxbar.js"];
@@ -1023,7 +1022,7 @@ var adcextchConfigs =
                                     }
                                     if (selectedoutputxbarinstance == null)
                                     {
-                                        return ""
+                                        return""
                                     }
 
                                 }
@@ -1699,41 +1698,31 @@ function onValidateStatic(mod, stat){
 
 function onValidate(inst, validation) {
 
-    let cpu = ""
-
-    if(Common.isContextCPU2()){
-        cpu = "CPU2"
-    }
-
-    if(Common.isContextCPU3()){
-        cpu = "CPU3"
-    }
-
-    if (Common.isContextCPU2() || Common.isContextCPU3()) {
+    if (Common.isContextCPU2()) {
         if (Common.isMultiCoreSysConfig()) {
             //
-            // Check if the asysctl module is added on CPU1 if the current context is CPU2/CPU3
+            // Check if the asysctl module is added on CPU1 if the current context is CPU2
             //
             if (Common.isModuleOnOtherContext("/driverlib/asysctl.js") == false) {
                 validation.logError(
-                    `The ASYSCTL module needs to be added on CPU1 when an ADC instance is added on ${cpu}`,inst,"adcBase");
+                    "The ASYSCTL module needs to be added on CPU1 when an ADC instance is added on CPU2",inst,"adcBase");
             }
             //
-            // Check if the analog module is added on CPU1 if the current context is CPU2/CPU3
+            // Check if the analog module is added on CPU1 if the current context is CPU2
             //
             if (Common.isModuleOnOtherContext("/driverlib/analog.js") == false) {
                 validation.logError(
-                    `The ANALOG PinMux module needs to be added on CPU1 when an ADC instance is added on ${cpu}`,inst,"adcBase");
+                    "The ANALOG PinMux module needs to be added on CPU1 when an ADC instance is added on CPU2",inst,"adcBase");
             }
             //
-            // Check if the OUTPUTXBAR module is added on CPU1 if the current context is CPU2/CPU3
+            // Check if the OUTPUTXBAR module is added on CPU1 if the current context is CPU2
             //
             if (inst.enableEXTMUX) {
                 if (Common.isModuleOnOtherContext("/driverlib/outputxbar.js") == false)
                 {
                     for (let xbari=0; xbari< inst["adcNumExtPins"]; xbari++){
                         validation.logError(
-                            `The OUTPUTXBAR module needs to be added on CPU1 when an external MUX is added on ${cpu}`,inst,"enableEXTMUX");
+                            "The OUTPUTXBAR module needs to be added on CPU1 when an external MUX is added on CPU2",inst,"enableEXTMUX");
                     }
                 }
                 else{
@@ -1753,7 +1742,7 @@ function onValidate(inst, validation) {
                             }
                             if (selectedoutputxbarinstance == null) {
                                 validation.logError(
-                                    `OUTPUTXBAR module needs to be added on CPU1 when an external MUX is added on ${cpu}`, inst, "extchannel"+ xbari+" pin");
+                                    "OUTPUTXBAR module needs to be added on CPU1 when an external MUX is added on CPU2", inst, "extchannel"+ xbari+" pin");
                             }
                         }
                     }
@@ -1764,12 +1753,12 @@ function onValidate(inst, validation) {
             if (inst.enableEXTMUX)
             {
                 validation.logWarning(
-                    `The OUTPUTXBAR module needs to be added on CPU1 when an external MUX is added on ${cpu}`,inst,"enableEXTMUX");
+                    "The OUTPUTXBAR module needs to be added on CPU1 when an external MUX is added on CPU2",inst,"enableEXTMUX");
             }
             validation.logWarning(
-                `The ASYSCTL module needs to be added on CPU1 when an ADC instance is added on ${cpu}`,inst,"adcBase");
+                "The ASYSCTL module needs to be added on CPU1 when an ADC instance is added on CPU2",inst,"adcBase");
             validation.logWarning(
-                `The ANALOG PinMux module needs to be added on CPU1 when an ADC instance is added on ${cpu}`,inst,"adcBase");
+                "The ANALOG PinMux module needs to be added on CPU1 when an ADC instance is added on CPU2",inst,"adcBase");
         }
     }
 

@@ -121,6 +121,7 @@ typedef enum
 //
 //*****************************************************************************
 #ifdef DEBUG
+__attribute__((always_inline))
 static inline bool CPUTimer_isBaseValid(uint32_t base)
 {
     return((base == CPUTIMER0_BASE) || (base == CPUTIMER1_BASE) ||
@@ -139,6 +140,7 @@ static inline bool CPUTimer_isBaseValid(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void CPUTimer_clearOverflowFlag(uint32_t base)
 {
     ASSERT(CPUTimer_isBaseValid(base));
@@ -160,6 +162,7 @@ static inline void CPUTimer_clearOverflowFlag(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void CPUTimer_disableInterrupt(uint32_t base)
 {
     ASSERT(CPUTimer_isBaseValid(base));
@@ -181,6 +184,7 @@ static inline void CPUTimer_disableInterrupt(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void CPUTimer_enableInterrupt(uint32_t base)
 {
     uint16_t tcrValue = 0;
@@ -205,6 +209,7 @@ static inline void CPUTimer_enableInterrupt(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void CPUTimer_reloadTimerCounter(uint32_t base)
 {
     uint16_t tcrValue = 0;
@@ -228,6 +233,7 @@ static inline void CPUTimer_reloadTimerCounter(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void CPUTimer_stopTimer(uint32_t base)
 {
     uint16_t tcrValue = 0;
@@ -253,6 +259,7 @@ static inline void CPUTimer_stopTimer(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void CPUTimer_resumeTimer(uint32_t base)
 {
     ASSERT(CPUTimer_isBaseValid(base));
@@ -276,6 +283,7 @@ static inline void CPUTimer_resumeTimer(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void CPUTimer_startTimer(uint32_t base)
 {
     uint16_t tcrValue = 0;
@@ -305,6 +313,7 @@ static inline void CPUTimer_startTimer(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void CPUTimer_setPeriod(uint32_t base, uint32_t periodCount)
 {
     ASSERT(CPUTimer_isBaseValid(base));
@@ -326,6 +335,7 @@ static inline void CPUTimer_setPeriod(uint32_t base, uint32_t periodCount)
 //! \return Returns the current CPU timer count value.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline uint32_t CPUTimer_getTimerCount(uint32_t base)
 {
     ASSERT(CPUTimer_isBaseValid(base));
@@ -349,6 +359,7 @@ static inline uint32_t CPUTimer_getTimerCount(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void CPUTimer_setPreScaler(uint32_t base, uint16_t prescaler)
 {
     ASSERT(CPUTimer_isBaseValid(base));
@@ -371,6 +382,7 @@ static inline void CPUTimer_setPreScaler(uint32_t base, uint16_t prescaler)
 //! \return Returns true if the CPU timer has overflowed, false if not.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline bool CPUTimer_getTimerOverflowStatus(uint32_t base)
 {
     ASSERT(CPUTimer_isBaseValid(base));

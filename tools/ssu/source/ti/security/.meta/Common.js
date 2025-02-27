@@ -66,7 +66,8 @@ exports = {
     getSummaryList,
     getBankModeConfig,
     getFlashRegion,
-    getBootPeripherals
+    getBootPeripherals,
+    getLink2RequiredAprs
 };
 
 /*
@@ -417,19 +418,6 @@ function getLinkAccess(apr, sysSec)
                     map(x=>{return "SSU_LINK_RD_ACCESS(" + x.$name + ") | "}).
                     join("");
 
-    if(sysSec){
-        if(sysSec.addCommonCodeModule){
-            if(apr.name == "LINK2_codeAPR_Flash")
-            {
-                access += "SSU_LINK_RD_ACCESS(CommonCodeModule_Link) | "
-            }
-            if(apr.name == "LINK2_codeAPR_RAM")
-            {
-                access += "SSU_LINK_RW_ACCESS(CommonCodeModule_Link) | "
-            }
-        }
-    }
-
     return access + '0U'
 }
 
@@ -720,7 +708,58 @@ function isSectionIncluded(str)
     else return false;
 }
 
-function sectionListModule(easyModeModule, APRList, cpu)
+function textSectionList(x, fileList, libList, customListCodeFlash)
+{
+    var inputSections = ""
+
+    if(x.isLink2) {
+        getList(x.link2CodeSection).forEach(f => {
+            f = f.endsWith(")") ? f : "*(" + f + ")"
+            inputSections += "        " + f + "\n"
+        })
+        getList(x.link2DefaultAllSections).forEach(f => {
+            inputSections += "        " + f + "(.text)\n"
+        })
+    }
+    fileList.forEach(f => {
+        inputSections += "        " + f + ".o(.text)\n"
+    })
+    libList.forEach(f => {
+        let specifier = isSectionIncluded(f) ? "" : "<*>"
+        inputSections += "        " + f + specifier +"(.text)\n"
+    })
+    customListCodeFlash.forEach(f => {
+        inputSections += "        " + f + "\n"
+    })
+
+    return inputSections
+}
+
+function ramFunctionSectionList(x, fileList, libList, customListCodeRAM)
+{
+    var inputSections = ""
+
+    if(x.isLink2){
+        inputSections += "        " + "*(.TI.ramfunc.link2)\n"
+        getList(x.link2DefaultAllSections).forEach(f => {
+            inputSections += "        " + f + "(.TI.ramfunc)\n"
+        })
+    }
+    fileList.forEach( f => {
+        inputSections += "        " + f + ".o(.TI.ramfunc)\n"
+    })
+    libList.forEach( f => {
+        let specifier = isSectionIncluded(f) ? "" : "<*>"
+        inputSections += "        " + f + specifier +"(.TI.ramfunc)\n"
+    })
+    customListCodeRAM.forEach( f => {
+        inputSections += "        " + f + "\n"
+    })
+
+    return inputSections
+}
+
+function sectionListModule(easyModeModule, APRList, cpu, sysSec)
 {
     var sections = ""
     var x = easyModeModule
@@ -737,71 +776,156 @@ function sectionListModule(easyModeModule, APRList, cpu)
     customListRWSection = customListRWSection.map(a => {return a.endsWith(")") ? a : "*(" + a + ")"})
     customListROSection = customListROSection.map(a => {return a.endsWith(")") ? a : "*(" + a + ")"})
 
+    //Case        codeAPR_Flash   codeAPR_RAM     flashLoadSize   Action
+    //-------     -------------   -------------   -----------     ------
+    //
+    //1           0               1               0               .text       => RAM
+    //                                                            .TI.ramfunc => RAM
+    //
+    //2           0               1               1               .text       => RAM
+    //                                                            .TI.ramfunc => LOAD=FLASHL RUN=RAM
+    //
+    //3           1               0               X               .text       => FLASH
+    //
+    //4           1               1               0               .text       => FLASH
+    //                                                            .TI.ramfunc => LOAD=FLASH RUN=RAM
+    //
+    //5           1               1               1               .text       => FLASH
+    //                                                            .TI.ramfunc => LOAD=FLASHL RUN=RAM
+
     if(x.codeAPR_Flash)
     {
-        var inputSections = ""
-
-        if(x.isLink2) {
-            getList(x.link2CodeSection).forEach(f => {
-                f = f.endsWith(")") ? f : "*(" + f + ")"
-                inputSections += "        " + f + "\n"
-            })
-            getList(x.link2DefaultAllSections).forEach(f => {
-                inputSections += "        " + f + "(.text)\n"
-            })
-        }
-        fileList.forEach(f => {
-            inputSections += "        " + f + ".o(.text)\n"
-        })
-        libList.forEach(f => {
-            let specifier = isSectionIncluded(f) ? "" : "<*>"
-            inputSections += "        " + f + specifier +"(.text)\n"
-        })
-        customListCodeFlash.forEach(f => {
-            inputSections += "        " + f + "\n"
-        })
-
-        if(inputSections != "")
+        if(x.codeAPR_RAM)
         {
-            let reqdApr = APRList.find(o => {return o.name == x.codeAPR_Flash.$name})
-            sections += "    ." + x.codeAPR_Flash.$name + getSECGROUP(reqdApr) + " {\n"
-            sections += inputSections
-            sections += "    }     " + where(reqdApr) + ", palign(8)  \n\n"
+            if(sysSec.APR_FlashLoad)
+            {
+                //  CASE 5
+                //      .text       => FLASH
+                //      .TI.ramfunc => LOAD=FLASHL RUN=RAM
+
+                var inputSections = textSectionList(x, fileList, libList, customListCodeFlash)
+                if(inputSections != "")
+                {
+                    let reqdApr = APRList.find(o => {return o.name == x.codeAPR_Flash.$name})
+                    sections += "    ." + x.codeAPR_Flash.$name + getSECGROUP(reqdApr) + " {\n"
+                    sections += inputSections
+                    sections += "    }   > " + memName(reqdApr) + ", palign(8)  \n\n"
+                }
+
+                var inputSections = ramFunctionSectionList(x, fileList, libList, customListCodeRAM)
+                if(inputSections != "") {
+                    let reqdApr = APRList.find(o => {return o.name == x.codeAPR_RAM.$name})
+                    sections += "    ." + x.codeAPR_RAM.$name + getSECGROUP(reqdApr) + " {\n"
+                    sections += inputSections
+                    sections += "    }   LOAD = APR_FLASHLOAD_" + cpu.toUpperCase() + ", RUN = " + memName(reqdApr) + ", table(BINIT)\n\n"
+                }
+            }
+            else
+            {
+                //  CASE 4
+                //      .text       => FLASH
+                //      .TI.ramfunc => LOAD=FLASH RUN=RAM
+
+                var inputSections = textSectionList(x, fileList, libList, customListCodeFlash)
+                if(inputSections != "")
+                {
+                    let reqdApr = APRList.find(o => {return o.name == x.codeAPR_Flash.$name})
+                    sections += "    ." + x.codeAPR_Flash.$name + getSECGROUP(reqdApr) + " {\n"
+                    sections += inputSections
+                    sections += "    }   > " + memName(reqdApr) + ", palign(8)  \n\n"
+                }
+
+                var inputSections = ramFunctionSectionList(x, fileList, libList, customListCodeRAM)
+                if(inputSections != "") {
+                    let reqdApr = APRList.find(o => {return o.name == x.codeAPR_RAM.$name})
+                    let reqdAprf = APRList.find(o => {return o.name == x.codeAPR_Flash.$name})
+                    sections += "    ." + x.codeAPR_RAM.$name + getSECGROUP(reqdApr) + " {\n"
+                    sections += inputSections
+                    sections += "    }   LOAD = " + memName(reqdAprf) + ", RUN = " + memName(reqdApr) + ", table(BINIT)\n\n"
+                }
+            }
+        }
+        else
+        {
+            //  CASE 3
+            //      .text       => FLASH
+
+            var inputSections = textSectionList(x, fileList, libList, customListCodeFlash)
+            if(inputSections != "")
+            {
+                let reqdApr = APRList.find(o => {return o.name == x.codeAPR_Flash.$name})
+                sections += "    ." + x.codeAPR_Flash.$name + getSECGROUP(reqdApr) + " {\n"
+                sections += inputSections
+                sections += "    }   > " + memName(reqdApr) + ", palign(8)  \n\n"
+            }
         }
     }
-
-    if(x.codeAPR_RAM)
+    else
     {
-        var inputSections = ""
+        if(x.codeAPR_RAM)
+        {
+            if(sysSec.APR_FlashLoad)
+            {
+                //  CASE 2
+                //      .text       => RAM
+                //      .TI.ramfunc => LOAD=FLASHL RUN=RAM
 
-        if(x.isLink2){
-            inputSections += "        " + "*(.TI.ramfunc.link2)\n"
-            getList(x.link2DefaultAllSections).forEach(f => {
-                inputSections += "        " + f + "(.TI.ramfunc)\n"
-            })
-        }
-        fileList.forEach( f => {
-            if(x.textInRAM)
-                inputSections += "        " + f + ".o(.text .TI.ramfunc)\n"
+                var inputSections = textSectionList(x, fileList, libList, customListCodeFlash)
+                if(inputSections != "")
+                {
+                    let reqdApr = APRList.find(o => {return o.name == x.codeAPR_RAM.$name})
+                    sections += "    ." + x.codeAPR_RAM.$name + getSECGROUP(reqdApr) + " {\n"
+                    sections += inputSections
+                    sections += "    }   > " + memName(reqdApr) + ", palign(8)  \n\n"
+                }
+                //
+                //  .TI.ramfunc => LOAD=Flash RUN=RAM
+                //
+                var inputSections = ramFunctionSectionList(x, fileList, libList, customListCodeRAM)
+                if(inputSections != "") {
+                    let reqdApr = APRList.find(o => {return o.name == x.codeAPR_RAM.$name})
+                    sections += "    ." + x.codeAPR_RAM.$name + getSECGROUP(reqdApr) + " {\n"
+                    sections += inputSections
+                    sections += "    }   LOAD = APR_FLASHLOAD_" + cpu.toUpperCase() + ", RUN = " + memName(reqdApr) + ", table(BINIT)\n\n"
+                }
+            }
             else
-                inputSections += "        " + f + ".o(.TI.ramfunc)\n"
-        })
-        libList.forEach( f => {
-            let specifier = isSectionIncluded(f) ? "" : "<*>"
-            if(x.textInRAM)
-                inputSections += "        " + f + specifier +"(.text .TI.ramfunc)\n"
-            else
-                inputSections += "        " + f + specifier +"(.TI.ramfunc)\n"
-        })
-        customListCodeRAM.forEach( f => {
-            inputSections += "        " + f + "\n"
-        })
+            {
+                //  CASE 1
+                //      .text       => RAM
+                //      .TI.ramfunc => RAM
 
-        if(inputSections != "") {
-            let reqdApr = APRList.find(o => {return o.name == x.codeAPR_RAM.$name})
-            sections += "    ." + x.codeAPR_RAM.$name + getSECGROUP(reqdApr) + " {\n"
-            sections += inputSections
-            sections += "    }     " + where(reqdApr) + "\n\n"
+                var inputSections = ""
+
+                if(x.isLink2) {
+                    inputSections += "        " + "*(.TI.ramfunc.link2)\n"
+                    getList(x.link2CodeSection).forEach(f => {
+                        f = f.endsWith(")") ? f : "*(" + f + ")"
+                        inputSections += "        " + f + "\n"
+                    })
+                    getList(x.link2DefaultAllSections).forEach(f => {
+                        inputSections += "        " + f + "(.text .TI.ramfunc)\n"
+                    })
+                }
+                fileList.forEach(f => {
+                    inputSections += "        " + f + ".o(.text .TI.ramfunc)\n"
+                })
+                libList.forEach(f => {
+                    let specifier = isSectionIncluded(f) ? "" : "<*>"
+                    inputSections += "        " + f + specifier +"(.text .TI.ramfunc)\n"
+                })
+                customListCodeFlash.forEach(f => {
+                    inputSections += "        " + f + "\n"
+                })
+
+                if(inputSections != "")
+                {
+                    let reqdApr = APRList.find(o => {return o.name == x.codeAPR_RAM.$name})
+                    sections += "    ." + x.codeAPR_RAM.$name + getSECGROUP(reqdApr) + " {\n"
+                    sections += inputSections
+                    sections += "    }   > " + memName(reqdApr) + "\n\n"
+                }
+            }
         }
     }
 
@@ -1006,10 +1130,28 @@ function getSectionsList(sysSec, cpu)
             sections += `    .ovly      : > APR_FLASHLOAD_${system.context}, palign(8)  // Copy tables other than boot time (.binit) copy tables.\n\n`
         }
  */
-        sections += `    .cinit       : > APR_FLASHLOAD_${system.context}, palign(8)  // Tables for explicitly initialized global and static variables.\n`
-        sections += `    .binit       : > APR_FLASHLOAD_${system.context}, palign(8)  // Boot time copy tables\n`
-        sections += `    .ovly        : > APR_FLASHLOAD_${system.context}, palign(8)  // Copy tables other than boot time (.binit) copy tables.\n`
-        sections += `    .sysmem      : > LINK2_DATAAPR_RW,   palign(8)  // Sysmem\n\n`
+        reqdAPR = APRList.find(o => {return o.name == "APR_FlashLoad_"+system.context}) //!! tag
+        if(reqdAPR){
+            sections += `    .cinit       : > APR_FLASHLOAD_${system.context}, palign(8)  // Tables for explicitly initialized global and static variables.\n`
+            sections += `    .binit       : > APR_FLASHLOAD_${system.context}, palign(8)  // Boot time copy tables\n`
+            sections += `    .ovly        : > APR_FLASHLOAD_${system.context}, palign(8)  // Copy tables other than boot time (.binit) copy tables.\n`
+        }
+        reqdAPR = APRList.find(o => {return o.name == "LINK2_dataAPR_RW"}) //!! tag
+        if(reqdAPR){
+            sections += `    .sysmem      : > LINK2_DATAAPR_RW,   palign(8)  // Sysmem\n\n`
+        }
+    }
+    else {
+        let reqdAPR = APRList.find(o => {return o.name == "LINK2_codeAPR_RAM"}) //!! tag
+        if(reqdAPR){
+            sections += `    .cinit       : > LINK2_CODEAPR_RAM, palign(8)  // Tables for explicitly initialized global and static variables.\n`
+            sections += `    .binit       : > LINK2_CODEAPR_RAM, palign(8)  // Boot time copy tables\n`
+            sections += `    .ovly        : > LINK2_CODEAPR_RAM, palign(8)  // Copy tables other than boot time (.binit) copy tables.\n`
+        }
+        reqdAPR = APRList.find(o => {return o.name == "LINK2_dataAPR_RW"}) //!! tag
+        if(reqdAPR){
+            sections += `    .sysmem      : > LINK2_DATAAPR_RW,  palign(8)  // Sysmem\n\n`
+        }
     }
 
     // Get the stack sections
@@ -1035,9 +1177,9 @@ function getSectionsList(sysSec, cpu)
     let commonCodeSections = ""
     modInstances('/ti/security/EasyMode_link').forEach(x => {
         if(x.isCommonCode)
-            commonCodeSections += sectionListModule(x, APRList, cpu)
+            commonCodeSections += sectionListModule(x, APRList, cpu, sysSec)
         else
-            sections += sectionListModule(x, APRList, cpu)
+            sections += sectionListModule(x, APRList, cpu, sysSec)
     })
     sections += commonCodeSections                                  //!! Always placing common code sections at the end
 
@@ -1133,7 +1275,7 @@ function getMemoryList(cpu)
         }
         else
             list += "    " + memName(item) + spaces + " : origin = 0x" + toHex(item.startAddr, 8) + ", length = 0x" + toHex(size, 8) + "\n"
-     })
+    })
 
     return list
 }
@@ -1342,10 +1484,20 @@ function getSeccfgLocation(cpuName){
 }
 
 function getSeccfgLocationDummy(cpuName){
-    if(cpuName == "CPU1") return 0x200FC000;
-    if(cpuName == "CPU2") return 0x200FC800;
-    if(cpuName == "CPU3") return 0x200FD000;
-    if(cpuName == "CPU4") return 0x200FD800;
+    if(isContextCPU1() == true)
+    {
+        if(cpuName == "CPU1") return 0x200FC000;
+        if(cpuName == "CPU2") return 0x200FC800;
+        if(cpuName == "CPU3") return 0x200FD000;
+        if(cpuName == "CPU4") return 0x200FD800;
+    }
+    else
+    {
+        if(cpuName == "CPU1") return 0x00000000;
+        if(cpuName == "CPU2") return 0x00000800;
+        if(cpuName == "CPU3") return 0x00001000;
+        if(cpuName == "CPU4") return 0x00001800;
+    }
 }
 
 function getCoreList(lockstepFilter = 0){
@@ -1454,16 +1606,22 @@ function allocateRamMemoriesUtil(){
        // console.log(sharedRegions)
 
         let sortedRegions = _.sortBy(memRegionsAll[cpu],
-                                    [(reg) => {
-                                        if(reg.isShared) return reg.sharedCores.length;
-                                        return 0;
-                                    },
-                                     (reg) => { return -reg.zeroWS},
-                                     (reg) => { return -reg.memSize},
-                                     (reg) => {                             // Code then data
-                                        if(reg.type == "Code") return 0;
-                                        return 1;
-                                    }])
+                                    [
+                                        (reg) => {
+                                            if (reg.specialAprStatus == "link2_ram_code") return -2;
+                                            return 0;
+                                        },
+                                        (reg) => {
+                                            if(reg.isShared) return reg.sharedCores.length;
+                                            return 0;
+                                        },
+                                        (reg) => { return -reg.zeroWS},
+                                        (reg) => { return -reg.memSize},
+                                        (reg) => {                             // Code then data
+                                            if(reg.type == "Code") return 0;
+                                            return 1;
+                                        }
+                                    ])
 
         /* let lowPriorityRegions = _.remove(sortedRegions, (reg) => {
             if(reg.isShared && (reg.sharedCores.includes("CPU2") && reg.sharedCores.includes("CPU3")))
@@ -1791,6 +1949,10 @@ function allocateFlashMemoriesUtil()
                                     (a) => {
                                         {if(weprot_last == 0) return (a.weprot)
                                             else return (-1 * a.weprot)}
+                                    },
+                                    (a) => {
+                                        if (a.$name == "CPU2_FLASH_REGION") return 0xFFFFFFFF
+                                        else return 0
                                     }
                                 ])
 
@@ -2172,4 +2334,8 @@ function getBootPeripherals(inst){
 
     let retArray = Array.from(periphsNeeded)
     return retArray
+}
+
+function getLink2RequiredAprs(){
+    return ssuData["link2RequiredAprs"]
 }

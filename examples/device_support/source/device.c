@@ -107,7 +107,7 @@ void Device_init(void)
     // Errata workaround
     //
     Device_errataWorkaroundNMIVectorFetch();
-    
+
 #ifdef _FLASH
     //
     // Call Flash Initialization to setup flash waitstates. This function must
@@ -375,7 +375,7 @@ void Device_errataWorkaroundNMIVectorFetch()
 	counter_params.event_mode = ERAD_COUNTER_MODE_RISING_EDGE;
     counter_params.rst_on_match = true;
     counter_params.reference = 0x32U;
-    ERAD_configCounterInStartStopMode(ERAD_COUNTER3, counter_params, ERAD_EVENT_EPWMXBAR_OUT1, ERAD_EVENT_COUNTER3_EVENT);
+    ERAD_configCounterInStartStopMode(ERAD_COUNTER3, &counter_params, ERAD_EVENT_EPWMXBAR_OUT1, ERAD_EVENT_COUNTER3_EVENT);
 	ERAD_enableCounterModule(ERAD_COUNTER3);
 
     // Configure CPU1_ESM to generate an NMI on CPU1_ERAD_NMI event
@@ -399,10 +399,11 @@ void Device_errataWorkaroundNMIVectorFetch()
 __attribute__((interrupt("RTINT"), section("nmivector")))
 void nmi_vector(void)
 {
+    Interrupt_NmiStatus nmiStatus;
     //
     //  Clear ESM and EA error flags
     //
-    Interrupt_clearEsmEaFlags();
+    Interrupt_clearEsmEaFlags(&nmiStatus);
 
     //
     //  Spin forever

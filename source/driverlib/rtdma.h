@@ -583,6 +583,7 @@ typedef struct
 //
 //*****************************************************************************
 #ifdef DEBUG
+__attribute__((always_inline))
 static inline bool
 DMA_isBaseValid(uint32_t base)
 {
@@ -595,6 +596,7 @@ DMA_isBaseValid(uint32_t base)
           );
 }
 
+__attribute__((always_inline))
 static inline bool
 DMA_MPU_isBaseValid(uint32_t base)
 {
@@ -607,6 +609,7 @@ DMA_MPU_isBaseValid(uint32_t base)
           );
 }
 
+__attribute__((always_inline))
 static inline bool
 DMA_CH_isBaseValid(uint32_t base)
 {
@@ -653,6 +656,7 @@ DMA_CH_isBaseValid(uint32_t base)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.DMA_initController")))
+__attribute__((always_inline))
 static inline void
 DMA_initController(uint32_t base)
 {
@@ -680,6 +684,7 @@ DMA_initController(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 DMA_triggerSoftReset(uint32_t base)
 {
@@ -715,6 +720,7 @@ DMA_triggerSoftReset(uint32_t base)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.DMA_setEmulationMode")))
+__attribute__((always_inline))
 static inline void
 DMA_setEmulationMode(uint32_t base, DMA_EmulationMode mode)
 {
@@ -756,6 +762,7 @@ DMA_setEmulationMode(uint32_t base, DMA_EmulationMode mode)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.DMA_setPriorityMode")))
+__attribute__((always_inline))
 static inline void
 DMA_setPriorityMode(uint32_t base, DMA_PriorityMode priorityMode)
 {
@@ -794,6 +801,7 @@ DMA_setPriorityMode(uint32_t base, DMA_PriorityMode priorityMode)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.DMA_setChannelPriority")))
+__attribute__((always_inline))
 static inline void
 DMA_setChannelPriority(uint32_t base, DMA_Channel channel,
                                DMA_ChannelPriority chPriority)
@@ -835,6 +843,7 @@ DMA_setChannelPriority(uint32_t base, DMA_Channel channel,
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.DMA_resetPriority")))
+__attribute__((always_inline))
 static inline void
 DMA_resetPriority(uint32_t base)
 {
@@ -862,6 +871,7 @@ DMA_resetPriority(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 DMA_enableTrigger(uint32_t base)
 {
@@ -890,6 +900,7 @@ DMA_enableTrigger(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 DMA_disableTrigger(uint32_t base)
 {
@@ -918,6 +929,7 @@ DMA_disableTrigger(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 DMA_forceTrigger(uint32_t base)
 {
@@ -946,6 +958,7 @@ DMA_forceTrigger(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 DMA_clearTriggerFlag(uint32_t base)
 {
@@ -976,6 +989,7 @@ DMA_clearTriggerFlag(uint32_t base)
 //! \b false otherwise.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline bool
 DMA_getTransferStatusFlag(uint32_t base)
 {
@@ -1006,6 +1020,7 @@ DMA_getTransferStatusFlag(uint32_t base)
 //! otherwise.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline bool
 DMA_getBurstStatusFlag(uint32_t base)
 {
@@ -1037,6 +1052,7 @@ DMA_getBurstStatusFlag(uint32_t base)
 //! otherwise.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline bool
 DMA_getRunStatusFlag(uint32_t base)
 {
@@ -1068,6 +1084,7 @@ DMA_getRunStatusFlag(uint32_t base)
 //! otherwise.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline bool
 DMA_getOverflowFlag(uint32_t base)
 {
@@ -1097,6 +1114,7 @@ DMA_getOverflowFlag(uint32_t base)
 //! flag is set. Returns \b false otherwise.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline bool
 DMA_getTriggerFlagStatus(uint32_t base)
 {
@@ -1125,6 +1143,7 @@ DMA_getTriggerFlagStatus(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 DMA_startChannel(uint32_t base)
 {
@@ -1152,6 +1171,7 @@ DMA_startChannel(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 DMA_stopChannel(uint32_t base)
 {
@@ -1185,6 +1205,7 @@ DMA_stopChannel(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 DMA_setInterruptMode(uint32_t base, DMA_InterruptMode mode)
 {
@@ -1218,6 +1239,7 @@ DMA_setInterruptMode(uint32_t base, DMA_InterruptMode mode)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 DMA_enableInterrupt(uint32_t base)
 {
@@ -1244,6 +1266,7 @@ DMA_enableInterrupt(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 DMA_disableInterrupt(uint32_t base)
 {
@@ -1273,6 +1296,7 @@ DMA_disableInterrupt(uint32_t base)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.DMA_lockDMAConfig")))
+__attribute__((always_inline))
 static inline void
 DMA_lockDMAConfig(uint32_t base)
 {
@@ -1302,6 +1326,7 @@ DMA_lockDMAConfig(uint32_t base)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.DMA_unlockDMAConfig")))
+__attribute__((always_inline))
 static inline void
 DMA_unlockDMAConfig(uint32_t base)
 {
@@ -1330,6 +1355,7 @@ DMA_unlockDMAConfig(uint32_t base)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.DMA_commitDMAConfig")))
+__attribute__((always_inline))
 static inline void
 DMA_commitDMAConfig(uint32_t base)
 {
@@ -1364,6 +1390,7 @@ DMA_commitDMAConfig(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 DMA_enableOverrunInterrupt(uint32_t base)
 {
@@ -1391,6 +1418,7 @@ DMA_enableOverrunInterrupt(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 DMA_disableOverrunInterrupt(uint32_t base)
 {
@@ -1418,6 +1446,7 @@ DMA_disableOverrunInterrupt(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 DMA_clearErrorFlag(uint32_t base)
 {
@@ -1445,6 +1474,7 @@ DMA_clearErrorFlag(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 DMA_configSourceAddress(uint32_t base, const void *srcAddr)
 {
@@ -1473,6 +1503,7 @@ DMA_configSourceAddress(uint32_t base, const void *srcAddr)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 DMA_configDestAddress(uint32_t base, const void *destAddr)
 {
@@ -1503,6 +1534,7 @@ DMA_configDestAddress(uint32_t base, const void *destAddr)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 DMA_setBurstSignalingMode(uint32_t base, DMA_BurstSignalingMode mode)
 {
@@ -1534,6 +1566,7 @@ DMA_setBurstSignalingMode(uint32_t base, DMA_BurstSignalingMode mode)
 //! \return None
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 DMA_lockAllChannelConfig(uint32_t base)
 {
@@ -1572,6 +1605,7 @@ DMA_lockAllChannelConfig(uint32_t base)
 //! \return None
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 DMA_unlockAllChannelConfig(uint32_t base)
 {
@@ -1609,6 +1643,7 @@ DMA_unlockAllChannelConfig(uint32_t base)
 //! \return None
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 DMA_commitAllChannelConfig(uint32_t base)
 {
@@ -1648,6 +1683,7 @@ DMA_commitAllChannelConfig(uint32_t base)
 //! \return None
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 DMA_lockChannelConfig(uint32_t base)
 {
@@ -1678,6 +1714,7 @@ DMA_lockChannelConfig(uint32_t base)
 //! \return None
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 DMA_unlockChannelConfig(uint32_t base)
 {
@@ -1705,6 +1742,7 @@ DMA_unlockChannelConfig(uint32_t base)
 //! \return None
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 DMA_commitChannelConfig(uint32_t base)
 {
@@ -1732,6 +1770,7 @@ DMA_commitChannelConfig(uint32_t base)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.DMA_enableMPU")))
+__attribute__((always_inline))
 static inline void
 DMA_enableMPU(uint32_t base)
 {
@@ -1759,6 +1798,7 @@ DMA_enableMPU(uint32_t base)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.DMA_disableMPU")))
+__attribute__((always_inline))
 static inline void
 DMA_disableMPU(uint32_t base)
 {
@@ -1787,6 +1827,7 @@ DMA_disableMPU(uint32_t base)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.DMA_lockMPUConfig")))
+__attribute__((always_inline))
 static inline void
 DMA_lockMPUConfig(uint32_t base)
 {
@@ -1815,6 +1856,7 @@ DMA_lockMPUConfig(uint32_t base)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.DMA_unlockMPUConfig")))
+__attribute__((always_inline))
 static inline void
 DMA_unlockMPUConfig(uint32_t base)
 {
@@ -1843,6 +1885,7 @@ DMA_unlockMPUConfig(uint32_t base)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.DMA_commitMPUConfig")))
+__attribute__((always_inline))
 static inline void
 DMA_commitMPUConfig(uint32_t base)
 {
@@ -1872,6 +1915,7 @@ DMA_commitMPUConfig(uint32_t base)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.DMA_lockAllMPURegion")))
+__attribute__((always_inline))
 static inline void
 DMA_lockAllMPURegion(uint32_t base)
 {
@@ -1905,6 +1949,7 @@ DMA_lockAllMPURegion(uint32_t base)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.DMA_unlockAllMPURegion")))
+__attribute__((always_inline))
 static inline void
 DMA_unlockAllMPURegion(uint32_t base)
 {
@@ -1939,6 +1984,7 @@ DMA_unlockAllMPURegion(uint32_t base)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.DMA_commitAllMPURegion")))
+__attribute__((always_inline))
 static inline void
 DMA_commitAllMPURegion(uint32_t base)
 {
@@ -1974,6 +2020,7 @@ DMA_commitAllMPURegion(uint32_t base)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.DMA_lockMPURegion")))
+__attribute__((always_inline))
 static inline void
 DMA_lockMPURegion(uint32_t base, DMA_MPURegion MPURegion)
 {
@@ -2003,6 +2050,7 @@ DMA_lockMPURegion(uint32_t base, DMA_MPURegion MPURegion)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.DMA_unlockMPURegion")))
+__attribute__((always_inline))
 static inline void
 DMA_unlockMPURegion(uint32_t base, DMA_MPURegion MPURegion)
 {
@@ -2032,6 +2080,7 @@ DMA_unlockMPURegion(uint32_t base, DMA_MPURegion MPURegion)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.DMA_commitMPURegion")))
+__attribute__((always_inline))
 static inline void
 DMA_commitMPURegion(uint32_t base, DMA_MPURegion MPURegion)
 {
@@ -2060,6 +2109,7 @@ DMA_commitMPURegion(uint32_t base, DMA_MPURegion MPURegion)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.DMA_commitAllDMASettings")))
+__attribute__((always_inline))
 static inline void
 DMA_commitAllDMASettings(void)
 {

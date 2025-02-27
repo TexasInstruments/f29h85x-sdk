@@ -232,6 +232,7 @@ typedef enum
 //
 //*****************************************************************************
 #ifdef DEBUG
+__attribute__((always_inline))
 static inline bool
 GPIO_isPinValid(uint32_t pin)
 {
@@ -274,6 +275,7 @@ GPIO_isPinValid(uint32_t pin)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 GPIO_setInterruptType(GPIO_ExternalIntNum extIntNum, GPIO_IntType intType)
 {
@@ -307,6 +309,7 @@ GPIO_setInterruptType(GPIO_ExternalIntNum extIntNum, GPIO_IntType intType)
 //! \return Returns one of the flags described for GPIO_setInterruptType().
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline GPIO_IntType
 GPIO_getInterruptType(GPIO_ExternalIntNum extIntNum)
 {
@@ -339,6 +342,7 @@ GPIO_getInterruptType(GPIO_ExternalIntNum extIntNum)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 GPIO_enableInterrupt(GPIO_ExternalIntNum extIntNum)
 {
@@ -370,6 +374,7 @@ GPIO_enableInterrupt(GPIO_ExternalIntNum extIntNum)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 GPIO_disableInterrupt(GPIO_ExternalIntNum extIntNum)
 {
@@ -397,6 +402,7 @@ GPIO_disableInterrupt(GPIO_ExternalIntNum extIntNum)
 //! \return Returns external interrupt counter value.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline uint16_t
 GPIO_getInterruptCounter(GPIO_ExternalIntNum extIntNum)
 {
@@ -423,6 +429,7 @@ GPIO_getInterruptCounter(GPIO_ExternalIntNum extIntNum)
 //! \return Returns the value in the data register for the specified pin.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline uint32_t
 GPIO_readPin(uint32_t pin)
 {
@@ -456,6 +463,7 @@ GPIO_readPin(uint32_t pin)
 //! \return Returns the value in the data register for the specified pin.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline uint32_t
 GPIO_readPinDataRegister(uint32_t pin)
 {
@@ -488,6 +496,7 @@ GPIO_readPinDataRegister(uint32_t pin)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 GPIO_writePin(uint32_t pin, uint32_t outVal)
 {
@@ -529,6 +538,7 @@ GPIO_writePin(uint32_t pin, uint32_t outVal)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 GPIO_togglePin(uint32_t pin)
 {
@@ -557,6 +567,7 @@ GPIO_togglePin(uint32_t pin)
 //! represents GPIO port pin 0, bit 1 represents GPIO port pin 1, and so on.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline uint32_t
 GPIO_readPortData(GPIO_Port port)
 {
@@ -590,6 +601,7 @@ GPIO_readPortData(GPIO_Port port)
 //! represents GPIO port pin 0, bit 1 represents GPIO port pin 1, and so on.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline uint32_t
 GPIO_readPortDataRegister(GPIO_Port port)
 {
@@ -623,6 +635,7 @@ GPIO_readPortDataRegister(GPIO_Port port)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 GPIO_writePortData(GPIO_Port port, uint32_t outVal)
 {
@@ -656,6 +669,7 @@ GPIO_writePortData(GPIO_Port port, uint32_t outVal)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 GPIO_setPortPins(GPIO_Port port, uint32_t pinMask)
 {
@@ -689,6 +703,7 @@ GPIO_setPortPins(GPIO_Port port, uint32_t pinMask)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 GPIO_clearPortPins(GPIO_Port port, uint32_t pinMask)
 {
@@ -722,6 +737,7 @@ GPIO_clearPortPins(GPIO_Port port, uint32_t pinMask)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 GPIO_togglePortPins(GPIO_Port port, uint32_t pinMask)
 {
@@ -760,6 +776,7 @@ GPIO_togglePortPins(GPIO_Port port, uint32_t pinMask)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.GPIO_lockPortConfig")))
+__attribute__((always_inline))
 static inline void
 GPIO_lockPortConfig(GPIO_Port port, uint32_t pinMask)
 {
@@ -794,6 +811,7 @@ GPIO_lockPortConfig(GPIO_Port port, uint32_t pinMask)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.GPIO_unlockPortConfig")))
+__attribute__((always_inline))
 static inline void
 GPIO_unlockPortConfig(GPIO_Port port, uint32_t pinMask)
 {
@@ -832,6 +850,7 @@ GPIO_unlockPortConfig(GPIO_Port port, uint32_t pinMask)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.GPIO_commitPortConfig")))
+__attribute__((always_inline))
 static inline void
 GPIO_commitPortConfig(GPIO_Port port, uint32_t pinMask)
 {

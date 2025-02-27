@@ -177,7 +177,7 @@ void configureERAD()
     ERAD_disableBusCompModule(ERAD_BUSCOMP4);
     buscomp_params.bus_sel = ERAD_BUSCOMP_BUS_VPC_W_ALIGNED;
 	buscomp_params.reference = (uint64_t)&cpuTimer0ISR;
-    ERAD_configBusComp(ERAD_BUSCOMP4, buscomp_params);
+    ERAD_configBusComp(ERAD_BUSCOMP4, &buscomp_params);
 
     //
     // ERAD_BUSCOMP5 = cpuTimer1ISR (W aligned)
@@ -186,7 +186,7 @@ void configureERAD()
     ERAD_disableBusCompModule(ERAD_BUSCOMP5);
     buscomp_params.bus_sel = ERAD_BUSCOMP_BUS_VPC_W_ALIGNED;
 	buscomp_params.reference = (uint64_t)&cpuTimer1ISR;
-    ERAD_configBusComp(ERAD_BUSCOMP5, buscomp_params);
+    ERAD_configBusComp(ERAD_BUSCOMP5, &buscomp_params);
 
     //
     // ERAD_BUSCOMP6 = cpuTimer0IntCount (DR, W Aligned)
@@ -195,7 +195,7 @@ void configureERAD()
     ERAD_disableBusCompModule(ERAD_BUSCOMP6);
     buscomp_params.bus_sel = ERAD_BUSCOMP_BUS_DRAB_W;
 	buscomp_params.reference = (uint64_t)&cpuTimer0IntCount;
-    ERAD_configBusComp(ERAD_BUSCOMP6, buscomp_params);
+    ERAD_configBusComp(ERAD_BUSCOMP6, &buscomp_params);
 
     //
     // ERAD_BUSCOMP7 = cpuTimer1IntCount (DR, W Aligned)
@@ -204,7 +204,7 @@ void configureERAD()
     ERAD_disableBusCompModule(ERAD_BUSCOMP7);
     buscomp_params.bus_sel = ERAD_BUSCOMP_BUS_DRAB_W;
 	buscomp_params.reference = (uint64_t)&cpuTimer1IntCount;
-    ERAD_configBusComp(ERAD_BUSCOMP7, buscomp_params);
+    ERAD_configBusComp(ERAD_BUSCOMP7, &buscomp_params);
 
 
     //
@@ -224,28 +224,28 @@ void configureERAD()
     //
     ERAD_setCounterOwnership(ERAD_COUNTER0, ERAD_OWNER_APPLICATION);
     ERAD_disableCounterModule(ERAD_COUNTER0);
-    ERAD_configCounterInStartStopMode(ERAD_COUNTER0, counter_params, ERAD_EVENT_CPU1_TIMER0_INT, ERAD_EVENT_EBC4);
+    ERAD_configCounterInStartStopMode(ERAD_COUNTER0, &counter_params, ERAD_EVENT_CPU1_TIMER0_INT, ERAD_EVENT_EBC4);
 
     //
     // ERAD_COUNTER1 = ERAD_BUSCOMP4 (cpuTimer0ISR) - ERAD_BUSCOMP6 (cpuTimer0IntCount)
     //
     ERAD_setCounterOwnership(ERAD_COUNTER1, ERAD_OWNER_APPLICATION);
     ERAD_disableCounterModule(ERAD_COUNTER1);
-    ERAD_configCounterInStartStopMode(ERAD_COUNTER1, counter_params, ERAD_EVENT_EBC4, ERAD_EVENT_EBC6);
+    ERAD_configCounterInStartStopMode(ERAD_COUNTER1, &counter_params, ERAD_EVENT_EBC4, ERAD_EVENT_EBC6);
 
     //
     // ERAD_COUNTER2 = TINT1 - ERAD_BUSCOMP5 (cpuTimer1ISR)
     //
     ERAD_setCounterOwnership(ERAD_COUNTER2, ERAD_OWNER_APPLICATION);
     ERAD_disableCounterModule(ERAD_COUNTER2);
-    ERAD_configCounterInStartStopMode(ERAD_COUNTER2, counter_params, ERAD_EVENT_CPU1_TIMER1_INT, ERAD_EVENT_EBC5);
+    ERAD_configCounterInStartStopMode(ERAD_COUNTER2, &counter_params, ERAD_EVENT_CPU1_TIMER1_INT, ERAD_EVENT_EBC5);
 
     //
     // ERAD_COUNTER3 = ERAD_BUSCOMP5 (cpuTimer1ISR) - ERAD_BUSCOMP7 (cpuTimer1IntCount)
     //
     ERAD_setCounterOwnership(ERAD_COUNTER3, ERAD_OWNER_APPLICATION);
     ERAD_disableCounterModule(ERAD_COUNTER3);
-    ERAD_configCounterInStartStopMode(ERAD_COUNTER3, counter_params, ERAD_EVENT_EBC5, ERAD_EVENT_EBC7);
+    ERAD_configCounterInStartStopMode(ERAD_COUNTER3, &counter_params, ERAD_EVENT_EBC5, ERAD_EVENT_EBC7);
 
 
     ERAD_enableModules(ERAD_INST_BUSCOMP4 | ERAD_INST_BUSCOMP5 | ERAD_INST_BUSCOMP6 | ERAD_INST_BUSCOMP7  |

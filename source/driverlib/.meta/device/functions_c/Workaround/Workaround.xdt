@@ -33,7 +33,7 @@ void Device_errataWorkaroundNMIVectorFetch()
 	counter_params.event_mode = ERAD_COUNTER_MODE_RISING_EDGE;
     counter_params.rst_on_match = true;
     counter_params.reference = 0x32U;
-    ERAD_configCounterInStartStopMode(ERAD_COUNTER3, counter_params, ERAD_EVENT_EPWMXBAR_OUT1, ERAD_EVENT_COUNTER3_EVENT);
+    ERAD_configCounterInStartStopMode(ERAD_COUNTER3, &counter_params, ERAD_EVENT_EPWMXBAR_OUT1, ERAD_EVENT_COUNTER3_EVENT);
 	ERAD_enableCounterModule(ERAD_COUNTER3);
 
 % }

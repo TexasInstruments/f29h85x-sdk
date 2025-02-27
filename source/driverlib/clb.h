@@ -690,6 +690,7 @@ typedef enum
 //
 //*****************************************************************************
 #ifdef DEBUG
+__attribute__((always_inline))
 static inline bool CLB_isBaseValid(uint32_t base)
 {
     return(
@@ -714,6 +715,7 @@ static inline bool CLB_isBaseValid(uint32_t base)
 //! \return Returns \b true if the address is valid and \b false otherwise.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline bool CLB_isAddressValid(uint32_t address)
 {
     return(address <= (CLB_ADDR_HLC_BASE + CLB_NUM_HLC_INSTR));
@@ -731,11 +733,12 @@ static inline bool CLB_isAddressValid(uint32_t address)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void CLB_enableCLB(uint32_t base)
 {
     ASSERT(CLB_isBaseValid(base));
 
-    HWREGH(base + CLB_LOGICCTL + CLB_O_LOAD_EN) |= CLB_LOAD_EN_GLOBAL_EN; 
+    HWREGH(base + CLB_LOGICCTL + CLB_O_LOAD_EN) |= CLB_LOAD_EN_GLOBAL_EN;
 }
 
 //*****************************************************************************
@@ -749,6 +752,7 @@ static inline void CLB_enableCLB(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void CLB_disableCLB(uint32_t base)
 {
     ASSERT(CLB_isBaseValid(base));
@@ -767,11 +771,12 @@ static inline void CLB_disableCLB(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void CLB_enableNMI(uint32_t base)
 {
     ASSERT(CLB_isBaseValid(base));
 
-    HWREGH(base + CLB_LOGICCTL + CLB_O_LOAD_EN) |= CLB_LOAD_EN_NMI_EN;   
+    HWREGH(base + CLB_LOGICCTL + CLB_O_LOAD_EN) |= CLB_LOAD_EN_NMI_EN;
 }
 
 //*****************************************************************************
@@ -785,11 +790,12 @@ static inline void CLB_enableNMI(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void CLB_disableNMI(uint32_t base)
 {
     ASSERT(CLB_isBaseValid(base));
 
-    HWREGH(base + CLB_LOGICCTL + CLB_O_LOAD_EN) &= ~CLB_LOAD_EN_NMI_EN;   
+    HWREGH(base + CLB_LOGICCTL + CLB_O_LOAD_EN) &= ~CLB_LOAD_EN_NMI_EN;
 }
 
 //*****************************************************************************
@@ -803,6 +809,7 @@ static inline void CLB_disableNMI(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void CLB_configureClockPrescalar(uint32_t base, uint16_t prescl)
 {
     ASSERT(CLB_isBaseValid(base));
@@ -811,7 +818,7 @@ static inline void CLB_configureClockPrescalar(uint32_t base, uint16_t prescl)
         (HWREG(base + CLB_LOGICCTL + CLB_O_PRESCALE_CTRL) &
          ~(CLB_PRESCALE_CTRL_PRESCALE_M)) |
         ((uint32_t)prescl << CLB_PRESCALE_CTRL_PRESCALE_S);
-    HWREG(base + CLB_LOGICCTL + CLB_O_PRESCALE_CTRL) |= CLB_PRESCALE_CTRL_CLKEN;  
+    HWREG(base + CLB_LOGICCTL + CLB_O_PRESCALE_CTRL) |= CLB_PRESCALE_CTRL_CLKEN;
 }
 
 //*****************************************************************************
@@ -825,6 +832,7 @@ static inline void CLB_configureClockPrescalar(uint32_t base, uint16_t prescl)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void CLB_configureStrobeMode(uint32_t base, uint16_t strb)
 {
     ASSERT(CLB_isBaseValid(base));
@@ -833,7 +841,7 @@ static inline void CLB_configureStrobeMode(uint32_t base, uint16_t strb)
         (HWREG(base + CLB_LOGICCTL + CLB_O_PRESCALE_CTRL) &
          ~((uint32_t)CLB_PRESCALE_CTRL_TAP_M)) |
         ((uint32_t)strb << CLB_PRESCALE_CTRL_TAP_S);
-    HWREG(base + CLB_LOGICCTL + CLB_O_PRESCALE_CTRL) |= CLB_PRESCALE_CTRL_STRB;   
+    HWREG(base + CLB_LOGICCTL + CLB_O_PRESCALE_CTRL) |= CLB_PRESCALE_CTRL_STRB;
 }
 
 //*****************************************************************************
@@ -850,6 +858,7 @@ static inline void CLB_configureStrobeMode(uint32_t base, uint16_t strb)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void CLB_writeSWReleaseControl(uint32_t base,
                                             CLB_SWReleaseCtrl inID, bool val)
 {
@@ -876,6 +885,7 @@ static inline void CLB_writeSWReleaseControl(uint32_t base,
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void CLB_writeSWGateControl(uint32_t base,
                                             CLB_SWGateCtrl inID, bool val)
 {
@@ -901,11 +911,12 @@ static inline void CLB_writeSWGateControl(uint32_t base,
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void CLB_configCounterTapSelects(uint32_t base, uint32_t tapSel)
 {
     ASSERT(CLB_isBaseValid(base));
 
-    HWREG(base + CLB_O_COUNT_MATCH_TAP_SEL) = tapSel;  
+    HWREG(base + CLB_O_COUNT_MATCH_TAP_SEL) = tapSel;
 }
 
 //*****************************************************************************
@@ -924,12 +935,13 @@ static inline void CLB_configCounterTapSelects(uint32_t base, uint32_t tapSel)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void CLB_configAOC(uint32_t base, CLB_AOCs aocID,
                                      uint32_t aocCfg)
 {
     ASSERT(CLB_isBaseValid(base));
 
-    HWREG(base + CLB_O_OUTPUT_COND_CTRL_0 + (sizeof(uint32_t) * aocID)) = aocCfg;   
+    HWREG(base + CLB_O_OUTPUT_COND_CTRL_0 + (sizeof(uint32_t) * aocID)) = aocCfg;
 }
 
 //*****************************************************************************
@@ -944,6 +956,7 @@ static inline void CLB_configAOC(uint32_t base, CLB_AOCs aocID,
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void CLB_enableLock(uint32_t base)
 {
     ASSERT(CLB_isBaseValid(base));
@@ -951,10 +964,10 @@ static inline void CLB_enableLock(uint32_t base)
     //
     // Setting the lock bit requires key 0x5A5A to be written at the same time
     //
-    
+
     HWREG(base + CLB_LOGICCTL + CLB_O_LOCK) =
         (uint32_t)CLB_LOCK_LOCK | ((uint32_t)CLB_LOCK_KEY << CLB_LOCK_KEY_S);
-    
+
 }
 
 //*****************************************************************************
@@ -970,6 +983,7 @@ static inline void CLB_enableLock(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void CLB_writeInterface(uint32_t base, uint32_t address,
                                       uint32_t value)
 {
@@ -978,7 +992,7 @@ static inline void CLB_writeInterface(uint32_t base, uint32_t address,
 
     HWREG(base + CLB_LOGICCTL + CLB_O_LOAD_ADDR) = address;
     HWREG(base + CLB_LOGICCTL + CLB_O_LOAD_DATA) =  value;
-    HWREG(base + CLB_LOGICCTL + CLB_O_LOAD_EN) |= CLB_LOAD_EN_LOAD_EN;    
+    HWREG(base + CLB_LOGICCTL + CLB_O_LOAD_EN) |= CLB_LOAD_EN_LOAD_EN;
 }
 
 //*****************************************************************************
@@ -997,6 +1011,7 @@ static inline void CLB_writeInterface(uint32_t base, uint32_t address,
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void CLB_selectInputFilter(uint32_t base, CLB_Inputs inID,
                                          CLB_FilterType filterType)
 {
@@ -1029,6 +1044,7 @@ static inline void CLB_selectInputFilter(uint32_t base, CLB_Inputs inID,
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void CLB_enableSynchronization(uint32_t base, CLB_Inputs inID)
 {
     ASSERT(CLB_isBaseValid(base));
@@ -1050,6 +1066,7 @@ static inline void CLB_enableSynchronization(uint32_t base, CLB_Inputs inID)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void CLB_disableSynchronization(uint32_t base, CLB_Inputs inID)
 {
     ASSERT(CLB_isBaseValid(base));
@@ -1077,6 +1094,7 @@ static inline void CLB_disableSynchronization(uint32_t base, CLB_Inputs inID)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void CLB_configGPInputMux(uint32_t base, CLB_Inputs inID,
                                         CLB_GPInputMux gpMuxCfg)
 {
@@ -1106,6 +1124,7 @@ static inline void CLB_configGPInputMux(uint32_t base, CLB_Inputs inID,
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void CLB_setGPREG(uint32_t base, uint32_t gpRegVal)
 {
     ASSERT(CLB_isBaseValid(base));
@@ -1130,6 +1149,7 @@ static inline void CLB_setGPREG(uint32_t base, uint32_t gpRegVal)
 //! \return CLB_GP_REG value.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline uint32_t CLB_getGPREG(uint32_t base)
 {
     ASSERT(CLB_isBaseValid(base));
@@ -1160,6 +1180,7 @@ static inline uint32_t CLB_getGPREG(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void CLB_configLocalInputMux(uint32_t base, CLB_Inputs inID,
                                             CLB_LocalInputMux localMuxCfg)
 {
@@ -1259,6 +1280,7 @@ static inline void CLB_configLocalInputMux(uint32_t base, CLB_Inputs inID,
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void CLB_configGlobalInputMux(uint32_t base, CLB_Inputs inID,
                                             CLB_GlobalInputMux globalMuxCfg)
 {
@@ -1317,6 +1339,7 @@ static inline void CLB_configGlobalInputMux(uint32_t base, CLB_Inputs inID,
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void CLB_setOutputMask(uint32_t base, uint32_t outputMask ,
                                              bool enable)
 {
@@ -1342,6 +1365,7 @@ static inline void CLB_setOutputMask(uint32_t base, uint32_t outputMask ,
 //!         constant set by the HLC.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline uint16_t CLB_getInterruptTag(uint32_t base)
 {
     ASSERT(CLB_isBaseValid(base));
@@ -1360,6 +1384,7 @@ static inline uint16_t CLB_getInterruptTag(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void CLB_clearInterruptTag(uint32_t base)
 {
     ASSERT(CLB_isBaseValid(base));
@@ -1386,6 +1411,7 @@ static inline void CLB_clearInterruptTag(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void CLB_selectLUT4Inputs(uint32_t base, uint32_t lut4In0,
                                         uint32_t lut4In1, uint32_t lut4In2,
                                         uint32_t lut4In3)
@@ -1395,7 +1421,7 @@ static inline void CLB_selectLUT4Inputs(uint32_t base, uint32_t lut4In0,
     HWREG(base + CLB_O_LUT4_IN0) = lut4In0;
     HWREG(base + CLB_O_LUT4_IN1) = lut4In1;
     HWREG(base + CLB_O_LUT4_IN2) = lut4In2;
-    HWREG(base + CLB_O_LUT4_IN3) = lut4In3;  
+    HWREG(base + CLB_O_LUT4_IN3) = lut4In3;
 }
 
 //*****************************************************************************
@@ -1413,13 +1439,14 @@ static inline void CLB_selectLUT4Inputs(uint32_t base, uint32_t lut4In0,
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void CLB_configLUT4Function(uint32_t base, uint32_t lut4Fn10,
                                           uint32_t lut4Fn2)
 {
     ASSERT(CLB_isBaseValid(base));
 
     HWREG(base + CLB_O_LUT4_FN1_0) = lut4Fn10;
-    HWREG(base + CLB_O_LUT4_FN2) = lut4Fn2;   
+    HWREG(base + CLB_O_LUT4_FN2) = lut4Fn2;
 }
 
 //*****************************************************************************
@@ -1442,6 +1469,7 @@ static inline void CLB_configLUT4Function(uint32_t base, uint32_t lut4Fn10,
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void CLB_selectFSMInputs(uint32_t base, uint32_t external0,
                                        uint32_t external1, uint32_t extra0,
                                        uint32_t extra1)
@@ -1451,7 +1479,7 @@ static inline void CLB_selectFSMInputs(uint32_t base, uint32_t external0,
     HWREG(base + CLB_O_FSM_EXTERNAL_IN0) = external0;
     HWREG(base + CLB_O_FSM_EXTERNAL_IN1) = external1;
     HWREG(base + CLB_O_FSM_EXTRA_IN0) = extra0;
-    HWREG(base + CLB_O_FSM_EXTRA_IN1) = extra1;   
+    HWREG(base + CLB_O_FSM_EXTRA_IN1) = extra1;
 }
 
 //*****************************************************************************
@@ -1469,13 +1497,14 @@ static inline void CLB_selectFSMInputs(uint32_t base, uint32_t external0,
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void CLB_configFSMLUTFunction(uint32_t base, uint32_t fsmLutFn10,
                                             uint32_t fsmLutFn2)
 {
     ASSERT(CLB_isBaseValid(base));
 
     HWREG(base + CLB_O_FSM_LUT_FN1_0) = fsmLutFn10;
-    HWREG(base + CLB_O_FSM_LUT_FN2) = fsmLutFn2; 
+    HWREG(base + CLB_O_FSM_LUT_FN2) = fsmLutFn2;
 }
 
 //*****************************************************************************
@@ -1495,6 +1524,7 @@ static inline void CLB_configFSMLUTFunction(uint32_t base, uint32_t fsmLutFn10,
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void CLB_configFSMNextState(uint32_t base, uint32_t nextState0,
                                           uint32_t nextState1,
                                           uint32_t nextState2)
@@ -1503,7 +1533,7 @@ static inline void CLB_configFSMNextState(uint32_t base, uint32_t nextState0,
 
     HWREG(base + CLB_O_FSM_NEXT_STATE_0) = nextState0;
     HWREG(base + CLB_O_FSM_NEXT_STATE_1) = nextState1;
-    HWREG(base + CLB_O_FSM_NEXT_STATE_2) = nextState2;   
+    HWREG(base + CLB_O_FSM_NEXT_STATE_2) = nextState2;
 }
 
 //*****************************************************************************
@@ -1525,6 +1555,7 @@ static inline void CLB_configFSMNextState(uint32_t base, uint32_t nextState0,
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void CLB_selectCounterInputs(uint32_t base, uint32_t reset,
                                            uint32_t event, uint32_t mode0,
                                            uint32_t mode1)
@@ -1534,7 +1565,7 @@ static inline void CLB_selectCounterInputs(uint32_t base, uint32_t reset,
     HWREG(base + CLB_O_COUNT_RESET) = reset;
     HWREG(base + CLB_O_COUNT_EVENT) = event;
     HWREG(base + CLB_O_COUNT_MODE_0) = mode0;
-    HWREG(base + CLB_O_COUNT_MODE_1) = mode1;  
+    HWREG(base + CLB_O_COUNT_MODE_1) = mode1;
 }
 
 //*****************************************************************************
@@ -1552,11 +1583,12 @@ static inline void CLB_selectCounterInputs(uint32_t base, uint32_t reset,
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void CLB_configMiscCtrlModes(uint32_t base, uint32_t miscCtrl)
 {
     ASSERT(CLB_isBaseValid(base));
-    
-    HWREG(base + CLB_O_MISC_CONTROL) = miscCtrl;   
+
+    HWREG(base + CLB_O_MISC_CONTROL) = miscCtrl;
 }
 
 //*****************************************************************************
@@ -1575,6 +1607,7 @@ static inline void CLB_configMiscCtrlModes(uint32_t base, uint32_t miscCtrl)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void CLB_configOutputLUT(uint32_t base, CLB_Outputs outID,
                                        uint32_t outputCfg)
 {
@@ -1596,11 +1629,12 @@ static inline void CLB_configOutputLUT(uint32_t base, CLB_Outputs outID,
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void CLB_configHLCEventSelect(uint32_t base, uint32_t eventSel)
 {
     ASSERT(CLB_isBaseValid(base));
 
-    HWREG(base + CLB_O_HLC_EVENT_SEL) = eventSel; 
+    HWREG(base + CLB_O_HLC_EVENT_SEL) = eventSel;
 }
 
 //*****************************************************************************
@@ -1621,6 +1655,7 @@ static inline void CLB_configHLCEventSelect(uint32_t base, uint32_t eventSel)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void CLB_programHLCInstruction(uint32_t base,
                                              uint32_t instructionNum,
                                              uint32_t instruction)
@@ -1651,6 +1686,7 @@ static inline void CLB_programHLCInstruction(uint32_t base,
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void CLB_setHLCRegisters(uint32_t base, uint32_t r0Init,
                                        uint32_t r1Init, uint32_t r2Init,
                                        uint32_t r3Init)
@@ -1675,6 +1711,7 @@ static inline void CLB_setHLCRegisters(uint32_t base, uint32_t r0Init,
 //! \return Returns the value in the specified HLC register or counter.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline uint32_t CLB_getRegister(uint32_t base, CLB_Register registerID)
 {
     ASSERT(CLB_isBaseValid(base));
@@ -1693,6 +1730,7 @@ static inline uint32_t CLB_getRegister(uint32_t base, CLB_Register registerID)
 //!         masks from <tt>hw_clb.h</tt> to decode the bits.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline uint32_t CLB_getOutputStatus(uint32_t base)
 {
     ASSERT(CLB_isBaseValid(base));
@@ -1711,6 +1749,7 @@ static inline uint32_t CLB_getOutputStatus(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void CLB_enablePipelineMode(uint32_t base)
 {
     ASSERT(CLB_isBaseValid(base));
@@ -1729,6 +1768,7 @@ static inline void CLB_enablePipelineMode(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void CLB_disablePipelineMode(uint32_t base)
 {
     ASSERT(CLB_isBaseValid(base));
@@ -1747,6 +1787,7 @@ static inline void CLB_disablePipelineMode(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void CLB_disableOutputMaskUpdates(uint32_t base)
 {
     ASSERT(CLB_isBaseValid(base));
@@ -1765,6 +1806,7 @@ static inline void CLB_disableOutputMaskUpdates(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void CLB_enableOutputMaskUpdates(uint32_t base)
 {
     ASSERT(CLB_isBaseValid(base));
@@ -1783,6 +1825,7 @@ static inline void CLB_enableOutputMaskUpdates(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void CLB_enableInputPipelineMode(uint32_t base, CLB_Inputs inID)
 {
     ASSERT(CLB_isBaseValid(base));
@@ -1802,6 +1845,7 @@ static inline void CLB_enableInputPipelineMode(uint32_t base, CLB_Inputs inID)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void CLB_disableInputPipelineMode(uint32_t base, CLB_Inputs inID)
 {
     ASSERT(CLB_isBaseValid(base));
@@ -1821,6 +1865,7 @@ static inline void CLB_disableInputPipelineMode(uint32_t base, CLB_Inputs inID)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void CLB_disableSPIBufferAccess(uint32_t base)
 {
     ASSERT(CLB_isBaseValid(base));
@@ -1839,6 +1884,7 @@ static inline void CLB_disableSPIBufferAccess(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void CLB_enableSPIBufferAccess(uint32_t base)
 {
     ASSERT(CLB_isBaseValid(base));
@@ -1859,6 +1905,7 @@ static inline void CLB_enableSPIBufferAccess(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void CLB_configSPIBufferLoadSignal(uint32_t base, uint16_t eventSel)
 {
     ASSERT(CLB_isBaseValid(base));
@@ -1881,6 +1928,7 @@ static inline void CLB_configSPIBufferLoadSignal(uint32_t base, uint16_t eventSe
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void CLB_configSPIBufferShift(uint32_t base, uint16_t shiftVal)
 {
     ASSERT(CLB_isBaseValid(base));
@@ -1903,6 +1951,7 @@ static inline void CLB_configSPIBufferShift(uint32_t base, uint16_t shiftVal)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void CLB_enableSPIStrobeDelay(uint32_t base)
 {
     ASSERT(CLB_isBaseValid(base));
@@ -1921,6 +1970,7 @@ static inline void CLB_enableSPIStrobeDelay(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void CLB_disableSPIStrobeDelay(uint32_t base)
 {
     ASSERT(CLB_isBaseValid(base));

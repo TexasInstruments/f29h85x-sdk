@@ -27,39 +27,7 @@
 //!
 //
 //#############################################################################
-// //
-//	Copyright: Copyright (C) Texas Instruments Incorporated
-//	All rights reserved not granted herein.
-//
-//  Redistribution and use in source and binary forms, with or without 
-//  modification, are permitted provided that the following conditions 
-//  are met:
-//
-//  Redistributions of source code must retain the above copyright 
-//  notice, this list of conditions and the following disclaimer.
-//
-//  Redistributions in binary form must reproduce the above copyright
-//  notice, this list of conditions and the following disclaimer in the 
-//  documentation and/or other materials provided with the   
-//  distribution.
-//
-//  Neither the name of Texas Instruments Incorporated nor the names of
-//  its contributors may be used to endorse or promote products derived
-//  from this software without specific prior written permission.
-//
-//  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS 
-//  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT 
-//  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-//  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT 
-//  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, 
-//  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT 
-//  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-//  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-//  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT 
-//  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE 
-//  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-//
-
+// $Copyright: $
 //###########################################################################
 
 //
@@ -72,13 +40,8 @@
 //
 // Defines
 //
-#ifdef _FLASH
-    #define CPU3_RESET_VECTOR   0x10400000U
-    #define CPU3_NMI_VECTOR     0x10400040U
-#else
-    #define CPU3_RESET_VECTOR   0x20110000U
-    #define CPU3_NMI_VECTOR     0x20110040U
-#endif
+#define CPU2_RESET_VECTOR       0x20100000U
+#define CPU2_NMI_VECTOR         0x20100040U
 #define IPC_CMD_READ_MEM        0x1001
 #define TEST_PASS               0x5555
 #define TEST_FAIL               0xAAAA
@@ -118,14 +81,14 @@ int main(void)
     //
     // Defines the address at which CPU3 Boots
     //
-    SSU_configBootAddress(SSU_CPU3, (uint32_t)CPU3_RESET_VECTOR, SSU_LINK2);
-    SSU_configNmiAddress(SSU_CPU3, CPU3_NMI_VECTOR, SSU_LINK2);
+    SSU_configBootAddress(SSU_CPU2, (uint32_t)CPU2_RESET_VECTOR, SSU_LINK2);
+    SSU_configNmiAddress(SSU_CPU2, CPU2_NMI_VECTOR, SSU_LINK2);
 
     //
     // Bring CPU3 out of reset. Wait for CPU3 to go out of reset.
     //
-    SSU_controlCPUReset(SSU_CPU3, SSU_CORE_RESET_DEACTIVE);
-    while(SysCtl_isCPU3Reset() == 0x1U);
+    SSU_controlCPUReset(SSU_CPU2, SSU_CORE_RESET_DEACTIVE);
+    while(SysCtl_isCPU2Reset() == 0x1U);
 
     //
     // Enable PIPE Global Interrupt (for INTs and RTINTs) and INT enable in CPU.
@@ -141,12 +104,12 @@ int main(void)
     //
     // Clear any IPC flags if set already
     //
-    IPC_clearFlagLtoR(IPC_CPU1_L_CPU3_R_CH0, IPC_FLAG_ALL);
+    IPC_clearFlagLtoR(IPC_CPU1_L_CPU2_R_CH0, IPC_FLAG_ALL);
 
     //
     // Synchronize both the cores.
     //
-    IPC_sync(IPC_CPU1_L_CPU3_R_CH0, IPC_FLAG31);
+    IPC_sync(IPC_CPU1_L_CPU2_R_CH0, IPC_FLAG31);
 
     //
     // Fill in the data to be sent
@@ -161,7 +124,7 @@ int main(void)
     // Length of the data to be read is passed as data.
     //
     IPC_sendCommand(
-                IPC_CPU1_L_CPU3_R_CH0,
+                IPC_CPU1_L_CPU2_R_CH0,
                 IPC_FLAG0,
                 IPC_CMD_READ_MEM,
                 (uint32_t)ipc_shared_START_ADDR,
@@ -170,12 +133,12 @@ int main(void)
     //
     // Wait for acknowledgment
     //
-    IPC_waitForAck(IPC_CPU1_L_CPU3_R_CH0, IPC_FLAG0);
+    IPC_waitForAck(IPC_CPU1_L_CPU2_R_CH0, IPC_FLAG0);
 
     //
     // Read response
     //
-    if(IPC_getResponse(IPC_CPU1_L_CPU3_R_CH0) == TEST_PASS)
+    if(IPC_getResponse(IPC_CPU1_L_CPU2_R_CH0) == TEST_PASS)
     {
         pass = 1;
     }

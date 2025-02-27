@@ -1,8 +1,8 @@
 /**
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
- * @cliArgs --device "F29H85x" --part "F29H85x_256ZEX" --package "256ZEX" --context "CPU3" --product "MCU_SDK_F29H85x@1.00.00.00"
- * @v2CliArgs --device "F29H850TU" --package "256ZEX" --variant "TMS320F29H850TU9" --context "CPU3" --product "MCU_SDK_F29H85x@1.00.00.00"
+ * @cliArgs --device "F29H85x" --part "F29H85x_256ZEX" --package "256ZEX" --context "CPU2" --product "MCU_SDK_F29H85x@1.00.00.00"
+ * @v2CliArgs --device "F29H850TU" --package "256ZEX" --variant "TMS320F29H850TU9" --context "CPU2" --product "MCU_SDK_F29H85x@1.00.00.00"
  * @versions {"tool":"1.22.0+3893"}
  */
 
@@ -21,24 +21,21 @@ interrupt.RTINT_Threshold = 50;
 ipc.registerInterrupts0        = ["0"];
 ipc.ipcInt11.interruptPriority = 10;
 
+System_Security.LINK2.fileNames                               = "ssuIpc_ex2_basic_cpu1_cpu2_multi_c29x2";
+System_Security.LINK2.codesizeRAM                             = 8;
 System_Security.LINK2.rodatasize                              = 4;
-System_Security.LINK2.fileNames                               = "ssuIpc_ex1_basic_cpu1_cpu3_multi_c29x3";
-System_Security.LINK2.codesizeFlash                           = 12;
-System_Security.LINK2.periphs_rw                              = ["CPU_SYS_REGS","DCC1_REGS","ERR_AGG_REGS","ESM_CPU1_REGS","ESM_CPU2_REGS","ESM_CPU3_REGS","ESM_SAFETY_AGG_REGS","ESM_SYS_REGS","IPC_CPU3_RECV_REGS_CPU1_CH0_CH1","IPC_CPU3_SEND_REGS_CPU1_CH0_CH1","PER_CFG_REGS_WD_REGS"];
+System_Security.LINK2.periphs_rw                              = ["CPU_SYS_REGS","DCC1_REGS","ERR_AGG_REGS","ESM_CPU1_REGS","ESM_CPU2_REGS","ESM_CPU3_REGS","ESM_SAFETY_AGG_REGS","ESM_SYS_REGS","IPC_CPU2_RECV_REGS_CPU1_CH0_CH1","IPC_CPU2_SEND_REGS_CPU1_CH0_CH1","PER_CFG_REGS_WD_REGS"];
 System_Security.LINK2.codeAPR_RAM.type                        = scripting.forceWrite("Code");
 System_Security.LINK2.codeAPR_RAM.memType                     = scripting.forceWrite("RAM");
-System_Security.LINK2.codeAPR_RAM.memSize                     = scripting.forceWrite(4);
 System_Security.LINK2.dataAPR_RW.memType                      = scripting.forceWrite("RAM");
 System_Security.LINK2.dataAPR_RW.memSize                      = scripting.forceWrite(4);
 System_Security.LINK2.Link.isLink1                            = scripting.forceWrite(false);
 System_Security.LINK2.Link.readAPRs                           = ["ipc_shared_SHARED_CPU1"];
-System_Security.CommonCodeModule.libs                         = "libc.a, libclang_rt.builtins.a, driverlib.lib";
+System_Security.CommonCodeModule.codesizeRAM                  = 16;
 System_Security.CommonCodeModule.rodatasize                   = 4;
-System_Security.CommonCodeModule.codesizeFlash                = 12;
 System_Security.CommonCodeModule.codeAPR_RAM.specialAprStatus = scripting.forceWrite("none");
 System_Security.CommonCodeModule.codeAPR_RAM.type             = scripting.forceWrite("Code");
 System_Security.CommonCodeModule.codeAPR_RAM.memType          = scripting.forceWrite("RAM");
-System_Security.CommonCodeModule.codeAPR_RAM.memSize          = scripting.forceWrite(4);
 System_Security.CommonCodeModule.dataAPR_RW.memType           = scripting.forceWrite("RAM");
 System_Security.CommonCodeModule.dataAPR_RW.memSize           = scripting.forceWrite(4);
 System_Security.CommonCodeModule.Link.isLink1                 = scripting.forceWrite(false);
@@ -61,7 +58,6 @@ System_Security.sandbox[0].stackMem.type                      = scripting.forceW
 System_Security.sandbox[0].stackMem.datasize                  = scripting.forceWrite(4);
 System_Security.sandbox[0].stack.size                         = scripting.forceWrite(256);
 System_Security.sandbox[0].stack.zone                         = scripting.forceWrite("ZONE1");
-System_Security.sandbox[0].stack.secGroupAttr                 = scripting.forceWrite("NONE");
 System_Security.sandbox[0].stack.stackAPR.memType             = scripting.forceWrite("RAM");
 
 /**

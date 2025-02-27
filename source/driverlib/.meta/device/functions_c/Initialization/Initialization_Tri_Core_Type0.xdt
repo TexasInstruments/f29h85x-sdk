@@ -94,10 +94,11 @@ void Device_init(void)
 __attribute__((interrupt("RTINT"), section("nmivector")))
 void nmi_vector(void)
 {
+    Interrupt_NmiStatus nmiStatus;
     //
     //  Clear ESM and EA error flags
     //
-    Interrupt_clearEsmEaFlags();
+    Interrupt_clearEsmEaFlags(&nmiStatus);
 
     //
     //  Spin forever

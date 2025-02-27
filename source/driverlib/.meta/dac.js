@@ -169,32 +169,22 @@ config.splice(2, 0,
 
 function onValidate(inst, validation) {
 
-    let cpu = ""
-
-    if(Common.isContextCPU2()){
-        cpu = "CPU2"
-    }
-
-    if(Common.isContextCPU3()){
-        cpu = "CPU3"
-    }
-
     //
     // Check Multicontext
     //
-    if (Common.isContextCPU2() || Common.isContextCPU3()) {
+    if (Common.isContextCPU2()) {
         if (Common.isMultiCoreSysConfig()) {
             //
-            // Check if the analog module is added on CPU1 if the current context is CPU2/CPU3
+            // Check if the analog module is added on CPU1 if the current context is CPU2
             //
             if (Common.isModuleOnOtherContext("/driverlib/analog.js") == false) {
                 validation.logError(
-                    `The ANALOG PinMux module needs to be added on CPU1 when a DAC instance is added on ${cpu}`,inst,"dacBase");
+                    "The ANALOG PinMux module needs to be added on CPU1 when a DAC instance is added on CPU2",inst,"dacBase");
             }
         } 
         else {
             validation.logWarning(
-                `The ANALOG PinMux module needs to be added on CPU1 when a DAC instance is added on ${cpu}`,inst,"dacBase");
+                "The ANALOG PinMux module needs to be added on CPU1 when a DAC instance is added on CPU2",inst,"dacBase");
         } 
     }
 

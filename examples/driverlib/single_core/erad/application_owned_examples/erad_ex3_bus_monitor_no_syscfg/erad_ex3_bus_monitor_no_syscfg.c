@@ -101,7 +101,7 @@ int main(void)
     addr_params.address = (uint32_t)&delayFunction;
     addr_params.mask    = 0x0;
     addr_params.bus_sel = ERAD_BUSCOMP_BUS_VPC_I_ALIGNED;
-    ERAD_countAddressHits(addr_params, ERAD_BUSCOMP7, ERAD_COUNTER0);
+    ERAD_countAddressHits(&addr_params, ERAD_BUSCOMP7, ERAD_COUNTER0);
 
     //
     // Configure BUSCOMP6 to generate an interrupt when the startCount variable
@@ -111,7 +111,7 @@ int main(void)
     addr_params.address = (uint32_t)&startCount;
     addr_params.mask    = 0x0;
     addr_params.bus_sel = ERAD_BUSCOMP_BUS_DRAB_W;
-    ERAD_enableInterruptOnAddressHit(addr_params, ERAD_BUSCOMP6);
+    ERAD_enableInterruptOnAddressHit(&addr_params, ERAD_BUSCOMP6);
 
     //
     // Configure BUSCOMP5 to generate an interrupt when the endCount variable
@@ -121,7 +121,7 @@ int main(void)
     addr_params.address = (uint32_t)&endCount;
     addr_params.mask    = 0x0;
     addr_params.bus_sel = ERAD_BUSCOMP_BUS_DWAB;
-    ERAD_enableInterruptOnAddressHit(addr_params, ERAD_BUSCOMP5);
+    ERAD_enableInterruptOnAddressHit(&addr_params, ERAD_BUSCOMP5);
 
     //
     // Enable PIPE Global Interrupt (for INTs and RTINTs) and INT enable in CPU.
