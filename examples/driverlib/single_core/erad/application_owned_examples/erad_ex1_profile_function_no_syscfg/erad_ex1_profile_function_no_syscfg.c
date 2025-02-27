@@ -27,15 +27,15 @@
 //!  application to use.
 //!
 //!  \b Watch \b Variables \n
-//!   - cycles_Function_Max - the maximum number of cycles between the start 
+//!   - cycles_Function_Max - the maximum number of cycles between the start
 //!                           of function to the end of function
-//!   - cycles_Function_Min - the minimum number of cycles between the start 
+//!   - cycles_Function_Min - the minimum number of cycles between the start
 //!                           of function to the end of function
 //!   - cycles_Data_Max     - the maximum number of cycles taken between
-//!                           accessing startCount variable to endCount 
+//!                           accessing startCount variable to endCount
 //!                           variable
 //!   - cycles_Data_Min     - the minimum number of cycles taken between
-//!                           accessing startCount variable to endCount 
+//!                           accessing startCount variable to endCount
 //!                           variable
 //!
 //! \b External \b Connections \n
@@ -108,7 +108,7 @@ int main(void)
     //
     // Configuring the required ERAD submodules
     //
-    ERAD_profile(params);
+    ERAD_profile(&params);
 
     //
     // Parameters for profiling the time between the accesses
@@ -125,7 +125,7 @@ int main(void)
     //
     // Configuring the required ERAD submodules
     //
-    ERAD_profile(params);
+    ERAD_profile(&params);
 
     //
     // Loop to call the delay function repeatedly with different delays

@@ -167,6 +167,7 @@ typedef struct
 //
 //*****************************************************************************
 #ifdef DEBUG
+__attribute__((always_inline))
 static inline bool
 DLT_isFIFOBaseValid(uint32_t base)
 {
@@ -194,6 +195,7 @@ DLT_isFIFOBaseValid(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 DLT_enableLinkPermission(SSU_Link link)
 {
@@ -212,6 +214,7 @@ DLT_enableLinkPermission(SSU_Link link)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 DLT_disableLinkPermission(SSU_Link link)
 {
@@ -233,6 +236,7 @@ DLT_disableLinkPermission(SSU_Link link)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 DLT_enableModule(void)
 {
@@ -249,6 +253,7 @@ DLT_enableModule(void)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 DLT_disableModule(void)
 {
@@ -267,6 +272,7 @@ DLT_disableModule(void)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 DLT_enableERADFilter(void)
 {
@@ -283,6 +289,7 @@ DLT_enableERADFilter(void)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 DLT_disableERADFilter(void)
 {
@@ -303,6 +310,7 @@ DLT_disableERADFilter(void)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 DLT_enableTagFilter(void)
 {
@@ -319,6 +327,7 @@ DLT_enableTagFilter(void)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 DLT_disableTagFilter(void)
 {
@@ -341,6 +350,7 @@ DLT_disableTagFilter(void)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 DLT_setCaptureMode(DLT_CaptureMode mode)
 {
@@ -360,6 +370,7 @@ DLT_setCaptureMode(DLT_CaptureMode mode)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 DLT_resetFilter(void)
 {
@@ -377,6 +388,7 @@ DLT_resetFilter(void)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 DLT_enableDMA(void)
 {
@@ -396,6 +408,7 @@ DLT_enableDMA(void)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 DLT_disableDMA(void)
 {
@@ -414,6 +427,7 @@ DLT_disableDMA(void)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 DLT_resetFIFO(void)
 {
@@ -433,6 +447,7 @@ DLT_resetFIFO(void)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 DLT_setFIFOTriggerLevel(uint32_t triggerLevel)
 {
@@ -456,6 +471,7 @@ DLT_setFIFOTriggerLevel(uint32_t triggerLevel)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 DLT_resetTimer(void)
 {
@@ -473,6 +489,7 @@ DLT_resetTimer(void)
 //! \return Returns the number of 64-bit words to be read in the FIFO.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline uint32_t
 DLT_getFIFOWordStatus(void)
 {
@@ -491,6 +508,7 @@ DLT_getFIFOWordStatus(void)
 //! last trigger.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline uint32_t
 DLT_getFIFOWriteStatus(void)
 {
@@ -507,6 +525,7 @@ DLT_getFIFOWriteStatus(void)
 //! \return Returns the read pointer location of FIFO.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline uint32_t
 DLT_getFIFOReadPointer(void)
 {
@@ -522,6 +541,7 @@ DLT_getFIFOReadPointer(void)
 //! \return Returns the write pointer location of FIFO.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline uint32_t
 DLT_getFIFOWritePointer(void)
 {
@@ -540,6 +560,7 @@ DLT_getFIFOWritePointer(void)
 //! \return Returns the current value of TIMER2.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline uint32_t
 DLT_getTimerCount(void)
 {
@@ -563,6 +584,7 @@ DLT_getTimerCount(void)
 //! Returns \b false otherwise.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline bool
 DLT_getGlobalInterruptStatus(void)
 {
@@ -581,6 +603,7 @@ DLT_getGlobalInterruptStatus(void)
 //! Returns \b false otherwise.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline bool
 DLT_getTimer1OverflowStatus(void)
 {
@@ -598,6 +621,7 @@ DLT_getTimer1OverflowStatus(void)
 //! Returns \b false otherwise.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline bool
 DLT_getTimer2OverflowStatus(void)
 {
@@ -615,6 +639,7 @@ DLT_getTimer2OverflowStatus(void)
 //! Returns \b false otherwise.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline bool
 DLT_getFIFOOverflowStatus(void)
 {
@@ -632,6 +657,7 @@ DLT_getFIFOOverflowStatus(void)
 //! Returns \b false otherwise.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline bool
 DLT_getFIFOUnderflowStatus(void)
 {
@@ -650,6 +676,7 @@ DLT_getFIFOUnderflowStatus(void)
 //! Returns \b false otherwise.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline bool
 DLT_getFIFOTriggerLevelStatus(void)
 {
@@ -672,6 +699,7 @@ DLT_getFIFOTriggerLevelStatus(void)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 DLT_enableInterrupt(uint16_t events)
 {
@@ -694,6 +722,7 @@ DLT_enableInterrupt(uint16_t events)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 DLT_disableInterrupt(uint16_t events)
 {
@@ -716,6 +745,7 @@ DLT_disableInterrupt(uint16_t events)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 DLT_forceEvent(uint16_t events)
 {
@@ -741,6 +771,7 @@ DLT_forceEvent(uint16_t events)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 DLT_clearEvent(uint16_t events)
 {

@@ -174,6 +174,7 @@ typedef enum {
 //
 //*****************************************************************************
 __attribute__((section(".TI.ramfunc.link2")))
+__attribute__((always_inline))
 static inline void
 Flash_setWaitstates(uint16_t waitstates)
 {
@@ -205,6 +206,7 @@ Flash_setWaitstates(uint16_t waitstates)
 //
 //*****************************************************************************
 __attribute__((section(".TI.ramfunc.link2")))
+__attribute__((always_inline))
 static inline void
 Flash_lockWaitstates()
 {
@@ -229,6 +231,7 @@ Flash_lockWaitstates()
 //
 //*****************************************************************************
 __attribute__((section(".TI.ramfunc.link2")))
+__attribute__((always_inline))
 static inline void
 Flash_commitWaitstates()
 {
@@ -259,6 +262,7 @@ Flash_commitWaitstates()
 //
 //*****************************************************************************
 __attribute__((section(".TI.ramfunc.link2")))
+__attribute__((always_inline))
 static inline void
 Flash_configFRI(Flash_FRI friID, uint32_t configFlags)
 {
@@ -284,6 +288,7 @@ Flash_configFRI(Flash_FRI friID, uint32_t configFlags)
 //
 //*****************************************************************************
 __attribute__((section(".TI.ramfunc.link2")))
+__attribute__((always_inline))
 static inline void
 Flash_lockFRI(Flash_FRI friID)
 {
@@ -309,6 +314,7 @@ Flash_lockFRI(Flash_FRI friID)
 //
 //*****************************************************************************
 __attribute__((section(".TI.ramfunc.link2")))
+__attribute__((always_inline))
 static inline void
 Flash_commitFRI(Flash_FRI friID)
 {
@@ -334,6 +340,7 @@ Flash_commitFRI(Flash_FRI friID)
 //
 //*****************************************************************************
 __attribute__((section(".TI.ramfunc.link2")))
+__attribute__((always_inline))
 static inline void
 Flash_clearFRI(Flash_FRI friID, uint32_t clearFlags)
 {
@@ -356,6 +363,7 @@ Flash_clearFRI(Flash_FRI friID, uint32_t clearFlags)
 //
 //*****************************************************************************
 __attribute__((section(".TI.ramfunc.link2")))
+__attribute__((always_inline))
 static inline void
 Flash_enableParityTest(uint16_t testEnable)
 {
@@ -385,6 +393,7 @@ Flash_enableParityTest(uint16_t testEnable)
 //
 //*****************************************************************************
 __attribute__((section(".TI.ramfunc.link2")))
+__attribute__((always_inline))
 static inline void
 Flash_disableParityTest()
 {
@@ -408,6 +417,7 @@ Flash_disableParityTest()
 //
 //*****************************************************************************
 __attribute__((section(".TI.ramfunc.link2")))
+__attribute__((always_inline))
 static inline void
 Flash_lockParityTest()
 {
@@ -432,6 +442,7 @@ Flash_lockParityTest()
 //
 //*****************************************************************************
 __attribute__((section(".TI.ramfunc.link2")))
+__attribute__((always_inline))
 static inline void
 Flash_commitParityTest()
 {
@@ -451,6 +462,7 @@ Flash_commitParityTest()
 //!
 //!
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 Flash_writeTrims(uint32_t reg_offset, uint32_t mask,
                  uint32_t shift, uint32_t value)

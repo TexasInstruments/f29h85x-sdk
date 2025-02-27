@@ -145,6 +145,7 @@ extern "C"
 //! \return None
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 CPU_lockRegister(uint32_t registers)
 {
@@ -165,6 +166,7 @@ CPU_lockRegister(uint32_t registers)
 //! \return None
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 CPU_unlockRegister(uint32_t registers)
 {
@@ -185,6 +187,7 @@ CPU_unlockRegister(uint32_t registers)
 //! \return None
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 CPU_commitRegister(uint32_t registers)
 {
@@ -205,6 +208,7 @@ CPU_commitRegister(uint32_t registers)
 //! \return None
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 CPU_setPSPWarningLevel(uint16_t level)
 {
@@ -223,6 +227,7 @@ CPU_setPSPWarningLevel(uint16_t level)
 //! \return None
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 CPU_forceTMUROMParityError(void)
 {
@@ -241,6 +246,7 @@ CPU_forceTMUROMParityError(void)
 //! \return None
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 CPU_clearTMUROMParityError(void)
 {

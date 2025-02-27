@@ -526,6 +526,7 @@ use HRPWM_forceActionQualifierSWAction*/
 //
 //*****************************************************************************
 #ifdef DEBUG
+__attribute__((always_inline))
 static inline bool HRPWM_isBaseValid(uint32_t base)
 {
     return(
@@ -562,6 +563,7 @@ static inline bool HRPWM_isBaseValid(uint32_t base)
 //! otherwise.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline bool HRPWMCAL_isBaseValid(uint32_t base)
 {
     return(
@@ -591,6 +593,7 @@ static inline bool HRPWMCAL_isBaseValid(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 HRPWM_setPhaseShift(uint32_t base, uint32_t phaseCount)
 {
@@ -622,6 +625,7 @@ HRPWM_setPhaseShift(uint32_t base, uint32_t phaseCount)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 HRPWM_setHiResPhaseShiftOnly(uint32_t base, uint16_t hrPhaseCount)
 {
@@ -657,6 +661,7 @@ HRPWM_setHiResPhaseShiftOnly(uint32_t base, uint16_t hrPhaseCount)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 HRPWM_setTimeBasePeriod(uint32_t base, uint32_t periodCount)
 {
@@ -690,6 +695,7 @@ HRPWM_setTimeBasePeriod(uint32_t base, uint32_t periodCount)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 HRPWM_setHiResTimeBasePeriodOnly(uint32_t base, uint16_t hrPeriodCount)
 {
@@ -717,6 +723,7 @@ HRPWM_setHiResTimeBasePeriodOnly(uint32_t base, uint16_t hrPeriodCount)
 //! \return The consolidated time base period count value.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline uint32_t
 HRPWM_getTimeBasePeriod(uint32_t base)
 {
@@ -742,6 +749,7 @@ HRPWM_getTimeBasePeriod(uint32_t base)
 //! \return The high resolution time base period count value.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline uint16_t
 HRPWM_getHiResTimeBasePeriodOnly(uint32_t base)
 {
@@ -782,6 +790,7 @@ HRPWM_getHiResTimeBasePeriodOnly(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 HRPWM_setMEPEdgeSelect(uint32_t base, HRPWM_Channel channel,
                        HRPWM_MEPEdgeMode mepEdgeMode)
@@ -825,6 +834,7 @@ HRPWM_setMEPEdgeSelect(uint32_t base, HRPWM_Channel channel,
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 HRPWM_setMEPControlMode(uint32_t base, HRPWM_Channel channel,
                         HRPWM_MEPCtrlMode mepCtrlMode)
@@ -869,6 +879,7 @@ HRPWM_setMEPControlMode(uint32_t base, HRPWM_Channel channel,
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 HRPWM_setCounterCompareShadowLoadEvent(uint32_t base, HRPWM_Channel channel,
                                        HRPWM_LoadMode loadEvent)
@@ -902,6 +913,7 @@ HRPWM_setCounterCompareShadowLoadEvent(uint32_t base, HRPWM_Channel channel,
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 HRPWM_setOutputSwapMode(uint32_t base, bool enableOutputSwap)
 {
@@ -940,6 +952,7 @@ HRPWM_setOutputSwapMode(uint32_t base, bool enableOutputSwap)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 HRPWM_setChannelBOutputPath(uint32_t base, HRPWM_ChannelBOutput outputOnB)
 {
@@ -975,6 +988,7 @@ HRPWM_setChannelBOutputPath(uint32_t base, HRPWM_ChannelBOutput outputOnB)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 HRPWM_enableAutoConversion(uint32_t base)
 {
@@ -1003,6 +1017,7 @@ HRPWM_enableAutoConversion(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 HRPWM_disableAutoConversion(uint32_t base)
 {
@@ -1030,6 +1045,7 @@ HRPWM_disableAutoConversion(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 HRPWM_enablePeriodControl(uint32_t base)
 {
@@ -1057,6 +1073,7 @@ HRPWM_enablePeriodControl(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 HRPWM_disablePeriodControl(uint32_t base)
 {
@@ -1085,6 +1102,7 @@ HRPWM_disablePeriodControl(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 HRPWM_enablePhaseShiftLoad(uint32_t base)
 {
@@ -1112,6 +1130,7 @@ HRPWM_enablePhaseShiftLoad(uint32_t base)
 //! \return
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 HRPWM_disablePhaseShiftLoad(uint32_t base)
 {
@@ -1151,6 +1170,7 @@ HRPWM_disablePhaseShiftLoad(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 HRPWM_setSyncPulseSource(uint32_t base, HRPWM_SyncPulseSource syncPulseSource)
 {
@@ -1191,6 +1211,7 @@ HRPWM_setSyncPulseSource(uint32_t base, HRPWM_SyncPulseSource syncPulseSource)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 HRPWM_setTranslatorRemainder(uint32_t base, uint16_t trremVal)
 {
@@ -1229,6 +1250,7 @@ HRPWM_setTranslatorRemainder(uint32_t base, uint16_t trremVal)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 HRPWM_setCounterCompareValue(uint32_t base,
                              HRPWM_CounterCompareModule compModule,
@@ -1278,6 +1300,7 @@ HRPWM_setCounterCompareValue(uint32_t base,
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 HRPWM_setHiResCounterCompareValueOnly(uint32_t base,
                                       HRPWM_CounterCompareModule compModule,
@@ -1325,6 +1348,7 @@ HRPWM_setHiResCounterCompareValueOnly(uint32_t base,
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline uint32_t
 HRPWM_getCounterCompareValue(uint32_t base,
                              HRPWM_CounterCompareModule compModule)
@@ -1372,6 +1396,7 @@ HRPWM_getCounterCompareValue(uint32_t base,
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline uint16_t
 HRPWM_getHiResCounterCompareValueOnly(uint32_t base,
                                       HRPWM_CounterCompareModule compModule)
@@ -1421,6 +1446,7 @@ HRPWM_getHiResCounterCompareValueOnly(uint32_t base,
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 HRPWM_setRisingEdgeDelay(uint32_t base, uint32_t redCount)
 {
@@ -1452,6 +1478,7 @@ HRPWM_setRisingEdgeDelay(uint32_t base, uint32_t redCount)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 HRPWM_setHiResRisingEdgeDelayOnly(uint32_t base, uint16_t hrRedCount)
 {
@@ -1485,6 +1512,7 @@ HRPWM_setHiResRisingEdgeDelayOnly(uint32_t base, uint16_t hrRedCount)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 HRPWM_setFallingEdgeDelay(uint32_t base, uint32_t fedCount)
 {
@@ -1515,6 +1543,7 @@ HRPWM_setFallingEdgeDelay(uint32_t base, uint32_t fedCount)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 HRPWM_setHiResFallingEdgeDelayOnly(uint32_t base, uint16_t hrFedCount)
 {
@@ -1544,6 +1573,7 @@ HRPWM_setHiResFallingEdgeDelayOnly(uint32_t base, uint16_t hrFedCount)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 HRPWM_setMEPStep(uint32_t base, uint16_t mepCount)
 {
@@ -1584,6 +1614,7 @@ HRPWM_setMEPStep(uint32_t base, uint16_t mepCount)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 HRPWM_setDeadbandMEPEdgeSelect(uint32_t base,
                                HRPWM_MEPDeadBandEdgeMode mepDBEdge)
@@ -1621,6 +1652,7 @@ HRPWM_setDeadbandMEPEdgeSelect(uint32_t base,
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 HRPWM_setRisingEdgeDelayLoadMode(uint32_t base,
                                  HRPWM_LoadMode loadEvent)
@@ -1658,6 +1690,7 @@ HRPWM_setRisingEdgeDelayLoadMode(uint32_t base,
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 HRPWM_setFallingEdgeDelayLoadMode(uint32_t base, HRPWM_LoadMode loadEvent)
 {
@@ -1685,6 +1718,7 @@ HRPWM_setFallingEdgeDelayLoadMode(uint32_t base, HRPWM_LoadMode loadEvent)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 HRPWM_lockRegisters(uint32_t base, HRPWM_LockRegisterGroup registerGroup)
 {
@@ -1724,6 +1758,7 @@ HRPWM_lockRegisters(uint32_t base, HRPWM_LockRegisterGroup registerGroup)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 HRPWM_setXCMPRegValue(uint32_t base, EPWM_XCMPReg xcmpReg,
                       uint32_t xcmpValue)
@@ -1763,6 +1798,7 @@ HRPWM_setXCMPRegValue(uint32_t base, EPWM_XCMPReg xcmpReg,
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 HRPWM_setHiResXCMPRegValueOnly(uint32_t base, EPWM_XCMPReg xcmpReg,
                                uint32_t hrXcmpValue)

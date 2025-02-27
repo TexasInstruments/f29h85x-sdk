@@ -417,6 +417,7 @@ typedef enum
 //
 //*****************************************************************************
 #ifdef DEBUG
+__attribute__((always_inline))
 static inline bool
 LIN_isBaseValid(uint32_t base)
 {
@@ -443,6 +444,7 @@ LIN_isBaseValid(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 LIN_setLINMode(uint32_t base, LIN_LINMode mode)
 {
@@ -479,6 +481,7 @@ LIN_setLINMode(uint32_t base, LIN_LINMode mode)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 LIN_setMaximumBaudRate(uint32_t base, uint32_t vclk, uint32_t mbr)
 {
@@ -514,6 +517,7 @@ LIN_setMaximumBaudRate(uint32_t base, uint32_t vclk, uint32_t mbr)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 LIN_setMessageFiltering(uint32_t base, LIN_MessageFilter type)
 {
@@ -546,6 +550,7 @@ LIN_setMessageFiltering(uint32_t base, LIN_MessageFilter type)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 LIN_enableParity(uint32_t base)
 {
@@ -571,6 +576,7 @@ LIN_enableParity(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 LIN_disableParity(uint32_t base)
 {
@@ -601,6 +607,7 @@ LIN_disableParity(uint32_t base)
 //! \return Returns the identifier appended with parity bits.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline uint16_t
 LIN_generateParityID(uint16_t identifier)
 {
@@ -635,6 +642,7 @@ LIN_generateParityID(uint16_t identifier)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 LIN_setIDByte(uint32_t base, uint16_t identifier)
 {
@@ -662,6 +670,7 @@ LIN_setIDByte(uint32_t base, uint16_t identifier)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 LIN_setIDResponderTask(uint32_t base, uint16_t identifier)
 {
@@ -688,6 +697,7 @@ LIN_setIDResponderTask(uint32_t base, uint16_t identifier)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 LIN_sendWakeupSignal(uint32_t base)
 {
@@ -724,6 +734,7 @@ LIN_sendWakeupSignal(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 LIN_enterSleep(uint32_t base)
 {
@@ -747,6 +758,7 @@ LIN_enterSleep(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 LIN_sendChecksum(uint32_t base)
 {
@@ -770,6 +782,7 @@ LIN_sendChecksum(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 LIN_triggerChecksumCompare(uint32_t base)
 {
@@ -793,6 +806,7 @@ LIN_triggerChecksumCompare(uint32_t base)
 //! \return Returns \b true if the TX ready flag is set, else returns \b false
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline bool
 LIN_isTxReady(uint32_t base)
 {
@@ -823,6 +837,7 @@ LIN_isTxReady(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 LIN_setFrameLength(uint32_t base, uint16_t length)
 {
@@ -855,6 +870,7 @@ LIN_setFrameLength(uint32_t base, uint16_t length)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 LIN_setCommMode(uint32_t base, LIN_CommMode mode)
 {
@@ -884,6 +900,7 @@ LIN_setCommMode(uint32_t base, LIN_CommMode mode)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 LIN_setTxMask(uint32_t base, uint16_t mask)
 {
@@ -911,6 +928,7 @@ LIN_setTxMask(uint32_t base, uint16_t mask)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 LIN_setRxMask(uint32_t base, uint16_t mask)
 {
@@ -937,6 +955,7 @@ LIN_setRxMask(uint32_t base, uint16_t mask)
 //! \return Returns the Transmit ID Mask.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline uint16_t
 LIN_getTxMask(uint32_t base)
 {
@@ -960,6 +979,7 @@ LIN_getTxMask(uint32_t base)
 //! \return Returns the Receive ID Mask.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline uint16_t
 LIN_getRxMask(uint32_t base)
 {
@@ -983,6 +1003,7 @@ LIN_getRxMask(uint32_t base)
 //! \return Returns \b true if the Rx ready flag is set, else returns \b false.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline bool
 LIN_isRxReady(uint32_t base)
 {
@@ -1009,6 +1030,7 @@ LIN_isRxReady(uint32_t base)
 //! \return Returns the Received Identifier.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline uint16_t
 LIN_getRxIdentifier(uint32_t base)
 {
@@ -1032,6 +1054,7 @@ LIN_getRxIdentifier(uint32_t base)
 //! \return Returns \b true if a valid ID is matched, else returns \b false.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline bool
 LIN_isTxMatch(uint32_t base)
 {
@@ -1059,6 +1082,7 @@ LIN_isTxMatch(uint32_t base)
 //! \return Returns \b true if a valid ID is matched, else returns \b false.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline bool
 LIN_isRxMatch(uint32_t base)
 {
@@ -1109,6 +1133,7 @@ LIN_isRxMatch(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 LIN_enableInterrupt(uint32_t base, uint32_t intFlags)
 {
@@ -1158,6 +1183,7 @@ LIN_enableInterrupt(uint32_t base, uint32_t intFlags)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 LIN_disableInterrupt(uint32_t base, uint32_t intFlags)
 {
@@ -1206,6 +1232,7 @@ LIN_disableInterrupt(uint32_t base, uint32_t intFlags)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 LIN_clearInterruptStatus(uint32_t base, uint32_t intFlags)
 {
@@ -1255,6 +1282,7 @@ LIN_clearInterruptStatus(uint32_t base, uint32_t intFlags)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 LIN_setInterruptLevel0(uint32_t base, uint32_t intFlags)
 {
@@ -1304,6 +1332,7 @@ LIN_setInterruptLevel0(uint32_t base, uint32_t intFlags)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 LIN_setInterruptLevel1(uint32_t base, uint32_t intFlags)
 {
@@ -1338,6 +1367,7 @@ LIN_setInterruptLevel1(uint32_t base, uint32_t intFlags)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 LIN_enableModuleErrors(uint32_t base, uint32_t errors)
 {
@@ -1385,6 +1415,7 @@ LIN_enableModuleErrors(uint32_t base, uint32_t errors)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 LIN_disableModuleErrors(uint32_t base, uint32_t errors)
 {
@@ -1429,6 +1460,7 @@ LIN_disableModuleErrors(uint32_t base, uint32_t errors)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 LIN_enableAutomaticBaudrate(uint32_t base)
 {
@@ -1453,6 +1485,7 @@ LIN_enableAutomaticBaudrate(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 LIN_disableAutomaticBaudrate(uint32_t base)
 {
@@ -1478,6 +1511,7 @@ LIN_disableAutomaticBaudrate(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 LIN_stopExtendedFrame(uint32_t base)
 {
@@ -1507,6 +1541,7 @@ LIN_stopExtendedFrame(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 LIN_setChecksumType(uint32_t base, LIN_ChecksumType type)
 {
@@ -1551,6 +1586,7 @@ LIN_setChecksumType(uint32_t base, LIN_ChecksumType type)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 LIN_setSyncFields(uint32_t base, uint16_t syncBreak, uint16_t delimiter)
 {
@@ -1584,6 +1620,7 @@ LIN_setSyncFields(uint32_t base, uint16_t syncBreak, uint16_t delimiter)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 LIN_enableSCIMode(uint32_t base)
 {
@@ -1611,6 +1648,7 @@ LIN_enableSCIMode(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 LIN_disableSCIMode(uint32_t base)
 {
@@ -1643,6 +1681,7 @@ LIN_disableSCIMode(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 LIN_setSCICommMode(uint32_t base, LIN_SCICommMode mode)
 {
@@ -1675,6 +1714,7 @@ LIN_setSCICommMode(uint32_t base, LIN_SCICommMode mode)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 LIN_enableSCIParity(uint32_t base, LIN_SCIParityType parity)
 {
@@ -1713,6 +1753,7 @@ LIN_enableSCIParity(uint32_t base, LIN_SCIParityType parity)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 LIN_disableSCIParity(uint32_t base)
 {
@@ -1743,6 +1784,7 @@ LIN_disableSCIParity(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 LIN_setSCIStopBits(uint32_t base, LIN_SCIStopBits number)
 {
@@ -1781,6 +1823,7 @@ LIN_setSCIStopBits(uint32_t base, LIN_SCIStopBits number)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 LIN_enableSCISleepMode(uint32_t base)
 {
@@ -1808,6 +1851,7 @@ LIN_enableSCISleepMode(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 LIN_disableSCISleepMode(uint32_t base)
 {
@@ -1838,6 +1882,7 @@ LIN_disableSCISleepMode(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 LIN_enterSCILowPower(uint32_t base)
 {
@@ -1864,6 +1909,7 @@ LIN_enterSCILowPower(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 LIN_exitSCILowPower(uint32_t base)
 {
@@ -1893,6 +1939,7 @@ LIN_exitSCILowPower(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 LIN_setSCICharLength(uint32_t base, uint16_t numBits)
 {
@@ -1924,6 +1971,7 @@ LIN_setSCICharLength(uint32_t base, uint16_t numBits)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 LIN_setSCIFrameLength(uint32_t base, uint16_t length)
 {
@@ -1952,6 +2000,7 @@ LIN_setSCIFrameLength(uint32_t base, uint16_t length)
 //! \return Returns \b true if the Rx ready flag is set, else returns \b false.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline bool
 LIN_isSCIDataAvailable(uint32_t base)
 {
@@ -1980,6 +2029,7 @@ LIN_isSCIDataAvailable(uint32_t base)
 //! \return Returns \b true if the TX ready flag is set, else returns \b false
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline bool
 LIN_isSCISpaceAvailable(uint32_t base)
 {
@@ -2018,6 +2068,7 @@ LIN_isSCISpaceAvailable(uint32_t base)
 //! \return Returns the received data.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline uint16_t
 LIN_readSCICharNonBlocking(uint32_t base, bool emulation)
 {
@@ -2053,6 +2104,7 @@ LIN_readSCICharNonBlocking(uint32_t base, bool emulation)
 //! \return Returns the received data.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline uint16_t
 LIN_readSCICharBlocking(uint32_t base, bool emulation)
 {
@@ -2094,6 +2146,7 @@ LIN_readSCICharBlocking(uint32_t base, bool emulation)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 LIN_writeSCICharNonBlocking(uint32_t base, uint16_t data)
 {
@@ -2124,6 +2177,7 @@ LIN_writeSCICharNonBlocking(uint32_t base, uint16_t data)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 LIN_writeSCICharBlocking(uint32_t base, uint16_t data)
 {
@@ -2169,6 +2223,7 @@ LIN_writeSCICharBlocking(uint32_t base, uint16_t data)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 LIN_enableSCIModuleErrors(uint32_t base, uint32_t errors)
 {
@@ -2217,6 +2272,7 @@ LIN_enableSCIModuleErrors(uint32_t base, uint32_t errors)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 LIN_disableSCIModuleErrors(uint32_t base, uint32_t errors)
 {
@@ -2277,6 +2333,7 @@ LIN_disableSCIModuleErrors(uint32_t base, uint32_t errors)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 LIN_enableSCIInterrupt(uint32_t base, uint32_t intFlags)
 {
@@ -2322,6 +2379,7 @@ LIN_enableSCIInterrupt(uint32_t base, uint32_t intFlags)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 LIN_disableSCIInterrupt(uint32_t base, uint32_t intFlags)
 {
@@ -2366,6 +2424,7 @@ LIN_disableSCIInterrupt(uint32_t base, uint32_t intFlags)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 LIN_clearSCIInterruptStatus(uint32_t base, uint32_t intFlags)
 {
@@ -2411,6 +2470,7 @@ LIN_clearSCIInterruptStatus(uint32_t base, uint32_t intFlags)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 LIN_setSCIInterruptLevel0(uint32_t base, uint32_t intFlags)
 {
@@ -2456,6 +2516,7 @@ LIN_setSCIInterruptLevel0(uint32_t base, uint32_t intFlags)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 LIN_setSCIInterruptLevel1(uint32_t base, uint32_t intFlags)
 {
@@ -2482,6 +2543,7 @@ LIN_setSCIInterruptLevel1(uint32_t base, uint32_t intFlags)
 //! \return Returns \b true if the state is idle, else returns \b false.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline bool
 LIN_isSCIReceiverIdle(uint32_t base)
 {
@@ -2510,6 +2572,7 @@ LIN_isSCIReceiverIdle(uint32_t base)
 //! \b false if the frame will be data.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline bool
 LIN_getSCITxFrameType(uint32_t base)
 {
@@ -2539,6 +2602,7 @@ LIN_getSCITxFrameType(uint32_t base)
 //! \b false if the frame isn't an address.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline bool
 LIN_getSCIRxFrameType(uint32_t base)
 {
@@ -2567,6 +2631,7 @@ LIN_getSCIRxFrameType(uint32_t base)
 //! \return Returns \b true if break detected, else returns \b false.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline bool
 LIN_isSCIBreakDetected(uint32_t base)
 {
@@ -2602,6 +2667,7 @@ LIN_isSCIBreakDetected(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 LIN_enableModule(uint32_t base)
 {
@@ -2635,6 +2701,7 @@ LIN_enableModule(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 LIN_disableModule(uint32_t base)
 {
@@ -2673,6 +2740,7 @@ LIN_disableModule(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 LIN_setBaudRatePrescaler(uint32_t base, uint32_t prescaler,
                          uint32_t divider)
@@ -2702,6 +2770,7 @@ LIN_setBaudRatePrescaler(uint32_t base, uint32_t prescaler,
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 LIN_enableDataTransmitter(uint32_t base)
 {
@@ -2728,6 +2797,7 @@ LIN_enableDataTransmitter(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 LIN_disableDataTransmitter(uint32_t base)
 {
@@ -2754,6 +2824,7 @@ LIN_disableDataTransmitter(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 LIN_enableDataReceiver(uint32_t base)
 {
@@ -2780,6 +2851,7 @@ LIN_enableDataReceiver(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 LIN_disableDataReceiver(uint32_t base)
 {
@@ -2810,6 +2882,7 @@ LIN_disableDataReceiver(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 LIN_performSoftwareReset(uint32_t base)
 {
@@ -2839,6 +2912,7 @@ LIN_performSoftwareReset(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 LIN_enterSoftwareReset(uint32_t base)
 {
@@ -2865,6 +2939,7 @@ LIN_enterSoftwareReset(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 LIN_exitSoftwareReset(uint32_t base)
 {
@@ -2888,6 +2963,7 @@ LIN_exitSoftwareReset(uint32_t base)
 //! \return Returns \b true if the bus is busy, else returns \b false.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline bool
 LIN_isBusBusy(uint32_t base)
 {
@@ -2915,6 +2991,7 @@ LIN_isBusBusy(uint32_t base)
 //! \return Returns \b true if the Tx buffer is empty, else returns \b false.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline bool
 LIN_isTxBufferEmpty(uint32_t base)
 {
@@ -2954,6 +3031,7 @@ LIN_isTxBufferEmpty(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 LIN_enableExtLoopback(uint32_t base, LIN_LoopbackType loopbackType,
                       LIN_AnalogLoopback path)
@@ -2991,6 +3069,7 @@ LIN_enableExtLoopback(uint32_t base, LIN_LoopbackType loopbackType,
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 LIN_disableExtLoopback(uint32_t base)
 {
@@ -3020,6 +3099,7 @@ LIN_disableExtLoopback(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 LIN_enableIntLoopback(uint32_t base)
 {
@@ -3046,6 +3126,7 @@ LIN_enableIntLoopback(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 LIN_disableIntLoopback(uint32_t base)
 {
@@ -3095,6 +3176,7 @@ LIN_disableIntLoopback(uint32_t base)
 //! \return Returns the status flag register.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline uint32_t
 LIN_getInterruptStatus(uint32_t base)
 {
@@ -3121,6 +3203,7 @@ LIN_getInterruptStatus(uint32_t base)
 //! \return Returns the value of the interrupt level register.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline uint32_t
 LIN_getInterruptLevel(uint32_t base)
 {
@@ -3171,6 +3254,7 @@ LIN_getInterruptLevel(uint32_t base)
 //! \return Returns the interrupt vector offset for interrupt line 0.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline uint16_t
 LIN_getInterruptLine0Offset(uint32_t base)
 {
@@ -3221,6 +3305,7 @@ LIN_getInterruptLine0Offset(uint32_t base)
 //! \return Returns the interrupt vector offset for interrupt line 1.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline uint16_t
 LIN_getInterruptLine1Offset(uint32_t base)
 {
@@ -3246,6 +3331,7 @@ LIN_getInterruptLine1Offset(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 LIN_enableMultibufferMode(uint32_t base)
 {
@@ -3268,6 +3354,7 @@ LIN_enableMultibufferMode(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 LIN_disableMultibufferMode(uint32_t base)
 {
@@ -3295,6 +3382,7 @@ LIN_disableMultibufferMode(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 LIN_setTransmitDelay(uint32_t base, uint16_t delay)
 {
@@ -3351,6 +3439,7 @@ LIN_setTransmitDelay(uint32_t base, uint16_t delay)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 LIN_setPinSampleMask(uint32_t base, LIN_PinSampleMask mask)
 {
@@ -3404,6 +3493,7 @@ LIN_setPinSampleMask(uint32_t base, LIN_PinSampleMask mask)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 LIN_setDebugSuspendMode(uint32_t base, LIN_DebugMode mode)
 {
@@ -3443,6 +3533,7 @@ LIN_setDebugSuspendMode(uint32_t base, LIN_DebugMode mode)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 LIN_enableGlobalInterrupt(uint32_t base, LIN_InterruptLine line)
 {
@@ -3472,6 +3563,7 @@ LIN_enableGlobalInterrupt(uint32_t base, LIN_InterruptLine line)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 LIN_disableGlobalInterrupt(uint32_t base, LIN_InterruptLine line)
 {
@@ -3501,6 +3593,7 @@ LIN_disableGlobalInterrupt(uint32_t base, LIN_InterruptLine line)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 LIN_clearGlobalInterruptStatus(uint32_t base, LIN_InterruptLine line)
 {
@@ -3531,6 +3624,7 @@ LIN_clearGlobalInterruptStatus(uint32_t base, LIN_InterruptLine line)
 //!  not.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline bool
 LIN_getGlobalInterruptStatus(uint32_t base, LIN_InterruptLine line)
 {
@@ -3561,6 +3655,7 @@ LIN_getGlobalInterruptStatus(uint32_t base, LIN_InterruptLine line)
 //! \return Returns \b true if the pin is high else \b false if low.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline bool
 LIN_getPinStatus(uint32_t base, LIN_PinType pin)
 {

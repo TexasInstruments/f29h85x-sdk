@@ -502,6 +502,7 @@ typedef struct
 //
 //*****************************************************************************
 #ifdef DEBUG
+__attribute__((always_inline))
 static inline bool
 SDFM_isBaseValid(uint32_t base)
 {
@@ -527,6 +528,7 @@ SDFM_isBaseValid(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 SDFM_enableExternalReset(uint32_t base, SDFM_FilterNumber filterNumber)
 {
@@ -551,6 +553,7 @@ SDFM_enableExternalReset(uint32_t base, SDFM_FilterNumber filterNumber)
 //!
 //! \return None.
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 SDFM_disableExternalReset(uint32_t base, SDFM_FilterNumber filterNumber)
 {
@@ -575,6 +578,7 @@ SDFM_disableExternalReset(uint32_t base, SDFM_FilterNumber filterNumber)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 SDFM_enableFilter(uint32_t base, SDFM_FilterNumber filterNumber)
 {
@@ -599,6 +603,7 @@ SDFM_enableFilter(uint32_t base, SDFM_FilterNumber filterNumber)
 //!
 //! \return None.
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 SDFM_disableFilter(uint32_t base, SDFM_FilterNumber filterNumber)
 {
@@ -624,6 +629,7 @@ SDFM_disableFilter(uint32_t base, SDFM_FilterNumber filterNumber)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 SDFM_enableFIFOBuffer(uint32_t base, SDFM_FilterNumber filterNumber)
 {
@@ -649,6 +655,7 @@ SDFM_enableFIFOBuffer(uint32_t base, SDFM_FilterNumber filterNumber)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 SDFM_disableFIFOBuffer(uint32_t base, SDFM_FilterNumber filterNumber)
 {
@@ -675,6 +682,7 @@ SDFM_disableFIFOBuffer(uint32_t base, SDFM_FilterNumber filterNumber)
 //!         \b false if Comparator filter output < High-level threshold (Z)
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline bool
 SDFM_getZeroCrossTripStatus(uint32_t base, SDFM_FilterNumber filterNumber)
 {
@@ -697,6 +705,7 @@ SDFM_getZeroCrossTripStatus(uint32_t base, SDFM_FilterNumber filterNumber)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 SDFM_clearZeroCrossTripStatus(uint32_t base, SDFM_FilterNumber filterNumber)
 {
@@ -720,6 +729,7 @@ SDFM_clearZeroCrossTripStatus(uint32_t base, SDFM_FilterNumber filterNumber)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 SDFM_enableComparator(uint32_t base, SDFM_FilterNumber filterNumber)
 {
@@ -744,6 +754,7 @@ SDFM_enableComparator(uint32_t base, SDFM_FilterNumber filterNumber)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 SDFM_disableComparator(uint32_t base, SDFM_FilterNumber filterNumber)
 {
@@ -788,6 +799,7 @@ SDFM_disableComparator(uint32_t base, SDFM_FilterNumber filterNumber)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 SDFM_selectCompEventSource(uint32_t base, SDFM_FilterNumber filterNumber,
                            SDFM_CompEventNumber compEventNum,
@@ -819,6 +831,7 @@ SDFM_selectCompEventSource(uint32_t base, SDFM_FilterNumber filterNumber,
 //!
 //! \return None.
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 SDFM_setFilterType(uint32_t base, SDFM_FilterNumber filterNumber,
                    SDFM_FilterType filterType)
@@ -851,6 +864,7 @@ SDFM_setFilterType(uint32_t base, SDFM_FilterNumber filterNumber,
 //!
 //! \return None.
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 SDFM_setFilterOverSamplingRatio(uint32_t base, SDFM_FilterNumber filterNumber,
                                 uint16_t overSamplingRatio)
@@ -885,6 +899,7 @@ SDFM_setFilterOverSamplingRatio(uint32_t base, SDFM_FilterNumber filterNumber,
 //!
 //! \return None.
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 SDFM_setupModulatorClock(uint32_t base, SDFM_FilterNumber filterNumber,
                          SDFM_ModulatorClockMode clockMode)
@@ -923,6 +938,7 @@ SDFM_setupModulatorClock(uint32_t base, SDFM_FilterNumber filterNumber,
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 SDFM_setOutputDataFormat(uint32_t base, SDFM_FilterNumber filterNumber,
                          SDFM_OutputDataFormat dataFormat)
@@ -936,10 +952,10 @@ SDFM_setOutputDataFormat(uint32_t base, SDFM_FilterNumber filterNumber,
     //
     // Write to DR bit
     //
-    
+
     HWREGH(address) = (HWREGH(address) & (~SDFM_SDDPARM1_DR)) |
                       ((uint16_t)dataFormat << 10U);
-    
+
 }
 
 //*****************************************************************************
@@ -958,6 +974,7 @@ SDFM_setOutputDataFormat(uint32_t base, SDFM_FilterNumber filterNumber,
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 SDFM_setDataShiftValue(uint32_t base, SDFM_FilterNumber filterNumber,
                        uint16_t shiftValue)
@@ -973,7 +990,7 @@ SDFM_setDataShiftValue(uint32_t base, SDFM_FilterNumber filterNumber,
     // Write to SH bit
     //
     HWREGH(address) = (HWREGH(address) & (~SDFM_SDDPARM1_SH_M)) |
-                      (shiftValue << SDFM_SDDPARM1_SH_S);   
+                      (shiftValue << SDFM_SDDPARM1_SH_S);
 }
 
 
@@ -995,6 +1012,7 @@ SDFM_setDataShiftValue(uint32_t base, SDFM_FilterNumber filterNumber,
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 SDFM_setCompFilterHighThreshold(uint32_t base, SDFM_FilterNumber filterNumber,
                                 uint32_t highThreshold)
@@ -1016,7 +1034,7 @@ SDFM_setCompFilterHighThreshold(uint32_t base, SDFM_FilterNumber filterNumber,
     HWREGH(address + SDFM_SDFLT1CMPHx_OFFSET) =
                                   (HWREGH(address + SDFM_SDFLT1CMPHx_OFFSET) &
                                    ~SDFM_SDFLT1CMPH2_HLT2_M) |
-                                  (uint16_t)(highThreshold >> 16U);    
+                                  (uint16_t)(highThreshold >> 16U);
 }
 
 //*****************************************************************************
@@ -1037,6 +1055,7 @@ SDFM_setCompFilterHighThreshold(uint32_t base, SDFM_FilterNumber filterNumber,
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 SDFM_setCompFilterLowThreshold(uint32_t base, SDFM_FilterNumber filterNumber,
                                uint32_t lowThreshold)
@@ -1058,7 +1077,7 @@ SDFM_setCompFilterLowThreshold(uint32_t base, SDFM_FilterNumber filterNumber,
     HWREGH(address + SDFM_SDFLT1CMPLx_OFFSET) =
                                    (HWREGH(address + SDFM_SDFLT1CMPLx_OFFSET) &
                                     ~SDFM_SDFLT1CMPL2_LLT2_M) |
-                                   (uint16_t)(lowThreshold >> 16U);   
+                                   (uint16_t)(lowThreshold >> 16U);
 }
 //*****************************************************************************
 //
@@ -1074,6 +1093,7 @@ SDFM_setCompFilterLowThreshold(uint32_t base, SDFM_FilterNumber filterNumber,
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 SDFM_setCompFilterZeroCrossThreshold(uint32_t base,
                                      SDFM_FilterNumber filterNumber,
@@ -1091,7 +1111,7 @@ SDFM_setCompFilterZeroCrossThreshold(uint32_t base,
     //
     HWREGH(address) = (HWREGH(address) & ~SDFM_SDFLT1CMPHZ_HLTZ_M) |
                       zeroCrossThreshold;
-   
+
 }
 
 //*****************************************************************************
@@ -1106,6 +1126,7 @@ SDFM_setCompFilterZeroCrossThreshold(uint32_t base,
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 SDFM_enableZeroCrossEdgeDetect(uint32_t base, SDFM_FilterNumber filterNumber)
 {
@@ -1115,7 +1136,7 @@ SDFM_enableZeroCrossEdgeDetect(uint32_t base, SDFM_FilterNumber filterNumber)
     // Set ZCEN bit
     //
     HWREGH(base + SDFM_O_SDCPARM1 + ((uint32_t)filterNumber * 32U)) |=
-        SDFM_SDCPARM1_HZEN;   
+        SDFM_SDCPARM1_HZEN;
 }
 
 //*****************************************************************************
@@ -1130,6 +1151,7 @@ SDFM_enableZeroCrossEdgeDetect(uint32_t base, SDFM_FilterNumber filterNumber)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 SDFM_disableZeroCrossEdgeDetect(uint32_t base, SDFM_FilterNumber filterNumber)
 {
@@ -1139,7 +1161,7 @@ SDFM_disableZeroCrossEdgeDetect(uint32_t base, SDFM_FilterNumber filterNumber)
     // Clear ZCEN bit
     //
     HWREGH(base + SDFM_O_SDCPARM1 + ((uint32_t)filterNumber * 32U)) &=
-        ~SDFM_SDCPARM1_HZEN;   
+        ~SDFM_SDCPARM1_HZEN;
 }
 
 //*****************************************************************************
@@ -1161,6 +1183,7 @@ SDFM_disableZeroCrossEdgeDetect(uint32_t base, SDFM_FilterNumber filterNumber)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 SDFM_enableInterrupt(uint32_t base, SDFM_FilterNumber filterNumber,
                      uint16_t intFlags)
@@ -1206,7 +1229,7 @@ SDFM_enableInterrupt(uint32_t base, SDFM_FilterNumber filterNumber,
         HWREGH(base + SDFM_O_SDFIFOCTL1 + offset) |=
                 (intFlags & (SDFM_FIFO_INTERRUPT |
                              SDFM_FIFO_OVERFLOW_INTERRUPT));
-    }   
+    }
 }
 
 //*****************************************************************************
@@ -1228,6 +1251,7 @@ SDFM_enableInterrupt(uint32_t base, SDFM_FilterNumber filterNumber,
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 SDFM_disableInterrupt(uint32_t base, SDFM_FilterNumber filterNumber,
                       uint16_t intFlags)
@@ -1272,7 +1296,7 @@ SDFM_disableInterrupt(uint32_t base, SDFM_FilterNumber filterNumber,
          //
          HWREGH(base + SDFM_O_SDFIFOCTL1 + offset) &=
             ~(intFlags & (SDFM_FIFO_INTERRUPT | SDFM_FIFO_OVERFLOW_INTERRUPT));
-    }   
+    }
 }
 
 //*****************************************************************************
@@ -1289,6 +1313,7 @@ SDFM_disableInterrupt(uint32_t base, SDFM_FilterNumber filterNumber,
 //!
 //! \return None.
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 SDFM_setComparatorFilterType(uint32_t base, SDFM_FilterNumber filterNumber,
                              SDFM_FilterType filterType)
@@ -1303,7 +1328,7 @@ SDFM_setComparatorFilterType(uint32_t base, SDFM_FilterNumber filterNumber,
     // Write to CS1_CS0 bits
     //
     HWREGH(address) = (HWREGH(address) & (~SDFM_SDCPARM1_CS1_CS0_M)) |
-                      ((uint16_t)filterType << 3U);    
+                      ((uint16_t)filterType << 3U);
 }
 
 //*****************************************************************************
@@ -1321,6 +1346,7 @@ SDFM_setComparatorFilterType(uint32_t base, SDFM_FilterNumber filterNumber,
 //!
 //! \return None.
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 SDFM_setCompFilterOverSamplingRatio(uint32_t base,
                                     SDFM_FilterNumber filterNumber,
@@ -1337,7 +1363,7 @@ SDFM_setCompFilterOverSamplingRatio(uint32_t base,
     // Write to COSR bits
     //
     HWREGH(address) = (HWREGH(address) & (~SDFM_SDCPARM1_COSR_M)) |
-                      overSamplingRatio;   
+                      overSamplingRatio;
 }
 
 //*****************************************************************************
@@ -1353,6 +1379,7 @@ SDFM_setCompFilterOverSamplingRatio(uint32_t base,
 //!
 //! \return Returns the latest data filter output.
 //*****************************************************************************
+__attribute__((always_inline))
 static inline uint32_t
 SDFM_getFilterData(uint32_t base, SDFM_FilterNumber filterNumber)
 {
@@ -1383,6 +1410,7 @@ SDFM_getFilterData(uint32_t base, SDFM_FilterNumber filterNumber)
 //!                                   threshold.
 //!
 //*****************************************************************************
+__attribute__((always_inline))
 static inline SDFM_OutputThresholdStatus
 SDFM_getThresholdStatus(uint32_t base, SDFM_FilterNumber filterNumber)
 {
@@ -1408,6 +1436,7 @@ SDFM_getThresholdStatus(uint32_t base, SDFM_FilterNumber filterNumber)
 //!         Returns false if the Modulator has failed
 //!
 //*****************************************************************************
+__attribute__((always_inline))
 static inline bool
 SDFM_getModulatorStatus(uint32_t base, SDFM_FilterNumber filterNumber)
 {
@@ -1433,6 +1462,7 @@ SDFM_getModulatorStatus(uint32_t base, SDFM_FilterNumber filterNumber)
 //!         Returns \b false if no new filter data is available
 //!
 //*****************************************************************************
+__attribute__((always_inline))
 static inline bool
 SDFM_getNewFilterDataStatus(uint32_t base, SDFM_FilterNumber filterNumber)
 {
@@ -1459,6 +1489,7 @@ SDFM_getNewFilterDataStatus(uint32_t base, SDFM_FilterNumber filterNumber)
 //!         Returns \b false if FIFO buffer is not overflowed
 //!
 //*****************************************************************************
+__attribute__((always_inline))
 static inline bool
 SDFM_getFIFOOverflowStatus(uint32_t base, SDFM_FilterNumber filterNumber)
 {
@@ -1485,6 +1516,7 @@ SDFM_getFIFOOverflowStatus(uint32_t base, SDFM_FilterNumber filterNumber)
 //!         Returns \b false if FIFO buffer interrupt has not occurred.
 //!
 //*****************************************************************************
+__attribute__((always_inline))
 static inline bool
 SDFM_getFIFOISRStatus(uint32_t base, SDFM_FilterNumber filterNumber)
 {
@@ -1509,6 +1541,7 @@ SDFM_getFIFOISRStatus(uint32_t base, SDFM_FilterNumber filterNumber)
 //!         Returns \b false if no interrupt is pending.
 //!
 //*****************************************************************************
+__attribute__((always_inline))
 static inline bool
 SDFM_getIsrStatus(uint32_t base)
 {
@@ -1546,6 +1579,7 @@ SDFM_getIsrStatus(uint32_t base)
 //! \return None
 //!
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 SDFM_clearInterruptFlag(uint32_t base, uint32_t flag)
 {
@@ -1569,6 +1603,7 @@ SDFM_clearInterruptFlag(uint32_t base, uint32_t flag)
 //! \return None
 //!
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 SDFM_enableMainInterrupt(uint32_t base)
 {
@@ -1577,7 +1612,7 @@ SDFM_enableMainInterrupt(uint32_t base)
     //
     // Set SDCTL MIE bit
     //
-    HWREGH(base + SDFM_O_SDCTL) |= SDFM_SDCTL_MIE;   
+    HWREGH(base + SDFM_O_SDCTL) |= SDFM_SDCTL_MIE;
 }
 
 //*****************************************************************************
@@ -1591,6 +1626,7 @@ SDFM_enableMainInterrupt(uint32_t base)
 //! \return None
 //!
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 SDFM_disableMainInterrupt(uint32_t base)
 {
@@ -1599,7 +1635,7 @@ SDFM_disableMainInterrupt(uint32_t base)
     //
     // Clear SDCTL MIE bit
     //
-    HWREGH(base + SDFM_O_SDCTL) &= ~SDFM_SDCTL_MIE;  
+    HWREGH(base + SDFM_O_SDCTL) &= ~SDFM_SDCTL_MIE;
 }
 
 //*****************************************************************************
@@ -1613,6 +1649,7 @@ SDFM_disableMainInterrupt(uint32_t base)
 //! \return None
 //!
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 SDFM_enableMainFilter(uint32_t base)
 {
@@ -1621,7 +1658,7 @@ SDFM_enableMainFilter(uint32_t base)
     //
     // Set SDMFILEN MFE bit
     //
-    HWREGH(base + SDFM_O_SDMFILEN) |= SDFM_SDMFILEN_MFE;   
+    HWREGH(base + SDFM_O_SDMFILEN) |= SDFM_SDMFILEN_MFE;
 }
 
 //*****************************************************************************
@@ -1635,6 +1672,7 @@ SDFM_enableMainFilter(uint32_t base)
 //! \return None
 //!
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 SDFM_disableMainFilter(uint32_t base)
 {
@@ -1643,7 +1681,7 @@ SDFM_disableMainFilter(uint32_t base)
     //
     // Clear SDMFILEN MFE bit
     //
-    HWREGH(base + SDFM_O_SDMFILEN) &= ~SDFM_SDMFILEN_MFE;   
+    HWREGH(base + SDFM_O_SDMFILEN) &= ~SDFM_SDMFILEN_MFE;
 }
 
 //*****************************************************************************
@@ -1658,6 +1696,7 @@ SDFM_disableMainFilter(uint32_t base)
 //! \return Returns the number of data words available in FIFO buffer.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline uint16_t
 SDFM_getFIFODataCount(uint32_t base, SDFM_FilterNumber filterNumber)
 {
@@ -1684,6 +1723,7 @@ SDFM_getFIFODataCount(uint32_t base, SDFM_FilterNumber filterNumber)
 //!
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline uint16_t
 SDFM_getComparatorSincData(uint32_t base, SDFM_FilterNumber filterNumber)
 {
@@ -1709,6 +1749,7 @@ SDFM_getComparatorSincData(uint32_t base, SDFM_FilterNumber filterNumber)
 //! \note Discard the upper 16 bits if the output data format is 16bits.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline uint32_t
 SDFM_getFIFOData(uint32_t base, SDFM_FilterNumber filterNumber)
 {
@@ -1735,6 +1776,7 @@ SDFM_getFIFOData(uint32_t base, SDFM_FilterNumber filterNumber)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 SDFM_setFIFOInterruptLevel(uint32_t base, SDFM_FilterNumber filterNumber,
                            uint16_t fifoLevel)
@@ -1750,7 +1792,7 @@ SDFM_setFIFOInterruptLevel(uint32_t base, SDFM_FilterNumber filterNumber,
     // Write to SDFFIL bit
     //
     HWREGH(address) =
-        ((HWREGH(address) & (~SDFM_SDFIFOCTL1_SDFFIL_M)) | fifoLevel);   
+        ((HWREGH(address) & (~SDFM_SDFIFOCTL1_SDFFIL_M)) | fifoLevel);
 }
 
 //*****************************************************************************
@@ -1769,6 +1811,7 @@ SDFM_setFIFOInterruptLevel(uint32_t base, SDFM_FilterNumber filterNumber,
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 SDFM_setDataReadyInterruptSource(uint32_t base, SDFM_FilterNumber filterNumber,
                                  SDFM_DataReadyInterruptSource dataReadySource)
@@ -1783,7 +1826,7 @@ SDFM_setDataReadyInterruptSource(uint32_t base, SDFM_FilterNumber filterNumber,
     // Write to DRINTSEL
     //
     HWREGH(address) = (HWREGH(address) & ~SDFM_SDFIFOCTL1_DRINTSEL) |
-                      ((uint16_t)dataReadySource << 14U);  
+                      ((uint16_t)dataReadySource << 14U);
 }
 
 //*****************************************************************************
@@ -1799,6 +1842,7 @@ SDFM_setDataReadyInterruptSource(uint32_t base, SDFM_FilterNumber filterNumber,
 //!         Returns false if sync event has not occurred.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline bool
 SDFM_getWaitForSyncStatus(uint32_t base, SDFM_FilterNumber filterNumber)
 {
@@ -1823,6 +1867,7 @@ SDFM_getWaitForSyncStatus(uint32_t base, SDFM_FilterNumber filterNumber)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 SDFM_clearWaitForSyncFlag(uint32_t base, SDFM_FilterNumber filterNumber)
 {
@@ -1832,7 +1877,7 @@ SDFM_clearWaitForSyncFlag(uint32_t base, SDFM_FilterNumber filterNumber)
     // Clear WTSYNCLR bit
     //
     HWREGH(base + SDFM_O_SDSYNC1 + ((uint32_t)filterNumber * 32U)) |=
-           SDFM_SDSYNC1_WTSYNCLR;    
+           SDFM_SDSYNC1_WTSYNCLR;
 }
 
 //*****************************************************************************
@@ -1848,6 +1893,7 @@ SDFM_clearWaitForSyncFlag(uint32_t base, SDFM_FilterNumber filterNumber)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 SDFM_enableWaitForSync(uint32_t base, SDFM_FilterNumber filterNumber)
 {
@@ -1857,7 +1903,7 @@ SDFM_enableWaitForSync(uint32_t base, SDFM_FilterNumber filterNumber)
     // Set WTSYNCEN bit
     //
     HWREGH(base + SDFM_O_SDSYNC1 + ((uint32_t)filterNumber * 32U)) |=
-        SDFM_SDSYNC1_WTSYNCEN;    
+        SDFM_SDSYNC1_WTSYNCEN;
 }
 
 //*****************************************************************************
@@ -1873,6 +1919,7 @@ SDFM_enableWaitForSync(uint32_t base, SDFM_FilterNumber filterNumber)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 SDFM_disableWaitForSync(uint32_t base, SDFM_FilterNumber filterNumber)
 {
@@ -1882,7 +1929,7 @@ SDFM_disableWaitForSync(uint32_t base, SDFM_FilterNumber filterNumber)
     // Clear WTSYNCEN bit
     //
     HWREGH(base + SDFM_O_SDSYNC1 + ((uint32_t)filterNumber * 32U)) &=
-        ~SDFM_SDSYNC1_WTSYNCEN;    
+        ~SDFM_SDSYNC1_WTSYNCEN;
 }
 
 //*****************************************************************************
@@ -1901,6 +1948,7 @@ SDFM_disableWaitForSync(uint32_t base, SDFM_FilterNumber filterNumber)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 SDFM_setPWMSyncSource(uint32_t base, SDFM_FilterNumber filterNumber,
                       SDFM_PWMSyncSource syncSource)
@@ -1916,7 +1964,7 @@ SDFM_setPWMSyncSource(uint32_t base, SDFM_FilterNumber filterNumber,
     //
     HWREGH(address) =
         (HWREGH(address) & ~SDFM_SDSYNC1_SYNCSEL_M) | (uint16_t)syncSource;
-    
+
     //
     //Enable SDSYNC reset to data filter
     //
@@ -1940,6 +1988,7 @@ SDFM_setPWMSyncSource(uint32_t base, SDFM_FilterNumber filterNumber,
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 SDFM_setFIFOClearOnSyncMode(uint32_t base, SDFM_FilterNumber filterNumber,
                             SDFM_FIFOClearSyncMode fifoClearSyncMode)
@@ -1954,7 +2003,7 @@ SDFM_setFIFOClearOnSyncMode(uint32_t base, SDFM_FilterNumber filterNumber,
     // Write to FFSYNCCLREN bit
     //
     HWREGH(address) = (HWREGH(address) & ~SDFM_SDSYNC1_FFSYNCCLREN) |
-                      ((uint16_t)fifoClearSyncMode << 9U);  
+                      ((uint16_t)fifoClearSyncMode << 9U);
 }
 
 //*****************************************************************************
@@ -1976,6 +2025,7 @@ SDFM_setFIFOClearOnSyncMode(uint32_t base, SDFM_FilterNumber filterNumber,
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 SDFM_setWaitForSyncClearMode(uint32_t base, SDFM_FilterNumber filterNumber,
                              SDFM_WaitForSyncClearMode syncClearMode)
@@ -1990,7 +2040,7 @@ SDFM_setWaitForSyncClearMode(uint32_t base, SDFM_FilterNumber filterNumber,
     // Write to WTSCLREN  bit
     //
     HWREGH(address) = (HWREGH(address) & ~SDFM_SDSYNC1_WTSCLREN) |
-                      ((uint16_t)syncClearMode << 10U);   
+                      ((uint16_t)syncClearMode << 10U);
 }
 
 //*****************************************************************************
@@ -2009,6 +2059,7 @@ SDFM_setWaitForSyncClearMode(uint32_t base, SDFM_FilterNumber filterNumber,
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 SDFM_selectClockSource(uint32_t base, SDFM_FilterNumber filterNumber,
                        SDFM_ClockSource clkSource)
@@ -2023,7 +2074,7 @@ SDFM_selectClockSource(uint32_t base, SDFM_FilterNumber filterNumber,
     // Select SDFM clock source.
     //
     HWREGH(address) = (HWREGH(address) & ~(SDFM_SDCTLPARM1_SDCLKSEL)) |
-                      (uint16_t)clkSource;    
+                      (uint16_t)clkSource;
 }
 
 //*****************************************************************************
@@ -2042,6 +2093,7 @@ SDFM_selectClockSource(uint32_t base, SDFM_FilterNumber filterNumber,
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 SDFM_enableSynchronizer(uint32_t base, SDFM_FilterNumber filterNumber,
                         uint16_t syncConfig)
@@ -2052,7 +2104,7 @@ SDFM_enableSynchronizer(uint32_t base, SDFM_FilterNumber filterNumber,
     // Select SDFM clock source.
     //
     HWREGH(base + SDFM_O_SDCTLPARM1 +
-           ((uint32_t)filterNumber * SDFM_SDFIL_OFFSET)) |= syncConfig;   
+           ((uint32_t)filterNumber * SDFM_SDFIL_OFFSET)) |= syncConfig;
 }
 
 //*****************************************************************************
@@ -2071,6 +2123,7 @@ SDFM_enableSynchronizer(uint32_t base, SDFM_FilterNumber filterNumber,
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 SDFM_disableSynchronizer(uint32_t base, SDFM_FilterNumber filterNumber,
                          uint16_t syncConfig)
@@ -2081,7 +2134,7 @@ SDFM_disableSynchronizer(uint32_t base, SDFM_FilterNumber filterNumber,
     // Select SDFM clock source.
     //
     HWREGH(base + SDFM_O_SDCTLPARM1 +
-           ((uint32_t)filterNumber * SDFM_SDFIL_OFFSET)) &= ~syncConfig;  
+           ((uint32_t)filterNumber * SDFM_SDFIL_OFFSET)) &= ~syncConfig;
 }
 
 //*****************************************************************************
@@ -2100,6 +2153,7 @@ SDFM_disableSynchronizer(uint32_t base, SDFM_FilterNumber filterNumber,
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 SDFM_selectCompEventHighSource(uint32_t base, SDFM_FilterNumber filterNumber,
                                SDFM_CompEventHighSource source)
@@ -2113,7 +2167,7 @@ SDFM_selectCompEventHighSource(uint32_t base, SDFM_FilterNumber filterNumber,
     // Set COMPHOUT source.
     //
     HWREGH(address) = (HWREGH(address) & ~SDFM_SDCOMP1CTL_CEVT1DIGFILTSEL_M) |
-                      (uint16_t)source;  
+                      (uint16_t)source;
 }
 
 //*****************************************************************************
@@ -2132,6 +2186,7 @@ SDFM_selectCompEventHighSource(uint32_t base, SDFM_FilterNumber filterNumber,
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 SDFM_selectCompEventLowSource(uint32_t base, SDFM_FilterNumber filterNumber,
                               SDFM_CompEventLowSource source)
@@ -2145,7 +2200,7 @@ SDFM_selectCompEventLowSource(uint32_t base, SDFM_FilterNumber filterNumber,
     // Set COMPLOUT source.
     //
     HWREGH(address) = (HWREGH(address) & ~SDFM_SDCOMP1CTL_CEVT2DIGFILTSEL_M) |
-                      (uint16_t)source;  
+                      (uint16_t)source;
 }
 
 //*****************************************************************************
@@ -2160,6 +2215,7 @@ SDFM_selectCompEventLowSource(uint32_t base, SDFM_FilterNumber filterNumber,
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 SDFM_initCompEventLowFilter(uint32_t base, SDFM_FilterNumber filterNumber)
 {
@@ -2170,7 +2226,7 @@ SDFM_initCompEventLowFilter(uint32_t base, SDFM_FilterNumber filterNumber)
     //
     HWREGH(base + SDFM_O_SDCOMP1EVT2FLTCTL +
            ((uint32_t)filterNumber * SDFM_DIGFIL_OFFSET)) |=
-                                      (uint16_t)SDFM_SDCOMP1EVT2FLTCTL_FILINIT;  
+                                      (uint16_t)SDFM_SDCOMP1EVT2FLTCTL_FILINIT;
 }
 
 //*****************************************************************************
@@ -2185,6 +2241,7 @@ SDFM_initCompEventLowFilter(uint32_t base, SDFM_FilterNumber filterNumber)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 SDFM_initCompEventHighFilter(uint32_t base, SDFM_FilterNumber filterNumber)
 {
@@ -2195,7 +2252,7 @@ SDFM_initCompEventHighFilter(uint32_t base, SDFM_FilterNumber filterNumber)
     //
     HWREGH(base + SDFM_O_SDCOMP1EVT1FLTCTL +
            ((uint32_t)filterNumber * SDFM_DIGFIL_OFFSET)) |=
-                                      (uint16_t)SDFM_SDCOMP1EVT1FLTCTL_FILINIT;    
+                                      (uint16_t)SDFM_SDCOMP1EVT1FLTCTL_FILINIT;
 }
 
 //*****************************************************************************
@@ -2215,6 +2272,7 @@ SDFM_initCompEventHighFilter(uint32_t base, SDFM_FilterNumber filterNumber)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 SDFM_lockCompEventFilterConfig(uint32_t base, SDFM_FilterNumber filterNumber,
                                uint16_t lockConfig)
@@ -2225,7 +2283,7 @@ SDFM_lockCompEventFilterConfig(uint32_t base, SDFM_FilterNumber filterNumber,
     // Lock comparator event filter related configurations.
     //
     HWREGH(base + SDFM_O_SDCOMP1LOCK +
-           ((uint32_t)filterNumber * SDFM_DIGFIL_OFFSET)) |= lockConfig;   
+           ((uint32_t)filterNumber * SDFM_DIGFIL_OFFSET)) |= lockConfig;
 }
 
 //*****************************************************************************

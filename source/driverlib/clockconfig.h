@@ -275,6 +275,134 @@ typedef enum
     SYSCTL_IMULT_125,
     SYSCTL_IMULT_126,
     SYSCTL_IMULT_127,
+    SYSCTL_IMULT_128,
+    SYSCTL_IMULT_129,
+    SYSCTL_IMULT_130,
+    SYSCTL_IMULT_131,
+    SYSCTL_IMULT_132,
+    SYSCTL_IMULT_133,
+    SYSCTL_IMULT_134,
+    SYSCTL_IMULT_135,
+    SYSCTL_IMULT_136,
+    SYSCTL_IMULT_137,
+    SYSCTL_IMULT_138,
+    SYSCTL_IMULT_139,
+    SYSCTL_IMULT_140,
+    SYSCTL_IMULT_141,
+    SYSCTL_IMULT_142,
+    SYSCTL_IMULT_143,
+    SYSCTL_IMULT_144,
+    SYSCTL_IMULT_145,
+    SYSCTL_IMULT_146,
+    SYSCTL_IMULT_147,
+    SYSCTL_IMULT_148,
+    SYSCTL_IMULT_149,
+    SYSCTL_IMULT_150,
+    SYSCTL_IMULT_151,
+    SYSCTL_IMULT_152,
+    SYSCTL_IMULT_153,
+    SYSCTL_IMULT_154,
+    SYSCTL_IMULT_155,
+    SYSCTL_IMULT_156,
+    SYSCTL_IMULT_157,
+    SYSCTL_IMULT_158,
+    SYSCTL_IMULT_159,
+    SYSCTL_IMULT_160,
+    SYSCTL_IMULT_161,
+    SYSCTL_IMULT_162,
+    SYSCTL_IMULT_163,
+    SYSCTL_IMULT_164,
+    SYSCTL_IMULT_165,
+    SYSCTL_IMULT_166,
+    SYSCTL_IMULT_167,
+    SYSCTL_IMULT_168,
+    SYSCTL_IMULT_169,
+    SYSCTL_IMULT_170,
+    SYSCTL_IMULT_171,
+    SYSCTL_IMULT_172,
+    SYSCTL_IMULT_173,
+    SYSCTL_IMULT_174,
+    SYSCTL_IMULT_175,
+    SYSCTL_IMULT_176,
+    SYSCTL_IMULT_177,
+    SYSCTL_IMULT_178,
+    SYSCTL_IMULT_179,
+    SYSCTL_IMULT_180,
+    SYSCTL_IMULT_181,
+    SYSCTL_IMULT_182,
+    SYSCTL_IMULT_183,
+    SYSCTL_IMULT_184,
+    SYSCTL_IMULT_185,
+    SYSCTL_IMULT_186,
+    SYSCTL_IMULT_187,
+    SYSCTL_IMULT_188,
+    SYSCTL_IMULT_189,
+    SYSCTL_IMULT_190,
+    SYSCTL_IMULT_191,
+    SYSCTL_IMULT_192,
+    SYSCTL_IMULT_193,
+    SYSCTL_IMULT_194,
+    SYSCTL_IMULT_195,
+    SYSCTL_IMULT_196,
+    SYSCTL_IMULT_197,
+    SYSCTL_IMULT_198,
+    SYSCTL_IMULT_199,
+    SYSCTL_IMULT_200,
+    SYSCTL_IMULT_201,
+    SYSCTL_IMULT_202,
+    SYSCTL_IMULT_203,
+    SYSCTL_IMULT_204,
+    SYSCTL_IMULT_205,
+    SYSCTL_IMULT_206,
+    SYSCTL_IMULT_207,
+    SYSCTL_IMULT_208,
+    SYSCTL_IMULT_209,
+    SYSCTL_IMULT_210,
+    SYSCTL_IMULT_211,
+    SYSCTL_IMULT_212,
+    SYSCTL_IMULT_213,
+    SYSCTL_IMULT_214,
+    SYSCTL_IMULT_215,
+    SYSCTL_IMULT_216,
+    SYSCTL_IMULT_217,
+    SYSCTL_IMULT_218,
+    SYSCTL_IMULT_219,
+    SYSCTL_IMULT_220,
+    SYSCTL_IMULT_221,
+    SYSCTL_IMULT_222,
+    SYSCTL_IMULT_223,
+    SYSCTL_IMULT_224,
+    SYSCTL_IMULT_225,
+    SYSCTL_IMULT_226,
+    SYSCTL_IMULT_227,
+    SYSCTL_IMULT_228,
+    SYSCTL_IMULT_229,
+    SYSCTL_IMULT_230,
+    SYSCTL_IMULT_231,
+    SYSCTL_IMULT_232,
+    SYSCTL_IMULT_233,
+    SYSCTL_IMULT_234,
+    SYSCTL_IMULT_235,
+    SYSCTL_IMULT_236,
+    SYSCTL_IMULT_237,
+    SYSCTL_IMULT_238,
+    SYSCTL_IMULT_239,
+    SYSCTL_IMULT_240,
+    SYSCTL_IMULT_241,
+    SYSCTL_IMULT_242,
+    SYSCTL_IMULT_243,
+    SYSCTL_IMULT_244,
+    SYSCTL_IMULT_245,
+    SYSCTL_IMULT_246,
+    SYSCTL_IMULT_247,
+    SYSCTL_IMULT_248,
+    SYSCTL_IMULT_249,
+    SYSCTL_IMULT_250,
+    SYSCTL_IMULT_251,
+    SYSCTL_IMULT_252,
+    SYSCTL_IMULT_253,
+    SYSCTL_IMULT_254,
+    SYSCTL_IMULT_255,
 } Sysctl_PLLIMult;
 
 
@@ -666,6 +794,7 @@ extern void SysCtl_pollSyncBusy(uint32_t mask);
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.SysCtl_enableMCD")))
+__attribute__((always_inline))
 static inline void
 SysCtl_enableMCD(void)
 {
@@ -680,6 +809,7 @@ SysCtl_enableMCD(void)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.SysCtl_disableMCD")))
+__attribute__((always_inline))
 static inline void
 SysCtl_disableMCD(void)
 {
@@ -697,6 +827,7 @@ SysCtl_disableMCD(void)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.SysCtl_isMCDClockFailureDetected")))
+__attribute__((always_inline))
 static inline bool
 SysCtl_isMCDClockFailureDetected(void)
 {
@@ -714,6 +845,7 @@ SysCtl_isMCDClockFailureDetected(void)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.SysCtl_resetMCD")))
+__attribute__((always_inline))
 static inline void
 SysCtl_resetMCD(void)
 {
@@ -729,6 +861,7 @@ SysCtl_resetMCD(void)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.SysCtl_connectMCDClockSource")))
+__attribute__((always_inline))
 static inline void
 SysCtl_connectMCDClockSource(void)
 {
@@ -744,6 +877,7 @@ SysCtl_connectMCDClockSource(void)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.SysCtl_disconnectMCDClockSource")))
+__attribute__((always_inline))
 static inline void
 SysCtl_disconnectMCDClockSource(void)
 {
@@ -769,6 +903,7 @@ SysCtl_disconnectMCDClockSource(void)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.SysCtl_setXClk")))
+__attribute__((always_inline))
 static inline void
 SysCtl_setXClk(SysCtl_XClkSource clksrc, SysCtl_XClkDivider divider)
 {
@@ -812,6 +947,7 @@ SysCtl_setXClk(SysCtl_XClkSource clksrc, SysCtl_XClkDivider divider)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.SysCtl_setMCANClock")))
+__attribute__((always_inline))
 static inline void
 SysCtl_setMCANClock(SysCtl_MCANInstance mcanInst, SysCtl_MCANClkSource clksrc,
                     SysCtl_MCANClkDivider divider)
@@ -860,6 +996,7 @@ SysCtl_setMCANClock(SysCtl_MCANInstance mcanInst, SysCtl_MCANClkSource clksrc,
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.SysCtl_setCputimer2Clock")))
+__attribute__((always_inline))
 static inline void
 SysCtl_setCputimer2Clock(SysCtl_Cputimer2ClkSource source,
                          SysCtl_Cputimer2ClkDivider divider)
@@ -887,6 +1024,7 @@ SysCtl_setCputimer2Clock(SysCtl_Cputimer2ClkSource source,
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.SysCtl_setEPWMClock")))
+__attribute__((always_inline))
 static inline void
 SysCtl_setEPWMClock(SysCtl_EPWMClkDivider divider)
 {
@@ -912,6 +1050,7 @@ SysCtl_setEPWMClock(SysCtl_EPWMClkDivider divider)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.SysCtl_setEMIF1Clock")))
+__attribute__((always_inline))
 static inline void
 SysCtl_setEMIF1Clock(SysCtl_EMIFClkDivider divider)
 {
@@ -937,6 +1076,7 @@ SysCtl_setEMIF1Clock(SysCtl_EMIFClkDivider divider)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.SysCtl_setLINAClock")))
+__attribute__((always_inline))
 static inline void
 SysCtl_setLINAClock(SysCtl_LINClkDivider divider)
 {
@@ -962,6 +1102,7 @@ SysCtl_setLINAClock(SysCtl_LINClkDivider divider)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.SysCtl_setLINBClock")))
+__attribute__((always_inline))
 static inline void
 SysCtl_setLINBClock(SysCtl_LINClkDivider divider)
 {
@@ -997,6 +1138,7 @@ SysCtl_setLINBClock(SysCtl_LINClkDivider divider)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.SysCtl_setECatClock")))
+__attribute__((always_inline))
 static inline void
 SysCtl_setECatClock(SysCtl_ECatClkDivider divider, SysCtl_ECatPhyClk phyEnable)
 {
@@ -1038,6 +1180,7 @@ SysCtl_setECatClock(SysCtl_ECatClkDivider divider, SysCtl_ECatPhyClk phyEnable)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.SysCtl_setCLBClock")))
+__attribute__((always_inline))
 static inline void
 SysCtl_setCLBClock(SysCtl_CLBClkDivider divider, SysCtl_CLBTClkDivider tdivider,
                    uint8_t clkMode)
@@ -1062,6 +1205,7 @@ SysCtl_setCLBClock(SysCtl_CLBClkDivider divider, SysCtl_CLBTClkDivider tdivider,
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.SysCtl_setHSMClock")))
+__attribute__((always_inline))
 static inline void
 SysCtl_setHSMClock(SysCtl_HSMClkDivider divider)
 {
@@ -1084,6 +1228,7 @@ SysCtl_setHSMClock(SysCtl_HSMClkDivider divider)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.SysCtl_getExternalOscCounterValue")))
+__attribute__((always_inline))
 static inline uint16_t
 SysCtl_getExternalOscCounterValue(void)
 {
@@ -1098,6 +1243,7 @@ SysCtl_getExternalOscCounterValue(void)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.SysCtl_clearExternalOscCounterValue")))
+__attribute__((always_inline))
 static inline void
 SysCtl_clearExternalOscCounterValue(void)
 {
@@ -1112,6 +1258,7 @@ SysCtl_clearExternalOscCounterValue(void)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.SysCtl_turnOnXTAL")))
+__attribute__((always_inline))
 static inline void
 SysCtl_turnOnXTAL(void)
 {
@@ -1127,6 +1274,7 @@ SysCtl_turnOnXTAL(void)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.SysCtl_turnOffXTAL")))
+__attribute__((always_inline))
 static inline void
 SysCtl_turnOffXTAL(void)
 {
@@ -1178,7 +1326,7 @@ SysCtl_getClock(uint32_t clockInHz);
 //!        PLLCLK to the System.
 //!
 //! \param refDiv Reference Clock Divider. Use Enum SYSCTL_REFDIV_1..32
-//! \param iMult  Multiplier. Use Enum SYSCTL_IMULT_4..127
+//! \param iMult  Multiplier. Use Enum SYSCTL_IMULT_4..255
 //! \param oDiv   Output Clock Divider. Use Enum SYSCTL_ODIV_1..32
 //! \param sysDiv SYSCLK Divider. Use Enum SYSCTL_SYSDIV_1..64
 //! \param dccBase Base address of DCC module for PLL output validation

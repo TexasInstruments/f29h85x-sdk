@@ -85,6 +85,7 @@
 #endif
 
 bool cpu1nmigen = false;
+Interrupt_NmiStatus nmiStatus;
 //
 // Main
 //
@@ -144,7 +145,7 @@ void myNMI_CPU1_ISR(void)
    //
    // Clear the raw status and deassert the level interrupt.
    //
-   Interrupt_clearEsmEaFlags();
+   Interrupt_clearEsmEaFlags(&nmiStatus);
 
    ESM_writeEOIVector(ESMCPU1_BASE, ESM_EOI_HIGH_PRIORITY_ERROR_INTERRUPT);
 }

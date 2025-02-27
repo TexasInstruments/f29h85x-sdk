@@ -93,7 +93,7 @@ exports = {
                     zone             : inst.zone,
                     secGroupAttr     : inst.secGroupAttr,
                     easyModeGenerated: true,
-                    
+
                 },
                 args: {
                     stackAPR         : {

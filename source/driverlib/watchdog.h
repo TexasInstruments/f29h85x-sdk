@@ -167,6 +167,7 @@ typedef enum
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 SysCtl_setWatchdogMode(SysCtl_WDMode mode)
 {
@@ -206,6 +207,7 @@ SysCtl_setWatchdogMode(SysCtl_WDMode mode)
 //! \return \b true if the interrupt is active and \b false if it is not.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline bool
 SysCtl_isWatchdogInterruptActive(void)
 {
@@ -225,6 +227,7 @@ SysCtl_isWatchdogInterruptActive(void)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 SysCtl_disableWatchdog(void)
 {
@@ -244,6 +247,7 @@ SysCtl_disableWatchdog(void)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 SysCtl_enableWatchdog(void)
 {
@@ -263,6 +267,7 @@ SysCtl_enableWatchdog(void)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 SysCtl_serviceWatchdog(void)
 {
@@ -282,6 +287,7 @@ SysCtl_serviceWatchdog(void)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 SysCtl_enableWatchdogReset(void)
 {
@@ -300,6 +306,7 @@ SysCtl_enableWatchdogReset(void)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 SysCtl_resetWatchdog(void)
 {
@@ -323,6 +330,7 @@ SysCtl_resetWatchdog(void)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 SysCtl_setWatchdogPredivider(SysCtl_WDPredivider predivider)
 {
@@ -352,6 +360,7 @@ SysCtl_setWatchdogPredivider(SysCtl_WDPredivider predivider)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 SysCtl_setWatchdogPrescaler(SysCtl_WDPrescaler prescaler)
 {
@@ -374,6 +383,7 @@ SysCtl_setWatchdogPrescaler(SysCtl_WDPrescaler prescaler)
 //! count value overflows, a watchdog output pulse is generated.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline uint16_t
 SysCtl_getWatchdogCounterValue(void)
 {
@@ -395,6 +405,7 @@ SysCtl_getWatchdogCounterValue(void)
 //! \return Returns \b true if the watchdog generated the last reset condition.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline bool
 SysCtl_getWatchdogResetStatus(void)
 {
@@ -414,6 +425,7 @@ SysCtl_getWatchdogResetStatus(void)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 SysCtl_clearWatchdogResetStatus(void)
 {
@@ -435,6 +447,7 @@ SysCtl_clearWatchdogResetStatus(void)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 SysCtl_setWatchdogWindowValue(uint16_t value)
 {
@@ -460,6 +473,7 @@ SysCtl_setWatchdogWindowValue(uint16_t value)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 SysCtl_clearWatchdogOverride(void)
 {

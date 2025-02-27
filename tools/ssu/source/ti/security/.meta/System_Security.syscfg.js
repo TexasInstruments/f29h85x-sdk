@@ -1,11 +1,11 @@
 const Common = system.getScript('/ti/security/Common.js');
-const Cmn    = system.getScript("/driverlib/Common.js"); 
+const Cmn    = system.getScript("/driverlib/Common.js");
 
 const peripheralData    = system.getScript('/ti/security/device_specific_information/peripheral_data.js');
 const ssuData           = system.getScript('/ti/security/device_specific_information/ssu_data.js');
 
 
-let config_Global = 
+let config_Global =
     {
         name       : "globalInfo",
         displayName: "Global Settings",
@@ -16,7 +16,7 @@ let config_Global =
                 displayName: "SSU Mode",
                 default    : 1,
                 hidden       : !Cmn.isContextCPU1(),
-                options    : [1,2] .map(x => {return {name:x, displayName:"SSUMODE"+x.toString()};}), // Mode 3 hidden
+                options    : [1,2,3] .map(x => {return {name:x, displayName:"SSUMODE"+x.toString()};}),
                 onChange   : (inst, ui) => {
                     // ui.inter_security_context_behavior.hidden = inst.ssumode != 3;
                     config_debugAccess.config.forEach(x => {
@@ -135,7 +135,7 @@ let config_WEPROT =
                         else
                             return aprs
                     }
-                    
+
                 },
             },
         ]
@@ -233,13 +233,13 @@ let config_flashUpdateOwner =
                     name         : x + '_UPDATE_EN',
                     displayName  : 'Enable update',
                     hidden       : !Cmn.isContextCPU1(),
-                    default      : false,
+                    default      : true,
                 },
                 {
                     name         : x + '_UPDATE_CPU',
                     displayName  : 'Update Owner CPU',
                     hidden       : !Cmn.isContextCPU1(),
-                    default      : 0,
+                    default      : 1,
                     options      : [
                         { name: 0, displayName :"CPU-HSM"},
                         { name: 1, displayName :"CPU1"},
@@ -315,8 +315,9 @@ let config_bootSettings =
                         name        : 'ERROR_STS_PIN',
                         displayName : 'Error Status Pin',
                         hidden       : !Cmn.isContextCPU1(),
-                        default     : 79,
+                        default     : 219,
                         options     : [
+                            {name:255,  displayName: "None"},
                             {name:4,    displayName: "GPIO4"},
                             {name:79,   displayName: "GPIO79"},
                             {name:80,   displayName: "GPIO80"},
@@ -624,7 +625,7 @@ function validate(inst, vo)
     if(aprList && aprList.length > ssuData.instanceCount.APR){
         vo.logError(`Maximum APR count of ${ssuData.instanceCount.APR} exceeded`, inst)
     }
-    
+
     let coresEnabled = Common.getConfigFromStaticModule("/ti/security/System_Security", "cpuList", Cmn.CONTEXT_CPU1)
     let coresValid  = Common.getCoreList(1).map(c => {return c.name})
     // Corelist validation
@@ -725,7 +726,7 @@ function validate(inst, vo)
                 perSet.add(p)
             })
         })
-        
+
         let r = Array.from(reqSet), p = Array.from(perSet)
         let diff = r.filter(x => ! p.includes(x));
         diff.forEach(p => {
@@ -733,6 +734,8 @@ function validate(inst, vo)
             allow LINK1 RW permissions to this region through System Security / LINK module`, inst);
         })
     }
+
+    //LINK2 required APRs check //!!
 }
 
 let config_ssu =
@@ -746,7 +749,7 @@ let config_ssu =
             name            : "flashLoadSize",
             displayName     : "Flash size used as Load memory (in kB)",
             longDescription : "This is used for as Load memory for functions and RO sections in RAM and for storing cinit section copy tables",
-            default         : 4,
+            default         : !Cmn.isContextCPU2() ? 4 : 0,
         },
         {
             name            : "addStack1",
@@ -875,6 +878,9 @@ function moduleInstances(inst)
             collapsed         : true,
             requiredArgs      : {
                 $name : "LINK2", isLink2 : true
+            },
+            args : {
+                periphs_rw: Common.getLink2RequiredAprs()
             }
         })
     }
@@ -895,7 +901,7 @@ function moduleInstances(inst)
             },
             args : {
                 //fileNames   : "error",
-                libs        : "libc.a,libclang_rt.builtins.a"
+                libs        : "libc.a,libclang_rt.builtins.a,driverlib.lib"
             }
         })
     }
@@ -933,7 +939,7 @@ function moduleInstances(inst)
             },
             args              : {
                 modules: inst.addLink1 ? ["LINK1_Link"] : []
-            }          
+            }
         })
     }
 
@@ -949,7 +955,7 @@ function moduleInstances(inst)
         },
         args              : {
             modules: inst.addLink2 ? ["LINK2_Link"] : []
-        } 
+        }
     })
 
     // Sandboxes with no default Instances
@@ -971,6 +977,29 @@ function moduleInstances(inst)
         useArray          : true,
         group             : "SSUSettings",
     })
+
+    if(Cmn.isContextCPU1() == true)
+    {
+        inst.cpuList.forEach(core => {
+            if(core == "CPU2")
+            {
+                modules.push({
+                    name        : "CPU2_FLASH_REGION",
+                    displayName : "CPU2 Flash Load APR",
+                    moduleName  : "/ti/security/APR",
+                    collapsed   : true,
+                    hidden      : false,
+                    group       : "group_moduleAPRs",
+                    requiredArgs: {
+                        $name           : "CPU2_FLASH_REGION",
+                        type            : "Data",
+                        memType         : "Flash",
+                        memSize         : 64,
+                    }
+                })
+            }
+        })
+    }
 
     return modules;
 }

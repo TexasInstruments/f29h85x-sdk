@@ -315,6 +315,7 @@ typedef enum
 //
 //*****************************************************************************
 #ifdef DEBUG
+__attribute__((always_inline))
 static inline bool
 I2C_isBaseValid(uint32_t base)
 {
@@ -336,6 +337,7 @@ I2C_isBaseValid(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 I2C_enableModule(uint32_t base)
 {
@@ -358,6 +360,7 @@ I2C_enableModule(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 I2C_disableModule(uint32_t base)
 {
@@ -380,6 +383,7 @@ I2C_disableModule(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 I2C_enableFIFO(uint32_t base)
 {
@@ -406,6 +410,7 @@ I2C_enableFIFO(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 I2C_disableFIFO(uint32_t base)
 {
@@ -442,6 +447,7 @@ I2C_disableFIFO(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 I2C_setFIFOInterruptLevel(uint32_t base, I2C_TxFIFOLevel txLevel,
                           I2C_RxFIFOLevel rxLevel)
@@ -481,6 +487,7 @@ I2C_setFIFOInterruptLevel(uint32_t base, I2C_TxFIFOLevel txLevel,
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 I2C_getFIFOInterruptLevel(uint32_t base, I2C_TxFIFOLevel *txLevel,
                           I2C_RxFIFOLevel *rxLevel)
@@ -513,6 +520,7 @@ I2C_getFIFOInterruptLevel(uint32_t base, I2C_TxFIFOLevel *txLevel,
 //! ..., or \b I2C_FIFO_TX16
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline I2C_TxFIFOLevel
 I2C_getTxFIFOStatus(uint32_t base)
 {
@@ -546,6 +554,7 @@ I2C_getTxFIFOStatus(uint32_t base)
 //! ..., or \b I2C_FIFO_RX16
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline I2C_RxFIFOLevel
 I2C_getRxFIFOStatus(uint32_t base)
 {
@@ -577,6 +586,7 @@ I2C_getRxFIFOStatus(uint32_t base)
 //! \return Returns the I2C prescaler(I2CPSC) cast as an uint16_t.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline uint16_t
 I2C_getPreScaler(uint32_t base)
 {
@@ -604,6 +614,7 @@ I2C_getPreScaler(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 I2C_setTargetAddress(uint32_t base, uint16_t targetAddr)
 {
@@ -631,6 +642,7 @@ I2C_setTargetAddress(uint32_t base, uint16_t targetAddr)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 I2C_setOwnAddress(uint32_t base, uint16_t Addr)
 {
@@ -657,6 +669,7 @@ I2C_setOwnAddress(uint32_t base, uint16_t Addr)
 //! \b false.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline bool
 I2C_isBusBusy(uint32_t base)
 {
@@ -694,6 +707,7 @@ I2C_isBusBusy(uint32_t base)
 //! - \b I2C_STS_SCL_ECS - SCL Auto Clock Stretch Status
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline uint16_t
 I2C_getStatus(uint32_t base)
 {
@@ -734,6 +748,7 @@ I2C_getStatus(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 I2C_clearStatus(uint32_t base, uint16_t stsFlags)
 {
@@ -772,6 +787,7 @@ I2C_clearStatus(uint32_t base, uint16_t stsFlags)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 I2C_setConfig(uint32_t base, uint16_t config)
 {
@@ -801,6 +817,7 @@ I2C_setConfig(uint32_t base, uint16_t config)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 I2C_setBitCount(uint32_t base, I2C_BitCount size)
 {
@@ -829,6 +846,7 @@ I2C_setBitCount(uint32_t base, I2C_BitCount size)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 I2C_sendStartCondition(uint32_t base)
 {
@@ -859,6 +877,7 @@ I2C_sendStartCondition(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 I2C_sendStopCondition(uint32_t base)
 {
@@ -885,6 +904,7 @@ I2C_sendStopCondition(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 I2C_sendNACK(uint32_t base)
 {
@@ -910,6 +930,7 @@ I2C_sendNACK(uint32_t base)
 //! \return Returns the byte received from by the I2C cast as an uint16_t.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline uint8_t
 I2C_getData(uint32_t base)
 {
@@ -936,6 +957,7 @@ I2C_getData(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 I2C_putData(uint32_t base, uint8_t data)
 {
@@ -964,6 +986,7 @@ I2C_putData(uint32_t base, uint8_t data)
 //! automatically cleared after the stop condition has been generated.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline bool
 I2C_getStopConditionStatus(uint32_t base)
 {
@@ -991,6 +1014,7 @@ I2C_getStopConditionStatus(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 I2C_setDataCount(uint32_t base, uint16_t count)
 {
@@ -1020,6 +1044,7 @@ I2C_setDataCount(uint32_t base, uint16_t count)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 I2C_setAddressMode(uint32_t base, I2C_AddressMode mode)
 {
@@ -1054,6 +1079,7 @@ I2C_setAddressMode(uint32_t base, I2C_AddressMode mode)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 I2C_setEmulationMode(uint32_t base, I2C_EmulationMode mode)
 {
@@ -1082,6 +1108,7 @@ I2C_setEmulationMode(uint32_t base, I2C_EmulationMode mode)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 I2C_enableLoopback(uint32_t base)
 {
@@ -1108,6 +1135,7 @@ I2C_enableLoopback(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 I2C_disableLoopback(uint32_t base)
 {
@@ -1153,6 +1181,7 @@ I2C_disableLoopback(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline I2C_InterruptSource
 I2C_getInterruptSource(uint32_t base)
 {
@@ -1183,6 +1212,7 @@ I2C_getInterruptSource(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 I2C_setExtendedMode(uint32_t base, I2C_ExtendedMode mode)
 {
@@ -1212,6 +1242,7 @@ I2C_setExtendedMode(uint32_t base, I2C_ExtendedMode mode)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 I2C_enableExtendedAutomaticClkStretchingMode(uint32_t base)
 {
@@ -1247,6 +1278,7 @@ I2C_enableExtendedAutomaticClkStretchingMode(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 I2C_disableExtendedAutomaticClkStretchingMode(uint32_t base)
 {
@@ -1282,6 +1314,7 @@ I2C_disableExtendedAutomaticClkStretchingMode(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 I2C_enableManualClkStretchingMode(uint32_t base)
 {
@@ -1317,6 +1350,7 @@ I2C_enableManualClkStretchingMode(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 I2C_disableManualClkStretchingMode(uint32_t base)
 {
@@ -1351,6 +1385,7 @@ I2C_disableManualClkStretchingMode(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 I2C_enableNACKCompatibilityMode(uint32_t base)
 {
@@ -1377,6 +1412,7 @@ I2C_enableNACKCompatibilityMode(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 I2C_disableNACKCompatibilityMode(uint32_t base)
 {

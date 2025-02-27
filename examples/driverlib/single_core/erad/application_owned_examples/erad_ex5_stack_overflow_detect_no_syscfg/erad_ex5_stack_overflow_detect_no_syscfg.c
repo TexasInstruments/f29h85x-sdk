@@ -149,14 +149,14 @@ ERAD_enableInterruptOnStackOverflow(ERAD_BusCompInstance instance)
 
     //
     // Comparison mode is set to greater than to
-    // and the bus to be monitored is the 
+    // and the bus to be monitored is the
     // Data Write Address Bus
     //
     buscomp_params.reference = 0x200E0400; // End of stack address
     buscomp_params.mask = 0x0;
     buscomp_params.bus_sel = ERAD_BUSCOMP_BUS_DWAB;
     buscomp_params.comp_mode = ERAD_BUSCOMP_COMPMODE_GT;
-    
+
     //
     // Configure the Stack qualification
     //
@@ -165,7 +165,7 @@ ERAD_enableInterruptOnStackOverflow(ERAD_BusCompInstance instance)
     //
     // Configure the bus comparator
     //
-    ERAD_configBusComp(instance, buscomp_params);
+    ERAD_configBusComp(instance, &buscomp_params);
 
     //
     // Enable the bus comparator

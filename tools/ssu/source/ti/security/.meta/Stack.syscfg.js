@@ -17,7 +17,7 @@ let config = [
         hidden           : true,
         getValue         : (inst) => {
             if(inst.easyModeGenerated)
-                return inst.$ownedBy.modules//.map(x => x.Link.$name)          
+                return inst.$ownedBy.modules//.map(x => x.Link.$name)
             else
                 return []
         }

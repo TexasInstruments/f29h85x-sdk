@@ -45,8 +45,6 @@
 //
 //  NMI status
 //
-Interrupt_NmiStatus gNmiStatus;
-
 __attribute__((interrupt("INT")))
 void Interrupt_defaultHandler(void)
 {
@@ -64,7 +62,7 @@ void Interrupt_defaultHandler(void)
 //  ->  Clear CPU1/2/3 ESM status
 //  ->  Clear CPU1/2/3, RTDMA1/2 SSU and Ethercat Error Aggregator status
 //
-void Interrupt_clearEsmEaFlags(void)
+void Interrupt_clearEsmEaFlags(Interrupt_NmiStatus *nmiStatus)
 {
     uint32_t grp;
 
@@ -73,7 +71,7 @@ void Interrupt_clearEsmEaFlags(void)
     //
     for(grp = 0U;grp < ESM_NUM_GROUPS;grp++)
     {
-        gNmiStatus.cpu1EsmSts[grp]  = ESM_getGroupRawIntStatus(ESMCPU1_BASE, grp);
+        nmiStatus->cpu1EsmSts[grp]  = ESM_getGroupRawIntStatus(ESMCPU1_BASE, grp);
     }
 
     //
@@ -82,22 +80,22 @@ void Interrupt_clearEsmEaFlags(void)
     //
     //  CPU
     //
-    ErrorAggregator_getCpuErrorInfo(ERRORAGGREGATOR_BASE, EA_SRC_CPU1, &gNmiStatus.cpu1EaSts);
-    ErrorAggregator_getCpuErrorInfo(ERRORAGGREGATOR_BASE, EA_SRC_CPU2, &gNmiStatus.cpu2EaSts);
-    ErrorAggregator_getCpuErrorInfo(ERRORAGGREGATOR_BASE, EA_SRC_CPU3, &gNmiStatus.cpu3EaSts);
+    ErrorAggregator_getCpuErrorInfo(ERRORAGGREGATOR_BASE, EA_SRC_CPU1, &nmiStatus->cpu1EaSts);
+    ErrorAggregator_getCpuErrorInfo(ERRORAGGREGATOR_BASE, EA_SRC_CPU2, &nmiStatus->cpu2EaSts);
+    ErrorAggregator_getCpuErrorInfo(ERRORAGGREGATOR_BASE, EA_SRC_CPU3, &nmiStatus->cpu3EaSts);
     //
     //  RTDMA
     //
-    ErrorAggregator_getRtdmaErrorInfo(ERRORAGGREGATOR_BASE, EA_SRC_RTDMA1, &gNmiStatus.rtdma1EaSts);
-    ErrorAggregator_getRtdmaErrorInfo(ERRORAGGREGATOR_BASE, EA_SRC_RTDMA2, &gNmiStatus.rtdma2EaSts);
+    ErrorAggregator_getRtdmaErrorInfo(ERRORAGGREGATOR_BASE, EA_SRC_RTDMA1, &nmiStatus->rtdma1EaSts);
+    ErrorAggregator_getRtdmaErrorInfo(ERRORAGGREGATOR_BASE, EA_SRC_RTDMA2, &nmiStatus->rtdma2EaSts);
     //
     //  SSU
     //
-    ErrorAggregator_getSsuErrorInfo(ERRORAGGREGATOR_BASE, &gNmiStatus.ssuEaSts);
+    ErrorAggregator_getSsuErrorInfo(ERRORAGGREGATOR_BASE, &nmiStatus->ssuEaSts);
     //
     //  Ethercat
     //
-    ErrorAggregator_getEthercatErrorInfo(ERRORAGGREGATOR_BASE, &gNmiStatus.ethercatEaSts);
+    ErrorAggregator_getEthercatErrorInfo(ERRORAGGREGATOR_BASE, &nmiStatus->ethercatEaSts);
 
     //
     //  Clear ESM status for all CPUs
@@ -137,10 +135,11 @@ void Interrupt_clearEsmEaFlags(void)
 __attribute__((interrupt("RTINT")))
 void Interrupt_defaultNMIHandler(void)
 {
+    Interrupt_NmiStatus nmiStatus;
     //
     //  Clear ESM and EA error flags
     //
-    Interrupt_clearEsmEaFlags();
+    Interrupt_clearEsmEaFlags(&nmiStatus);
 
     //
     //  Spin forever

@@ -74,11 +74,19 @@
 // Included Files
 //
 #include "board.h"
+#include "inc/hw_types.h"
 
 //
-//  Function declaration
+//  Defines
 //
-void ipcCpu3(void) __attribute__((c29_protected_call));
+#define IPC_CMD_READ_MEM    0x1001
+#define TEST_PASS           0x5555
+#define TEST_FAIL           0xAAAA
+
+//
+//  IPC isr
+//
+__attribute__((interrupt("RTINT"))) void INT_IPC_1_1_ISR();
 
 //
 // Main
@@ -112,9 +120,70 @@ int main(void)
     Interrupt_enableGlobal();
 
     //
-    //  Protected call to IPC function
+    // Clear any IPC flags if set already
     //
-    ipcCpu3();
+    IPC_clearFlagLtoR(IPC_CPU3_L_CPU1_R_CH0, IPC_FLAG_ALL);
+
+    //
+    // Synchronize both the cores.
+    //
+    IPC_sync(IPC_CPU3_L_CPU1_R_CH0, IPC_FLAG31);
+
+    //
+    // Loop forever. Wait for IPC interrupt
+    //
+    while(1);
+}
+
+//
+// IPC ISR for Flag 0.
+// C29x core sends data using Flag 0
+//
+void INT_IPC_1_1_ISR()
+{
+    uint32_t    cnt;
+    uint32_t    command;
+    uint32_t    addr;
+    uint32_t    data;
+    bool        status = false;
+
+    //
+    // Read the command
+    //
+    IPC_readCommand(IPC_CPU3_L_CPU1_R_CH0, IPC_FLAG0, &command, &addr, &data);
+
+    if(command == IPC_CMD_READ_MEM)
+    {
+        status = true;
+
+        //
+        //  Read and compare data
+        //
+        for(cnt = 0U;cnt < data;cnt++)
+        {
+            if(HWREGB(addr + cnt) != cnt)
+            {
+                status = false;
+            }
+        }
+    }
+
+    //
+    // Send response to C29x core
+    //
+    if(status)
+    {
+        IPC_sendResponse(IPC_CPU3_L_CPU1_R_CH0, TEST_PASS);
+    }
+    else
+    {
+        IPC_sendResponse(IPC_CPU3_L_CPU1_R_CH0, TEST_FAIL);
+    }
+
+    //
+    // Acknowledge the flag
+    //
+    IPC_ackFlagRtoL(IPC_CPU3_L_CPU1_R_CH0, IPC_FLAG0);
 }
 
 //

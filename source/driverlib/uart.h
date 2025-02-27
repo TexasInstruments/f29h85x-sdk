@@ -239,6 +239,7 @@ typedef bool UART_SirLPMode;
 //
 //*****************************************************************************
 #ifdef DEBUG
+__attribute__((always_inline))
 static inline bool
 UART_isBaseValid(uint32_t base)
 {
@@ -272,6 +273,7 @@ UART_isBaseValid(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 UART_setParityMode(uint32_t base, uint32_t parity)
 {
@@ -308,6 +310,7 @@ UART_setParityMode(uint32_t base, uint32_t parity)
 //! \b UART_CONFIG_PAR_ONE, or \b UART_CONFIG_PAR_ZERO.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline uint32_t
 UART_getParityMode(uint32_t base)
 {
@@ -342,6 +345,7 @@ UART_getParityMode(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 UART_setFIFOLevel(uint32_t base, uint32_t txLevel,
                      uint32_t rxLevel)
@@ -385,6 +389,7 @@ UART_setFIFOLevel(uint32_t base, uint32_t txLevel,
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 UART_getFIFOLevel(uint32_t base, uint32_t *txLevel,
                      uint32_t *rxLevel)
@@ -419,6 +424,7 @@ UART_getFIFOLevel(uint32_t base, uint32_t *txLevel,
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 UART_enableModule(uint32_t base)
 {
@@ -450,6 +456,7 @@ UART_enableModule(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 UART_enableModuleNonFIFO(uint32_t base)
 {
@@ -477,6 +484,7 @@ UART_enableModuleNonFIFO(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 UART_disableModule(uint32_t base)
 {
@@ -517,6 +525,7 @@ UART_disableModule(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 UART_disableModuleNonFIFO(uint32_t base)
 {
@@ -551,6 +560,7 @@ UART_disableModuleNonFIFO(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 UART_enableFIFO(uint32_t base)
 {
@@ -576,6 +586,7 @@ UART_enableFIFO(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 UART_disableFIFO(uint32_t base)
 {
@@ -603,6 +614,7 @@ UART_disableFIFO(uint32_t base)
 //! if FIFOs are not enabled.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline bool
 UART_isFIFOEnabled(uint32_t base)
 {
@@ -641,6 +653,7 @@ UART_isFIFOEnabled(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 UART_enableSIR(uint32_t base, UART_SirLPMode bLowPower)
 {
@@ -685,6 +698,7 @@ UART_enableSIR(uint32_t base, UART_SirLPMode bLowPower)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 UART_disableSIR(uint32_t base)
 {
@@ -720,6 +734,7 @@ UART_disableSIR(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 UART_setTxIntMode(uint32_t base, uint32_t mode)
 {
@@ -754,6 +769,7 @@ UART_setTxIntMode(uint32_t base, uint32_t mode)
 //! \return Returns \b UART_TXINT_MODE_FIFO or \b UART_TXINT_MODE_EOT.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline uint32_t
 UART_getTxIntMode(uint32_t base)
 {
@@ -781,6 +797,7 @@ UART_getTxIntMode(uint32_t base)
 //! if there is no data in the receive FIFO.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline bool
 UART_isDataAvailable(uint32_t base)
 {
@@ -809,6 +826,7 @@ UART_isDataAvailable(uint32_t base)
 //! or \b false if there is no space available in the transmit FIFO.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline bool
 UART_isSpaceAvailable(uint32_t base)
 {
@@ -839,6 +857,7 @@ UART_isSpaceAvailable(uint32_t base)
 //! before attempting to call this function.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline int32_t
 UART_readCharNonBlocking(uint32_t base)
 {
@@ -883,6 +902,7 @@ UART_readCharNonBlocking(uint32_t base)
 //! \e int32_t.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline int32_t
 UART_readChar(uint32_t base)
 {
@@ -919,6 +939,7 @@ UART_readChar(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 UART_writeChar(uint32_t base, uint8_t data)
 {
@@ -956,6 +977,7 @@ UART_writeChar(uint32_t base, uint8_t data)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 UART_setBreakConfig(uint32_t base, bool breakState)
 {
@@ -987,6 +1009,7 @@ UART_setBreakConfig(uint32_t base, bool breakState)
 //! transmissions are complete.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline bool
 UART_isBusy(uint32_t base)
 {
@@ -1014,6 +1037,7 @@ UART_isBusy(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 UART_clearGlobalInterruptFlag(uint32_t base)
 {
@@ -1039,6 +1063,7 @@ UART_clearGlobalInterruptFlag(uint32_t base)
 //! \return Returns the status of UART global interrupt flag register.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline bool
 UART_getGlobalInterruptFlagStatus(uint32_t base)
 {
@@ -1080,6 +1105,7 @@ UART_getGlobalInterruptFlagStatus(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 UART_enableInterrupt(uint32_t base, uint32_t intFlags)
 {
@@ -1112,6 +1138,7 @@ UART_enableInterrupt(uint32_t base, uint32_t intFlags)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 UART_disableInterrupt(uint32_t base, uint32_t intFlags)
 {
@@ -1143,6 +1170,7 @@ UART_disableInterrupt(uint32_t base, uint32_t intFlags)
 //! values described in UART_enableInterrupt().
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline uint32_t
 UART_getInterruptStatus(uint32_t base, UART_IntType masked)
 {
@@ -1192,6 +1220,7 @@ UART_getInterruptStatus(uint32_t base, UART_IntType masked)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 UART_clearInterruptStatus(uint32_t base, uint32_t intFlags)
 {
@@ -1228,6 +1257,7 @@ UART_clearInterruptStatus(uint32_t base, uint32_t intFlags)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 UART_enableDMA(uint32_t base, uint32_t dmaFlags)
 {
@@ -1260,6 +1290,7 @@ UART_enableDMA(uint32_t base, uint32_t dmaFlags)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 UART_disableDMA(uint32_t base, uint32_t dmaFlags)
 {
@@ -1292,6 +1323,7 @@ UART_disableDMA(uint32_t base, uint32_t dmaFlags)
 //! \b UART_RXERROR_BREAK and \b UART_RXERROR_OVERRUN.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline uint32_t
 UART_getRxError(uint32_t base)
 {
@@ -1320,6 +1352,7 @@ UART_getRxError(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 UART_clearRxError(uint32_t base)
 {
@@ -1346,6 +1379,7 @@ UART_clearRxError(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 UART_enable9Bit(uint32_t base)
 {
@@ -1371,6 +1405,7 @@ UART_enable9Bit(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 UART_disable9Bit(uint32_t base)
 {
@@ -1402,6 +1437,7 @@ UART_disable9Bit(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 UART_set9BitAddress(uint32_t base, uint8_t addr,
                     uint8_t mask)
@@ -1434,6 +1470,7 @@ UART_set9BitAddress(uint32_t base, uint8_t addr,
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 UART_setIrDALPDivisor(uint32_t base, uint32_t uartClk)
 {
@@ -1465,6 +1502,7 @@ UART_setIrDALPDivisor(uint32_t base, uint32_t uartClk)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 UART_enableLoopback(uint32_t base)
 {
@@ -1493,6 +1531,7 @@ UART_enableLoopback(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 UART_disableLoopback(uint32_t base)
 {

@@ -307,6 +307,7 @@ typedef enum
 //
 //*****************************************************************************
 #ifdef DEBUG
+__attribute__((always_inline))
 static inline bool
 ESCSS_isBaseValid(uint32_t base)
 {
@@ -331,6 +332,7 @@ ESCSS_isBaseValid(uint32_t base)
 //
 //*****************************************************************************
 #ifdef DEBUG
+__attribute__((always_inline))
 static inline bool
 ESCSS_isConfigBaseValid(uint32_t base)
 {
@@ -350,6 +352,7 @@ ESCSS_isConfigBaseValid(uint32_t base)
 //! \return Returns the EtherCAT Minor IP Revision Number.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline uint16_t
 ESCSS_readIPMinorRevNumber(uint32_t base)
 {
@@ -378,6 +381,7 @@ ESCSS_readIPMinorRevNumber(uint32_t base)
 //! \return Returns the EtherCAT Major IP Revision Number.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline uint16_t
 ESCSS_readIPMajorRevNumber(uint32_t base)
 {
@@ -406,6 +410,7 @@ ESCSS_readIPMajorRevNumber(uint32_t base)
 //! \return Returns the EtherCAT IP Revision Number.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline uint32_t
 ESCSS_readIPRevNumber(uint32_t base)
 {
@@ -434,6 +439,7 @@ ESCSS_readIPRevNumber(uint32_t base)
 //! \return Returns the Raw Interrupt Status Value.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline uint16_t
 ESCSS_getRawInterruptStatus(uint32_t base, uint16_t interruptMask)
 {
@@ -467,6 +473,7 @@ ESCSS_getRawInterruptStatus(uint32_t base, uint16_t interruptMask)
 //! \return Returns the Raw Interrupt Status Value.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline uint32_t
 ESCSS_readRawInterruptStatus(uint32_t base)
 {
@@ -510,6 +517,7 @@ ESCSS_readRawInterruptStatus(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 ESCSS_setMaskedInterruptStatus(uint32_t base, uint16_t interruptMask)
 {
@@ -554,6 +562,7 @@ ESCSS_setMaskedInterruptStatus(uint32_t base, uint16_t interruptMask)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 ESCSS_resetMaskedInterruptStatus(uint32_t base, uint16_t interruptMask)
 {
@@ -588,6 +597,7 @@ ESCSS_resetMaskedInterruptStatus(uint32_t base, uint16_t interruptMask)
 //! \return Returns the Masked Interrupt Status Value.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline uint16_t
 ESCSS_getMaskedInterruptStatus(uint32_t base, uint16_t interruptMask)
 {
@@ -623,6 +633,7 @@ ESCSS_getMaskedInterruptStatus(uint32_t base, uint16_t interruptMask)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 ESCSS_clearRawInterruptStatus(uint32_t base, uint16_t interruptMask)
 {
@@ -652,6 +663,7 @@ ESCSS_clearRawInterruptStatus(uint32_t base, uint16_t interruptMask)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 ESCSS_selectLatch0Mux(uint32_t base, ESCSS_LatchTrigger muxSelectValue)
 {
@@ -683,6 +695,7 @@ ESCSS_selectLatch0Mux(uint32_t base, ESCSS_LatchTrigger muxSelectValue)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 ESCSS_selectLatch1Mux(uint32_t base, ESCSS_LatchTrigger muxSelectValue)
 {
@@ -712,6 +725,7 @@ ESCSS_selectLatch1Mux(uint32_t base, ESCSS_LatchTrigger muxSelectValue)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 ESCSS_configure16BitAsyncAccessWaitState(uint32_t base, uint16_t waitState)
 {
@@ -741,6 +755,7 @@ ESCSS_configure16BitAsyncAccessWaitState(uint32_t base, uint16_t waitState)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 ESCSS_enablePDIAccessTimeOut(uint32_t base)
 {
@@ -767,6 +782,7 @@ ESCSS_enablePDIAccessTimeOut(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 ESCSS_disablePDIAccessTimeOut(uint32_t base)
 {
@@ -793,6 +809,7 @@ ESCSS_disablePDIAccessTimeOut(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 ESCSS_enableDebugAccess(uint32_t base)
 {
@@ -820,6 +837,7 @@ ESCSS_enableDebugAccess(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 ESCSS_disableDebugAccess(uint32_t base)
 {
@@ -848,6 +866,7 @@ ESCSS_disableDebugAccess(uint32_t base)
 //! \return Returns the GPIN Data Value.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline uint32_t
 ESCSS_readGPINData(uint32_t base)
 {
@@ -879,6 +898,7 @@ ESCSS_readGPINData(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 ESCSS_setGPINData(uint32_t base, uint32_t pinValue)
 {
@@ -910,6 +930,7 @@ ESCSS_setGPINData(uint32_t base, uint32_t pinValue)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 ESCSS_resetGPINData(uint32_t base, uint32_t pinValue)
 {
@@ -943,6 +964,7 @@ ESCSS_resetGPINData(uint32_t base, uint32_t pinValue)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 ESCSS_enableGPIPipelinedRegCaptureOnEvent(uint32_t base, uint32_t pipelineMask)
 {
@@ -976,6 +998,7 @@ ESCSS_enableGPIPipelinedRegCaptureOnEvent(uint32_t base, uint32_t pipelineMask)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 ESCSS_disableGPIPipelinedRegCaptureOnEvent(uint32_t base,
                                            uint32_t pipelineMask)
@@ -1004,6 +1027,7 @@ ESCSS_disableGPIPipelinedRegCaptureOnEvent(uint32_t base,
 //! \return Returns the GPOUT Data Value.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline uint32_t
 ESCSS_readGPOUTData(uint32_t base)
 {
@@ -1037,6 +1061,7 @@ ESCSS_readGPOUTData(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 ESCSS_enableGPOUTPipelinedRegCaptureOnEvent(uint32_t base,
                                             uint32_t pipelineMask)
@@ -1071,6 +1096,7 @@ ESCSS_enableGPOUTPipelinedRegCaptureOnEvent(uint32_t base,
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 ESCSS_disableGPOUTPipelinedRegCaptureOnEvent(uint32_t base,
                                              uint32_t pipelineMask)
@@ -1097,6 +1123,7 @@ ESCSS_disableGPOUTPipelinedRegCaptureOnEvent(uint32_t base,
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 ESCSS_initMemory(uint32_t base)
 {
@@ -1124,6 +1151,7 @@ ESCSS_initMemory(uint32_t base)
 //!
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline bool
 ESCSS_getMemoryInitDoneStatusNonBlocking(uint32_t base)
 {
@@ -1162,6 +1190,7 @@ ESCSS_getMemoryInitDoneStatusNonBlocking(uint32_t base)
 //!
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline uint32_t
 ESCSS_getMemoryInitDoneStatusBlocking(uint32_t base, uint32_t loopCount)
 {
@@ -1211,6 +1240,7 @@ ESCSS_getMemoryInitDoneStatusBlocking(uint32_t base, uint32_t loopCount)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline bool
 ESCSS_isConfigurationLockEnabled(uint32_t base)
 {
@@ -1260,6 +1290,7 @@ ESCSS_isConfigurationLockEnabled(uint32_t base)
 //! \b ESCSS_API_FAIL if access to the Register Fails.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline uint16_t
 ESCSS_enableLEDOptions(uint32_t base, uint16_t ledSelectConfig)
 {
@@ -1316,6 +1347,7 @@ ESCSS_enableLEDOptions(uint32_t base, uint16_t ledSelectConfig)
 //! \b ESCSS_API_FAIL if access to the Register Fails.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline uint16_t
 ESCSS_disableLEDOptions(uint32_t base, uint16_t ledSelectConfig)
 {
@@ -1369,6 +1401,7 @@ ESCSS_disableLEDOptions(uint32_t base, uint16_t ledSelectConfig)
 //! \b ESCSS_API_FAIL if access to the Register Fails.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline uint16_t
 ESCSS_enableGPIN(uint32_t base, uint32_t selectValue)
 {
@@ -1416,6 +1449,7 @@ ESCSS_enableGPIN(uint32_t base, uint32_t selectValue)
 //! \b ESCSS_API_FAIL if access to the Register Fails.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline uint16_t
 ESCSS_disableGPIN(uint32_t base, uint32_t selectValue)
 {
@@ -1463,6 +1497,7 @@ ESCSS_disableGPIN(uint32_t base, uint32_t selectValue)
 //! \b ESCSS_API_FAIL if access to the Register Fails.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline uint16_t
 ESCSS_enableGPOUT(uint32_t base, uint32_t selectValue)
 {
@@ -1510,6 +1545,7 @@ ESCSS_enableGPOUT(uint32_t base, uint32_t selectValue)
 //! \b ESCSS_API_FAIL if access to the Register Fails.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline uint16_t
 ESCSS_disableGPOUT(uint32_t base, uint32_t selectValue)
 {
@@ -1555,6 +1591,7 @@ ESCSS_disableGPOUT(uint32_t base, uint32_t selectValue)
 //! \b ESCSS_API_FAIL if access to the Register Fails.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline uint16_t
 ESCSS_configureTX0ShiftForTxEnaAndTxData(uint32_t base, uint32_t shiftValue)
 {
@@ -1604,6 +1641,7 @@ ESCSS_configureTX0ShiftForTxEnaAndTxData(uint32_t base, uint32_t shiftValue)
 //! \b ESCSS_API_FAIL if access to the Register Fails.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline uint16_t
 ESCSS_configureTX1ShiftForTxEnaAndTxData(uint32_t base, uint32_t shiftValue)
 {
@@ -1649,6 +1687,7 @@ ESCSS_configureTX1ShiftForTxEnaAndTxData(uint32_t base, uint32_t shiftValue)
 //! \b ESCSS_API_FAIL if access to the Register Fails.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline uint16_t
 ESCSS_enablePDIEmulation(uint32_t base)
 {
@@ -1691,6 +1730,7 @@ ESCSS_enablePDIEmulation(uint32_t base)
 //! \b ESCSS_API_FAIL if access to the Register Fails.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline uint16_t
 ESCSS_disablePDIEmulation(uint32_t base)
 {
@@ -1733,6 +1773,7 @@ ESCSS_disablePDIEmulation(uint32_t base)
 //! \b ESCSS_API_FAIL if access to the Register Fails.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline uint16_t
 ESCSS_configurePhyAddressOffset(uint32_t base, uint16_t registerOffset)
 {

@@ -88,6 +88,7 @@ uint32_t M0RAM_data = 0x12;
 uint32_t Globalerroreventnumber;
 
 bool CPU3nmigen = false;
+Interrupt_NmiStatus nmiStatus;
 //
 // Main
 //
@@ -97,7 +98,7 @@ int main(void)
     // Initialize peripheral clocks and interrupts
     //
     Device_init();
-    
+
     //
     // Initialize SysConfig Settings
     //
@@ -114,7 +115,7 @@ int main(void)
     //
     IPC_sync(IPC_CPU3_L_CPU1_R_CH0, IPC_FLAG31);
 
-   
+
     // Write to M0 RAM Base address - 0x2000_0000
     // Since CPU3 does not have write access to M0 RAM hence write generates a Security violation fault to CPU3 which needs to be handled using ESM
     HWREG(0x20000000) = M0RAM_data;
@@ -136,8 +137,8 @@ void myNMI_CPU3_ISR(void)
     //Find out the highest priority outstanding high priority interrupt that triggered the NMI
     Globalerroreventnumber = ESM_getHighestLowPriorityInterrupt(ESMSYSTEM_BASE);
 
-    Interrupt_clearEsmEaFlags();
-    
+    Interrupt_clearEsmEaFlags(&nmiStatus);
+
     //After errors are cleared, write End of Interrupt vector and exit the ISR
     ESM_writeEOIVector(ESMCPU3_BASE, ESM_EOI_HIGH_PRIORITY_ERROR_INTERRUPT);
 }

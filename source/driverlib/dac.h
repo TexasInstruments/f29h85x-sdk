@@ -113,6 +113,7 @@ typedef enum
 //
 //*****************************************************************************
 #ifdef DEBUG
+__attribute__((always_inline))
 static inline bool
 DAC_isBaseValid(uint32_t base)
 {
@@ -134,6 +135,7 @@ return (
 //! \return Returns the DAC revision value.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline uint16_t
 DAC_getRevision(uint32_t base)
 {
@@ -164,6 +166,7 @@ DAC_getRevision(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 DAC_setReferenceVoltage(uint32_t base, DAC_ReferenceVoltage source)
 {
@@ -175,9 +178,9 @@ DAC_setReferenceVoltage(uint32_t base, DAC_ReferenceVoltage source)
     //
     // Set the reference voltage
     //
-      
+
     HWREGH(base + DAC_O_CTL) = (HWREGH(base + DAC_O_CTL) &
-                                ~DAC_CTL_DACREFSEL) | (uint16_t)source;    
+                                ~DAC_CTL_DACREFSEL) | (uint16_t)source;
 }
 
 //*****************************************************************************
@@ -199,6 +202,7 @@ DAC_setReferenceVoltage(uint32_t base, DAC_ReferenceVoltage source)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 DAC_setGainMode(uint32_t base, DAC_GainMode mode)
 {
@@ -210,7 +214,7 @@ DAC_setGainMode(uint32_t base, DAC_GainMode mode)
     //
     // Set the gain mode
     //
-    
+
     HWREGH(base + DAC_O_CTL) = (HWREGH(base + DAC_O_CTL) &
                                 ~DAC_CTL_MODE) | (uint16_t)mode;
 }
@@ -231,6 +235,7 @@ DAC_setGainMode(uint32_t base, DAC_GainMode mode)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 DAC_setLoadMode(uint32_t base, DAC_LoadMode mode)
 {
@@ -242,9 +247,9 @@ DAC_setLoadMode(uint32_t base, DAC_LoadMode mode)
     //
     // Set the load mode
     //
-    
+
     HWREGH(base + DAC_O_CTL) = (HWREGH(base + DAC_O_CTL) &
-                                ~DAC_CTL_LOADMODE) | (uint16_t)mode;  
+                                ~DAC_CTL_LOADMODE) | (uint16_t)mode;
 }
 
 //*****************************************************************************
@@ -263,6 +268,7 @@ DAC_setLoadMode(uint32_t base, DAC_LoadMode mode)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 DAC_setPWMSyncSignal(uint32_t base, uint16_t pwmSignal)
 {
@@ -279,7 +285,7 @@ DAC_setPWMSyncSignal(uint32_t base, uint16_t pwmSignal)
     HWREGH(base + DAC_O_CTL) = (HWREGH(base + DAC_O_CTL) &
                                 ~DAC_CTL_SYNCSEL_M) |
                                ((uint16_t)(pwmSignal - 1U) <<
-                                DAC_CTL_SYNCSEL_S); 
+                                DAC_CTL_SYNCSEL_S);
 }
 
 //*****************************************************************************
@@ -293,6 +299,7 @@ DAC_setPWMSyncSignal(uint32_t base, uint16_t pwmSignal)
 //! \return Returns the DAC active output value.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline uint16_t
 DAC_getActiveValue(uint32_t base)
 {
@@ -319,6 +326,7 @@ DAC_getActiveValue(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 DAC_setShadowValue(uint32_t base, uint16_t value)
 {
@@ -347,6 +355,7 @@ DAC_setShadowValue(uint32_t base, uint16_t value)
 //! \return Returns the DAC shadow output value.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline uint16_t
 DAC_getShadowValue(uint32_t base)
 {
@@ -375,6 +384,7 @@ DAC_getShadowValue(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 DAC_enableOutput(uint32_t base)
 {
@@ -401,6 +411,7 @@ DAC_enableOutput(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 DAC_disableOutput(uint32_t base)
 {
@@ -412,7 +423,7 @@ DAC_disableOutput(uint32_t base)
     //
     // Disable the output
     //
-    
+
     HWREGH(base + DAC_O_OUTEN) &= ~DAC_OUTEN_DACOUTEN;
 }
 
@@ -433,6 +444,7 @@ DAC_disableOutput(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 DAC_setOffsetTrim(uint32_t base, int16_t offset)
 {
@@ -445,9 +457,9 @@ DAC_setOffsetTrim(uint32_t base, int16_t offset)
     //
     // Set the offset trim value
     //
-    
+
     HWREGH(base + DAC_O_TRIM) = (HWREGH(base + DAC_O_TRIM) &
-                                 ~DAC_TRIM_OFFSET_TRIM_M) | (int16_t)offset;    
+                                 ~DAC_TRIM_OFFSET_TRIM_M) | (int16_t)offset;
 }
 
 //*****************************************************************************
@@ -461,6 +473,7 @@ DAC_setOffsetTrim(uint32_t base, int16_t offset)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline int16_t
 DAC_getOffsetTrim(uint32_t base)
 {
@@ -500,6 +513,7 @@ DAC_getOffsetTrim(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 DAC_lockRegister(uint32_t base, uint16_t reg)
 {
@@ -513,7 +527,7 @@ DAC_lockRegister(uint32_t base, uint16_t reg)
     //
     // Lock the specified registers
     //
-    
+
     HWREGH(base + DAC_O_LOCK) |= (DAC_LOCK_KEY | reg);
 }
 
@@ -537,6 +551,7 @@ DAC_lockRegister(uint32_t base, uint16_t reg)
 //! \b false if all specified registers aren't locked.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline bool
 DAC_isRegisterLocked(uint32_t base, uint16_t reg)
 {

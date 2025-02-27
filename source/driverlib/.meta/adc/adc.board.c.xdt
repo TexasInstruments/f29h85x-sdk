@@ -4,10 +4,8 @@
 % var nameOfPeripheral = module.peripheralName;
 % var device_driverlib_peripheral = system.getScript("/driverlib/device_driverlib_peripherals/" + Common.getDeviceName().toLowerCase() + "_adc.js");
 %%{
-if((Common.isContextCPU1())){
-	var staticModule = system.modules['/driverlib/asysctl.js']
-	var stat = staticModule.$static
-}
+var staticModule = system.modules['/driverlib/asysctl.js']
+var stat = staticModule.$static
 var varDelay = 500
 var refMode = ""
 var refVoltage = ""
@@ -34,7 +32,20 @@ void `nameOfPeripheral`_init(){
 %     var baseName = instance.$name + "_BASE";
 %     let instancePinmux = instance[nameOfModule];
 void `instance.$name`_init(){
- 	// delay depends on analog reference
+% 	// delay depends on analog reference
+% 			if(stat.analogReference == "EXTERNAL"){
+% 				refMode = "ADC_REFERENCE_EXTERNAL"
+% 			}
+% 			else{
+% 				refMode = "ADC_REFERENCE_INTERNAL"
+% 			}
+% 			if(stat.analogReferenceVoltage == "2P5"){
+% 				refVoltage = "ADC_REFERENCE_2_5V"
+% 			}
+% 			else{
+% 				refVoltage = "ADC_REFERENCE_3_3V"
+% 			}
+% 		
 	//
 	// ADC Initialization: Write ADC configurations and power up the ADC
 	//
@@ -76,14 +87,12 @@ void `instance.$name`_init(){
 	//
 	// delay depends on analog reference
 	//
-	    if(Common.isContextCPU1()){
-			if(stat.analogReferenceAB == "EXTERNAL" || stat.analogReferenceCDE == "EXTERNAL"){
+			if(stat.analogReference == "EXTERNAL"){
 			varDelay = 500
 			}
 		else{
 			varDelay = 5000
 			}
-		}
 %%}
 	//
 	// Delay for 1ms to allow ADC time to power up
@@ -412,3 +421,4 @@ void `instance.$name`_init(){
 		% }
 }
 % }
+

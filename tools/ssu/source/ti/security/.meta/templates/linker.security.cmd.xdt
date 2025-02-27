@@ -18,14 +18,14 @@
 // ----------------------------------------------------------------------------
 // This linker command file is auto-generated. Do not edit directly.
 // ----------------------------------------------------------------------------
-% if(sysSec && ((sysSec.ssumode != 1) || (Common.isContextCPU3() == true))){
+% if(sysSec && ((sysSec.ssumode != 1) || (Common.isContextCPU3() == true) || (Common.isContextCPU2() == true))){
 % if (sysSec && sysSec.ssumode == 3 && sysSec.inter_security_context_behavior == 'autofix') {
 --auto_resolve_protected_calls
 % }
 
 --entry_point="code_start"
 --stack_size=`Stack2Size`
-% if(Common.isContextCPU3())
+% if((Common.isContextCPU2() == true) || (Common.isContextCPU3() == true))
 % {
 --retain="reset_vector"
 --retain="nmi_vector"
@@ -34,14 +34,6 @@
 MEMORY
 {
 `Common.getMemoryList(system.context)`
-%if(cpu2 != null) {
-%   cpu2instance = cpu2.$static;
-%   let cpu2FlashRegion = Common.getFlashRegion("CPU2")
-    // CPU2 load memory
-
-    CPU2_FLASH_REGION               : origin = 0x`Common.toHex(cpu2FlashRegion.origin, 8)`, length = 0x`Common.toHex(cpu2FlashRegion.length, 8)`
-
-%}
 %if(cpu3 != null) {
 %   cpu3instance = cpu3.$static;
 %   let cpu3FlashRegion = Common.getFlashRegion("CPU3")

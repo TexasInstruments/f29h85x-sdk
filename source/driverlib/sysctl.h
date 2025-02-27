@@ -790,22 +790,14 @@ typedef enum
 {
     SYSCTL_EMULATE_F29H850TU9,
     SYSCTL_EMULATE_F29H859TU8,
-    SYSCTL_EMULATE_F29H850TM9,
-    SYSCTL_EMULATE_F29H850TM8,
-    SYSCTL_EMULATE_F29H850TU8,
     SYSCTL_EMULATE_F29H859TM8,
-    SYSCTL_EMULATE_F29H850DM6,
     SYSCTL_EMULATE_F29H850DM7,
-    SYSCTL_EMULATE_F29H850DU6,
     SYSCTL_EMULATE_F29H850DU7,
     SYSCTL_EMULATE_F29H859DM6,
     SYSCTL_EMULATE_F29H859DU6,
     SYSCTL_EMULATE_F29P580DM5,
-    SYSCTL_EMULATE_F29P580DU5,
     SYSCTL_EMULATE_F29P589DM5,
     SYSCTL_EMULATE_F29P589DU5,
-    SYSCTL_EMULATE_F29P589DJ3,
-    SYSCTL_EMULATE_F29P580DJ4,
 
 }SysCtl_DevicePartNumber;
 
@@ -1054,6 +1046,7 @@ typedef enum
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 SysCtl_enablePeripheral(SysCtl_PeripheralPCLOCKCR peripheral)
 {
@@ -1085,6 +1078,7 @@ SysCtl_enablePeripheral(SysCtl_PeripheralPCLOCKCR peripheral)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 SysCtl_disablePeripheral(SysCtl_PeripheralPCLOCKCR peripheral)
 {
@@ -1117,6 +1111,7 @@ SysCtl_disablePeripheral(SysCtl_PeripheralPCLOCKCR peripheral)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 SysCtl_resetPeripheral(SysCtl_PeripheralSOFTPRES peripheral)
 {
@@ -1159,6 +1154,7 @@ SysCtl_resetPeripheral(SysCtl_PeripheralSOFTPRES peripheral)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.SysCtl_selectCPUForPeripheral")))
+__attribute__((always_inline))
 static inline void
 SysCtl_selectCPUForPeripheral(SysCtl_PeripheralConfig peripheral,
                               SysCtl_CPUSel cpuInst)
@@ -1193,6 +1189,7 @@ SysCtl_selectCPUForPeripheral(SysCtl_PeripheralConfig peripheral,
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.SysCtl_selectFrameForPeripheral")))
+__attribute__((always_inline))
 static inline void
 SysCtl_selectFrameForPeripheral(SysCtl_PeripheralConfig peripheral,
                                 SysCtl_FrameSel frameSel)
@@ -1220,6 +1217,7 @@ SysCtl_selectFrameForPeripheral(SysCtl_PeripheralConfig peripheral,
 //! - \b SYSCTL_FRAMESEL_3 - peripheral connected to Frame 3
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline SysCtl_FrameSel
 SysCtl_getPeripheralFrame(SysCtl_PeripheralConfig peripheral)
 {
@@ -1248,6 +1246,7 @@ SysCtl_getPeripheralFrame(SysCtl_PeripheralConfig peripheral)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.SysCtl_enableStandbyForPeripheral")))
+__attribute__((always_inline))
 static inline void
 SysCtl_enableStandbyForPeripheral(SysCtl_PeripheralConfig peripheral)
 {
@@ -1284,6 +1283,7 @@ SysCtl_enableStandbyForPeripheral(SysCtl_PeripheralConfig peripheral)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.SysCtl_disableStandbyForPeripheral")))
+__attribute__((always_inline))
 static inline void
 SysCtl_disableStandbyForPeripheral(SysCtl_PeripheralConfig peripheral)
 {
@@ -1320,6 +1320,7 @@ SysCtl_disableStandbyForPeripheral(SysCtl_PeripheralConfig peripheral)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.SysCtl_enableDebugHaltForPeripheral")))
+__attribute__((always_inline))
 static inline void
 SysCtl_enableDebugHaltForPeripheral(SysCtl_PeripheralConfig peripheral)
 {
@@ -1356,6 +1357,7 @@ SysCtl_enableDebugHaltForPeripheral(SysCtl_PeripheralConfig peripheral)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.SysCtl_disableDebugHaltForPeripheral")))
+__attribute__((always_inline))
 static inline void
 SysCtl_disableDebugHaltForPeripheral(SysCtl_PeripheralConfig peripheral)
 {
@@ -1396,6 +1398,7 @@ SysCtl_disableDebugHaltForPeripheral(SysCtl_PeripheralConfig peripheral)
 //! \return Returns the reason(s) for a reset.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline uint32_t
 SysCtl_getResetCause(void)
 {
@@ -1445,6 +1448,7 @@ SysCtl_getResetCause(void)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 SysCtl_clearResetCause(uint32_t rstCauses)
 {
@@ -1463,6 +1467,7 @@ SysCtl_clearResetCause(uint32_t rstCauses)
 //! \note This API exists only on CPU1
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 SysCtl_simulateReset(void)
 {
@@ -1491,6 +1496,7 @@ SysCtl_simulateReset(void)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.SysCtl_enableESMResetCauses")))
+__attribute__((always_inline))
 static inline void
 SysCtl_enableESMResetCauses(uint32_t rstCauses)
 {
@@ -1513,6 +1519,7 @@ SysCtl_enableESMResetCauses(uint32_t rstCauses)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.SysCtl_disableESMResetCauses")))
+__attribute__((always_inline))
 static inline void
 SysCtl_disableESMResetCauses(uint32_t rstCauses)
 {
@@ -1529,6 +1536,7 @@ SysCtl_disableESMResetCauses(uint32_t rstCauses)
 //! is out of reset
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline bool
 SysCtl_isCPU2Reset(void)
 {
@@ -1547,6 +1555,7 @@ SysCtl_isCPU2Reset(void)
 //!          - SYSCTL_CPU_STANDBY
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline SysCtl_LPMStatus
 SysCtl_getCPU2LPMStatus(void)
 {
@@ -1564,6 +1573,7 @@ SysCtl_getCPU2LPMStatus(void)
 //! is out of reset
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline bool
 SysCtl_isCPU3Reset(void)
 {
@@ -1582,6 +1592,7 @@ SysCtl_isCPU3Reset(void)
 //!          - SYSCTL_CPU_STANDBY
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline SysCtl_LPMStatus
 SysCtl_getCPU3LPMStatus(void)
 {
@@ -1600,6 +1611,7 @@ SysCtl_getCPU3LPMStatus(void)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 SysCtl_enterIdleMode(void)
 {
@@ -1631,6 +1643,7 @@ SysCtl_enterIdleMode(void)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 SysCtl_enterStandbyMode(void)
 {
@@ -1655,6 +1668,7 @@ SysCtl_enterStandbyMode(void)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 SysCtl_enableLPMWakeupPin(SysCtl_LPMWakeupPin pin)
 {
@@ -1684,6 +1698,7 @@ SysCtl_enableLPMWakeupPin(SysCtl_LPMWakeupPin pin)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 SysCtl_disableLPMWakeupPin(SysCtl_LPMWakeupPin pin)
 {
@@ -1715,6 +1730,7 @@ SysCtl_disableLPMWakeupPin(SysCtl_LPMWakeupPin pin)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 SysCtl_setStandbyQualificationPeriod(uint16_t cycles)
 {
@@ -1740,6 +1756,7 @@ SysCtl_setStandbyQualificationPeriod(uint16_t cycles)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.SysCtl_disableLockStep")))
+__attribute__((always_inline))
 static inline void
 SysCtl_disableLockStep(void)
 {
@@ -1756,6 +1773,7 @@ SysCtl_disableLockStep(void)
 //! \return Returns CPU ID : 1 for CPU1, 2 for CPU2, 3 for CPU3.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline uint8_t
 SysCtl_getCPUID(void)
 {
@@ -1773,6 +1791,7 @@ SysCtl_getCPUID(void)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.SysCtl_enableSafetyInterconnect")))
+__attribute__((always_inline))
 static inline void
 SysCtl_enableSafetyInterconnect(uint16_t timeout)
 {
@@ -1788,6 +1807,7 @@ SysCtl_enableSafetyInterconnect(uint16_t timeout)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.SysCtl_disableSafetyInterconnect")))
+__attribute__((always_inline))
 static inline void
 SysCtl_disableSafetyInterconnect(void)
 {
@@ -1808,6 +1828,7 @@ SysCtl_disableSafetyInterconnect(void)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.SysCtl_setSyncOutputConfig")))
+__attribute__((always_inline))
 static inline void
 SysCtl_setSyncOutputConfig(SysCtl_SyncOutputSource syncSrc)
 {
@@ -1834,6 +1855,7 @@ SysCtl_setSyncOutputConfig(SysCtl_SyncOutputSource syncSrc)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.SysCtl_enableEPWMXLINK")))
+__attribute__((always_inline))
 static inline void
 SysCtl_enableEPWMXLINK(uint32_t epwmInstances)
 {
@@ -1853,6 +1875,7 @@ SysCtl_enableEPWMXLINK(uint32_t epwmInstances)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.SysCtl_disableEPWMXLINK")))
+__attribute__((always_inline))
 static inline void
 SysCtl_disableEPWMXLINK(uint32_t epwmInstances)
 {
@@ -1874,6 +1897,7 @@ SysCtl_disableEPWMXLINK(uint32_t epwmInstances)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.SysCtl_enableExtADCSOCSource")))
+__attribute__((always_inline))
 static inline void
 SysCtl_enableExtADCSOCSource(uint64_t adcsocSrc)
 {
@@ -1899,6 +1923,7 @@ SysCtl_enableExtADCSOCSource(uint64_t adcsocSrc)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.SysCtl_disableExtADCSOCSource")))
+__attribute__((always_inline))
 static inline void
 SysCtl_disableExtADCSOCSource(uint64_t adcsocSrc)
 {
@@ -1920,6 +1945,7 @@ SysCtl_disableExtADCSOCSource(uint64_t adcsocSrc)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.SysCtl_enableEthercatI2Cloopback")))
+__attribute__((always_inline))
 static inline void
 SysCtl_enableEthercatI2Cloopback(void)
 {
@@ -1938,6 +1964,7 @@ SysCtl_enableEthercatI2Cloopback(void)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.SysCtl_disableEthercatI2Cloopback")))
+__attribute__((always_inline))
 static inline void
 SysCtl_disableEthercatI2Cloopback(void)
 {
@@ -1961,6 +1988,7 @@ SysCtl_disableEthercatI2Cloopback(void)
 //!  \b false if the MCAN wakeup event has not occured.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline bool
 SysCtl_isMCANWakeStatusSet(SysCtl_MCANInstance mcanInst)
 {
@@ -1986,6 +2014,7 @@ SysCtl_isMCANWakeStatusSet(SysCtl_MCANInstance mcanInst)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 SysCtl_clearMCANWakeStatus(SysCtl_MCANInstance mcanInst)
 {
@@ -2009,6 +2038,7 @@ SysCtl_clearMCANWakeStatus(SysCtl_MCANInstance mcanInst)
 //! \return None.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline void
 SysCtl_setUserRegister(SysCtl_UserRegister reg, uint32_t value)
 {
@@ -2031,6 +2061,7 @@ SysCtl_setUserRegister(SysCtl_UserRegister reg, uint32_t value)
 //! \return value of the specified register.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline uint32_t
 SysCtl_getUserRegister(SysCtl_UserRegister reg)
 {
@@ -2055,6 +2086,7 @@ SysCtl_getUserRegister(SysCtl_UserRegister reg)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.SysCtl_lockRegister")))
+__attribute__((always_inline))
 static inline void
 SysCtl_lockRegister(SysCtl_LockRegister reg)
 {
@@ -2072,6 +2104,7 @@ SysCtl_lockRegister(SysCtl_LockRegister reg)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.SysCtl_lockAllPeriphConfigRegisters")))
+__attribute__((always_inline))
 static inline void
 SysCtl_lockAllPeriphConfigRegisters(void)
 {
@@ -2091,6 +2124,7 @@ SysCtl_lockAllPeriphConfigRegisters(void)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.SysCtl_lockAllMCUCNFRegisters")))
+__attribute__((always_inline))
 static inline void
 SysCtl_lockAllMCUCNFRegisters(void)
 {
@@ -2108,6 +2142,7 @@ SysCtl_lockAllMCUCNFRegisters(void)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.SysCtl_lockAllClockConfigRegisters")))
+__attribute__((always_inline))
 static inline void
 SysCtl_lockAllClockConfigRegisters(void)
 {
@@ -2122,6 +2157,7 @@ SysCtl_lockAllClockConfigRegisters(void)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.SysCtl_lockAllPeriphClockRegisters")))
+__attribute__((always_inline))
 static inline void
 SysCtl_lockAllPeriphClockRegisters(void)
 {
@@ -2139,6 +2175,7 @@ SysCtl_lockAllPeriphClockRegisters(void)
 //! \return Returns the silicon revision ID value.
 //
 //*****************************************************************************
+__attribute__((always_inline))
 static inline uint32_t
 SysCtl_getDeviceRevision(void)
 {

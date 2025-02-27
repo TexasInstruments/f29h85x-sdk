@@ -37,7 +37,7 @@ let config = [
         name           : 'secGroupAttr',
         displayName    : "Unprotected calls to common code",
         hidden         : true,
-        default        : "NONE",
+        default        : "PUBLIC",
         options        : [
             {name : "NONE",           displayName : "Generate Linker error"},
             {name : "PUBLIC",         displayName : "Add linker trampolines and landing pads (Secure)"},
@@ -99,7 +99,7 @@ let config = [
             {
                 name          : "link2CodeSection",
                 displayName   : "Default code sections included in Link2",
-                default       : "libc.a<boot.c.obj>(.text), libc.a<autoinit.c.obj>(.text), *(.text.link2)" + ((Cmn.isContextCPU1()) ? "" : ", codestart"),
+                default       : "libc.a<boot.c.obj>(.text), libc.a<autoinit.c.obj>(.text), libc.a<cpy_tbl.c.obj>(.text), libc.a<memcpy.S.obj>(.text), *(.text.link2)" + ((Cmn.isContextCPU1()) ? "" : ", codestart"),
                 multiline     : true,
                 hidden        : true,
                 readOnly      : true
@@ -107,7 +107,7 @@ let config = [
             {
                 name          : "link2DefaultAllSections",
                 displayName   : "Default sections included in Link2",
-                default       : "libc.a<copy_zero_init.c.obj>,libc.a<pre_init.c.obj>,libc.a<exit.c.obj>,libc.a<startup.c.obj>",
+                default       : "libc.a<copy_zero_init.c.obj>,libc.a<pre_init.c.obj>,libc.a<exit.c.obj>,libc.a<startup.c.obj>,device.o,board.o,ssu_config.o",
                 multiline     : true,
                 hidden        : true,
                 readOnly      : true
@@ -116,7 +116,7 @@ let config = [
                 name            : "textInRAM",
                 displayName     : "Place the .text section in RAM",
                 longDescription : "If enabled, all the .text sections from selected files/libraries will be run from RAM. If disabled, only functions marked as ramfunc will be run from RAM",
-                default         : false,
+                default         : Cmn.isContextCPU2() ? true : false,
                 onChange        : (inst, ui) => {
                     ui.codesizeFlash.hidden = inst.textInRAM
                 }
@@ -125,7 +125,7 @@ let config = [
                 name            : "roInRAM",
                 displayName     : "Place RO section in RAM",
                 longDescription : "If enabled, all the RO sections will be placed in RAM. If disabled, they will be placed in Flash",
-                default         : false,
+                default         : Cmn.isContextCPU2() ? true : false,
                 onChange        : (inst, ui) => {
                     ui.combine_ro_rw.hidden = !inst.roInRAM
                     if(!inst.roInRAM)
@@ -280,7 +280,7 @@ function validate(inst, vo)
     })
 
     let bankmode = Common.getBankModeConfig();
-    
+
     if(inst.codesizeFlash > 0){
         if(Cmn.isContextCPU2()){
             vo.logError("Current core doesn't have flash access" , inst, 'codesizeFlash');
@@ -299,9 +299,9 @@ function validate(inst, vo)
         }
     }
 
-    //!! Check if LINK1 has correct peripheral boot APRs 
+    //!! Check if LINK1 has correct peripheral boot APRs
     if(inst.isLink1){
-        
+
     }
 }
 
@@ -353,6 +353,7 @@ function moduleInstances(inst)
                     type            : "Code",
                     memType         : "RAM",
                     memSize         : inst.codesizeRAM,
+                    specialAprStatus: inst.isLink2 ? "link2_ram_code" : "none"
                 }
             }
         )
@@ -386,7 +387,7 @@ function moduleInstances(inst)
                 group : "group_moduleAPRs",
                 requiredArgs:{
                     $name           : inst.$name + "_dataAPR_RO",
-                    type            : "Data",
+                    type            : "Code",
                     memType         : inst.roInRAM ? "RAM"  : "Flash",
                     memSize         : inst.rodatasize,
                 }
@@ -432,7 +433,7 @@ function moduleInstances(inst)
 }
 
 exports = {
-    displayName  : 'Link',  
+    displayName  : 'Link',
     defaultInstanceName : "AppModule",
     config,
     validate,
