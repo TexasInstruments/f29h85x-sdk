@@ -1,22 +1,23 @@
 //#############################################################################
 //
-// FILE:  ssuIpc_ex1_basic_cpu1_cpu3_multi_c29x1.c
+// FILE:  ssuIpc_ex1_basic_cpu1_cpu3_multi_starter_c29x1.c
 //
-// TITLE: SysConfig IPC example with interrupt
+// TITLE: Starter SysConfig IPC example with interrupt
 //
 //! \addtogroup driver_dual_example_list
-//! <h1> IPC basic message passing example with interrupt with SSU </h1>
+//! <h1> Simple IPC messaging between two CPUs (with interrupts) configured with minimum SSU settings </h1>
 //!
 //! This example demonstrates how to configure IPC and pass information from
-//! C29x1 to C29x3 core without using message queues.
+//! C29x1 to C29x3 core without using message queues and configure the SSU. This example
+//! should be used to get started with the SSU as it uses the minimum APR/LINK/STACK configuration.
 //!
 //! Follow these steps to use CCS to debug this multi-core example. After 
 //! launching the debug session:
 //!     1. Connect to CPU1.
 //!     2. Using the Flash Plug-In, 
 //!         - In 'User Config Settings', Program FLASH BANKMODE to BANKMODE 2, if not already done.
-//!         - In 'Download Settings', Unselect ‘Verify Flash after Program (SSU Mode 1 Usage Only)’, if not already done.
-//!         - In 'Download Settings', Unselect ‘Perform Blank Check before loading data to Flash memory (SSU Mode 1 Usage Only)’, if not already done.
+//!         - In 'Download Settings', Unselect â€˜Verify Flash after Program (SSU Mode 1 Usage Only)â€™, if not already done.
+//!         - In 'Download Settings', Unselect â€˜Perform Blank Check before loading data to Flash memory (SSU Mode 1 Usage Only)â€™, if not already done.
 //!         - In 'NonMain Erase Settings', Select 'Allow NonMain Flash erase before loading data to Flash memory' (click checkbox), if not already done. 
 //!          Refer to Flash Plug-In documentation for further instructions.
 //!     4. Load only the CPU1.out.
@@ -30,6 +31,12 @@
 //! documentation to know about changing FLASH BANKMODEs and more.
 //! Additionally, the CPAx and CDAx RAMs are used for allocating various
 //! RAM sections.
+//!
+//!  CPU1 SSU Configurations:
+//!  APRs   - ipc_shared, APR_RESERVED_sign_CPU1 (CERT), APR_FlashLoad_CPU1, LINK2_codeAPR_Flash, 
+//!           LINK2_codeAPR_RAM, LINK2_dataAPR_RW, LINK2_dataAPR_RO, STACK1_stackmem_apr, STACK2_stackmem_apr
+//!  LINKs  - LINK1, LINK2
+//!  STACKs - STACK1, STACK2
 //!
 //! Refer to linker.cmd files and Memory Allocation tool (View > Memory Allocation) for more insight on memory usage.
 //!

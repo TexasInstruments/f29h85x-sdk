@@ -1,0 +1,98 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --device "F29H85x" --package "256ZEX" --part "F29H85x_256ZEX" --context "CPU1" --product "MCU_SDK_F29H85x@1.00.00.00"
+ * @v2CliArgs --device "F29H850TU" --package "256ZEX" --variant "TMS320F29H850TU9" --context "CPU1" --product "MCU_SDK_F29H85x@1.00.00.00"
+ * @versions {"tool":"1.22.0+3877"}
+ */
+
+const divider15       = system.clockTree["PLL_REFDIV"];
+divider15.divideValue = 1;
+
+const multiplier1         = system.clockTree["PLL_IMULT"];
+multiplier1.multiplyValue = 40;
+
+const mux7       = system.clockTree["OSCCLKSRCSEL"];
+mux7.inputSelect = "INTOSC2";
+
+/**
+ * Import the modules used in this configuration.
+ */
+const esm_cpu         = scripting.addModule("/driverlib/esm_cpu.js");
+const esm_cpu1        = esm_cpu.addInstance();
+const sysctl          = scripting.addModule("/driverlib/sysctl.js");
+const APR             = scripting.addModule("/ti/security/APR");
+const APR1            = APR.addInstance();
+const System_Security = scripting.addModule("/ti/security/System_Security");
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+
+esm_cpu.registerNMI = true;
+esm_cpu.NMIHandler  = "Interrupt_defaultNMIHandler";
+
+esm_cpu1.eventSource = "ESM_EVENT_ErrorAggregator_SSU_HPERR";
+esm_cpu1.enableNMI   = true;
+esm_cpu1.$name       = "ssuHpErr";
+
+sysctl.ESM_CPU1CRITICAL = false;
+
+APR.bankMode = 2;
+
+APR1.$name = "ipc_shared";
+APR1.type  = "Data";
+APR1.share = ["CPU3"];
+
+System_Security.cpuList                       = ["CPU3"];
+System_Security.EMU_BOOTEN                    = true;
+System_Security.ssumode                       = 2;
+System_Security.addCommonCodeModule           = false;
+System_Security.LINK2.fileNames               = "ssuIpc_ex1_basic_cpu1_cpu3_multi_starter_c29x1";
+System_Security.LINK2.periphs_rw              = ["CPU_SYS_REGS","DCC1_REGS","ERR_AGG_REGS","ESM_CPU1_REGS","ESM_CPU2_REGS","ESM_CPU3_REGS","ESM_SAFETY_AGG_REGS","ESM_SYS_REGS","IPC_CPU1_RECV_REGS_CPU3_CH0_CH1","IPC_CPU1_SEND_REGS_CPU3_CH0_CH1","PER_CFG_REGS_WD_REGS"];
+System_Security.LINK2.libs                    = "libc.a, libclang_rt.builtins.a, driverlib.lib";
+System_Security.LINK2.codesizeFlash           = 56;
+System_Security.LINK2.codesizeRAM             = 8;
+System_Security.LINK2.rwdatasize              = 8;
+System_Security.LINK2.rodatasize              = 8;
+System_Security.LINK2.codeAPR_Flash.type      = scripting.forceWrite("Code");
+System_Security.LINK2.codeAPR_RAM.type        = scripting.forceWrite("Code");
+System_Security.LINK2.codeAPR_RAM.memType     = scripting.forceWrite("RAM");
+System_Security.LINK2.dataAPR_RW.memType      = scripting.forceWrite("RAM");
+System_Security.LINK2.dataAPR_RO.type         = scripting.forceWrite("Code");
+System_Security.LINK2.Link.isLink1            = scripting.forceWrite(false);
+System_Security.LINK2.Link.readwriteAPRs      = ["ipc_shared"];
+System_Security.LINK1.Link.isLink2            = scripting.forceWrite(false);
+System_Security.STACK1.stackMem.type          = scripting.forceWrite("RAM");
+System_Security.STACK1.stackMem.datasize      = scripting.forceWrite(4);
+System_Security.STACK1.stack.size             = scripting.forceWrite(256);
+System_Security.STACK1.stack.zone             = scripting.forceWrite("ZONE1");
+System_Security.STACK1.stack.secGroupAttr     = scripting.forceWrite("NONE");
+System_Security.STACK1.stack.stackAPR.memType = scripting.forceWrite("RAM");
+System_Security.STACK2.stackAPRsize           = 8;
+System_Security.STACK2.stacksize              = 512;
+System_Security.STACK2.stackMem.type          = scripting.forceWrite("RAM");
+System_Security.STACK2.stack.zone             = scripting.forceWrite("ZONE1");
+System_Security.STACK2.stack.secGroupAttr     = scripting.forceWrite("NONE");
+System_Security.STACK2.stack.stackAPR.memType = scripting.forceWrite("RAM");
+
+/**
+ * References between modules
+ */
+System_Security.ZONE2_UPDATE_LINK         = null;
+System_Security.ZONE3_UPDATE_LINK         = null;
+System_Security.dltLinks                  = [];
+System_Security.SECCFG_UPDATE_LINK        = System_Security.LINK1.Link;
+System_Security.ZONE1_UPDATE_LINK         = System_Security.LINK1.Link;
+System_Security.LINK2.interrupts          = [];
+System_Security.LINK2.Link.interrupts     = [];
+System_Security.LINK2.Link.interruptsAPI  = [];
+System_Security.LINK1.interrupts          = [];
+System_Security.LINK1.Link.interrupts     = [];
+System_Security.LINK1.Link.interruptsAPI  = [];
+System_Security.STACK1.stackMem.module_ro = [];
+System_Security.STACK1.stackMem.module_rw = [];
+System_Security.STACK1.stack.links        = [];
+System_Security.STACK2.stackMem.module_ro = [];
+System_Security.STACK2.stackMem.module_rw = [];
+System_Security.STACK2.stack.links        = [];
