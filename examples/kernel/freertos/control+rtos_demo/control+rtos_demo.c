@@ -128,7 +128,7 @@ void EradSetup()
     buscomp1_params.enable_stack_qual = 0; 
     buscomp1_params.enable_spsel_match = 0;
     buscomp1_params.reference = (uint32_t)&semaphore_timer_counter;
-    ERAD_configBusComp(ERAD_BUSCOMP7, buscomp1_params);
+    ERAD_configBusComp(ERAD_BUSCOMP7, &buscomp1_params);
 
     //
     // Configure the second bus comparator
@@ -144,7 +144,7 @@ void EradSetup()
     buscomp2_params.enable_stack_qual = 0; 
     buscomp2_params.enable_spsel_match = 0;
     buscomp2_params.reference = (uint32_t)&epwm1Interrupt;
-    ERAD_configBusComp(ERAD_BUSCOMP6, buscomp2_params);
+    ERAD_configBusComp(ERAD_BUSCOMP6, &buscomp2_params);
 
     //
     // Configure the first counter
@@ -162,7 +162,7 @@ void EradSetup()
     counter1_params.event = ERAD_EVENT_NO_EVENT;
     ERAD_Counter_Input_Event start1 = ERAD_EVENT_CPU1_TIMER0_INT;
     ERAD_Counter_Input_Event stop1 = (ERAD_Counter_Input_Event)ERAD_BUSCOMP7;
-    ERAD_configCounterInStartStopMode(ERAD_COUNTER1, counter1_params, start1, stop1);
+    ERAD_configCounterInStartStopMode(ERAD_COUNTER1, &counter1_params, start1, stop1);
 
     //
     // Configure the second counter
@@ -180,7 +180,7 @@ void EradSetup()
     counter2_params.event = ERAD_EVENT_NO_EVENT;
     ERAD_Counter_Input_Event start2 = ERAD_EVENT_PIPE_RTINT;
     ERAD_Counter_Input_Event stop2 = (ERAD_Counter_Input_Event) ERAD_BUSCOMP6;
-    ERAD_configCounterInStartStopMode(ERAD_COUNTER2, counter2_params, start2, stop2);
+    ERAD_configCounterInStartStopMode(ERAD_COUNTER2, &counter2_params, start2, stop2);
 
     //
     // Enable the modules

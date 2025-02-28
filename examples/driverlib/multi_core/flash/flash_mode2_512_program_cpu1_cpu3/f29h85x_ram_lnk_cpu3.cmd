@@ -9,7 +9,7 @@ MEMORY
     /*
      *  RAM
      */
-    SRAM_CPA0  : origin = 0x20110000, length = 0x008000
+    SRAM_CPA0  : origin = 0x20110000, length = 0x010000
     SRAM_CDAX  : origin = 0x20120000, length = 0x008000
 }
 

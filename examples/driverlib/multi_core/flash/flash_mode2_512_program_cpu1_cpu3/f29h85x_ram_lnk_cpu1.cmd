@@ -12,7 +12,7 @@ MEMORY
     /*
      *  CPU3 load and run memories
      */
-    CPU3_CPAX   : origin = 0x20110000, length = 0x008000
+    CPU3_CPAX   : origin = 0x20110000, length = 0x010000
 }
 
 
