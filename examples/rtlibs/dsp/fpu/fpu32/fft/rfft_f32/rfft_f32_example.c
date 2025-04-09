@@ -116,13 +116,20 @@ int32_t main(void)
     // After this function, test_output contains the complex FFT input data
     CFFT_f32_unpack(hnd_cfft);
 
+#if USE_C
+    // Asm does bit reversing in Stg1_2
     printf("Bitreversing input...\n");
     // Bit reverse the inputs - the function bit reverses the input array and returns it in the same array
     // test_output contains the data to be bit reversed, hence it is provided as the 1st argument
     // After this function, both test_input and test_output contain the bit reversed data 
     CFFT_f32_bitrev((complex_T *)(test_output), (complex_T *)(test_input), FFT_SIZE);
-    // Run the calculation function
 
+#else
+    CFFT_f32_setInputPtr(hnd_cfft, test_output);
+    CFFT_f32_setOutputPtr(hnd_cfft, test_input);
+#endif
+
+    // Run the calculation function
     printf("Computing RFFT...\n");
     CPUTimer_startTimer(CPUTIMER0_BASE);
     startCounter = CPUTimer_getTimerCount(CPUTIMER0_BASE);

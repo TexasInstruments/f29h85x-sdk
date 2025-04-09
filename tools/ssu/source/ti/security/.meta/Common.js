@@ -692,7 +692,10 @@ function sectionListManual(section, aprList, sysSecPresent = true)
         ret += inputSections
     }
 
-    ret += "    }     " + where(apr) + "\n"
+    if(!section.sectionRunFromDifferentAddr)
+        ret += "    }     " + where(apr) + "\n"
+    else
+        ret += "    }"
 
     ret += symbolsFormat(section)
 
@@ -1097,24 +1100,43 @@ function getSectionsList(sysSec, cpu)
         let reqdAPR = APRList.find(o => {return o.name == "LINK2_codeAPR_Flash"}) //!! tag
         if(reqdAPR)
             sections += `    codestart : > 0x${reqdAPR.startAddr.toString(16)}, palign(8)  \n`
+        
         let certSection = `    cert      : {} > CERT, palign(8) \n`
         sections += certSection
     }
     else{
+        let section_resetvector = ""
+        let section_nmivector = ""
+        let section_codestart = ""
+
         let reqdAPR = APRList.find(o => {return o.name == "LINK2_codeAPR_Flash"}) //!! tag
         if(reqdAPR){
-            sections += `    resetvector  : > 0x${reqdAPR.startAddr.toString(16)}, palign(8)  \n`
-            sections += `    nmivector    : > 0x${(reqdAPR.startAddr + 0x40).toString(16)}, palign(8)  \n`
-            sections += `    codestart    : > ${reqdAPR.name.toUpperCase()}, palign(8)  \n`
+            section_resetvector = `    resetvector  : > 0x${reqdAPR.startAddr.toString(16)}, palign(8)  \n`
+            section_nmivector   = `    nmivector    : > 0x${(reqdAPR.startAddr + 0x40).toString(16)}, palign(8)  \n`
+            section_codestart   = `    codestart    : > ${reqdAPR.name.toUpperCase()}, palign(8)  \n`
         }
         else{
             reqdAPR = APRList.find(o => {return o.name == "LINK2_codeAPR_RAM"}) //!! tag
             if(reqdAPR){
-                sections += `    resetvector  : > 0x${reqdAPR.startAddr.toString(16)}  \n`
-                sections += `    nmivector    : > 0x${(reqdAPR.startAddr + 0x40).toString(16)}, palign(8)  \n`
-                sections += `    codestart    : > ${reqdAPR.name.toUpperCase()}  \n`
+                section_resetvector = `    resetvector  : > 0x${reqdAPR.startAddr.toString(16)}  \n`
+                section_nmivector   = `    nmivector    : > 0x${(reqdAPR.startAddr + 0x40).toString(16)}, palign(8)  \n`
+                section_codestart   = `    codestart    : > ${reqdAPR.name.toUpperCase()}  \n`
             }
         }
+
+        let resetVectorAddr = getConfigFromStaticModule("/ti/security/APR", "resetVectorAddress", system.context)
+        let nmiVectorAddr = getConfigFromStaticModule("/ti/security/APR", "nmiVectorAddress", system.context)
+
+        if(resetVectorAddr.available && resetVectorAddr.value > 0x0){
+            section_resetvector = `    resetvector   : > 0x${resetVectorAddr.value.toString(16)} \n`
+        }
+        if(nmiVectorAddr.available && nmiVectorAddr.value > 0x0){
+            section_nmivector   = `    nmivector    : > 0x${nmiVectorAddr.value.toString(16)} \n`
+        }
+
+        sections += section_resetvector
+        sections += section_nmivector
+        sections += section_codestart
     }
 
     if(sysSec.APR_FlashLoad) {
@@ -1173,7 +1195,7 @@ function getSectionsList(sysSec, cpu)
 
     sections += "\n\n"
 
-    // Get section  corresponding to Easy Mode Link
+    // Get sections corresponding to Easy Mode Link
     let commonCodeSections = ""
     modInstances('/ti/security/EasyMode_link').forEach(x => {
         if(x.isCommonCode)
@@ -1183,7 +1205,7 @@ function getSectionsList(sysSec, cpu)
     })
     sections += commonCodeSections                                  //!! Always placing common code sections at the end
 
-    // Get section  corresponding to Easy Mode SharedMem
+    // Get sections corresponding to Easy Mode SharedMem
     modInstances('/ti/security/EasyMode_sharedMem').forEach(x => {
         sections += sectionListSharedMem(x, APRList, cpu)
     })
@@ -1200,6 +1222,19 @@ function getSectionsMinimal(cpu){
     let sections = ""
     let APRList = allocateAllMemoryRegions()[cpu].filter(apr=> apr.type != "Peripheral")
     let sectionsList = modInstancesByCPU('/ti/security/OutputSection', cpu)
+
+    if(!isContextCPU1()){
+        let resetVectorAddr = getConfigFromStaticModule("/ti/security/APR", "resetVectorAddress", system.context)
+        let nmiVectorAddr = getConfigFromStaticModule("/ti/security/APR", "nmiVectorAddress", system.context)
+
+        if(resetVectorAddr.available && resetVectorAddr.value > 0x0){
+            sections += `    resetvector : > 0x${resetVectorAddr.value.toString(16)} \n`
+        }
+
+        if(nmiVectorAddr.available && nmiVectorAddr.value > 0x0){
+            sections += `    nmivector   : > 0x${nmiVectorAddr.value.toString(16)} \n`
+        }
+    }
 
     let firstCode = APRList.filter(apr => {return apr.type == "Code"})
                             .sort((a,b) => {return a.startAddr - b.startAddr})[0]   //!! check what to put
@@ -1256,15 +1291,28 @@ function getMemoryList(cpu)
     })
 
     list += "\n    // FLASH MEMORY\n\n"
-    /* if(!isContextCPU1()){
-        let flashLoadApr = aprsAll[system.context].find(o => {return o.name == ("APR_FlashLoad_"+system.context)})
-        if(flashLoadApr){
-            let size = flashLoadApr.endAddr - flashLoadApr.startAddr
-            let spaces = ' '.repeat(maxLen - flashLoadApr.name.length)
-            list += "    " + memName(flashLoadApr) + spaces + " : origin = 0x" + toHex(flashLoadApr.startAddr, 8) + ", length = 0x" + toHex(size, 8) + "\n"
-        }
-    } */
-    APRList.filter(apr => {return apr.memType == "Flash"})
+
+    let flashMemoryList = APRList.filter(apr => {return apr.memType == "Flash"})
+
+    // Create CERT memory for non-SSU allocation
+    let checkSysSec = modStaticByCPU("/ti/security/System_Security", CONTEXT_CPU1)
+    if(cpu == CONTEXT_CPU1 && !checkSysSec && flashMemoryList.length){
+        flashMemoryList.unshift(
+            {
+                "name": "CERT",
+                "ramMem": ["flc1set1_SECT_1"],
+                "startAddr": 0x10000000,
+                "endAddr": 0x10001000,
+                "size": 4096,
+                "memRegion": null,
+                "type": "Data",
+                "memType": "Flash",
+                "implicitRegion": true
+            }
+        )
+    }
+
+    flashMemoryList
     .forEach(item => {
         //if(item.name.includes("APR_FlashLoad_") && item.name != "APR_FlashLoad_CPU1") return;
         let size = item.endAddr - item.startAddr
@@ -1680,8 +1728,13 @@ function placeRamMemory(availableMemoryAll, memRegion, cpu, finalAllocations, is
 
             if(isShared){
                 memRegion.share.forEach(core => {
+                    // Other core context is not opened
+                    if(!finalAllocations[core])
+                        return;
+                    
                     let flag = checkRamRegionOverlap(finalAllocations[core], result.allottedRamUnits[0].start, result.allottedRamUnits[result.num_reqd - 1].end)
                     if(flag){
+                        // NO OVERLAP
                         // create region on other core implicitly
                         finalAllocations[core].push({
                             name: memRegion.$name + "_SHARED_" + cpu.toUpperCase(),
@@ -1880,6 +1933,10 @@ function allocateFlashMemoriesUtil()
     }
 
     let flx = constructFlashRegions()
+    let checkSysSec = modStaticByCPU("/ti/security/System_Security", CONTEXT_CPU1)
+    if(!checkSysSec){
+        flx = flx.slice(1)  // Remove 1st 4kb block in case of non-ssu allocation
+    }
     let available_flash = flx
 
     for(let i=0; i<available_flash.length; i++){

@@ -1,4 +1,11 @@
-//#############################################################################
+//###########################################################################
+//
+// FILE:    F29H85x_EEPROM_Example.c
+//
+// TITLE:   EEPROM main file
+//! <h1> EEPROM main file </h1>
+//
+//###########################################################################
 //
 //
 // //
@@ -131,6 +138,11 @@ int main(void)
     }
 #endif
 
+    //
+    // Release semaphore
+    //
+    while (!SSU_releaseFlashSemaphore());
+    
     Example_Done();
 
     return 0;
@@ -169,15 +181,21 @@ void Configure_Device() {
     //
     // Request semaphore for CPU1
     //
-    HWREG(SSUGEN_BASE + SSU_O_FLSEMREQ ) =  1;
-    while ((HWREG( SSUGEN_BASE + SSU_O_FLSEMSTAT) & SSU_FLSEMSTAT_CPU_M)!= (0x1<<SSU_FLSEMSTAT_CPU_S));
+    while (!SSU_claimFlashSemaphore());
 
     //
     // Set configuration as per user request
     //
     u32UserFlashConfig = Fapi_getUserConfiguration(BankType, FOTAStatus);
-
-    Fapi_SetFlashCPUConfiguration(u32UserFlashConfig);
+    oReturnCheck = Fapi_SetFlashCPUConfiguration(Mode0);
+    
+    if(oReturnCheck != Fapi_Status_Success)
+    {
+        //
+        // Check Flash API documentation for possible errors
+        //
+        Sample_Error();
+    }
 
     //
     // Initialize the Flash API by providing the Flash register base address

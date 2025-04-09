@@ -57,7 +57,9 @@ var supported_peripheralName_moduleFile = [
     { moduleCategory: CATEGORY_COMS,     peripheralName : "FSITX",          moduleFile : "/driverlib/fsitx.js"},
     { moduleCategory: CATEGORY_COMS,     peripheralName : "FSIRX",          moduleFile : "/driverlib/fsirx.js"},
     { moduleCategory: CATEGORY_COMS,     peripheralName : "SENT",           moduleFile : "/driverlib/sent.js"},
-    { moduleCategory: CATEGORY_COMS,     peripheralName : "PMBUS",           moduleFile : "/driverlib/pmbus.js"},
+    { moduleCategory: CATEGORY_COMS,     peripheralName : "PMBUS",          moduleFile : "/driverlib/pmbus.js"},
+    { moduleCategory: CATEGORY_COMS ,    peripheralName : "ECAT",           moduleFile : "/driverlib/ecat.js"},
+    { moduleCategory: CATEGORY_SYSTEM ,  peripheralName : "EMIF1",          moduleFile : "/driverlib/emif1.js"},    
 ];
 
 
@@ -121,6 +123,10 @@ if (Common.onlyPinmux())
 var cpu2_unavailable_peripherals = {
     "F29H85x" : [
         { peripheralName: "AIO", moduleFile : "/driverlib/aio.js"},
+        { peripheralName: "ANALOG", moduleFile : "/driverlib/analog.js"},
+        { peripheralName: "ASYSCTL", moduleFile : "/driverlib/asysctl.js" },
+        { peripheralName: "CLOCKTREE", moduleFile : "/driverlib/clocktree.js"},
+        { peripheralName: "SYNC", moduleFile : "/driverlib/sync.js" },
         { peripheralName: "GPIO", moduleFile : "/driverlib/gpio.js"},
         { peripheralName: "INPUTXBAR INPUT", moduleFile : "/driverlib/inputxbar_input.js"},
         { peripheralName: "OUTPUTXBAR", moduleFile : "/driverlib/outputxbar.js" },
@@ -129,12 +135,17 @@ var cpu2_unavailable_peripherals = {
         { peripheralName: "ICLXBAR", moduleFile : "/driverlib/iclxbar.js"},
         { peripheralName: "MINDBXBAR", moduleFile : "/driverlib/mindbxbar.js"},
         { peripheralName: "XBARFLAGS", moduleFile : "/driverlib/xbar_flags.js"},
+        { peripheralName: "FLASH", moduleFile : "/driverlib/flash.js"},
     ],
 }
 
 var cpu3_unavailable_peripherals = {
     "F29H85x" : [
         { peripheralName: "AIO", moduleFile : "/driverlib/aio.js"},
+        { peripheralName: "ANALOG", moduleFile : "/driverlib/analog.js"},
+        { peripheralName: "ASYSCTL", moduleFile : "/driverlib/asysctl.js" },
+        { peripheralName: "CLOCKTREE", moduleFile : "/driverlib/clocktree.js"},
+        { peripheralName: "SYNC", moduleFile : "/driverlib/sync.js" },
         { peripheralName: "GPIO", moduleFile : "/driverlib/gpio.js"},
         { peripheralName: "INPUTXBAR INPUT", moduleFile : "/driverlib/inputxbar_input.js"},
         { peripheralName: "OUTPUTXBAR", moduleFile : "/driverlib/outputxbar.js" },
@@ -143,6 +154,7 @@ var cpu3_unavailable_peripherals = {
         { peripheralName: "ICLXBAR", moduleFile : "/driverlib/iclxbar.js"},
         { peripheralName: "MINDBXBAR", moduleFile : "/driverlib/mindbxbar.js"},
         { peripheralName: "XBARFLAGS", moduleFile : "/driverlib/xbar_flags.js"},
+        { peripheralName: "FLASH", moduleFile : "/driverlib/flash.js"},
     ],
 }
 

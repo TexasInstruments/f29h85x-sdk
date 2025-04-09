@@ -1,0 +1,236 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --device "F29H85x" --package "256ZEX" --part "F29H85x_256ZEX" --context "CPU1" --product "MCU_SDK_F29H85x@1.00.00.00"
+ * @v2CliArgs --device "F29H850TU" --package "256ZEX" --variant "TMS320F29H850TU9" --context "CPU1" --product "MCU_SDK_F29H85x@1.00.00.00"
+ * @versions {"tool":"1.22.0+3877"}
+ */
+
+const divider15       = system.clockTree["PLL_REFDIV"];
+divider15.divideValue = 1;
+
+const multiplier1         = system.clockTree["PLL_IMULT"];
+multiplier1.multiplyValue = 40;
+
+const mux7       = system.clockTree["OSCCLKSRCSEL"];
+mux7.inputSelect = "INTOSC2";
+
+/**
+ * Import the modules used in this configuration.
+ */
+const cputimer        = scripting.addModule("/driverlib/cputimer.js", {}, false);
+const cputimer1       = cputimer.addInstance();
+const esm_cpu         = scripting.addModule("/driverlib/esm_cpu.js");
+const esm_cpu1        = esm_cpu.addInstance();
+const interrupt       = scripting.addModule("/driverlib/interrupt.js");
+const interrupt1      = interrupt.addInstance();
+const interrupt2      = interrupt.addInstance();
+const spi             = scripting.addModule("/driverlib/spi.js", {}, false);
+const spi1            = spi.addInstance();
+const sysctl          = scripting.addModule("/driverlib/sysctl.js");
+const uart            = scripting.addModule("/driverlib/uart.js", {}, false);
+const uart1           = uart.addInstance();
+const FREERTOS        = scripting.addModule("/kernel/freertos_tool/FREERTOS", {}, false);
+const FREERTOS1       = FREERTOS.addInstance();
+const System_Security = scripting.addModule("/ti/security/System_Security");
+
+cputimer1.$name                      = "myCPUTIMER0";
+cputimer1.timerPeriod                = 100000000;
+cputimer1.startTimer                 = true;
+cputimer1.enableInterrupt            = true;
+cputimer1.registerInterrupts         = true;
+cputimer1.periphClock.$name          = "driverlib_perClock1";
+cputimer1.timerInt.interruptHandler  = "WRAP_myCPUTIMER0_ISR";
+cputimer1.timerInt.interruptPriority = 240;
+
+esm_cpu.NMIHandler  = "Interrupt_defaultNMIHandler";
+esm_cpu.registerNMI = true;
+
+esm_cpu1.eventSource = "ESM_EVENT_ErrorAggregator_SSU_HPERR";
+esm_cpu1.enableNMI   = true;
+esm_cpu1.$name       = "ssuHpErr";
+
+interrupt.RTINT_Threshold = 50;
+
+interrupt1.interruptPriority = 230;
+interrupt1.driverlibIntList  = "INT_SW11";
+interrupt1.interruptHandler  = "WRAP_INT_SW11_ISR";
+interrupt1.$name             = "med_prio_swint";
+
+interrupt2.interruptPriority = 220;
+interrupt2.driverlibIntList  = "INT_SW12";
+interrupt2.interruptHandler  = "WRAP_INT_SW12_ISR";
+interrupt2.$name             = "high_prio_swint";
+
+spi1.$name                      = "mySPI0";
+spi1.mode                       = "SPI_MODE_CONTROLLER";
+spi1.loopback                   = true;
+spi1.registerInterrupts         = true;
+spi1.enabledFIFOInterrupts      = ["SPI_INT_RXFF"];
+spi1.txFifo                     = "SPI_FIFO_TX8";
+spi1.registerSpiTxInt           = false;
+spi1.rxFifo                     = "SPI_FIFO_RX5";
+spi1.spi.$assign                = "SPIA";
+spi1.picoQual.$name             = "myGPIOQUAL0";
+spi1.pociQual.$name             = "myGPIOQUAL1";
+spi1.clkQual.$name              = "myGPIOQUAL2";
+spi1.pteQual.$name              = "myGPIOQUAL3";
+spi1.periphClock.$name          = "driverlib_perClock2";
+spi1.periphConfig.$name         = "driverlib_perConfig0";
+spi1.spiRXInt.interruptPriority = 250;
+spi1.spiRXInt.interruptHandler  = "WRAP_mySPI0_RX_ISR";
+
+sysctl.ESM_CPU1CRITICAL = false;
+
+uart1.$name                   = "myUART0";
+uart1.baudSelect              = "115200";
+uart1.uart.$assign            = "UARTA";
+uart1.uart.uart_txPin.$assign = "GPIO42";
+uart1.uart.uart_rxPin.$assign = "GPIO43";
+uart1.txQual.$name            = "myGPIOQUAL4";
+uart1.rxQual.$name            = "myGPIOQUAL5";
+uart1.periphClock.$name       = "driverlib_perClock3";
+uart1.periphConfig.$name      = "driverlib_perConfig1";
+
+FREERTOS1.$name                                        = "myFREERTOS0";
+FREERTOS1.START_SCHEDULER                              = false;
+FREERTOS1.MINIMAL_STACK_SIZE                           = 256;
+FREERTOS1.tasks.create(3);
+FREERTOS1.tasks[0].taskPriority                        = 3;
+FREERTOS1.tasks[0].$name                               = "myTask1";
+FREERTOS1.tasks[0].taskPointer                         = "task_ctrl";
+FREERTOS1.tasks[0].taskStackSize                       = 256;
+FREERTOS1.tasks[1].$name                               = "myTask2";
+FREERTOS1.tasks[1].taskPriority                        = 3;
+FREERTOS1.tasks[1].taskPointer                         = "task_comms";
+FREERTOS1.tasks[1].taskStackSize                       = 256;
+FREERTOS1.tasks[2].$name                               = "myTaskSecure";
+FREERTOS1.tasks[2].taskPointer                         = "Task_Secure";
+FREERTOS1.tasks[2].taskPriority                        = 4;
+FREERTOS1.tasks[2].taskStackSize                       = 256;
+FREERTOS1.tickTimer.periphClock.pinmuxPeripheralModule = scripting.forceWrite("");
+FREERTOS1.tickTimer.periphClock.$name                  = "driverlib_perClock0";
+
+System_Security.EMU_BOOTEN                                      = true;
+System_Security.ssumode                                         = 2;
+System_Security.module.create(2);
+System_Security.module[0].useCustomSections                     = true;
+System_Security.module[0].customRWSection                       = ".bss.myTask2StackBuffer, .bss.myTask2TCBBuffer, .bsem_comms";
+System_Security.module[0].codesizeRAM                           = 0;
+System_Security.module[0].rodatasize                            = 0;
+System_Security.module[0].fileNames                             = "appMdl_comms";
+System_Security.module[0].$name                                 = "comms_Module";
+System_Security.module[0].periphs_rw                            = ["SPIA_REGS","UARTA_REGS"];
+System_Security.module[0].codeAPR_Flash.specialAprStatus        = scripting.forceWrite("none");
+System_Security.module[0].codeAPR_Flash.type                    = scripting.forceWrite("Code");
+System_Security.module[0].codeAPR_Flash.memSize                 = scripting.forceWrite(4);
+System_Security.module[0].dataAPR_RW.memType                    = scripting.forceWrite("RAM");
+System_Security.module[0].dataAPR_RW.memSize                    = scripting.forceWrite(4);
+System_Security.module[0].Link.isLink1                          = scripting.forceWrite(false);
+System_Security.module[0].Link.isLink2                          = scripting.forceWrite(false);
+System_Security.module[1].useCustomSections                     = true;
+System_Security.module[1].customRWSection                       = ".bss.myTask1StackBuffer, .bss.myTask1TCBBuffer";
+System_Security.module[1].periphs_rw                            = ["CPUTIMER0_REGS"];
+System_Security.module[1].codesizeRAM                           = 0;
+System_Security.module[1].rodatasize                            = 0;
+System_Security.module[1].fileNames                             = "appMdl_control";
+System_Security.module[1].$name                                 = "control_Module";
+System_Security.module[1].codeAPR_Flash.specialAprStatus        = scripting.forceWrite("none");
+System_Security.module[1].codeAPR_Flash.type                    = scripting.forceWrite("Code");
+System_Security.module[1].codeAPR_Flash.memSize                 = scripting.forceWrite(4);
+System_Security.module[1].dataAPR_RW.memType                    = scripting.forceWrite("RAM");
+System_Security.module[1].dataAPR_RW.memSize                    = scripting.forceWrite(4);
+System_Security.module[1].Link.isLink1                          = scripting.forceWrite(false);
+System_Security.module[1].Link.isLink2                          = scripting.forceWrite(false);
+System_Security.LINK2.codesizeFlash                             = 28;
+System_Security.LINK2.fileNames                                 = "freertos_ssu_demo, appMdl_secure, portasm, port, c2000_freertos, tasks, list, commonIsr_secure, queue, helperFunctions_secure";
+System_Security.LINK2.useCustomSections                         = true;
+System_Security.LINK2.customRWSection                           = ".bsem_secure";
+System_Security.LINK2.periphs_rw                                = ["CPUTIMER0_REGS","CPUTIMER1_REGS","CPUTIMER2_REGS","CPU_SYS_REGS","DCC1_REGS","ERR_AGG_REGS","ESM_CPU1_REGS","ESM_CPU2_REGS","ESM_CPU3_REGS","ESM_SAFETY_AGG_REGS","ESM_SYS_REGS","PER_CFG_REGS_WD_REGS","SPIA_REGS"];
+System_Security.LINK2.codeAPR_Flash.type                        = scripting.forceWrite("Code");
+System_Security.LINK2.codeAPR_RAM.type                          = scripting.forceWrite("Code");
+System_Security.LINK2.codeAPR_RAM.memType                       = scripting.forceWrite("RAM");
+System_Security.LINK2.codeAPR_RAM.memSize                       = scripting.forceWrite(4);
+System_Security.LINK2.dataAPR_RW.memType                        = scripting.forceWrite("RAM");
+System_Security.LINK2.dataAPR_RW.memSize                        = scripting.forceWrite(4);
+System_Security.LINK2.dataAPR_RO.type                           = scripting.forceWrite("Code");
+System_Security.LINK2.dataAPR_RO.memSize                        = scripting.forceWrite(4);
+System_Security.LINK2.Link.isLink1                              = scripting.forceWrite(false);
+System_Security.LINK2.Link.codeAPRs                             = [{}];
+System_Security.LINK2.Link.readwriteAPRs                        = ["comms_Module_dataAPR_RW","control_Module_dataAPR_RW"];
+System_Security.CommonCodeModule.libs                           = "libc.a, libclang_rt.builtins.a, driverlib.lib";
+System_Security.CommonCodeModule.codesizeFlash                  = 12;
+System_Security.CommonCodeModule.codeAPR_Flash.specialAprStatus = scripting.forceWrite("none");
+System_Security.CommonCodeModule.codeAPR_Flash.type             = scripting.forceWrite("Code");
+System_Security.CommonCodeModule.codeAPR_RAM.specialAprStatus   = scripting.forceWrite("none");
+System_Security.CommonCodeModule.codeAPR_RAM.type               = scripting.forceWrite("Code");
+System_Security.CommonCodeModule.codeAPR_RAM.memType            = scripting.forceWrite("RAM");
+System_Security.CommonCodeModule.codeAPR_RAM.memSize            = scripting.forceWrite(4);
+System_Security.CommonCodeModule.dataAPR_RW.memType             = scripting.forceWrite("RAM");
+System_Security.CommonCodeModule.dataAPR_RW.memSize             = scripting.forceWrite(4);
+System_Security.CommonCodeModule.dataAPR_RO.type                = scripting.forceWrite("Code");
+System_Security.CommonCodeModule.dataAPR_RO.memSize             = scripting.forceWrite(4);
+System_Security.CommonCodeModule.Link.isLink1                   = scripting.forceWrite(false);
+System_Security.CommonCodeModule.Link.isLink2                   = scripting.forceWrite(false);
+System_Security.LINK1.Link.isLink2                              = scripting.forceWrite(false);
+System_Security.STACK1.stackMem.type                            = scripting.forceWrite("RAM");
+System_Security.STACK1.stackMem.datasize                        = scripting.forceWrite(4);
+System_Security.STACK1.stack.size                               = scripting.forceWrite(256);
+System_Security.STACK1.stack.zone                               = scripting.forceWrite("ZONE1");
+System_Security.STACK1.stack.secGroupAttr                       = scripting.forceWrite("PUBLIC");
+System_Security.STACK1.stack.stackAPR.memType                   = scripting.forceWrite("RAM");
+System_Security.STACK2.modules                                  = ["LINK2_Link","comms_Module_Link","control_Module_Link"];
+System_Security.STACK2.stackMem.type                            = scripting.forceWrite("RAM");
+System_Security.STACK2.stackMem.datasize                        = scripting.forceWrite(4);
+System_Security.STACK2.stack.size                               = scripting.forceWrite(256);
+System_Security.STACK2.stack.zone                               = scripting.forceWrite("ZONE1");
+System_Security.STACK2.stack.secGroupAttr                       = scripting.forceWrite("PUBLIC");
+System_Security.STACK2.stack.stackAPR.memType                   = scripting.forceWrite("RAM");
+System_Security.sandbox.create(1);
+System_Security.sandbox[0].$name                                = "sbox_CommonCode";
+System_Security.sandbox[0].modules                              = ["CommonCodeModule_Link"];
+System_Security.sandbox[0].stackMem.type                        = scripting.forceWrite("RAM");
+System_Security.sandbox[0].stackMem.datasize                    = scripting.forceWrite(4);
+System_Security.sandbox[0].stack.size                           = scripting.forceWrite(256);
+System_Security.sandbox[0].stack.zone                           = scripting.forceWrite("ZONE1");
+System_Security.sandbox[0].stack.secGroupAttr                   = scripting.forceWrite("PUBLIC");
+System_Security.sandbox[0].stack.stackAPR.memType               = scripting.forceWrite("RAM");
+System_Security.sharedMem.create(1);
+System_Security.sharedMem[0].$name                              = "SharedMem0";
+System_Security.sharedMem[0].useCustomSections                  = true;
+System_Security.sharedMem[0].customDataSections                 = ".isrStackCommon";
+
+/**
+ * References between modules
+ */
+System_Security.SECCFG_UPDATE_LINK                  = null;
+System_Security.ZONE1_UPDATE_LINK                   = null;
+System_Security.ZONE2_UPDATE_LINK                   = null;
+System_Security.ZONE3_UPDATE_LINK                   = null;
+System_Security.dltLinks                            = [];
+System_Security.module[0].interrupts                = [];
+System_Security.module[0].Link.interrupts           = [];
+System_Security.module[0].Link.interruptsAPI        = [];
+System_Security.module[1].interrupts                = [];
+System_Security.module[1].Link.interrupts           = [];
+System_Security.module[1].Link.interruptsAPI        = [];
+System_Security.LINK2.interrupts                    = [interrupt2, interrupt1, cputimer1.timerInt, FREERTOS1.tickTimer.timerInt, spi1.spiRXInt];
+System_Security.LINK2.Link.interrupts               = [];
+System_Security.LINK2.Link.interruptsAPI            = [];
+System_Security.CommonCodeModule.interrupts         = [];
+System_Security.CommonCodeModule.Link.interrupts    = [];
+System_Security.CommonCodeModule.Link.interruptsAPI = [];
+System_Security.LINK1.interrupts                    = [];
+System_Security.LINK1.Link.interrupts               = [];
+System_Security.LINK1.Link.interruptsAPI            = [];
+System_Security.STACK1.stackMem.module_ro           = [];
+System_Security.STACK1.stackMem.module_rw           = [];
+System_Security.STACK1.stack.links                  = [];
+System_Security.STACK2.stackMem.module_ro           = [];
+System_Security.STACK2.stackMem.module_rw           = [];
+System_Security.STACK2.stack.links                  = [];
+System_Security.sandbox[0].stackMem.module_ro       = [];
+System_Security.sandbox[0].stackMem.module_rw       = [];
+System_Security.sandbox[0].stack.links              = [];
+System_Security.sharedMem[0].module_ro              = [];
+System_Security.sharedMem[0].module_rw              = [System_Security.LINK2, System_Security.module[0], System_Security.module[1]];

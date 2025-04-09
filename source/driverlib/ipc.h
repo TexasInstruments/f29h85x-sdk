@@ -69,8 +69,6 @@ extern "C"
 #include "inc/hw_types.h"
 #include "inc/hw_ipc.h"
 #include "inc/hw_ints.h"
-#include "interrupt.h"
-#include "sysctl.h"
 
 //*****************************************************************************
 //
@@ -119,6 +117,44 @@ extern "C"
 #define IPC_FLAG31      0x80000000U  //!< IPC FLAG 31
 #define IPC_FLAG_ALL    0xFFFFFFFFU  //!< All IPC flags
 
+//*****************************************************************************
+//
+// IPC Interrupts
+//
+//*****************************************************************************
+//
+// Interrupts in CPU1 core fired by CPU2 and CPU3
+//
+#define IPC_CPU2_TO_CPU1_INT1  INT_IPC_1_1
+#define IPC_CPU2_TO_CPU1_INT2  INT_IPC_1_2
+#define IPC_CPU2_TO_CPU1_INT3  INT_IPC_1_3
+#define IPC_CPU2_TO_CPU1_INT4  INT_IPC_1_4
+#define IPC_CPU3_TO_CPU1_INT1  INT_IPC_2_1
+#define IPC_CPU3_TO_CPU1_INT2  INT_IPC_2_2
+#define IPC_CPU3_TO_CPU1_INT3  INT_IPC_2_3
+#define IPC_CPU3_TO_CPU1_INT4  INT_IPC_2_4
+//
+// Interrupts in CPU2 core fired by CPU1 and CPU3
+//
+#define IPC_CPU1_TO_CPU2_INT1  INT_IPC_1_1
+#define IPC_CPU1_TO_CPU2_INT2  INT_IPC_1_2
+#define IPC_CPU1_TO_CPU2_INT3  INT_IPC_1_3
+#define IPC_CPU1_TO_CPU2_INT4  INT_IPC_1_4
+#define IPC_CPU3_TO_CPU2_INT1  INT_IPC_2_1
+#define IPC_CPU3_TO_CPU2_INT2  INT_IPC_2_2
+#define IPC_CPU3_TO_CPU2_INT3  INT_IPC_2_3
+#define IPC_CPU3_TO_CPU2_INT4  INT_IPC_2_4
+//
+// Interrupts in CPU3 core fired by CPU1 and CPU2
+//
+#define IPC_CPU1_TO_CPU3_INT1  INT_IPC_1_1
+#define IPC_CPU1_TO_CPU3_INT2  INT_IPC_1_2
+#define IPC_CPU1_TO_CPU3_INT3  INT_IPC_1_3
+#define IPC_CPU1_TO_CPU3_INT4  INT_IPC_1_4
+#define IPC_CPU2_TO_CPU3_INT1  INT_IPC_2_1
+#define IPC_CPU2_TO_CPU3_INT2  INT_IPC_2_2
+#define IPC_CPU2_TO_CPU3_INT3  INT_IPC_2_3
+#define IPC_CPU2_TO_CPU3_INT4  INT_IPC_2_4
 
 //
 // Useful defines used in APIs
@@ -546,8 +582,8 @@ IPC_getCounter(void)
     // Get the Counter High and Low values. Read to the Counter low register
     // saves the value of Counter High register.
     //
-    uint32_t ctrL = HWREG(IPCCOUNTERREGS_BASE + IPC_O_COUNTERL);
-    uint32_t ctrH = HWREG(IPCCOUNTERREGS_BASE + IPC_O_COUNTERH);
+    uint32_t ctrL = HWREG(IPCCOUNTER_BASE + IPC_O_COUNTERL);
+    uint32_t ctrH = HWREG(IPCCOUNTER_BASE + IPC_O_COUNTERH);
 
     //
     // Return the 64-bit value of the counter

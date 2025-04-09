@@ -8,7 +8,7 @@ MEMORY
      *  RAM
      */
     SRAM_LDAx   : origin = 0x200E0000, length = 0x008000
-    SRAM_LPAx   : origin = 0x20100000, length = 0x10000
+    SRAM_LPAx   : origin = 0x20100000, length = 0x010000
     /*
      *  CPU3 load and run memories
      */

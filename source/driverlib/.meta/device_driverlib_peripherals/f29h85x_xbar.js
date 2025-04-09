@@ -69,6 +69,7 @@ let XBAR_TripNum = [
 	{ name: "XBAR_TRIP16", displayName: "TRIP16 of the ePWM X-BAR" },
 ]
 let XBAR_AuxSigNum = [
+	{ name: "XBAR_AUXSIG0", displayName: "AUXSIG0 of the CLB X-BAR" },
 	{ name: "XBAR_AUXSIG1", displayName: "AUXSIG1 of the CLB X-BAR" },
 	{ name: "XBAR_AUXSIG2", displayName: "AUXSIG2 of the CLB X-BAR" },
 	{ name: "XBAR_AUXSIG3", displayName: "AUXSIG3 of the CLB X-BAR" },
@@ -76,7 +77,6 @@ let XBAR_AuxSigNum = [
 	{ name: "XBAR_AUXSIG5", displayName: "AUXSIG5 of the CLB X-BAR" },
 	{ name: "XBAR_AUXSIG6", displayName: "AUXSIG6 of the CLB X-BAR" },
 	{ name: "XBAR_AUXSIG7", displayName: "AUXSIG7 of the CLB X-BAR" },
-	{ name: "XBAR_AUXSIG8", displayName: "AUXSIG8 of the CLB X-BAR" },
 ]
 let XBAR_InputNum = [
 	{ name: "XBAR_INPUT1", displayName: "X-BARs, CLBXBAR, OUTPUTXBAR, EPWM TRIP[TZ1,TRIP1], EPWMDEL, ECAP, ERAD, ECAT" },

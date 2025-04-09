@@ -7,14 +7,14 @@
 % var usedBusComps = module.$static.erad_buscomp;
 % var usedANDMasks = module.$static.erad_and_mask;
 % var usedORMasks = module.$static.erad_or_mask;
-% if ((usedCounters.length | usedBusComps.length | usedANDMasks.length | usedORMasks.length) != 0)
-% {
 //*****************************************************************************
 //
 // ERAD Configurations
 //
 //*****************************************************************************
 void `nameOfPeripheral`_init(){
+% if ((usedCounters.length | usedBusComps.length | usedANDMasks.length | usedORMasks.length) != 0)
+% {
     % var modulesEnable = ""
     //
     // Bus Comparator initialization
@@ -96,7 +96,7 @@ void `nameOfPeripheral`_init(){
         % }
     % }
     % modulesEnable = modulesEnable + "\tERAD_enableCounterModule(" + CounterInstance.$name + ");\n"
-    
+
 % }
 
     //
@@ -143,5 +143,5 @@ void `nameOfPeripheral`_init(){
     // Enable the modules
     //
 `modulesEnable`
-}
 % }
+}

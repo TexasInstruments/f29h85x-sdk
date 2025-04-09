@@ -92,7 +92,13 @@ int32_t main(void)
     CRC.pMsgBuffer   = (uint8_t *)&test_input[0];
     CRC.pCrcTable    = (uint8_t *)&crc32P1Table[0];
     //CRC.init         = (void (*)(void *))CRC_init8Bit;
+#if INPUT_TYPE==8    
     CRC.run          = (void (*)(void *))CRC_run32BitTableLookupC;
+#elif INPUT_TYPE==16
+    CRC.run          = (void (*)(void *))CRC_run32BitTableLookupC_16;
+#elif INPUT_TYPE==32
+    CRC.run          = (void (*)(void *))CRC_run32BitTableLookupC_32;
+#endif
     CRC.polynomial   = POLYNOMIAL32P1;
     CRC.reflected    = 0;
 
@@ -114,8 +120,14 @@ int32_t main(void)
 
     // Reset a few elements of the CRC object
     CRC.crcResult    = 0;
-    CRC.run          = (void (*)(void *))CRC_run32BitAsm;
-
+#if INPUT_TYPE==8    
+        CRC.run          = (void (*)(void *))CRC_run32BitAsm;
+#elif INPUT_TYPE==16
+        CRC.run          = (void (*)(void *))CRC_run32BitAsm_16;
+#elif INPUT_TYPE==32
+        CRC.run          = (void (*)(void *))CRC_run32BitAsm_32;
+#endif
+    
     // Run the 32-bit Asm CRC routine and save the result
     printf("Computing 32-bit Asm CRC...\n");
     
@@ -138,7 +150,13 @@ int32_t main(void)
     CRC.crcResult    = 0;
     CRC.seedValue    = INIT_CRC32_P2;
     CRC.polynomial   = POLYNOMIAL32P2;
+#if INPUT_TYPE==8    
     CRC.run          = (void (*)(void *))CRC_run32BitTableLookupC;
+#elif INPUT_TYPE==16
+    CRC.run          = (void (*)(void *))CRC_run32BitTableLookupC_16;
+#elif INPUT_TYPE==32
+    CRC.run          = (void (*)(void *))CRC_run32BitTableLookupC_32;
+#endif
     
     // Run the 32-bit LUT C CRC routine and save the result
     printf("Computing 32-bit LUT CRC on Polynomial P2...\n");
@@ -157,7 +175,13 @@ int32_t main(void)
 
     // Reset a few elements of the CRC object
     CRC.crcResult    = 0;
-    CRC.run          = (void (*)(void *))CRC_run32BitAsm;
+#if INPUT_TYPE==8    
+        CRC.run          = (void (*)(void *))CRC_run32BitAsm;
+#elif INPUT_TYPE==16
+        CRC.run          = (void (*)(void *))CRC_run32BitAsm_16;
+#elif INPUT_TYPE==32
+        CRC.run          = (void (*)(void *))CRC_run32BitAsm_32;
+#endif
 
     // Run the 16-bit Asm CRC routine and save the result
     printf("Computing 32-bit Asm CRC...\n");

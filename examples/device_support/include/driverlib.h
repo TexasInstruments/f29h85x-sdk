@@ -59,6 +59,7 @@
 #include "debug.h"
 #include "dlt.h"
 #include "ecap.h"
+#include "emif.h"
 #include "epg.h"
 #include "epwm.h"
 #include "eqep.h"

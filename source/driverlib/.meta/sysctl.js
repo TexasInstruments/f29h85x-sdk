@@ -93,7 +93,6 @@ let config = [
             {
                 name: "lpmWakeUpPin",
                 displayName: "LPM Wake Up Pin",
-                hidden      : !Common.isContextCPU1(),
                 default : [],
                 minSelections : 0,
                 options : device_driverlib_peripheral.SysCtl_LPMWakeupPin,
@@ -101,11 +100,23 @@ let config = [
             {
                 name: "standbyQualificationPeriod",
                 displayName: "Standby Qualification Period",
-                hidden      : !Common.isContextCPU1(),
                 options : standbyOptions,
                 default: standbyOptions[0].name
             }
         ]
+    },
+    {
+        name: "PERIPHERAL_CLOCKS",
+        displayName : "Peripheral Clocks Customization",
+        collapsed: false,
+        config: [
+            {
+                name: "enable_all_peripheral_clocks",
+                displayName: "Enable all Peripheral clocks",
+                longDescription: "By default, the clock is enabled for all the peripherals (as part of Device_init()). To enable the clocks only for peripherals added in SysConfig , disable this configurable.",
+                default: true,
+            },
+        ],
     },
     {
         name        : "interrupt",

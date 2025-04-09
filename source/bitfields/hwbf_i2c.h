@@ -171,8 +171,8 @@ struct I2C_I2CEMDR_BITS {               // bits description
     uint16_t BC:1;                      // 0 Backwards compatibility mode
     uint16_t FCM:1;                     // 1 Forward Compatibility for Tx behav in Type1
     uint16_t ECS:1;                     // 2 Extended Automatic Clock Stretching mode
-    uint16_t MCS:1;                     // 3 Manual Clock Stretching mode (Clock Override)
-    uint16_t SCLKEY:4;                  // 7:4 Key to enable SCL (Clock Override)
+    uint16_t MCS:1;                     // 3 Manual Clock Stretching mode
+    uint16_t SCLKEY:4;                  // 7:4 KEY
     uint16_t NACK_CM:1;                 // 8 NACK Compatibility mode
     uint16_t rsvd1:6;                   // 14:9 Reserved
     uint16_t rsvd2:1;                   // 15 Reserved

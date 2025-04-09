@@ -6,10 +6,10 @@
 MEMORY
 {
     SRAM_LDAx_LOADABLE      : o=0x200FC000, l=0x2000                /* Address range 0x200E0000 - 0x200FC000 is reserved for HSM */
-    SRAM_LDAx               : o=0x200FE000, l=0x2000                   
+    SRAM_LDAx               : o=0x200FE000, l=0x2000
     APPL_ENTRY              : o=0x20100000, l=0x000040
-    SRAM_LPAx_RAM           : o=0x20100040, l=0x0300
-    SRAM_LPAx               : o=0x20100340, l=0x00FBC0
+    SRAM_LPAx_RAM           : o=0x20100040, l=0x0450
+    SRAM_LPAx               : o=0x20100490, l=0x00FA70
     SRAM_LDAX_CPAx_MIRROR   : o=0x20110000, l=0x2000
     SRAM_CPAx_LOADABLE      : o=0x20112000, l=0xE000
     SRAM_CDAx               : o=0x20120000, l=0x30000

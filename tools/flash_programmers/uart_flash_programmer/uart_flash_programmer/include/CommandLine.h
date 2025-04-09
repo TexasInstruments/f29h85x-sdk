@@ -51,14 +51,6 @@
 #include "Common.h"
 #include "OutputStream.h"
 
-// Needed by exitApp()
-#if defined(_WIN32)
-#include <conio.h>
-#elif defined(__unix__) || defined(__linux__) || defined(__APPLE__)
-#include <termios.h>
-#include <unistd.h>
-#endif 
-
 //
 // Global parameter input variable
 //
@@ -71,6 +63,7 @@ extern char* g_pszKernelFile2;
 extern char* g_pszSecCfgProgramFile;
 extern char* g_pszHSMFlashCodeProvisionFile;
 extern char* g_pszCPU1FlashCodeProvisionFile;
+extern char* g_pszCPU3FlashCodeProvisionFile;
 extern char* g_pszHSMRunTimeFile;
 extern char* g_pszHSMKeysFile;
 extern char* g_pszComPort;
@@ -86,7 +79,7 @@ void exitApp(int iRetcode);
 void printWelcome(void);
 void showHelp(void);
 void parseCommandLine(int argc, char* argv[]);
-void setDeviceName(void);
+void setDeviceName(char* deviceName);
 void checkErrors(void);
 
 #endif /* COMMANDLINE_H */

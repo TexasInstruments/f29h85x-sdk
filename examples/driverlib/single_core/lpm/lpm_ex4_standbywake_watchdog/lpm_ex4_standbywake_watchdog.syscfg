@@ -24,7 +24,8 @@ const gpio1     = gpio.addInstance();
 const gpio2     = gpio.addInstance();
 const interrupt = scripting.addModule("/driverlib/interrupt.js");
 const jtag      = scripting.addModule("/driverlib/jtag.js");
-const watchdog  = scripting.addModule("/driverlib/watchdog.js");
+const watchdog  = scripting.addModule("/driverlib/watchdog.js", {}, false);
+const watchdog1 = watchdog.addInstance();
 
 /**
  * Write custom configuration values to the imported modules.
@@ -37,6 +38,7 @@ gpio2.$name           = "myGPIO2";
 gpio2.direction       = "GPIO_DIR_MODE_OUT";
 gpio2.gpioPin.$assign = "GPIO2";
 
-watchdog.wdMode                 = "SYSCTL_WD_MODE_INTERRUPT";
-watchdog.registerInterrupts     = true;
-watchdog.wdInt.interruptHandler = "watchdogISR";
+watchdog1.$name                  = "myWATCHDOG0";
+watchdog1.wdMode                 = "SYSCTL_WD_MODE_INTERRUPT";
+watchdog1.registerInterrupts     = true;
+watchdog1.wdInt.interruptHandler = "watchdogISR";

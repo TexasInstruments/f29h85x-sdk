@@ -1,51 +1,8 @@
-/*
- *	Copyright (C) Texas Instruments Incorporated
- *
- *	All rights reserved not granted herein.
- *	Limited License.
-
- *	Texas Instruments Incorporated grants a world-wide, royalty-free,
- *	non-exclusive license under copyrights and patents it now or hereafter
- *	owns or controls to make, have made, use, import, offer to sell and sell ("Utilize")
- *	this software subject to the terms herein.  With respect to the foregoing patent
- *	license, such license is granted  solely to the extent that any such patent is necessary
- *	to Utilize the software alone.  The patent license shall not apply to any combinations which
- *	include this software, other than combinations with devices manufactured by or for TI ("TI Devices").
- *	No hardware patent is licensed hereunder.
-
- *	Redistributions must preserve existing copyright notices and reproduce this license (including the
- *	above copyright notice and the disclaimer and (if applicable) source code license limitations below)
- *	in the documentation and/or other materials provided with the distribution
-
- *	Redistribution and use in binary form, without modification, are permitted provided that the following
- *	conditions are met:
-
- *	  - No reverse engineering, decompilation, or disassembly of this software is permitted with respect to any
- *		 software provided in binary form.
- *	  - Any redistribution and use are licensed by TI for use only with TI Devices.
- *	  - Nothing shall obligate TI to provide you with source code for the software licensed and provided to you in object code.
-
- *	If software source code is provided to you, modification and redistribution of the source code are permitted
- *	provided that the following conditions are met:
- *
- *	  - any redistribution and use of the source code, including any resulting derivative works, are licensed by
- *		TI for use only with TI Devices.
- *	  - any redistribution and use of any object code compiled from the source code and any resulting derivative
- *		works, are licensed by TI for use only with TI Devices.
- *
- *	Neither the name of Texas Instruments Incorporated nor the names of its suppliers may be used to endorse or
- *	promote products derived from this software without specific prior written permission.
-
- *	DISCLAIMER.
- *
- *	THIS SOFTWARE IS PROVIDED BY TI AND TI'S LICENSORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING,
- *	BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- *	IN NO EVENT SHALL TI AND TI'S LICENSORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
- *	CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA,
- *	OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
- *	OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- *	POSSIBILITY OF SUCH DAMAGE.
-*/
+//#############################################################################
+//
+//
+// $Copyright:
+//#############################################################################
 
 #include "fir_f32.h"
 #include <string.h>
@@ -69,26 +26,26 @@
 #else
 #  define DECCIRC(x, y) deccirc((x), (y))
 #endif
-
+// this function runs with optimal performance if the compiler option to enable debug (-g) is removed
 __attribute__((section("kernel_opt")))
 void fir_f32_c(FIR_f32_Handle hndFIR_f32,float32_t *restrict out, float32_t *restrict in, uint32_t input_size)
 {
     uint32_t filt_size;
     float32_t *filt;
     float32_t *hist;
-
+    int32_t circular_buff_index;
     // map the F28x handle to the F29x function arguments
     filt_size = hndFIR_f32->order;
     filt = hndFIR_f32->coeff_ptr;
     hist = hndFIR_f32->dbuffer_ptr;
+    circular_buff_index = hndFIR_f32->cbindex;
 
     //
     // the FIR filter function
     //
     float32_t acc;
-    static int circular_buff_index = 0;
-    int n;
-    int j;
+    int32_t n;
+    int32_t j;
     
     //
     // apply the filter to each input sample
@@ -110,25 +67,46 @@ void fir_f32_c(FIR_f32_Handle hndFIR_f32,float32_t *restrict out, float32_t *res
         
         circular_buff_index = INCCIRC(circular_buff_index,(filt_size - 1));
     }
+    hndFIR_f32->cbindex = circular_buff_index;
 }
 
 __attribute__((section("kernel_asm")))
 void fir_f32_casm(FIR_f32_Handle hndFIR_f32,float32_t *restrict out, float32_t *restrict in, uint32_t input_size)
 {
-    uint32_t filt_size;
-    float32_t *filt;
-    float32_t *hist;
+    //
+    // the FIR filter function
+    //
+    float32_t acc;
+    float32_t *coeffp; // pointer to coefficients
+    int32_t n;
+    int32_t k , circ_buffer_limit;
+    int16_t cbindex;
 
-    // map the F28x handle to the F29x function arguments
-    filt_size = hndFIR_f32->order;
-    filt = hndFIR_f32->coeff_ptr;
-    hist = hndFIR_f32->dbuffer_ptr;
-    
-    fir_f32_asm(input_size, filt_size, out, in, filt, hist);
+    circ_buffer_limit = ((hndFIR_f32->order)/2) - 1;
+    coeffp = (hndFIR_f32->coeff_ptr);
 
+    //
+    // apply the filter to each input sample
+    //
+    for ( n = 0; n < input_size; n++ ) 
+    {
+        cbindex = hndFIR_f32->cbindex * 2;
+        (hndFIR_f32->dbuffer_ptr)[cbindex+ 1] = (hndFIR_f32->dbuffer_ptr)[cbindex];
+        (hndFIR_f32->dbuffer_ptr)[cbindex] = in[n];
+
+        //
+        // calculate output n
+        //
+        k = hndFIR_f32->cbindex;
+
+        out[n] =  c29_fir_sample_asm(hndFIR_f32, coeffp, &k, circ_buffer_limit);
+
+        hndFIR_f32->cbindex = INCCIRC(hndFIR_f32->cbindex, circ_buffer_limit);
+    }
 }
 
 void FIR_f32_init(FIR_f32_Handle hndFIR_f32)
 {
     memset(hndFIR_f32->dbuffer_ptr,0U,sizeof(float32_t)*(hndFIR_f32->order));
+    hndFIR_f32->cbindex = 0;
 }

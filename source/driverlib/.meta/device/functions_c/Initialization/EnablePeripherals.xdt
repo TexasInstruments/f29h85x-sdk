@@ -8,32 +8,21 @@
 // peripherals. Eg: Sysctl_enablePeripheral(SYSCTL_PERIPH_CLK_CPUTIMER0)
 //
 //*****************************************************************************
+
+%%{
+let 	Common   					= system.getScript("/driverlib/Common.js");
+let 	device_driverlib_peripheral = system.getScript("/driverlib/device_driverlib_peripherals/" +
+                                        Common.getDeviceName().toLowerCase() + "_sysctl.js");
+%%}
+
 void Device_enableAllPeripherals(void)
 {
-    HWREG(CPUPERCFG_BASE + SYSCTL_O_PCLKCR0)  = 0xFFFFFFFF;
-    HWREG(CPUPERCFG_BASE + SYSCTL_O_PCLKCR1)  = 0xFFFFFFFF;
-    HWREG(CPUPERCFG_BASE + SYSCTL_O_PCLKCR2)  = 0xFFFFFFFF;
-    HWREG(CPUPERCFG_BASE + SYSCTL_O_PCLKCR3)  = 0xFFFFFFFF;
-    HWREG(CPUPERCFG_BASE + SYSCTL_O_PCLKCR4)  = 0xFFFFFFFF;
-    HWREG(CPUPERCFG_BASE + SYSCTL_O_PCLKCR6)  = 0xFFFFFFFF;
-    HWREG(CPUPERCFG_BASE + SYSCTL_O_PCLKCR7)  = 0xFFFFFFFF;
-    HWREG(CPUPERCFG_BASE + SYSCTL_O_PCLKCR8)  = 0xFFFFFFFF;
-    HWREG(CPUPERCFG_BASE + SYSCTL_O_PCLKCR9)  = 0xFFFFFFFF;
-    HWREG(CPUPERCFG_BASE + SYSCTL_O_PCLKCR10) = 0xFFFFFFFF;
-    HWREG(CPUPERCFG_BASE + SYSCTL_O_PCLKCR13) = 0xFFFFFFFF;
-    HWREG(CPUPERCFG_BASE + SYSCTL_O_PCLKCR14) = 0xFFFFFFFF;
-    HWREG(CPUPERCFG_BASE + SYSCTL_O_PCLKCR16) = 0xFFFFFFFF;
-    HWREG(CPUPERCFG_BASE + SYSCTL_O_PCLKCR17) = 0xFFFFFFFF;
-    HWREG(CPUPERCFG_BASE + SYSCTL_O_PCLKCR18) = 0xFFFFFFFF;
-    HWREG(CPUPERCFG_BASE + SYSCTL_O_PCLKCR19) = 0xFFFFFFFF;
-    HWREG(CPUPERCFG_BASE + SYSCTL_O_PCLKCR20) = 0xFFFFFFFF;
-    HWREG(CPUPERCFG_BASE + SYSCTL_O_PCLKCR21) = 0xFFFFFFFF;
-    HWREG(CPUPERCFG_BASE + SYSCTL_O_PCLKCR23) = 0xFFFFFFFF;
-    HWREG(CPUPERCFG_BASE + SYSCTL_O_PCLKCR25) = 0xFFFFFFFF;
-    HWREG(CPUPERCFG_BASE + SYSCTL_O_PCLKCR27) = 0xFFFFFFFF;
-    HWREG(CPUPERCFG_BASE + SYSCTL_O_PCLKCR28) = 0xFFFFFFFF;
-    HWREG(CPUPERCFG_BASE + SYSCTL_O_PCLKCR30) = 0xFFFFFFFF;
-    HWREG(CPUPERCFG_BASE + SYSCTL_O_PCLKCR32) = 0xFFFFFFFF;
+% for (let perphEnable of device_driverlib_peripheral.SysCtl_PeripheralPCLOCKCR)
+% {
+% if (!["SYSCTL_PERIPH_CLK_GTBCLKSYNC"].includes(perphEnable.name)) {
+    SysCtl_enablePeripheral(`perphEnable.name`);
+% }
+% }
 }
 
 //*****************************************************************************

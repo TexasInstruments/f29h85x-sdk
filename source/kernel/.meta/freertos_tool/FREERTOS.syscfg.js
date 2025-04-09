@@ -126,7 +126,7 @@ var config = [
                 name: "USE_PORT_OPTIMISED_TASK_SELECTION" ,
                 displayName: "Use Port Optimised Task Selection",
                 description: "",
-                default: false,
+                default: true,
             },
             {
                 name: "USE_TICKLESS_IDLE" ,
@@ -589,8 +589,11 @@ var moduleInstances = (inst) => {
             enableInterrupt    : true,
             registerInterrupts : true,
             startTimer         : false,
-            timerPeriod        : 100000,
+            timerPeriod        : 200000,
             timerPrescaler     : 0,
+            clockSource        : "SYSCTL_TIMER2CLK_SOURCE_SYSCLK",
+            clockPrescaler     : "SYSCTL_TIMER2CLK_DIV_1",
+            emulationMode      : "CPUTIMER_EMULATIONMODE_STOPAFTERNEXTDECREMENT",
             timerInt           : {
                 interruptHandler: "portTICK_ISR"
             },

@@ -54,7 +54,7 @@ using std::memcpy;
 #endif
 
 #ifdef _FLASH
-#if !defined(__CPU2__) && !defined(__CPU3__)
+#if (!defined(__CPU2__))
     //
     //  Dummy certificate section which is updated when actual certitifcate is generated
     //  as part of the post build steps
@@ -98,6 +98,8 @@ void Device_copy_in(COPY_TABLE *tp)
 //*****************************************************************************
 void Device_init(void)
 {
+    bool clkConfigStatus = false;
+
     //
     // Disable the watchdog
     //
@@ -121,12 +123,22 @@ void Device_init(void)
     // Set up PLL
     //
 #if defined(USE_PLL_SRC_INTOSC)
-    SysCtl_setClock(SYSCTL_OSCSRC_OSC2, SYSCTL_PLL_ENABLE, SYSCTL_REFDIV_1,
-					SYSCTL_IMULT_40, SYSCTL_ODIV_2, SYSCTL_SYSDIV_1, DCC1_BASE);
+    clkConfigStatus = SysCtl_setClock(SYSCTL_OSCSRC_OSC2, SYSCTL_PLL_ENABLE,
+	                    SYSCTL_REFDIV_1, SYSCTL_IMULT_40, SYSCTL_ODIV_2,
+                        SYSCTL_SYSDIV_1, DCC1_BASE);
 #elif defined(USE_PLL_SRC_XTAL)
-    SysCtl_setClock(SYSCTL_OSCSRC_XTAL_SE, SYSCTL_PLL_ENABLE, SYSCTL_REFDIV_2,
-					SYSCTL_IMULT_32, SYSCTL_ODIV_2, SYSCTL_SYSDIV_1, DCC1_BASE);
+    clkConfigStatus = SysCtl_setClock(SYSCTL_OSCSRC_XTAL_SE, SYSCTL_PLL_ENABLE,
+                        SYSCTL_REFDIV_2, SYSCTL_IMULT_32, SYSCTL_ODIV_2,
+                        SYSCTL_SYSDIV_1, DCC1_BASE);
 #endif
+
+    //
+    // Check if the clocking of the device is configured correctly.
+    // This fails if a missing clock error is detected or if the PLLRAWCLK
+    // is not running at its expected rate
+    //
+    ASSERT(clkConfigStatus);
+    
 	ASSERT(SysCtl_getClock(DEVICE_OSCSRC_FREQ) == DEVICE_SYSCLK_FREQ);
 
     //
@@ -164,30 +176,132 @@ void Device_init(void)
 //*****************************************************************************
 void Device_enableAllPeripherals(void)
 {
-    HWREG(CPUPERCFG_BASE + SYSCTL_O_PCLKCR0)  = 0xFFFFFFFF;
-    HWREG(CPUPERCFG_BASE + SYSCTL_O_PCLKCR1)  = 0xFFFFFFFF;
-    HWREG(CPUPERCFG_BASE + SYSCTL_O_PCLKCR2)  = 0xFFFFFFFF;
-    HWREG(CPUPERCFG_BASE + SYSCTL_O_PCLKCR3)  = 0xFFFFFFFF;
-    HWREG(CPUPERCFG_BASE + SYSCTL_O_PCLKCR4)  = 0xFFFFFFFF;
-    HWREG(CPUPERCFG_BASE + SYSCTL_O_PCLKCR6)  = 0xFFFFFFFF;
-    HWREG(CPUPERCFG_BASE + SYSCTL_O_PCLKCR7)  = 0xFFFFFFFF;
-    HWREG(CPUPERCFG_BASE + SYSCTL_O_PCLKCR8)  = 0xFFFFFFFF;
-    HWREG(CPUPERCFG_BASE + SYSCTL_O_PCLKCR9)  = 0xFFFFFFFF;
-    HWREG(CPUPERCFG_BASE + SYSCTL_O_PCLKCR10) = 0xFFFFFFFF;
-    HWREG(CPUPERCFG_BASE + SYSCTL_O_PCLKCR13) = 0xFFFFFFFF;
-    HWREG(CPUPERCFG_BASE + SYSCTL_O_PCLKCR14) = 0xFFFFFFFF;
-    HWREG(CPUPERCFG_BASE + SYSCTL_O_PCLKCR16) = 0xFFFFFFFF;
-    HWREG(CPUPERCFG_BASE + SYSCTL_O_PCLKCR17) = 0xFFFFFFFF;
-    HWREG(CPUPERCFG_BASE + SYSCTL_O_PCLKCR18) = 0xFFFFFFFF;
-    HWREG(CPUPERCFG_BASE + SYSCTL_O_PCLKCR19) = 0xFFFFFFFF;
-    HWREG(CPUPERCFG_BASE + SYSCTL_O_PCLKCR20) = 0xFFFFFFFF;
-    HWREG(CPUPERCFG_BASE + SYSCTL_O_PCLKCR21) = 0xFFFFFFFF;
-    HWREG(CPUPERCFG_BASE + SYSCTL_O_PCLKCR23) = 0xFFFFFFFF;
-    HWREG(CPUPERCFG_BASE + SYSCTL_O_PCLKCR25) = 0xFFFFFFFF;
-    HWREG(CPUPERCFG_BASE + SYSCTL_O_PCLKCR27) = 0xFFFFFFFF;
-    HWREG(CPUPERCFG_BASE + SYSCTL_O_PCLKCR28) = 0xFFFFFFFF;
-    HWREG(CPUPERCFG_BASE + SYSCTL_O_PCLKCR30) = 0xFFFFFFFF;
-    HWREG(CPUPERCFG_BASE + SYSCTL_O_PCLKCR32) = 0xFFFFFFFF;
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_RTDMA1);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_RTDMA2);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_CPUTIMER0);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_CPUTIMER1);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_CPUTIMER2);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_CPUXERAD);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_CPUXDLT);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_EMIF1);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_EPWM1);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_EPWM2);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_EPWM3);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_EPWM4);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_EPWM5);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_EPWM6);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_EPWM7);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_EPWM8);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_EPWM9);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_EPWM10);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_EPWM11);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_EPWM12);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_EPWM13);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_EPWM14);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_EPWM15);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_EPWM16);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_EPWM17);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_EPWM18);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_ECAP1);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_ECAP2);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_ECAP3);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_ECAP4);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_ECAP5);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_ECAP6);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_EQEP1);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_EQEP2);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_EQEP3);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_EQEP4);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_EQEP5);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_EQEP6);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_SD1);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_SD2);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_SD3);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_SD4);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_UARTA);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_UARTB);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_UARTC);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_UARTD);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_UARTE);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_UARTF);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_SPIA);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_SPIB);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_SPIC);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_SPID);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_SPIE);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_I2CA);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_I2CB);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_MCANA);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_MCANB);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_MCANC);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_MCAND);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_MCANE);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_MCANF);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_ADCA);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_ADCB);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_ADCC);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_ADCD);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_ADCE);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_CMPSS1);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_CMPSS2);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_CMPSS3);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_CMPSS4);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_CMPSS5);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_CMPSS6);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_CMPSS7);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_CMPSS8);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_CMPSS9);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_CMPSS10);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_CMPSS11);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_CMPSS12);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_DACA);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_DACB);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_CLB1);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_CLB2);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_CLB3);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_CLB4);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_CLB5);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_CLB6);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_FSITXA);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_FSITXB);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_FSITXC);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_FSITXD);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_FSIRXA);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_FSIRXB);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_FSIRXC);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_FSIRXD);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_LINA);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_LINB);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_PMBUSA);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_DCC1);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_DCC2);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_DCC3);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_ETHERCAT);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_HRCAL0);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_HRCAL1);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_HRCAL2);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_EPG1);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_ADCCHECKER1);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_ADCCHECKER2);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_ADCCHECKER3);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_ADCCHECKER4);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_ADCCHECKER5);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_ADCCHECKER6);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_ADCCHECKER7);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_ADCCHECKER8);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_ADCCHECKER9);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_ADCCHECKER10);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_ADCSEAGGRCPU1);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_ADCSEAGGRCPU2);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_ADCSEAGGRCPU3);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_SENT1);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_SENT2);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_SENT3);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_SENT4);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_SENT5);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_SENT6);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_WADI1);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_WADI2);
 }
 
 //*****************************************************************************

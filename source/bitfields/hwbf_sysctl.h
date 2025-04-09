@@ -3184,7 +3184,7 @@ struct DEV_CFG_REGS {
     union   SYSCTL_MCUCNFLOCK3_REG           MCUCNFLOCK3;                  // Lock bit for MCUCNFx registers
     union   SYSCTL_LSEN_REG                  LSEN;                         // Lockstep enable configuration
     uint8_t                                  rsvd18[48];                   // Reserved
-    union   SYSCTL_EPWMXLINKCFG_REG          EPWMXLINKCFG;                 // Confugure which EPWM module instaces are linked in the XLINK scheme
+    union   SYSCTL_EPWMXLINKCFG_REG          EPWMXLINKCFG;                 // Configure which EPWM module instaces are linked in the XLINK scheme
     uint8_t                                  rsvd19[4];                    // Reserved
     union   SYSCTL_SICCONFIG_REG             SICCONFIG;                    // Safety Interconnect(SIC) Configuration - Enable and READY TIMEOUT value
     uint8_t                                  rsvd20[40];                   // Reserved

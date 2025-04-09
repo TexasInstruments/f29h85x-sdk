@@ -1,7 +1,7 @@
 {
     "name": "MCU_SDK_F29H85x",
     "displayName": "F29H85x-SDK",
-    "version": "1.00.00.00",
+    "version": "1.01.00.00",
     "documentationPath": "../tools/clb_tool/clb_syscfg/doc",
     "includePaths": [
         "../source",

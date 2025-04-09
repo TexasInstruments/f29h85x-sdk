@@ -927,7 +927,7 @@ ESCSS_configurePortCount(uint32_t base, ESCSS_PortSelection portConfig,
     // Check the arguments.
     //
     ASSERT(ESCSS_isConfigBaseValid(base));
-    ASSERT((portConfig == ESCSS_ONE_PORT_SELECTION) |
+    ASSERT((portConfig == ESCSS_ONE_PORT_SELECTION) ||
            (portConfig == ESCSS_TWO_PORT_SELECTION));
 
     if(ESCSS_VALID_KEY_VALUE == writeKey)

@@ -42,9 +42,6 @@
 
 #include "interrupt.h"
 
-//
-//  NMI status
-//
 __attribute__((interrupt("INT")))
 void Interrupt_defaultHandler(void)
 {
@@ -135,6 +132,8 @@ void Interrupt_clearEsmEaFlags(Interrupt_NmiStatus *nmiStatus)
 __attribute__((interrupt("RTINT")))
 void Interrupt_defaultNMIHandler(void)
 {
+    ESTOP0;  // Use Gel scripts to read ESM and Error Aggregator status
+
     Interrupt_NmiStatus nmiStatus;
     //
     //  Clear ESM and EA error flags

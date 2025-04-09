@@ -108,12 +108,13 @@ int32_t main(void)
     CFFT_f32_setTwiddlesPtr(hnd_cfft, twiddleFactors);
     CFFT_f32_computeTwiddle(hnd_cfft);   
 #endif //USE_TABLES
-
+#if USE_C
+    // Asm does bit reversing in Stg1_2
     printf("Bitreversing input...\n");
     // Bit reverse the inputs - the function bit reverses the input array and returns it in the same array
     CFFT_f32_bitrev((complex_T *)(test_input), (complex_T *)(test_output), FFT_SIZE);
     // Run the calculation function
-
+#endif
     printf("Computing CFFT...\n");
     CPUTimer_startTimer(CPUTIMER0_BASE);
     startCounter = CPUTimer_getTimerCount(CPUTIMER0_BASE);

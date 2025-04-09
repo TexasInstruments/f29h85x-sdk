@@ -5,6 +5,10 @@ let device_driverlib_peripheral =
     system.getScript("/driverlib/device_driverlib_peripherals/" + 
         Common.getDeviceName().toLowerCase() + "_cputimer.js");
 
+let device_driverlib_clockconfig = 
+        system.getScript("/driverlib/device_driverlib_peripherals/" + 
+            Common.getDeviceName().toLowerCase() + "_clockconfig.js");
+
 /* Intro splash on GUI */
 let longDescription = "";
 
@@ -14,31 +18,32 @@ var CPUTIMER_INSTANCE = [
     { name: "CPUTIMER2_BASE", displayName: "CPUTIMER2"},
 ]
 
+let cputimer2ClkSourceMapping = {
+    "SYSCTL_TIMER2CLK_SOURCE_SYSCLK"  : { default: 200, clockTreeName: "PLLSYSCLK",  clockTreeSignal: "in"},
+    "SYSCTL_TIMER2CLK_SOURCE_INTOSC1" : { default: 10,  clockTreeName: "INTOSC1",    clockTreeSignal: "out"},
+    "SYSCTL_TIMER2CLK_SOURCE_INTOSC2" : { default: 10,  clockTreeName: "INTOSC2",    clockTreeSignal: "out"},
+    "SYSCTL_TIMER2CLK_SOURCE_XTAL"    : { default: 25,  clockTreeName: "XTAL_OR_X1", clockTreeSignal: "External_Clock"},
+}
+
+let cputimer2ClkDividerMapping = {
+	"SYSCTL_TIMER2CLK_DIV_1" : 1,
+	"SYSCTL_TIMER2CLK_DIV_2" : 2,
+	"SYSCTL_TIMER2CLK_DIV_4" : 4,
+	"SYSCTL_TIMER2CLK_DIV_8" : 8,
+	"SYSCTL_TIMER2CLK_DIV_16" :16,
+}
 function onChangeCPUTIMERBase(inst, ui)
 {
     if (inst.cputimerBase == "CPUTIMER2_BASE"){
         ui.clockSource.hidden = false;
+        ui.clockSourceFreq.hidden = false;
         ui.clockPrescaler.hidden = false;
     }
     else {
         ui.clockSource.hidden = true;
+        ui.clockSourceFreq.hidden = true;
         ui.clockPrescaler.hidden = true;
     }
-}
-
-function calcInputFreq(inst, ui)
-{
-    let timerClock = Common.getSYSCLK();
-    let clocktree = Common.getClockTree()
-   
-    if(clocktree)
-    {
-        if (inst.cputimerBase == "CPUTIMER2_BASE")
-        {
-            timerClock = (clocktree["TIMER2CLK"].in)
-        }
-    }
-    return timerClock;
 }
 
 function calcTimerFreq(inst, ui)
@@ -72,42 +77,42 @@ let config = [
                 displayName : "Clock Source",
                 description : 'Clock source for the Timer',
                 hidden      : true,
-                default     : "PLLSYSCLK",
-                getValue    : () => {
-                    var clockTree = Common.getClockTree();
+                default     : device_driverlib_clockconfig.SysCtl_Cputimer2ClkSource[0].name,
+                options     : device_driverlib_clockconfig.SysCtl_Cputimer2ClkSource
+            },
+            {
+                name        : "clockSourceFreq",
+                displayName : "Clock Source Frequency (MHz)",
+                description : 'Frequency of the Clock source as calculated in Clocktree.',
+                hidden      : true,
+                default     : 200,
+                getValue    : (inst) => {
+                    let clockTree = Common.getClockTree()
                     if(clockTree){
-                        return clockTree["TMR2CLKSRCSEL"].inputSelect
+                        return clockTree[cputimer2ClkSourceMapping[inst.clockSource].clockTreeName][cputimer2ClkSourceMapping[inst.clockSource].clockTreeSignal]
                     }
                     else{
-                        return "PLLSYSCLK";
+                        return cputimer2ClkSourceMapping[inst.clockSource].default
                     }
-                },
-                readOnly    : true,
+                }
             },
             {
                 name        : "clockPrescaler",
                 displayName : "Clock Prescaler",
                 description : 'Sets the prescaler for the Clock source of the Timer.',
                 hidden      : true,
-                default     : 1,
-                getValue    : () => {
-                    var clockTree = Common.getClockTree();
-                    if(clockTree){
-                        return clockTree["TMR2CLKPRESCALE"].divideValue
-                    }
-                    else{
-                        return 1;
-                    }
-                },
-                readOnly    : true,
+                default     : device_driverlib_clockconfig.SysCtl_Cputimer2ClkDivider[0].name,
+                options     : device_driverlib_clockconfig.SysCtl_Cputimer2ClkDivider
             },
             {
                 name        : "timerInputFreq",
                 displayName : "Timer Input Frequency (MHz)",
                 description : 'CPUTIMER Input frequency in MHz.',
                 hidden      : false,
-                default     : 0,
-                getValue    : calcInputFreq,
+                default     : 10,
+                getValue    : (inst) => {
+                    return (inst.clockSourceFreq / cputimer2ClkDividerMapping[inst.clockPrescaler])
+                }
             },
             {
                 name        : "emulationMode",
@@ -210,7 +215,12 @@ function onValidate(inst, validation)
             inst, "cputimerBase");
     }
 
-
+    if (inst.timerInputFreq < 2)
+    {
+        validation.logError(
+            "Minimum input frequency supported is 2 MHz", 
+            inst, "timerInputFreq");
+    }
     if (inst.timerPrescaler < 0 || inst.timerPrescaler > 65535)
     {
         validation.logError(

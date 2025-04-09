@@ -25,10 +25,10 @@ function onChangeRemoveCpuSelStandbyDbgHalt(inst, ui)
 function onChangeRemoveFrameSel(inst, ui)
 {
     if(inst.removeFrameSel){
-        ui.removeFrameSel.hidden = true;
+        ui.frameSel.hidden = true;
     }
     else{
-        ui.removeFrameSel.hidden = false;
+        ui.frameSel.hidden = false;
     }
 }
 

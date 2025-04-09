@@ -603,7 +603,7 @@ __attribute__((always_inline))
 static inline void
 SSU_lockAllAPRegisters(SSU_CPUID cpu)
 {
-    int i;
+    uint32_t i;
     for(i = 0U; i < SSU_TOTAL_AP; i++)
     {
         HWREG(SSU_AP_LOCK(cpu, i)) = 1U;
@@ -623,7 +623,7 @@ __attribute__((always_inline))
 static inline void
 SSU_commitAllAPRegisters(SSU_CPUID cpu)
 {
-    int i;
+    uint32_t i;
     for(i = 0U; i < SSU_TOTAL_AP; i++)
     {
         HWREG(SSU_AP_COMMIT(cpu, i)) = 1U;

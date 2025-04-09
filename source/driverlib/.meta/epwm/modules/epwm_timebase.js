@@ -1,10 +1,10 @@
 let Common   = system.getScript("/driverlib/Common.js");
 let Pinmux   = system.getScript("/driverlib/pinmux.js");
-let device_driverlib_peripheral = 
-    system.getScript("/driverlib/device_driverlib_peripherals/" + 
+let device_driverlib_peripheral =
+    system.getScript("/driverlib/device_driverlib_peripherals/" +
         Common.getDeviceName().toLowerCase() + "_epwm.js");
-let device_driverlib_hrpwm = 
-    system.getScript("/driverlib/device_driverlib_peripherals/" + 
+let device_driverlib_hrpwm =
+    system.getScript("/driverlib/device_driverlib_peripherals/" +
         Common.getDeviceName().toLowerCase() + "_hrpwm.js");
 
 
@@ -34,7 +34,7 @@ function onChangeEnableDisable(inst, ui)
     {
         ui.epwmTimebase_counterModeAfterSync.hidden = false;
     }
-    else if (inst.epwmTimebase_counterMode == "EPWM_COUNTER_MODE_UP" || 
+    else if (inst.epwmTimebase_counterMode == "EPWM_COUNTER_MODE_UP" ||
         inst.epwmTimebase_counterMode =="EPWM_COUNTER_MODE_DOWN" ||
         inst.epwmTimebase_counterMode == "EPWM_COUNTER_MODE_STOP_FREEZE")
     {
@@ -69,11 +69,13 @@ var config = [
         options     : device_driverlib_peripheral.EPWM_HSClockDivider,
     },
     {
-        name: "epwmTimebase_period",
-        displayName : "Time Base Period",
-        description : 'Period for the Time Base Counter Submodule',
+        name: "epwmTimebase_periodLoadMode",
+        displayName : "Time Base Period Load Mode",
+        description : 'Period load mode for the Time Base Counter Submodule',
         hidden      : false,
-        default     : 0,
+        default     : device_driverlib_peripheral.EPWM_PeriodLoadMode[0].name,
+        options     : device_driverlib_peripheral.EPWM_PeriodLoadMode,
+        onChange    : onChangeEnableDisable
     },
     {
         name: "epwmTimebase_counterMode",
@@ -86,7 +88,7 @@ var config = [
     },
     {
         name: "EPWM_Frequency",
-        displayName : "EPWM Frequency [Mhz]",
+        displayName : "EPWM Frequency [Hz]",
         hidden      : false,
         default     : Common.SYSCLK_getMaxMHz(),
         getValue    : (inst) => {
@@ -112,7 +114,7 @@ var config = [
                     "EPWM_HSCLOCK_DIVIDER_12" : 12,
                     "EPWM_HSCLOCK_DIVIDER_14" : 14
                 }
-                var tbclk = (clockTree["EPWMCLK"].in/(epwm_clk_div[inst.epwmTimebase_clockDiv] * hs_clk_div[inst.epwmTimebase_hsClockDiv]))
+                var tbclk = ((clockTree["EPWMCLK"].in * 1000000)/(epwm_clk_div[inst.epwmTimebase_clockDiv] * hs_clk_div[inst.epwmTimebase_hsClockDiv]))
                 var num
                 if(inst.epwmTimebase_counterMode == "EPWM_COUNTER_MODE_UP" || inst.epwmTimebase_counterMode == "EPWM_COUNTER_MODE_DOWN"){
                     num = tbclk/(1 + inst.epwmTimebase_period)
@@ -123,7 +125,7 @@ var config = [
                 else{
                     return 0
                 }
-                return Math.round(num*100)/100   
+                return Math.round(num*100)/100
             }
             else{
                 return 0
@@ -131,13 +133,11 @@ var config = [
         }
     },
     {
-        name: "epwmTimebase_periodLoadMode", 
-        displayName : "Time Base Period Load Mode",
-        description : 'Period load mode for the Time Base Counter Submodule',
+        name: "epwmTimebase_period",
+        displayName : "Time Base Period",
+        description : 'Period for the Time Base Counter Submodule',
         hidden      : false,
-        default     : device_driverlib_peripheral.EPWM_PeriodLoadMode[0].name,
-        options     : device_driverlib_peripheral.EPWM_PeriodLoadMode,
-        onChange    : onChangeEnableDisable
+        default     : 0,
     },
     {
         name: "epwmTimebase_periodLoadEvent",
@@ -202,7 +202,7 @@ var config = [
 ];
 
 if(["F29H85x"].includes(Common.getDeviceName())) //else
-{    
+{
     config.splice.apply(config, [config.length - 1, 0].concat([
         {
             name: "epwmTimebase_syncInPulseSource",

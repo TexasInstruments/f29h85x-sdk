@@ -31,7 +31,7 @@ void CLOCK_init()
 %    }
 %    else if(tri_core.includes(device)) 
 %    {
-    `TriCore_Clock("")`
+`TriCore_Clock("")`
 %    }
 %}
 %

@@ -92,7 +92,13 @@ int32_t main(void)
     CRC.pMsgBuffer   = (uint8_t *)&test_input[0];
     CRC.pCrcTable    = (uint8_t *)&crc16P1TableReflected[0];
     //CRC.init         = (void (*)(void *))CRC_init8Bit;
+#if INPUT_TYPE==8    
     CRC.run          = (void (*)(void *))CRC_run16BitReflectedTableLookupC;
+#elif INPUT_TYPE==16
+    CRC.run          = (void (*)(void *))CRC_run16BitReflectedTableLookupC_16;
+#elif INPUT_TYPE==32
+    CRC.run          = (void (*)(void *))CRC_run16BitReflectedTableLookupC_32;
+#endif
     CRC.polynomial   = POLYNOMIAL16P1;
     CRC.reflected    = 1;
 
@@ -114,7 +120,13 @@ int32_t main(void)
 
     // Reset a few elements of the CRC object
     CRC.crcResult    = 0;
-    CRC.run          = (void (*)(void *))CRC_run16BitAsm;
+#if INPUT_TYPE==8    
+        CRC.run          = (void (*)(void *))CRC_run16BitAsm;
+#elif INPUT_TYPE==16
+        CRC.run          = (void (*)(void *))CRC_run16BitAsm_16;
+#elif INPUT_TYPE==32
+        CRC.run          = (void (*)(void *))CRC_run16BitAsm_32;
+#endif
 
     // Run the 16-bit Asm CRC routine and save the result
     printf("Computing 16-bit Asm CRC on Polynomial 1...\n");
@@ -136,7 +148,13 @@ int32_t main(void)
     // Configure the CRC object for Polynomial 2
     CRC.pCrcTable    = (uint16_t *)&crc16P2Table[0];
     CRC.crcResult    = 0;
+#if INPUT_TYPE==8    
     CRC.run          = (void (*)(void *))CRC_run16BitTableLookupC;
+#elif INPUT_TYPE==16
+    CRC.run          = (void (*)(void *))CRC_run16BitTableLookupC_16;
+#elif INPUT_TYPE==32
+    CRC.run          = (void (*)(void *))CRC_run16BitTableLookupC_32;
+#endif
     CRC.polynomial   = POLYNOMIAL16P2;
     CRC.reflected    = 0;
 
@@ -157,8 +175,13 @@ int32_t main(void)
 
     // Reset a few elements of the CRC object
     CRC.crcResult    = 0;
-    CRC.run          = (void (*)(void *))CRC_run16BitAsm;
-
+#if INPUT_TYPE==8    
+        CRC.run          = (void (*)(void *))CRC_run16BitAsm;
+#elif INPUT_TYPE==16
+        CRC.run          = (void (*)(void *))CRC_run16BitAsm_16;
+#elif INPUT_TYPE==32
+        CRC.run          = (void (*)(void *))CRC_run16BitAsm_32;
+#endif
     // Run the 16-bit Asm CRC routine and save the result
     printf("Computing 16-bit Asm CRC on Polynomial 2...\n");
 

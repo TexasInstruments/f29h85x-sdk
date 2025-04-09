@@ -437,7 +437,7 @@ typedef enum
 
 //*****************************************************************************
 //
-//! Values that can be used to specify the Enhanced BUs Comparator (EBC)
+//! Values that can be used to specify the Enhanced Bus Comparator (EBC)
 //! Instance.
 //
 //*****************************************************************************

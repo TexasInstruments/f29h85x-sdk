@@ -196,7 +196,7 @@ let config = [
                 displayName : "Set FIFO Trigger Level",
                 description : 'Sets the FIFO Trigger level',
                 hidden      : false,
-                default     : 0x3FF
+                default     : 0xFF
             },
             {
                 name        : "enableDMA",
@@ -265,9 +265,9 @@ let config = [
 
 function onValidate(inst, validation)
 {
-    if (inst.setFIFOTriggerLevel < 0 || inst.setFIFOTriggerLevel > 0x3FF || (!Number.isInteger(inst.setFIFOTriggerLevel)))
+    if (inst.setFIFOTriggerLevel < 0 || inst.setFIFOTriggerLevel > 0xFF || (!Number.isInteger(inst.setFIFOTriggerLevel)))
     {
-        validation.logError("FIFO Trigger level must be an integer between 0 and 0x3FF", inst, "setFIFOTriggerLevel");
+        validation.logError("FIFO Trigger level must be an integer between 0 and 0xFF", inst, "setFIFOTriggerLevel");
     }
     if (inst.startTagReference < 0 || inst.startTagReference > 0xFFFF || (!Number.isInteger(inst.startTagReference)))
     {

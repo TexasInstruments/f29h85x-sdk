@@ -87,7 +87,7 @@
 #define SYSCTL_O_MCUCNFLOCK1                 0x33CU   // Lock bit for MCUCNFx registers
 #define SYSCTL_O_MCUCNFLOCK3                 0x344U   // Lock bit for MCUCNFx registers
 #define SYSCTL_O_LSEN                        0x348U   // Lockstep enable configuration
-#define SYSCTL_O_EPWMXLINKCFG                0x37CU   // Confugure which EPWM module instaces are
+#define SYSCTL_O_EPWMXLINKCFG                0x37CU   // Configure which EPWM module instaces are
                                                       // linked in the XLINK scheme
 #define SYSCTL_O_SICCONFIG                   0x384U   // Safety Interconnect(SIC) Configuration -
                                                       // Enable and READY TIMEOUT value

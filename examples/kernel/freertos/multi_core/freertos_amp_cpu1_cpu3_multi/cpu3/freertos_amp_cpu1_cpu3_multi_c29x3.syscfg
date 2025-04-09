@@ -1,0 +1,37 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --device "F29H85x" --part "F29H85x_256ZEX" --package "256ZEX" --context "CPU3" --product "MCU_SDK_F29H85x@1.00.00.00"
+ * @v2CliArgs --device "F29H850TU" --package "256ZEX" --variant "TMS320F29H850TU9" --context "CPU3" --product "MCU_SDK_F29H85x@1.00.00.00"
+ * @versions {"tool":"1.22.0+3893"}
+ */
+scripting.excludeFromBuild("FreeRTOSConfig.h");
+
+/**
+ * Import the modules used in this configuration.
+ */
+const ipc       = scripting.addModule("/driverlib/ipc.js");
+const FREERTOS  = scripting.addModule("/kernel/freertos_tool/FREERTOS", {}, false);
+const FREERTOS1 = FREERTOS.addInstance();
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+ipc.registerInterrupts0        = ["0"];
+ipc.ipcInt11.interruptPriority = 250;
+ipc.ipcInt11.interruptHandler  = "ipcInterrupt_fromCPU1";
+
+FREERTOS1.$name                                        = "myFREERTOS0";
+FREERTOS1.tasks.create(2);
+FREERTOS1.tasks[0].addTaskParams                       = "Constant parameter";
+FREERTOS1.tasks[0].taskPriority                        = 1;
+FREERTOS1.tasks[0].taskParams                          = "1";
+FREERTOS1.tasks[0].$name                               = "TaksReceive1";
+FREERTOS1.tasks[0].taskPointer                         = "task_receive";
+FREERTOS1.tasks[1].addTaskParams                       = "Constant parameter";
+FREERTOS1.tasks[1].taskParams                          = "0";
+FREERTOS1.tasks[1].taskPriority                        = 1;
+FREERTOS1.tasks[1].$name                               = "TaksReceive2";
+FREERTOS1.tasks[1].taskPointer                         = "task_receive";
+FREERTOS1.tickTimer.periphClock.$name                  = "driverlib_perClock0";
+FREERTOS1.tickTimer.periphClock.pinmuxPeripheralModule = scripting.forceWrite("");

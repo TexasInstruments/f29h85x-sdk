@@ -815,6 +815,11 @@ let SYSCTL_ESM = [
 	{ name: "SYSCTL_ESM_CPU3HIPRIWD", displayName: "ESM CPU3HIPRIWD" },
 	{ name: "SYSCTL_ESM_RESET", displayName: "ESM RESET" },
 ]
+let SysCtl_EMIF1CLKDivider = [
+	{ name: "SYSCTL_EMIFCLK_DIV_1", displayName: "EMIF1CLK DIV 1" },
+	{ name: "SYSCTL_EMIFCLK_DIV_2", displayName: "EMIF1CLK DIV 2" },
+    { name: "SYSCTL_EMIFCLK_DIV_4", displayName: "EMIF1CLK DIV 4" },
+]
 module.exports = {
 	SysCtl_PeripheralPCLOCKCR: SysCtl_PeripheralPCLOCKCR,
 	SysCtl_PeripheralSOFTPRES: SysCtl_PeripheralSOFTPRES,
@@ -832,4 +837,5 @@ module.exports = {
 	SYSCTL_EPWM: SYSCTL_EPWM,
 	SYSCTL_CAUSE: SYSCTL_CAUSE,
 	SYSCTL_ESM: SYSCTL_ESM,
+    SysCtl_EMIF1CLKDivider: SysCtl_EMIF1CLKDivider,
 }

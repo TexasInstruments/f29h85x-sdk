@@ -97,6 +97,8 @@ extern "C"
 #define HSM_MSG_FW_UPDATE_CODE_PROGRAM           (0x9041)
 /** @brief Program firmware during firmware update/code provisioning*/
 #define HSM_MSG_FW_UPDATE_CODE_VERIFY            (0x9043)
+/** @brief Veriy RoT Switching Certificate Service type ID*/
+#define HSM_MSG_VERIFY_ROT_CERT                  (0x9044)
 /* message flags */
 /**
  * @brief

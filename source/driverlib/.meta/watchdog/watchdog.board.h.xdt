@@ -7,7 +7,7 @@
 // WATCHDOG Configurations
 //
 //*****************************************************************************
-% var instance = module.$static;
+% var instance = module.$instances[0];
 #define WATCHDOG_PREDIVIDER `instance.wdPredivider`
 #define WATCHDOG_PRESCALAR `instance.wdPrescalar`
 %}

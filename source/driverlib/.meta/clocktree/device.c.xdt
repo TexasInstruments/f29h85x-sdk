@@ -23,7 +23,6 @@ void CLOCK_init()
                     DCC1_BASE);
 % }
 
-    SysCtl_setCputimer2Clock(`inst.timer2ClkSrc`, `inst.timer2ClkDiv`);
     SysCtl_setEPWMClock(`inst.epwmClkDiv`);
     SysCtl_setEMIF1Clock(`inst.emif1ClkDiv`);
     SysCtl_setLINAClock(`inst.linAClkDiv`);

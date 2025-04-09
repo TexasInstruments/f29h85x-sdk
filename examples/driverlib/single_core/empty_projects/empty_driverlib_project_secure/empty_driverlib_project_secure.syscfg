@@ -1,0 +1,104 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --device "F29H85x" --package "256ZEX" --part "F29H85x_256ZEX" --context "CPU1" --product "MCU_SDK_F29H85x@1.00.00.00"
+ * @v2CliArgs --device "F29H850TU" --package "256ZEX" --variant "TMS320F29H850TU9" --context "CPU1" --product "MCU_SDK_F29H85x@1.00.00.00"
+ * @versions {"tool":"1.22.0+3877"}
+ */
+
+const divider15       = system.clockTree["PLL_REFDIV"];
+divider15.divideValue = 1;
+
+const multiplier1         = system.clockTree["PLL_IMULT"];
+multiplier1.multiplyValue = 40;
+
+const mux7       = system.clockTree["OSCCLKSRCSEL"];
+mux7.inputSelect = "INTOSC2";
+
+/**
+ * Import the modules used in this configuration.
+ */
+const jtag  = scripting.addModule("/driverlib/jtag.js");
+const System_Security = scripting.addModule("/ti/security/System_Security");
+System_Security.LINK2.fileNames                                 = "empty_driverlib_project_secure";
+System_Security.LINK2.codesizeFlash                             = 16;
+System_Security.LINK2.codeAPR_Flash.type                        = scripting.forceWrite("Code");
+System_Security.LINK2.codeAPR_RAM.type                          = scripting.forceWrite("Code");
+System_Security.LINK2.codeAPR_RAM.memType                       = scripting.forceWrite("RAM");
+System_Security.LINK2.codeAPR_RAM.memSize                       = scripting.forceWrite(4);
+System_Security.LINK2.dataAPR_RW.memType                        = scripting.forceWrite("RAM");
+System_Security.LINK2.dataAPR_RW.memSize                        = scripting.forceWrite(4);
+System_Security.LINK2.dataAPR_RO.type                           = scripting.forceWrite("Code");
+System_Security.LINK2.dataAPR_RO.memSize                        = scripting.forceWrite(4);
+System_Security.LINK2.Link.isLink1                              = scripting.forceWrite(false);
+System_Security.CommonCodeModule.codesizeFlash                  = 12;
+System_Security.CommonCodeModule.codeAPR_RAM.specialAprStatus   = scripting.forceWrite("none");
+System_Security.CommonCodeModule.codeAPR_RAM.type               = scripting.forceWrite("Code");
+System_Security.CommonCodeModule.codeAPR_RAM.memType            = scripting.forceWrite("RAM");
+System_Security.CommonCodeModule.codeAPR_RAM.memSize            = scripting.forceWrite(4);
+System_Security.CommonCodeModule.dataAPR_RW.memType             = scripting.forceWrite("RAM");
+System_Security.CommonCodeModule.dataAPR_RW.memSize             = scripting.forceWrite(4);
+System_Security.CommonCodeModule.dataAPR_RO.type                = scripting.forceWrite("Code");
+System_Security.CommonCodeModule.dataAPR_RO.memSize             = scripting.forceWrite(4);
+System_Security.CommonCodeModule.Link.isLink1                   = scripting.forceWrite(false);
+System_Security.CommonCodeModule.Link.isLink2                   = scripting.forceWrite(false);
+System_Security.CommonCodeModule.codeAPR_Flash.specialAprStatus = scripting.forceWrite("none");
+System_Security.CommonCodeModule.codeAPR_Flash.type             = scripting.forceWrite("Code");
+System_Security.LINK1.Link.isLink2                              = scripting.forceWrite(false);
+System_Security.STACK1.stackMem.type                            = scripting.forceWrite("RAM");
+System_Security.STACK1.stackMem.datasize                        = scripting.forceWrite(4);
+System_Security.STACK1.stack.size                               = scripting.forceWrite(256);
+System_Security.STACK1.stack.zone                               = scripting.forceWrite("ZONE1");
+System_Security.STACK1.stack.secGroupAttr                       = scripting.forceWrite("PUBLIC");
+System_Security.STACK1.stack.stackAPR.memType                   = scripting.forceWrite("RAM");
+System_Security.STACK2.stackMem.type                            = scripting.forceWrite("RAM");
+System_Security.STACK2.stackMem.datasize                        = scripting.forceWrite(4);
+System_Security.STACK2.stack.size                               = scripting.forceWrite(256);
+System_Security.STACK2.stack.zone                               = scripting.forceWrite("ZONE1");
+System_Security.STACK2.stack.secGroupAttr                       = scripting.forceWrite("PUBLIC");
+System_Security.STACK2.stack.stackAPR.memType                   = scripting.forceWrite("RAM");
+System_Security.sandbox.create(1);
+System_Security.sandbox[0].$name                                = "sandbox_CommonCode";
+System_Security.sandbox[0].modules                              = ["CommonCodeModule_Link"];
+System_Security.sandbox[0].stackMem.type                        = scripting.forceWrite("RAM");
+System_Security.sandbox[0].stackMem.datasize                    = scripting.forceWrite(4);
+System_Security.sandbox[0].stack.size                           = scripting.forceWrite(256);
+System_Security.sandbox[0].stack.zone                           = scripting.forceWrite("ZONE1");
+System_Security.sandbox[0].stack.secGroupAttr                   = scripting.forceWrite("PUBLIC");
+System_Security.sandbox[0].stack.stackAPR.memType               = scripting.forceWrite("RAM");
+
+/**
+ * References between modules
+ */
+System_Security.SECCFG_UPDATE_LINK                  = null;
+System_Security.ZONE1_UPDATE_LINK                   = null;
+System_Security.ZONE2_UPDATE_LINK                   = null;
+System_Security.ZONE3_UPDATE_LINK                   = null;
+System_Security.dltLinks                            = [];
+System_Security.LINK2.interrupts                    = [];
+System_Security.LINK2.Link.interrupts               = [];
+System_Security.LINK2.Link.interruptsAPI            = [];
+System_Security.CommonCodeModule.interrupts         = [];
+System_Security.CommonCodeModule.Link.interrupts    = [];
+System_Security.CommonCodeModule.Link.interruptsAPI = [];
+System_Security.LINK1.interrupts                    = [];
+System_Security.LINK1.Link.interrupts               = [];
+System_Security.LINK1.Link.interruptsAPI            = [];
+System_Security.STACK1.stackMem.module_ro           = [];
+System_Security.STACK1.stackMem.module_rw           = [];
+System_Security.STACK1.stack.links                  = [];
+System_Security.STACK2.stackMem.module_ro           = [];
+System_Security.STACK2.stackMem.module_rw           = [];
+System_Security.STACK2.stack.links                  = [];
+System_Security.sandbox[0].stackMem.module_ro       = [];
+System_Security.sandbox[0].stackMem.module_rw       = [];
+System_Security.sandbox[0].stack.links              = [];
+
+/**
+ * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
+ * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
+ * re-solve from scratch.
+ */
+jtag.JTAG.$suggestSolution        = "JTAG";
+jtag.JTAG.tdoPin.$suggestSolution = "GPIO223/TDO";
+jtag.JTAG.tdiPin.$suggestSolution = "GPIO222/TDI";

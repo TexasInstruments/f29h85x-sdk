@@ -46,201 +46,123 @@
  ;	OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  ;	POSSIBILITY OF SUCH DAMAGE.
 ;;
+
+;; This is the 64-bit version
+;;; NOTE !!!! This scheme will ONLY WORK for fir->order values which are a multiple of 8.
 .section   kernel_asm, "ax"
-.global    fir_f32_asm
-.type      fir_f32_asm,@function
+.global c29_fir_sample_asm  
+.type c29_fir_sample_asm,@function
 
-fir_f32_asm:
 
-;;; // circular hist buf so no need for in_with_hist
-;;; void fir_f32_asm(uint32_t N, uint32_t M, float32_t *out, float32_t *in, float32_t *filt, float32_t *hist);	
-; D0 = N (number of iterations)
-; D1 = M (number of taps)
-; A4 = *out (single sample)
-; A5 = *in (circular buffer)
-; A6 = *filt (filt coeffs)
-; A7 = *hist (single sample)
-    
-    ADD.U16 A15,#0x18
-    MV A8, A6 ;; Save the A6 pointer. This has to be reloaded to the start of the filter-coefficients on each iteration.
-  ||ST.32 *(A15-#0x8), A14
+;;; (pointer)fir : A4
+;;; (pointer)coeffp : A5 
+;;; (pointer) k_in : A6
+;;; (int32_t) limit;
+;;; For the example where fir->order = 64, limit will be 31. Total 32 executions of the dual-mac are needed.
+					  ;; limit/31 is also the circular buffer threshold
 
-      ;ST.64 *(A15-#0x10), XA12
-ST.32 *(A15-#0x10),A12
-   || ZERO A0  ;; V2
-ST.32 *(A15-#0x18),A13
-   || MV A13, D0
-        
-    DEC A13
-    ||MV A12, D0  ; Save D0 (N) in A12. Need to subtract this count later.
-    INC A12
-           
+;;;#define k_in A6
+;;;#define limit D0
 
-fir_loop:
-    MV  A14,D1      ;A14 = M
-  || MV A6,A8   ;; Reset A6 for each iteration of the loop.
-  || MV A1,A0   ;; Reset A1 also.
-    
-    MV.32 *(A7+A0<<#0x2),*A5	    ; Store input sample at hist[circ_buf_index]
-    || MV A3, D1   ; A3 = M    
-    || SUB.U16 A14, #4 ;; Adjust the count for the extra 4 iterations that will occur due to SDECBD
-       DEC A3 ; A3 = M-1 
-    
-;;;;;;;;;;;;;;;;;;;;;;;   Fix this later. Case of Number of taps less than 4
-;;;;;;;;;;;;;;;;;;;;;;;   WARNING !!! For now, this code will not handle case of TAP length less than 4
-;;V2   QDECB A14, #3, @Neq0, @Neq1, @Neq2, @
-;;V2   || DEC A3      ; A3 = M-1 	
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; Load coeffs and data 64-bits at a time.
+c29_fir_sample_asm:
+    ADD.U16	A15,A15,#0x20 ;; Allocate stack
+;; M0, M1 = acc1, acc2
+;; A0 = k_lcl
+    LD.32 A0, *(A6)
+    || ST.32 *(A15 - #0x10), A14
+    MV A8, D0  ;; Limit count for the loop  for ( j = 0; j <= limit; j++ ) 
+    || LD.32 A7, *(A4+#0x4) ;;;;; A7 will point to fir->dbuffer_ptr[]
+    || ZERO M6
 
-prologue:
-    LD.32 M1, *A5					; A5 - this prevents a stall over using *(A7+A1<<#0x2)
-	|| LD.32 M2, *(A6++#0x4)
-	|| DEC.CIRC A1, A3
-	|| ZERO M5
+    ZERO M7 ;;;;;; Zero acc1
+    || MV A9, A8  ;; A9 is used as circular buffer 
+    || SUB.U16 A14, A8, #4     ;; Adjust the loop count as follows sw_count = (count - 4)/4 ;
+    || ZERO M14
 
-    LD.32 M1, *(A7+A1<<#0x2)
-	|| LD.32 M2, *(A6++#0x4)
-    	|| SMPYF M3, M2, M1
-	|| DEC.CIRC A1, A3
-        || ZERO M6
-	
-	LD.32 M1, *(A7+A1<<#0x2)
-	|| LD.32 M2, *(A6++#0x4)
-        || SMPYF M4, M2, M1
-	|| DEC.CIRC A1, A3	
-	|| QDECB A14, #4, @epilogue0, @epilogue1, @epilogue2, @epilogue3, @
+       LSR A14, A14, #2	       	;; This will result in A14 = 6. Hence, the 'kernel_loop' body will iterate (6+1) 7 times
+    || ZERO M15		       	;; 4 dual-macs are executed as part of the prologue and epilogue.
+				;; Each kernel_loop iteration executes 4 dual-MACs. So, total dual-MACs in this example will be 
+				;; (7*4) + 4(part of prologue and epilogue) = 32 dual-MACs. which is 64 (fir->order)
+;;; prologue
+    || LD.64 XM0, *(A5++)
+    || LD.64 XM2, *(A7+A0<<3)
+    || DEC.CIRC A0, A9
 
-        ;;; Align this to a 128-bit boundary to get best performance
- .align 16
-kernel: 
-    ;1
-    LD.32 M1, *(A7+A1<<#0x2)
-	|| LD.32 M2, *(A6++#0x4)
-        || SMPYF M3, M2, M1
-        || SADDF M5, M5, M3
-	|| SDECBD A14, #4
-	|| DEC.CIRC A1, A3
+    LD.64 XM8, *(A5++)
+    || LD.64 XM10, *(A7+A0<<3)
+    || SMPYF M4, M0, M2
+    || SMPYF M5, M1, M3
+    || DEC.CIRC A0, A9
 
-    ;2    
-    LD.32 M1, *(A7+A1<<#0x2)
-	|| LD.32 M2, *(A6++#0x4)
-        || SMPYF M4, M2, M1
-	|| SADDF M6, M6, M4
-	|| DEC.CIRC A1, A3
+    LD.64 XM0, *(A5++)
+    || LD.64 XM2, *(A7+A0<<3)
+    || DEC.CIRC A0, A9
+    || SMPYF M12, M8, M10
+    || SMPYF M13, M9, M11
 
-    ;3    
-    LD.32 M1, *(A7+A1<<#0x2)
-	|| LD.32 M2, *(A6++#0x4)
-        || SMPYF M3, M2, M1
-	|| SADDF M5, M5, M3
-	|| DEC.CIRC A1, A3
-
-    ;4    
-    LD.32 M1, *(A7+A1<<#0x2)
-	|| LD.32 M2, *(A6++#0x4)
-        || SMPYF M4, M2, M1
-	|| SADDF M6, M6, M4
-	|| DEC.CIRC A1, A3
-
-epilogue:
-    LD.32 M1, *(A7+A1<<#0x2)
-    || LD.32 M2, *(A6++#0x4)
-    || SMPYF M3, M2, M1
-    || SADDF M5, M5, M3
-    || DEC.CIRC A1, A3
-
-    SMPYF M4, M2, M1
+.align 16
+kernel_loop:
+    SDECBD A14, #1, @kernel_loop
+    || LD.64 XM8, *(A5++)
+    || LD.64 XM10, *(A7+A0<<3)
+    || DEC.CIRC A0, A9
+    || SMPYF M4, M0, M2
+    || SMPYF M5, M1, M3
     || SADDF M6, M6, M4
+    || SADDF M7, M7, M5
 
-    SADDF M5, M5, M3
-    SADDF M6, M6, M4
-    || QDECB A14, #3, @epilogue0, @epilogue1, @epilogue2, @
+       LD.64 XM0, *(A5++)
+    || LD.64 XM2, *(A7+A0<<3)
+    || DEC.CIRC A0, A9
+    || SMPYF M12, M8, M10
+    || SMPYF M13, M9, M11
+    || SADDF M14, M14, M12
+    || SADDF M15, M15, M13
 
-/// These codes will execute the iterations which are a non-multiples of 4
-epilogue3:
-    ;1
-	LD.32 M1, *(A7+A1<<#0x2)
-	|| LD.32 M2, *(A6++#0x4)
-	|| DEC.CIRC A1, A3
+       LD.64 XM8, *(A5++)
+    || LD.64 XM10, *(A7+A0<<3)
+    || DEC.CIRC A0, A9
+    || SMPYF M4, M0, M2
+    || SMPYF M5, M1, M3
+    || SADDF M6, M6, M4
+    || SADDF M7, M7, M5
 
-    ;2
-	LD.32 M1, *(A7+A1<<#0x2)
-	|| LD.32 M2, *(A6++#0x4)
-	|| SMPYF M3, M2, M1
-	|| DEC.CIRC A1, A3
-	
-	;3
-    LD.32 M1, *(A7+A1<<#0x2)
-    || LD.32 M2, *(A6++#0x4)
-    || SMPYF M4, M2, M1
-    || SADDF M5, M5, M3
-    || DEC.CIRC A1, A3
+       LD.64 XM0, *(A5++)
+    || LD.64 XM2, *(A7+A0<<3)
+    || DEC.CIRC A0, A9
+    || SMPYF M12, M8, M10
+    || SMPYF M13, M9, M11
+    || SADDF M14, M14, M12
+    || SADDF M15, M15, M13
 
-     SMPYF M3, M2, M1
-     SADDF M6, M6, M4
-     SADDF M5, M5, M3
-    
-    INC.CIRC A0,A3  ; A0=0 if A0>=M-1, else A0+=1
-    || DECBD A13, #1, @fir_loop
-    SADDF M5, M5, M6 		; no stall due to above
-    ;; ST.32 *A8, A0  			; update *ptr_circ_buf_index
-    ADD.U16 A5, #4        
-    ST.32 *A4, M5		; no stall due to above
-    || ADD.U16 A4, #4
-    
-    B @func_exit_point, UNC
+;;; Epilogue
+       LD.64 XM8, *(A5++)
+    || LD.64 XM10, *(A7+A0<<3)
+    || DEC.CIRC A0, A9
+    || SADDF M6, M6, M4
+    || SADDF M7, M7, M5
+    || SMPYF M4, M0, M2
+    || SMPYF M5, M1, M3
 
-epilogue2:	
-    LD.32 M1, *(A7+A1<<#0x2)
-    || LD.32 M2, *(A6++#0x4)
-    || DEC.CIRC A1, A3
+       SMPYF M12, M8, M10
+    || SMPYF M13, M9, M11
+    || SADDF M14, M14, M12
+    || SADDF M15, M15, M13
 
-    ;1
-	LD.32 M1, *(A7+A1<<#0x2)
-	|| LD.32 M2, *A6
-	|| SMPYF M3, M2, M1
-	|| DEC.CIRC A1, A3
-    
-	SMPYF M4, M2, M1
-	SADDF M5, M5, M3	; no stall
-	SADDF M6, M6, M4	; no stall
-	
-	INC.CIRC A0,A3  ; A0=0 if A0>=M-1, else A0+=1
-	|| DECBD A13, #1, @fir_loop
-	SADDF M5, M5, M6 		; no stall due to above
-	;; ST.32 *A8, A0  			; update *ptr_circ_buf_index
-	ADD.U16 A5, #4        
-	ST.32 *A4, M5		; no stall due to above
-	|| ADD.U16 A4, #4
+       SADDF M6, M6, M4
+    || SADDF M7, M7, M5
 
-	B @func_exit_point, UNC
+       SADDF M14, M14, M12
+    || SADDF M15, M15, M13
 
-epilogue1:
-    ;1
-	LD.32 M1, *(A7+A1<<#0x2)
-	|| LD.32 M2, *(A6++#0x4)
-	|| DEC.CIRC A1, A3
-	
-	SMPYF M3, M2, M1
-	SADDF M5, M5, M3
+    || RETD	*(ADDR1)(A15-=#0x28) ;;;;; De-allocate stack and return
+    || LD.32 A14, *(A15 - #0x10)
+    SADDF M6, M6, M7
+    ADDF M0, M14, M15 ;;;;; Final value returned in M0
+    ||ST.32 *A6, A0 ;;;;; *k_in = k_lcl
+    SADDF M0, M0, M6
 
-epilogue0:
-	
-	INC.CIRC A0,A3  ; A0=0 if A0>=M-1, else A0+=1
-	
-	DECBD A13, #1, @fir_loop
-	SADDF M5, M5, M6 		; no stall due to above
-	;; ST.32 *A8, A0  ; update *ptr_circ_buf_index
-	ADD.U16 A5, #4	
-	|| ST.32 *A4, M5		; no stall due to above
-        ADD.U16 A4, #4
 
-func_exit_point:
-	RETD *(A15-#0x20)
-	LD.32 A14, *(A15-#0x8)
-       ||SUB A5, A5, A12,#2  ; Restore the A5 pointer in = in - N
-        ;LD.64 XA12,*(A15-#0x10)
-	LD.32 A12,*(A15-#0x10)
-       || SUB A4, A4, A12,#2  ; Restore the A4 pointer out = out - N
-	LD.32 A13,*(A15-#0x18)
-        || SUB.U16 A15, #0x20        
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; End of file ;;;;;;;;;;;;;;;;;;;;

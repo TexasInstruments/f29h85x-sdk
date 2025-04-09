@@ -78,10 +78,31 @@ void uartBoot(uint32_t bootMode, uint32_t LoadAddr, uint32_t ImageSize)
     Fapi_FlashStatusWordType  oFlashStatusWord;
     oReturnCheck = Fapi_Status_Success;
     oFlashStatus = 3;
+    bool flashSemaphore;
 
     // Set configuration as per user request
     u32UserFlashConfig = Fapi_getUserConfiguration(BankType,
                                                    FOTAStatus);
+
+    Fapi_SetFlashCPUConfiguration(Mode0);
+
+    // Request semaphore for CPU1
+    flashSemaphore = SSU_claimFlashSemaphore();
+
+    if (!flashSemaphore) 
+    {
+        Example_Error();
+    }
+
+    // Initialize the Flash API by providing the Flash register base address
+    // and operating frequency(in MHz).
+    // This function is required to initialize the Flash API based on System
+    // frequency before any other Flash API operation can be performed.
+    // This function must also be called whenever System frequency or RWAIT is
+    // changed.
+    //
+    oReturnCheck = Fapi_initializeAPI((Fapi_FmcRegistersType *)FLASHCONTROLLER1_BASE,
+                                      200);
 
     //
     // Erase flash before writing

@@ -43,22 +43,31 @@
 #ifndef F65_TYPES_H_
 #define F65_TYPES_H_
 
+//*****************************************************************************
+//
+// If building with a C++ compiler, make all of the definitions in this header
+// have a C binding.
+//
+//*****************************************************************************
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 /*****************************************************************************/
 /* GLOBAL DEFINITIONS                                                        */
 /*****************************************************************************/
-
 #define ATTRIBUTE_PACKED    __attribute__((packed))
 
-
-#define HIGH_BYTE_FIRST     0
-#define LOW_BYTE_FIRST      1
+#define HIGH_BYTE_FIRST     0U
+#define LOW_BYTE_FIRST      1U
 
 #ifndef TRUE
-   #define TRUE              1
+   #define TRUE              1U
 #endif
 
 #ifndef FALSE
-   #define FALSE             0
+   #define FALSE             0U
 #endif
 
 /*****************************************************************************/
@@ -103,10 +112,10 @@ typedef enum
 */
 typedef enum
 {
-   Fapi_ProgramData    = 0x0002,
-   Fapi_EraseSector    = 0x0006,
-   Fapi_EraseBank      = 0x0008,
-   Fapi_ClearStatus    = 0x0010
+   Fapi_ProgramData    = 0x0002U,
+   Fapi_EraseSector    = 0x0006U,
+   Fapi_EraseBank      = 0x0008U,
+   Fapi_ClearStatus    = 0x0010U
 }  ATTRIBUTE_PACKED Fapi_FlashStateCommandsType;
 
 typedef  uint32_t Fapi_FlashStatusType;
@@ -135,7 +144,8 @@ typedef enum
    Fapi_Error_AsyncDataEccBufferLengthMismatch,
    Fapi_Error_FeatureNotAvailable,  /* FMC feature is not available on this device */
    Fapi_Error_FlashRegsNotWritable, /* Returned if Flash registers are not writable due to security */
-   Fapi_Error_InvalidCPUID          /* Returned if OTP has an invalid CPUID */ 
+   Fapi_Error_InvalidCPUID,          /* Returned if OTP has an invalid CPUID */ 
+   Fapi_Error_InvalidBankMode       /* Returned if BankMode provided is invalid */ 
 }  ATTRIBUTE_PACKED Fapi_StatusType;
 
 
@@ -151,6 +161,9 @@ typedef enum
    Production               /* Fully validated, functionally complete, ready for production use */
 }  ATTRIBUTE_PACKED Fapi_ApiProductionStatusType;
 
+/*!
+    \brief
+*/
 typedef struct
 {
    uint8_t  u8ApiMajorVersion;
@@ -164,7 +177,9 @@ typedef struct
    uint32_t u32ApiCompilerVersion;
 } Fapi_LibraryInfoType;
 
-
+/*!
+    \brief This contains all the possible Flash Bank ID's.
+*/
 typedef enum
 {
    Bank0,
@@ -175,6 +190,9 @@ typedef enum
 
 } ATTRIBUTE_PACKED Fapi_BankID;
 
+/*!
+    \brief This contains a NW flash controller address
+*/
 typedef enum
 {
     FAPI_FLASHNW_FC1_BASE = (uint32_t)0x30100000U,
@@ -183,14 +201,23 @@ typedef enum
 } ATTRIBUTE_PACKED Fapi_FLCID;
 
 /*!
+    \brief This contains a NW flash controller address
+*/
+typedef enum
+{
+    Fapi_BankMgmtFLC1Address = (uint32_t)0x10d80000U,
+    Fapi_BankMgmtFLC2Address = (uint32_t)0x10d90000U
+
+} ATTRIBUTE_PACKED Fapi_BankMgmtAddress;
+/*!
     \brief
 */
 typedef enum
 {
-   Mode0 = 0x3,    /* CPU1 4MB, No FOTA, CPU1SWAP X CPU3SWAP X */
-   Mode1 = 0x6,    /* CPU1 4MB, FOTA Enabled, CPU1SWAP 0/1 CPU3SWAP X*/
-   Mode2 = 0x9,    /* CPU1 2MB CPU3 2MB, No FOTA, CPU1SWAP X CPU3SWAP X*/
-   Mode3 = 0xC     /* CPU1 2MB CPU3 2MB, FOTA Enabled, (CPU1SWAP 1 CPU3SWAP 1) or (CPU1SWAP 0 CPU3SWAP 0)*/
+   Mode0 = 0x3U,    /* Mode 0: CPU1 4MB, No FOTA, CPU1SWAP X CPU3SWAP X */
+   Mode1 = 0x6U,    /* Mode 1: CPU1 4MB, FOTA Enabled, CPU1SWAP 0/1 CPU3SWAP X*/
+   Mode2 = 0x9U,    /* Mode 2: CPU1 2MB CPU3 2MB, No FOTA, CPU1SWAP X CPU3SWAP X*/
+   Mode3 = 0xCU     /* Mode 3: CPU1 2MB CPU3 2MB, FOTA Enabled, (CPU1SWAP 1 CPU3SWAP 1) or (CPU1SWAP 0 CPU3SWAP 0)*/
 } ATTRIBUTE_PACKED Fapi_BankMode;
 
 /*!
@@ -198,8 +225,8 @@ typedef enum
 */
 typedef enum
 {
-   CPU1Swap0 = 0xC9,        //default mapping of CPU1 Banks
-   CPU1Swap1 = 0x36,        //Alternate Mapping of CPU1 Banks
+   CPU1Swap0 = 0xC9U,        //default mapping of CPU1 Banks
+   CPU1Swap1 = 0x36U,        //Alternate Mapping of CPU1 Banks
 } ATTRIBUTE_PACKED Fapi_CPU1BankSwap;
 
 /*!
@@ -207,8 +234,8 @@ typedef enum
 */
 typedef enum
 {
-   CPU3Swap0 = 0xC9,        //default mapping of CPU3 Banks
-   CPU3Swap1 = 0x36,        //Alternate Mapping of CPU3 Banks
+   CPU3Swap0 = 0xC9U,        //default mapping of CPU3 Banks
+   CPU3Swap1 = 0x36U,        //Alternate Mapping of CPU3 Banks
 } ATTRIBUTE_PACKED Fapi_CPU3BankSwap;
 
 
@@ -236,7 +263,15 @@ typedef enum
 typedef enum
 {
    Base = 0xC9U,    /* BASE addresses are valid */
-   Alt = 0x36       /* ALT addresses are valid */
+   Alt = 0x36U       /* ALT addresses are valid */
 } ATTRIBUTE_PACKED Fapi_SECVALID;
 
+//*****************************************************************************
+//
+// Mark the end of the C bindings section for C++ compilers.
+//
+//*****************************************************************************
+#ifdef __cplusplus
+}
+#endif
 #endif /*F65_TYPES_H_*/

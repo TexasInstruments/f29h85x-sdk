@@ -82,7 +82,7 @@ let config = [
         config: [
             {
                 name: "rtlogger",
-                displayName: "Enable Rapid Logger",
+                displayName: "Enable Rapid Time Logger",
                 default: false,
                 hidden: transferCommon.isC29x(),
                 onChange: rtLoggeronChange
@@ -213,7 +213,7 @@ function onValidate(inst, validation){
     if (inst["rtlogger"] && !inst["fsilogger"])
     {
         validation.logError(
-            "FSI Frame Logger must be enabled to use Rapid Logger", 
+            "FSI Frame Logger must be enabled to use Rapid Time Logger", 
             inst, "rtlogger");
     }
     if ((inst["customlogger"]) && !inst["exporter"]["exportCustomLog"])

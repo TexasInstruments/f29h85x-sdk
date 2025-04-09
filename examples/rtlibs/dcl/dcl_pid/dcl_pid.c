@@ -1,50 +1,52 @@
-/*
- * Copyright (C) 2024 Texas Instruments Incorporated - http://www.ti.com/
- *
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
- *
- *	* Redistributions of source code must retain the above copyright
- *	  notice, this list of conditions and the following disclaimer.
- *
- *	* Redistributions in binary form must reproduce the above copyright
- *	  notice, this list of conditions and the following disclaimer in the
- *	  documentation and/or other materials provided with the
- *	  distribution.
- *
- *	* Neither the name of Texas Instruments Incorporated nor the names of
- *	  its contributors may be used to endorse or promote products derived
- *	  from this software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
- * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
- * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
- * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
- * OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
- * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
- * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
- * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
- * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
+//#############################################################################
+//
+//
+// $Copyright:
+//#############################################################################
 
 #include "dcl_pid.h"
-    
+#include "device.h"
+
+//
+// rk = Target referenced value
+// yk = Current feedback value
+// lk = Clamp control value
+// uk = Output control effort
+//
+float32_t rk, yk, lk, uk;
+
+//
+// profiling variables
+//
+uint32_t startCounter = 0;
+uint32_t endCounter = 0;
+uint32_t overheadCount = 0;
+uint32_t totalCount = 0;
+
 int main(void)
 {
+    // Timer configured in Sysconfig (Period set to 10s)
     Board_init();
-    
+
+    // Calculate the overhead of an empty timer
+    CPUTimer_startTimer(CPUTIMER0_BASE);
+    startCounter = CPUTimer_getTimerCount(CPUTIMER0_BASE);
+    __builtin_instrumentation_label("overhead_start");
+    endCounter = CPUTimer_getTimerCount(CPUTIMER0_BASE);
+    __builtin_instrumentation_label("overhead_end");
+    overheadCount = startCounter - endCounter;
+    CPUTimer_stopTimer(CPUTIMER0_BASE);
+
     //
     // Available PID controllers are:
     // - DCL_runPIDSeries
     // - DCL_runPIDParallel
     //
     PID_runTest(pid_controller, &DCL_runPIDSeries); 
+
+    uint32_t avgCount = totalCount / NUM_ELEMENTS;
+    printf("DCL PID total cycles = %d\nDCL PID average cycles = %d\n", totalCount, avgCount);
 }
-        float32_t rk,yk,lk,uk;
 
 int PID_runTest(DCL_PID *ctrl_handle, DCL_PID_FUNC dcl_pid_func)
 {   
@@ -54,10 +56,9 @@ int PID_runTest(DCL_PID *ctrl_handle, DCL_PID_FUNC dcl_pid_func)
     DCL_FDLOG rkBuf, ykBuf, lkBuf, outBuf, ctlBuf;
 
     //
-    // Update controller parameters and reset controller
+    // Update controller parameters
     //
-    PID_updateParams(ctrl_handle);
-    DCL_resetPID(ctrl_handle);
+    PID_updateParams(ctrl_handle, PID_TESTCASE);
 
     //
     // Initialize Log pointers to the data buffer
@@ -73,30 +74,32 @@ int PID_runTest(DCL_PID *ctrl_handle, DCL_PID_FUNC dcl_pid_func)
     for (i = 0; i < NUM_ELEMENTS; i++)
     {   
         //
-        // rk = Target referenced value
-        // yk = Current feedback value
-        // uk = Output control effort
-        //
-
-        
-        //
         // Read the input data buffers
         //
         rk = DCL_readLog(&rkBuf);
         yk = DCL_readLog(&ykBuf);
         lk = DCL_readLog(&lkBuf);
 
+        CPUTimer_startTimer(CPUTIMER0_BASE);
+        startCounter = CPUTimer_getTimerCount(CPUTIMER0_BASE);
+        // Prevent instructions to be optimized out of order
+        __builtin_instrumentation_label("profiling_start");
+
         //
         // Run the controller
-        // Equivalent to uk = DCL_runPID_series(ctrl_handle, rk, yk, lk);
+        // Equivalent to uk = DCL_runPIDSeries(ctrl_handle, rk, yk, lk);
         //
         uk = (*dcl_pid_func)(ctrl_handle, rk, yk, lk); 
+
+        __builtin_instrumentation_label("profiling_end");
+        endCounter = CPUTimer_getTimerCount(CPUTIMER0_BASE);
+        totalCount += startCounter - endCounter - overheadCount;
+        CPUTimer_stopTimer(CPUTIMER0_BASE);
 
         //
         // Write the results to the output buffer
         //
         DCL_writeLog(&outBuf, uk);
-
     }
 
     //
@@ -115,7 +118,6 @@ int PID_runTest(DCL_PID *ctrl_handle, DCL_PID_FUNC dcl_pid_func)
         if (!DCL_isZero(output - expected))
         {
             errors++;
-
             printf("FAIL at sample %d, outputs %f, should be %f\n", i, output, expected);
         }
     }
@@ -125,24 +127,54 @@ int PID_runTest(DCL_PID *ctrl_handle, DCL_PID_FUNC dcl_pid_func)
     return errors;
 }
 
-bool PID_updateParams(DCL_PID *pid_ptr)
+bool PID_updateParams(DCL_PID *pid_ptr, uint32_t testCase)
 {
     bool is_updated;
     float32_t targetbw_hz;
 
-	pid_ptr->sps->Kp = 0.1693591151f;
-	pid_ptr->sps->Ki = 0.0075683544f;
-	pid_ptr->sps->Kd = 0.0252412200f;
-    pid_ptr->sps->Kr = 1.0f;
-	pid_ptr->css->T = (float32_t) 1/500;
-	pid_ptr->sps->Umax = 1.0f;
-	pid_ptr->sps->Umin = -1.0f;
+    switch (testCase) 
+    {
+        default:
+        case 1:
+            pid_ptr->sps->Kp = 0.1693591151f;
+	        pid_ptr->sps->Ki = 0.0075683544f;
+	        pid_ptr->sps->Kd = 0.0252412200f;
+            pid_ptr->sps->Kr = 1.0f;
+	        pid_ptr->css->T = (float32_t) 1/500;
+	        pid_ptr->sps->Umax = 1.0f;
+	        pid_ptr->sps->Umin = -1.0f;
+            // Calculate and set the filter coefficients
+            targetbw_hz = 45;
 
-    // Calculate and set the filter coefficients
-    targetbw_hz = 45;
+            break;
+        case 2:
+	        pid_ptr->sps->Kp = 1.8540138247f;
+	        pid_ptr->sps->Ki = 0.0081723506f;
+	        pid_ptr->sps->Kd = 0.0f;
+            pid_ptr->sps->Kr = 1.0f;
+	        pid_ptr->css->T = (float32_t) 1/2000;
+	        pid_ptr->sps->Umax = 100.0f;
+	        pid_ptr->sps->Umin = -100.0f;
+            // Calculate and set the filter coefficients
+            targetbw_hz = 1;
+
+            break;
+        case 3:
+	        pid_ptr->sps->Kp = 2.50000f;
+	        pid_ptr->sps->Ki = 0.01000f;
+	        pid_ptr->sps->Kd = 0.05200f;
+            pid_ptr->sps->Kr = 1.0f;
+	        pid_ptr->css->T = (float32_t) 0.05;
+	        pid_ptr->sps->Umax = 100.0f;
+	        pid_ptr->sps->Umin = -100.0f;
+            // Calculate and set the filter coefficients
+            targetbw_hz = 8;     
+
+            break;
+    }
     DCL_setPIDfilterBW(pid_ptr, targetbw_hz);
 
-    // Update NLPID params from SPS
+    // Update PID params from SPS
     DCL_setUpdateStatus(pid_ptr);
     is_updated = DCL_updatePID(pid_ptr);
 
@@ -151,5 +183,3 @@ bool PID_updateParams(DCL_PID *pid_ptr)
 
     return is_updated;
 }
-
-

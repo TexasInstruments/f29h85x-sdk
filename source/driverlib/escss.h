@@ -1167,9 +1167,13 @@ ESCSS_getMemoryInitDoneStatusNonBlocking(uint32_t base)
     //
     if((HWREG(base + ECAT_SS_O_ESCSS_MEM_TEST) & ECAT_SS_ESCSS_MEM_TEST_MEM_INIT_DONE) ==
        ECAT_SS_ESCSS_MEM_TEST_MEM_INIT_DONE)
+    {
         memoryInitStatus = (bool)true;
+    }
     else
+    {
         memoryInitStatus = (bool)false;
+    }
 
     return(memoryInitStatus);
 }

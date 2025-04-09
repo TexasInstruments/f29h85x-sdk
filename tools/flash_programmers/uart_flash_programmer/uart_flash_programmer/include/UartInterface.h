@@ -52,6 +52,7 @@
 #include <asio/serial_port.hpp>
 
 #include "Common.h"
+#include "f29h85x_kernel_commands_cpu1.h"
 
 namespace FlashProgrammer
 {
@@ -70,7 +71,7 @@ namespace FlashProgrammer
 		_curReadPtr(nullptr), _curWritePtr(nullptr), _unvalidatedBytes(0), _remainingBytesToWrite(0), _remainingBytesToRead(0), _readValidationEnabled(false)
 		{
 			_maxBytesToWrite = _maxPacketBytes;
-			_readBuffer.resize(_maxPacketBytes);
+			_readBuffer.reserve(_maxPacketBytes);
 		}
 
 		~UartHandler()
@@ -118,6 +119,7 @@ namespace FlashProgrammer
 		std::size_t sendByte(const uint8_t data);
 		std::size_t sendBytes(const void* dataPtr, const std::size_t size);
 		int sendData(const void* dataPtr, const std::size_t size, bool enableReadValidation, bool enableBitRateMeasurement);
+		int sendData(const void* dataPtr, const std::size_t size, const void* breakpointPtr, const std::size_t bpSize, bool enableBitRateMeasurement);
 		
 		int clearPort(void);
 		int clearPort(bool clearInput, bool clearOutput);
@@ -132,11 +134,17 @@ namespace FlashProgrammer
 		std::vector<uint8_t> _readBuffer;
 		bool _readValidationEnabled;
 
+		void resetReadAttributes();
+		void resetWriteAttributes();
 
 		void readTaskScheduler();
-		void writeTaskScheduler();
-
+		void readTaskSchedulerBp(std::priority_queue<uint32_t>& bpQueue);
 		void readValidationCallback(const asio::error_code& error, std::size_t bytesTransferred);
+		void readValidationCallbackBp(const asio::error_code& error, std::size_t bytesTransferred, std::priority_queue<uint32_t>& bpQueue);
+
+		void writeTaskScheduler();
+		void writeTaskSchedulerBp(std::priority_queue<uint32_t>& bpQueue);
+		
 		/*
 		int uartCommunicator::errorCodeHandler(const asio::error_code& error);
 		void uartCommunicator::asyncWait();

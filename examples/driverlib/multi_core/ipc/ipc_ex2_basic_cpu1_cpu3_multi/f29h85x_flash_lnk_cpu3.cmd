@@ -12,7 +12,8 @@ MEMORY
     SRAM_CPA0 : o=0x20110000, l=0x008000
     SRAM_CDAx : o=0x20120000, l=0x008000
 
-    FLASH_RP0 : o=0x10400000, l=0x100000
+    CERT : o=0x10400000, l=0x1000
+    FLASH_RP0 : o=0x10401000, l=0xFF000
 }
 
 
@@ -20,8 +21,9 @@ MEMORY
 
 SECTIONS
 {
-    resetvector   : {} > 0x10400000,    palign(8)
-    nmivector     : {} > 0x10400040,    palign(8)
+    cert          : {} > CERT,          palign(8)
+    resetvector   : {} > 0x10401000,    palign(8)
+    nmivector     : {} > 0x10401040,    palign(8)
     codestart     : {} > FLASH_RP0,     palign(8)
     .text         : {} > FLASH_RP0,     palign(8)
     .binit        : {} > FLASH_RP0,     palign(8)

@@ -47,7 +47,29 @@
 #ifndef F65_CONSTANTS_H_
 #define F65_CONSTANTS_H_
 
+//*****************************************************************************
+//
+// If building with a C++ compiler, make all of the definitions in this header
+// have a C binding.
+//
+//*****************************************************************************
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
+
 #include "F29H85x.h"
 
+
+	
+//*****************************************************************************
+//
+// Mark the end of the C bindings section for C++ compilers.
+//
+//*****************************************************************************
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* F65_CONSTANTS_H_ */

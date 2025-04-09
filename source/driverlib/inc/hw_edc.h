@@ -71,8 +71,6 @@
 #define EDC_REVISION_RTL_M      0xF800U       // RTL version of the module
 #define EDC_REVISION_FUNC_S     16U
 #define EDC_REVISION_FUNC_M     0xFFF0000U    // Assigned func id
-#define EDC_REVISION_RSVD_S     28U
-#define EDC_REVISION_RSVD_M     0x30000000U   // Reserved
 #define EDC_REVISION_SCHEME_S   30U
 #define EDC_REVISION_SCHEME_M   0xC0000000U   // Reserved
 
@@ -81,18 +79,12 @@
 // The following are defines for the bit fields in the CONTROL register
 //
 //*************************************************************************************************
-#define EDC_CONTROL_RSVD            0x1U          // RSVD
-#define EDC_CONTROL_ECCCHECK        0x2U          // Enable ECC Checkers
-#define EDC_CONTROL_RSVD            0x4U          // RSVD
-#define EDC_CONTROL_FORCE_SE        0x8U          // Inject Single bit error
-#define EDC_CONTROL_FORCE_DE        0x10U         // Inject Double bit error
-#define EDC_CONTROL_FORCE_N_BIT     0x20U         // Incremental Injection
-#define EDC_CONTROL_RSVD_S          6U
-#define EDC_CONTROL_RSVD_M          0xC0U         // Reserved
+#define EDC_CONTROL_ECCCHECK        0x2U     // Enable ECC Checkers
+#define EDC_CONTROL_FORCE_SE        0x8U     // Inject Single bit error
+#define EDC_CONTROL_FORCE_DE        0x10U    // Inject Double bit error
+#define EDC_CONTROL_FORCE_N_BIT     0x20U    // Incremental Injection
 #define EDC_CONTROL_ECC_PATTERN_S   8U
-#define EDC_CONTROL_ECC_PATTERN_M   0xF00U        // Data Pattern
-#define EDC_CONTROL_RSVD_S          12U
-#define EDC_CONTROL_RSVD_M          0xFFFFF000U   // Reserved
+#define EDC_CONTROL_ECC_PATTERN_M   0xF00U   // Data Pattern
 
 //*************************************************************************************************
 //
@@ -100,11 +92,9 @@
 //
 //*************************************************************************************************
 #define EDC_ERROR1_ECCGRP_S    0U
-#define EDC_ERROR1_ECCGRP_M    0xFFFFU       // Group of Checker to inject
+#define EDC_ERROR1_ECCGRP_M    0xFFFFU      // Group of Checker to inject
 #define EDC_ERROR1_ECCBIT1_S   16U
-#define EDC_ERROR1_ECCBIT1_M   0x1FF0000U    // ECC BIT1
-#define EDC_ERROR1_RSVD_S      25U
-#define EDC_ERROR1_RSVD_M      0xFE000000U   // RSVD
+#define EDC_ERROR1_ECCBIT1_M   0x1FF0000U   // ECC BIT1
 
 //*************************************************************************************************
 //
@@ -112,9 +102,7 @@
 //
 //*************************************************************************************************
 #define EDC_ERROR2_ECCBIT2_S   0U
-#define EDC_ERROR2_ECCBIT2_M   0x1FFU        // ECC BIT2
-#define EDC_ERROR2_RSVD_S      9U
-#define EDC_ERROR2_RSVD_M      0xFFFFFE00U   // RSVD
+#define EDC_ERROR2_ECCBIT2_M   0x1FFU   // ECC BIT2
 
 //*************************************************************************************************
 //

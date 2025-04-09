@@ -3,6 +3,7 @@
 let Common             = system.getScript("/driverlib/Common.js");
 let clocktree_common   = system.getScript("../clocktree_common.js");
 var clockTree_CPU2 	   = Common.getClockTree();
+let peripheralInfo	   = system.getScript("/driverlib/device/peripheral_instances.js");
 
 const PLL_type1 = clocktree_common.PLL_type1;
 const PLL_type2 = clocktree_common.PLL_type2;
@@ -13,6 +14,8 @@ const xtal_x1_macro 		= clocktree_common.xtal_x1_macro;
 var XTAL_OR_X1 				= clocktree_common.XTAL_OR_X1;
 
 const device  = clocktree_common.device
+const deviceGPN = system.deviceData.gpnVariant.replace("TMS320", "")
+let availablePeripherals = peripheralInfo.peripheralCounts[deviceGPN]
 
 //////////////////////////////////////////////////
 // OSCCLK source
@@ -130,7 +133,7 @@ switch(clockTree_CPU2.MCANABCLKSEL.inputSelect){
 		MCANA_source 	 	= "SYSCTL_MCANCLK_SOURCE_SYS"
 		break
 	case "PLLCLK":
-		MCANA_source 	 	= "SYSCTL_MCANCLK_SOURCE_PLLCLK"
+		MCANA_source 	 	= "SYSCTL_MCANCLK_SOURCE_PLLRAW"
 		break
 }
 var MCANB_divide_dv = clockTree_CPU2.MCANBCLKDIV.divideValue
@@ -144,7 +147,7 @@ switch(clockTree_CPU2.MCANBBCLKSEL.inputSelect){
 		MCANB_source 	 	= "SYSCTL_MCANCLK_SOURCE_SYS"
 		break
 	case "PLLCLK":
-		MCANB_source 	 	= "SYSCTL_MCANCLK_SOURCE_PLLCLK"
+		MCANB_source 	 	= "SYSCTL_MCANCLK_SOURCE_PLLRAW"
 		break
 }
 var MCANC_divide_dv = clockTree_CPU2.MCANCCLKDIV.divideValue
@@ -158,7 +161,7 @@ switch(clockTree_CPU2.MCANCBCLKSEL.inputSelect){
 		MCANC_source 	 	= "SYSCTL_MCANCLK_SOURCE_SYS"
 		break
 	case "PLLCLK":
-		MCANC_source 	 	= "SYSCTL_MCANCLK_SOURCE_PLLCLK"
+		MCANC_source 	 	= "SYSCTL_MCANCLK_SOURCE_PLLRAW"
 		break
 }
 var MCAND_divide_dv = clockTree_CPU2.MCANDCLKDIV.divideValue
@@ -172,7 +175,7 @@ switch(clockTree_CPU2.MCANDBCLKSEL.inputSelect){
 		MCAND_source 	 	= "SYSCTL_MCANCLK_SOURCE_SYS"
 		break
 	case "PLLCLK":
-		MCAND_source 	 	= "SYSCTL_MCANCLK_SOURCE_PLLCLK"
+		MCAND_source 	 	= "SYSCTL_MCANCLK_SOURCE_PLLRAW"
 		break
 }
 var MCANE_divide_dv = clockTree_CPU2.MCANECLKDIV.divideValue
@@ -186,7 +189,7 @@ switch(clockTree_CPU2.MCANEBCLKSEL.inputSelect){
 		MCANE_source 	 	= "SYSCTL_MCANCLK_SOURCE_SYS"
 		break
 	case "PLLCLK":
-		MCANE_source 	 	= "SYSCTL_MCANCLK_SOURCE_PLLCLK"
+		MCANE_source 	 	= "SYSCTL_MCANCLK_SOURCE_PLLRAW"
 		break
 }
 var MCANF_divide_dv = clockTree_CPU2.MCANFCLKDIV.divideValue
@@ -200,7 +203,7 @@ switch(clockTree_CPU2.MCANFBCLKSEL.inputSelect){
 		MCANF_source 	 	= "SYSCTL_MCANCLK_SOURCE_SYS"
 		break
 	case "PLLCLK":
-		MCANF_source 	 	= "SYSCTL_MCANCLK_SOURCE_PLLCLK"
+		MCANF_source 	 	= "SYSCTL_MCANCLK_SOURCE_PLLRAW"
 		break
 }
 %%}
@@ -219,20 +222,33 @@ switch(clockTree_CPU2.MCANFBCLKSEL.inputSelect){
 	//
 	// Initialize peripheral clocks
 	//
-    SysCtl_setCputimer2Clock(`TIMER2_source`, `TIMER2_divide`);
     SysCtl_setEPWMClock(`EPWM_divide`);
+%	if(availablePeripherals["EMIF1"]){
     SysCtl_setEMIF1Clock(`EMIF1_divide`);
+%	}
     SysCtl_setLINAClock(`LINA_divide`);
+%	if(availablePeripherals["LINB"]){
     SysCtl_setLINBClock(`LINB_divide`);
+%	}
+%	if(availablePeripherals["ECAT"]){
     SysCtl_setECatClock(`ECAT_divide`, `ECAT_enable`);
+%	}
     SysCtl_setHSMClock(`HSM_divide`);
 
     SysCtl_setMCANClock(SYSCTL_MCAN_A, `MCANA_source`, `MCANA_divide`);
     SysCtl_setMCANClock(SYSCTL_MCAN_B, `MCANB_source`, `MCANB_divide`);
+%	if(availablePeripherals["MCANC"]){
     SysCtl_setMCANClock(SYSCTL_MCAN_C, `MCANC_source`, `MCANC_divide`);
+%	}
+%	if(availablePeripherals["MCAND"]){
     SysCtl_setMCANClock(SYSCTL_MCAN_D, `MCAND_source`, `MCAND_divide`);
+%	}
+%	if(availablePeripherals["MCANE"]){
     SysCtl_setMCANClock(SYSCTL_MCAN_E, `MCANE_source`, `MCANE_divide`);
+%	}
+%	if(availablePeripherals["MCANF"]){
     SysCtl_setMCANClock(SYSCTL_MCAN_F, `MCANF_source`, `MCANF_divide`);
+%	}
 
 	//
     // These asserts will check that the #defines for the clock rates in

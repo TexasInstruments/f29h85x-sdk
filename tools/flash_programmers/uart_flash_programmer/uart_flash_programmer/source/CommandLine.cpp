@@ -47,6 +47,19 @@
 
 #include "../include/CommandLine.h"
 
+#include <unordered_map>
+#include <functional>
+
+// Needed by exitApp()
+#if defined(_WIN32)
+#include <conio.h>
+#elif defined(__unix__) || defined(__linux__) || defined(__APPLE__)
+#include <termios.h>
+#include <unistd.h>
+#endif 
+
+
+
 //*****************************************************************************
 //
 // \brief	Display the welcome banner when the program is started.
@@ -73,30 +86,32 @@ void showHelp(void)
 		return;
 	}
 
-	std::cout << ("This application may be used to download images to a Texas Instruments\n");
-	std::cout << ("F29x microcontroller in UART boot mode.\n\n");
+	std::cout << ("\nF29x UART Firmware Programmer\n");
 	std::cout << ("Supported parameters are:\n\n");
-	std::cout << ("-d <device>   - The device family of the target device:\n");
-	std::cout << ("                (f29h85x)\n");
-	std::cout << ("-p <port>     - Serial COM/tty port used for UART communication.\n");
-	std::cout << ("                (port format: COM<num>, /dev/ttyUSB<num>, /dev/ttyACM<num>)\n");
-	std::cout << ("-k <file>     - File path for uart flash kernel\n");
-	std::cout << ("-a <file>     - File path for Flash-based C29 CPU1 application image (HS-FS Only)\n");
-	std::cout << ("-j <file>     - File path for RAM-based HSM runtime (HSMRt) image    (Prerequisite for KP & CP)\n");
-	std::cout << ("-f <file>     - File path for HSM keys image                         (HS-KP key provision)\n");
-	std::cout << ("-t <file>     - File path for Flash-based C29 CPU1 application image (HS-SE code provision)\n");
-	std::cout << ("-g <file>     - File path for Flash-based HSM application image      (HS-SE code provision)\n");
-	std::cout << ("-c <file>     - File path for Sec Cfg program image                  (HS-SE code provision)\n");
-	std::cout << ("-e <hex_num>  - Override entry address of the C29 CPU1 application, optional\n");
-	std::cout << ("\nNote: -d, -k, -p are mandatory parameters.\n");
+	std::cout << ("-d,  --device <device>     - The device family of the target device:\n");
+	std::cout << ("                             (f29h85x)\n");
+	std::cout << ("-p,  --port   <port>       - Serial COM/tty port used for UART communication.\n");
+	std::cout << ("                             (port format: COM<num>, /dev/ttyUSB<num>, /dev/ttyACM<num>)\n");
+	std::cout << ("-k,  --kernel    <file>    - File path for uart flash kernel\n");
+	std::cout << ("-a1, --appcpu1   <file>    - File path for Flash-based C29 CPU1 application image (HS-FS Only)\n");
+	std::cout << ("-a3, --appcpu3   <file>    - File path for Flash-based C29 CPU3 application image (HS-FS Only)\n");
+	std::cout << ("-sr, --hsmrt     <file>    - File path for RAM-based HSM runtime (HSMRt) image    (Prerequisite for KP & CP)\n");
+	std::cout << ("-sk, --hsmkeys   <file>    - File path for HSM keys image                         (HS-KP key provision)\n");
+	std::cout << ("-s1, --cpappcpu1 <file>    - File path for Flash-based C29 CPU1 application image (HS-SE code provision)\n");
+	std::cout << ("-s3, --cpappcpu3 <file>    - File path for Flash-based C29 CPU3 application image (HS-SE code provision)\n");
+	std::cout << ("-sh, --cpapphsm  <file>    - File path for Flash-based HSM application image      (HS-SE code provision)\n");
+	std::cout << ("-sc, --cpseccfg  <file>    - File path for Sec Cfg program image                  (HS-SE code provision)\n");
+	std::cout << ("-e1, --entryaddr <hex_num> - (optional) Override entry address of the C29 CPU1 application \n");
+
+	std::cout << ("\nNote: -d, -p, -k are mandatory parameters.\n");
 	std::cout << ("Note: Images must be in the binary format and includes an X.509 certificate.\n\n");
 
-	std::cout << ("-? or -h      - Show this help.\n");
-	std::cout << ("-q            - Quiet mode. Suppress all non-essential printouts\n");
-	std::cout << ("-l <file>     - Log mode. Redirect all non-essential printouts to the specified file, will override -q mode\n");
-	std::cout << ("-w		     - Wait on keypress before exiting\n");
-	//std::cout << ("-v            - Enable verbose output\n");
-	std::cout << ("\nSyntax: -d f29h85x -p COM41 -k ex3_uart_flash_kernel.bin -a c29_cpu1_application.bin -e 10001000 -j HSM_runtimeImage.bin -f HSM_customKeyCert.bin -c sec_cfg_cert.bin -t c29_cpu1_application.bin -g hsm_application.bin -l output.log\n");
+	std::cout << ("-h, --help       - Show this help.\n");
+	std::cout << ("-q, --quiet      - Quiet mode. Suppress all non-essential printouts\n");
+	std::cout << ("-l, --log <file> - Log mode. Redirect all non-essential printouts to the specified file, will override -q mode\n");
+	std::cout << ("-w               - Wait on keypress before exiting\n");
+	//std::cout << ("-v           - Enable verbose output\n");
+	std::cout << ("\nSyntax: -d f29h85x -p COM41 -k ex3_uart_flash_kernel.bin --appcpu1 c29_cpu1_application.bin --entryaddr 10001000 --hsmrt HSM_runtimeImage.bin --hsmkeys HSM_customKeyCert.bin --cpseccfg sec_cfg_cert.bin --cpappcpu1 c29_cpu1_application.bin -cpapphsm hsm_application.bin -l output.log\n");
 
 	std::cout << std::endl;
 
@@ -112,151 +127,129 @@ void showHelp(void)
 //*****************************************************************************
 void parseCommandLine(int argc, char* argv[])
 {
-	int iParm;
-	char* pcOptArg = nullptr;
+	//
+	// Lambda functions for each parameter action
+	//
+	auto setQuietMode = [](){
+		// Don't override if output stream is already an instance of FileStream
+		if (!dynamic_cast<FileStream*>(g_pOutputStream.get()))
+		{
+			NullStream* nullStream = new NullStream();
+			g_pOutputStream.reset(nullStream);
+		}
+		std::cout << "Quiet mode specified, all non-essential outputs will be suppressed.\n";
+	};
+
+	auto setLogMode = [](char* file) {
+		g_pszLogFile = file;
+		FileStream* fileStream = new FileStream(g_pszLogFile);
+		g_pOutputStream.reset(fileStream);
+		std::cout << "Log mode specified, all non-essential outputs will be redirected to " << g_pszLogFile << ".\n";
+	};
+
+	auto setWaitOnExitMode = []() { g_bWaitOnExit = true; };
+
+	auto setPortName      = [](char* port) { g_pszComPort = port; };
+	auto setKernelFile    = [](char* file) { g_pszKernelFile = file; };
+	auto setAppCpu1File   = [](char* file) { g_pszAppFile = file; };
+	auto setAppCpu3File   = [](char* file) { g_pszAppFile2 = file; };
+	auto setHSMRtFile     = [](char* file) { g_pszHSMRunTimeFile = file; };
+	auto setHSMKeysFile   = [](char* file) { g_pszHSMKeysFile = file; };
+	auto setCPAppCpu1File = [](char* file) { g_pszCPU1FlashCodeProvisionFile = file; };
+	auto setCPAppCpu3File = [](char* file) { g_pszCPU3FlashCodeProvisionFile = file; };
+	auto setCPAppHSMFile  = [](char* file) { g_pszHSMFlashCodeProvisionFile = file; };
+	auto setCPSecCfgFile  = [](char* file) { g_pszSecCfgProgramFile = file; };
+	auto setEntryAddress  = [](char* addr) { g_pszAppEntryAddress = addr; };
+
+	std::unordered_map<std::string, std::function<void()>> noArgActions = {
+		{"-h",		showHelp},
+		{"--help",	showHelp},
+		{"-q",		setQuietMode},
+		{"--quiet",	setQuietMode},
+		{"-w",		setWaitOnExitMode},
+	};
+
+	std::unordered_map<std::string, std::function<void(char*)>> wArgActions = {
+		{"-d",		   setDeviceName},
+		{"--device",   setDeviceName},
+		{"-p",		   setPortName},
+		{"--port",	   setPortName},
+		{"-k",		   setKernelFile},
+		{"--kernel",   setKernelFile},
+		{"-a1",		   setAppCpu1File},
+		{"--appcpu1",  setAppCpu1File},
+		{"-a3",		   setAppCpu3File},
+		{"--appcpu3",  setAppCpu3File},
+		{"-sr",		 setHSMRtFile},
+		{"--hsmrt",	 setHSMRtFile},
+		{"-sk",		 setHSMKeysFile},
+		{"--hsmkeys",   setHSMKeysFile},
+		{"-s1",			setCPAppCpu1File},
+		{"--cpappcpu1", setCPAppCpu1File},
+		{"-s3",			setCPAppCpu3File},
+		{"--cpappcpu3", setCPAppCpu3File},
+		{"-sh",			setCPAppHSMFile},
+		{"--cpapphsm",  setCPAppHSMFile},
+		{"-sc",			setCPSecCfgFile},
+		{"--cpseccfg",  setCPSecCfgFile},
+		{"-e1",			setEntryAddress},
+		{"--entryaddr", setEntryAddress},
+		{"-l",		     setLogMode},
+		{"--log",	     setLogMode},
+	};
 
 	//
-	// By default, don't show the help screen.
-	//
-	g_bShownHelp = false;
-
-	//
-	// Walk through each of the parameters in the list, skipping the first one
+	// Walk through each of the parameters in the arr, skipping the first one
 	// which is the executable name itself.
 	//
-	for (iParm = 1; iParm < argc; iParm++)
+	for (int iParm = 1; iParm < argc; iParm++)
 	{
+		auto exitErrorMsg = [](const std::ostringstream& message)
+		{
+			showHelp();
+			std::cout << message.str() << std::endl;
+			exitApp(-1);
+		};
 
-		if (!argv || ((argv[iParm][0] != '-') && (argv[iParm][0] != '/')) ||
-			(argv[iParm][1] == '\0'))
+		std::ostringstream message;
+		std::string param = argv[iParm];
+		
+		//
+		// Check if any key matches with a value
+		//
+		auto noArgKey = noArgActions.find(param);
+		auto wArgKey = wArgActions.find(param);
+		if (noArgKey != noArgActions.end())
 		{
 			//
-			// We found something on the command line that didn't look like a
-			// switch so ExitApp.
+			// Run the value func
 			//
-			std::cout << "Unrecognized or invalid argument: " << argv[iParm] << "\n";
-			exitApp(-1);
+			noArgKey->second();
+		}
+		else if (wArgKey != wArgActions.end())
+		{
+			//
+			// Check flag input parameter for validity 
+			// (if flag input parameter exceeds number of input or is an input flag itself)
+			//
+			char* nextParam = argv[++iParm];
+			if (iParm >= argc || noArgActions.find(nextParam) != noArgActions.end() || wArgActions.find(nextParam) != wArgActions.end())
+			{
+				message << "Missing an input to parameter: " << argv[--iParm] << "\n";
+				exitErrorMsg(message);
+			}
+			wArgKey->second(nextParam);
 		}
 		else
 		{
-			//
-			// Get a pointer to the next argument since it may be used
-			// as a parameter for the case statements 
-			//
-			pcOptArg = ((iParm + 1) < argc) ? argv[iParm + 1] : NULL;
-		}
-
-		switch (argv[iParm][1])
-		{
-		case 'a':
-			g_pszAppFile = pcOptArg;
-			iParm++;
-			break;
-
-		case 'c':
-			g_pszSecCfgProgramFile = pcOptArg;
-			iParm++;
-			break;
-
-		case 'd':
-			g_pszDeviceName = pcOptArg;
-			iParm++;
-			setDeviceName();
-			break;
-
-		case 'e':
-			g_pszAppEntryAddress = pcOptArg;
-			iParm++;
-			break;
-
-		case 'f':
-			g_pszHSMKeysFile = pcOptArg;
-			iParm++;
-			break;
-
-		case 'g':
-			g_pszHSMFlashCodeProvisionFile = pcOptArg;
-			iParm++;
-			break;
-
-		case 'j':
-			g_pszHSMRunTimeFile = pcOptArg;
-			iParm++;
-			break;
-
-		case 't':
-			g_pszCPU1FlashCodeProvisionFile = pcOptArg;
-			iParm++;
-			break;
-
-		case 'k':
-			g_pszKernelFile = pcOptArg;
-			iParm++;
-			break;
-
-		case 'l':
-			{
-			g_pszLogFile = pcOptArg;
-			FileStream* fileStream = new FileStream(g_pszLogFile);
-			g_pOutputStream.reset(fileStream);
-			iParm++;
-			}
-			break;
-
-		case 'm':
-			g_pszKernelFile2 = pcOptArg;
-			iParm++;
-			break;
-
-		case 'n':
-			g_pszAppFile2 = pcOptArg;
-			iParm++;
-			break;
-
-		case 'p':
-			g_pszComPort = pcOptArg;
-			iParm++;
-			break;
-
-		case 'q':
-			{
-			//
-			// Don't override if output stream is already an instance of FileStream
-			//
-			if (!dynamic_cast<FileStream*>(g_pOutputStream.get()))
-			{
-				NullStream* nullStream = new NullStream();
-				g_pOutputStream.reset(nullStream);
-			}
-			iParm++;
-			}
-			break;
-
-		case 'v':
-			g_bVerbose = true;
-			break;
-
-		case 'w':
-			g_bWaitOnExit = true;
-			break;
-
-		case '?':
-		case 'h':
-			showHelp();
-			exitApp(0);
-			break;
-
-		default:
-			std::cout << "Unrecognized argument: " << argv[iParm] << "\n\n";
-			showHelp();
-			exitApp(-1);
-
+			message << "Unrecognized argument: " << argv[iParm] << "\n";
+			exitErrorMsg(message);
 		}
 	}
 
-	printWelcome();
-
 	checkErrors();
+
+	printWelcome();
 }
 
 //*****************************************************************************
@@ -293,9 +286,9 @@ void exitApp(int iRetcode)
 // \brief	Parse device name strings and assign corresponding variables
 //
 //*****************************************************************************
-void setDeviceName(void)
+void setDeviceName(char* deviceName)
 {
-	if (g_pszDeviceName == nullptr)
+	if (deviceName == nullptr)
 	{
 		std::cout << "ERROR: No device family specified. Please use -d to provide the target device.\n";
 		exitApp(-1);
@@ -305,7 +298,7 @@ void setDeviceName(void)
 	// if not a proper input device name
 	// 0 == false, !false = !0 = true. strncmp && wcsncmp returns !0 = true if different.
 	//
-	if (!strncmp(g_pszDeviceName, "f29h85x", 7))
+	if (!strncmp(deviceName, "f29h85x", 7))
 	{
 		g_bf29h85x = true;
 	}
@@ -314,6 +307,9 @@ void setDeviceName(void)
 		std::cout << "ERROR: Device name is not recognized. Please see -h for the list of recognized device family.\n";
 		exitApp(-1);
 	}
+
+	g_pszDeviceName = deviceName;
+
 	return;
 }
 

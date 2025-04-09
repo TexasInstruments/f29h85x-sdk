@@ -1,6 +1,6 @@
 //###########################################################################
 //
-// FILE:   FlashTech_F29H85xHSM_C29x.h
+// FILE:   FlashTech_F29H85x_C29x.h
 //
 // TITLE:  F65 Flash API v21.00
 //
@@ -41,11 +41,22 @@
 //###########################################################################
 
 /*!
-    \file F65\FlashTech_F29H85xHSM_C29x.h
-    \brief Setups the defines required for F29H85xHSM C29x
+    \file F65\FlashTech_F29H85x_C29x.h
+    \brief Setups the defines required for F29H85x C29x
 */
-#ifndef F65_F29H85xHSM_C29X_H_
-#define F65_F29H85xHSM_C29X_H_
+#ifndef F65_F29H85x_C29X_H_
+#define F65_F29H85x_C29X_H_
+
+//*****************************************************************************
+//
+// If building with a C++ compiler, make all of the definitions in this header
+// have a C binding.
+//
+//*****************************************************************************
+#ifdef __cplusplus
+extern "C"
+{
+#endif
 
 #if !defined(_F29H85x)
     #define _F29H85x
@@ -59,9 +70,14 @@
     #define _C29
 #endif
 
-#if !defined(QT)
-    #define QT
-#endif
 #include "FlashTech.h"
 
-#endif /*F65_F29H85xHSM_C29X_H_*/
+//*****************************************************************************
+//
+// Mark the end of the C bindings section for C++ compilers.
+//
+//*****************************************************************************
+#ifdef __cplusplus
+}
+#endif
+#endif /*F65_F29H85x_C29X_H_*/

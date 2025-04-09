@@ -1,0 +1,18 @@
+<projectSpec>
+  <project
+        name                    ="empty_driverlib_project_static_lib"
+        outputType              ="staticLibrary"
+        configurations          ="Debug"
+        compilerBuildOptions    ="-O1 -g -DDEBUG -Qunused-arguments"
+        linkerBuildOptions      ="--stack_size=0x2000 --heap_size=0x400 --diag_suppress=10325-D --diag_suppress=10063-D"
+        device       = "F29H850TU9"
+        cgtVersion   = "1.0.0"
+        toolChain    = "TICLANG"
+        products     = "sysconfig;f29h85x-sdk"
+        connection   = "TIXDS110_Connection.xml"
+        >
+
+    <file action="copy" path="../empty_driverlib_project_static_lib.c"  targetDirectory="" />
+    <file action="copy" path="../c2000.syscfg"                          targetDirectory="" />
+  </project>
+</projectSpec>

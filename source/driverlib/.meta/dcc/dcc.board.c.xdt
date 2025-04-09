@@ -28,7 +28,11 @@ void `instance.$name`_init(){
 	DCC_clearDoneFlag(`instance.$name`_BASE);
 	DCC_setCounter0ClkSource(`instance.$name`_BASE, `instance.setCounter0ClkSource`);
 	DCC_setCounter1ClkSource(`instance.$name`_BASE, `instance.setCounter1ClkSource`);
+		% if (instance.counterAutoCalc) {
+	DCC_setCounterSeeds(`instance.$name`_BASE, `instance.counter0seed_autoCalc`, `instance.validCounter0seed_autoCalc`, `instance.counter1seed_autoCalc`);	
+		% } else {
 	DCC_setCounterSeeds(`instance.$name`_BASE, `instance.counter0seed`, `instance.validCounter0seed`, `instance.counter1seed`);	
+		% }
 		% if (instance.enableSingleShotMode) {
 	DCC_enableSingleShotMode(`instance.$name`_BASE);
 		% } else {

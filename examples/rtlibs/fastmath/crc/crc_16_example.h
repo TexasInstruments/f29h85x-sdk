@@ -11,3 +11,5 @@
 // defines
 //***************************************************************************** 
 #define NUM_BYTES      (128U)
+// input type specifies whether the input buffer for CRC compute is 8/16/32-bit
+#define INPUT_TYPE     8

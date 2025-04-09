@@ -579,8 +579,7 @@ typedef enum
 {
     SYSCTL_MCANCLK_SOURCE_SYS       = 0x0, //! Peripheral System Clock Source
     SYSCTL_MCANCLK_SOURCE_AUXIN     = 0x2, //! Auxiliary Clock Input Source (GPIO)
-    SYSCTL_MCANCLK_SOURCE_PLLRAW    = 0x3, //! PLL Raw Clock Source
-    SYSCTL_MCANCLK_SOURCE_PLLCLK    = 0x3  //! PLL Raw Clock Source
+    SYSCTL_MCANCLK_SOURCE_PLLRAW    = 0x3  //! PLL Raw Clock Source
 }SysCtl_MCANClkSource;
 
 //*****************************************************************************
@@ -1340,7 +1339,7 @@ SysCtl_getClock(uint32_t clockInHz);
 //!
 //! \return Returns \b false if a missing clock error is detected. This needs
 //! to be cleared (see SysCtl_resetMCD()) before trying to call this function
-//! again. Also, returns \b false if the PLLRAWCLK is not running and its
+//! again. Also, returns \b false if the PLLRAWCLK is not running at its
 //! expected rate. Otherwise, returns \b true.
 //
 //*****************************************************************************

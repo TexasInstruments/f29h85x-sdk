@@ -131,40 +131,17 @@ typedef enum
                                    //! ECC bits
 } Memss_RAMTestMode;
 
-
 //*****************************************************************************
 //
-//! The following are values that can be passed to all the functions as \e rom
-//! or \e mem parameter.
-//
-//*****************************************************************************
-typedef enum
-{
-    MEMSS_ROM_CPU1 = MEMSSROMCFG_BASE + 0x0U,
-    MEMSS_ROM_CPU2 = MEMSSROMCFG_BASE + 0x10U,
-    MEMSS_ROM_CPU3 = MEMSSROMCFG_BASE + 0x20U
-} Memss_ROM;
-
-
-//*****************************************************************************
-//
-//! The following are values that can be passed to Memss_setTestMode() function
-//! as \e testMode parameter.
+//! The following are values that can be passed to Memss_enableDlb() and
+//! Memss_disableDlb() function as \e cpuId parameter.
 //
 //*****************************************************************************
 typedef enum
 {
-    MEMSS_ROM_TEST_NORMAL       = 0, //! Normal mode of operation
-    MEMSS_ROM_TEST_ECC_DISABLED = 1, //! ECC check on Read Data is disabled.
-    MEMSS_ROM_TEST_READ_ECC     = 2, //! ECC check on Read Data is disabled.
-                                     //! Read Returns ECC bits.
-} Memss_ROMTestMode;
-
-typedef enum
-{
-    MEMSS_CPU_ID_1  = 0,    //! ID for CPU1
-    MEMSS_CPU_ID_2  = 1,    //! ID for CPU2
-    MEMSS_CPU_ID_3  = 2     //! ID for CPU3
+    MEMSS_CPU_ID_1  = 0U,    //! ID for CPU1
+    MEMSS_CPU_ID_2  = 1U,    //! ID for CPU2
+    MEMSS_CPU_ID_3  = 2U     //! ID for CPU3
 } Memss_CpuId;
 
 //*****************************************************************************
@@ -236,32 +213,10 @@ Memss_setRAMTestMode(Memss_RAM ram, Memss_RAMTestMode testMode)
 
 //*****************************************************************************
 //
-//! Sets the ROM test mode
-//!
-//! \param rom is the ROM block
-//! \param testMode Test Mode to be set
-//!
-//! This function sets the test mode for the specified block.
-//!
-//! \return None.
-//
-//*****************************************************************************
-__attribute__((section(".text.link2.Memss_setROMTestMode")))
-__attribute__((always_inline))
-static inline void
-Memss_setROMTestMode(Memss_ROM rom, Memss_ROMTestMode testMode)
-{
-    HWREG((uint32_t)rom) =
-                 (HWREG((uint32_t)rom) & ~(uint32_t)MEMSS_TESTMODE_M) |
-                 ((uint32_t)testMode << MEMSS_TESTMODE_S);
-}
-
-//*****************************************************************************
-//
 //! Locks the config register
 //!
 //! \param mem is the RAM/ROM config register to be locked. Use the enum
-//!            Memss_RAM or Memss_ROM.
+//!            Memss_RAM.
 //!
 //! This function locks the CONFIG register of selected RAM block.
 //!
@@ -281,7 +236,7 @@ Memss_lockConfig(uint32_t mem)
 //! Unlocks the config register
 //!
 //! \param mem is the RAM/ROM config register to be unlocked. Use the enum
-//!            Memss_RAM or Memss_ROM.
+//!            Memss_RAM.
 //!
 //! This function unlocks the CONFIG register of selected RAM block.
 //!
@@ -301,7 +256,7 @@ Memss_unlockConfig(uint32_t mem)
 //! Commit the config register
 //!
 //! \param mem is the RAM/ROM config register to be commited. Use the enum
-//!            Memss_RAM or Memss_ROM.
+//!            Memss_RAM.
 //!
 //! This function commits the CONFIG register of selected RAM block.
 //!
@@ -332,7 +287,8 @@ __attribute__((always_inline))
 static inline void
 Memss_enableDlb(Memss_CpuId cpuId)
 {
-    HWREG(MEMSSMISCI_BASE + MEMSS_O_MEM_DLB_CONFIG) |= (uint32_t)(1U << cpuId);
+    HWREG(MEMSSMISCI_BASE + MEMSS_O_MEM_DLB_CONFIG) |= \
+                            ((uint32_t)1U << (uint32_t)cpuId);
 }
 
 //*****************************************************************************
@@ -351,7 +307,8 @@ __attribute__((always_inline))
 static inline void
 Memss_disableDlb(Memss_CpuId cpuId)
 {
-    HWREG(MEMSSMISCI_BASE + MEMSS_O_MEM_DLB_CONFIG) &= ~((uint32_t)(1U << cpuId));
+    HWREG(MEMSSMISCI_BASE + MEMSS_O_MEM_DLB_CONFIG) &= \
+                            ~(((uint32_t)1U << (uint32_t)cpuId));
 }
 
 //*****************************************************************************

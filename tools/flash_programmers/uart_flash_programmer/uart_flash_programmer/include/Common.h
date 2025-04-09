@@ -54,10 +54,11 @@
 #include <vector>
 #include <thread>
 #include <chrono>
+#include <queue>
 
 //
 // Uncomment kernel define to download the kernel to the device at startup
-//
+////
 #define kernel
 
 //*****************************************************************************

@@ -21,11 +21,55 @@ else
 endif
 
 ifeq ($(CCS_HOST_OS),win32)
-    CPU2APP_REL_PATH := ..\\..\\cpu2App.bin
-    CPU3APP_REL_PATH := ..\\..\\cpu3App.bin
+    CPU2APP_REL_PATH    := ..\\..\\cpu2App.bin
+    CPU3APP_REL_PATH    := ..\\..\\cpu3App.bin ..\\..\\cpu3App.cert.bin
     SECCFGCPU3_REL_PATH := ..\\..\\seccfgCpu3.bin
+    SECCFGCPU2_REL_PATH := ..\\..\\seccfgCpu2.bin
 else
-    CPU2APP_REL_PATH := ../../cpu2App.bin
-    CPU3APP_REL_PATH := ../../cpu3App.bin
+    CPU2APP_REL_PATH    := ../../cpu2App.bin
+    CPU3APP_REL_PATH    := ../../cpu3App.bin ../../cpu3App.cert.bin
     SECCFGCPU3_REL_PATH := ../../seccfgCpu3.bin
+    SECCFGCPU2_REL_PATH := ../../seccfgCpu2.bin
+endif
+
+ifeq ($(CCS_HOST_OS),win32)
+    define CREATE_DIAGRAM
+        $(eval $@_FLAG= $(1))
+        $(eval $@_NODE_TOOL= $(2))
+        $(eval $@_COM_TI_MCU_SDK_INSTALL_DIR= $(3))
+        $(eval $@_BuildDirectory= $(4))
+        if ${$@_FLAG} == 1  ${$@_NODE_TOOL} "${$@_COM_TI_MCU_SDK_INSTALL_DIR}/tools/clb_tool/clb_syscfg/dot_file_libraries/clbDotUtility.js"  "${$@_COM_TI_MCU_SDK_INSTALL_DIR}/tools/clb_tool/clb_syscfg/" "${$@_BuildDirectory}/syscfg" "${$@_BuildDirectory}/syscfg/clb.dot"
+        if ${$@_FLAG} == 1  rm -r "${$@_BuildDirectory}/diagrams"
+        if ${$@_FLAG} == 1  mkdir "${$@_BuildDirectory}/diagrams"
+        if ${$@_FLAG} == 1  ${$@_NODE_TOOL} "${$@_COM_TI_MCU_SDK_INSTALL_DIR}/source/driverlib/.meta/generate_diagrams.js" "${$@_COM_TI_MCU_SDK_INSTALL_DIR}" "${$@_BuildDirectory}/diagrams" "${$@_BuildDirectory}/syscfg"
+    endef
+else
+    define CREATE_DIAGRAM
+        $(eval $@_FLAG= $(1))
+        $(eval $@_NODE_TOOL= $(2))
+        $(eval $@_COM_TI_MCU_SDK_INSTALL_DIR= $(3))
+        $(eval $@_BuildDirectory= $(4))
+        [ ${$@_FLAG} -eq 1 ] && ${$@_NODE_TOOL} "${$@_COM_TI_MCU_SDK_INSTALL_DIR}/tools/clb_tool/clb_syscfg/dot_file_libraries/clbDotUtility.js" "${$@_COM_TI_MCU_SDK_INSTALL_DIR}/tools/clb_tool/clb_syscfg/" "${$@_BuildDirectory}/syscfg" "${$@_BuildDirectory}/syscfg/clb.dot" || :
+        [ ${$@_FLAG} -eq 1 ] &&  rm -r "${$@_BuildDirectory}/diagrams" || :
+        [ ${$@_FLAG} -eq 1 ] &&  mkdir "${$@_BuildDirectory}/diagrams" || :
+        [ ${$@_FLAG} -eq 1 ] && ${$@_NODE_TOOL} "${$@_COM_TI_MCU_SDK_INSTALL_DIR}/source/driverlib/.meta/generate_diagrams.js" "${$@_COM_TI_MCU_SDK_INSTALL_DIR}" "${$@_BuildDirectory}/diagrams" "${$@_BuildDirectory}/syscfg" || :
+    endef
+endif
+
+ALGORITHM := RSA4k
+
+ifeq ($(ALGORITHM),RSA4k)
+        SIGNING_KEY=tools/boot/signing/mcu_custMpk.pem
+endif
+ifeq ($(ALGORITHM),ECDSA256R1)
+        SIGNING_KEY=tools/boot/signing/mcu_custMpk_secp256r1.pem
+endif
+ifeq ($(ALGORITHM),ECDSA384R1)
+        SIGNING_KEY=tools/boot/signing/mcu_custMpk_secp384r1.pem
+endif
+ifeq ($(ALGORITHM),ECDSA521R1)
+        SIGNING_KEY=tools/boot/signing/mcu_custMpk_secp521r1.pem
+endif
+ifeq ($(ALGORITHM),BRAINPOOL512)
+        SIGNING_KEY=tools/boot/signing/mcu_custMpk_brainpool512.pem
 endif

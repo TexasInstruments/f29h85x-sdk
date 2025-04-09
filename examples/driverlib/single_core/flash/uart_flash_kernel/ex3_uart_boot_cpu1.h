@@ -72,4 +72,5 @@ extern bootLoadStatus_t g_bootLoadStatus;
 //
 void CopyApplication(uint32_t LoadAddr, uint32_t ImageSize);
 void ConstructInterleavedData1024Bits(uint8_t* arrPtr_1024Bits);
-
+extern void sendACK(void);
+extern void sendNAK(void);

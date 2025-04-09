@@ -118,7 +118,7 @@ void	Board_init();
 %   var interruptCodeGenerated = false;
 %   for (let i = 0; i < keys.length; i++) {
 %       let mod = system.modules[keys[i]];
-%       if (["ANALOG", "PERCONFIG", "XBARFLAGS", "ESM", "JTAG", "RTDMA1_MPU", "RTDMA2_MPU", "FSI"].includes(mod.peripheralName))
+%       if (["ANALOG", "PERCONFIG", "PERCLOCK", "XBARFLAGS", "ESM", "JTAG", "RTDMA1_MPU", "RTDMA2_MPU", "FSI"].includes(mod.peripheralName))
 %           continue;
 %       if (mod.peripheralName == "INTERRUPT")
 %       {

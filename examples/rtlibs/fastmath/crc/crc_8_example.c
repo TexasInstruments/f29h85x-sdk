@@ -44,7 +44,14 @@ CRC_Obj    CRC;
 CRC_Handle handleCRC = &CRC;
 
 // test input, output, golden (expected output) arrays
+#if (INPUT_TYPE==8)
 extern uint8_t test_input[];
+#elif (INPUT_TYPE==16)
+extern uint16_t test_input[];
+#elif (INPUT_TYPE==32)
+extern uint32_t test_input[];
+#endif
+
 extern const uint8_t test_golden;
 
 __attribute__((location(0x200E0000))) uint8_t test_output;
@@ -82,7 +89,13 @@ int32_t main(void)
     CRC.pMsgBuffer   = (uint8_t *)&test_input[0];
     CRC.pCrcTable    = (uint8_t *)&crc8Table[0];
     //CRC.init         = (void (*)(void *))CRC_init8Bit;
+#if INPUT_TYPE==8    
     CRC.run          = (void (*)(void *))CRC_run8BitTableLookupC;
+#elif INPUT_TYPE==16
+    CRC.run          = (void (*)(void *))CRC_run8BitTableLookupC_16;
+#elif INPUT_TYPE==32
+    CRC.run          = (void (*)(void *))CRC_run8BitTableLookupC_32;
+#endif
     CRC.polynomial   = POLYNOMIAL8;
     CRC.reflected    = 0;
 
@@ -104,7 +117,13 @@ int32_t main(void)
     
     // Reset a few elements of the CRC object
     CRC.crcResult    = 0;
+#if INPUT_TYPE==8    
     CRC.run          = (void (*)(void *))CRC_run8BitAsm;
+#elif INPUT_TYPE==16
+    CRC.run          = (void (*)(void *))CRC_run8BitAsm_16;
+#elif INPUT_TYPE ==32
+    CRC.run          = (void (*)(void *))CRC_run8BitAsm_32;
+#endif
 
     // Run the 8-bit Asm CRC routine and save the result
     printf("Computing 8-bit Asm CRC...\n");

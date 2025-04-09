@@ -1209,7 +1209,7 @@ SENT_setDataSortingFormat(uint32_t base, SENT_DataNumber dataNumber,
     ASSERT(SENT_isBaseValid(base));
 
     dataOffset = (SENT_DATAxMAP_STEP * (uint32_t)dataNumber) + SENT_O_DATA0_MAP;
-    shiftVal = (uint32_t)nibbleNum * 4;
+    shiftVal = (uint32_t)nibbleNum * 4U;
 
     //
     // Configure the trigger level for the receiver FIFO trigger interrupt.
@@ -1776,7 +1776,7 @@ SENT_setMTPTriggerSelect(uint32_t base, SENT_Channel channel,
     //
 
     HWREG(base + triggerOffset) = (HWREG(base + triggerOffset) &
-                                    ~SENT_BC_TRIGSEL_TRIGSEL_M) | triggerSel;
+                                    ~SENT_BC_TRIGSEL_TRIGSEL_M) | (uint32_t)triggerSel;
 
 }
 

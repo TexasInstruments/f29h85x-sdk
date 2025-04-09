@@ -1,4 +1,11 @@
-//#############################################################################
+//###########################################################################
+//
+// FILE:    F29H85x_EEPROM_PingPong.c
+//
+// TITLE:   EEPROM_PingPong Driver Logic
+//! <h1> EEPROM_PingPong Driver Logic </h1>
+//
+//###########################################################################
 //
 //
 // //
@@ -439,19 +446,21 @@ void ClearFSMStatus(void)
 
     oFlashStatus = Fapi_getFsmStatus(FLASH_BANK_SELECT, u32UserFlashConfig);
 
-    //
-    // Clear the status register
-    //
-    oReturnCheck = Fapi_issueAsyncCommand(FLASH_BANK_SELECT, u32UserFlashConfig, Fapi_ClearStatus);
-    
-    //
-    // Wait for the status to clear
-    //
-    while (Fapi_getFsmStatus(FLASH_BANK_SELECT, u32UserFlashConfig) != 0);
+    if (oFlashStatus != 0) {
+        //
+        // Clear the status register
+        //
+        oReturnCheck = Fapi_issueAsyncCommand(FLASH_BANK_SELECT, u32UserFlashConfig, Fapi_ClearStatus);
+        
+        //
+        // Wait for the status to clear
+        //
+        while (Fapi_getFsmStatus(FLASH_BANK_SELECT, u32UserFlashConfig) != 0);
 
-    if (oReturnCheck != Fapi_Status_Success)
-    {
-        Sample_Error();
+        if (oReturnCheck != Fapi_Status_Success)
+        {
+            Sample_Error();
+        }
     }
 }
 

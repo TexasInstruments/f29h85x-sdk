@@ -46,6 +46,17 @@
 #ifndef CONSTANTS_F29H85x_H_
 #define CONSTANTS_F29H85x_H_
 
+//*****************************************************************************
+//
+// If building with a C++ compiler, make all of the definitions in this header
+// have a C binding.
+//
+//*****************************************************************************
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 /*!
  *  FMC memory map defines
  */
@@ -328,5 +339,48 @@
 #define C29FLASHBANKFR4RP0BANKMGMTECCENDADDRESS                     (uint32_t)(0x10FB41FF)
 #define C29FLASHBANKFR4RP0BANKMGMTECCENDADDRESSPLUS1                (uint32_t)(0x10FB4200)
 
+// Mode 1 main and non-main address translation offsets
+#define Mode0_FR1_FOTAMainArrayOffset                   (uint32_t)(0x00600000)
+#define Mode0_FR1_FOTANonMainArrayOffset                (uint32_t)(0x00004000)
+
+// Mode 1 main and non-main address translation offsets
+#define Mode1_FR1_FOTAMainArrayOffset                   (uint32_t)(0x00600000)
+#define Mode1_FR1_FOTANonMainArrayOffset                (uint32_t)(0x00018000)
+
+// Mode 1  main and non-main ECC address translation offsets
+#define Mode1_FR1_FOTAMainArrayEccOffset                (uint32_t)(0x000C0000)
+#define Mode1_FR1_FOTANonMainArrayEccOffset             (uint32_t)(0x00003000)
+
+// Mode 3 FR1 main and non-main address translation offsets
+#define Mode3_FR1_FOTAMainArrayOffset                   (uint32_t)(0x00600000)
+#define Mode3_FR1_FOTANonMainArrayOffset                (uint32_t)(0x00018000)
+
+// Mode 3 FR2 main and non-main address translation offsets
+#define Mode3_FR2_FOTAMainArrayOffset                   (uint32_t)(0x00300000)
+#define Mode3_FR2_FOTANonMainArrayOffset                (uint32_t)(0x0000C000)
+
+// Mode 3 FR1 main and non-main ECC address translation offsets
+#define Mode3_FR1_FOTAMainArrayEccOffset                (uint32_t)(0x000C0000)
+#define Mode3_FR1_FOTANonMainArrayEccOffset             (uint32_t)(0x00003000)
+
+// Mode 3 FR2 main and non-main ECC address translation offsets
+#define Mode3_FR2_FOTAMainArrayEccOffset                (uint32_t)(0x00060000)
+#define Mode3_FR2_FOTANonMainArrayEccOffset             (uint32_t)(0x00001800)
+
+
+#define SECVALID_CPU1_2_MASK                            (uint32_t)(0x000000FF)
+#define SECVALID_CPU3_4_MASK                            (uint32_t)(0x00FF0000)
+
+#define SECCFG_UPDATE_CTR_OFFSET                        (uint32_t)(0x00000FF0)
+
+#endif
+
+//*****************************************************************************
+//
+// Mark the end of the C bindings section for C++ compilers.
+//
+//*****************************************************************************
+#ifdef __cplusplus
+}
 #endif
 #endif /* CONSTANTS_F29H85x_H_ */

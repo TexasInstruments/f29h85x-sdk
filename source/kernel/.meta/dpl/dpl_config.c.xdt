@@ -37,6 +37,7 @@
 % let dplclockconfig;
 % let Common            = system.getScript("/driverlib/Common.js");
 
+#include "driverlib.h"
 #include "ti_dpl_config.h"
 
 % for(let subTemplate of args) {
@@ -46,7 +47,7 @@
 % }
 
 /* ----------- DebugP ----------- */
-void putchar_(char character)
+__attribute__((weak)) void putchar_(char character)
 {
     /* Output to CCS console */
     putchar(character);
@@ -75,6 +76,9 @@ void Dpl_init(void)
 
     /* Cycle counter init */
     CycleCounterP_init(`Common.getSYSCLK()*1000000`);
+
+    /* CPU Timer2 clock source and divider configuration */
+    SysCtl_setCputimer2Clock(SYSCTL_TIMER2CLK_SOURCE_SYSCLK, SYSCTL_TIMER2CLK_DIV_1);
 % }
 }
 

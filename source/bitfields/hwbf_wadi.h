@@ -434,19 +434,19 @@ struct WADI_INTSTS_BITS {               // bits description
     uint16_t BLK2INT:1;                 // 1 Interrupt status by ORing all WADI block errors
     uint16_t BLK3INT:1;                 // 2 Interrupt status by ORing all WADI block errors
     uint16_t BLK4INT:1;                 // 3 Interrupt status by ORing all WADI block errors
-    uint16_t BLK5INT:1;                 // 4 Interrupt status by ORing all WADI block errors
-    uint16_t BLK6INT:1;                 // 5 Interrupt status by ORing all WADI block errors
-    uint16_t BLK7INT:1;                 // 6 Interrupt status by ORing all WADI block errors
-    uint16_t BLK8INT:1;                 // 7 Interrupt status by ORing all WADI block errors
-    uint16_t rsvd1:1;                   // 8 Reserved
-    uint16_t rsvd2:1;                   // 9 Reserved
-    uint16_t rsvd3:1;                   // 10 Reserved
-    uint16_t rsvd4:1;                   // 11 Reserved
-    uint16_t rsvd5:1;                   // 12 Reserved
-    uint16_t rsvd6:1;                   // 13 Reserved
-    uint16_t rsvd7:1;                   // 14 Reserved
-    uint16_t rsvd8:1;                   // 15 Reserved
-    uint16_t rsvd9:14;                  // 29:16 Reserved
+    uint16_t rsvd1:1;                   // 4 Reserved
+    uint16_t rsvd2:1;                   // 5 Reserved
+    uint16_t rsvd3:1;                   // 6 Reserved
+    uint16_t rsvd4:1;                   // 7 Reserved
+    uint16_t rsvd5:1;                   // 8 Reserved
+    uint16_t rsvd6:1;                   // 9 Reserved
+    uint16_t rsvd7:1;                   // 10 Reserved
+    uint16_t rsvd8:1;                   // 11 Reserved
+    uint16_t rsvd9:1;                   // 12 Reserved
+    uint16_t rsvd10:1;                  // 13 Reserved
+    uint16_t rsvd11:1;                  // 14 Reserved
+    uint16_t rsvd12:1;                  // 15 Reserved
+    uint16_t rsvd13:14;                 // 29:16 Reserved
     uint16_t SIGBLKSINT:1;              // 30 ORed int status of measurement error for all WADI blocks
     uint16_t SIGTOSIG_BLKSINT:1;        // 31 ORed int status of mismatch error for all WADI blocks
 };
@@ -485,19 +485,19 @@ struct WADI_INTSTSCLR_BITS {            // bits description
     uint16_t BLK2INT:1;                 // 1 Clears the status of the INTSTS of Block 2
     uint16_t BLK3INT:1;                 // 2 Clears the status of the INTSTS of Block 3
     uint16_t BLK4INT:1;                 // 3 Clears the status of the INTSTS of Block 4
-    uint16_t BLK5INT:1;                 // 4 Clears the status of the INTSTS of Block 5
-    uint16_t BLK6INT:1;                 // 5 Clears the status of the INTSTS of Block 6
-    uint16_t BLK7INT:1;                 // 6 Clears the status of the INTSTS of Block 7
-    uint16_t BLK8INT:1;                 // 7 Clears the status of the INTSTS of Block 8
-    uint16_t rsvd1:1;                   // 8 Reserved
-    uint16_t rsvd2:1;                   // 9 Reserved
-    uint16_t rsvd3:1;                   // 10 Reserved
-    uint16_t rsvd4:1;                   // 11 Reserved
-    uint16_t rsvd5:1;                   // 12 Reserved
-    uint16_t rsvd6:1;                   // 13 Reserved
-    uint16_t rsvd7:1;                   // 14 Reserved
-    uint16_t rsvd8:1;                   // 15 Reserved
-    uint16_t rsvd9:14;                  // 29:16 Reserved
+    uint16_t rsvd1:1;                   // 4 Reserved
+    uint16_t rsvd2:1;                   // 5 Reserved
+    uint16_t rsvd3:1;                   // 6 Reserved
+    uint16_t rsvd4:1;                   // 7 Reserved
+    uint16_t rsvd5:1;                   // 8 Reserved
+    uint16_t rsvd6:1;                   // 9 Reserved
+    uint16_t rsvd7:1;                   // 10 Reserved
+    uint16_t rsvd8:1;                   // 11 Reserved
+    uint16_t rsvd9:1;                   // 12 Reserved
+    uint16_t rsvd10:1;                  // 13 Reserved
+    uint16_t rsvd11:1;                  // 14 Reserved
+    uint16_t rsvd12:1;                  // 15 Reserved
+    uint16_t rsvd13:14;                 // 29:16 Reserved
     uint16_t SIGBLKSINT:1;              // 30 Clears the status of all block's INTSTS[SIGBLKSINT]
     uint16_t SIGTOSIG_BLKSINT:1;        // 31 Clears the status of all block's INTSTS[SIGTOSIG_BLKSINT]
 };
@@ -512,19 +512,19 @@ struct WADI_INTSTSFRC_BITS {            // bits description
     uint16_t BLK2INT:1;                 // 1 Allows software force of WADI Block interrupt
     uint16_t BLK3INT:1;                 // 2 Allows software force of WADI Block interrupt
     uint16_t BLK4INT:1;                 // 3 Allows software force of WADI Block interrupt
-    uint16_t BLK5INT:1;                 // 4 Allows software force of WADI Block interrupt
-    uint16_t BLK6INT:1;                 // 5 Allows software force of WADI Block interrupt
-    uint16_t BLK7INT:1;                 // 6 Allows software force of WADI Block interrupt
-    uint16_t BLK8INT:1;                 // 7 Allows software force of WADI Block interrupt
-    uint16_t rsvd1:1;                   // 8 Reserved
-    uint16_t rsvd2:1;                   // 9 Reserved
-    uint16_t rsvd3:1;                   // 10 Reserved
-    uint16_t rsvd4:1;                   // 11 Reserved
-    uint16_t rsvd5:1;                   // 12 Reserved
-    uint16_t rsvd6:1;                   // 13 Reserved
-    uint16_t rsvd7:1;                   // 14 Reserved
-    uint16_t rsvd8:1;                   // 15 Reserved
-    uint16_t rsvd9:14;                  // 29:16 Reserved
+    uint16_t rsvd1:1;                   // 4 Reserved
+    uint16_t rsvd2:1;                   // 5 Reserved
+    uint16_t rsvd3:1;                   // 6 Reserved
+    uint16_t rsvd4:1;                   // 7 Reserved
+    uint16_t rsvd5:1;                   // 8 Reserved
+    uint16_t rsvd6:1;                   // 9 Reserved
+    uint16_t rsvd7:1;                   // 10 Reserved
+    uint16_t rsvd8:1;                   // 11 Reserved
+    uint16_t rsvd9:1;                   // 12 Reserved
+    uint16_t rsvd10:1;                  // 13 Reserved
+    uint16_t rsvd11:1;                  // 14 Reserved
+    uint16_t rsvd12:1;                  // 15 Reserved
+    uint16_t rsvd13:14;                 // 29:16 Reserved
     uint16_t SIGBLKSINT:1;              // 30 Allows software force of WADI Block interrupt
     uint16_t SIGTOSIG_BLKSINT:1;        // 31 Allows software force of WADI Block interrupt
 };
@@ -535,8 +535,9 @@ union WADI_INTSTSFRC_REG {
 };
 
 struct WADI_SIGSYNCFILTCFG_BITS {       // bits description
-    uint32_t BLKS_SIGS_SYNCFILT:18;     // 17:0 Selects SIG is synchronised and filtered or not
-    uint16_t rsvd1:14;                  // 31:18 Reserved
+    uint16_t BLKS_SIGS_SYNCFILT:8;      // 7:0 Selects SIG is synchronised and filtered or not
+    uint16_t rsvd1:8;                   // 15:8 Reserved
+    uint16_t rsvd2:16;                  // 31:16 Reserved
 };
 
 union WADI_SIGSYNCFILTCFG_REG {
@@ -545,8 +546,9 @@ union WADI_SIGSYNCFILTCFG_REG {
 };
 
 struct WADI_TRIGSYNCFILTCFG_BITS {      // bits description
-    uint32_t BLKS_TRIG_SYNCFILT:18;     // 17:0 Selects Trigger input is synchronised and filtered or not
-    uint16_t rsvd1:14;                  // 31:18 Reserved
+    uint16_t BLKS_TRIG_SYNCFILT:8;      // 7:0 Selects Trigger input is synchronised and filtered or not
+    uint16_t rsvd1:8;                   // 15:8 Reserved
+    uint16_t rsvd2:16;                  // 31:16 Reserved
 };
 
 union WADI_TRIGSYNCFILTCFG_REG {
@@ -574,18 +576,18 @@ struct WADI_DMATRIGSTS_BITS {           // bits description
     uint16_t BLK2_DMAEVT:1;             // 1 Indicates the WADI Block event for DMA trigger
     uint16_t BLK3_DMAEVT:1;             // 2 Indicates the WADI Block event for DMA trigger
     uint16_t BLK4_DMAEVT:1;             // 3 Indicates the WADI Block event for DMA trigger
-    uint16_t BLK5_DMAEVT:1;             // 4 Indicates the WADI Block event for DMA trigger
-    uint16_t BLK6DMAEVT:1;              // 5 Indicates the WADI Block event for DMA trigger
-    uint16_t BLK7DMAEVT:1;              // 6 Indicates the WADI Block event for DMA trigger
-    uint16_t BLK8DMAEVT:1;              // 7 Indicates the WADI Block event for DMA trigger
-    uint16_t rsvd1:1;                   // 8 Reserved
-    uint16_t rsvd2:1;                   // 9 Reserved
-    uint16_t rsvd3:1;                   // 10 Reserved
-    uint16_t rsvd4:1;                   // 11 Reserved
-    uint16_t rsvd5:1;                   // 12 Reserved
-    uint16_t rsvd6:1;                   // 13 Reserved
-    uint16_t rsvd7:1;                   // 14 Reserved
-    uint16_t rsvd8:1;                   // 15 Reserved
+    uint16_t rsvd1:1;                   // 4 Reserved
+    uint16_t rsvd2:1;                   // 5 Reserved
+    uint16_t rsvd3:1;                   // 6 Reserved
+    uint16_t rsvd4:1;                   // 7 Reserved
+    uint16_t rsvd5:1;                   // 8 Reserved
+    uint16_t rsvd6:1;                   // 9 Reserved
+    uint16_t rsvd7:1;                   // 10 Reserved
+    uint16_t rsvd8:1;                   // 11 Reserved
+    uint16_t rsvd9:1;                   // 12 Reserved
+    uint16_t rsvd10:1;                  // 13 Reserved
+    uint16_t rsvd11:1;                  // 14 Reserved
+    uint16_t rsvd12:1;                  // 15 Reserved
     uint16_t SSS_EVT1:1;                // 16 Indicates the SSS Event event for DMA trigger
     uint16_t SSS_EVT2:1;                // 17 Indicates the SSS Event for DMA trigger
     uint16_t SSS_EVT3:1;                // 18 Indicates the SSS Event for DMA trigger
@@ -627,18 +629,18 @@ struct WADI_DMASTSUPDATE_BITS {         // bits description
     uint16_t WRSTSBLK2:1;               // 1 Status of DMA update for register set of WADI Block
     uint16_t WRSTSBLK3:1;               // 2 Status of DMA update for register set of WADI Block
     uint16_t WRSTSBLK4:1;               // 3 Status of DMA update for register set of WADI Block
-    uint16_t WRSTSBLK5:1;               // 4 Status of DMA update for register set of WADI Block
-    uint16_t WRSTSBLK6:1;               // 5 Status of DMA update for register set of WADI Block
-    uint16_t WRSTSBLK7:1;               // 6 Status of DMA update for register set of WADI Block
-    uint16_t WRSTSBLK8:1;               // 7 Status of DMA update for register set of WADI Block
-    uint16_t rsvd1:1;                   // 8 Reserved
-    uint16_t rsvd2:1;                   // 9 Reserved
-    uint16_t rsvd3:1;                   // 10 Reserved
-    uint16_t rsvd4:1;                   // 11 Reserved
-    uint16_t rsvd5:1;                   // 12 Reserved
-    uint16_t rsvd6:1;                   // 13 Reserved
-    uint16_t rsvd7:1;                   // 14 Reserved
-    uint16_t rsvd8:1;                   // 15 Reserved
+    uint16_t rsvd1:1;                   // 4 Reserved
+    uint16_t rsvd2:1;                   // 5 Reserved
+    uint16_t rsvd3:1;                   // 6 Reserved
+    uint16_t rsvd4:1;                   // 7 Reserved
+    uint16_t rsvd5:1;                   // 8 Reserved
+    uint16_t rsvd6:1;                   // 9 Reserved
+    uint16_t rsvd7:1;                   // 10 Reserved
+    uint16_t rsvd8:1;                   // 11 Reserved
+    uint16_t rsvd9:1;                   // 12 Reserved
+    uint16_t rsvd10:1;                  // 13 Reserved
+    uint16_t rsvd11:1;                  // 14 Reserved
+    uint16_t rsvd12:1;                  // 15 Reserved
     uint16_t WRSTSEVT1:1;               // 16 DMA MMR write status of  SSS Event word
     uint16_t WRSTSEVT2:1;               // 17 DMA MMR write status of  SSS Event word
     uint16_t WRSTSEVT3:1;               // 18 DMA MMR write status of  SSS Event word
@@ -719,6 +721,17 @@ union WADI_OPERREGCOMMIT_REG {
     struct  WADI_OPERREGCOMMIT_BITS  bit;
 };
 
+struct WADI_SSS_EVTTRIG_BITS {          // bits description
+    uint16_t EVTTRIG:8;                 // 7:0 SSS start if event trigger matches one of defined EVT1-8
+    uint16_t rsvd1:8;                   // 15:8 Reserved
+    uint16_t rsvd2:16;                  // 31:16 Reserved
+};
+
+union WADI_SSS_EVTTRIG_REG {
+    uint32_t  all;
+    struct  WADI_SSS_EVTTRIG_BITS  bit;
+};
+
 struct WADI_SSS_OUTEVTSTS_BITS {        // bits description
     uint16_t OUTEVT1_4:4;               // 3:0 Active seq word status for first set
     uint16_t OUTEVT5_8:4;               // 7:4 Active seq word status for Second set
@@ -753,30 +766,6 @@ struct WADI_SSS_BLK3_4OUTSEL_BITS {     // bits description
 union WADI_SSS_BLK3_4OUTSEL_REG {
     uint32_t  all;
     struct  WADI_SSS_BLK3_4OUTSEL_BITS  bit;
-};
-
-struct WADI_SSS_BLK5_6OUTSEL_BITS {     // bits description
-    uint16_t BLK5SIG1:8;                // 7:0 Maps the  OUTEVTn associated with BLK5:SIG1
-    uint16_t BLK5SIG2:8;                // 15:8 Maps the OUTEVTn associated with BLK5:SIG2
-    uint16_t BLK6SIG1:8;                // 23:16 Maps the OUTEVTn associated with BLK6:SIG1
-    uint16_t BLK6SIG2:8;                // 31:24 Maps the OUTEVTn associated with BLK6:SIG2
-};
-
-union WADI_SSS_BLK5_6OUTSEL_REG {
-    uint32_t  all;
-    struct  WADI_SSS_BLK5_6OUTSEL_BITS  bit;
-};
-
-struct WADI_SSS_BLK7_8OUTSEL_BITS {     // bits description
-    uint16_t BLK7SIG1:8;                // 7:0 Maps the  OUTEVTn associated with BLK7:SIG1
-    uint16_t BLK7SIG2:8;                // 15:8 Maps the OUTEVTn associated with BLK7:SIG2
-    uint16_t BLK8SIG1:8;                // 23:16 Maps the OUTEVTn associated with BLK8:SIG1
-    uint16_t BLK8SIG2:8;                // 31:24 Maps the OUTEVTn associated with BLK8:SIG2
-};
-
-union WADI_SSS_BLK7_8OUTSEL_REG {
-    uint32_t  all;
-    struct  WADI_SSS_BLK7_8OUTSEL_BITS  bit;
 };
 
 struct WADI_SSS_OUTEVT1LINKCFG_BITS {   // bits description
@@ -867,6 +856,48 @@ union WADI_SSS_OUTEVT8LINKCFG_REG {
     struct  WADI_SSS_OUTEVT8LINKCFG_BITS  bit;
 };
 
+struct WADI_SSS_EVT1CFG_BITS {          // bits description
+    uint16_t EVT1:8;                    // 7:0 First event compare configuration
+    uint16_t rsvd1:8;                   // 15:8 Reserved
+    uint16_t rsvd2:16;                  // 31:16 Reserved
+};
+
+union WADI_SSS_EVT1CFG_REG {
+    uint32_t  all;
+    struct  WADI_SSS_EVT1CFG_BITS  bit;
+};
+
+struct WADI_SSS_EVT2CFG_BITS {          // bits description
+    uint16_t EVT2:8;                    // 7:0 Second word compare value configuration
+    uint16_t rsvd1:8;                   // 15:8 Reserved
+    uint16_t rsvd2:16;                  // 31:16 Reserved
+};
+
+union WADI_SSS_EVT2CFG_REG {
+    uint32_t  all;
+    struct  WADI_SSS_EVT2CFG_BITS  bit;
+};
+
+struct WADI_SSS_EVT3CFG_BITS {          // bits description
+    uint16_t EVT3:8;                    // 7:0 Third word compare value configuration
+    uint32_t EVT3_BLK5_TO_16:24;        // 31:8 Third word compare value configuration
+};
+
+union WADI_SSS_EVT3CFG_REG {
+    uint32_t  all;
+    struct  WADI_SSS_EVT3CFG_BITS  bit;
+};
+
+struct WADI_SSS_EVT4CFG_BITS {          // bits description
+    uint16_t EVT4:8;                    // 7:0 Fourth word compare value configuration
+    uint32_t EVT4_BLK5_TO_16:24;        // 31:8 Fourth word compare value configuration
+};
+
+union WADI_SSS_EVT4CFG_REG {
+    uint32_t  all;
+    struct  WADI_SSS_EVT4CFG_BITS  bit;
+};
+
 struct WADI_SSS_TRIGEVT1_4CFG_BITS {    // bits description
     uint16_t TRIG_EVT1CFG:4;            // 3:0 Selects action associated with event 1
     uint16_t rsvd1:4;                   // 7:4 Reserved
@@ -884,8 +915,9 @@ union WADI_SSS_TRIGEVT1_4CFG_REG {
 };
 
 struct WADI_SSS_BLKSOUTEVT1CFG_BITS {   // bits description
-    uint32_t OUTEVT1:18;                // 17:0 Output configuration on event 1
-    uint16_t rsvd1:14;                  // 31:18 Reserved
+    uint16_t OUTEVT1:8;                 // 7:0 Output configuration on event 1
+    uint16_t rsvd1:8;                   // 15:8 Reserved
+    uint16_t rsvd2:16;                  // 31:16 Reserved
 };
 
 union WADI_SSS_BLKSOUTEVT1CFG_REG {
@@ -894,8 +926,9 @@ union WADI_SSS_BLKSOUTEVT1CFG_REG {
 };
 
 struct WADI_SSS_BLKSOUTEVT2CFG_BITS {   // bits description
-    uint32_t OUTEVT2:18;                // 17:0 Output configuration on event 2
-    uint16_t rsvd1:14;                  // 31:18 Reserved
+    uint16_t OUTEVT2:8;                 // 7:0 Output configuration on event 2
+    uint16_t rsvd1:8;                   // 15:8 Reserved
+    uint16_t rsvd2:16;                  // 31:16 Reserved
 };
 
 union WADI_SSS_BLKSOUTEVT2CFG_REG {
@@ -904,8 +937,9 @@ union WADI_SSS_BLKSOUTEVT2CFG_REG {
 };
 
 struct WADI_SSS_BLKSOUTEVT3CFG_BITS {   // bits description
-    uint32_t OUTEVT3:18;                // 17:0 Output configuration on event 3
-    uint16_t rsvd1:14;                  // 31:18 Reserved
+    uint16_t OUTEVT3:8;                 // 7:0 Output configuration on event 3
+    uint16_t rsvd1:8;                   // 15:8 Reserved
+    uint16_t rsvd2:16;                  // 31:16 Reserved
 };
 
 union WADI_SSS_BLKSOUTEVT3CFG_REG {
@@ -914,8 +948,9 @@ union WADI_SSS_BLKSOUTEVT3CFG_REG {
 };
 
 struct WADI_SSS_BLKSOUTEVT4CFG_BITS {   // bits description
-    uint32_t OUTEVT4:18;                // 17:0 Output configuration on event 4
-    uint16_t rsvd1:14;                  // 31:18 Reserved
+    uint16_t OUTEVT4:8;                 // 7:0 Output configuration on event 4
+    uint16_t rsvd1:8;                   // 15:8 Reserved
+    uint16_t rsvd2:16;                  // 31:16 Reserved
 };
 
 union WADI_SSS_BLKSOUTEVT4CFG_REG {
@@ -1035,6 +1070,46 @@ union WADI_SSS_OUTEVT4DUR_REG {
     struct  WADI_SSS_OUTEVT4DUR_BITS  bit;
 };
 
+struct WADI_SSS_EVT5CFG_BITS {          // bits description
+    uint16_t EVT5:8;                    // 7:0 Fifth word compare value configuration
+    uint32_t EVT5_BLK5_TO_16:24;        // 31:8 Fifth word compare value configuration
+};
+
+union WADI_SSS_EVT5CFG_REG {
+    uint32_t  all;
+    struct  WADI_SSS_EVT5CFG_BITS  bit;
+};
+
+struct WADI_SSS_EVT6CFG_BITS {          // bits description
+    uint16_t EVT6:8;                    // 7:0 Sixth word compare value configuration
+    uint32_t EVT6_BLK5_TO_16:24;        // 31:8 Sixth word compare value configuration
+};
+
+union WADI_SSS_EVT6CFG_REG {
+    uint32_t  all;
+    struct  WADI_SSS_EVT6CFG_BITS  bit;
+};
+
+struct WADI_SSS_EVT7CFG_BITS {          // bits description
+    uint16_t EVT7:8;                    // 7:0 Seventh word compare value configuration
+    uint32_t EVT7_BLK5_TO_16:24;        // 31:8 Seventh word compare value configuration
+};
+
+union WADI_SSS_EVT7CFG_REG {
+    uint32_t  all;
+    struct  WADI_SSS_EVT7CFG_BITS  bit;
+};
+
+struct WADI_SSS_EVT8CFG_BITS {          // bits description
+    uint16_t EVT8:8;                    // 7:0 Eighth word compare value configuration
+    uint32_t EVT8_BLK5_TO_16:24;        // 31:8 Eighth word compare value configuration
+};
+
+union WADI_SSS_EVT8CFG_REG {
+    uint32_t  all;
+    struct  WADI_SSS_EVT8CFG_BITS  bit;
+};
+
 struct WADI_SSS_TRIGEVT5_8CFG_BITS {    // bits description
     uint16_t TRIG_EVT5CFG:4;            // 3:0 Selects action associated with event 5
     uint16_t rsvd1:4;                   // 7:4 Reserved
@@ -1052,8 +1127,9 @@ union WADI_SSS_TRIGEVT5_8CFG_REG {
 };
 
 struct WADI_SSS_BLKSOUTEVT5CFG_BITS {   // bits description
-    uint32_t OUTEVT5:18;                // 17:0 Output configuration on event 5
-    uint16_t rsvd1:14;                  // 31:18 Reserved
+    uint16_t OUTEVT5:8;                 // 7:0 Output configuration on event 5
+    uint16_t rsvd1:8;                   // 15:8 Reserved
+    uint16_t rsvd2:16;                  // 31:16 Reserved
 };
 
 union WADI_SSS_BLKSOUTEVT5CFG_REG {
@@ -1062,8 +1138,9 @@ union WADI_SSS_BLKSOUTEVT5CFG_REG {
 };
 
 struct WADI_SSS_BLKSOUTEVT6CFG_BITS {   // bits description
-    uint32_t OUTEVT6:18;                // 17:0 Output configuration on event 6
-    uint16_t rsvd1:14;                  // 31:18 Reserved
+    uint16_t OUTEVT6:8;                 // 7:0 Output configuration on event 6
+    uint16_t rsvd1:8;                   // 15:8 Reserved
+    uint16_t rsvd2:16;                  // 31:16 Reserved
 };
 
 union WADI_SSS_BLKSOUTEVT6CFG_REG {
@@ -1072,8 +1149,9 @@ union WADI_SSS_BLKSOUTEVT6CFG_REG {
 };
 
 struct WADI_SSS_BLKSOUTEVT7CFG_BITS {   // bits description
-    uint32_t OUTEVT7:18;                // 17:0 Output configuration on event 7
-    uint16_t rsvd1:14;                  // 31:18 Reserved
+    uint16_t OUTEVT7:8;                 // 7:0 Output configuration on event 7
+    uint16_t rsvd1:8;                   // 15:8 Reserved
+    uint16_t rsvd2:16;                  // 31:16 Reserved
 };
 
 union WADI_SSS_BLKSOUTEVT7CFG_REG {
@@ -1082,8 +1160,9 @@ union WADI_SSS_BLKSOUTEVT7CFG_REG {
 };
 
 struct WADI_SSS_BLKSOUTEVT8CFG_BITS {   // bits description
-    uint32_t OUTEVT8:18;                // 17:0 Output configuration on event 8
-    uint16_t rsvd1:14;                  // 31:18 Reserved
+    uint16_t OUTEVT8:8;                 // 7:0 Output configuration on event 8
+    uint16_t rsvd1:8;                   // 15:8 Reserved
+    uint16_t rsvd2:16;                  // 31:16 Reserved
 };
 
 union WADI_SSS_BLKSOUTEVT8CFG_REG {
@@ -1225,13 +1304,11 @@ struct WADI_OPER_SSS_REGS {
     union   WADI_OPERREGLOCK_REG             OPERREGLOCK;                  // Operating Register Lock
     union   WADI_OPERREGCOMMIT_REG           OPERREGCOMMIT;                // Operating Register Commit
     uint8_t                                  rsvd3[4];                     // Reserved
-    uint32_t                                 SSS_EVTTRIG;                  // Event trigger word output by WADI instance for SSS
+    union   WADI_SSS_EVTTRIG_REG             SSS_EVTTRIG;                  // Event trigger word output by WADI instance for SSS
     union   WADI_SSS_OUTEVTSTS_REG           SSS_OUTEVTSTS;                // Status of the active event
     union   WADI_SSS_BLK1_2OUTSEL_REG        SSS_BLK1_2OUTSEL;             // Mux select word for outputs 0-3
     union   WADI_SSS_BLK3_4OUTSEL_REG        SSS_BLK3_4OUTSEL;             // Mux select word for outputs 4-7
-    union   WADI_SSS_BLK5_6OUTSEL_REG        SSS_BLK5_6OUTSEL;             // Mux select word for outputs 8-11
-    union   WADI_SSS_BLK7_8OUTSEL_REG        SSS_BLK7_8OUTSEL;             // Mux select word for outputs 12-15
-    uint8_t                                  rsvd4[16];                    // Reserved
+    uint8_t                                  rsvd4[24];                    // Reserved
     union   WADI_SSS_OUTEVT1LINKCFG_REG      SSS_OUTEVT1LINKCFG;           // Output event1 Link configuration
     union   WADI_SSS_OUTEVT2LINKCFG_REG      SSS_OUTEVT2LINKCFG;           // Output event2 link configuration
     union   WADI_SSS_OUTEVT3LINKCFG_REG      SSS_OUTEVT3LINKCFG;           // Output event3 link configuration
@@ -1240,10 +1317,10 @@ struct WADI_OPER_SSS_REGS {
     union   WADI_SSS_OUTEVT6LINKCFG_REG      SSS_OUTEVT6LINKCFG;           // Output event6 link configuration
     union   WADI_SSS_OUTEVT7LINKCFG_REG      SSS_OUTEVT7LINKCFG;           // Output event7 link configuration
     union   WADI_SSS_OUTEVT8LINKCFG_REG      SSS_OUTEVT8LINKCFG;           // Output event8 link configuration
-    uint32_t                                 SSS_EVT1CFG;                  // Event1 that compares to trigger word SSS_EVTTRIG
-    uint32_t                                 SSS_EVT2CFG;                  // Event2 that compares to trigger word SSS_EVTTRIG
-    uint32_t                                 SSS_EVT3CFG;                  // Event3 that compares to trigger word SSS_EVTTRIG
-    uint32_t                                 SSS_EVT4CFG;                  // Event4 that compares to trigger word SSS_EVTTRIG
+    union   WADI_SSS_EVT1CFG_REG             SSS_EVT1CFG;                  // Event1 that compares to trigger word SSS_EVTTRIG
+    union   WADI_SSS_EVT2CFG_REG             SSS_EVT2CFG;                  // Event2 that compares to trigger word SSS_EVTTRIG
+    union   WADI_SSS_EVT3CFG_REG             SSS_EVT3CFG;                  // Event3 that compares to trigger word SSS_EVTTRIG
+    union   WADI_SSS_EVT4CFG_REG             SSS_EVT4CFG;                  // Event4 that compares to trigger word SSS_EVTTRIG
     union   WADI_SSS_TRIGEVT1_4CFG_REG       SSS_TRIGEVT1_4CFG;            // Configuration for using trigger word in specific manner
     uint8_t                                  rsvd5[108];                   // Reserved
     union   WADI_SSS_BLKSOUTEVT1CFG_REG      SSS_BLKSOUTEVT1CFG;           // Output event1 to be applied for output
@@ -1259,10 +1336,10 @@ struct WADI_OPER_SSS_REGS {
     union   WADI_SSS_OUTEVT3DUR_REG          SSS_OUTEVT3DUR;               // Output event3 configuration of delays
     union   WADI_SSS_OUTEVT4DUR_REG          SSS_OUTEVT4DUR;               // Output event4 configuration of delays
     uint8_t                                  rsvd6[80];                    // Reserved
-    uint32_t                                 SSS_EVT5CFG;                  // Event5 that compares to trigger word SSS_EVTTRIG
-    uint32_t                                 SSS_EVT6CFG;                  // Event6 that compares to trigger word SSS_EVTTRIG
-    uint32_t                                 SSS_EVT7CFG;                  // Event7 that compares to trigger word SSS_EVTTRIG
-    uint32_t                                 SSS_EVT8CFG;                  // Event8 that compares to trigger word SSS_EVTTRIG
+    union   WADI_SSS_EVT5CFG_REG             SSS_EVT5CFG;                  // Event5 that compares to trigger word SSS_EVTTRIG
+    union   WADI_SSS_EVT6CFG_REG             SSS_EVT6CFG;                  // Event6 that compares to trigger word SSS_EVTTRIG
+    union   WADI_SSS_EVT7CFG_REG             SSS_EVT7CFG;                  // Event7 that compares to trigger word SSS_EVTTRIG
+    union   WADI_SSS_EVT8CFG_REG             SSS_EVT8CFG;                  // Event8 that compares to trigger word SSS_EVTTRIG
     union   WADI_SSS_TRIGEVT5_8CFG_REG       SSS_TRIGEVT5_8CFG;            // Configuration for using trigger word in specific manner
     uint8_t                                  rsvd7[108];                   // Reserved
     union   WADI_SSS_BLKSOUTEVT5CFG_REG      SSS_BLKSOUTEVT5CFG;           // Output event5 to be applied for output

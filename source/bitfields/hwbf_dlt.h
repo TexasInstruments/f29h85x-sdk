@@ -136,8 +136,8 @@ struct DLT_FIFO_CONTROL_BITS {          // bits description
     uint16_t DMA_EN:1;                  // 0 Trigger DMA on FIFO level
     uint16_t FIFO_RST:1;                // 1 Initialize pointers of FIFO to 0
     uint16_t rsvd1:6;                   // 7:2 Reserved
-    uint32_t WR_CTR_TRIG_LEVEL:10;      // 17:8 Level of FIFO writes required to trigger INT/DMA
-    uint16_t rsvd2:14;                  // 31:18 Reserved
+    uint16_t WR_CTR_TRIG_LEVEL:8;       // 15:8 Level of FIFO writes required to trigger INT/DMA
+    uint16_t rsvd2:16;                  // 31:16 Reserved
 };
 
 union DLT_FIFO_CONTROL_REG {
@@ -158,10 +158,10 @@ union DLT_TIMER_CONTROL_REG {
 };
 
 struct DLT_FIFO_STS_BITS {              // bits description
-    uint16_t WORD_CTR:10;               // 9:0 Number of 64-bit words to be read in the FIFO
-    uint16_t rsvd1:6;                   // 15:10 Reserved
-    uint16_t WR_CTR:10;                 // 25:16 Write counter of FIFO after last trigger
-    uint16_t rsvd2:6;                   // 31:26 Reserved
+    uint16_t WORD_CTR:8;                // 7:0 Number of 64-bit words to be read in the FIFO
+    uint16_t rsvd1:8;                   // 15:8 Reserved
+    uint16_t WR_CTR:8;                  // 23:16 Write counter of FIFO after last trigger
+    uint16_t rsvd2:8;                   // 31:24 Reserved
 };
 
 union DLT_FIFO_STS_REG {
@@ -170,10 +170,10 @@ union DLT_FIFO_STS_REG {
 };
 
 struct DLT_FIFO_PTR_BITS {              // bits description
-    uint16_t RD_PTR:10;                 // 9:0 Read pointer location of FIFO
-    uint16_t rsvd1:6;                   // 15:10 Reserved
-    uint16_t WR_PTR:10;                 // 25:16 Write pointer location of FIFO
-    uint16_t rsvd2:6;                   // 31:26 Reserved
+    uint16_t RD_PTR:8;                  // 7:0 Read pointer location of FIFO
+    uint16_t rsvd1:8;                   // 15:8 Reserved
+    uint16_t WR_PTR:8;                  // 23:16 Write pointer location of FIFO
+    uint16_t rsvd2:8;                   // 31:24 Reserved
 };
 
 union DLT_FIFO_PTR_REG {

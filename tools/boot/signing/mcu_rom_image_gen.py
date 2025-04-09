@@ -193,15 +193,20 @@ def get_cert(args):
             bootCore_id = 16
             certType = 1
             bootCoreOptions = 0
-        elif((args.device == 'f29h85x') and (args.core == 'C29') and (args.fw_type != 'SEC_CFG')):
+        elif((args.device == 'f29h85x') and (args.core == 'C29') and (args.fw_type != 'SEC_CFG') and (args.fw_type != 'CPU3')):
             bootAddress = 0
             bootCore_id = 16
             certType = 1
             bootCoreOptions = 0
-        elif((args.device == 'f29h85x') and (args.fw_type == 'SEC_CFG')):
+        elif((args.device == 'f29h85x') and (args.core == 'C29') and (args.fw_type == 'SEC_CFG')):
             bootAddress = 0
             bootCore_id = 16
             certType = 3
+            bootCoreOptions = 0
+        elif((args.device == 'f29h85x') and (args.core == 'C29') and (args.fw_type == 'CPU3')):
+            bootAddress = 0
+            bootCore_id = 16
+            certType = 4
             bootCoreOptions = 0
         else:
             bootAddress = 0

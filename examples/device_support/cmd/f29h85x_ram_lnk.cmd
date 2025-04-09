@@ -22,7 +22,7 @@ MEMORY
 
 SECTIONS
 {
-    codestart     : {} > 0x20100010
+    codestart     : {} > 0x20100000
 
     .text         : {} > SRAM_LPAx
     .TI.ramfunc   : {} > SRAM_LPAx

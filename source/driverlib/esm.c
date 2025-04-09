@@ -66,7 +66,7 @@ void ESM_configErrorEvent(uint32_t base, const ESM_ConfigParams *configParams)
     //
     if(configParams->enableInterrupt == true)
     {
-        HWREG(base + ESM_CPU_O_INTR_EN_SET(groupNum)) = 1U << eventNum;
+        HWREG(base + ESM_CPU_O_INTR_EN_SET(groupNum)) = (uint32_t)1U << eventNum;
     }
 
     //
@@ -87,11 +87,11 @@ void ESM_configErrorEvent(uint32_t base, const ESM_ConfigParams *configParams)
     //
     if(configParams->enableInfluenceOnErrorPin == true)
     {
-        HWREG(base + ESM_CPU_O_PIN_EN_SET(groupNum)) = 1U << eventNum;
+        HWREG(base + ESM_CPU_O_PIN_EN_SET(groupNum)) = (uint32_t)1U << eventNum;
     }
     else
     {
-        HWREG(base + ESM_CPU_O_PIN_EN_CLR(groupNum)) = 1U << eventNum;
+        HWREG(base + ESM_CPU_O_PIN_EN_CLR(groupNum)) = (uint32_t)1U << eventNum;
     }
 
     //
@@ -99,11 +99,11 @@ void ESM_configErrorEvent(uint32_t base, const ESM_ConfigParams *configParams)
     //
     if(configParams->enableCriticalPriorityInterruptInfluence == true)
     {
-        HWREG(base + ESM_CPU_O_CRIT_EN_SET(groupNum)) = 1U << eventNum;
+        HWREG(base + ESM_CPU_O_CRIT_EN_SET(groupNum)) = (uint32_t)1U << eventNum;
     }
     else
     {
-        HWREG(base + ESM_CPU_O_CRIT_EN_CLR(groupNum)) = 1U << eventNum;
+        HWREG(base + ESM_CPU_O_CRIT_EN_CLR(groupNum)) = (uint32_t)1U << eventNum;
     }
 }
 
@@ -228,7 +228,7 @@ void ESM_config(uint32_t base, ESM_EventMap event, ESM_ConfigType configType)
     //
     // Set the Interrupt enable bit
     //
-    HWREG(base + ESM_CPU_O_INTR_EN_SET(groupNum)) = 1U << eventNum;
+    HWREG(base + ESM_CPU_O_INTR_EN_SET(groupNum)) = (uint32_t)1U << eventNum;
 
     switch(configType)
     {
@@ -251,7 +251,7 @@ void ESM_config(uint32_t base, ESM_EventMap event, ESM_ConfigType configType)
             //
             // Configure Critical priority interrupt
             //
-            HWREG(base + ESM_CPU_O_CRIT_EN_SET(groupNum)) = 1U << eventNum;
+            HWREG(base + ESM_CPU_O_CRIT_EN_SET(groupNum)) = (uint32_t)1U << eventNum;
             break;
 
         case ESM_CONFIG_ERROR_PIN:
@@ -259,7 +259,7 @@ void ESM_config(uint32_t base, ESM_EventMap event, ESM_ConfigType configType)
             // Configure influence on Error Pin
             //
             ASSERT(base == ESMSYSTEM_BASE);
-            HWREG(base + ESM_CPU_O_PIN_EN_SET(groupNum)) = 1U << eventNum;
+            HWREG(base + ESM_CPU_O_PIN_EN_SET(groupNum)) = (uint32_t)1U << eventNum;
             break;
 
         default:

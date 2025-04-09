@@ -64,8 +64,7 @@
                                                                      // vector register
 #define PIPE_O_NMI_LINK_OWNER             0x34U                      // Non Maskable Interrupt link
                                                                      // owner register
-#define PIPE_O_MEM_ECC_DIAG               0x40U                      // ECC configuration and
-                                                                     // diagnostics register
+#define PIPE_O_MEM_ECC_DIAG               0x40U                      // ECC diagnostics register
 #define PIPE_O_MEM_INIT                   0x44U                      // PIPE vector memory
                                                                      // initialization register
 #define PIPE_O_MEM_INIT_STS               0x48U                      // PIPE memory initialization
@@ -84,9 +83,9 @@
 #define PIPE_O_TASK_CTRL                  0x90U                      // Task control register
 #define PIPE_O_BOOT_LINK_CTRL             0x94U                      // Boot Link control to lock
                                                                      // out BOOT_LINK
-#define PIPE_O_INT_VECT_MAPPING           0x98U                      // Interrupt vector mapping to
-                                                                     // post processing block for LFU
-                                                                     // support
+#define PIPE_O_INT_VECT_MAPPING           0x98U                      // Interrupt vector mapping
+                                                                     // for LFU, FOTA, and INT vector
+                                                                     // swapping support
 #define PIPE_O_MMR_CLR                    0xA0U                      // PIPE MMR clear register
 #define PIPE_O_ALL_FLAG_CLR               0xA4U                      // PIPE flag clear register
 #define PIPE_O_REG_PARITY_DIAG_DATA       0xB0U                      // Register parity Diagnostic
@@ -115,7 +114,7 @@
 #define PIPE_O_SELFTEST_DIAG_DATA0        0x8000U                    // Diagnostics data register 0
 #define PIPE_O_SELFTEST_DIAG_DATA1        0x8004U                    // Diagnostics data register 1
 #define PIPE_O_SELFTEST_DIAG_ECC          0x8020U                    // Diagnostics ECC
-#define PIPE_O_SELFTEST_DIAG_CONTROL      0x8028U                    // Diagnostic test enable
+#define PIPE_O_SELFTEST_DIAG_CONTROL      0x8028U                    // Diagnostic test enable.
 #define PIPE_O_SELFTEST_DIAG_STATUS       0x802CU                    // Diagnostic status register
 #define PIPE_O_SELFTEST_DIAG_STATUS_CLR   0x8030U                    // Diagnostic status clear
                                                                      // register

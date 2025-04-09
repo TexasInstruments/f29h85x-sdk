@@ -24,20 +24,32 @@ if (module != null)
         let owner = instance.$ownedBy;
 
         var peripheralInst = instance.peripheralInst;
+        var tempPeripheralInst = instance.peripheralInst;
         if (instance.pinmuxPeripheralModule)
         {
 	        let ownerSolution = owner[instance.pinmuxPeripheralModule].$solution;
 	        var ownerPeripheral = ownerSolution.peripheralName;
 	        peripheralInst = ownerPeripheral;
+            if (peripheralInst.includes("SD"))
+            {
+                tempPeripheralInst = peripheralInst.slice(0, 2) + "FM" + peripheralInst.slice(2);
+            }
+            else if(peripheralInst.includes("ECAT")){
+                tempPeripheralInst = "ETHERCATA";
+            }
+            else
+            {
+                tempPeripheralInst = peripheralInst;
+            }
         }
 %%}
 %   if(!instance.removeCpuSelStandbyDbgHalt)
 %   {
-    SysCtl_selectCPUForPeripheral(SYSCTL_PERIPH_CONFIG_`peripheralInst`, SYSCTL_CPUSEL_`instance.cpuSel`);
+    SysCtl_selectCPUForPeripheral(SYSCTL_PERIPH_CONFIG_`tempPeripheralInst`, SYSCTL_CPUSEL_`instance.cpuSel`);
 %   }
 %   if(!instance.removeFrameSel)
 %   {
-    SysCtl_selectFrameForPeripheral(SYSCTL_PERIPH_CONFIG_`peripheralInst`, SYSCTL_FRAMESEL_`instance.frameSel.replace("FRAME","")`);
+    SysCtl_selectFrameForPeripheral(SYSCTL_PERIPH_CONFIG_`tempPeripheralInst`, SYSCTL_FRAMESEL_`instance.frameSel.replace("FRAME","")`);
 %   }
 %%{
     if(!instance.removeCpuSelStandbyDbgHalt)
@@ -45,13 +57,13 @@ if (module != null)
         if(!instance.standbyEn)
         {
 %%}
-    SysCtl_disableStandbyForPeripheral(SYSCTL_PERIPH_CONFIG_`peripheralInst`);
+    SysCtl_disableStandbyForPeripheral(SYSCTL_PERIPH_CONFIG_`tempPeripheralInst`);
 %%{
         }
         if(!instance.dbgHaltEn)
         {
 %%}
-    SysCtl_disableDebugHaltForPeripheral(SYSCTL_PERIPH_CONFIG_`peripheralInst`);
+    SysCtl_disableDebugHaltForPeripheral(SYSCTL_PERIPH_CONFIG_`tempPeripheralInst`);
 %%{
         }
     }

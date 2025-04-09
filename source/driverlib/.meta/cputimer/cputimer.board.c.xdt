@@ -25,6 +25,9 @@ void `nameOfPeripheral`_init(){
         % if ((instance.cputimerBase == "CPUTIMER2_BASE") && ((freertos != null) || (dplclock != null))) continue;
 void `instance.$name`_init(){
 		% let instancePinmux = instance[nameOfModule];
+		% if (instance.cputimerBase == "CPUTIMER2_BASE") {
+    SysCtl_setCputimer2Clock(`instance.clockSource`, `instance.clockPrescaler`);
+		% }
 	CPUTimer_setEmulationMode(`instance.$name`_BASE, `instance.emulationMode`);
 	CPUTimer_setPreScaler(`instance.$name`_BASE, `instance.timerPrescaler`U);
 	CPUTimer_setPeriod(`instance.$name`_BASE, `instance.timerPeriod`U);

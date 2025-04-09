@@ -81,8 +81,8 @@
 #define CPU2_NMI_VECTOR         0x20108040U
 
 #ifdef _FLASH
-    #define CPU3_RESET_VECTOR   0x10400000U
-    #define CPU3_NMI_VECTOR     0x10400040U
+    #define CPU3_RESET_VECTOR   0x10401000U
+    #define CPU3_NMI_VECTOR     0x10401040U
 #else
     #define CPU3_RESET_VECTOR   0x20110000U
     #define CPU3_NMI_VECTOR     0x20110040U

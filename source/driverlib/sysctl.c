@@ -111,7 +111,38 @@ void SysCtl_pollSyncBusy(uint32_t mask)
     // When a timeout occurs, error function will be invoked.
     // Users can replace this with custom code.
     //
-    ASSERT(status == true);
+    ASSERT(status == (uint32_t)true);
+}
+
+//*****************************************************************************
+//
+// SysCtl_pollSyncBusyWd()
+//
+//*****************************************************************************
+void SysCtl_pollSyncBusyWd(uint32_t mask)
+{
+    uint32_t timeoutCnt = 0U;
+    uint32_t status = true;
+
+    //
+    //  Wait for BUSY bit to clear
+    //
+    while((HWREGH(WD_BASE + SYSCTL_O_SYNCBUSYWD) & mask) == mask)
+    {
+        if(timeoutCnt >= SYSCTL_SYNCBUSY_TIMEOUT_CYCLES)
+        {
+            status = false;
+            break;
+        }
+
+        timeoutCnt++;
+    }
+
+    //
+    // When a timeout occurs, error function will be invoked.
+    // Users can replace this with custom code.
+    //
+    ASSERT(status == (uint32_t)true);
 }
 
 //*****************************************************************************
@@ -813,7 +844,7 @@ SysCtl_setClock(Sysctl_PLLClockSource oscSrc, Sysctl_PLLConfig pllConfig,
             else
             {
                 HWREGH(DEVCFG_BASE + SYSCTL_O_SYSCLKDIVSEL) =
-                                            (uint8_t)sysDiv + 4U;
+                                            (uint16_t)sysDiv + 4U;
             }
 
             SysCtl_pollSyncBusy(SYSCTL_SYNCBUSY_SYSCLKDIVSEL);

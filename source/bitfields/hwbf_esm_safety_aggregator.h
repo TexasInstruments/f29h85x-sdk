@@ -48,6 +48,7 @@ extern "C" {
 #endif
 
 #include <stdint.h>
+#include "hwbf_edc.h"
 
 //---------------------------------------------------------------------------
 // ESM_SAFETY_AGGREGATOR Individual Register Bit Definitions:
@@ -179,7 +180,8 @@ struct ESM_SAFETYAGG_REGS {
     uint8_t                                  rsvd1[4];                     // Reserved
     union   ESM_SAFETY_AGGREGATOR_ecc_vector_REG ecc_vector;               // ECC Vector Register
     union   ESM_SAFETY_AGGREGATOR_misc_status_REG misc_status;             // Misc Status
-    uint8_t                                  rsvd2[48];                    // Reserved
+    struct  EDC_REGS                         EDC_Regs;                     // EDC Registers
+    uint8_t                                  rsvd2[8];                     // Reserved
     uint8_t                                  rsvd3[252];                   // Reserved
     union   ESM_SAFETY_AGGREGATOR_ded_eoi_reg_REG ded_eoi_reg;             // EOI Register
     union   ESM_SAFETY_AGGREGATOR_ded_status_reg0_REG ded_status_reg0;     // Interrupt Status Register 0
