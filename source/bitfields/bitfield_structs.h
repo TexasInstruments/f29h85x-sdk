@@ -62,6 +62,7 @@
 #include "hwbf_dlt.h"
 #include "hwbf_ecap.h"
 #include "hwbf_ecat_ss.h"
+#include "hwbf_edc.h"
 #include "hwbf_elt.h"
 #include "hwbf_emif.h"
 #include "hwbf_epg.h"
@@ -299,6 +300,42 @@ extern volatile struct DE_REGS EPwm17DeRegs;
 
 extern volatile struct DE_REGS EPwm18DeRegs;
 
+extern volatile struct DE_REGS EPwm1DeXlinkRegs;
+
+extern volatile struct DE_REGS EPwm2DeXlinkRegs;
+
+extern volatile struct DE_REGS EPwm3DeXlinkRegs;
+
+extern volatile struct DE_REGS EPwm4DeXlinkRegs;
+
+extern volatile struct DE_REGS EPwm5DeXlinkRegs;
+
+extern volatile struct DE_REGS EPwm6DeXlinkRegs;
+
+extern volatile struct DE_REGS EPwm7DeXlinkRegs;
+
+extern volatile struct DE_REGS EPwm8DeXlinkRegs;
+
+extern volatile struct DE_REGS EPwm9DeXlinkRegs;
+
+extern volatile struct DE_REGS EPwm10DeXlinkRegs;
+
+extern volatile struct DE_REGS EPwm11DeXlinkRegs;
+
+extern volatile struct DE_REGS EPwm12DeXlinkRegs;
+
+extern volatile struct DE_REGS EPwm13DeXlinkRegs;
+
+extern volatile struct DE_REGS EPwm14DeXlinkRegs;
+
+extern volatile struct DE_REGS EPwm15DeXlinkRegs;
+
+extern volatile struct DE_REGS EPwm16DeXlinkRegs;
+
+extern volatile struct DE_REGS EPwm17DeXlinkRegs;
+
+extern volatile struct DE_REGS EPwm18DeXlinkRegs;
+
 extern volatile struct DLT_CORE_REGS cpuDltRegs;
 
 extern volatile struct DLT_FIFO_REGS CPU1DLTFifoRegs;
@@ -373,6 +410,42 @@ extern volatile struct EPWM_REGS EPwm17Regs;
 
 extern volatile struct EPWM_REGS EPwm18Regs;
 
+extern volatile struct EPWM_REGS EPwm1XlinkRegs;
+
+extern volatile struct EPWM_REGS EPwm2XlinkRegs;
+
+extern volatile struct EPWM_REGS EPwm3XlinkRegs;
+
+extern volatile struct EPWM_REGS EPwm4XlinkRegs;
+
+extern volatile struct EPWM_REGS EPwm5XlinkRegs;
+
+extern volatile struct EPWM_REGS EPwm6XlinkRegs;
+
+extern volatile struct EPWM_REGS EPwm7XlinkRegs;
+
+extern volatile struct EPWM_REGS EPwm8XlinkRegs;
+
+extern volatile struct EPWM_REGS EPwm9XlinkRegs;
+
+extern volatile struct EPWM_REGS EPwm10XlinkRegs;
+
+extern volatile struct EPWM_REGS EPwm11XlinkRegs;
+
+extern volatile struct EPWM_REGS EPwm12XlinkRegs;
+
+extern volatile struct EPWM_REGS EPwm13XlinkRegs;
+
+extern volatile struct EPWM_REGS EPwm14XlinkRegs;
+
+extern volatile struct EPWM_REGS EPwm15XlinkRegs;
+
+extern volatile struct EPWM_REGS EPwm16XlinkRegs;
+
+extern volatile struct EPWM_REGS EPwm17XlinkRegs;
+
+extern volatile struct EPWM_REGS EPwm18XlinkRegs;
+
 extern volatile struct EPWM_XBAR_REGS EPwmXbarRegs;
 
 extern volatile struct EPWM_XCMP_REGS EPwm1XcmpRegs;
@@ -410,6 +483,42 @@ extern volatile struct EPWM_XCMP_REGS EPwm16XcmpRegs;
 extern volatile struct EPWM_XCMP_REGS EPwm17XcmpRegs;
 
 extern volatile struct EPWM_XCMP_REGS EPwm18XcmpRegs;
+
+extern volatile struct EPWM_XCMP_REGS EPwm1XcmpXlinkRegs;
+
+extern volatile struct EPWM_XCMP_REGS EPwm2XcmpXlinkRegs;
+
+extern volatile struct EPWM_XCMP_REGS EPwm3XcmpXlinkRegs;
+
+extern volatile struct EPWM_XCMP_REGS EPwm4XcmpXlinkRegs;
+
+extern volatile struct EPWM_XCMP_REGS EPwm5XcmpXlinkRegs;
+
+extern volatile struct EPWM_XCMP_REGS EPwm6XcmpXlinkRegs;
+
+extern volatile struct EPWM_XCMP_REGS EPwm7XcmpXlinkRegs;
+
+extern volatile struct EPWM_XCMP_REGS EPwm8XcmpXlinkRegs;
+
+extern volatile struct EPWM_XCMP_REGS EPwm9XcmpXlinkRegs;
+
+extern volatile struct EPWM_XCMP_REGS EPwm10XcmpXlinkRegs;
+
+extern volatile struct EPWM_XCMP_REGS EPwm11XcmpXlinkRegs;
+
+extern volatile struct EPWM_XCMP_REGS EPwm12XcmpXlinkRegs;
+
+extern volatile struct EPWM_XCMP_REGS EPwm13XcmpXlinkRegs;
+
+extern volatile struct EPWM_XCMP_REGS EPwm14XcmpXlinkRegs;
+
+extern volatile struct EPWM_XCMP_REGS EPwm15XcmpXlinkRegs;
+
+extern volatile struct EPWM_XCMP_REGS EPwm16XcmpXlinkRegs;
+
+extern volatile struct EPWM_XCMP_REGS EPwm17XcmpXlinkRegs;
+
+extern volatile struct EPWM_XCMP_REGS EPwm18XcmpXlinkRegs;
 
 extern volatile struct EQEP_REGS EQep1Regs;
 
@@ -485,7 +594,7 @@ extern volatile struct ICL_XBAR_REGS IclXbarRegs;
 
 extern volatile struct INPUT_XBAR_REGS InputXbarRegs;
 
-extern volatile struct IPC_COUNTER_REGS IpccounterRegsRegs;
+extern volatile struct IPC_COUNTER_REGS IpcCounterRegs;
 
 extern volatile struct LCM_REGS LCMCPURegs;
 
@@ -497,8 +606,6 @@ extern volatile struct LIN_REGS LinbRegs;
 
 extern volatile struct MDL_XBAR_REGS MdlXbarRegs;
 
-extern volatile struct MEMSS_CPU1_ROM_PATCH_REGS MemssRomPatchRegs;
-
 extern volatile struct MEMSS_C_CONFIG_REGS MemssCCfgRegs;
 
 extern volatile struct MEMSS_L_CONFIG_REGS MemssLCfgRegs;
@@ -506,8 +613,6 @@ extern volatile struct MEMSS_L_CONFIG_REGS MemssLCfgRegs;
 extern volatile struct MEMSS_MISCI_REGS MemssMisciRegs;
 
 extern volatile struct MEMSS_M_CONFIG_REGS MemssMCfgRegs;
-
-extern volatile struct MEMSS_ROM_CONFIG_REGS MemssRomCfgRegs;
 
 extern volatile struct MINDB_LUT_REGS EPwm1MinDbLutRegs;
 
@@ -544,6 +649,42 @@ extern volatile struct MINDB_LUT_REGS EPwm16MinDbLutRegs;
 extern volatile struct MINDB_LUT_REGS EPwm17MinDbLutRegs;
 
 extern volatile struct MINDB_LUT_REGS EPwm18MinDbLutRegs;
+
+extern volatile struct MINDB_LUT_REGS EPwm1MinDbLutXlinkRegs;
+
+extern volatile struct MINDB_LUT_REGS EPwm2MinDbLutXlinkRegs;
+
+extern volatile struct MINDB_LUT_REGS EPwm3MinDbLutXlinkRegs;
+
+extern volatile struct MINDB_LUT_REGS EPwm4MinDbLutXlinkRegs;
+
+extern volatile struct MINDB_LUT_REGS EPwm5MinDbLutXlinkRegs;
+
+extern volatile struct MINDB_LUT_REGS EPwm6MinDbLutXlinkRegs;
+
+extern volatile struct MINDB_LUT_REGS EPwm7MinDbLutXlinkRegs;
+
+extern volatile struct MINDB_LUT_REGS EPwm8MinDbLutXlinkRegs;
+
+extern volatile struct MINDB_LUT_REGS EPwm9MinDbLutXlinkRegs;
+
+extern volatile struct MINDB_LUT_REGS EPwm10MinDbLutXlinkRegs;
+
+extern volatile struct MINDB_LUT_REGS EPwm11MinDbLutXlinkRegs;
+
+extern volatile struct MINDB_LUT_REGS EPwm12MinDbLutXlinkRegs;
+
+extern volatile struct MINDB_LUT_REGS EPwm13MinDbLutXlinkRegs;
+
+extern volatile struct MINDB_LUT_REGS EPwm14MinDbLutXlinkRegs;
+
+extern volatile struct MINDB_LUT_REGS EPwm15MinDbLutXlinkRegs;
+
+extern volatile struct MINDB_LUT_REGS EPwm16MinDbLutXlinkRegs;
+
+extern volatile struct MINDB_LUT_REGS EPwm17MinDbLutXlinkRegs;
+
+extern volatile struct MINDB_LUT_REGS EPwm18MinDbLutXlinkRegs;
 
 extern volatile struct OUTPUTXBAR_FLAG_REGS Outputxbar1flagsRegs;
 

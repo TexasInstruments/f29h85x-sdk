@@ -154,10 +154,10 @@ $(Target).out: $(OBJS)
 	@echo 'Finished building bin file: $(Target).bin'
 	@echo 'Creating certificate appended binary'
 ifeq ($(OS),Windows_NT)
-	$(PYTHON) $(C29SDK_ROOT)/tools/boot/signing/mcu_rom_image_gen.py $(ENC_SBL_OPTION) --image-bin $(Target).bin --core C29 --swrv 1 --loadaddr 0x200E1000 --sign-key $(C29SDK_ROOT)/tools/boot/signing/mcu_custMpk.pem --out-image $(Target).cert.bin --device f29h85x --boot RAM $(IMG_INTEG_CMD) $(DEBUG_COMMAND)
+	$(PYTHON) $(C29SDK_ROOT)/tools/boot/signing/mcu_rom_image_gen.py $(ENC_SBL_OPTION) --image-bin $(Target).bin --core C29 --swrv 1 --loadaddr 0x200E1000 --sign-key $(SIGNING_KEY) --out-image $(Target).cert.bin --device f29h85x --boot RAM $(IMG_INTEG_CMD) $(DEBUG_COMMAND)
 	del C29-cert-pad.bin
 else
-	$(PYTHON) $(C29SDK_ROOT)/tools/boot/signing/mcu_rom_image_gen.py $(ENC_SBL_OPTION) --image-bin $(Target).bin --core C29 --swrv 1 --loadaddr 0x200E1000 --sign-key $(C29SDK_ROOT)/tools/boot/signing/mcu_custMpk.pem --out-image $(Target).cert.bin --device f29h85x --boot RAM $(IMG_INTEG_CMD) $(DEBUG_COMMAND)
+	$(PYTHON) $(C29SDK_ROOT)/tools/boot/signing/mcu_rom_image_gen.py $(ENC_SBL_OPTION) --image-bin $(Target).bin --core C29 --swrv 1 --loadaddr 0x200E1000 --sign-key $(SIGNING_KEY) --out-image $(Target).cert.bin --device f29h85x --boot RAM $(IMG_INTEG_CMD) $(DEBUG_COMMAND)
 	rm C29-cert-pad.bin
 endif
 	@echo 'Finished building certificate appended binary: $(Target).cert.bin'

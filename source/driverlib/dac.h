@@ -459,7 +459,7 @@ DAC_setOffsetTrim(uint32_t base, int16_t offset)
     //
 
     HWREGH(base + DAC_O_TRIM) = (HWREGH(base + DAC_O_TRIM) &
-                                 ~DAC_TRIM_OFFSET_TRIM_M) | (int16_t)offset;
+                                 ~DAC_TRIM_OFFSET_TRIM_M) | (uint16_t)offset;
 }
 
 //*****************************************************************************
@@ -488,8 +488,8 @@ DAC_getOffsetTrim(uint32_t base)
     // Get the sign-extended offset trim value
     //
     value = (HWREGH(base + DAC_O_TRIM) & DAC_TRIM_OFFSET_TRIM_M);
-    value = ((value & (uint16_t)DAC_REG_BYTE_MASK) ^ 0x80) -
-            0x80;
+    value = ((value & (uint16_t)DAC_REG_BYTE_MASK) ^ 0x80U) -
+            0x80U;
 
     return((int16_t)value);
 }

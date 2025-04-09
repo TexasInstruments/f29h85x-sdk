@@ -143,16 +143,16 @@ let templatesRTLog = [
     // Rapid Log
     //
     {
-        name: transferCommon.getTransferPath() + "logger/rtlog_log.json.xdt",
-        outputPath: "logger/rtlog_log.json",
+        name: transferCommon.getTransferPath() + "logger/rt_log.json.xdt",
+        outputPath: "logger/rt_log.json",
     },
     {
-        name: transferCommon.getTransferPath() + "logger/rtlog_log.c.xdt",
-        outputPath: "logger/rtlog_log.c",
+        name: transferCommon.getTransferPath() + "logger/rt_log.c.xdt",
+        outputPath: "logger/rt_log.c",
     },
     {
-        name: transferCommon.getTransferPath() + "logger/rtlog_log.h.xdt",
-        outputPath: "logger/rtlog_log.h",
+        name: transferCommon.getTransferPath() + "logger/rt_log.h.xdt",
+        outputPath: "logger/rt_log.h",
     },
 ]
 
@@ -260,5 +260,4 @@ var transfer_export = {
         }
     ]
 }
-
 exports = transfer_export

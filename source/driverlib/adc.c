@@ -83,14 +83,14 @@ ADC_setMode(uint32_t base, ADC_Resolution resolution,
     if((((base & BASE_ADDR_MASK) == ADCC_BASE_FRAME(0U)) || ((base & BASE_ADDR_MASK) == ADCD_BASE_FRAME(0U)) || ((base & BASE_ADDR_MASK) == ADCE_BASE_FRAME(0U)))
     && resolution == ADC_RESOLUTION_16BIT)
     {
-            ASSERT(false);
+            ASSERT((bool)false);
     }
 
     // ADC_C, ADC_D and ADC_E only support single ended conversion mode.
     if((((base & BASE_ADDR_MASK) == ADCC_BASE_FRAME(0U)) || ((base & BASE_ADDR_MASK) == ADCD_BASE_FRAME(0U)) || ((base & BASE_ADDR_MASK) == ADCE_BASE_FRAME(0U)))
     && signalMode == ADC_MODE_DIFFERENTIAL)
     {
-            ASSERT(false);
+            ASSERT((bool)false);
     }
 
     //

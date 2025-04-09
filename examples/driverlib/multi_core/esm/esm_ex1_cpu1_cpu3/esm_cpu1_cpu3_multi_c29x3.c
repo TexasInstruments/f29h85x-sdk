@@ -11,7 +11,7 @@
 //! in a muli-core example (ESM_cpu1_cpu3_multi_c29x3.c).
 //!
 //! When using CCS for debugging this Multi-core example, after launching the
-//! debug session, 
+//! debug session,
 //!     - Connect to CPU1 and load only the c29x1.out.
 //!     - After the program is loaded, run CPU1.
 //!     - Once c29x1 configures and releases CPU3 out of reset, the program
@@ -20,7 +20,7 @@
 //!     as soon as it is released from reset.
 //!     - In case of RAM configuration, restart the CPU3 target and load the
 //!     symbols.
-//! 
+//!
 //! \note For FLASH configuration, this example is run in FLASH BANKMODE2,
 //! where CPU3 has access to FLASH (FRI-2). Refer to the Flash Plugin
 //! documentation to know about changing FLASH BANKMODEs and more.
@@ -79,8 +79,6 @@
 #include "inc/hw_error_aggregator.h"
 #include "inc/hw_memmap.h"
 #include "inc/hw_types.h"
-
-#define DEVICE_SYSCLK_FREQ		200000000
 
 //Data variable to be written to M0RAM location
 uint32_t M0RAM_data = 0x12;

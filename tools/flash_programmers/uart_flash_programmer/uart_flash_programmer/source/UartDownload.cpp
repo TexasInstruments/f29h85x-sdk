@@ -77,6 +77,33 @@ void loadProgram(FlashProgrammer::UartHandler& uartHandle, FILE* fptr)
 
 //*****************************************************************************
 //!
+//! \brief   Loads the program to device by sending the file to flash kernel with specified breakpoints
+//!
+//! \param uartHandle   Handle to an instance of UART interface
+//! \param fptr		    File handler pointer
+//! \param breakpointPtr	The pointer to an array of breakpoints, needs to be uint32_t
+//! \param bpSize			The size of the breakpoint array
+//!
+//*****************************************************************************
+void loadProgram(FlashProgrammer::UartHandler& uartHandle, FILE* fptr, const void* breakpointPtr, const std::size_t bpSize)
+{
+	std::size_t dataSize = 0;
+
+	fseek(fptr, 0, SEEK_END);
+	dataSize = ftell(fptr);
+	rewind(fptr);
+
+	auto rawData = std::make_unique<char[]>(dataSize);
+	char* rawPtr = rawData.get();
+
+	fread(rawPtr, sizeof(*rawPtr), dataSize, fptr);
+
+	uartHandle.sendData(rawPtr, dataSize, breakpointPtr, bpSize, true);
+
+}
+
+//*****************************************************************************
+//!
 //! \brief   Download a kernel to the device. 
 //!
 //! \param uartHandle   Handle to an instance of UART interface
@@ -101,7 +128,7 @@ int downloadKernel(FlashProgrammer::UartHandler& uartHandle, const char* kernelF
 
 	loadProgram(uartHandle, Kfh);
 
-	*g_pOutputStream << "Kernel load successful!" << std::endl;
+	*g_pOutputStream << "Kernel successfully sent!" << std::endl;
 
 	fclose(Kfh);
 
@@ -112,7 +139,7 @@ int downloadKernel(FlashProgrammer::UartHandler& uartHandle, const char* kernelF
 
 //*****************************************************************************
 //!
-//! \brief	 Download an application image with/or certificate to the device. 
+//! \brief	 Download an application image with certificate to the device. 
 //!
 //! \param uartHandle		Handle to an instance of UART interface
 //! \param applicationFile  The name of the application image 
@@ -136,11 +163,48 @@ int downloadImage(FlashProgrammer::UartHandler& uartHandle, const char* applicat
 
 	loadProgram(uartHandle, Afh);
 
-	*g_pOutputStream << "Application load successful!\n" << std::endl;
+	*g_pOutputStream << "Application successfully sent!\n" << std::endl;
 
 	fclose(Afh);
 
 	uartHandle.clearPort(false, true);
+
+	return(0);
+}
+
+//*****************************************************************************
+//!
+//! \brief	 Download an application image with specified breakpoints 
+//!
+//! \param uartHandle		Handle to an instance of UART interface
+//! \param applicationFile  The name of the application image 
+//! \param breakpointPtr	The pointer to an array of breakpoints, needs to be uint32_t
+//! \param bpSize			The size of the breakpoint array
+//! 
+//! \return					0 upon success, -1 if error occurs 
+//!
+//*****************************************************************************
+int downloadImage(FlashProgrammer::UartHandler& uartHandle, const char* applicationFile, const void* breakpointPtr, const std::size_t bpSize)
+{
+	FILE* Afh;
+
+	*g_pOutputStream << "\nDownloading " << applicationFile << " to device..." << std::endl;
+
+	//Opens the application file 
+	Afh = fopen(applicationFile, "rb");
+	if (!Afh)
+	{
+		*g_pOutputStream << "Unable to open application file " << applicationFile << ", Does it exist?" << std::endl;
+		return(-1);
+	}
+
+	loadProgram(uartHandle, Afh, breakpointPtr, bpSize);
+
+	*g_pOutputStream << "Application successfully sent!\n" << std::endl;
+
+	fclose(Afh);
+
+	uartHandle.clearPort(true, true);
 
 	return(0);
 }

@@ -179,7 +179,7 @@ void CRC_run8Bit(CRC_Handle hndCRC);
 //
 void CRC_run8BitReflected(CRC_Handle hndCRC);
 
-//! \brief C table-lookup 8-bit CRC calculation
+//! \brief C table-lookup 8-bit CRC calculation, with 8-bit input buffer
 //!
 //! The CRC is calculated using a table lookup method, where 
 //! each byte of the input is an index into the table. The value
@@ -194,6 +194,12 @@ void CRC_run8BitReflected(CRC_Handle hndCRC);
 //! \sa http://www.ross.net/crc/download/crc_v3.txt
 //
 void CRC_run8BitTableLookupC(CRC_Handle hndCRC);
+
+//! \brief C table-lookup 8-bit CRC calculation, with 16-bit input buffer
+void CRC_run8BitTableLookupC_16(CRC_Handle hndCRC);
+
+//! \brief C table-lookup 8-bit CRC calculation, with 32-bit input buffer
+void CRC_run8BitTableLookupC_32(CRC_Handle hndCRC);
 
 //----------------------
 //16-bit CRC functions
@@ -262,7 +268,7 @@ void CRC_run16BitPoly1Reflected(CRC_Handle hndCRC);
 //
 void CRC_run16BitPoly2Reflected(CRC_Handle hndCRC);
 
-//! \brief C table-lookup 16-bit CRC calculation
+//! \brief C table-lookup 16-bit CRC calculation, with 8-bit input buffer
 //!
 //! The CRC is calculated using a table lookup method, where 
 //! each byte of the input is an index into the table. The value
@@ -278,7 +284,14 @@ void CRC_run16BitPoly2Reflected(CRC_Handle hndCRC);
 //
 void CRC_run16BitTableLookupC(CRC_Handle hndCRC);
 
+//! \brief C table-lookup 16-bit CRC calculation, with 16-bit input buffer
+void CRC_run16BitTableLookupC_16(CRC_Handle hndCRC);
+
+//! \brief C table-lookup 16-bit CRC calculation, with 32-bit input buffer
+void CRC_run16BitTableLookupC_32(CRC_Handle hndCRC);
+
 //! \brief C table-lookup 16-bit CRC calculation(reflected algorithm)
+//! with 8-bit input buffer
 //!
 //! The CRC is calculated using a table lookup method, where 
 //! each byte of the input is an index into the table. The value
@@ -294,6 +307,13 @@ void CRC_run16BitTableLookupC(CRC_Handle hndCRC);
 //
 void CRC_run16BitReflectedTableLookupC(CRC_Handle hndCRC);
 
+//! \brief C table-lookup 16-bit CRC calculation(reflected algorithm)
+//! with 16-bit input buffer
+void CRC_run16BitReflectedTableLookupC_16(CRC_Handle hndCRC);
+
+//! \brief C table-lookup 16-bit CRC calculation(reflected algorithm)
+//! with 32-bit input buffer
+void CRC_run16BitReflectedTableLookupC_32(CRC_Handle hndCRC);
 //----------------------
 //24-bit CRC functions
 //----------------------
@@ -432,7 +452,7 @@ void CRC_run32BitPoly1Reflected(CRC_Handle hndCRC);
 //
 void CRC_run32BitPoly2Reflected(CRC_Handle hndCRC);
 
-//! \brief C table-lookup 32-bit CRC calculation
+//! \brief C table-lookup 32-bit CRC calculation, with 8-bit input buffer
 //!
 //! The CRC is calculated using a table lookup method, where 
 //! each byte of the input is an index into the table. The value
@@ -448,7 +468,14 @@ void CRC_run32BitPoly2Reflected(CRC_Handle hndCRC);
 //
 void CRC_run32BitTableLookupC(CRC_Handle hndCRC);
 
+//! \brief C table-lookup 32-bit CRC calculation, with 16-bit input buffer
+void CRC_run32BitTableLookupC_16(CRC_Handle hndCRC);
+
+//! \brief C table-lookup 32-bit CRC calculation, with 32-bit input buffer
+void CRC_run32BitTableLookupC_32(CRC_Handle hndCRC);
+
 //! \brief C table-lookup 32-bit CRC calculation(reflected algorithm)
+//! with 8-bit input buffer
 //!
 //! The CRC is calculated using a table lookup method, where 
 //! each byte of the input is an index into the table. The value
@@ -464,13 +491,49 @@ void CRC_run32BitTableLookupC(CRC_Handle hndCRC);
 //
 void CRC_run32BitReflectedTableLookupC(CRC_Handle hndCRC);
 
+//! \brief C table-lookup 32-bit CRC calculation(reflected algorithm)
+//! with 16-bit input buffer
+void CRC_run32BitReflectedTableLookupC_16(CRC_Handle hndCRC);
+
+//! \brief C table-lookup 32-bit CRC calculation(reflected algorithm)
+//! with 32-bit input buffer
+void CRC_run32BitReflectedTableLookupC_32(CRC_Handle hndCRC);
+
+//! \brief Assembly based 8-bit CRC calc, 8-bit input buffer
 void CRC_run8BitAsm(CRC_Handle hndCRC);
 
+//! \brief Assembly based 8-bit CRC calc, 16-bit input buffer
+void CRC_run8BitAsm_16(CRC_Handle hndCRC);
+
+//! \brief Assembly based 8-bit CRC calc, 32-bit input buffer
+void CRC_run8BitAsm_32(CRC_Handle hndCRC);
+
+//! \brief Assembly based 16-bit CRC calc, 8-bit input buffer
 void CRC_run16BitAsm(CRC_Handle hndCRC);
 
+//! \brief Assembly based 16-bit CRC calc, 16-bit input buffer
+void CRC_run16BitAsm_16(CRC_Handle hndCRC);
+
+//! \brief Assembly based 16-bit CRC calc, 32-bit input buffer
+void CRC_run16BitAsm_32(CRC_Handle hndCRC);
+
+//! \brief Assembly based 32-bit CRC calc, 8-bit input buffer
 void CRC_run32BitAsm(CRC_Handle hndCRC);
 
+//! \brief Assembly based 32-bit CRC calc, 16-bit input buffer
+void CRC_run32BitAsm_16(CRC_Handle hndCRC);
+
+//! \brief Assembly based 32-bit CRC calc, 32-bit input buffer
+void CRC_run32BitAsm_32(CRC_Handle hndCRC);
+
+//! \brief Internal function for Assembly based CRC calc, 8-bit input buffer
 uint32_t crc_asm(uint8_t *buf_ptr, uint32_t poly, uint32_t crc_config, uint32_t byte_count, uint32_t seedValue);
+
+//! \brief Internal function for Assembly based CRC calc, 16-bit input buffer
+uint32_t crc_asm_16(uint16_t *buf_ptr, uint32_t poly, uint32_t crc_config, uint32_t byte_count, uint32_t seedValue);
+
+//! \brief Internal function for Assembly based CRC calc, 32-bit input buffer
+uint32_t crc_asm_32(uint32_t *buf_ptr, uint32_t poly, uint32_t crc_config, uint32_t byte_count, uint32_t seedValue);
 
 #ifdef __cplusplus
 }

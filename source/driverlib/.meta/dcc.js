@@ -25,6 +25,43 @@ for (var dcc of device_driverlib_memmap.DCCMemoryMap) {
     })
 }
 
+var fclk0_clocktree_mapping = {
+    "DCC_COUNT0SRC_XTAL" : ["XTAL_OR_X1", "External_Clock"] ,
+    "DCC_COUNT0SRC_INTOSC1" : ["INTOSC1", "out"] ,
+    "DCC_COUNT0SRC_INTOSC2" : ["INTOSC2", "out"] ,
+    "DCC_COUNT0SRC_TCK" : ["PLLSYSCLK", "in"] ,
+    "DCC_COUNT0SRC_CPU1_CLOCK" : ["CPU1_CPUCLK", "in"] ,
+    "DCC_COUNT0SRC_AUXCLKIN" : ["AUXCLKIN", "in"] ,
+    "DCC_COUNT0SRC_INPUTXBAR1_INPUT16" : ["PLLSYSCLK", "in"] ,
+}
+
+var fclk1_clocktree_mapping = {
+    "DCC_COUNT1SRC_PLL" : ["PLLSYSCLK", "in"] ,
+    "DCC_COUNT1SRC_FLC1_FCLK" : ["PLLSYSCLK", "in"] ,
+    "DCC_COUNT1SRC_INTOSC1" : ["INTOSC1", "out"] ,
+    "DCC_COUNT1SRC_INTOSC2" : ["INTOSC2", "out"] ,
+    "DCC_COUNT1SRC_ECATPHYCLK" : ["ECATDIV", "out"] ,
+    "DCC_COUNT1SRC_CPU1_CLOCK" : ["CPU1_CPUCLK", "in"] ,
+    "DCC_COUNT1SRC_CPU2_CLOCK" : ["CPU2_CPUCLK", "in"] ,
+    "DCC_COUNT1SRC_RTDMA_CLOCK" : ["PLLSYSCLK", "in"] ,
+    "DCC_COUNT1SRC_INPUTXBAR1_INPUT15" : ["PLLSYSCLK", "in"] ,
+    "DCC_COUNT1SRC_AUXCLKIN" : ["AUXCLKIN", "in"] ,
+    "DCC_COUNT1SRC_EPWMCLK" : ["EPWMCLK", "in"] ,
+    "DCC_COUNT1SRC_ADCCLK" : ["PERx_CPU_PLLSYSCLK_GATE", "out"] ,
+    "DCC_COUNT1SRC_WDCLK" : ["Watchdog_domain", "in"] ,
+    "DCC_COUNT1SRC_FLC2_FCLK" : ["PLLSYSCLK", "in"] ,
+    "DCC_COUNT1SRC_CPU3_CLOCK" : ["CPU3_CPUCLK", "in"] ,
+    "DCC_COUNT1SRC_INPUTXBAR1_INPUT11" : ["PLLSYSCLK", "in"] ,
+    "DCC_COUNT1SRC_INPUTXBAR1_INPUT12" : ["PLLSYSCLK", "in"] ,
+    "DCC_COUNT1SRC_MCANA" : ["MCANABITCLK", "in"] ,
+    "DCC_COUNT1SRC_MCANB" : ["MCANBBITCLK", "in"] ,
+    "DCC_COUNT1SRC_MCANC" : ["MCANCBITCLK", "in"] ,
+    "DCC_COUNT1SRC_MCAND" : ["MCANDBITCLK", "in"] ,
+    "DCC_COUNT1SRC_MCANE" : ["MCANEBITCLK", "in"] ,
+    "DCC_COUNT1SRC_MCANF" : ["MCANFBITCLK", "in"] ,
+    "DCC_COUNT1SRC_ESMCLK" : ["PLLSYSCLK", "in"] ,
+}
+
 function onChangeEnableDoneSignalInterrupt(inst, ui)
 {
     if (inst.enableDoneSignalInterrupt == true){
@@ -78,11 +115,28 @@ function AutoCalculate(localDCCerrtol, localFclk1, localFclk0, localFsysclk, loc
     }
 }
 
+function autoCalculateResult(inst, seed)
+{
+    if(inst.freqAutofill == true)
+        return AutoCalculate(inst.dccerrtol, inst.fclk1_autofill, inst.fclk0_autofill, inst.fsysclk, inst.measureFclk1, inst.freqerrtol)
+    else
+        return AutoCalculate(inst.dccerrtol, inst.fclk1, inst.fclk0, inst.fsysclk, inst.measureFclk1, inst.freqerrtol)
+}
+
 var SysClk_MHz = Common.SYSCLK_getMaxMHz();
-var fclk0_default = 10;    
-var fclk1_default = SysClk_MHz;
 var dccerrtol_default = 0.25;
 var freqerrtol_default = 1.0;
+var clockTree = Common.getClockTree();
+
+if(clockTree){
+    var fclk0_default = clockTree[fclk0_clocktree_mapping[device_driverlib_peripheral.DCC_Count0ClockSource[0].name][0]][fclk0_clocktree_mapping[device_driverlib_peripheral.DCC_Count0ClockSource[0].name][1]];    
+    var fclk1_default = clockTree[fclk1_clocktree_mapping[device_driverlib_peripheral.DCC_Count1ClockSource[0].name][0]][fclk1_clocktree_mapping[device_driverlib_peripheral.DCC_Count1ClockSource[0].name][1]];
+}
+else{
+    var fclk0_default = 25;    
+    var fclk1_default = 200;
+}
+
 var autoCal_defaults = AutoCalculate(dccerrtol_default, fclk1_default, fclk0_default, SysClk_MHz, false, freqerrtol_default)
 
 function onChangeAutoCalc(inst, ui)
@@ -90,39 +144,45 @@ function onChangeAutoCalc(inst, ui)
 
     if(inst.counterAutoCalc)
     {
-        ui.counter0seed.readOnly = true;
-        ui.validCounter0seed.readOnly = true;
-        ui.counter1seed.readOnly = true;
-        ui.fsysclk.hidden = false;
-        ui.fclk0.hidden = false;
-        ui.fclk1.hidden = false;
+        ui.counter0seed.hidden = true;
+        ui.validCounter0seed.hidden = true;
+        ui.counter1seed.hidden = true;
+        ui.counter0seed_autoCalc.hidden = false;
+        ui.validCounter0seed_autoCalc.hidden = false;
+        ui.counter1seed_autoCalc.hidden = false;
         ui.dccerrtol.hidden = false;
         ui.freqerrtol.hidden = false;
         ui.measureFclk1.hidden = false;
-        ui.fsysclk.readOnly = false;
-        ui.fclk0.readOnly = false;
-        ui.fclk1.readOnly = false;
-
-        // Calculation
-        var autoCalResults = AutoCalculate(inst.dccerrtol, inst.fclk1, inst.fclk0, inst.fsysclk, inst.measureFclk1, inst.freqerrtol)
-        // End of calculation
-
-        inst.counter0seed = autoCalResults.counter0seed;
-        inst.validCounter0seed = autoCalResults.validcounter0seed;
-        inst.counter1seed = autoCalResults.counter1seed;
     }
     else
     {
-        ui.counter0seed.readOnly = false;
-        ui.validCounter0seed.readOnly = false;
-        ui.counter1seed.readOnly = false;
-        // ui.fsysclk.readOnly = true;
-        // ui.fclk0.readOnly = true;
-        // ui.fclk1.readOnly = true;
+        ui.counter0seed.hidden = false;
+        ui.validCounter0seed.hidden = false;
+        ui.counter1seed.hidden = false;
+        ui.counter0seed_autoCalc.hidden = true;
+        ui.validCounter0seed_autoCalc.hidden = true;
+        ui.counter1seed_autoCalc.hidden = true;
         ui.dccerrtol.hidden = true;
         ui.freqerrtol.hidden = true;
         ui.measureFclk1.hidden = true;
+    }
+}
 
+function onChangeFreqAutofill(inst, ui)
+{
+    if(inst.freqAutofill)
+    {
+        ui.fclk0_autofill.hidden = false;
+        ui.fclk1_autofill.hidden = false;
+        ui.fclk0.hidden = true;
+        ui.fclk1.hidden = true;
+    }
+    else
+    {
+        ui.fclk0_autofill.hidden = true;
+        ui.fclk1_autofill.hidden = true;
+        ui.fclk0.hidden = false;
+        ui.fclk1.hidden = false;
     }
 }
 
@@ -142,89 +202,111 @@ let config = [
                 options     : DCC_INSTANCE
             },
             {
-                 name        : "counterAutoCalc",
-                 displayName : "Auto Calculate Counter Seeds",
-                 description : 'Use Calculated Values for Counter Seed',
+                 name        : "freqAutofill",
+                 displayName : "Autofill Clock Sources Frequency from Clocktree",
+                 description : 'Use the Frequency calculated in Clocktree for the selected Clock sources',
                  hidden      : false,
-                 onChange    : onChangeAutoCalc,
+                 onChange    : onChangeFreqAutofill,
                  default     : true,
             },
             {
+                name        : "fsysclk",
+                displayName : "SysClk Frequency/ Fsysclk (MHz)",
+                description : 'SysClk Frequency in MegaHertz used when DCC is running',
+                hidden      : false,
+                default     : Common.SYSCLK_getMaxMHz(),
+                getValue    : () => Common.getSYSCLK()
+            },
+            {
                 name        : "setCounter0ClkSource",
-                displayName : "Set Counter 0 Clock Source",
+                displayName : "Counter 0 Clock Source",
                 description : 'Set Counter 0 Clock Source',
                 hidden      : false,
                 default     : device_driverlib_peripheral.DCC_Count0ClockSource[0].name,
                 options     : device_driverlib_peripheral.DCC_Count0ClockSource,
             },
             {
+                name        : "fclk0_autofill",
+                displayName : "Counter 0 Clock/ Fclk0 Frequency (MHz)",
+                description : 'DCC Clk0 (Reference clock) If Fclk0 is unknown or to be measured, put some ball park/expected value, DO NOT LEAVE this field blank',
+                hidden      : false,
+                default     : fclk0_default,
+                getValue    : (inst) => {
+                    var clockTree = Common.getClockTree();
+                    if(clockTree){
+                        return clockTree[fclk0_clocktree_mapping[inst.setCounter0ClkSource][0]][fclk0_clocktree_mapping[inst.setCounter0ClkSource][1]]
+                    }
+                    else{
+                        return fclk0_default;
+                    }
+                },
+            },
+            {
+                name        : "fclk0",
+                displayName : "Counter 0 Clock/ Fclk0 Frequency (MHz)",
+                description : 'DCC Clk0 (Reference clock) If Fclk0 is unknown or to be measured, put some ball park/expected value, DO NOT LEAVE this field blank',
+                hidden      : true,
+                default     : fclk0_default,
+            },
+            {
                 name        : "setCounter1ClkSource",
-                displayName : "Set Counter 1 Clock Source",
+                displayName : "Counter 1 Clock Source",
                 description : 'Set Counter 1 Clock Source',
                 hidden      : false,
                 default     : device_driverlib_peripheral.DCC_Count1ClockSource[0].name,
                 options     : device_driverlib_peripheral.DCC_Count1ClockSource,
             },
-            /*Nima need to check here on why initial click reverts to initial value*/
+            {
+                name        : "fclk1_autofill",
+                displayName : "Counter 1 Clock/ Fclk1 Frequency  (MHz)",
+                description : 'DCC Clk1 (Reference clock) If Fclk0 is unknown or to be measured, put some ball park/expected value, DO NOT LEAVE this field blank',
+                hidden      : false,
+                default     : fclk1_default,
+                getValue    : (inst) => {
+                    var clockTree = Common.getClockTree();
+                    if(clockTree){
+                        return clockTree[fclk1_clocktree_mapping[inst.setCounter1ClkSource][0]][fclk1_clocktree_mapping[inst.setCounter1ClkSource][1]]
+                    }
+                    else{
+                        return fclk1_default;
+                    }
+                },
+            },
+            {
+                name        : "fclk1",
+                displayName : "Counter 1 Clock/ Fclk1 Frequency  (MHz)",
+                description : 'DCC Clk1 (Reference clock) If Fclk0 is unknown or to be measured, put some ball park/expected value, DO NOT LEAVE this field blank',
+                hidden      : true,
+                default     : fclk1_default,
+            },
+            {
+                name        : "counterAutoCalc",
+                displayName : "Auto Calculate Counter Seeds",
+                description : 'Use Calculated Values for Counter Seed',
+                hidden      : false,
+                onChange    : onChangeAutoCalc,
+                default     : true,
+            },
             {
                 name        : "counter0seed",
                 displayName : "Counter 0 seed value",
                 description : 'Sets the value for counter 0 seed',
-                hidden      : false,
+                hidden      : true,
                 default     : autoCal_defaults.counter0seed,
-                readOnly    : true,
             },
             {
                 name        : "validCounter0seed",
                 displayName : "Valid duration Counter 0 seed value",
                 description : 'Sets the value for the valid duration counter 0 seed',
-                hidden      : false,
+                hidden      : true,
                 default     : autoCal_defaults.validcounter0seed,
-                readOnly    : true,
             },
             {
                 name        : "counter1seed",
                 displayName : "Counter 1 seed value",
                 description : 'Sets the value for counter 1 seed',
-                hidden      : false,
+                hidden      : true,
                 default     : autoCal_defaults.counter1seed,
-                readOnly    : true,
-            },
-            /*End of check*/
-            {
-                name        : "fsysclk",
-                displayName : "SysClk Frequency/Fsysclk (MHz)",
-                description : 'SysClk Frequency in MegaHertz used when DCC is running',
-                hidden      : false,
-                onChange    : onChangeAutoCalc,
-                default     : Common.SYSCLK_getMaxMHz(), // instead use the value from clocktree
-                // readOnly    : true,
-            },
-            {
-                name        : "fclk0",
-                displayName : "Counter 0 Clock/Fclk0 Frequency (MHz)",
-                description : 'DCC Clk0 (Reference clock) If Fclk0 is unknown or to be measured, put some ball park/expected value, DO NOT LEAVE this field blank',
-                hidden      : false,
-                onChange    : onChangeAutoCalc,
-                default     : fclk0_default,   // use the value from clocktree
-                // readOnly    : true,
-            },
-            {
-                name        : "fclk1",
-                displayName : "Counter 1 Clock/Fclk1 Frequency  (MHz)",
-                description : 'DCC Clk1 (Reference clock) If Fclk0 is unknown or to be measured, put some ball park/expected value, DO NOT LEAVE this field blank',
-                hidden      : false,
-                onChange    : onChangeAutoCalc,
-                default     : fclk1_default,  // use the value from clocktree
-                // readOnly    : true,   
-            },
-            {
-                name        : "measureFclk1",
-                displayName : "Measure System Clock Frequency (MHz)",
-                description : 'If Fclk1/Fclk0 value is being measured, meaning instead of checking the validity of the ratio, want to measure exact clock frequency value, then type "Yes" in the Value cell.',
-                hidden      : false,
-                onChange    : onChangeAutoCalc,
-                default     : false,
             },
             {
                 name        : "dccerrtol",
@@ -245,6 +327,41 @@ let config = [
                 hidden      : false,
                 onChange    : onChangeAutoCalc,
                 default     : freqerrtol_default,
+            },
+            {
+                name        : "counter0seed_autoCalc",
+                displayName : "Counter 0 seed value",
+                description : 'Sets the value for counter 0 seed',
+                hidden      : false,
+                default     : autoCal_defaults.counter0seed,
+                readOnly    : true,
+                getValue    : (inst) => autoCalculateResult(inst).counter0seed
+            },
+            {
+                name        : "validCounter0seed_autoCalc",
+                displayName : "Valid duration Counter 0 seed value",
+                description : 'Sets the value for the valid duration counter 0 seed',
+                hidden      : false,
+                default     : autoCal_defaults.validcounter0seed,
+                readOnly    : true,
+                getValue    : (inst) => autoCalculateResult(inst).validcounter0seed
+            },
+            {
+                name        : "counter1seed_autoCalc",
+                displayName : "Counter 1 seed value",
+                description : 'Sets the value for counter 1 seed',
+                hidden      : false,
+                default     : autoCal_defaults.counter1seed,
+                readOnly    : true,
+                getValue    : (inst) => autoCalculateResult(inst).counter1seed
+            },
+            {
+                name        : "measureFclk1",
+                displayName : "Measure System Clock Frequency (MHz)",
+                description : 'If Fclk1/Fclk0 value is being measured, meaning instead of checking the validity of the ratio, want to measure exact clock frequency value, then check this box.',
+                hidden      : false,
+                onChange    : onChangeAutoCalc,
+                default     : false,
             },
             {
                 name        : "enableSingleShotMode",
@@ -343,42 +460,83 @@ function onValidate(inst, validation)
             "This DCC Instance is already in use. Duplicates: " + allDuplicates,
             inst, "dccBase");
     }
-
-    if (inst.counter1seed < 0 || inst.counter1seed > 4294967295)
+    if (inst.counterAutoCalc)
     {
-        validation.logError(
-            "Enter an integer for counter1 seed between 0 and 4294967295!",
-            inst, "counter1seed");
+        if (inst.counter1seed_autoCalc < 0 || inst.counter1seed_autoCalc > 4294967295)
+        {
+            validation.logError(
+                "Enter an integer for counter1 seed between 0 and 4294967295!",
+                inst, "counter1seed_autoCalc");
+        }
+        if (!Number.isInteger(inst.counter1seed_autoCalc))
+        {
+            validation.logError(
+                "counter 1 seed must be an integer",
+                inst, "counter1seed_autoCalc");
+        }
+        if (inst.counter0seed_autoCalc < 0 || inst.counter0seed_autoCalc > 4294967295)
+        {
+            validation.logError(
+                "Enter an integer for counter0 seed between 0 and 4294967295!",
+                inst, "counter0seed_autoCalc");
+        }
+        if (!Number.isInteger(inst.counter0seed_autoCalc))
+        {
+            validation.logError(
+                "counter 0 seed must be an integer",
+                inst, "counter0seed_autoCalc");
+        }
+        if (inst.validCounter0seed_autoCalc < 0 || inst.validCounter0seed_autoCalc > 4294967295)
+        {
+            validation.logError(
+                "Enter an integer for valid counter0 seed between 0 and 4294967295!",
+                inst, "validCounter0seed_autoCalc");
+        }
+        if (!Number.isInteger(inst.validCounter0seed_autoCalc))
+        {
+            validation.logError(
+                "valid counter 0 seed must be an integer",
+                inst, "validCounter0seed_autoCalc");
+        }
     }
-    if (!Number.isInteger(inst.counter1seed))
+    else
     {
-        validation.logError(
-            "counter 1 seed must be an integer",
-            inst, "counter1seed");
-    }
-    if (inst.counter0seed < 0 || inst.counter0seed > 4294967295)
-    {
-        validation.logError(
-            "Enter an integer for counter0 seed between 0 and 4294967295!",
-            inst, "counter0seed");
-    }
-    if (!Number.isInteger(inst.counter0seed))
-    {
-        validation.logError(
-            "counter 0 seed must be an integer",
-            inst, "counter0seed");
-    }
-    if (inst.validCounter0seed < 0 || inst.validCounter0seed > 4294967295)
-    {
-        validation.logError(
-            "Enter an integer for counter1 seed between 0 and 4294967295!",
-            inst, "validCounter0seed");
-    }
-    if (!Number.isInteger(inst.validCounter0seed))
-    {
-        validation.logError(
-            "valid counter 0 seed must be an integer",
-            inst, "validCounter0seed");
+        if (inst.counter1seed < 0 || inst.counter1seed > 4294967295)
+        {
+            validation.logError(
+                "Enter an integer for counter1 seed between 0 and 4294967295!",
+                inst, "counter1seed");
+        }
+        if (!Number.isInteger(inst.counter1seed))
+        {
+            validation.logError(
+                "counter 1 seed must be an integer",
+                inst, "counter1seed");
+        }
+        if (inst.counter0seed < 0 || inst.counter0seed > 4294967295)
+        {
+            validation.logError(
+                "Enter an integer for counter0 seed between 0 and 4294967295!",
+                inst, "counter0seed");
+        }
+        if (!Number.isInteger(inst.counter0seed))
+        {
+            validation.logError(
+                "counter 0 seed must be an integer",
+                inst, "counter0seed");
+        }
+        if (inst.validCounter0seed < 0 || inst.validCounter0seed > 4294967295)
+        {
+            validation.logError(
+                "Enter an integer for valid counter0 seed between 0 and 4294967295!",
+                inst, "validCounter0seed");
+        }
+        if (!Number.isInteger(inst.validCounter0seed))
+        {
+            validation.logError(
+                "valid counter 0 seed must be an integer",
+                inst, "validCounter0seed");
+        }
     }
     if (inst.fsysclk >  SysClk_MHz)
     {

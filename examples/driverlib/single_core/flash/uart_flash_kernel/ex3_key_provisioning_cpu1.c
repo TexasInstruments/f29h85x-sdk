@@ -58,8 +58,18 @@
 /* Initial value of debug response. This is compared with the response from HSM side. */
 #define DEBUG_RESPONSE_SUCCESS                  (0x00000000U)
 
+#define DBGRSP_ERROR_PHASE_MASK                 (0x0000000FU)
+#define DBGRSP_ERROR_MODULE_MASK                (0x00000FF0U)
+#define DBGRSP_ERROR_STAGE_MASK                 (0x000FF000U)
+#define DBGRSP_ERROR_CUSTKEYEXTENSION_MASK      (0x00F00000U)
+
+#define DBGRSP_ERROR_MODULE_SHIFT               (4U)
+#define DBGRSP_ERROR_STAGE_SHIFT                (12U)
+#define DBGRSP_ERROR_CUSTKEYEXTENSION_SHIFT     (20U)
+
 /* Global variable declare in auto-gen file */
 extern HsmClient_t gHSMClient;
+extern ClockP_Config gClockConfig;
 
 //
 // Copy a RAM-based HSMRt Image to LDAx RAM
@@ -160,6 +170,11 @@ uint8_t copyKeysToRAM(uint32_t bootMode, uint32_t BaseAddress)
 
     KeyWriterCertHeader_t certHeader;
 
+    uint32_t startCycleCount, endCycleCount;
+    const uint32_t cpuMHz = (gClockConfig.timerInputClkHz)/1000000;
+
+    CycleCounterP_reset();
+
     certHeader.certAddress = (uint8_t *)SOC_virtToPhy((uint8_t *)BaseAddress);
     certHeader.debugResponse = DEBUG_RESPONSE_SUCCESS;
 
@@ -211,8 +226,27 @@ uint8_t copyKeysToRAM(uint32_t bootMode, uint32_t BaseAddress)
                         //
                         CopyApplicationToRAM(ImageSize, BaseAddress + g_bootLoadStatus.certSize);
 
+                        startCycleCount = CycleCounterP_getCount64();
                         // Wait for HSM IPC message that says keys are validated in LDAx RAM
                         authStatus = HsmClient_keyWriter(&gHSMClient, (KeyWriterCertHeader_t *)(&certHeader), SystemP_WAIT_FOREVER);
+                        endCycleCount = CycleCounterP_getCount64();
+                        char buffer[2048U], buffer1[128U];
+                        sprintf(buffer1, "\r\n\r\n[HSM CLIENT_PROFILE] Time taken to Process Key Certificate %uus\r\n", ((endCycleCount - startCycleCount) / cpuMHz));
+                        strcat(buffer, buffer1);
+                        sprintf(buffer1, "[HSM CLIENT] OTP-KW Error encountered in OTP Keywriter\n\n\r");
+                        strcat(buffer, buffer1);
+                        sprintf(buffer1, "[HSM CLIENT] OTP-KW debugResponse = 0x%08x\r\n", certHeader.debugResponse);
+                        strcat(buffer, buffer1);
+                        sprintf(buffer1, "[HSM CLIENT] OTP-KW Error phase = 0x%01x\r\n", (certHeader.debugResponse & DBGRSP_ERROR_PHASE_MASK));
+                        strcat(buffer, buffer1);
+                        sprintf(buffer1, "[HSM CLIENT] OTP-KW Error module = 0x%02x\r\n", (certHeader.debugResponse & DBGRSP_ERROR_MODULE_MASK) >> DBGRSP_ERROR_MODULE_SHIFT);
+                        strcat(buffer, buffer1);
+                        sprintf(buffer1, "[HSM CLIENT] OTP-KW Error stage = 0x%02x\r\n", (certHeader.debugResponse & DBGRSP_ERROR_STAGE_MASK) >> DBGRSP_ERROR_STAGE_SHIFT);
+                        strcat(buffer, buffer1);
+                        sprintf(buffer1, "[HSM CLIENT] OTP-KW Error customer key extension = 0x%01x\n\n\r", (certHeader.debugResponse & DBGRSP_ERROR_CUSTKEYEXTENSION_MASK) >> DBGRSP_ERROR_CUSTKEYEXTENSION_SHIFT);
+                        strcat(buffer, buffer1);
+
+                        strcpy((void *)((0x200FA000U + 0x2000U)- 512U), (buffer));
                     }
                     else
                     {

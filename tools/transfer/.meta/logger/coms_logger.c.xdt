@@ -191,14 +191,14 @@ void COMSLOG_init()
         `comsLinkBufferModule.$name`_Handle, 
         (char**)`comsLinkBufferModule.$name`_buffer, 
         `comsLinkBufferModule.$name`_BUFFER_SIZE, 
-        `comsLinkBufferModule.$name`_ELEMENT_SIZE);
+        sizeof(`comsLinkBufferModule.$name`_buffer[0]));
 
 % if (comsloggerInst["comsLink"] == "fsi") {
     TransferRingBuffer_init(
         `comsLinkBufferModule.$name`_tagUdata_Handle, 
         (char**)`comsLinkBufferModule.$name`_tagUdata_buffer, 
         `comsLinkBufferModule.$name`_BUFFER_SIZE, 
-        1);
+        sizeof(`comsLinkBufferModule.$name`_tagUdata_buffer[0]));
 % }
 }
 

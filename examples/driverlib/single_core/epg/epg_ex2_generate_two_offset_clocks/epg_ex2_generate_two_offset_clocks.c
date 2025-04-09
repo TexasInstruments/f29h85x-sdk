@@ -13,7 +13,7 @@
 //! (EPG)](https://www.ti.com/lit/spracy7)
 //!
 //! \b External \b Connections \n
-//!  - None. Signal is generated on GPIO 34, 3. Can be visualized
+//!  - None. Signal is generated on GPIO 2, 3. Can be visualized
 //!    through oscilloscope.
 //!
 //
@@ -77,14 +77,14 @@ int main(void)
     Device_init();
 
     //
-    // Initialize GPIO and configure GPIO pins 34, 3 for EPG OUT
+    // Initialize GPIO and configure GPIO pins 2, 3 for EPG OUT
     //
     Device_initGPIO();
     
-    GPIO_setPinConfig(GPIO_34_OUTPUTXBAR1);
-    GPIO_setDirectionMode(34, GPIO_DIR_MODE_OUT);
-    GPIO_setPadConfig(34, GPIO_PIN_TYPE_STD);
-    GPIO_setQualificationMode(34, GPIO_QUAL_SYNC);
+    GPIO_setPinConfig(GPIO_2_OUTPUTXBAR1);
+    GPIO_setDirectionMode(2, GPIO_DIR_MODE_OUT);
+    GPIO_setPadConfig(2, GPIO_PIN_TYPE_STD);
+    GPIO_setQualificationMode(2, GPIO_QUAL_SYNC);
 
     GPIO_setPinConfig(GPIO_3_OUTPUTXBAR2);
     GPIO_setDirectionMode(3, GPIO_DIR_MODE_OUT);

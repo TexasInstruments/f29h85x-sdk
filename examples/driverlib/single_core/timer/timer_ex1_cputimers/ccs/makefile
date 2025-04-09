@@ -6,58 +6,58 @@ PROFILE?=debug
 
 CMD_SRCS += $(CMD_SRCS_$(CONFIG))
 
-CFLAGS := $(CFLAGS_common) $(CFLAGS_$(PROFILE))
-INCLUDES := $(INCLUDES_common)
-C_SRCS := $(C_SRCS_common)
-LFLAGS := $(LFLAGS_common)
+CFLAGS      := $(CFLAGS_common) $(CFLAGS_$(PROFILE))
+INCLUDES    := $(INCLUDES_common)
+C_SRCS      := $(C_SRCS_common)
+C_SRCS_PATH := $(C_SRCS_PATH_common)
+LFLAGS      := $(LFLAGS_common)
 
-C_SRCS += $(C_SRCS_nosyscfg)
+SYSCFG_FLAG  = false
+C_SRCS      += $(C_SRCS_nosyscfg)
+C_SRCS_PATH += $(C_SRCS_PATH_nosyscfg)
 
-OBJS  += \
-"./device.o"
+OBJDIR   := obj/
+OBJS     := $(C_SRCS:%.c=%.o)
+ASM_OBJS := $(ASM_SRCS:%.S=%.o)
+DEPS     := $(C_SRCS:%.c=%.d)
 
-"./device.o": $(C29SDK_ROOT)/examples/device_support/source/device.c
-	@echo 'Building file: $<'
-	@echo 'Invoking: Compiler'
-	$(COMPILER) $(CFLAGS) $(INCLUDES) "$<"
-	@echo 'Finished building: $<'
-	@echo ' '
+vpath %.o $(OBJDIR)
+vpath %.c $(C_SRCS_PATH)
+vpath %.S $(C_SRCS_PATH)
+vpath %.lib $(LIBS_PATH)
+vpath %.a $(LIBS_PATH)
 
-OBJS  += \
-"./$(Target).o" \
-"./bitfield_structs.o" \
-"./codestartbranch.o" \
-$(CMD_SRCS)
+$(OBJS): | $(OBJDIR)
 
-"./$(Target).o": ../$(Target).c
-	@echo 'Building file: $<'
-	@echo 'Invoking: Compiler'
-	$(COMPILER) $(CFLAGS) $(INCLUDES) "$<"
-	@echo 'Finished building: $<'
-	@echo ' '
+$(OBJDIR):
+	$(MKDIR) $@
+ 
+$(OBJDIR)/%.o %.o: %.c
+	@echo  Compiling: $<
+	$(COMPILER) -c $(CFLAGS) $(INCLUDES) -MMD -o $(OBJDIR)/$@ $<
 
-"./bitfield_structs.o": $(C29SDK_ROOT)/source/bitfields/bitfield_structs.c
-	@echo 'Building file: $<'
-	@echo 'Invoking: Compiler'
-	$(COMPILER) $(CFLAGS) $(INCLUDES) "$<"
-	@echo 'Finished building: $<'
-	@echo ' '
-
-"./codestartbranch.o": $(ASM_SRCS)
-	@echo 'Building file: $<'
-	@echo 'Invoking: Compiler'
-	$(COMPILER) $(CFLAGS) $(INCLUDES) "$<"
-	@echo 'Finished building: $<'
-	@echo ' '
+$(OBJDIR)/%.o %.o: %.S
+	@echo  Compiling: $<
+	$(COMPILER) -c $(CFLAGS) -o $(OBJDIR)/$@ $<
 
 # All Target
 all: $(Target).out
 
-$(Target).out: $(OBJS)
-	@echo 'Building target: $@'
-	@echo 'Invoking: Linker'
-	$(LINKER) $(INCLUDES) -Wl,-m=$(Target).map $(LFLAGS) -o $@ $(OBJS) $(LIB)
-	@echo 'Finished building target: $@'
+SYSCFG_FLAG ?= true
+
+ifeq ($(SYSCFG_FLAG), true)
+	SYSTEM_COMMAND := syscfg $(SYSCFG_GEN_FILES) $(OBJS) $(CMD_SRCS) $(LIBS)
+else
+	SYSTEM_COMMAND := $(OBJS) $(CMD_SRCS) $(LIBS)
+endif
+
+$(Target).out:  $(SYSTEM_COMMAND)
+	@echo  .
+	@echo  Linking: $(Target) $@ ...
+	$(LINKER) $(INCLUDES) $(LFLAGS) $(addprefix -Wl$(comma)-i, $(LIBS_PATH)) -Wl,-m=$(Target).map -o $@ $(addprefix $(OBJDIR), $(OBJS)) $(ASM_OBJS) $(addprefix -l,$(LIBS)) $(CMD_SRCS)
+	@echo  Linking: $(Target) $@ Done !!!
+	@echo  .
+
 ifeq ($(CONFIG),FLASH)
 	@echo 'Post build steps'
 	$(CG_TOOL_OBJCOPY) --remove-section=cert -O binary $(Target).out $(Target).bin
@@ -74,10 +74,8 @@ endif
 	@echo ' '
 
 clean:
-	-$(RM) $(Target).out $(Target).bin $(Target)_cert.bin
-	-$(RM) $(Target).map
-	-$(RM) "./$(Target).o" "./syscfg/board.o" "./bitfield_structs.o" "./device.o" "./codestartbranch.o"
-	-$(RMDIR) syscfg
+	-$(RM) $(Target).out $(Target).bin $(Target)_cert.bin $(Target).map
+	-$(RMDIR) $(OBJDIR) syscfg
 	-@echo 'Finished clean for $(Target)'
 	-@echo ' '
 

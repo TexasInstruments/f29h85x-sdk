@@ -122,8 +122,6 @@
 #define WADI_O_SSS_OUTEVTSTS        0xBCU    // Status of the active event
 #define WADI_O_SSS_BLK1_2OUTSEL     0xC0U    // Mux select word for outputs 0-3
 #define WADI_O_SSS_BLK3_4OUTSEL     0xC4U    // Mux select word for outputs 4-7
-#define WADI_O_SSS_BLK5_6OUTSEL     0xC8U    // Mux select word for outputs 8-11
-#define WADI_O_SSS_BLK7_8OUTSEL     0xCCU    // Mux select word for outputs 12-15
 #define WADI_O_SSS_OUTEVT1LINKCFG   0xE0U    // Output event1 Link configuration
 #define WADI_O_SSS_OUTEVT2LINKCFG   0xE4U    // Output event2 link configuration
 #define WADI_O_SSS_OUTEVT3LINKCFG   0xE8U    // Output event3 link configuration
@@ -564,14 +562,6 @@
                                                      // errors
 #define WADI_INTSTS_BLK4INT            0x8U          // Interrupt status by ORing all WADI block
                                                      // errors
-#define WADI_INTSTS_BLK5INT            0x10U         // Interrupt status by ORing all WADI block
-                                                     // errors
-#define WADI_INTSTS_BLK6INT            0x20U         // Interrupt status by ORing all WADI block
-                                                     // errors
-#define WADI_INTSTS_BLK7INT            0x40U         // Interrupt status by ORing all WADI block
-                                                     // errors
-#define WADI_INTSTS_BLK8INT            0x80U         // Interrupt status by ORing all WADI block
-                                                     // errors
 #define WADI_INTSTS_SIGBLKSINT         0x40000000U   // ORed int status of measurement error for
                                                      // all WADI blocks
 #define WADI_INTSTS_SIGTOSIG_BLKSINT   0x80000000U   // ORed int status of mismatch error for all
@@ -613,14 +603,6 @@
                                                         // 3
 #define WADI_INTSTSCLR_BLK4INT            0x8U          // Clears the status of the INTSTS of Block
                                                         // 4
-#define WADI_INTSTSCLR_BLK5INT            0x10U         // Clears the status of the INTSTS of Block
-                                                        // 5
-#define WADI_INTSTSCLR_BLK6INT            0x20U         // Clears the status of the INTSTS of Block
-                                                        // 6
-#define WADI_INTSTSCLR_BLK7INT            0x40U         // Clears the status of the INTSTS of Block
-                                                        // 7
-#define WADI_INTSTSCLR_BLK8INT            0x80U         // Clears the status of the INTSTS of Block
-                                                        // 8
 #define WADI_INTSTSCLR_SIGBLKSINT         0x40000000U   // Clears the status of all block's
                                                         // INTSTS[SIGBLKSINT]
 #define WADI_INTSTSCLR_SIGTOSIG_BLKSINT   0x80000000U   // Clears the status of all block's
@@ -639,14 +621,6 @@
                                                         // interrupt
 #define WADI_INTSTSFRC_BLK4INT            0x8U          // Allows software force of WADI Block
                                                         // interrupt
-#define WADI_INTSTSFRC_BLK5INT            0x10U         // Allows software force of WADI Block
-                                                        // interrupt
-#define WADI_INTSTSFRC_BLK6INT            0x20U         // Allows software force of WADI Block
-                                                        // interrupt
-#define WADI_INTSTSFRC_BLK7INT            0x40U         // Allows software force of WADI Block
-                                                        // interrupt
-#define WADI_INTSTSFRC_BLK8INT            0x80U         // Allows software force of WADI Block
-                                                        // interrupt
 #define WADI_INTSTSFRC_SIGBLKSINT         0x40000000U   // Allows software force of WADI Block
                                                         // interrupt
 #define WADI_INTSTSFRC_SIGTOSIG_BLKSINT   0x80000000U   // Allows software force of WADI Block
@@ -658,8 +632,8 @@
 //
 //*************************************************************************************************
 #define WADI_SIGSYNCFILTCFG_BLKS_SIGS_SYNCFILT_S   0U
-#define WADI_SIGSYNCFILTCFG_BLKS_SIGS_SYNCFILT_M   0x3FFFFU   // Selects SIG is synchronised and
-                                                              // filtered or not
+#define WADI_SIGSYNCFILTCFG_BLKS_SIGS_SYNCFILT_M   0xFFU   // Selects SIG is synchronised and
+                                                           // filtered or not
 
 //*************************************************************************************************
 //
@@ -667,8 +641,8 @@
 //
 //*************************************************************************************************
 #define WADI_TRIGSYNCFILTCFG_BLKS_TRIG_SYNCFILT_S   0U
-#define WADI_TRIGSYNCFILTCFG_BLKS_TRIG_SYNCFILT_M   0x3FFFFU   // Selects Trigger input is
-                                                               // synchronised and filtered or not
+#define WADI_TRIGSYNCFILTCFG_BLKS_TRIG_SYNCFILT_M   0xFFU   // Selects Trigger input is
+                                                            // synchronised and filtered or not
 
 //*************************************************************************************************
 //
@@ -700,14 +674,6 @@
 #define WADI_DMATRIGSTS_BLK3_DMAEVT   0x4U          // Indicates the WADI Block event for DMA
                                                     // trigger
 #define WADI_DMATRIGSTS_BLK4_DMAEVT   0x8U          // Indicates the WADI Block event for DMA
-                                                    // trigger
-#define WADI_DMATRIGSTS_BLK5_DMAEVT   0x10U         // Indicates the WADI Block event for DMA
-                                                    // trigger
-#define WADI_DMATRIGSTS_BLK6DMAEVT    0x20U         // Indicates the WADI Block event for DMA
-                                                    // trigger
-#define WADI_DMATRIGSTS_BLK7DMAEVT    0x40U         // Indicates the WADI Block event for DMA
-                                                    // trigger
-#define WADI_DMATRIGSTS_BLK8DMAEVT    0x80U         // Indicates the WADI Block event for DMA
                                                     // trigger
 #define WADI_DMATRIGSTS_SSS_EVT1      0x10000U      // Indicates the SSS Event event for DMA
                                                     // trigger
@@ -768,14 +734,6 @@
 #define WADI_DMASTSUPDATE_WRSTSBLK3   0x4U          // Status of DMA update for register set of
                                                     // WADI Block
 #define WADI_DMASTSUPDATE_WRSTSBLK4   0x8U          // Status of DMA update for register set of
-                                                    // WADI Block
-#define WADI_DMASTSUPDATE_WRSTSBLK5   0x10U         // Status of DMA update for register set of
-                                                    // WADI Block
-#define WADI_DMASTSUPDATE_WRSTSBLK6   0x20U         // Status of DMA update for register set of
-                                                    // WADI Block
-#define WADI_DMASTSUPDATE_WRSTSBLK7   0x40U         // Status of DMA update for register set of
-                                                    // WADI Block
-#define WADI_DMASTSUPDATE_WRSTSBLK8   0x80U         // Status of DMA update for register set of
                                                     // WADI Block
 #define WADI_DMASTSUPDATE_WRSTSEVT1   0x10000U      // DMA MMR write status of  SSS Event word
 #define WADI_DMASTSUPDATE_WRSTSEVT2   0x20000U      // DMA MMR write status of  SSS Event word
@@ -845,6 +803,15 @@
 
 //*************************************************************************************************
 //
+// The following are defines for the bit fields in the SSS_EVTTRIG register
+//
+//*************************************************************************************************
+#define WADI_SSS_EVTTRIG_EVTTRIG_S   0U
+#define WADI_SSS_EVTTRIG_EVTTRIG_M   0xFFU   // SSS start if event trigger matches one of defined
+                                             // EVT1-8
+
+//*************************************************************************************************
+//
 // The following are defines for the bit fields in the SSS_OUTEVTSTS register
 //
 //*************************************************************************************************
@@ -888,42 +855,6 @@
 #define WADI_SSS_BLK3_4OUTSEL_BLK4SIG2_S   24U
 #define WADI_SSS_BLK3_4OUTSEL_BLK4SIG2_M   0xFF000000U   // Maps the OUTEVTn associated with
                                                          // BLK3:SIG2
-
-//*************************************************************************************************
-//
-// The following are defines for the bit fields in the SSS_BLK5_6OUTSEL register
-//
-//*************************************************************************************************
-#define WADI_SSS_BLK5_6OUTSEL_BLK5SIG1_S   0U
-#define WADI_SSS_BLK5_6OUTSEL_BLK5SIG1_M   0xFFU         // Maps the  OUTEVTn associated with
-                                                         // BLK5:SIG1
-#define WADI_SSS_BLK5_6OUTSEL_BLK5SIG2_S   8U
-#define WADI_SSS_BLK5_6OUTSEL_BLK5SIG2_M   0xFF00U       // Maps the OUTEVTn associated with
-                                                         // BLK5:SIG2
-#define WADI_SSS_BLK5_6OUTSEL_BLK6SIG1_S   16U
-#define WADI_SSS_BLK5_6OUTSEL_BLK6SIG1_M   0xFF0000U     // Maps the OUTEVTn associated with
-                                                         // BLK6:SIG1
-#define WADI_SSS_BLK5_6OUTSEL_BLK6SIG2_S   24U
-#define WADI_SSS_BLK5_6OUTSEL_BLK6SIG2_M   0xFF000000U   // Maps the OUTEVTn associated with
-                                                         // BLK6:SIG2
-
-//*************************************************************************************************
-//
-// The following are defines for the bit fields in the SSS_BLK7_8OUTSEL register
-//
-//*************************************************************************************************
-#define WADI_SSS_BLK7_8OUTSEL_BLK7SIG1_S   0U
-#define WADI_SSS_BLK7_8OUTSEL_BLK7SIG1_M   0xFFU         // Maps the  OUTEVTn associated with
-                                                         // BLK7:SIG1
-#define WADI_SSS_BLK7_8OUTSEL_BLK7SIG2_S   8U
-#define WADI_SSS_BLK7_8OUTSEL_BLK7SIG2_M   0xFF00U       // Maps the OUTEVTn associated with
-                                                         // BLK7:SIG2
-#define WADI_SSS_BLK7_8OUTSEL_BLK8SIG1_S   16U
-#define WADI_SSS_BLK7_8OUTSEL_BLK8SIG1_M   0xFF0000U     // Maps the OUTEVTn associated with
-                                                         // BLK8:SIG1
-#define WADI_SSS_BLK7_8OUTSEL_BLK8SIG2_S   24U
-#define WADI_SSS_BLK7_8OUTSEL_BLK8SIG2_M   0xFF000000U   // Maps the OUTEVTn associated with
-                                                         // BLK8:SIG2
 
 //*************************************************************************************************
 //
@@ -999,6 +930,46 @@
 
 //*************************************************************************************************
 //
+// The following are defines for the bit fields in the SSS_EVT1CFG register
+//
+//*************************************************************************************************
+#define WADI_SSS_EVT1CFG_EVT1_S   0U
+#define WADI_SSS_EVT1CFG_EVT1_M   0xFFU   // First event compare configuration
+
+//*************************************************************************************************
+//
+// The following are defines for the bit fields in the SSS_EVT2CFG register
+//
+//*************************************************************************************************
+#define WADI_SSS_EVT2CFG_EVT2_S   0U
+#define WADI_SSS_EVT2CFG_EVT2_M   0xFFU   // Second word compare value configuration
+
+//*************************************************************************************************
+//
+// The following are defines for the bit fields in the SSS_EVT3CFG register
+//
+//*************************************************************************************************
+#define WADI_SSS_EVT3CFG_EVT3_S              0U
+#define WADI_SSS_EVT3CFG_EVT3_M              0xFFU         // Third word compare value
+                                                           // configuration
+#define WADI_SSS_EVT3CFG_EVT3_BLK5_TO_16_S   8U
+#define WADI_SSS_EVT3CFG_EVT3_BLK5_TO_16_M   0xFFFFFF00U   // Third word compare value
+                                                           // configuration
+
+//*************************************************************************************************
+//
+// The following are defines for the bit fields in the SSS_EVT4CFG register
+//
+//*************************************************************************************************
+#define WADI_SSS_EVT4CFG_EVT4_S              0U
+#define WADI_SSS_EVT4CFG_EVT4_M              0xFFU         // Fourth word compare value
+                                                           // configuration
+#define WADI_SSS_EVT4CFG_EVT4_BLK5_TO_16_S   8U
+#define WADI_SSS_EVT4CFG_EVT4_BLK5_TO_16_M   0xFFFFFF00U   // Fourth word compare value
+                                                           // configuration
+
+//*************************************************************************************************
+//
 // The following are defines for the bit fields in the SSS_TRIGEVT1_4CFG register
 //
 //*************************************************************************************************
@@ -1021,7 +992,7 @@
 //
 //*************************************************************************************************
 #define WADI_SSS_BLKSOUTEVT1CFG_OUTEVT1_S   0U
-#define WADI_SSS_BLKSOUTEVT1CFG_OUTEVT1_M   0x3FFFFU   // Output configuration on event 1
+#define WADI_SSS_BLKSOUTEVT1CFG_OUTEVT1_M   0xFFU   // Output configuration on event 1
 
 //*************************************************************************************************
 //
@@ -1029,7 +1000,7 @@
 //
 //*************************************************************************************************
 #define WADI_SSS_BLKSOUTEVT2CFG_OUTEVT2_S   0U
-#define WADI_SSS_BLKSOUTEVT2CFG_OUTEVT2_M   0x3FFFFU   // Output configuration on event 2
+#define WADI_SSS_BLKSOUTEVT2CFG_OUTEVT2_M   0xFFU   // Output configuration on event 2
 
 //*************************************************************************************************
 //
@@ -1037,7 +1008,7 @@
 //
 //*************************************************************************************************
 #define WADI_SSS_BLKSOUTEVT3CFG_OUTEVT3_S   0U
-#define WADI_SSS_BLKSOUTEVT3CFG_OUTEVT3_M   0x3FFFFU   // Output configuration on event 3
+#define WADI_SSS_BLKSOUTEVT3CFG_OUTEVT3_M   0xFFU   // Output configuration on event 3
 
 //*************************************************************************************************
 //
@@ -1045,7 +1016,7 @@
 //
 //*************************************************************************************************
 #define WADI_SSS_BLKSOUTEVT4CFG_OUTEVT4_S   0U
-#define WADI_SSS_BLKSOUTEVT4CFG_OUTEVT4_M   0x3FFFFU   // Output configuration on event 4
+#define WADI_SSS_BLKSOUTEVT4CFG_OUTEVT4_M   0xFFU   // Output configuration on event 4
 
 //*************************************************************************************************
 //
@@ -1137,6 +1108,54 @@
 
 //*************************************************************************************************
 //
+// The following are defines for the bit fields in the SSS_EVT5CFG register
+//
+//*************************************************************************************************
+#define WADI_SSS_EVT5CFG_EVT5_S              0U
+#define WADI_SSS_EVT5CFG_EVT5_M              0xFFU         // Fifth word compare value
+                                                           // configuration
+#define WADI_SSS_EVT5CFG_EVT5_BLK5_TO_16_S   8U
+#define WADI_SSS_EVT5CFG_EVT5_BLK5_TO_16_M   0xFFFFFF00U   // Fifth word compare value
+                                                           // configuration
+
+//*************************************************************************************************
+//
+// The following are defines for the bit fields in the SSS_EVT6CFG register
+//
+//*************************************************************************************************
+#define WADI_SSS_EVT6CFG_EVT6_S              0U
+#define WADI_SSS_EVT6CFG_EVT6_M              0xFFU         // Sixth word compare value
+                                                           // configuration
+#define WADI_SSS_EVT6CFG_EVT6_BLK5_TO_16_S   8U
+#define WADI_SSS_EVT6CFG_EVT6_BLK5_TO_16_M   0xFFFFFF00U   // Sixth word compare value
+                                                           // configuration
+
+//*************************************************************************************************
+//
+// The following are defines for the bit fields in the SSS_EVT7CFG register
+//
+//*************************************************************************************************
+#define WADI_SSS_EVT7CFG_EVT7_S              0U
+#define WADI_SSS_EVT7CFG_EVT7_M              0xFFU         // Seventh word compare value
+                                                           // configuration
+#define WADI_SSS_EVT7CFG_EVT7_BLK5_TO_16_S   8U
+#define WADI_SSS_EVT7CFG_EVT7_BLK5_TO_16_M   0xFFFFFF00U   // Seventh word compare value
+                                                           // configuration
+
+//*************************************************************************************************
+//
+// The following are defines for the bit fields in the SSS_EVT8CFG register
+//
+//*************************************************************************************************
+#define WADI_SSS_EVT8CFG_EVT8_S              0U
+#define WADI_SSS_EVT8CFG_EVT8_M              0xFFU         // Eighth word compare value
+                                                           // configuration
+#define WADI_SSS_EVT8CFG_EVT8_BLK5_TO_16_S   8U
+#define WADI_SSS_EVT8CFG_EVT8_BLK5_TO_16_M   0xFFFFFF00U   // Eighth word compare value
+                                                           // configuration
+
+//*************************************************************************************************
+//
 // The following are defines for the bit fields in the SSS_TRIGEVT5_8CFG register
 //
 //*************************************************************************************************
@@ -1159,7 +1178,7 @@
 //
 //*************************************************************************************************
 #define WADI_SSS_BLKSOUTEVT5CFG_OUTEVT5_S   0U
-#define WADI_SSS_BLKSOUTEVT5CFG_OUTEVT5_M   0x3FFFFU   // Output configuration on event 5
+#define WADI_SSS_BLKSOUTEVT5CFG_OUTEVT5_M   0xFFU   // Output configuration on event 5
 
 //*************************************************************************************************
 //
@@ -1167,7 +1186,7 @@
 //
 //*************************************************************************************************
 #define WADI_SSS_BLKSOUTEVT6CFG_OUTEVT6_S   0U
-#define WADI_SSS_BLKSOUTEVT6CFG_OUTEVT6_M   0x3FFFFU   // Output configuration on event 6
+#define WADI_SSS_BLKSOUTEVT6CFG_OUTEVT6_M   0xFFU   // Output configuration on event 6
 
 //*************************************************************************************************
 //
@@ -1175,7 +1194,7 @@
 //
 //*************************************************************************************************
 #define WADI_SSS_BLKSOUTEVT7CFG_OUTEVT7_S   0U
-#define WADI_SSS_BLKSOUTEVT7CFG_OUTEVT7_M   0x3FFFFU   // Output configuration on event 7
+#define WADI_SSS_BLKSOUTEVT7CFG_OUTEVT7_M   0xFFU   // Output configuration on event 7
 
 //*************************************************************************************************
 //
@@ -1183,7 +1202,7 @@
 //
 //*************************************************************************************************
 #define WADI_SSS_BLKSOUTEVT8CFG_OUTEVT8_S   0U
-#define WADI_SSS_BLKSOUTEVT8CFG_OUTEVT8_M   0x3FFFFU   // Output configuration on event 8
+#define WADI_SSS_BLKSOUTEVT8CFG_OUTEVT8_M   0xFFU   // Output configuration on event 8
 
 //*************************************************************************************************
 //

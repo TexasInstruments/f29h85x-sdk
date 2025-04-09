@@ -76,9 +76,9 @@ let DMA_Trigger = [
 	{ name: "DMA_TRIGGER_EPWM17SOCB", displayName: "TRIGGER EPWM17SOCB" },
 	{ name: "DMA_TRIGGER_EPWM18SOCA", displayName: "TRIGGER EPWM18SOCA" },
 	{ name: "DMA_TRIGGER_EPWM18SOCB", displayName: "TRIGGER EPWM18SOCB" },
-	{ name: "DMA_TRIGGER_TINT0", displayName: "TRIGGER TINT0" },
-	{ name: "DMA_TRIGGER_TINT1", displayName: "TRIGGER TINT1" },
-	{ name: "DMA_TRIGGER_TINT2", displayName: "TRIGGER TINT2" },
+	{ name: "DMA_TRIGGER_TINT0", displayName: "TRIGGER CPU1 TINT0" },
+	{ name: "DMA_TRIGGER_TINT1", displayName: "TRIGGER CPU1 TINT1" },
+	{ name: "DMA_TRIGGER_TINT2", displayName: "TRIGGER CPU1 TINT2" },
 	{ name: "DMA_TRIGGER_CPU2_TINT0", displayName: "TRIGGER CPU2 TINT0" },
 	{ name: "DMA_TRIGGER_CPU2_TINT1", displayName: "TRIGGER CPU2 TINT1" },
 	{ name: "DMA_TRIGGER_CPU2_TINT2", displayName: "TRIGGER CPU2 TINT2" },
@@ -258,7 +258,7 @@ let DMA_MPUAccessPermission = [
 	{ name: "DMA_MPU_READ_WRITE_ACCESS", displayName: "DMA has both read and write access to the MPU region." },
 ]
 let DMA_TOTAL = [
-	{ name: "DMA_TOTAL_MPU", displayName: "Out of 32, only 16 are supported in Veloce" },
+	{ name: "DMA_TOTAL_MPU", displayName: "16 MPU regions" },
 	{ name: "DMA_TOTAL_CH", displayName: "10 channels in each DMA instance" },
 ]
 let DMA_CFG_ONESHOT = [

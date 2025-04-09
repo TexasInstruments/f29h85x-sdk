@@ -3,10 +3,11 @@ include $(C29SDK_ROOT)/imports.mak
 
 PROFILE?=debug
 
-CFLAGS 		:= $(CFLAGS_common) $(CFLAGS_$(PROFILE)) -DSOC_F29H85X
+CFLAGS 		:= $(CFLAGS_common) $(CFLAGS_$(PROFILE)) -DSOC_F29H85X -D_F29H85x
 INCLUDES 	:= $(INCLUDES_common)
 INCLUDES 	+= -I $(C29SDK_ROOT)/source/security
 INCLUDES 	+= -I $(C29SDK_ROOT)/source/kernel/nortos/dpl/c29
+INCLUDES 	+= -I $(C29SDK_ROOT)/source
 
 FILES := \
 	hsmclient_loadhsmrt.c	\

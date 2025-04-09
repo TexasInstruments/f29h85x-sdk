@@ -1,0 +1,20 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --device "F29H85x" --part "F29H85x_256ZEX" --package "256ZEX" --context "CPU3" --product "MCU_SDK_F29H85x@1.00.00.00"
+ * @v2CliArgs --device "F29H850TU" --package "256ZEX" --variant "TMS320F29H850TU9" --context "CPU3" --product "MCU_SDK_F29H85x@1.00.00.00"
+ * @versions {"tool":"1.22.0+3893"}
+ */
+
+/**
+ * Import the modules used in this configuration.
+ */
+const interrupt  = scripting.addModule("/driverlib/interrupt.js");
+const interrupt1 = interrupt.addInstance();
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+interrupt1.driverlibIntList = "INT_IPC_1_1";
+interrupt1.interruptHandler = "IPC_HAL_CPU3_L_CPU1_R_INT1_ISR";
+interrupt1.$name            = "IPC_HAL_Interrupt_from_CPU1_to_CPU3";

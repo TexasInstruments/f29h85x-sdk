@@ -178,6 +178,7 @@ typedef enum
 //*****************************************************************************
 typedef enum
 {
+    XBAR_AUXSIG0,   //!< AUXSIG0 of the CLB X-BAR
     XBAR_AUXSIG1,   //!< AUXSIG1 of the CLB X-BAR
     XBAR_AUXSIG2,   //!< AUXSIG2 of the CLB X-BAR
     XBAR_AUXSIG3,   //!< AUXSIG3 of the CLB X-BAR
@@ -185,7 +186,6 @@ typedef enum
     XBAR_AUXSIG5,   //!< AUXSIG5 of the CLB X-BAR
     XBAR_AUXSIG6,   //!< AUXSIG6 of the CLB X-BAR
     XBAR_AUXSIG7,   //!< AUXSIG7 of the CLB X-BAR
-    XBAR_AUXSIG8,   //!< AUXSIG8 of the CLB X-BAR
 } XBAR_AuxSigNum;
 
 //*****************************************************************************

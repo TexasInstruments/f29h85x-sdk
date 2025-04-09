@@ -75,8 +75,6 @@
 //
 #include "board.h"
 
-#define DEVICE_SYSCLK_FREQ		200000000
-
 //
 // Main
 //

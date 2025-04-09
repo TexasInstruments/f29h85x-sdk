@@ -77,10 +77,6 @@ Memss_lockAllRegisters(void)
     Memss_lockConfig(MEMSS_RAM_CDA10);
     Memss_lockConfig(MEMSS_RAM_CDA11);
     Memss_lockConfig(MEMSS_RAM_M0);
-
-    Memss_lockConfig(MEMSS_ROM_CPU1);
-    Memss_lockConfig(MEMSS_ROM_CPU2);
-    Memss_lockConfig(MEMSS_ROM_CPU3);
 }
 
 //******************************************************************************
@@ -116,10 +112,6 @@ Memss_unlockAllRegisters(void)
     Memss_unlockConfig(MEMSS_RAM_CDA10);
     Memss_unlockConfig(MEMSS_RAM_CDA11);
     Memss_unlockConfig(MEMSS_RAM_M0);
-
-    Memss_unlockConfig(MEMSS_ROM_CPU1);
-    Memss_unlockConfig(MEMSS_ROM_CPU2);
-    Memss_unlockConfig(MEMSS_ROM_CPU3);
 }
 
 //******************************************************************************
@@ -155,9 +147,5 @@ Memss_commitAllRegisters(void)
     Memss_commitConfig(MEMSS_RAM_CDA10);
     Memss_commitConfig(MEMSS_RAM_CDA11);
     Memss_commitConfig(MEMSS_RAM_M0);
-
-    Memss_commitConfig(MEMSS_ROM_CPU1);
-    Memss_commitConfig(MEMSS_ROM_CPU2);
-    Memss_commitConfig(MEMSS_ROM_CPU3);
 }
 

@@ -134,7 +134,10 @@ typedef enum
     SYSCTL_WD_PRESCALE_64 = 7       //!< WDCLK = PREDIVCLK / 64
 } SysCtl_WDPrescaler;
 
-
+//
+// Defined in sysctl.c
+//
+extern void SysCtl_pollSyncBusyWd(uint32_t mask);
 
 //*****************************************************************************
 //
@@ -235,6 +238,11 @@ SysCtl_disableWatchdog(void)
     // Set the disable bit.
     //
     HWREGH(WD_BASE + SYSCTL_O_WDCR) |= SYSCTL_WD_CHKBITS | SYSCTL_WDCR_WDDIS;
+
+    //
+    //  Poll until WD sync busy is cleared
+    //
+    SysCtl_pollSyncBusyWd(SYSCTL_SYNCBUSYWD_WDCR);
 }
 
 //*****************************************************************************
@@ -256,6 +264,11 @@ SysCtl_enableWatchdog(void)
     //
     HWREGH(WD_BASE + SYSCTL_O_WDCR) = (HWREGH(WD_BASE + SYSCTL_O_WDCR) &
                                        ~SYSCTL_WDCR_WDDIS) | SYSCTL_WD_CHKBITS;
+
+    //
+    //  Poll until WD sync busy is cleared
+    //
+    SysCtl_pollSyncBusyWd(SYSCTL_SYNCBUSYWD_WDCR);
 }
 
 //*****************************************************************************
@@ -343,6 +356,11 @@ SysCtl_setWatchdogPredivider(SysCtl_WDPredivider predivider)
     //
     HWREGH(WD_BASE + SYSCTL_O_WDCR) = (HWREGH(WD_BASE + SYSCTL_O_WDCR) &
                                        ~(SYSCTL_WDCR_WDPRECLKDIV_M)) | regVal;
+
+    //
+    //  Poll until WD sync busy is cleared
+    //
+    SysCtl_pollSyncBusyWd(SYSCTL_SYNCBUSYWD_WDCR);
 }
 
 //*****************************************************************************
@@ -373,6 +391,11 @@ SysCtl_setWatchdogPrescaler(SysCtl_WDPrescaler prescaler)
     //
     HWREGH(WD_BASE + SYSCTL_O_WDCR) = (HWREGH(WD_BASE + SYSCTL_O_WDCR) &
                                        ~(SYSCTL_WDCR_WDPS_M)) | regVal;
+
+    //
+    //  Poll until WD sync busy is cleared
+    //
+    SysCtl_pollSyncBusyWd(SYSCTL_SYNCBUSYWD_WDCR);
 }
 
 //*****************************************************************************

@@ -1263,7 +1263,7 @@ ADC_setInterruptSOCTrigger(uint32_t base, ADC_SOCNumber socNumber,
 
     if(socNumber >= ADC_SOC_NUMBER16)
     {
-        socNumber = (ADC_SOCNumber)(socNumber - ADC_SOC_NUMBER16);
+        socNumber = (ADC_SOCNumber)((uint32_t)socNumber - (uint32_t)ADC_SOC_NUMBER16);
         regOffset = ADC_O_INTSOCSEL2;
     }
     //
@@ -3849,7 +3849,7 @@ ADC_configSOCSafetyCheckerInput(uint32_t base, ADC_SOCNumber socNumber,
 
     if(socNumber >= ADC_SOC_NUMBER16)
     {
-        socNumber = (ADC_SOCNumber)(socNumber - ADC_SOC_NUMBER16);;
+        socNumber = (ADC_SOCNumber)((uint32_t)socNumber - (uint32_t)ADC_SOC_NUMBER16);
         regOffset = ADC_O_SAFECHECKRESEN2;
     }
 

@@ -33,7 +33,7 @@ SECTIONS
     .const          : {} > FLASH_RP0,   palign(8)
     .rodata         : {} > FLASH_RP0,   palign(8)
     .init_array     : {} > FLASH_RP0,   palign(8)
-    .TI.ramfunc     : {} LOAD=FLASH_RP0, RUN=SRAM_LPA0, table(BINIT), palign(8)
+    .TI.ramfunc     : { -l F29H85x_NWFlashAPI_v21.00.00.00.lib } LOAD=FLASH_RP0, RUN=SRAM_LPA0, table(BINIT), palign(8)
 
     cpu3app         : {} > CPU3_FLASH_RP0,    palign(8)
 

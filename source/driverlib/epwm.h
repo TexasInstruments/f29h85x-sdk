@@ -3245,7 +3245,7 @@ EPWM_setPhaseShift(uint32_t base, uint16_t phaseCount)
     //
     // Write to TBPHS bit
     //
-    HWREGH(base + EPWM_O_TBPHS + 0x2) = phaseCount;
+    HWREGH(base + EPWM_O_TBPHS + 0x2U) = phaseCount;
 
 }
 //*****************************************************************************
@@ -6255,7 +6255,7 @@ EPWM_setMixEvtTriggerSource(uint32_t base, EPWM_ETMixSignalSelect etmixSignal,
     ASSERT(EPWM_isBaseValid(base));
     ASSERT((uint32_t)interruptSource < 11U);
 
-    registerOffset = base + EPWM_O_ETINTMIXEN + (uint32_t)etmixSignal * 2;
+    registerOffset = base + EPWM_O_ETINTMIXEN + (uint32_t)etmixSignal * 2U;
 
     //
     // Set the ETMIX source
@@ -7379,7 +7379,7 @@ EPWM_setDigitalCompareEventSource(uint32_t base,
     //
     ASSERT(EPWM_isBaseValid(base));
 
-    registerOffset = EPWM_O_DCACTL + (uint32_t)dcModule * 2;
+    registerOffset = EPWM_O_DCACTL + (uint32_t)dcModule * 2U;
 
     //
     // Set the DC event 1 source source
@@ -7439,7 +7439,7 @@ EPWM_setDigitalCompareEventSyncMode(uint32_t base,
     //
     ASSERT(EPWM_isBaseValid(base));
 
-    registerOffset = EPWM_O_DCACTL + (uint32_t)dcModule * 2;
+    registerOffset = EPWM_O_DCACTL + (uint32_t)dcModule * 2U;
 
     //
     // Set the DC event sync mode
@@ -10116,7 +10116,7 @@ EPWM_getMinDeadBandDelay(uint32_t base, uint32_t block)
         //
         // Return dead band delay value of ePWMA
         //
-        retval = (HWREGH(registerOffset) & EPWM_MINDBDLY_DELAYA_M);
+        retval = ((uint32_t)HWREGH(registerOffset) & EPWM_MINDBDLY_DELAYA_M);
     }
     else
     {

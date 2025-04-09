@@ -112,7 +112,7 @@ function calcwdtime(predivide, prescale)
 
 
 /* Array of Watchdog configurables that are common across device families */
-let staticConfig = [
+let config = [
 
     {
         name : "GROUP_PERCFG",
@@ -301,12 +301,9 @@ var watchdogModule = {
         boardc : "/driverlib/watchdog/watchdog.board.c.xdt",
         boardh : "/driverlib/watchdog/watchdog.board.h.xdt"
     },
-    moduleStatic : {
-        config          : staticConfig,
-        validate        : onValidate,
-        moduleInstances : moduleInstances,
-
-    }
+    config          : config,
+    validate        : onValidate,
+    moduleInstances : moduleInstances,
 };
 
 

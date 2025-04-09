@@ -48,9 +48,28 @@
 */
 #ifndef F65_REGISTERS_H_
 #define F65_REGISTERS_H_
+//*****************************************************************************
+//
+// If building with a C++ compiler, make all of the definitions in this header
+// have a C binding.
+//
+//*****************************************************************************
+#ifdef __cplusplus
+extern "C"
+{
+#endif
 
 #include "Types.h"
 
 #include "Registers_C29x.h"
+
+//*****************************************************************************
+//
+// Mark the end of the C bindings section for C++ compilers.
+//
+//*****************************************************************************
+#ifdef __cplusplus
+}
+#endif
     
 #endif /*F65_REGISTERS_H_*/

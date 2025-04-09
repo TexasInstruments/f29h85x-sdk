@@ -52,8 +52,10 @@
 #include "UartInterface.h"
 
 void loadProgram(FlashProgrammer::UartHandler& uartHandle, FILE* fptr);
+void loadProgram(FlashProgrammer::UartHandler& uartHandle, FILE* fptr, const void* breakpointPtr, const std::size_t bpSize);
 int downloadKernel(FlashProgrammer::UartHandler& uartHandle, const char* kernelFile);
 int downloadImage(FlashProgrammer::UartHandler& uartHandle, const char* applicationFile);
+int downloadImage(FlashProgrammer::UartHandler& uartHandle, const char* applicationFile, const void* breakpointPtr, const std::size_t bpSize);
 
 #endif /* UARTDOWNLOAD_H */
 /** @} */

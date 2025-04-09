@@ -412,7 +412,7 @@ typedef enum
 
 //*****************************************************************************
 //
-//! Values that can be pased to ESM_config().
+//! Values that can be passed to ESM_config().
 //
 //*****************************************************************************
 typedef enum
@@ -426,6 +426,35 @@ typedef enum
     //! Configure Error Pin output
     ESM_CONFIG_ERROR_PIN                   = 0x3U
 }ESM_ConfigType;
+
+//*****************************************************************************
+//
+//! Values that can be passed to Safety Aggregator APIs as ESM instance
+//! parameter.
+//
+//*****************************************************************************
+typedef enum
+{
+    ESM_INSTANCE_SYS_ESM = 0x1U,
+    ESM_INSTANCE_ESM1    = 0x2U,
+    ESM_INSTANCE_ESM2    = 0x4U,
+    ESM_INSTANCE_ESM3    = 0x8U
+}ESM_Instance;
+
+//*****************************************************************************
+//
+//! Values that are used in ESM_enableAggrErrorInterrupt(),
+//! ESM_disableAggrErrorInterrupt(), ESM_forceAggrErrorInterrupt(),
+//! ESM_getAggrErrorInterruptStatus() and ESM_clearAggrErrorInterruptStatus()
+//! as the errorType parameter.
+//
+//*****************************************************************************
+typedef enum
+{
+    ESM_AGGR_PARITY_ERROR,
+    ESM_AGGR_TIMEOUT_ERROR
+}ESM_AggrErrorType;
+
 
 //*****************************************************************************
 //
@@ -1052,7 +1081,7 @@ ESM_enableInterrupt(uint32_t base, ESM_EventMap event)
     //
     // Set the Interrupt enable bit
     //
-    HWREG(base + ESM_CPU_O_INTR_EN_SET(groupNum)) = 1U << eventNum;
+    HWREG(base + ESM_CPU_O_INTR_EN_SET(groupNum)) = (uint32_t)1U << eventNum;
 }
 
 //*****************************************************************************
@@ -1087,7 +1116,7 @@ ESM_disableInterrupt(uint32_t base, ESM_EventMap event)
     //
     // Set the Interrupt enable bit
     //
-    HWREG(base + ESM_CPU_O_INTR_EN_CLR(groupNum)) = 1U << eventNum;
+    HWREG(base + ESM_CPU_O_INTR_EN_CLR(groupNum)) = (uint32_t)1U << eventNum;
 }
 
 //*****************************************************************************
@@ -1166,7 +1195,7 @@ ESM_setRawInterruptStatus(uint32_t base, ESM_EventMap event)
     //
     // Get the interrupt status of the corresponding event.
     //
-    HWREG(base + ESM_CPU_O_RAW(groupNum)) = 1U << eventNum;
+    HWREG(base + ESM_CPU_O_RAW(groupNum)) = (uint32_t)1U << eventNum;
 }
 
 //*****************************************************************************
@@ -1272,7 +1301,7 @@ ESM_clearRawInterruptStatus(uint32_t base, ESM_EventMap event)
     //
     // Get the interrupt status of the corresponding event.
     //
-    HWREG(base + ESM_CPU_O_STS(groupNum)) = 1U << eventNum;
+    HWREG(base + ESM_CPU_O_STS(groupNum)) = (uint32_t)1U << eventNum;
 }
 
 //*****************************************************************************
@@ -1316,11 +1345,11 @@ ESM_setCriticalPriorityInterruptInfluence(uint32_t base,
     //
     if(influence == true)
     {
-        HWREG(base + ESM_CPU_O_CRIT_EN_SET(groupNum)) = 1U << eventNum;
+        HWREG(base + ESM_CPU_O_CRIT_EN_SET(groupNum)) = (uint32_t)1U << eventNum;
     }
     else
     {
-        HWREG(base + ESM_CPU_O_CRIT_EN_CLR(groupNum)) = 1U << eventNum;
+        HWREG(base + ESM_CPU_O_CRIT_EN_CLR(groupNum)) = (uint32_t)1U << eventNum;
     }
 }
 
@@ -1379,12 +1408,12 @@ ESM_setInfluenceOnErrorPin(ESM_EventMap event, bool influence)
     if(influence == true)
     {
         HWREG(ESMSYSTEM_BASE + ESM_CPU_O_PIN_EN_SET(groupNum)) =
-                                                            1U << eventNum;
+                                                            (uint32_t)1U << eventNum;
     }
     else
     {
         HWREG(ESMSYSTEM_BASE + ESM_CPU_O_PIN_EN_CLR(groupNum)) =
-                                                            1U << eventNum;
+                                                            (uint32_t)1U << eventNum;
     }
 }
 
@@ -1973,6 +2002,279 @@ ESM_setPWMCounterPreload(uint32_t highValue, uint32_t lowValue);
 extern void
 ESM_configErrorPin(const ESM_ErrorPinConfigParams *configParams);
 
+
+//*****************************************************************************
+//
+//! Configure Serial VBUS read
+//!
+//! \param inst is the ESM instance.
+//! \param readAddress is the address to be set for Serial VBUS read.
+//!
+//! This function configures the Serial VBUS read at the \e readAddress
+//! specified, for the ESM instance corresponding to \e inst.
+//!
+//! \return None.
+//
+//*****************************************************************************
+static inline void
+ESM_configSvbusRead(ESM_Instance inst, uint8_t readAddress)
+{
+
+    HWREG(ESMSAFETYAGG_BASE + ESM_SAFETY_AGGREGATOR_O_ECC_VECTOR) =
+         (uint32_t)inst | ESM_SAFETY_AGGREGATOR_ECC_VECTOR_RD_SVBUS |
+         ((uint32_t)readAddress <<
+                    ESM_SAFETY_AGGREGATOR_ECC_VECTOR_RD_SVBUS_ADDRESS_S);
+}
+
+//*****************************************************************************
+//
+//! Trigger Serial VBUS read
+//!
+//! This function triggers a read on the serial VBUS.
+//!
+//! \return None.
+//
+//*****************************************************************************
+static inline void
+ESM_triggerSvbusRead(void)
+{
+    HWREG(ESMSAFETYAGG_BASE + ESM_SAFETY_AGGREGATOR_O_ECC_VECTOR) |=
+                                ESM_SAFETY_AGGREGATOR_ECC_VECTOR_RD_SVBUS;
+}
+
+//*****************************************************************************
+//
+//! Get the Serial VBUS Read Address.
+//!
+//! This function returns the read address of the Serial VBUS.
+//!
+//! \return Returns the SVBUS read address.
+//
+//*****************************************************************************
+static inline uint32_t
+ESM_getSvbusReadAddress(void)
+{
+    return((HWREG(ESMSAFETYAGG_BASE + ESM_SAFETY_AGGREGATOR_O_ECC_VECTOR)
+            & (uint32_t)ESM_SAFETY_AGGREGATOR_ECC_VECTOR_RD_SVBUS_ADDRESS_M)
+            >> ESM_SAFETY_AGGREGATOR_ECC_VECTOR_RD_SVBUS_ADDRESS_S);
+}
+
+//*****************************************************************************
+//
+//! Get the serial VBUS read status.
+//!
+//! This function returns the status if the read operation on the serial VBUS
+//! is complete.
+//!
+//! \return Returns \b true if serial VBUS read is complete.
+//!         Returns \b false if serial VBUS read is not complete.
+//
+//*****************************************************************************
+static inline bool
+ESM_getSvbusReadStatus(void)
+{
+    return((HWREG(ESMSAFETYAGG_BASE + ESM_SAFETY_AGGREGATOR_O_ECC_VECTOR)
+                    & ESM_SAFETY_AGGREGATOR_ECC_VECTOR_RD_SVBUS_DONE) ==
+                    ESM_SAFETY_AGGREGATOR_ECC_VECTOR_RD_SVBUS_DONE);
+}
+
+//*****************************************************************************
+//
+//! Clear serial VBUS read status
+//!
+//! This function clears the status of the read operation on the serial VBUS.
+//!
+//! \return None.
+//
+//*****************************************************************************
+static inline void
+ESM_clearSvbusReadStatus(void)
+{
+    HWREG(ESMSAFETYAGG_BASE + ESM_SAFETY_AGGREGATOR_O_ECC_VECTOR) &=
+                    ~(uint32_t)ESM_SAFETY_AGGREGATOR_ECC_VECTOR_RD_SVBUS_DONE;
+}
+
+//*****************************************************************************
+//
+//! Set EOI
+//!
+//! This function sets the End Of Interrupt for DED.
+//!
+//! \return None.
+//
+//*****************************************************************************
+static inline void
+ESM_ackDedInterrupt(void)
+{
+    HWREG(ESMSAFETYAGG_BASE + ESM_SAFETY_AGGREGATOR_O_DED_EOI_REG) =
+                                    ESM_SAFETY_AGGREGATOR_DED_EOI_REG_EOI_WR;
+}
+
+//*****************************************************************************
+//
+//! Get the Safety Aggregator Interrupt pending status.
+//!
+//! \param inst is the ESM instance to enable the interrupt for.
+//!
+//! This function returns the pending status of the interrupt from the EDC
+//! controller for the ESM instance specified.
+//!
+//! \return Returns \b true if there are pending interrupts.
+//!         Returns \b false if there are no pending interrupts.
+//
+//*****************************************************************************
+static inline bool
+ESM_getInterruptPendingStatus(ESM_Instance inst)
+{
+    return((HWREGB(ESMSAFETYAGG_BASE + ESM_SAFETY_AGGREGATOR_O_DED_STATUS_REG0)
+            & (uint8_t)inst) == (uint8_t)inst);
+}
+
+//*****************************************************************************
+//
+//! Enable EDC Controller Interrupt
+//!
+//! \param inst is the ESM instance to enable the interrupt for.
+//!
+//! This function enables the interrupt for the EDC controller of the
+//! specified ESM instance.
+//!
+//! \return None.
+//
+//*****************************************************************************
+static inline void
+ESM_enableEdcInterrupt(ESM_Instance inst)
+{
+    HWREGB(ESMSAFETYAGG_BASE + ESM_SAFETY_AGGREGATOR_O_DED_ENABLE_SET_REG0)
+                                                        |= (uint8_t)inst;
+}
+
+//*****************************************************************************
+//
+//! Disable EDC Controller Interrupt
+//!
+//! \param inst is the ESM instance to disable the interrupt for.
+//!
+//! This function disables the interrupt for the EDC controller of the
+//! specified ESM instance.
+//!
+//! \return None.
+//
+//*****************************************************************************
+static inline void
+ESM_disableEdcInterrupt(ESM_Instance inst)
+{
+    HWREGB(ESMSAFETYAGG_BASE + ESM_SAFETY_AGGREGATOR_O_DED_ENABLE_CLR_REG0)
+                                                        |= (uint8_t)inst;
+}
+
+//*****************************************************************************
+//
+//! Enable Safety Aggregator Error Interrupt
+//!
+//! \param errorType is the type of the aggregator error.
+//!
+//! This function enables the interrupt for the safety aggregator error
+//! specified by the \e errorType parameter.
+//!
+//! \return None.
+//
+//*****************************************************************************
+static inline void
+ESM_enableAggrErrorInterrupt(ESM_AggrErrorType errorType)
+{
+    HWREGB(ESMSAFETYAGG_BASE + ESM_SAFETY_AGGREGATOR_O_AGGR_ENABLE_SET)
+                                                 |= 1U << (uint8_t)errorType;
+}
+
+//*****************************************************************************
+//
+//! Disable Safety Aggregator Error Interrupt
+//!
+//! \param errorType is the type of the aggregator error.
+//!
+//! This function disables the interrupt for the safety aggregator error
+//! specified by the \e errorType parameter.
+//!
+//! \return None.
+//
+//*****************************************************************************
+static inline void
+ESM_disableAggrErrorInterrupt(ESM_AggrErrorType errorType)
+{
+    HWREGB(ESMSAFETYAGG_BASE + ESM_SAFETY_AGGREGATOR_O_AGGR_ENABLE_CLR)
+                                                 |= 1U << (uint8_t)errorType;
+}
+
+//*****************************************************************************
+//
+//! Force the Aggregator Error Interrupt
+//!
+//! \param errorType is the type of the aggregator error.
+//!
+//! This function forces the error interrupt for the aggregator error specified
+//! by the \e errorType parameter.
+//! A single force (write of 1) increments the count of errors.
+//!
+//! \return None.
+//
+//*****************************************************************************
+static inline void
+ESM_forceAggrErrorInterrupt(ESM_AggrErrorType errorType)
+{
+    HWREGB(ESMSAFETYAGG_BASE + ESM_SAFETY_AGGREGATOR_O_AGGR_STATUS_SET) =
+      HWREGB(ESMSAFETYAGG_BASE + ESM_SAFETY_AGGREGATOR_O_AGGR_STATUS_SET)
+      & (~(ESM_SAFETY_AGGREGATOR_AGGR_STATUS_SET_PARITY_M <<
+        (ESM_SAFETY_AGGREGATOR_AGGR_STATUS_SET_TIMEOUT_S * (uint8_t)errorType)))
+      | (1U << (ESM_SAFETY_AGGREGATOR_AGGR_STATUS_SET_TIMEOUT_S *
+        (uint8_t)errorType));
+}
+
+//*****************************************************************************
+//
+//! Get the Aggregator Error Interrupt Status
+//!
+//! \param errorType is the type of the aggregator error.
+//!
+//! This function returns the status of the error interrupt specified by the
+//! \e errorType parameter. It reflects the number of times the correspoding
+//! error has occurred.
+//!
+//! \return Returns the interrupt status.
+//
+//*****************************************************************************
+static inline uint8_t
+ESM_getAggrErrorInterruptStatus(ESM_AggrErrorType errorType)
+{
+    return((HWREGB(ESMSAFETYAGG_BASE + ESM_SAFETY_AGGREGATOR_O_AGGR_STATUS_SET)
+            & (ESM_SAFETY_AGGREGATOR_AGGR_STATUS_SET_PARITY_M <<
+      (ESM_SAFETY_AGGREGATOR_AGGR_STATUS_SET_TIMEOUT_S * (uint8_t)errorType)))
+    >> (ESM_SAFETY_AGGREGATOR_AGGR_STATUS_SET_TIMEOUT_S * (uint8_t)errorType));
+}
+
+//*****************************************************************************
+//
+//! Clear the Aggregator Error Interrupt
+//!
+//! \param errorType is the type of the aggregator error.
+//!
+//! This function clears the error interrupt for the aggregator error specified
+//! by the \e errorType parameter.
+//! A single clear (write of 1) decrements the count of errors.
+//!
+//! \return None.
+//
+//*****************************************************************************
+static inline void
+ESM_clearAggrErrorInterruptStatus(ESM_AggrErrorType errorType)
+{
+    HWREGB(ESMSAFETYAGG_BASE + ESM_SAFETY_AGGREGATOR_O_AGGR_STATUS_CLR) =
+      HWREGB(ESMSAFETYAGG_BASE + ESM_SAFETY_AGGREGATOR_O_AGGR_STATUS_CLR)
+      & (~(ESM_SAFETY_AGGREGATOR_AGGR_STATUS_SET_PARITY_M <<
+        (ESM_SAFETY_AGGREGATOR_AGGR_STATUS_SET_TIMEOUT_S * (uint8_t)errorType)))
+      | (1U << (ESM_SAFETY_AGGREGATOR_AGGR_STATUS_SET_TIMEOUT_S *
+        (uint8_t)errorType));
+}
 
 
 //*****************************************************************************

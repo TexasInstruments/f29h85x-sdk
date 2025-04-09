@@ -70,6 +70,22 @@ let config_static = [
             {name : 3, displayName : "MODE3 : CPU1/CPU3 split, FOTA Enabled"}
         ],
     },
+    {
+        name       : "nmiVectorAddress",
+        displayName: "NMI Vector Address",
+        longDescription: `Use this field to place the ${system.context} NMI Vector at a specific address (This will override any auto-assigned address if present). To auto-assign the vector address, set this field to 0x0.`,
+        hidden     : Cmn.isContextCPU1(),
+        default    : 0x0,
+        displayFormat: "hex"
+    },
+    {
+        name       : "resetVectorAddress",
+        displayName: "Reset Vector Address",
+        longDescription: `Use this field to place the ${system.context} Reset Vector at a specific address (This will override any auto-assigned address if present). To auto-assign the vector address, set this field to 0x0.`,
+        hidden     : Cmn.isContextCPU1(),
+        default    : 0x0,
+        displayFormat: "hex"
+    },
 ]
 
 let config = [
@@ -229,7 +245,7 @@ let config = [
             {
                 name             : 'share',
                 displayName      : 'Share with other cores',
-                options          : cpuData.cpuList.map(x=> { return {name:x.name}}).filter(x => x.name!=system.context),
+                options          : () => Common.getCoreList(1).map(x=> { return {name:x.name}}).filter(x => x.name!=system.context),
                 default          : [],
                 hidden           : false,
                 minSelections    : 0,
@@ -328,6 +344,14 @@ let moduleInstances = (inst) => {
 }
 
 function validateStatic(inst, vo){
+    // Validate user-configured address ranges
+    if(inst.nmiVectorAddr < 0){
+        vo.logError("NMI Vector Address cannot be negative" , inst, 'nmiVectorAddr');
+    }
+    if(inst.resetVectorAddress < 0){
+        vo.logError("Reset Vector Address cannot be negative" , inst, 'resetVectorAddress');
+    }
+
     // validate peripheral overlap
 }
 
@@ -335,6 +359,11 @@ function validate(inst, vo)
 {
     let APRList = Common.allocateAllMemoryRegions()[system.context]
     const sysSec    = Common.modStaticByCPU('/ti/security/System_Security', "CPU1");
+
+    // CERT name is reserved
+    if(inst.$name == "CERT"){
+        vo.logError("Cannot use name 'CERT' as it is a reserved memory region indicator" , inst, '$name');
+    }
 
     if(inst.type != "Peripheral"){
         // Check if the size is 0

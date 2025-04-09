@@ -92,7 +92,7 @@ int main(void)
     //
     // Verify the frequency of PLL clock using the INTOSC2 as reference clock
     // FClk1 = PLL frequency = 200 MHz
-    // FClk0 = INTOSC2 frequency = 25 MHz
+    // FClk0 = INTOSC2 frequency = 10 MHz
     // Tolerance = 1%
     // Allowable Frequency Tolerance = 0% (update as per the error in frequency)
     // SysClk Freq = 200MHz

@@ -1,51 +1,8 @@
-/*
- *	Copyright (C) Texas Instruments Incorporated
- *
- *	All rights reserved not granted herein.
- *	Limited License.
-
- *	Texas Instruments Incorporated grants a world-wide, royalty-free,
- *	non-exclusive license under copyrights and patents it now or hereafter
- *	owns or controls to make, have made, use, import, offer to sell and sell ("Utilize")
- *	this software subject to the terms herein.  With respect to the foregoing patent
- *	license, such license is granted  solely to the extent that any such patent is necessary
- *	to Utilize the software alone.  The patent license shall not apply to any combinations which
- *	include this software, other than combinations with devices manufactured by or for TI ("TI Devices").
- *	No hardware patent is licensed hereunder.
-
- *	Redistributions must preserve existing copyright notices and reproduce this license (including the
- *	above copyright notice and the disclaimer and (if applicable) source code license limitations below)
- *	in the documentation and/or other materials provided with the distribution
-
- *	Redistribution and use in binary form, without modification, are permitted provided that the following
- *	conditions are met:
-
- *	  - No reverse engineering, decompilation, or disassembly of this software is permitted with respect to any
- *		 software provided in binary form.
- *	  - Any redistribution and use are licensed by TI for use only with TI Devices.
- *	  - Nothing shall obligate TI to provide you with source code for the software licensed and provided to you in object code.
-
- *	If software source code is provided to you, modification and redistribution of the source code are permitted
- *	provided that the following conditions are met:
- *
- *	  - any redistribution and use of the source code, including any resulting derivative works, are licensed by
- *		TI for use only with TI Devices.
- *	  - any redistribution and use of any object code compiled from the source code and any resulting derivative
- *		works, are licensed by TI for use only with TI Devices.
- *
- *	Neither the name of Texas Instruments Incorporated nor the names of its suppliers may be used to endorse or
- *	promote products derived from this software without specific prior written permission.
-
- *	DISCLAIMER.
- *
- *	THIS SOFTWARE IS PROVIDED BY TI AND TI'S LICENSORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING,
- *	BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- *	IN NO EVENT SHALL TI AND TI'S LICENSORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
- *	CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA,
- *	OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
- *	OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- *	POSSIBILITY OF SUCH DAMAGE.
-*/
+//#############################################################################
+//
+//
+// $Copyright:
+//#############################################################################
 #ifndef _DCL_NLPID_H_
 #define _DCL_NLPID_H_
 
@@ -422,7 +379,7 @@ void DCL_setActiveNLPIDgamma(DCL_NLPID *pid)
 _DCL_CRIT_ACCESS
 float32_t DCL_runNLPIDParallel(DCL_NLPID *pid, float32_t rk, float32_t yk, float32_t lk)
 {
-    float32_t v1, v2, v3, v4, v5, v8, v9, v10, v12, v13, v14, v15;
+    float32_t v1, v2, v3, v4, v5, v8, v9, v10, v12, v13, v14;
 
     // pre-conditioning block
     v1 = (rk - yk) * 0.5f;
@@ -460,8 +417,7 @@ float32_t DCL_runNLPIDParallel(DCL_NLPID *pid, float32_t rk, float32_t yk, float
     // output sum & clamp
     v13 = (pid->Kp * (v4 + v12)) + v8;
     v14 = DCL_runSat(v13, pid->Umax, pid->Umin);
-    v15 = (v14 == v13) ? 1.0f : 0.0f;
-    pid->i16 = v15 * lk;
+    pid->i16 = (v14 == v13) ? lk : 0.0f;
 
 #ifdef DCL_TESTPOINTS_ENABLED
     pid->css->tpt = v14;
@@ -485,7 +441,7 @@ float32_t DCL_runNLPIDParallel(DCL_NLPID *pid, float32_t rk, float32_t yk, float
 _DCL_CRIT_ACCESS
 float32_t DCL_runNLPIDSeries(DCL_NLPID *pid, float32_t rk, float32_t yk, float32_t lk)
 {
-    float32_t v1, v2, vd2, v3, vd3, v4, v5, v6, v8, v9, v12, v15, v16, v17;
+    float32_t v1, v2, vd2, v3, vd3, v4, v5, v6, v8, v9, v15, v16, v17;
 
     // pre-conditioning block for P & I
     v1 = (rk - yk) * 0.5f;
@@ -538,8 +494,7 @@ float32_t DCL_runNLPIDSeries(DCL_NLPID *pid, float32_t rk, float32_t yk, float32
     // output sum & clamp
     v9 = (pid->Kp * (v4 - v16)) + v8;
     v17 = DCL_runSat(v9, pid->Umax, pid->Umin);
-    v12 = (v17 == v9) ? 1.0f : 0.0f;
-    pid->i16 = v12 * lk;
+    pid->i16 = (v17 == v9) ? lk : 0.0f;
 
 #ifdef DCL_TESTPOINTS_ENABLED
     pid->css->tpt = v17;

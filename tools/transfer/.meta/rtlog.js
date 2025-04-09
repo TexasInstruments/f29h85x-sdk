@@ -93,7 +93,7 @@ function onValidate(inst, validation){
 }
 
 var rtlogModule = {
-    displayName: "Rapid Logger (BETA)",
+    displayName: "Rapid Time Logger (BETA)",
     maxInstances: 1,
     defaultInstanceName: "myRTLOG",
     description: "Rapid Log Module",

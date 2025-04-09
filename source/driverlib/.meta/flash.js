@@ -23,7 +23,7 @@ var FLASH_INSTANCE = [];
 FLASH_INSTANCE.push({ name: device_driverlib_memmap.FLASH0MemoryMap[0].name, displayName: device_driverlib_memmap.FLASH0MemoryMap[0].displayName });
 
 var Flash_SysClk_MHz = 200;
-Flash_SysClk_MHz = Common.SYSCLK_getMaxMHz();
+Flash_SysClk_MHz = Common.getSYSCLK();
 
 var Flash_FClk_MHz = 50;
 
@@ -35,6 +35,7 @@ var deviceNumberOfInstances = numberOfInstance[Common.getDeviceName()];
 
 function calcWaitState(inst, ui)
 {
+    Flash_SysClk_MHz = Common.getSYSCLK()
     if (["F29H85x"].includes(Common.getDeviceName()) && (0 < Flash_SysClk_MHz && Flash_SysClk_MHz <= 100)){
         return (1)
     }
@@ -127,148 +128,190 @@ let config = [
         hidden      : false,
         default     : true
     },
-    //Flash_enableFRI1Prefetch(uint32_t ctrlBase), disabled by default
     {
-        name        : "enableFRI1Prefetch",
-        displayName : "Enable FRI1 Prefetch",
-        description : '',
-        hidden      : false,
-        default     : true
+        name : "FRI1_CONFIG",
+        displayName: "FRI1 Configuration",
+        collapsed: true,
+        config: [
+                    //Flash_enableFRI1Prefetch(uint32_t ctrlBase), disabled by default
+                    {
+                        name        : "enableFRI1Prefetch",
+                        displayName : "Enable FRI1 Prefetch",
+                        description : '',
+                        hidden      : false,
+                        default     : true
+                    },
+                    //Flash_enableFRI1DataPreread(uint32_t ctrlBase), disabled by default
+                    {
+                        name        : "enableFRI1DataPreread",
+                        displayName : "Enable FRI1 Data Preread",
+                        description : '',
+                        hidden      : false,
+                        default     : true
+                    },
+                    //Flash_enableFRI1DataCache(uint32_t ctrlBase), disabled by default
+                    {
+                        name        : "enableFRI1DataCache",
+                        displayName : "Enable FRI1 Data Cache",
+                        description : '',
+                        hidden      : false,
+                        default     : true
+                    },
+                    //Flash_enableFRI1CodeCache(uint32_t ctrlBase), disabled by default
+                    {
+                        name        : "enableFRI1CodeCache",
+                        displayName : "Enable FRI1 Code Cache",
+                        description : '',
+                        hidden      : false,
+                        default     : true
+                    }
+        ]
     },
-    //Flash_enableFRI1DataPreread(uint32_t ctrlBase), disabled by default
     {
-        name        : "enableFRI1DataPreread",
-        displayName : "Enable FRI1 Data Preread",
-        description : '',
-        hidden      : false,
-        default     : true
+        name : "FRI2_CONFIG",
+        displayName: "FRI2 Configuration",
+        collapsed: true,
+        config: [
+                    //Flash_enableFRI2Prefetch(uint32_t ctrlBase), disabled by default
+                    {
+                        name        : "enableFRI2Prefetch",
+                        displayName : "Enable FRI2 Prefetch",
+                        description : '',
+                        hidden      : false,
+                        default     : true
+                    },
+                    //Flash_enableFRI2DataPreread(uint32_t ctrlBase), disabled by default
+                    {
+                        name        : "enableFRI2DataPreread",
+                        displayName : "Enable FRI2 Data Preread",
+                        description : '',
+                        hidden      : false,
+                        default     : true
+                    },
+                    //Flash_enableFRI2DataCache(uint32_t ctrlBase), disabled by default
+                    {
+                        name        : "enableFRI2DataCache",
+                        displayName : "Enable FRI2 Data Cache",
+                        description : '',
+                        hidden      : false,
+                        default     : true
+                    },
+                    //Flash_enableFRI2CodeCache(uint32_t ctrlBase), disabled by default
+                    {
+                        name        : "enableFRI2CodeCache",
+                        displayName : "Enable FRI2 Code Cache",
+                        description : '',
+                        hidden      : false,
+                        default     : true
+                    }
+        ]
     },
-    //Flash_enableFRI1DataCache(uint32_t ctrlBase), disabled by default
     {
-        name        : "enableFRI1DataCache",
-        displayName : "Enable FRI1 Data Cache",
-        description : '',
-        hidden      : false,
-        default     : true
+        name : "FRI3_CONFIG",
+        displayName: "FRI3 Configuration",
+        collapsed: true,
+        config: [
+                    //Flash_enableFRI3Prefetch(uint32_t ctrlBase), disabled by default
+                    {
+                        name        : "enableFRI3Prefetch",
+                        displayName : "Enable FRI3 Prefetch",
+                        description : '',
+                        hidden      : false,
+                        default     : true
+                    },
+                    //Flash_enableFRI3DataPreread(uint32_t ctrlBase), disabled by default
+                    {
+                        name        : "enableFRI3DataPreread",
+                        displayName : "Enable FRI3 Data Preread",
+                        description : '',
+                        hidden      : false,
+                        default     : true
+                    },
+                    //Flash_enableFRI3DataCache(uint32_t ctrlBase), disabled by default
+                    {
+                        name        : "enableFRI3DataCache",
+                        displayName : "Enable FRI3 Data Cache",
+                        description : '',
+                        hidden      : false,
+                        default     : true
+                    },
+                    //Flash_enableFRI3CodeCache(uint32_t ctrlBase), disabled by default
+                    {
+                        name        : "enableFRI3CodeCache",
+                        displayName : "Enable FRI3 Code Cache",
+                        description : '',
+                        hidden      : false,
+                        default     : true
+                    }
+        ]
     },
-    //Flash_enableFRI1CodeCache(uint32_t ctrlBase), disabled by default
     {
-        name        : "enableFRI1CodeCache",
-        displayName : "Enable FRI1 Code Cache",
-        description : '',
-        hidden      : false,
-        default     : true
+        name : "FRI4_CONFIG",
+        displayName: "FRI4 Configuration",
+        collapsed: true,
+        config: [
+                    //Flash_enableFRI4Prefetch(uint32_t ctrlBase), disabled by default
+                    {
+                        name        : "enableFRI4Prefetch",
+                        displayName : "Enable FRI4 Prefetch",
+                        description : '',
+                        hidden      : false,
+                        default     : true
+                    },
+                    //Flash_enableFRI4DataPreread(uint32_t ctrlBase), disabled by default
+                    {
+                        name        : "enableFRI4DataPreread",
+                        displayName : "Enable FRI4 Data Preread",
+                        description : '',
+                        hidden      : false,
+                        default     : true
+                    },
+                    //Flash_enableFRI4DataCache(uint32_t ctrlBase), disabled by default
+                    {
+                        name        : "enableFRI4DataCache",
+                        displayName : "Enable FRI4 Data Cache",
+                        description : '',
+                        hidden      : false,
+                        default     : true
+                    },
+                    //Flash_enableFRI4CodeCache(uint32_t ctrlBase), disabled by default
+                    {
+                        name        : "enableFRI4CodeCache",
+                        displayName : "Enable FRI4 Code Cache",
+                        description : '',
+                        hidden      : false,
+                        default     : true
+                    }
+        ]
     },
-    //Flash_enableFRI2Prefetch(uint32_t ctrlBase), disabled by default
     {
-        name        : "enableFRI2Prefetch",
-        displayName : "Enable FRI2 Prefetch",
-        description : '',
-        hidden      : false,
-        default     : true
-    },
-    //Flash_enableFRI2DataPreread(uint32_t ctrlBase), disabled by default
-    {
-        name        : "enableFRI2DataPreread",
-        displayName : "Enable FRI2 Data Preread",
-        description : '',
-        hidden      : false,
-        default     : true
-    },
-    //Flash_enableFRI2DataCache(uint32_t ctrlBase), disabled by default
-    {
-        name        : "enableFRI2DataCache",
-        displayName : "Enable FRI2 Data Cache",
-        description : '',
-        hidden      : false,
-        default     : true
-    },
-    //Flash_enableFRI2CodeCache(uint32_t ctrlBase), disabled by default
-    {
-        name        : "enableFRI2CodeCache",
-        displayName : "Enable FRI2 Code Cache",
-        description : '',
-        hidden      : false,
-        default     : true
-    },
-    //Flash_enableFRI3Prefetch(uint32_t ctrlBase), disabled by default
-    {
-        name        : "enableFRI3Prefetch",
-        displayName : "Enable FRI3 Prefetch",
-        description : '',
-        hidden      : false,
-        default     : true
-    },
-    //Flash_enableFRI3DataPreread(uint32_t ctrlBase), disabled by default
-    {
-        name        : "enableFRI3DataPreread",
-        displayName : "Enable FRI3 Data Preread",
-        description : '',
-        hidden      : false,
-        default     : true
-    },
-    //Flash_enableFRI3DataCache(uint32_t ctrlBase), disabled by default
-    {
-        name        : "enableFRI3DataCache",
-        displayName : "Enable FRI3 Data Cache",
-        description : '',
-        hidden      : false,
-        default     : true
-    },
-    //Flash_enableFRI3CodeCache(uint32_t ctrlBase), disabled by default
-    {
-        name        : "enableFRI3CodeCache",
-        displayName : "Enable FRI3 Code Cache",
-        description : '',
-        hidden      : false,
-        default     : true
-    },
-    //Flash_enableFRI4Prefetch(uint32_t ctrlBase), disabled by default
-    {
-        name        : "enableFRI4Prefetch",
-        displayName : "Enable FRI4 Prefetch",
-        description : '',
-        hidden      : false,
-        default     : true
-    },
-    //Flash_enableFRI4DataPreread(uint32_t ctrlBase), disabled by default
-    {
-        name        : "enableFRI4DataPreread",
-        displayName : "Enable FRI4 Data Preread",
-        description : '',
-        hidden      : false,
-        default     : true
-    },
-    //Flash_enableFRI4DataCache(uint32_t ctrlBase), disabled by default
-    {
-        name        : "enableFRI4DataCache",
-        displayName : "Enable FRI4 Data Cache",
-        description : '',
-        hidden      : false,
-        default     : true
-    },
-    //Flash_enableFRI4CodeCache(uint32_t ctrlBase), disabled by default
-    {
-        name        : "enableFRI4CodeCache",
-        displayName : "Enable FRI4 Code Cache",
-        description : '',
-        hidden      : false,
-        default     : true
+        name: "GROUP_ESM",
+        displayName: "Error Signaling Configuration",
+        collapsed: true,
+        config: [
+            {
+                name        : "enableErrorSignal",
+                displayName : "Enable Error Signal",
+                description : 'Enable Error Signal to ESM',
+                hidden      : false,
+                default     : false
+            },
+        ]
     }
 ];
 
 
 var globalConfig = [
     
-    {
-        name: "flashSYSCLK",
-        displayName: "CPUCLK [MHz] for Flash Wait State Calculation",
-        description: "This is the CPUCLK/SYSCLK value assumed for flash wait state calculation",
-        default: Flash_SysClk_MHz,
-        onChange : (inst, ui)=>{
-            Flash_SysClk_MHz = inst.flashSYSCLK
-        }
-    },
+    // {
+    //     name: "flashSYSCLK",
+    //     displayName: "CPUCLK [MHz] for Flash Wait State Calculation",
+    //     description: "This is the CPUCLK/SYSCLK value assumed for flash wait state calculation",
+    //     default: Flash_SysClk_MHz,
+    //     onChange : (inst, ui)=>{
+    //         Flash_SysClk_MHz = inst.flashSYSCLK
+    //     }
+    // },
     
 ]
 
@@ -341,6 +384,28 @@ function onValidateStatic(inst, validation){
 
 }
 
+function moduleInstances(inst) {
+    let components = []
+
+    if (inst.enableErrorSignal)
+    {
+        components = components.concat([{
+            name: "ESMConfig",
+            group: "GROUP_ESM",
+            displayName: "FRI Error Signaling",
+            moduleName : "/driverlib/esm.js",
+            collapsed: true,
+            args: {
+                $name        : inst.$name + "_ESM",
+            },
+            requiredArgs:{
+                eventSource  : "ESM_EVENT_FRI_REG_PAR_ERR"
+            },
+        }])
+    }
+    return components
+}
+
 var flashModule = {
 
     peripheralName: "FLASH",
@@ -351,9 +416,7 @@ var flashModule = {
     longDescription : longDescription,
     filterHardware: filterHardware,
     config: config,
-    moduleInstances: (inst) => {
-        return [];
-    },
+    moduleInstances: moduleInstances,
     sharedModuleInstances : sharedModuleInstances,
     templates: {
         boardc : "/driverlib/flash/flash.board.c.xdt",

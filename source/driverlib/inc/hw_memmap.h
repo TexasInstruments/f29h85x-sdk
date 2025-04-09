@@ -99,7 +99,7 @@
 #define DEVCFG_BASE                          0x30180000U
 #define ANALOGSUBSYS_BASE                    0x30182000U
 #define GPIOCTRL_BASE                        0x30190000U
-#define IPCCOUNTERREGS_BASE                  0x301B0000U
+#define IPCCOUNTER_BASE                      0x301B0000U
 #define RTDMA1_BASE                          0x301C0000U
 #define RTDMA1_DIAG_BASE                     0x301C0800U
 #define RTDMA1_SELFTEST_BASE                 0x301C0C00U
@@ -112,9 +112,7 @@
 #define MEMSSLCFG_BASE                       0x301D8000U
 #define MEMSSCCFG_BASE                       0x301D8400U
 #define MEMSSMCFG_BASE                       0x301D8800U
-#define MEMSSROMCFG_BASE                     0x301D8C00U
 #define MEMSSMISCI_BASE                      0x301D8E00U
-#define MEMSSROMPATCH_BASE                   0x301D9000U
 #define SYNCBRIDGEMPU_BASE                   0x301E0000U
 #define INPUTXBAR_BASE                       0x301E8000U
 #define EPWMXBAR_BASE                        0x301E9000U
@@ -179,7 +177,7 @@
 #define RTDMA2CH9_BASE_FRAME(i)              (0x60018000U + ((i) * 0x400000U))
 #define RTDMA2CH10_BASE_FRAME(i)             (0x60019000U + ((i) * 0x400000U))
 #define MCANA_DRIVER_BASE_FRAME(i)           (0x60020000U + ((i) * 0x400000U))
-#define MCANSSA_BASE_FRAME(i)                (0x60024000U + ((i) * 0x400000U))
+#define MCANASS_BASE_FRAME(i)                (0x60024000U + ((i) * 0x400000U))
 #define MCANA_BASE_FRAME(i)                  (0x60024600U + ((i) * 0x400000U))
 #define MCANA_ERROR_BASE_FRAME(i)            (0x60024800U + ((i) * 0x400000U))
 #define MCANB_DRIVER_BASE_FRAME(i)           (0x60028000U + ((i) * 0x400000U))
@@ -578,8 +576,8 @@
 #ifndef MCANA_DRIVER_BASE
     #define MCANA_DRIVER_BASE                MCANA_DRIVER_BASE_FRAME(0U)
 #endif
-#ifndef MCANSSA_BASE
-    #define MCANSSA_BASE                     MCANSSA_BASE_FRAME(0U)
+#ifndef MCANASS_BASE
+    #define MCANASS_BASE                     MCANASS_BASE_FRAME(0U)
 #endif
 #ifndef MCANA_BASE
     #define MCANA_BASE                       MCANA_BASE_FRAME(0U)

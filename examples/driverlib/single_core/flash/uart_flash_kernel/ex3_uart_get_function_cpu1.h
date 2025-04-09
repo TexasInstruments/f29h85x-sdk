@@ -43,6 +43,10 @@
 
 //###########################################################################
 
+#ifndef UART_GET_FUNCTION_CPU1_H
+#define UART_GET_FUNCTION_CPU1_H
+
+
 //
 // Included Files
 //
@@ -57,7 +61,6 @@
 #include "f29h85x_kernel_commands_cpu1.h"
 #include "inc/hw_ssu.h"
 #include "inc/hw_memmap.h"
-
 
 //
 // Globals
@@ -104,3 +107,5 @@ uint8_t copyKeysToRAM(uint32_t bootMode, uint32_t BaseAddress);
 uint8_t provisionApplicationImgToHSM(uint32_t bootMode, uint32_t BaseAddress);
 uint8_t copyC29ImageToFlash(uint32_t bootMode, uint32_t BaseAddress);
 uint8_t provisionSecCfgImg(uint32_t bootMode, uint32_t BaseAddress);
+
+#endif

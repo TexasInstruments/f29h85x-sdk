@@ -1,6 +1,6 @@
 //###########################################################################
 //
-// FILE:   Registers_C28x.h
+// FILE:   Registers_C29x.h
 //
 // TITLE:  Flash API v21.00.00
 //
@@ -49,6 +49,17 @@
 #ifndef F65_REGISTERS_C29X_H_
 #define F65_REGISTERS_C29X_H_
 
+//*****************************************************************************
+//
+// If building with a C++ compiler, make all of the definitions in this header
+// have a C binding.
+//
+//*****************************************************************************
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "Types.h"
 
 /*  Flash Configuration Registers */
@@ -64,5 +75,14 @@ typedef volatile struct NW_BASE_REGISTERS
 
       uint32_t u32Register; /* Correctable Error Address Register, bits 31:0 */
 } Fapi_FmcRegistersType;
+
+//*****************************************************************************
+//
+// Mark the end of the C bindings section for C++ compilers.
+//
+//*****************************************************************************
+#ifdef __cplusplus
+}
+#endif
 
 #endif /*F65_REGISTERS_C29X_H_*/

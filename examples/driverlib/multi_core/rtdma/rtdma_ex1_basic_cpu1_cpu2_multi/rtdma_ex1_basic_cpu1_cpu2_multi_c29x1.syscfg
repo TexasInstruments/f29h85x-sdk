@@ -1,0 +1,134 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --device "F29H85x" --package "256ZEX" --part "F29H85x_256ZEX" --context "CPU1" --product "MCU_SDK_F29H85x@1.00.00.00"
+ * @v2CliArgs --device "F29H850TU" --package "256ZEX" --variant "TMS320F29H850TU9" --context "CPU1" --product "MCU_SDK_F29H85x@1.00.00.00"
+ * @versions {"tool":"1.22.0+3877"}
+ */
+
+const divider15       = system.clockTree["PLL_REFDIV"];
+divider15.divideValue = 1;
+
+const multiplier1         = system.clockTree["PLL_IMULT"];
+multiplier1.multiplyValue = 40;
+
+const mux7       = system.clockTree["OSCCLKSRCSEL"];
+mux7.inputSelect = "INTOSC2";
+
+/**
+ * Import the modules used in this configuration.
+ */
+const clocktree       = scripting.addModule("/driverlib/clocktree.js");
+const jtag            = scripting.addModule("/driverlib/jtag.js");
+const rtdma2          = scripting.addModule("/driverlib/rtdma2.js");
+const rtdma2_mpu      = scripting.addModule("/driverlib/rtdma2_mpu.js");
+const rtdma2_mpu1     = rtdma2_mpu.addInstance();
+const rtdma2_mpu2     = rtdma2_mpu.addInstance();
+const sysctl          = scripting.addModule("/driverlib/sysctl.js");
+const APR             = scripting.addModule("/ti/security/APR", {}, false);
+const APR1            = APR.addInstance();
+const APR2            = APR.addInstance();
+const APR3            = APR.addInstance();
+const APR4            = APR.addInstance();
+const OutputSection   = scripting.addModule("/ti/security/OutputSection", {}, false);
+const OutputSection1  = OutputSection.addInstance();
+const OutputSection2  = OutputSection.addInstance();
+const OutputSection3  = OutputSection.addInstance();
+const OutputSection4  = OutputSection.addInstance();
+const OutputSection5  = OutputSection.addInstance();
+const OutputSection6  = OutputSection.addInstance();
+const OutputSection7  = OutputSection.addInstance();
+const OutputSection8  = OutputSection.addInstance();
+const OutputSection9  = OutputSection.addInstance();
+const OutputSection10 = OutputSection.addInstance();
+const OutputSection11 = OutputSection.addInstance();
+const OutputSection12 = OutputSection.addInstance();
+const OutputSection13 = OutputSection.addInstance();
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+rtdma2.enableMPU          = true;
+rtdma2.periphClock.$name  = "driverlib_perClock1";
+rtdma2.periphConfig.$name = "driverlib_perConfig1";
+
+rtdma2_mpu1.channelMask        = ["DMA_MPU_CH1_ENABLE"];
+rtdma2_mpu1.accessPermission   = "DMA_MPU_READ_ACCESS";
+rtdma2_mpu1.startAddressManual = 0x20149000;
+rtdma2_mpu1.endAddressManual   = 0x20149FFF;
+rtdma2_mpu1.$name              = "MPUR_TxData";
+
+rtdma2_mpu2.channelMask        = ["DMA_MPU_CH1_ENABLE"];
+rtdma2_mpu2.accessPermission   = "DMA_MPU_READ_WRITE_ACCESS";
+rtdma2_mpu2.mpuRegion          = "DMA_MPUR2";
+rtdma2_mpu2.startAddressManual = 0x200FF000;
+rtdma2_mpu2.$name              = "MPUR_RxData";
+rtdma2_mpu2.endAddressManual   = 0x20100FFF;
+
+sysctl.enable_all_peripheral_clocks = false;
+sysctl.LSConfig                     = "SplitLock";
+
+APR1.memType = "Flash";
+APR1.$name   = "CPU1_FLASH";
+APR1.memSize = 32;
+
+APR2.$name = "CPU1_SRAM_PROGRAM";
+
+APR3.type  = "Data";
+APR3.$name = "CPU1_SRAM_DATA";
+
+APR4.memType = "Flash";
+APR4.memSize = 16;
+APR4.$name   = "CPU2_FLASH";
+
+OutputSection1.$name              = ".text";
+OutputSection1.sectionAlignEnable = true;
+OutputSection1.sectionMemory      = "CPU1_FLASH";
+
+OutputSection2.sectionAlignEnable = true;
+OutputSection2.$name              = ".binit";
+OutputSection2.sectionMemory      = "CPU1_FLASH";
+
+OutputSection3.sectionAlignEnable = true;
+OutputSection3.$name              = ".cinit";
+OutputSection3.sectionMemory      = "CPU1_FLASH";
+
+OutputSection4.sectionAlignEnable = true;
+OutputSection4.$name              = ".const";
+OutputSection4.sectionMemory      = "CPU1_FLASH";
+
+OutputSection5.sectionAlignEnable = true;
+OutputSection5.$name              = ".rodata";
+OutputSection5.sectionMemory      = "CPU1_FLASH";
+
+OutputSection6.sectionAlignEnable = true;
+OutputSection6.$name              = ".init_array";
+OutputSection6.sectionMemory      = "CPU1_FLASH";
+
+OutputSection7.sectionAlignEnable          = true;
+OutputSection7.$name                       = ".TI.ramfunc";
+OutputSection7.sectionRunFromDifferentAddr = true;
+OutputSection7.sectionMemory               = "CPU1_FLASH";
+OutputSection7.sectionRun                  = "CPU1_SRAM_PROGRAM";
+
+OutputSection8.$name                       = "cpu2app";
+OutputSection8.sectionMemory               = "CPU2_FLASH";
+OutputSection8.sectionRunFromDifferentAddr = true;
+OutputSection8.sectionAlignEnable          = true;
+OutputSection8.sectionRun                  = "SRAM_PROGRAM_SHARED_CPU2";
+
+OutputSection9.$name         = ".data";
+OutputSection9.sectionMemory = "CPU1_SRAM_DATA";
+
+OutputSection10.sectionMemory = "CPU1_SRAM_DATA";
+OutputSection10.$name         = ".bss";
+
+OutputSection11.sectionMemory = "CPU1_SRAM_DATA";
+OutputSection11.$name         = ".stack";
+
+OutputSection12.sectionMemory = "CPU1_SRAM_DATA";
+OutputSection12.$name         = ".sysmem";
+
+OutputSection13.sectionMemory = "CPU1_SRAM_DATA";
+OutputSection13.$name         = ".cio";
+

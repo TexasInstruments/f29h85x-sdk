@@ -283,13 +283,6 @@ void AuthenticateImageviaHSMRT(uint32_t ImageSize, uint32_t BaseAddress)
     uint8_t temp = 0;
     uint8_t lastStream[CHUNK_SIZE] = {0xFF};
 
-    // Receive the first chunk post certificate from the SCI tool
-    for (j = 0; j < CHUNK_SIZE; j++)
-    {
-        wordData = uartGetCPData();
-        HWREGB(BaseAddress + MAX_CERT_SIZE + j) = wordData;
-    }
-
     // Populate parameters for certificate processing
     firmwareUpdate.pStartAddress = (uint8_t *)BaseAddress;
     firmwareUpdate.dataLength = MAX_CERT_SIZE;
@@ -297,6 +290,15 @@ void AuthenticateImageviaHSMRT(uint32_t ImageSize, uint32_t BaseAddress)
 
     // Process certificate to verify the authenticity of the incoming firmware
     authStatus = HsmClient_firmwareUpdate_CertProcess(&gHSMClient, &firmwareUpdate);
+
+    sendACK();
+
+    // Receive the first chunk post certificate from the SCI tool
+    for (j = 0; j < CHUNK_SIZE; j++)
+    {
+        wordData = uartGetData();
+        HWREGB(BaseAddress + MAX_CERT_SIZE + j) = wordData;
+    }
 
     // Populate parameters to program the first receive chunk in flash
     firmwareUpdate.pStartAddress = (uint8_t *)(BaseAddress + MAX_CERT_SIZE);
@@ -307,6 +309,8 @@ void AuthenticateImageviaHSMRT(uint32_t ImageSize, uint32_t BaseAddress)
     authStatus = HsmClient_firmwareUpdate_CodeProgram(&gHSMClient, &firmwareUpdate);
     bytesWritten += CHUNK_SIZE;
 
+    sendACK();
+
     // Populate the array that will store the last data stream and pad it
     for (i = 0; i < CHUNK_SIZE; i++)
     {
@@ -314,7 +318,7 @@ void AuthenticateImageviaHSMRT(uint32_t ImageSize, uint32_t BaseAddress)
     }
     
     // Copy the last received chunk to the end of the LDAx bank
-    memcpy((void *)(BaseAddress + (15 * (2 * CHUNK_SIZE))), (void *)(BaseAddress + MAX_CERT_SIZE), CHUNK_SIZE);
+    // memcpy((void *)(BaseAddress + (15 * (2 * CHUNK_SIZE))), (void *)(BaseAddress + MAX_CERT_SIZE), CHUNK_SIZE);
 
     // Calculate the number of bytes left to receive from the SCI tool
     numBytesRemaining = ImageSize - bytesWritten;
@@ -335,20 +339,15 @@ void AuthenticateImageviaHSMRT(uint32_t ImageSize, uint32_t BaseAddress)
         // If number of chunks pending is greater than 28 (size >= 14 KB), receive 14 KB of data and program it 
         if (numChunks >= 28)
         {
-            for (i = 0; i < 28; i++)
+            // Read in 14KB and copy it to the first 14KB of LDA7 RAM
+            for (i = 0; i < (14 * 2 * CHUNK_SIZE); i++) 
             {
-                for (j = 0; j < CHUNK_SIZE; j++)
-                {
-                    currentAddress = ((BaseAddress + j) + 15 * (2 * CHUNK_SIZE));
-                    wordData = *(uint8_t *)(currentAddress);
-                    uartSendCPData(wordData);
-                    wordData = uartGetCPData();
-                    HWREGB(BaseAddress + (i * CHUNK_SIZE) + j) = wordData;
-                }
-                numChunks--;
-                // Copy the last received chunk to the end of LDAx bank 
-                memcpy((void *)(BaseAddress + (15 * (2 * CHUNK_SIZE))), (void *)(BaseAddress + (i * CHUNK_SIZE)), CHUNK_SIZE);
+                wordData = uartGetData();
+                HWREGB(BaseAddress + i) = wordData;
             }
+
+            // Subract 28 chunks (14 KB)
+            numChunks -= 28;
             // Populate parameters to program the chunk in flash
             firmwareUpdate.pStartAddress = (uint8_t *)BaseAddress;
             firmwareUpdate.dataLength = 14 * (2 * CHUNK_SIZE);
@@ -357,54 +356,55 @@ void AuthenticateImageviaHSMRT(uint32_t ImageSize, uint32_t BaseAddress)
             // Program the received chunk in flash
             authStatus = HsmClient_firmwareUpdate_CodeProgram(&gHSMClient, &firmwareUpdate);
             bytesWritten += 14 * (2 * CHUNK_SIZE);
+
+            sendACK();
         }
         // If number of chunks pending is less than 28 (size < 14 KB), receive remaining number of chunks and program it
         else if ((numChunks < 28) && (numChunks > 0))
         {
             temp = numChunks;
-            for (i = 0; i < temp; i++)
+
+            // Read in the data less than 14KB
+            for (i = 0; i < (numChunks * CHUNK_SIZE); i++) 
             {
-                for (j = 0; j < CHUNK_SIZE; j++)
-                {
-                    currentAddress = ((BaseAddress + j) + 15 * (2 * CHUNK_SIZE));
-                    wordData = *(uint8_t *)(currentAddress);
-                    uartSendCPData(wordData);
-                    wordData = uartGetCPData();
-                    HWREGB(BaseAddress + (i * CHUNK_SIZE) + j) = wordData;
-                }
-                numChunks--;
-                // Copy the last received chunk to the end of LDAx bank 
-                memcpy((void *)(BaseAddress + (15 * (2 * CHUNK_SIZE))), (void *)(BaseAddress + (i * CHUNK_SIZE)), CHUNK_SIZE);
+                wordData = uartGetData();
+                HWREGB(BaseAddress + i) = wordData;
             }
+
+            // Decrement numChunks by the number of chunks we read
+            numChunks -= temp;
+
             // Populate parameters to program the chunk in flash
             firmwareUpdate.pStartAddress = (uint8_t *)BaseAddress;
-            firmwareUpdate.dataLength = i * CHUNK_SIZE;
+            firmwareUpdate.dataLength = temp * CHUNK_SIZE;
             firmwareUpdate.bankMode = 0; // TBD
 
             // Program the received chunk in flash
             authStatus = HsmClient_firmwareUpdate_CodeProgram(&gHSMClient, &firmwareUpdate);
-            bytesWritten += (i * CHUNK_SIZE);
+            bytesWritten += (temp * CHUNK_SIZE);
+
+            // Only send ack if more data is coming
+            if (lastDataStreamSize) 
+            {
+                sendACK();
+            }
         }
         // If number of bytes pending is less than the chunk size and not zero, program the remaining number of bytes
         else if ((0 == numChunks) && (0 != lastDataStreamSize))
         {
-            for (i = 0; i < CHUNK_SIZE; i++)
+            // Read in last chunk
+            for (i = 0; i < lastDataStreamSize; i++) 
             {
-                // Send the last received chunk back
-                currentAddress = ((BaseAddress + i) + 15 * (2 * CHUNK_SIZE));
-                wordData = *(uint8_t *)(currentAddress);
-                uartSendCPData(wordData);
-                // Receive only the remaining bytes
-                if (i < lastDataStreamSize)
-                {
-                    wordData = uartGetCPData();
-                    HWREGB(BaseAddress + i) = wordData;
-                    // Store the last received data stream contents in the pre-defined padded array
-                    lastStream[i] = wordData;
-                }
+                wordData = uartGetData();
+                HWREGB(BaseAddress + i) = wordData;
+                lastStream[i] = wordData;
             }
-            // Copy the last received chunk to the end of LDAx bank
-            memcpy((void *)(BaseAddress + (15 * (2 * CHUNK_SIZE))), (void *)(BaseAddress), lastDataStreamSize);
+
+            // Fill in empty chunk space with 0xFF
+            for (i = lastDataStreamSize; i < CHUNK_SIZE; i++) 
+            {
+                HWREGB(BaseAddress + i) = 0xFF;
+            }
             
             // Populate parameters to program the chunk in flash
             firmwareUpdate.pStartAddress = (uint8_t *)&lastStream[0];
@@ -414,14 +414,6 @@ void AuthenticateImageviaHSMRT(uint32_t ImageSize, uint32_t BaseAddress)
             // Program the last data stream along with padded array in flash
             authStatus = HsmClient_firmwareUpdate_CodeProgram(&gHSMClient, &firmwareUpdate);
             bytesWritten += lastDataStreamSize;
-
-            // Send the last received data stream back to the SCI tool
-            for (i = 0; i < lastDataStreamSize; i++)
-            {
-                currentAddress = ((BaseAddress + i) + 15 * (2 * CHUNK_SIZE));
-                wordData = *(uint8_t *)(currentAddress);
-                uartSendCPData(wordData);
-            }
             lastDataStreamSize = 0;
         }
     }

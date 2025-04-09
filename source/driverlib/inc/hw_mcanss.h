@@ -58,7 +58,7 @@ extern "C"
 ****************************************************************************************************/
 // Sub-module base addresses
 #define MCAN_MCAN_MSG_MEM                            (0x0U)
-#define MCANSS_REGS                                  (MCANSSA_BASE - MCANA_DRIVER_BASE)
+#define MCANSS_REGS                                  (MCANASS_BASE - MCANA_DRIVER_BASE)
 #define MCAN_REGS                                    (MCANA_BASE - MCANA_DRIVER_BASE)
 #define MCAN_ERROR_REGS                              (MCANA_ERROR_BASE - MCANA_DRIVER_BASE)
 

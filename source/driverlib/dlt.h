@@ -454,7 +454,7 @@ DLT_setFIFOTriggerLevel(uint32_t triggerLevel)
     //
     // Check the arguments.
     //
-    ASSERT(triggerLevel <= 0x3FFU);
+    ASSERT(triggerLevel <= 0xFFU);
 
     HWREG(CPUDLT_BASE + DLT_O_FIFO_CONTROL) =
                         (HWREG(CPUDLT_BASE + DLT_O_FIFO_CONTROL) &

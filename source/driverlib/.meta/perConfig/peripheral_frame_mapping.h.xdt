@@ -4,7 +4,7 @@ let Common   = system.getScript("/driverlib/Common.js");
 %%}
 //*****************************************************************************
 //
-// Base Address mapping for peripherals with Framsel support
+// Base Address mapping for peripherals with FrameSel support
 //
 //*****************************************************************************
 %%{
@@ -21,7 +21,11 @@ if (perConfig != null)
 	        let ownerPeripheral = ownerSolution.peripheralName;
 	        peripheralInst = ownerPeripheral;
         }
-        if((peripheralInst == "RTDMA1CH") || (peripheralInst == "RTDMA2CH"))
+        if(peripheralInst == "ECAT")
+        {
+            continue;
+        }
+        else if((peripheralInst == "RTDMA1CH") || (peripheralInst == "RTDMA2CH"))
         {
             // Add for all 10 channels
             for(let k=1; k<=10; k++){
@@ -29,6 +33,19 @@ if (perConfig != null)
 #define `peripheralInst``k`_BASE  `peripheralInst``k`_BASE_FRAME(`instance.frameSel.replace("FRAME","")`)
 %%{
             }
+        }
+        else if(peripheralInst.startsWith("EPWM"))
+    {
+%%}
+#define `peripheralInst`_BASE  `peripheralInst`_BASE_FRAME(`instance.frameSel.replace("FRAME","")`)
+#define `peripheralInst`XCMP_BASE  `peripheralInst`XCMP_BASE_FRAME(`instance.frameSel.replace("FRAME","")`)
+#define `peripheralInst`DE_BASE  `peripheralInst`DE_BASE_FRAME(`instance.frameSel.replace("FRAME","")`)
+#define `peripheralInst`MINDBLUT_BASE  `peripheralInst`MINDBLUT_BASE_FRAME(`instance.frameSel.replace("FRAME","")`)
+#define `peripheralInst`XLINK_BASE  `peripheralInst`XLINK_BASE_FRAME(`instance.frameSel.replace("FRAME","")`)
+#define `peripheralInst`XCMPXLINK_BASE  `peripheralInst`XCMPXLINK_BASE_FRAME(`instance.frameSel.replace("FRAME","")`)
+#define `peripheralInst`DEXLINK_BASE  `peripheralInst`DEXLINK_BASE_FRAME(`instance.frameSel.replace("FRAME","")`)
+#define `peripheralInst`MINDBLUTXLINK_BASE  `peripheralInst`MINDBLUTXLINK_BASE_FRAME(`instance.frameSel.replace("FRAME","")`)
+%%{
         }
         else if(peripheralInst == "OUTPUTXBARFLAGS")
         {
@@ -49,6 +66,7 @@ if (perConfig != null)
         else
         {
 %%}
+// 
 #define `peripheralInst`_BASE  `peripheralInst`_BASE_FRAME(`instance.frameSel.replace("FRAME","")`)
 %%{
         }

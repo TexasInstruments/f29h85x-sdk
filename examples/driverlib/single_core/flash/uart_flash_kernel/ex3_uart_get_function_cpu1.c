@@ -79,31 +79,6 @@ uint32_t uartGetFunction(uint32_t BootMode)
     // By default, entry address is expected to be CPU1 default address.
     EntryAddr = CPU1_FLASH_ENTRY_POINT;
 
-#ifdef DFU_CPU1_APP
-    // Initialize the Flash API by providing the Flash register base address
-    // and operating frequency(in MHz).
-    // This function is required to initialize the Flash API based on System
-    // frequency before any other Flash API operation can be performed.
-    // This function must also be called whenever System frequency or RWAIT is
-    // changed.
-    //
-    oReturnCheck = Fapi_initializeAPI((Fapi_FmcRegistersType *)FLASHCONTROLLER1_BASE,
-                                      200);
-
-    if (oReturnCheck != Fapi_Status_Success)
-    {
-        //
-        // Check Flash API documentation for possible errors
-        //
-        Example_Error();
-    }
-
-    // Request semaphore for CPU1
-    HWREG(SSUGEN_BASE + SSU_O_FLSEMREQ) = 1;
-    while ((HWREG(SSUGEN_BASE + SSU_O_FLSEMSTAT) & SSU_FLSEMSTAT_CPU_M) != (0x1 << SSU_FLSEMSTAT_CPU_S))
-        ;
-#endif /* DFU_CPU1_APP */
-
     //
     // get user command through console.
     //

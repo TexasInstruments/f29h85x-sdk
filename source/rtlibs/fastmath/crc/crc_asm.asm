@@ -66,3 +66,56 @@ crc_loop_2:
 	DECB   A7, #1, @crc_loop_2
     RET
 	|| MV D0, D3
+;; end of function
+
+.section   kernel_asm, "ax"
+.global crc_asm_16
+.type   crc_asm_16,@function
+
+;;; 
+;;;; uint32_t crc_asm_16(uint16_t *buf_ptr, uint32_t poly, uint32_t crc_config, uint32_t byte_count, uint32_t seed);
+;;; A4 = buf_ptr
+;;; D0 = poly
+;;; D1 = crc_config
+;;; D2 = byte_count - 1 (This decrement happens in C, so decbd can directly use this)
+;;; D3 = seed
+
+crc_asm_16: 
+	MV A7, D2
+crc_loop_16:
+	LD.U8   D4, *(A4+#1)
+	LD.U8   D5, *(A4++#2)
+	|| CRC    D3, D4, D0, D1
+	CRC    D3, D5, D0, D1
+	DECB   A7, #2, @crc_loop_16
+    RET
+	|| MV D0, D3
+;; end of function
+
+.section   kernel_asm, "ax"
+.global crc_asm_32
+.type   crc_asm_32,@function
+
+;;; 
+;;;; uint32_t crc_asm_32(uint32_t *buf_ptr, uint32_t poly, uint32_t crc_config, uint32_t byte_count, uint32_t seed);
+;;; A4 = buf_ptr
+;;; D0 = poly
+;;; D1 = crc_config
+;;; D2 = byte_count - 1 (This decrement happens in C, so decbd can directly use this)
+;;; D3 = seed
+
+crc_asm_32: 
+	MV A7, D2
+crc_loop_32:
+	LD.U8   D4, *(A4+#3)
+	LD.U8   D5, *(A4+#2)
+	|| CRC    D3, D4, D0, D1
+	LD.U8   D6, *(A4+#1)
+	|| CRC    D3, D5, D0, D1
+	LD.U8   D7, *(A4++#4)
+	|| CRC    D3, D6, D0, D1
+	CRC    D3, D7, D0, D1
+	DECB   A7, #4, @crc_loop_32
+    RET
+	|| MV D0, D3
+;; end of function

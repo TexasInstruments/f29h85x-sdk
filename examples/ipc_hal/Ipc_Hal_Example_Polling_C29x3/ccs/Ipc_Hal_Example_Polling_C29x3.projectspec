@@ -1,0 +1,28 @@
+<projectSpec>
+  <project
+        name="Ipc_Hal_Example_Polling_C29x3"
+        device="F29H850TU9"
+        cgtVersion="1.0.0"
+        toolChain="TICLANG"
+        products="sysconfig;f29h85x-sdk"
+        launchWizard="False"
+        enableSysConfigTool="true"
+        connection   = "TIXDS110_Connection.xml"
+        >
+    <configuration name="RAM"   compilerBuildOptions=" -I${C2000SDK_IPC_HAL}  -I${C2000SDK_IPC_HAL_CONF} -O1 -g -DDEBUG -Qunused-arguments -D__CPU3__" linkerBuildOptions="--stack_size=0x1000 --diag_suppress=10325-D --diag_suppress=10063-D"/>
+    <configuration name="FLASH" compilerBuildOptions=" -I${C2000SDK_IPC_HAL}  -I${C2000SDK_IPC_HAL_CONF} -O1 -g -DDEBUG -Qunused-arguments -D__CPU3__ -D_FLASH" linkerBuildOptions="--stack_size=0x1000 --heap_size=0x400 --diag_suppress=10325-D --diag_suppress=10063-D"/>
+
+    <pathVariable name="C2000SDK_IPC_HAL"                  path="../../ipc_hal_driver/include/"                             scope="project"/>
+    <pathVariable name="C2000SDK_IPC_HAL_CONF"             path="../config/include/"                                        scope="project"/>
+
+    <file action="link" path="${COM_TI_MCU_SDK_INSTALL_DIR}/examples/device_support/source/codestartbranch.asm"             targetDirectory="device" />
+    <file action="link" path="${COM_TI_MCU_SDK_INSTALL_DIR}/examples/device_support/include/driverlib.h"                    targetDirectory="device" />
+    <file action="copy" path="${COM_TI_MCU_SDK_INSTALL_DIR}/examples/device_support/makefile.defs"                          targetDirectory="" />
+    <file action="copy" path="${COM_TI_MCU_SDK_INSTALL_DIR}/examples/ipc_hal/ipc_hal_driver"                                targetDirectory="" />
+    <file action="copy" path="${COM_TI_MCU_SDK_INSTALL_DIR}/examples/ipc_hal/Ipc_Hal_Example_Polling_C29x3/config"          targetDirectory="" />
+    <file action="copy" path="../f29h85x_ram_lnk_cpu3.cmd"                                                                  targetDirectory="" applicableConfigurations="RAM" />
+    <file action="copy" path="../f29h85x_flash_lnk_cpu3.cmd"                                                                targetDirectory="" applicableConfigurations="FLASH" />
+    <file action="copy" path="../Ipc_Hal_Example_Polling_C29x3.c"                                                           targetDirectory="" />
+    <file action="copy" path="../Ipc_Hal_Example_Polling_C29x3.syscfg"                                                      targetDirectory="" />
+  </project>
+</projectSpec>

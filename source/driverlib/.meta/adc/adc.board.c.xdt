@@ -4,8 +4,10 @@
 % var nameOfPeripheral = module.peripheralName;
 % var device_driverlib_peripheral = system.getScript("/driverlib/device_driverlib_peripherals/" + Common.getDeviceName().toLowerCase() + "_adc.js");
 %%{
-var staticModule = system.modules['/driverlib/asysctl.js']
-var stat = staticModule.$static
+if((Common.isContextCPU1())){
+	var staticModule = system.modules['/driverlib/asysctl.js']
+	var stat = staticModule.$static
+}
 var varDelay = 500
 var refMode = ""
 var refVoltage = ""
@@ -28,24 +30,12 @@ void `nameOfPeripheral`_init(){
 
 %   for(var i = 0; i < module.$instances.length; i++) 
 %	{
+%	  let flag1, flag2 = ""
 %     var instance = module.$instances[i];
 %     var baseName = instance.$name + "_BASE";
 %     let instancePinmux = instance[nameOfModule];
 void `instance.$name`_init(){
-% 	// delay depends on analog reference
-% 			if(stat.analogReference == "EXTERNAL"){
-% 				refMode = "ADC_REFERENCE_EXTERNAL"
-% 			}
-% 			else{
-% 				refMode = "ADC_REFERENCE_INTERNAL"
-% 			}
-% 			if(stat.analogReferenceVoltage == "2P5"){
-% 				refVoltage = "ADC_REFERENCE_2_5V"
-% 			}
-% 			else{
-% 				refVoltage = "ADC_REFERENCE_3_3V"
-% 			}
-% 		
+ 	// delay depends on analog reference
 	//
 	// ADC Initialization: Write ADC configurations and power up the ADC
 	//
@@ -87,12 +77,14 @@ void `instance.$name`_init(){
 	//
 	// delay depends on analog reference
 	//
-			if(stat.analogReference == "EXTERNAL"){
+	    if(Common.isContextCPU1()){
+			if(stat.analogReferenceAB == "EXTERNAL" || stat.analogReferenceCDE == "EXTERNAL"){
 			varDelay = 500
 			}
 		else{
 			varDelay = 5000
 			}
+		}
 %%}
 	//
 	// Delay for 1ms to allow ADC time to power up
@@ -162,14 +154,19 @@ void `instance.$name`_init(){
 	//
 	ADC_selectSOCExtChannel(`baseName`, ADC_SOC_NUMBER`socNumber`,`instance["soc"+socNumber+"ExtChannel"]`);
 					% }
-					% if(instance["soc" + socNumber.toString() + "Triggermode"]=="repeatermode"){
-	//
-	// Configures Repeater Modules
-	//
+					% if(((instance["soc" + socNumber.toString() + "Triggermode"]=="repeatermode") || (instance.enableBurstMode && (instance.burstTrigger == "ADC_TRIGGER_REPEATER1" || instance.burstTrigger == "ADC_TRIGGER_REPEATER2")))){
+	                
 						% for(var rptrIndex in device_driverlib_peripheral.ADC_RepInstance){ 
 							% var currentRPTR = device_driverlib_peripheral.ADC_RepInstance[rptrIndex].name
 							% var rptriNumber = (currentRPTR).replace(/[^0-9]/g,'')
-							% if((instance["soc" + socNumber.toString() + "Trigger"].replace(/[^0-9]/g,'')==rptriNumber )){
+							% if((instance["soc" + socNumber.toString() + "Trigger"].replace(/[^0-9]/g,'') == rptriNumber) || (instance.enableBurstMode && (instance[`burstTrigger`].replace(/[^0-9]/g,'')==rptriNumber))){	
+
+
+    % if((flag1 != "SET" && rptriNumber == "1") || (flag2 != "SET" && rptriNumber == "2")){
+	//                 
+	// Configures Repeater Modules
+	//
+
 	//
 	// 		Repeater module `rptriNumber` parameters
 	//      base: 			`baseName`
@@ -188,6 +185,18 @@ void `instance.$name`_init(){
 	ADC_triggerRepeaterCount(`baseName`, ADC_REPINST`rptriNumber`, `instance["repeater"+rptriNumber+" Count"]`);
 	ADC_triggerRepeaterPhase(`baseName`, ADC_REPINST`rptriNumber`, `instance["repeater"+rptriNumber+" Phase"]`);
 	ADC_triggerRepeaterSpread(`baseName`, ADC_REPINST`rptriNumber`, `instance["repeater"+rptriNumber+" Spread"]`);
+    %}
+
+		% for(var socValue = 0; socValue<16; ++socValue){
+		   % if(((instance["soc" + socValue.toString() + "Trigger"].replace(/[^0-9]/g,'') == rptriNumber)) || instance.enableBurstMode){
+			   %if(rptriNumber == "1"){
+					%flag1 = "SET"
+			   %}
+			%else{
+					%flag2 = "SET"
+			   %}
+		   %}
+		%}
 							% }
 						% }
 					% }

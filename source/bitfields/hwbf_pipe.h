@@ -519,7 +519,7 @@ struct PIPE_REGS {
     uint32_t                                 NMI_VECT;                     // Non Maskable Interrupt vector register
     union   PIPE_NMI_LINK_OWNER_REG          NMI_LINK_OWNER;               // Non Maskable Interrupt link owner register
     uint8_t                                  rsvd2[8];                     // Reserved
-    union   PIPE_MEM_ECC_DIAG_REG            MEM_ECC_DIAG;                 // ECC configuration and diagnostics register
+    union   PIPE_MEM_ECC_DIAG_REG            MEM_ECC_DIAG;                 // ECC diagnostics register
     union   PIPE_MEM_INIT_REG                MEM_INIT;                     // PIPE vector memory initialization register
     union   PIPE_MEM_INIT_STS_REG            MEM_INIT_STS;                 // PIPE memory initialization status register
     union   PIPE_INT_SEC_STS_REG             INT_SEC_STS;                  // Interrupt security status register
@@ -535,7 +535,7 @@ struct PIPE_REGS {
     uint8_t                                  rsvd5[8];                     // Reserved
     union   PIPE_TASK_CTRL_REG               TASK_CTRL;                    // Task control register
     union   PIPE_BOOT_LINK_CTRL_REG          BOOT_LINK_CTRL;               // Boot Link control to lock out BOOT_LINK
-    union   PIPE_INT_VECT_MAPPING_REG        INT_VECT_MAPPING;             // Interrupt vector mapping to post processing block for LFU support
+    union   PIPE_INT_VECT_MAPPING_REG        INT_VECT_MAPPING;             // Interrupt vector mapping for LFU, FOTA, and INT vector swapping support
     uint8_t                                  rsvd6[4];                     // Reserved
     union   PIPE_MMR_CLR_REG                 MMR_CLR;                      // PIPE MMR clear register
     union   PIPE_ALL_FLAG_CLR_REG            ALL_FLAG_CLR;                 // PIPE flag clear register
@@ -568,7 +568,7 @@ struct PIPE_REGS {
     uint8_t                                  rsvd19[24];                   // Reserved
     union   PIPE_SELFTEST_DIAG_ECC_REG       SELFTEST_DIAG_ECC;            // Diagnostics ECC
     uint8_t                                  rsvd20[4];                    // Reserved
-    union   PIPE_SELFTEST_DIAG_CONTROL_REG   SELFTEST_DIAG_CONTROL;        // Diagnostic test enable
+    union   PIPE_SELFTEST_DIAG_CONTROL_REG   SELFTEST_DIAG_CONTROL;        // Diagnostic test enable.
     union   PIPE_SELFTEST_DIAG_STATUS_REG    SELFTEST_DIAG_STATUS;         // Diagnostic status register
     union   PIPE_SELFTEST_DIAG_STATUS_CLR_REG SELFTEST_DIAG_STATUS_CLR;    // Diagnostic status clear register
 };

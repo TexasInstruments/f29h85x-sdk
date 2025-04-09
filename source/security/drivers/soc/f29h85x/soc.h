@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021-2023 Texas Instruments Incorporated
+ *  Copyright (C) 2024 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -30,8 +30,8 @@
  *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef SOC_AM263X_H_
-#define SOC_AM263X_H_
+#ifndef SOC_F29H85X_H_
+#define SOC_F29H85X_H_
 
 #ifdef __cplusplus
 extern "C"
@@ -49,6 +49,12 @@ extern "C"
 
 #include <drivers/hw_include/cslr_soc.h>
 
+#if !defined(__C29__)
+#include <flash/f29h85x/flash_programming_F29H85xHSM.h>
+#else
+#include <flash_api/include/FlashAPI/Constants/F29H85x.h>
+#endif
+
 #define C29_CPU_1   (1U)
 #define C29_CPU_2   (2U)
 #define C29_CPU_3   (3U)
@@ -58,6 +64,7 @@ extern "C"
 
 #define LDA_ADDRESS_TRANSLATION_MASK    (0x50000000U)
 #define MBOX_ADDRESS_TRANSLATION_MASK   (0x1DD80000U)
+#define FLASH_ADDRESS_TRANSLATION_MASK  (0x50000000U)
 
 /**
  *  \brief SOC Virtual (CPU) to Physical address translation function.
@@ -76,6 +83,13 @@ uint64_t SOC_virtToPhy(void *virtAddr);
  *  \return Corresponding virtual/CPU address
  */
 void *SOC_phyToVirt(uint64_t phyAddr);
+
+/**
+ * \brief Get the clock frequency in Hz of the CPU on which the driver is running
+ *
+ * \return Clock frequency in Hz
+ */
+uint64_t SOC_getSelfCpuClk(void);
 
 /** @} */
 

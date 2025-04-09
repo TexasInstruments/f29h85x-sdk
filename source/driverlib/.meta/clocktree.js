@@ -3,6 +3,20 @@ let Common   = system.getScript("/driverlib/Common.js");
 /* Intro splash on GUI */
 let longDescription = "";
 
+// used for button validation
+var result_100_XTAL_Default = false;
+var result_150_XTAL_Default = false;
+var result_200_XTAL_Default = false;
+var result_100_X1_Default = false;
+var result_150_X1_Default = false;
+var result_200_X1_Default = false;
+var result_100_INTOSC1_Default = false;
+var result_150_INTOSC1_Default = false;
+var result_200_INTOSC1_Default = false;
+var result_100_INTOSC2_Default = false;
+var result_150_INTOSC2_Default = false;
+var result_200_INTOSC2_Default = false;
+
 // let f29h85x_defaults = {
 //     "pllSource" : "SYSCTL_OSCSRC_XTAL",
 //     "xtalFreq"  : 1230000,
@@ -39,7 +53,18 @@ var config = [
                     system.clockTree["PLL_REFDIV"].divideValue = 1;
                     system.clockTree["PLL_IMULT"].multiplyValue = 15;
                     system.clockTree["PLL_ODIV"].divideValue = 3;
-
+                    result_100_XTAL_Default = true;
+                    result_150_XTAL_Default = false;
+                    result_200_XTAL_Default = false;
+                    result_100_X1_Default = false;
+                    result_150_X1_Default = false;
+                    result_200_X1_Default = false;
+                    result_100_INTOSC1_Default = false;
+                    result_150_INTOSC1_Default = false;
+                    result_200_INTOSC1_Default = false;
+                    result_100_INTOSC2_Default = false;
+                    result_150_INTOSC2_Default = false;
+                    result_200_INTOSC2_Default = false;
                 },
             },
             {
@@ -57,6 +82,18 @@ var config = [
                     system.clockTree["PLL_REFDIV"].divideValue = 2;
                     system.clockTree["PLL_IMULT"].multiplyValue = 30;
                     system.clockTree["PLL_ODIV"].divideValue = 2;
+                    result_100_XTAL_Default = false;
+                    result_150_XTAL_Default = true;
+                    result_200_XTAL_Default = false;
+                    result_100_X1_Default = false;
+                    result_150_X1_Default = false;
+                    result_200_X1_Default = false;
+                    result_100_INTOSC1_Default = false;
+                    result_150_INTOSC1_Default = false;
+                    result_200_INTOSC1_Default = false;
+                    result_100_INTOSC2_Default = false;
+                    result_150_INTOSC2_Default = false;
+                    result_200_INTOSC2_Default = false;
                 },
             },
             {
@@ -74,6 +111,18 @@ var config = [
                     system.clockTree["PLL_REFDIV"].divideValue = 1;
                     system.clockTree["PLL_IMULT"].multiplyValue = 30;
                     system.clockTree["PLL_ODIV"].divideValue = 3;
+                    result_100_XTAL_Default = false;
+                    result_150_XTAL_Default = false;
+                    result_200_XTAL_Default = true;
+                    result_100_X1_Default = false;
+                    result_150_X1_Default = false;
+                    result_200_X1_Default = false;
+                    result_100_INTOSC1_Default = false;
+                    result_150_INTOSC1_Default = false;
+                    result_200_INTOSC1_Default = false;
+                    result_100_INTOSC2_Default = false;
+                    result_150_INTOSC2_Default = false;
+                    result_200_INTOSC2_Default = false;
                 },
             },
         ],
@@ -97,6 +146,18 @@ var config = [
                     system.clockTree["PLL_REFDIV"].divideValue = 1;
                     system.clockTree["PLL_IMULT"].multiplyValue = 16;
                     system.clockTree["PLL_ODIV"].divideValue = 4;
+                    result_100_XTAL_Default = false;
+                    result_150_XTAL_Default = false;
+                    result_200_XTAL_Default = false;
+                    result_100_X1_Default = true;
+                    result_150_X1_Default = false;
+                    result_200_X1_Default = false;
+                    result_100_INTOSC1_Default = false;
+                    result_150_INTOSC1_Default = false;
+                    result_200_INTOSC1_Default = false;
+                    result_100_INTOSC2_Default = false;
+                    result_150_INTOSC2_Default = false;
+                    result_200_INTOSC2_Default = false;
                 },
             },
             {
@@ -114,6 +175,18 @@ var config = [
                     system.clockTree["PLL_REFDIV"].divideValue = 1;
                     system.clockTree["PLL_IMULT"].multiplyValue = 24;
                     system.clockTree["PLL_ODIV"].divideValue = 4;
+                    result_100_XTAL_Default = false;
+                    result_150_XTAL_Default = false;
+                    result_200_XTAL_Default = false;
+                    result_100_X1_Default = false;
+                    result_150_X1_Default = true;
+                    result_200_X1_Default = false;
+                    result_100_INTOSC1_Default = false;
+                    result_150_INTOSC1_Default = false;
+                    result_200_INTOSC1_Default = false;
+                    result_100_INTOSC2_Default = false;
+                    result_150_INTOSC2_Default = false;
+                    result_200_INTOSC2_Default = false;
                 },
             },
             {
@@ -131,6 +204,18 @@ var config = [
                     system.clockTree["PLL_REFDIV"].divideValue = 2;
                     system.clockTree["PLL_IMULT"].multiplyValue = 32;
                     system.clockTree["PLL_ODIV"].divideValue = 2;
+                    result_100_XTAL_Default = false;
+                    result_150_XTAL_Default = false;
+                    result_200_XTAL_Default = false;
+                    result_100_X1_Default = false;
+                    result_150_X1_Default = false;
+                    result_200_X1_Default = true;
+                    result_100_INTOSC1_Default = false;
+                    result_150_INTOSC1_Default = false;
+                    result_200_INTOSC1_Default = false;
+                    result_100_INTOSC2_Default = false;
+                    result_150_INTOSC2_Default = false;
+                    result_200_INTOSC2_Default = false;
                 },
             },
         ],
@@ -150,6 +235,18 @@ var config = [
                     system.clockTree["PLL_REFDIV"].divideValue = 1;
                     system.clockTree["PLL_IMULT"].multiplyValue = 30;
                     system.clockTree["PLL_ODIV"].divideValue = 3;
+                    result_100_XTAL_Default = false;
+                    result_150_XTAL_Default = false;
+                    result_200_XTAL_Default = false;
+                    result_100_X1_Default = false;
+                    result_150_X1_Default = false;
+                    result_200_X1_Default = false;
+                    result_100_INTOSC1_Default = true;
+                    result_150_INTOSC1_Default = false;
+                    result_200_INTOSC1_Default = false;
+                    result_100_INTOSC2_Default = false;
+                    result_150_INTOSC2_Default = false;
+                    result_200_INTOSC2_Default = false;
                 },
             },
             {
@@ -163,6 +260,18 @@ var config = [
                     system.clockTree["PLL_REFDIV"].divideValue = 1;
                     system.clockTree["PLL_IMULT"].multiplyValue = 30;
                     system.clockTree["PLL_ODIV"].divideValue = 2;
+                    result_100_XTAL_Default = false;
+                    result_150_XTAL_Default = false;
+                    result_200_XTAL_Default = false;
+                    result_100_X1_Default = false;
+                    result_150_X1_Default = false;
+                    result_200_X1_Default = false;
+                    result_100_INTOSC1_Default = false;
+                    result_150_INTOSC1_Default = true;
+                    result_200_INTOSC1_Default = false;
+                    result_100_INTOSC2_Default = false;
+                    result_150_INTOSC2_Default = false;
+                    result_200_INTOSC2_Default = false;
                 },
             },
             {
@@ -176,6 +285,18 @@ var config = [
                     system.clockTree["PLL_REFDIV"].divideValue = 1;
                     system.clockTree["PLL_IMULT"].multiplyValue = 40;
                     system.clockTree["PLL_ODIV"].divideValue = 2;
+                    result_100_XTAL_Default = false;
+                    result_150_XTAL_Default = false;
+                    result_200_XTAL_Default = false;
+                    result_100_X1_Default = false;
+                    result_150_X1_Default = false;
+                    result_200_X1_Default = false;
+                    result_100_INTOSC1_Default = false;
+                    result_150_INTOSC1_Default = false;
+                    result_200_INTOSC1_Default = true;
+                    result_100_INTOSC2_Default = false;
+                    result_150_INTOSC2_Default = false;
+                    result_200_INTOSC2_Default = false;
                 },
             },
         ],
@@ -195,6 +316,18 @@ var config = [
                     system.clockTree["PLL_REFDIV"].divideValue = 1;
                     system.clockTree["PLL_IMULT"].multiplyValue = 30;
                     system.clockTree["PLL_ODIV"].divideValue = 3;
+                    result_100_XTAL_Default = false;
+                    result_150_XTAL_Default = false;
+                    result_200_XTAL_Default = false;
+                    result_100_X1_Default = false;
+                    result_150_X1_Default = false;
+                    result_200_X1_Default = false;
+                    result_100_INTOSC1_Default = false;
+                    result_150_INTOSC1_Default = false;
+                    result_200_INTOSC1_Default = false;
+                    result_100_INTOSC2_Default = true;
+                    result_150_INTOSC2_Default = false;
+                    result_200_INTOSC2_Default = false;
                 },
             },
             {
@@ -208,6 +341,18 @@ var config = [
                     system.clockTree["PLL_REFDIV"].divideValue = 1;
                     system.clockTree["PLL_IMULT"].multiplyValue = 30;
                     system.clockTree["PLL_ODIV"].divideValue = 2;
+                    result_100_XTAL_Default = false;
+                    result_150_XTAL_Default = false;
+                    result_200_XTAL_Default = false;
+                    result_100_X1_Default = false;
+                    result_150_X1_Default = false;
+                    result_200_X1_Default = false;
+                    result_100_INTOSC1_Default = false;
+                    result_150_INTOSC1_Default = false;
+                    result_200_INTOSC1_Default = false;
+                    result_100_INTOSC2_Default = false;
+                    result_150_INTOSC2_Default = true;
+                    result_200_INTOSC2_Default = false;
                 },
             },
             {
@@ -221,20 +366,19 @@ var config = [
                     system.clockTree["PLL_REFDIV"].divideValue = 1;
                     system.clockTree["PLL_IMULT"].multiplyValue = 40;
                     system.clockTree["PLL_ODIV"].divideValue = 2;
+                    result_100_XTAL_Default = false;
+                    result_150_XTAL_Default = false;
+                    result_200_XTAL_Default = false;
+                    result_100_X1_Default = false;
+                    result_150_X1_Default = false;
+                    result_200_X1_Default = false;
+                    result_100_INTOSC1_Default = false;
+                    result_150_INTOSC1_Default = false;
+                    result_200_INTOSC1_Default = false;
+                    result_100_INTOSC2_Default = false;
+                    result_150_INTOSC2_Default = false;
+                    result_200_INTOSC2_Default = true;
                 },
-            },
-        ],
-    },
-    {
-        name: "PERIPHERAL_CLOCKS",
-        displayName : "Peripheral Clocks Customization",
-        collapsed: false,
-        config: [
-            {
-                name: "enable_all_peripheral_clocks",
-                displayName: "Enable all Peripheral clocks",
-                longDescription: "By default, the clock is enabled for all the peripherals (as part of Device_init()). To enable the clocks only for peripherals added in SysConfig , disable this configurable.",
-                default: true,
             },
         ],
     },
@@ -277,7 +421,55 @@ function moduleInstances(inst)
 }
 
 function onValidate(inst, validation) 
-{ 
+{
+    if (result_100_XTAL_Default) {
+        validation.logInfo("100 MHz PLLSYSCLK with 20 MHz XTAL Clock Source is selected", 
+                            inst, "100_XTAL_Default");
+    }
+    else if (result_150_XTAL_Default) {
+        validation.logInfo("150 MHz PLLSYSCLK with 20 MHz XTAL Clock Source is selected", 
+                            inst, "150_XTAL_Default");
+    }
+    else if (result_200_XTAL_Default) {
+        validation.logInfo("200 MHz PLLSYSCLK with 20 MHz XTAL Clock Source is selected", 
+                            inst, "200_XTAL_Default");
+    }
+    else if (result_100_X1_Default) {
+        validation.logInfo("100 MHz PLLSYSCLK with 25 MHz X1 Clock Source is selected", 
+                            inst, "100_X1_Default");
+    }
+    else if (result_150_X1_Default) {
+        validation.logInfo("150 MHz PLLSYSCLK with 25 MHz X1 Clock Source is selected", 
+                            inst, "150_X1_Default");
+    }
+    else if (result_200_X1_Default) {
+        validation.logInfo("200 MHz PLLSYSCLK with 25 MHz X1 Clock Source is selected", 
+                            inst, "200_X1_Default");
+    }
+    else if (result_100_INTOSC1_Default) {
+        validation.logInfo("100 MHz PLLSYSCLK with 10 MHz INTOSC1 Clock Source is selected", 
+                            inst, "100_INTOSC1_Default");
+    }
+    else if (result_150_INTOSC1_Default) {
+        validation.logInfo("150 MHz PLLSYSCLK with 10 MHz INTOSC1 Clock Source is selected", 
+                            inst, "150_INTOSC1_Default");
+    }
+    else if (result_200_INTOSC1_Default) {
+        validation.logInfo("200 MHz PLLSYSCLK with 10 MHz INTOSC1 Clock Source is selected", 
+                            inst, "200_INTOSC1_Default");
+    }
+    else if (result_100_INTOSC2_Default) {
+        validation.logInfo("100 MHz PLLSYSCLK with 10 MHz INTOSC2 Clock Source is selected", 
+                            inst, "100_INTOSC2_Default");
+    }
+    else if (result_150_INTOSC2_Default) {
+        validation.logInfo("150 MHz PLLSYSCLK with 10 MHz INTOSC2 Clock Source is selected", 
+                            inst, "150_INTOSC2_Default");
+    }
+    else if (result_200_INTOSC2_Default) {
+        validation.logInfo("200 MHz PLLSYSCLK with 10 MHz INTOSC2 Clock Source is selected", 
+                            inst, "200_INTOSC2_Default");
+    }
 }
 
 
@@ -297,11 +489,8 @@ var clockModule = {
     moduleStatic : {
         config  : config,
         validate: onValidate,
-        moduleInstances
+        moduleInstances : moduleInstances,
     }
 };
-
-
-
 
 exports = clockModule;

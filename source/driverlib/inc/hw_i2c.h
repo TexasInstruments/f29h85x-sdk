@@ -170,9 +170,9 @@
 #define I2C_EMDR_BC         0x1U     // Backwards compatibility mode
 #define I2C_EMDR_FCM        0x2U     // Forward Compatibility for Tx behav in Type1
 #define I2C_EMDR_ECS        0x4U     // Extended Automatic Clock Stretching mode
-#define I2C_EMDR_MCS        0x8U     // Manual Clock Stretching mode (Clock Override)
+#define I2C_EMDR_MCS        0x8U     // Manual Clock Stretching mode
 #define I2C_EMDR_SCLKEY_S   4U
-#define I2C_EMDR_SCLKEY_M   0xF0U    // Key to enable SCL (Clock Override)
+#define I2C_EMDR_SCLKEY_M   0xF0U    // KEY
 #define I2C_EMDR_NACK_CM    0x100U   // NACK Compatibility mode
 
 //*************************************************************************************************

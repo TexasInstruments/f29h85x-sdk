@@ -22,9 +22,6 @@ void `instance.$name`_init(){
 		% if (instance.analogMode == "GPIO_ANALOG_ENABLED"){
 	GPIO_setAnalogMode(`instance.$name`, `instance.analogMode`);
 		%} else {
-% if (instance.writeInitialValue){
-	GPIO_writePin(`instance.$name`, `instance.initialValue`);
-% }
 %if(instance.padConfig == "STD")
 %{
 	GPIO_setPadConfig(`instance.$name`, GPIO_PIN_TYPE_`instance.padConfig`);
@@ -63,6 +60,9 @@ void `instance.$name`_init(){
 %}
 %if(system.context == instance.controllerCore.split("_")[2]){
 	GPIO_setDirectionMode(`instance.$name`, `instance.direction`);
+	% if (instance.writeInitialValue){
+	GPIO_writePin(`instance.$name`, `instance.initialValue`);
+	% }
 %}
 }
 	%}

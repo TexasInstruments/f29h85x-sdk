@@ -41,12 +41,14 @@ APR_END_OFFSET      = 4
 APR_ACCESS_OFFSET   = 8
 L1_RD               = 0x04
 L1_RW               = 0x0C
+SECCFG_UPDATE_CFG_M3= 0xC101
+ZONE_CFG_M3         = 0xC101
 
 # Necessary APRs
-necessaryAprAddr    = [0x10000000, 0x30208000, 0x30226000, 0x30227000, 0x302C0000, 0x60080000, 0x6008C000, 0x60090000]
-necessaryAprSize    = [0x00001000, 0x00001000, 0x00001000, 0x00001000, 0x00002000, 0x00001000, 0x00001000, 0x00001000]
-necessaryAprAccess  = [L1_RD, L1_RW, L1_RW, L1_RW, L1_RW, L1_RW, L1_RW, L1_RW]
-necessaryAprCheck   = [0, 0, 0, 0, 0, 0, 0, 0]
+necessaryAprAddr    = [0x10000000, 0x30226000, 0x30227000, 0x302C0000, 0x60080000, 0x6008C000, 0x60090000]
+necessaryAprSize    = [0x00001000, 0x00001000, 0x00001000, 0x00002000, 0x00001000, 0x00001000, 0x00001000]
+necessaryAprAccess  = [L1_RD, L1_RW, L1_RW, L1_RW, L1_RW, L1_RW, L1_RW]
+necessaryAprCheck   = [0, 0, 0, 0, 0, 0, 0]
 
 # CRC look up table
 crc32Table = [
@@ -105,21 +107,29 @@ def aprCheck(secCfgAddr):
         aprCfg      = secCfgAddr[(APR_OFFSET * i) + APR_CONFIG_OFFSET] | (secCfgAddr[(APR_OFFSET * i) + APR_CONFIG_OFFSET + 1] << 8)
         aprCfgMask  = aprCfg & 0xF
         if(aprCfgMask == 0):
-            print("APR",i,"config = ",aprCfg)
+            print("APR",i,"config = ",hex(aprCfg))
             retVal = -1
 
     return retVal
 
 # Zone config check
-def zoneCfgCheck(secCfgAddr):
+def zoneCfgCheck(secCfgAddr, ssumode):
     # UPDATE_EN should be either 0x3 or 0xC
     retVal = 0
     for i in range(0, NUM_ZONE):
         zoneCfg     = secCfgAddr[ZONE_CFG + (i * 2)] | (secCfgAddr[ZONE_CFG + (i * 2) + 1] << 8)
         zoneCfgMask = zoneCfg & 0xF000
         if((zoneCfgMask != 0x3000) and (zoneCfgMask != 0xC000)):
-            print("Zone",(i + 1),"config = ",zoneCfg)
+            print("Zone",(i + 1),"config = ",hex(zoneCfg))
             retVal = -1
+        if(ssumode == SSUMODE_3):
+            if(zoneCfg != ZONE_CFG_M3):
+                print("SECCFG-ERROR:ZONE", (i + 1),"update config = ", hex(zoneCfg), "is not compatible with flash plug-in")
+                print("Update ZONE",(i + 1),"Update Owner in syscfg to ..")
+                print("    Enable update    = YES")
+                print("    Update owner CPU = CPU1")
+                print("    Update owner CPU = LINK1_Link")
+                retVal = -1
 
     return retVal
 
@@ -130,22 +140,22 @@ def debugCfgCheck(secCfgAddr):
     # C29DBGGEN_CFG
     debugCfgMask    = debugCfg & 0x7
     if((debugCfgMask != 0x1) and (debugCfgMask != 0x2) and (debugCfgMask != 0x4)):
-        print("Debug config = ", debugCfg)
+        print("Debug config = ", hex(debugCfg))
         retVal = -1
     # ZONE 1
     debugCfgMask    = debugCfg & 0x70
     if((debugCfgMask != 0x10) and (debugCfgMask != 0x20) and (debugCfgMask != 0x40)):
-        print("Debug config = ", debugCfg)
+        print("Debug config = ", hex(debugCfg))
         retVal = -1
     # ZONE 2
     debugCfgMask    = debugCfg & 0x700
     if((debugCfgMask != 0x100) and (debugCfgMask != 0x200) and (debugCfgMask != 0x400)):
-        print("Debug config = ", debugCfg)
+        print("Debug config = ", hex(debugCfg))
         retVal = -1
     # ZONE 3
     debugCfgMask    = debugCfg & 0x7000
     if((debugCfgMask != 0x1000) and (debugCfgMask != 0x2000) and (debugCfgMask != 0x4000)):
-        print("Debug config = ", debugCfg)
+        print("Debug config = ", hex(debugCfg))
         retVal = -1
 
     return retVal
@@ -158,7 +168,7 @@ def stackCheck(secCfgAddr):
         stackCfg        = secCfgAddr[STACK_CFG + i]
         stackCfgMask    = stackCfg & 0x3
         if(stackCfgMask == 0):
-            print("Stack",(i + 3),"config = ", stackCfg)
+            print("Stack",(i + 3),"config = ", hex(stackCfg))
             retVal = -1
 
     return retVal
@@ -171,7 +181,7 @@ def linkCheck(secCfgAddr):
         linkCfg     = secCfgAddr[LINK_CFG + i]
         linkCfgMask = linkCfg & 0x7
         if(linkCfgMask == 0):
-            print("Link",(i + 3),"config = ", linkCfg)
+            print("Link",(i + 3),"config = ", hex(linkCfg))
             retVal = -1
 
     return retVal
@@ -219,7 +229,7 @@ goldenCrc = read32(secCfgCpu1Data, SECCFG_CRC)
 # Compare golden CRC vs computed CRC
 if(computedCrc != goldenCrc):
     errorCount += 1
-    print("SECCFG-ERROR:Seccfg CRC mismatch computed = ", computedCrc, "golden = ",goldenCrc)
+    print("SECCFG-ERROR:Seccfg CRC mismatch computed = ", hex(computedCrc), "golden = ",hex(goldenCrc))
 
 ###############################################################################
 # Check seccfg STATUS
@@ -229,14 +239,14 @@ secCfgStatus1 = read32(secCfgCpu1Data, SECCFG_STATUS_1)
 secCfgStatus2 = read32(secCfgCpu1Data, SECCFG_STATUS_2)
 if((secCfgStatus1 != SECCFG_STATUS) or (secCfgStatus2 != SECCFG_STATUS)):
     errorCount += 1
-    print("SECCFG-ERROR:CPU1 seccfg status is invalid = ", secCfgStatus1, secCfgStatus2)
+    print("SECCFG-ERROR:CPU1 seccfg status is invalid = ", hex(secCfgStatus1), hex(secCfgStatus2))
 
 # Check CPU3 seccfg status
 secCfgStatus1 = read32(secCfgCpu3Data, SECCFG_STATUS_1)
 secCfgStatus2 = read32(secCfgCpu3Data, SECCFG_STATUS_2)
 if((secCfgStatus1 != SECCFG_STATUS) or (secCfgStatus2 != SECCFG_STATUS)):
     errorCount += 1
-    print("SECCFG-ERROR:CPU3 seccfg status is invalid = ", secCfgStatus1, secCfgStatus2)
+    print("SECCFG-ERROR:CPU3 seccfg status is invalid = ", hex(secCfgStatus1), hex(secCfgStatus2))
 
 ###############################################################################
 # Check SSUMODE
@@ -245,7 +255,7 @@ ssuMode = read32(secCfgCpu1Data, SSU_MODE)
 # SSUMODE should be either 0x30 or 0x0C or 0x03, any other write causes fault
 if((ssuMode != SSUMODE_1) and (ssuMode != SSUMODE_2) and (ssuMode != SSUMODE_3)):
     errorCount += 1
-    print("SECCFG-ERROR:SSUMODE is invalid = ", ssuMode)
+    print("SECCFG-ERROR:SSUMODE is invalid = ", hex(ssuMode))
 
 ###############################################################################
 # Check APR list
@@ -278,12 +288,12 @@ if(ssuMode != SSUMODE_1):
     for k in range(0, len(necessaryAprCheck)):
         if(necessaryAprCheck[k] == 0):
             errorCount += 1
-            print("SECCFG-ERROR:Necessary APR for ",necessaryAprAddr[k],"not defined")
+            print("SECCFG-ERROR:Necessary APR for ",hex(necessaryAprAddr[k]),"not defined")
 
 ###############################################################################
 # ZONE config
 ###############################################################################
-zoneCfgCheckResult = zoneCfgCheck(secCfgCpu1Data)
+zoneCfgCheckResult = zoneCfgCheck(secCfgCpu1Data, ssuMode)
 if(zoneCfgCheckResult == -1):
     errorCount += 1
     print("SECCFG-ERROR:Zone config are invalid")
@@ -295,11 +305,19 @@ secCfgUpdateCfg = secCfgCpu1Data[SECCFG_UPDATE_CFG] | (secCfgCpu1Data[SECCFG_UPD
 # LINK_OWNER cannot be 0
 if((secCfgUpdateCfg & 0xF) == 0):
     errorCount += 1
-    print("SECCFG-ERROR:Seccfg update config is invalid = ", secCfgUpdateCfg)
+    print("SECCFG-ERROR:Seccfg update config is invalid = ", hex(secCfgUpdateCfg))
 # UPDATE_EN should be either 0x3 or 0xC
 if(((secCfgUpdateCfg & 0xF000) != 0x3000) and ((secCfgUpdateCfg & 0xF000) != 0xC000)):
     errorCount += 1
-    print("SECCFG-ERROR:Seccfg update config is invalid = ", secCfgUpdateCfg)
+    print("SECCFG-ERROR:Seccfg update config is invalid = ", hex(secCfgUpdateCfg))
+if(ssuMode == SSUMODE_3):
+    if(secCfgUpdateCfg != SECCFG_UPDATE_CFG_M3):
+        errorCount += 1
+        print("SECCFG-ERROR:Seccfg update config = ", hex(secCfgUpdateCfg), "is not compatible with flash plug-in")
+        print("Update SECCFG Update Owner in syscfg to ..")
+        print("    Enable update    = YES")
+        print("    Update owner CPU = CPU1")
+        print("    Update owner CPU = LINK1_Link")
 
 ###############################################################################
 # DEBUG config
@@ -316,7 +334,7 @@ ramopenLock = secCfgCpu1Data[RAMOPEN_LOCK]
 # RAMOPEN_LOCK should be either 0xA5 or 0x5A
 if(((ramopenLock & 0xFF) != 0xA5) and ((ramopenLock & 0xFF) != 0x5A)):
     errorCount += 1
-    print("SECCFG-ERROR:Ramopen lock is invalid = ", ramopenLock)
+    print("SECCFG-ERROR:Ramopen lock is invalid = ", hex(ramopenLock))
 
 ###############################################################################
 # Check STACK config

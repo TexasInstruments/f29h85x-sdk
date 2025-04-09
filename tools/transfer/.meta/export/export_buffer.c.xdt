@@ -75,7 +75,7 @@ void EXPORTBUFF_init()
         `expLogBuff.$name`_Handle, 
         (char**)`expLogBuff.$name`_buffer, 
         `expLogBuff.$name`_BUFFER_SIZE, 
-        `expLogBuff.$name`_ELEMENT_SIZE);
+        sizeof(`expLogBuff.$name`_buffer[0]));
     % }
 }
 

@@ -104,12 +104,11 @@ int main(void)
 //
 // INT1 ISR
 //
-__attribute__((interrupt("INT")))
 void INT_SW1_ISR(void)
 {
     printf(" -> Entering SW INT 1 ISR.\n");
     SWINT1Count++; // INT1 ISR is being serviced.
-    ENINT; // Enable Nesting. This interrupt will be preempted by any interrupt in another group with a higher priority.
+    ENINT; // Enable Nesting. This interrupt has the higher priority within its group, and it will not be preempted by any interrupts within its group. This interrupt will be preempted by an interrupt in another group with a higher priority.
     printf("   SW INT 2 is triggered.\n");
     Interrupt_force(INT2); // Trigger INT2
     printf("   SW INT 3 is triggered.\n");
@@ -120,12 +119,11 @@ void INT_SW1_ISR(void)
 //
 // INT2 ISR
 //
-__attribute__((interrupt("INT")))
 void INT_SW2_ISR(void)
 {
     printf("   -> Entering SW INT 2 ISR.\n");
     SWINT2Count++; // INT2 ISR is being serviced.
-    ENINT; // Enable Nesting. This interrupt has the highest priority within its group, so it will not be preempted by any interrupts within its group.
+    ENINT; // Enable Nesting. This interrupt has the lower priority within its group, and it will not be preempted by any interrupts within its group.
     done = 1; // Test done. 
     printf("   <- Exiting SW INT 2 ISR.\n");
 }
@@ -133,12 +131,11 @@ void INT_SW2_ISR(void)
 //
 // INT3 ISR
 //
-__attribute__((interrupt("INT")))
 void INT_SW3_ISR(void)
 {
     printf("     -> Entering SW INT 3 ISR.\n");
     SWINT3Count++; // INT3 ISR is being serviced.
-    ENINT; // Enable Nesting. This interrupt has the lowest INT priority and is in its own group, so it will not be preempted by the other INTs.
+    ENINT; // Enable Nesting. This interrupt has the highest INT priority overall and is in its own group, so it will not be preempted by the other INTs.
     printf("       SW RTINT 1 is triggered.\n");
     Interrupt_force(RTINT1); // Trigger RTINT1
     printf("     <- Exiting SW INT 3 ISR.\n");
@@ -147,12 +144,10 @@ void INT_SW3_ISR(void)
 //
 // RTINT1 ISR
 //
-__attribute__((interrupt("RTINT")))
 void INT_SW4_ISR(void)
 {
     printf("       -> Entering SW RTINT 1 ISR.\n");
     SWINT4Count++; // RTINT1 ISR is being serviced.
-    ENINT; // Enable Nesting. This interrupt will be preempted by any interrupt in another group with a higher priority.
     printf("         SW RTINT 2 is triggered.\n");
     Interrupt_force(RTINT2); // Trigger RTINT2
     printf("         SW RTINT 3 is triggered.\n");
@@ -163,24 +158,20 @@ void INT_SW4_ISR(void)
 //
 // RTINT2 ISR
 //
-__attribute__((interrupt("RTINT")))
 void INT_SW5_ISR(void)
 {
     printf("         -> Entering SW RTINT 2 ISR.\n");
     SWINT5Count++; // RTINT2 ISR is being serviced.
-    ENINT; // Enable Nesting. This interrupt has the highest priority within its group, so it will not be preempted by any interrupts within its group.
     printf("         <- Exiting SW RTINT 2 ISR.\n");
 }
 
 //
 // RTINT3 ISR
 //
-__attribute__((interrupt("RTINT")))
 void INT_SW6_ISR(void)
 {
     printf("           -> Entering SW RTINT 3 ISR.\n");
     SWINT6Count++; // RTINT3 ISR is being serviced.
-    ENINT; // Enable Nesting. This interrupt has the lowest priority overall and is in its own group, so it will not be preempted by INTs or RTINTs.
     printf("           <- Exiting SW RTINT 3 ISR.\n");
 }
 

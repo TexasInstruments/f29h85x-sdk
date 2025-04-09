@@ -5,37 +5,39 @@
 // TITLE:  C29x Flash driver.
 //
 //###########################################################################
-// $Copyright:
-// Copyright (C) 2024 Texas Instruments Incorporated - http://www.ti.com/
+// //
+//	Copyright: Copyright (C) Texas Instruments Incorporated
+//	All rights reserved not granted herein.
 //
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions
-// are met:
+//  Redistribution and use in source and binary forms, with or without 
+//  modification, are permitted provided that the following conditions 
+//  are met:
 //
-//   Redistributions of source code must retain the above copyright
-//   notice, this list of conditions and the following disclaimer.
+//  Redistributions of source code must retain the above copyright 
+//  notice, this list of conditions and the following disclaimer.
 //
-//   Redistributions in binary form must reproduce the above copyright
-//   notice, this list of conditions and the following disclaimer in the
-//   documentation and/or other materials provided with the
-//   distribution.
+//  Redistributions in binary form must reproduce the above copyright
+//  notice, this list of conditions and the following disclaimer in the 
+//  documentation and/or other materials provided with the   
+//  distribution.
 //
-//   Neither the name of Texas Instruments Incorporated nor the names of
-//   its contributors may be used to endorse or promote products derived
-//   from this software without specific prior written permission.
+//  Neither the name of Texas Instruments Incorporated nor the names of
+//  its contributors may be used to endorse or promote products derived
+//  from this software without specific prior written permission.
 //
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-// $
+//  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS 
+//  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT 
+//  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+//  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT 
+//  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, 
+//  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT 
+//  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+//  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+//  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT 
+//  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE 
+//  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+//
+
 //###########################################################################
 
 #ifndef FLASH_H
@@ -208,7 +210,7 @@ Flash_setWaitstates(uint16_t waitstates)
 __attribute__((section(".TI.ramfunc.link2")))
 __attribute__((always_inline))
 static inline void
-Flash_lockWaitstates()
+Flash_lockWaitstates(void)
 {
 
     //
@@ -233,7 +235,7 @@ Flash_lockWaitstates()
 __attribute__((section(".TI.ramfunc.link2")))
 __attribute__((always_inline))
 static inline void
-Flash_commitWaitstates()
+Flash_commitWaitstates(void)
 {
 
     //
@@ -270,7 +272,7 @@ Flash_configFRI(Flash_FRI friID, uint32_t configFlags)
     //
     // Set the FRI options.
     //
-    HWREG(FRI1_BASE + FRI_O_1_INTF_CTRL + (friID * FRI_REG_STEP)) = configFlags;
+    HWREG(FRI1_BASE + FRI_O_1_INTF_CTRL + ((uint32_t)friID * FRI_REG_STEP)) = configFlags;
 
 }
 
@@ -296,7 +298,7 @@ Flash_lockFRI(Flash_FRI friID)
     //
     // Set the FRI lock bit.
     //
-    HWREG(FRI1_BASE + FRI_O_1_INTF_CTRL_LOCK + (friID * FRI_REG_STEP)) |= FLASH_INTF_CTRL_LOCK;
+    HWREG(FRI1_BASE + FRI_O_1_INTF_CTRL_LOCK + ((uint32_t)friID * FRI_REG_STEP)) |= FLASH_INTF_CTRL_LOCK;
 
 }
 
@@ -322,7 +324,7 @@ Flash_commitFRI(Flash_FRI friID)
     //
     // Set the FRI lock bit.
     //
-    HWREG(FRI1_BASE + FRI_O_1_INTF_CTRL_COMMIT + (friID * FRI_REG_STEP)) |= FLASH_INTF_CTRL_COMMIT;
+    HWREG(FRI1_BASE + FRI_O_1_INTF_CTRL_COMMIT + ((uint32_t)friID * FRI_REG_STEP)) |= FLASH_INTF_CTRL_COMMIT;
 
 }
 
@@ -348,7 +350,7 @@ Flash_clearFRI(Flash_FRI friID, uint32_t clearFlags)
     //
     // Set the FRI INTF CLR bits
     //
-    HWREG(FRI1_BASE + FRI_O_1_INTF_CLR + (friID * FRI_REG_STEP)) = clearFlags;
+    HWREG(FRI1_BASE + FRI_O_1_INTF_CLR + ((uint32_t)friID * FRI_REG_STEP)) = clearFlags;
 
 }
 
@@ -395,7 +397,7 @@ Flash_enableParityTest(uint16_t testEnable)
 __attribute__((section(".TI.ramfunc.link2")))
 __attribute__((always_inline))
 static inline void
-Flash_disableParityTest()
+Flash_disableParityTest(void)
 {
 
     //
@@ -419,7 +421,7 @@ Flash_disableParityTest()
 __attribute__((section(".TI.ramfunc.link2")))
 __attribute__((always_inline))
 static inline void
-Flash_lockParityTest()
+Flash_lockParityTest(void)
 {
 
     //
@@ -444,7 +446,7 @@ Flash_lockParityTest()
 __attribute__((section(".TI.ramfunc.link2")))
 __attribute__((always_inline))
 static inline void
-Flash_commitParityTest()
+Flash_commitParityTest(void)
 {
 
     //

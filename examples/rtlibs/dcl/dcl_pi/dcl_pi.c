@@ -1,123 +1,120 @@
-/*
- * Copyright (C) 2024 Texas Instruments Incorporated - http://www.ti.com/
- *
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
- *
- *	* Redistributions of source code must retain the above copyright
- *	  notice, this list of conditions and the following disclaimer.
- *
- *	* Redistributions in binary form must reproduce the above copyright
- *	  notice, this list of conditions and the following disclaimer in the
- *	  documentation and/or other materials provided with the
- *	  distribution.
- *
- *	* Neither the name of Texas Instruments Incorporated nor the names of
- *	  its contributors may be used to endorse or promote products derived
- *	  from this software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
- * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
- * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
- * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
- * OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
- * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
- * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
- * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
- * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
+//#############################################################################
+//
+//
+// $Copyright:
+//#############################################################################
 
 #include "dcl_pi.h"
-    
-int main(void)
-{
-    Board_init();
-    
-    //
-    // Available PI controllers are:
-    // - DCL_runPISeries
-    // - DCL_runPIParallel
-    // - DCL_runPISeriesTustin
-    // - DCL_runPIParallelEnhanced (Requires additional parameters)
-    //
-    PI_runTest(pi_controller, &DCL_runPISeries); 
+
+//
+// rk = Target referenced value
+// yk = Current feedback value
+// uk = Output control effort
+//
+float32_t rk, yk, uk;
+
+//
+// profiling variables
+//
+uint32_t startCounter = 0;
+uint32_t endCounter = 0;
+uint32_t overheadCount = 0;
+uint32_t totalCount = 0;
+
+int main(void) {
+  // Timer configured in Sysconfig (Period set to 10s)
+  Board_init();
+
+  // Calculate the overhead of an empty timer
+  CPUTimer_startTimer(CPUTIMER0_BASE);
+  startCounter = CPUTimer_getTimerCount(CPUTIMER0_BASE);
+  __builtin_instrumentation_label("overhead_start");
+  endCounter = CPUTimer_getTimerCount(CPUTIMER0_BASE);
+  __builtin_instrumentation_label("overhead_end");
+  overheadCount = startCounter - endCounter;
+  CPUTimer_stopTimer(CPUTIMER0_BASE);
+
+  //
+  // Available PI controllers are:
+  // - DCL_runPISeries
+  // - DCL_runPIParallel
+  // - DCL_runPISeriesTustin
+  // - DCL_runPIParallelEnhanced (Requires additional parameters)
+  //
+  PI_runTest(pi_controller, &DCL_runPISeries);
+
+  uint32_t avgCount = totalCount / NUM_ELEMENTS;
+  printf("DCL PID total cycles = %d\nDCL PID average cycles = %d\n", totalCount,
+         avgCount);
 }
 
+int PI_runTest(DCL_PI *ctrl_handle, DCL_PI_FUNC dcl_pi_func) {
+  //
+  // Define DFLOG pointers that will be used to access the data buffer
+  //
+  DCL_FDLOG rkBuf, ykBuf, outBuf, ctlBuf;
+  DCL_resetPI(ctrl_handle);
 
-int PI_runTest(DCL_PI *ctrl_handle, DCL_PI_FUNC dcl_pi_func)
-{   
+  //
+  // Initialize Log pointers to the data buffer
+  //
+  DCL_initLog(&rkBuf, (float32_t *)rk_buffer, DATA_LENGTH);
+  DCL_initLog(&ykBuf, (float32_t *)yk_buffer, DATA_LENGTH);
+  DCL_initLog(&outBuf, (float32_t *)out_buffer, DATA_LENGTH);
+  DCL_initLog(&ctlBuf, (float32_t *)ctl_buffer, DATA_LENGTH);
+  DCL_clearLog(&outBuf);
+
+  int i;
+  for (i = 0; i < NUM_ELEMENTS; i++) {
     //
-    // Define DFLOG pointers that will be used to access the data buffer
+    // Read the input data buffers
     //
-    DCL_FDLOG rkBuf, ykBuf, outBuf, ctlBuf;
-    DCL_resetPI(ctrl_handle);
+    rk = DCL_readLog(&rkBuf);
+    yk = DCL_readLog(&ykBuf);
+
+    CPUTimer_startTimer(CPUTIMER0_BASE);
+    startCounter = CPUTimer_getTimerCount(CPUTIMER0_BASE);
+    // Prevent instructions to be optimized out of order
+    __builtin_instrumentation_label("profiling_start");
 
     //
-    // Initialize Log pointers to the data buffer
+    // Run the controller
+    // Equivalent to uk = DCL_runPI_series(ctrl_handle, rk, yk);
     //
-    DCL_initLog(&rkBuf, (float32_t*)rk_buffer, DATA_LENGTH);
-    DCL_initLog(&ykBuf, (float32_t*)yk_buffer, DATA_LENGTH);
-    DCL_initLog(&outBuf, (float32_t*)out_buffer, DATA_LENGTH);
-    DCL_initLog(&ctlBuf, (float32_t*)ctl_buffer, DATA_LENGTH);
-    DCL_clearLog(&outBuf);
+    uk = (*dcl_pi_func)(ctrl_handle, rk, yk);
 
-    int i;
-    for (i = 0; i < NUM_ELEMENTS; i++)
-    {   
-        //
-        // rk = Target referenced value
-        // yk = Current feedback value
-        // uk = Output control effort
-        //
-        float32_t rk,yk,uk;
-        
-        //
-        // Read the input data buffers
-        //
-        rk = DCL_readLog(&rkBuf);
-        yk = DCL_readLog(&ykBuf);
+    __builtin_instrumentation_label("profiling_end");
+    endCounter = CPUTimer_getTimerCount(CPUTIMER0_BASE);
+    totalCount += startCounter - endCounter - overheadCount;
+    CPUTimer_stopTimer(CPUTIMER0_BASE);
+    
+    //
+    // Write the results to the output buffer
+    //
+    DCL_writeLog(&outBuf, uk);
+  }
 
-        //
-        // Run the controller
-        // Equivalent to uk = DCL_runPI_series(ctrl_handle, rk, yk);
-        //
-        uk = (*dcl_pi_func)(ctrl_handle, rk, yk); 
+  //
+  // Reset the log pointer so it starts from the beginning
+  //
+  DCL_resetLog(&outBuf);
 
-        //
-        // Write the results to the output buffer
-        //
-        DCL_writeLog(&outBuf, uk);
+  //
+  // Check output against expected output with tolerance (1e-06)
+  //
+  int errors = 0;
+  for (i = 0; i < NUM_ELEMENTS; i++) {
+    float32_t output = DCL_readLog(&outBuf);   // out_buffer[i]
+    float32_t expected = DCL_readLog(&ctlBuf); // ctl_buffer[i]
+    if (!DCL_isZero(output - expected)) {
+      errors++;
 
+      printf("FAIL at sample %d, outputs %f, should be %f\n", i, output,
+             expected);
     }
+  }
 
-    //
-    // Reset the log pointer so it starts from the beginning
-    //
-    DCL_resetLog(&outBuf);
+  printf("PI test produced %d error\n", errors);
 
-    //
-    // Check output against expected output with tolerance (1e-06)
-    //
-    int errors = 0;
-    for (i = 0; i < NUM_ELEMENTS; i++)
-    {
-        float32_t output = DCL_readLog(&outBuf);   // out_buffer[i]
-        float32_t expected = DCL_readLog(&ctlBuf); // ctl_buffer[i]
-        if (!DCL_isZero(output - expected))
-        {
-            errors++;
-
-            printf("FAIL at sample %d, outputs %f, should be %f\n", i, output, expected);
-        }
-    }
-
-    printf("PI test produced %d error\n",errors);
-      
-    return errors;
+  return errors;
 }
-
-

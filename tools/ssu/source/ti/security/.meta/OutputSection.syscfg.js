@@ -121,7 +121,10 @@ var moduleInstances = (inst) => {
 
 function validate(inst, vo)
 {
-    let aprList = Common.allocateAllMemoryRegions()[system.context]
+    let currentContext = system.context;
+    let aprList = Common.allocateAllMemoryRegions()?.currentContext
+    if(!aprList) return; 
+
     let runMem = inst.sectionRunFromDifferentAddr ? inst.sectionRun : inst.sectionMemory
     if(runMem != "None"){
         let currRegion  = aprList.find(apr => {return (apr.name == runMem)})

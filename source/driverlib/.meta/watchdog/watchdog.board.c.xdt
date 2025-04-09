@@ -11,7 +11,7 @@ void `nameOfPeripheral`_init(){
 
 %if (module != null)
 %{
-% var instance = module.$static;
+% var instance = module.$instances[0];
 	SysCtl_disableWatchdog();
 	SysCtl_setWatchdogMode(`instance.wdMode`);
 	% if (instance.wdPredivider){
@@ -19,20 +19,14 @@ void `nameOfPeripheral`_init(){
 	% }
 	SysCtl_setWatchdogPrescaler(`instance.wdPrescalar`);
 	SysCtl_setWatchdogWindowValue(`instance.wdWindowThreshold`);
-	% if (instance.wdStandbyWakeup) {
-	SysCtl_enableWatchdogStandbyWakeup();
-	% }
-	% if (instance.wdHaltEnable) {
-	SysCtl_enableWatchdogInHalt();
-	% }
 	% if (instance.enableModule) {
 	SysCtl_delay(6);
 	SysCtl_enableWatchdog();
 	% } else{
 	//
 	// This Watchdog is not started in this function.
-	// The application SW must call the WATCHDOG_enableModule function when needed.
-	// WATCHDOG_enableModule_enableModule(`instance.$name`_BASE);
+	// The application SW must call the SysCtl_enableWatchdog function when needed.
+	// SysCtl_enableWatchdog();
 	//
 	% }
 }

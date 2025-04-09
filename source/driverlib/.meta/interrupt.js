@@ -196,6 +196,16 @@ function onValidate(inst, validation) {
             "Interrupt priority must be in 0-255 range", 
             inst, "interruptPriority");
     }
+
+    // Block INT_SW1 if FreeRTOS is used
+    if(inst.driverlibIntList == 'INT_SW1'){
+        let freertosModule = system.modules["/kernel/freertos_tool/FREERTOS"]
+        if(freertosModule)
+            validation.logError(
+                "FreeRTOS uses this software interrupt as part of the device port",
+                inst, "driverlibIntList"
+            )
+    }
 }
 
 function onValidateStatic(mod, validation){

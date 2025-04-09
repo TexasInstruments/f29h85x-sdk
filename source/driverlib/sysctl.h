@@ -75,7 +75,7 @@ extern "C"
 //
 // Values to help decode peripheral parameter
 //
-#define SYSCTL_PERIPH_REG_M     0x001FU
+#define SYSCTL_PERIPH_REG_M     0x003FU
 #define SYSCTL_PERIPH_REG_S     0x0000U
 #define SYSCTL_PERIPH_BIT_M     0x1F00U
 #define SYSCTL_PERIPH_BIT_S     0x0008U
@@ -1796,7 +1796,7 @@ static inline void
 SysCtl_enableSafetyInterconnect(uint16_t timeout)
 {
     HWREG(DEVCFG_BASE + SYSCTL_O_SICCONFIG) =
-            SYSCTL_SICCONFIG_ENABLE | (timeout << SYSCTL_SICCONFIG_TIMEOUT_S);
+            SYSCTL_SICCONFIG_ENABLE | ((uint32_t)timeout << SYSCTL_SICCONFIG_TIMEOUT_S);
 }
 
 //*****************************************************************************

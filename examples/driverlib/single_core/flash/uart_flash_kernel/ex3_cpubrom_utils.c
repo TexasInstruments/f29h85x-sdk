@@ -53,10 +53,10 @@ uint64_t CPU_BROM_getCycleCount(void)
     volatile uint32_t ipcCounterH;
     //
     //  Always read IPCCOUNTERL followed by IPCCOUNTERH register
-    //  ->  IPCCOUNTER register provides free running pll sysckl count
+    //  ->  IPCCOUNTER register provides free running pll sysclk count
     //
-    ipcCounterL = HWREG(IPCCOUNTERREGS_BASE + IPC_O_COUNTERL);
-    ipcCounterH = HWREG(IPCCOUNTERREGS_BASE + IPC_O_COUNTERH);
+    ipcCounterL = HWREG(IPCCOUNTER_BASE + IPC_O_COUNTERL);
+    ipcCounterH = HWREG(IPCCOUNTER_BASE + IPC_O_COUNTERH);
 
     return ((((uint64_t)ipcCounterH << 32U) | ipcCounterL));
 }

@@ -7,6 +7,8 @@
 % var perClockContent = system.getTemplate("/driverlib/perClock/perClock.board.c.xdt");
 %var Asserts				        = system.getTemplate('/driverlib/device/functions_c/Clocktree/Asserts.xdt');
 
+% let flashModule = system.modules['/driverlib/flash.js'];
+
 %var clockTree 	= Common.getClockTree();
 %var DualCore 	= clocktree_common.DualCore_CPU2;
 %var TriCore 	= clocktree_common.TriCore_CPU2;
@@ -36,13 +38,25 @@ void Device_init(void)
     // Disable the watchdog
     //
     SysCtl_disableWatchdog();
-    
+
     //
     // Errata workaround
     //
     Device_errataWorkaroundNMIVectorFetch();
 %if (Common.isContextCPU1()){
-    
+
+#ifdef _FLASH
+    //
+    // Call Flash Initialization to setup flash waitstates. This function must
+    // reside in RAM.
+    //
+%if(flashModule){
+    FLASH_init();
+%} else {
+    Flash_initModule(DEVICE_FLASH_WAITSTATES);
+%}
+#endif
+
     //
     // Initialize system clock
     //
@@ -51,7 +65,7 @@ void Device_init(void)
 %else {
 %}
 
-% if (!system.modules['/driverlib/clocktree.js'] || system.modules['/driverlib/clocktree.js'].$static.enable_all_peripheral_clocks)
+% if (!system.modules['/driverlib/sysctl.js'] || system.modules['/driverlib/sysctl.js'].$static.enable_all_peripheral_clocks)
 % {
     //
     // Turn on all peripherals

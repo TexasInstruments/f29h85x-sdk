@@ -12,8 +12,6 @@ const tri_core = clocktree_common.tri_core;
 const PLL_type1  	= clocktree_common.PLL_type1;
 const PLL_type2  	= clocktree_common.PLL_type2;
 const device  		= clocktree_common.device;
-if (clockTree_CPU2!=null){            // If we can't get clock tree, CPU1 context is probably not open
-
 %%}
 //#############################################################################
 //
@@ -57,31 +55,23 @@ if (clockTree_CPU2!=null){            // If we can't get clock tree, CPU1 contex
 
 #ifndef CLOCKTREE_H
 #define CLOCKTREE_H
+
 %
-% if(multi_core.includes(device))
-%{
-%    if(dual_core.includes(device)) 
-%    {
-%    `DualCore_CPU2()`
-%    }
-%    else if(tri_core.includes(device)) 
-%    {
-%    `TriCore_CPU2()`
-%    }
-%}
+% if (clockTree_CPU2!=null){            // If we can't get clock tree, CPU1 context is probably not open
+% let context    =   system.contexts["CPU1"]
+% let sysclk  =   context.system.clockTree["PLLSYSCLK"].out
+% sysclk *= Math.pow(10,6)
+#define DEVICE_SYSCLK_FREQ		`sysclk`
 %
-%
+
 #endif // CLOCKTREE_H
-%} else {
-#ifndef CLOCKTREE_H
-#define CLOCKTREE_H
+% } else {
 
 //
 // CANNOT ACCESS CLOCKTREE. PLEASE MAKE SURE TO OPEN BOTH CPU1 AND CPU2 in SYSCONFIG.
 //
 
-#define DEVICE_SYSCLK_FREQ		200000000
+#define DEVICE_SYSCLK_FREQ		200000000 // Default MAX SYSCLK
 
 #endif // CLOCKTREE_H
 %}
-

@@ -17,14 +17,14 @@ extern "C" {
 
 #include <stdio.h>
 #include <string.h>
-#include "/kernel/dpl/ClockP.h"
-#include "/kernel/dpl/CpuIdP.h"
-#include "/kernel/dpl/DebugP.h"
-#include "/kernel/dpl/HwiP.h"
-#include "/kernel/dpl/SemaphoreP.h"
-#include "/kernel/dpl/TimerP.h"
-#include "/kernel/nortos/dpl/c29/HwiP_c29_pipe.h"
-#include "/kernel/nortos/dpl/common/printf.h"
+#include "kernel/dpl/ClockP.h"
+#include "kernel/dpl/CpuIdP.h"
+#include "kernel/dpl/DebugP.h"
+#include "kernel/dpl/HwiP.h"
+#include "kernel/dpl/SemaphoreP.h"
+#include "kernel/dpl/TimerP.h"
+#include "kernel/nortos/dpl/c29/HwiP_c29_pipe.h"
+#include "kernel/nortos/dpl/common/printf.h"
 
 //
 // This setup is done by SysConfig for AM263

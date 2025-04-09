@@ -88,8 +88,8 @@ uint32_t readData[10];
 uint32_t pass;
 
 #ifdef _FLASH
-    #define CPU3_RESET_VECTOR   0x10400000U
-    #define CPU3_NMI_VECTOR     0x10400040U
+    #define CPU3_RESET_VECTOR   0x10401000U
+    #define CPU3_NMI_VECTOR     0x10401040U
 #else
     #define CPU3_RESET_VECTOR   0x20110000U
     #define CPU3_NMI_VECTOR     0x20110040U

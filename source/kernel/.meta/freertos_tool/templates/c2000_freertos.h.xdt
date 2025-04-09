@@ -12,6 +12,8 @@
 #include "timers.h"
 #include "event_groups.h"
 #include "driverlib.h"
+#include "stream_buffer.h"
+#include "message_buffer.h"
 %   var module = system.modules['/kernel/freertos_tool/FREERTOS'];
 %   var taskNames      = [];
 %   var semaphoreNames = [];

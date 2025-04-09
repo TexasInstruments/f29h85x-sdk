@@ -674,12 +674,12 @@ PMBus_configModuleClockMode(uint32_t base, uint32_t moduleFrequency, uint32_t sy
            (moduleFrequency <= PMBUS_MODULE_FREQ_MAX));
     ASSERT((sysFrequency >= PMBUS_SYS_FREQ_MIN) &&
            (sysFrequency <= PMBUS_SYS_FREQ_MAX));
-    
+
     if(mode == PMBUS_CLOCKMODE_FAST_PLUS)
     {
-        ASSERT((moduleFrequency >= fastPlusLow));  
+        ASSERT((moduleFrequency >= fastPlusLow));
     }
-    if((mode == PMBUS_CLOCKMODE_STANDARD) || (mode == PMBUS_CLOCKMODE_FAST)) 
+    if((mode == PMBUS_CLOCKMODE_STANDARD) || (mode == PMBUS_CLOCKMODE_FAST))
     {
         ASSERT((moduleFrequency <= fsmClkLimit));
     }
@@ -719,7 +719,7 @@ PMBus_configModuleClockMode(uint32_t base, uint32_t moduleFrequency, uint32_t sy
     HWREG(base + PMBUS_O_PMBINTM) = interruptState;
     return(calcModuleFreq);
 }
-            
+
 //*****************************************************************************
 //
 // PMBus_configBusClock
@@ -814,10 +814,10 @@ bool PMBus_configBusClock(uint32_t base, PMBus_ClockMode mode,
         //
         // Fast Mode Plus
         // Parameter                Timing Value in ns
-        // CLK_LOW_LIMIT                   500 
-        // CLK_HIGH_LIMIT                  500 
-        // CLK_FREQ                        1000 
-        // START_LIMIT                     300 
+        // CLK_LOW_LIMIT                   500
+        // CLK_HIGH_LIMIT                  500
+        // CLK_FREQ                        1000
+        // START_LIMIT                     300
         // busIdle                         5000
         // CLK_HIGH_TIMEOUT_LIMIT          50000
         // CLK_LOW_TIMEOUT_LIMIT           35000000

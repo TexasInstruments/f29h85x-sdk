@@ -103,6 +103,22 @@ extern "C"
 //
 //*****************************************************************************
 
+#ifdef _LAUNCHXL_F29H85X
+
+//
+// LaunchPad
+//
+
+//
+// LEDs
+//
+#define DEVICE_GPIO_PIN_LED1        19U             // GPIO number for LED4
+#define DEVICE_GPIO_PIN_LED2        62U             // GPIO number for LED5
+#define DEVICE_GPIO_CFG_LED1        GPIO_19_GPIO19  // "pinConfig" for LED4
+#define DEVICE_GPIO_CFG_LED2        GPIO_62_GPIO62  // "pinConfig" for LED5
+
+#else
+
 //
 // ControlSOM
 //
@@ -110,10 +126,20 @@ extern "C"
 //
 // LEDs
 //
-#define DEVICE_GPIO_PIN_LED1        23U             // GPIO number for LED1
-#define DEVICE_GPIO_PIN_LED2        9U              // GPIO number for LED2
-#define DEVICE_GPIO_CFG_LED1        GPIO_23_GPIO23  // "pinConfig" for LED1
-#define DEVICE_GPIO_CFG_LED2        GPIO_9_GPIO9    // "pinConfig" for LED2
+#define DEVICE_GPIO_PIN_LED1        23U             // GPIO number for LED3
+#define DEVICE_GPIO_PIN_LED2        9U              // GPIO number for LED4
+#define DEVICE_GPIO_CFG_LED1        GPIO_23_GPIO23  // "pinConfig" for LED3
+#define DEVICE_GPIO_CFG_LED2        GPIO_9_GPIO9    // "pinConfig" for LED4
+
+#endif
+
+//
+// UART 
+//
+#define DEVICE_GPIO_PIN_UARTA_TX  42U               // GPIO number for UARTA TX
+#define DEVICE_GPIO_PIN_UARTA_RX  43U               // GPIO number for UARTA RX
+#define DEVICE_GPIO_CFG_UARTA_TX  GPIO_42_UARTA_TX  // "pinConfig" for UARTA TX
+#define DEVICE_GPIO_CFG_UARTA_RX  GPIO_43_UARTA_RX  // "pinConfig" for UARTA RX
 
 //*****************************************************************************
 //

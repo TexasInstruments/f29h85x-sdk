@@ -17,3 +17,13 @@ const mux7       = system.clockTree["OSCCLKSRCSEL"];
 mux7.inputSelect = "INTOSC2";
 
     
+
+/**
+ * Import the modules used in this configuration.
+ */
+const cputimer  = scripting.addModule("/driverlib/cputimer.js", {}, false);
+const cputimer1 = cputimer.addInstance();
+
+cputimer1.timerPeriod       = 2000000000;
+cputimer1.$name             = "myCPUTIMER0";
+cputimer1.periphClock.$name = "driverlib_perClock0";

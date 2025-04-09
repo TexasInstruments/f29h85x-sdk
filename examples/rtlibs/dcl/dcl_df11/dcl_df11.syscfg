@@ -17,3 +17,14 @@ const mux7       = system.clockTree["OSCCLKSRCSEL"];
 mux7.inputSelect = "INTOSC2";
 
     
+
+/**
+ * Import the modules used in this configuration.
+ */
+const clock_c29_sdk = scripting.addModule("/kernel/dpl/clock_c29_sdk");
+
+clock_c29_sdk.intlinkowner                                = "SSU_LINK1";
+clock_c29_sdk.intsp                                       = "SSU_STACK1";
+clock_c29_sdk.dplTimer.periphClock.$name                  = "driverlib_perClock0";
+clock_c29_sdk.dplTimer.periphClock.pinmuxPeripheralModule = scripting.forceWrite("");
+clock_c29_sdk.nortos_source.$name                         = "kernel_dpl_nortos_source0";

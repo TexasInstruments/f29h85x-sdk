@@ -238,6 +238,42 @@ __attribute__((noinit, location(EPWM17DE_BASE))) volatile struct DE_REGS EPwm17D
 
 __attribute__((noinit, location(EPWM18DE_BASE))) volatile struct DE_REGS EPwm18DeRegs;
 
+__attribute__((noinit, location(EPWM1DEXLINK_BASE))) volatile struct DE_REGS EPwm1DeXlinkRegs;
+
+__attribute__((noinit, location(EPWM2DEXLINK_BASE))) volatile struct DE_REGS EPwm2DeXlinkRegs;
+
+__attribute__((noinit, location(EPWM3DEXLINK_BASE))) volatile struct DE_REGS EPwm3DeXlinkRegs;
+
+__attribute__((noinit, location(EPWM4DEXLINK_BASE))) volatile struct DE_REGS EPwm4DeXlinkRegs;
+
+__attribute__((noinit, location(EPWM5DEXLINK_BASE))) volatile struct DE_REGS EPwm5DeXlinkRegs;
+
+__attribute__((noinit, location(EPWM6DEXLINK_BASE))) volatile struct DE_REGS EPwm6DeXlinkRegs;
+
+__attribute__((noinit, location(EPWM7DEXLINK_BASE))) volatile struct DE_REGS EPwm7DeXlinkRegs;
+
+__attribute__((noinit, location(EPWM8DEXLINK_BASE))) volatile struct DE_REGS EPwm8DeXlinkRegs;
+
+__attribute__((noinit, location(EPWM9DEXLINK_BASE))) volatile struct DE_REGS EPwm9DeXlinkRegs;
+
+__attribute__((noinit, location(EPWM10DEXLINK_BASE))) volatile struct DE_REGS EPwm10DeXlinkRegs;
+
+__attribute__((noinit, location(EPWM11DEXLINK_BASE))) volatile struct DE_REGS EPwm11DeXlinkRegs;
+
+__attribute__((noinit, location(EPWM12DEXLINK_BASE))) volatile struct DE_REGS EPwm12DeXlinkRegs;
+
+__attribute__((noinit, location(EPWM13DEXLINK_BASE))) volatile struct DE_REGS EPwm13DeXlinkRegs;
+
+__attribute__((noinit, location(EPWM14DEXLINK_BASE))) volatile struct DE_REGS EPwm14DeXlinkRegs;
+
+__attribute__((noinit, location(EPWM15DEXLINK_BASE))) volatile struct DE_REGS EPwm15DeXlinkRegs;
+
+__attribute__((noinit, location(EPWM16DEXLINK_BASE))) volatile struct DE_REGS EPwm16DeXlinkRegs;
+
+__attribute__((noinit, location(EPWM17DEXLINK_BASE))) volatile struct DE_REGS EPwm17DeXlinkRegs;
+
+__attribute__((noinit, location(EPWM18DEXLINK_BASE))) volatile struct DE_REGS EPwm18DeXlinkRegs;
+
 __attribute__((noinit, location(CPUDLT_BASE))) volatile struct DLT_CORE_REGS cpuDltRegs;
 
 __attribute__((noinit, location(CPU1DLTFIFO_BASE))) volatile struct DLT_FIFO_REGS CPU1DLTFifoRegs;
@@ -312,6 +348,42 @@ __attribute__((noinit, location(EPWM17_BASE))) volatile struct EPWM_REGS EPwm17R
 
 __attribute__((noinit, location(EPWM18_BASE))) volatile struct EPWM_REGS EPwm18Regs;
 
+__attribute__((noinit, location(EPWM1XLINK_BASE))) volatile struct EPWM_REGS EPwm1XlinkRegs;
+
+__attribute__((noinit, location(EPWM2XLINK_BASE))) volatile struct EPWM_REGS EPwm2XlinkRegs;
+
+__attribute__((noinit, location(EPWM3XLINK_BASE))) volatile struct EPWM_REGS EPwm3XlinkRegs;
+
+__attribute__((noinit, location(EPWM4XLINK_BASE))) volatile struct EPWM_REGS EPwm4XlinkRegs;
+
+__attribute__((noinit, location(EPWM5XLINK_BASE))) volatile struct EPWM_REGS EPwm5XlinkRegs;
+
+__attribute__((noinit, location(EPWM6XLINK_BASE))) volatile struct EPWM_REGS EPwm6XlinkRegs;
+
+__attribute__((noinit, location(EPWM7XLINK_BASE))) volatile struct EPWM_REGS EPwm7XlinkRegs;
+
+__attribute__((noinit, location(EPWM8XLINK_BASE))) volatile struct EPWM_REGS EPwm8XlinkRegs;
+
+__attribute__((noinit, location(EPWM9XLINK_BASE))) volatile struct EPWM_REGS EPwm9XlinkRegs;
+
+__attribute__((noinit, location(EPWM10XLINK_BASE))) volatile struct EPWM_REGS EPwm10XlinkRegs;
+
+__attribute__((noinit, location(EPWM11XLINK_BASE))) volatile struct EPWM_REGS EPwm11XlinkRegs;
+
+__attribute__((noinit, location(EPWM12XLINK_BASE))) volatile struct EPWM_REGS EPwm12XlinkRegs;
+
+__attribute__((noinit, location(EPWM13XLINK_BASE))) volatile struct EPWM_REGS EPwm13XlinkRegs;
+
+__attribute__((noinit, location(EPWM14XLINK_BASE))) volatile struct EPWM_REGS EPwm14XlinkRegs;
+
+__attribute__((noinit, location(EPWM15XLINK_BASE))) volatile struct EPWM_REGS EPwm15XlinkRegs;
+
+__attribute__((noinit, location(EPWM16XLINK_BASE))) volatile struct EPWM_REGS EPwm16XlinkRegs;
+
+__attribute__((noinit, location(EPWM17XLINK_BASE))) volatile struct EPWM_REGS EPwm17XlinkRegs;
+
+__attribute__((noinit, location(EPWM18XLINK_BASE))) volatile struct EPWM_REGS EPwm18XlinkRegs;
+
 __attribute__((noinit, location(EPWMXBAR_BASE))) volatile struct EPWM_XBAR_REGS EPwmXbarRegs;
 
 __attribute__((noinit, location(EPWM1XCMP_BASE))) volatile struct EPWM_XCMP_REGS EPwm1XcmpRegs;
@@ -349,6 +421,42 @@ __attribute__((noinit, location(EPWM16XCMP_BASE))) volatile struct EPWM_XCMP_REG
 __attribute__((noinit, location(EPWM17XCMP_BASE))) volatile struct EPWM_XCMP_REGS EPwm17XcmpRegs;
 
 __attribute__((noinit, location(EPWM18XCMP_BASE))) volatile struct EPWM_XCMP_REGS EPwm18XcmpRegs;
+
+__attribute__((noinit, location(EPWM1XCMPXLINK_BASE))) volatile struct EPWM_XCMP_REGS EPwm1XcmpXlinkRegs;
+
+__attribute__((noinit, location(EPWM2XCMPXLINK_BASE))) volatile struct EPWM_XCMP_REGS EPwm2XcmpXlinkRegs;
+
+__attribute__((noinit, location(EPWM3XCMPXLINK_BASE))) volatile struct EPWM_XCMP_REGS EPwm3XcmpXlinkRegs;
+
+__attribute__((noinit, location(EPWM4XCMPXLINK_BASE))) volatile struct EPWM_XCMP_REGS EPwm4XcmpXlinkRegs;
+
+__attribute__((noinit, location(EPWM5XCMPXLINK_BASE))) volatile struct EPWM_XCMP_REGS EPwm5XcmpXlinkRegs;
+
+__attribute__((noinit, location(EPWM6XCMPXLINK_BASE))) volatile struct EPWM_XCMP_REGS EPwm6XcmpXlinkRegs;
+
+__attribute__((noinit, location(EPWM7XCMPXLINK_BASE))) volatile struct EPWM_XCMP_REGS EPwm7XcmpXlinkRegs;
+
+__attribute__((noinit, location(EPWM8XCMPXLINK_BASE))) volatile struct EPWM_XCMP_REGS EPwm8XcmpXlinkRegs;
+
+__attribute__((noinit, location(EPWM9XCMPXLINK_BASE))) volatile struct EPWM_XCMP_REGS EPwm9XcmpXlinkRegs;
+
+__attribute__((noinit, location(EPWM10XCMPXLINK_BASE))) volatile struct EPWM_XCMP_REGS EPwm10XcmpXlinkRegs;
+
+__attribute__((noinit, location(EPWM11XCMPXLINK_BASE))) volatile struct EPWM_XCMP_REGS EPwm11XcmpXlinkRegs;
+
+__attribute__((noinit, location(EPWM12XCMPXLINK_BASE))) volatile struct EPWM_XCMP_REGS EPwm12XcmpXlinkRegs;
+
+__attribute__((noinit, location(EPWM13XCMPXLINK_BASE))) volatile struct EPWM_XCMP_REGS EPwm13XcmpXlinkRegs;
+
+__attribute__((noinit, location(EPWM14XCMPXLINK_BASE))) volatile struct EPWM_XCMP_REGS EPwm14XcmpXlinkRegs;
+
+__attribute__((noinit, location(EPWM15XCMPXLINK_BASE))) volatile struct EPWM_XCMP_REGS EPwm15XcmpXlinkRegs;
+
+__attribute__((noinit, location(EPWM16XCMPXLINK_BASE))) volatile struct EPWM_XCMP_REGS EPwm16XcmpXlinkRegs;
+
+__attribute__((noinit, location(EPWM17XCMPXLINK_BASE))) volatile struct EPWM_XCMP_REGS EPwm17XcmpXlinkRegs;
+
+__attribute__((noinit, location(EPWM18XCMPXLINK_BASE))) volatile struct EPWM_XCMP_REGS EPwm18XcmpXlinkRegs;
 
 __attribute__((noinit, location(EQEP1_BASE))) volatile struct EQEP_REGS EQep1Regs;
 
@@ -424,7 +532,7 @@ __attribute__((noinit, location(ICLXBAR_BASE))) volatile struct ICL_XBAR_REGS Ic
 
 __attribute__((noinit, location(INPUTXBAR_BASE))) volatile struct INPUT_XBAR_REGS InputXbarRegs;
 
-__attribute__((noinit, location(IPCCOUNTERREGS_BASE))) volatile struct IPC_COUNTER_REGS IpccounterRegsRegs;
+__attribute__((noinit, location(IPCCOUNTER_BASE))) volatile struct IPC_COUNTER_REGS IpcCounterRegs;
 
 __attribute__((noinit, location(LCM_CPU_BASE))) volatile struct LCM_REGS LCMCPURegs;
 
@@ -436,8 +544,6 @@ __attribute__((noinit, location(LINB_BASE))) volatile struct LIN_REGS LinbRegs;
 
 __attribute__((noinit, location(MDLXBAR_BASE))) volatile struct MDL_XBAR_REGS MdlXbarRegs;
 
-__attribute__((noinit, location(MEMSSROMPATCH_BASE))) volatile struct MEMSS_CPU1_ROM_PATCH_REGS MemssRomPatchRegs;
-
 __attribute__((noinit, location(MEMSSCCFG_BASE))) volatile struct MEMSS_C_CONFIG_REGS MemssCCfgRegs;
 
 __attribute__((noinit, location(MEMSSLCFG_BASE))) volatile struct MEMSS_L_CONFIG_REGS MemssLCfgRegs;
@@ -445,8 +551,6 @@ __attribute__((noinit, location(MEMSSLCFG_BASE))) volatile struct MEMSS_L_CONFIG
 __attribute__((noinit, location(MEMSSMISCI_BASE))) volatile struct MEMSS_MISCI_REGS MemssMisciRegs;
 
 __attribute__((noinit, location(MEMSSMCFG_BASE))) volatile struct MEMSS_M_CONFIG_REGS MemssMCfgRegs;
-
-__attribute__((noinit, location(MEMSSROMCFG_BASE))) volatile struct MEMSS_ROM_CONFIG_REGS MemssRomCfgRegs;
 
 __attribute__((noinit, location(EPWM1MINDBLUT_BASE))) volatile struct MINDB_LUT_REGS EPwm1MinDbLutRegs;
 
@@ -483,6 +587,42 @@ __attribute__((noinit, location(EPWM16MINDBLUT_BASE))) volatile struct MINDB_LUT
 __attribute__((noinit, location(EPWM17MINDBLUT_BASE))) volatile struct MINDB_LUT_REGS EPwm17MinDbLutRegs;
 
 __attribute__((noinit, location(EPWM18MINDBLUT_BASE))) volatile struct MINDB_LUT_REGS EPwm18MinDbLutRegs;
+
+__attribute__((noinit, location(EPWM1MINDBLUTXLINK_BASE))) volatile struct MINDB_LUT_REGS EPwm1MinDbLutXlinkRegs;
+
+__attribute__((noinit, location(EPWM2MINDBLUTXLINK_BASE))) volatile struct MINDB_LUT_REGS EPwm2MinDbLutXlinkRegs;
+
+__attribute__((noinit, location(EPWM3MINDBLUTXLINK_BASE))) volatile struct MINDB_LUT_REGS EPwm3MinDbLutXlinkRegs;
+
+__attribute__((noinit, location(EPWM4MINDBLUTXLINK_BASE))) volatile struct MINDB_LUT_REGS EPwm4MinDbLutXlinkRegs;
+
+__attribute__((noinit, location(EPWM5MINDBLUTXLINK_BASE))) volatile struct MINDB_LUT_REGS EPwm5MinDbLutXlinkRegs;
+
+__attribute__((noinit, location(EPWM6MINDBLUTXLINK_BASE))) volatile struct MINDB_LUT_REGS EPwm6MinDbLutXlinkRegs;
+
+__attribute__((noinit, location(EPWM7MINDBLUTXLINK_BASE))) volatile struct MINDB_LUT_REGS EPwm7MinDbLutXlinkRegs;
+
+__attribute__((noinit, location(EPWM8MINDBLUTXLINK_BASE))) volatile struct MINDB_LUT_REGS EPwm8MinDbLutXlinkRegs;
+
+__attribute__((noinit, location(EPWM9MINDBLUTXLINK_BASE))) volatile struct MINDB_LUT_REGS EPwm9MinDbLutXlinkRegs;
+
+__attribute__((noinit, location(EPWM10MINDBLUTXLINK_BASE))) volatile struct MINDB_LUT_REGS EPwm10MinDbLutXlinkRegs;
+
+__attribute__((noinit, location(EPWM11MINDBLUTXLINK_BASE))) volatile struct MINDB_LUT_REGS EPwm11MinDbLutXlinkRegs;
+
+__attribute__((noinit, location(EPWM12MINDBLUTXLINK_BASE))) volatile struct MINDB_LUT_REGS EPwm12MinDbLutXlinkRegs;
+
+__attribute__((noinit, location(EPWM13MINDBLUTXLINK_BASE))) volatile struct MINDB_LUT_REGS EPwm13MinDbLutXlinkRegs;
+
+__attribute__((noinit, location(EPWM14MINDBLUTXLINK_BASE))) volatile struct MINDB_LUT_REGS EPwm14MinDbLutXlinkRegs;
+
+__attribute__((noinit, location(EPWM15MINDBLUTXLINK_BASE))) volatile struct MINDB_LUT_REGS EPwm15MinDbLutXlinkRegs;
+
+__attribute__((noinit, location(EPWM16MINDBLUTXLINK_BASE))) volatile struct MINDB_LUT_REGS EPwm16MinDbLutXlinkRegs;
+
+__attribute__((noinit, location(EPWM17MINDBLUTXLINK_BASE))) volatile struct MINDB_LUT_REGS EPwm17MinDbLutXlinkRegs;
+
+__attribute__((noinit, location(EPWM18MINDBLUTXLINK_BASE))) volatile struct MINDB_LUT_REGS EPwm18MinDbLutXlinkRegs;
 
 __attribute__((noinit, location(OUTPUTXBAR1_FLAGS_BASE))) volatile struct OUTPUTXBAR_FLAG_REGS Outputxbar1flagsRegs;
 

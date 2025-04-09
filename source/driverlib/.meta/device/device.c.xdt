@@ -19,7 +19,7 @@ let cpu3instance;
 `Include()`
 
 #ifdef _FLASH
-#if (!defined(__CPU2__) && !defined(__CPU3__))
+#if (!defined(__CPU2__))
     //
     //  Dummy certificate section which is updated when actual certitifcate is generated
     //  as part of the post build steps

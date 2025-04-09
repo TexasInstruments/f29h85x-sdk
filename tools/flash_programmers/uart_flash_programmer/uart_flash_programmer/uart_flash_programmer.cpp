@@ -53,6 +53,7 @@
 #include "include/UartDownload.h"
 #include "include/UartPacket.h"
 #include "include/UartInterface.h"
+#include <filesystem>
 
 //*****************************************************************************
 //
@@ -80,11 +81,15 @@ char* g_pszKernelFile2 = nullptr;
 char* g_pszSecCfgProgramFile = nullptr;
 char* g_pszHSMFlashCodeProvisionFile = nullptr;
 char* g_pszCPU1FlashCodeProvisionFile = nullptr;
+char* g_pszCPU3FlashCodeProvisionFile = nullptr;
 char* g_pszHSMRunTimeFile = nullptr;
 char* g_pszHSMKeysFile = nullptr;
 char* g_pszComPort = nullptr;
 char* g_pszDeviceName = nullptr;
 char* g_pszLogFile = nullptr;
+
+uint32_t CERT_SIZE = 4096;
+uint32_t CP_CHUNK_SIZE = 14336;
 
 //
 // Device name
@@ -144,6 +149,7 @@ int main(int argc, char* argv[])
 	std::this_thread::sleep_for(std::chrono::milliseconds(6));
 #endif
 
+
 	bool done = false;
 	std::vector<uint8_t> packet;
 	uint32_t packetLength;
@@ -154,18 +160,23 @@ int main(int argc, char* argv[])
 	FlashStatusCode flashErrorCode;
 	FlashStatusCode* flashStatus = &flashErrorCode;
 
+
 	while (!done)
 	{
 		// Display user input options
 		std::cout << ("\nWhat operation do you want to perform?\n");
 		std::cout << ("\t 1-DFU CPU1             (HS-FS only)\n");
-		std::cout << ("\t 2-Load HSMRt Image     (Prerequisite for KP & CP)\n");
-		std::cout << ("\t 3-Load HSM Keys        (HS-KP Key Provision)\n");
-		std::cout << ("\t 4-Program Sec Cfg      (HS-SE Code Provision)\n");
-		std::cout << ("\t 5-Load HSM Image       (HS-SE Code Provision)\n");
-		std::cout << ("\t 6-Load C29 CPU1 Image  (HS-SE Code Provision)\n");
-		std::cout << ("\t 7-Run CPU1\n");
-		std::cout << ("\t 8-Reset CPU1\n");
+		std::cout << ("\t 2-DFU CPU3             (HS-FS only)\n");
+		std::cout << ("\t 3-Load HSMRt Image     (Prerequisite for KP & CP)\n");
+		std::cout << ("\t 4-Load HSM Keys        (HS-KP Key Provision)\n");
+		std::cout << ("\t 5-Program Sec Cfg      (HS-SE Code Provision)\n");
+		std::cout << ("\t 6-Load HSM Image       (HS-SE Code Provision)\n");
+		std::cout << ("\t 7-Load C29 CPU1 Image  (HS-SE Code Provision)\n");
+		std::cout << ("\t 8-Load C29 CPU3 Image  (HS-SE Code Provision)\n");
+		std::cout << ("\t 9-Run CPU1\n");
+		std::cout << ("\t 10-Run CPU3\n");
+		std::cout << ("\t 11-Sync (Verify kernel or Boot Manager is running)\n");
+		std::cout << ("\t 12-Reset CPU1\n");
 		std::cout << ("\t 0-Done\n");
 
 		size_t responseOption;
@@ -173,42 +184,13 @@ int main(int argc, char* argv[])
 
 		switch (responseOption)
 		{
-
+			
 			//------------------------------------DFU_CPU1------------------------------//
-			case 1:
+		case 1: {
 			if (!g_pszAppFile)
 			{
 				*g_pOutputStream << "ERROR: No flash application specified for CPU1 Flash Programming!" << std::endl;
 				exitApp(-1);
-			}
-			
-			//
-			// Optional Entry Address override
-			//
-			if (g_pszAppEntryAddress) 
-			{
-				// Convert entry address to uint32_t
-				entryAddr = strtoul(g_pszAppEntryAddress, nullptr, 16);
-
-				// Construct packet with app entry address selection
-				packetLength = constructPacket(packet, SET_APP_ENTRY_ADDRESS, sizeof(entryAddr), (uint8_t*)&entryAddr);
-
-				// Send packet with app entry address selection
-				*g_pOutputStream << ("\nSending entry address command packet\n");
-				sendPacket(uartHandle, packet, packetLength);
-				commandType = getPacket(uartHandle, packet, &tempLength);
-				if (commandType != SET_APP_ENTRY_ADDRESS)
-				{
-					*g_pOutputStream << "validation ERROR with returned command!" << std::endl;
-				}
-				parseFlashStatus(packet, flashStatus);
-				if (flashStatus->status != NO_COMMAND_ERROR)
-				{
-					printErrorStatus(flashStatus->status);
-					*g_pOutputStream << std::hex << std::showbase << "ERROR Flashing Address: " << flashStatus->address << std::endl;
-					printErrorStatus(flashStatus->flashAPIError);
-					*g_pOutputStream << std::hex << std::showbase << "FMSTAT Register contents: " << flashStatus->flashAPIFsmStatus << std::endl;
-				}
 			}
 
 			// Construct packet to send DFU command
@@ -242,9 +224,51 @@ int main(int argc, char* argv[])
 			(*g_pOutputStream).write((char*)packet.data(), tempLength) << std::endl;
 
 			break;
+		}
+
+			  //------------------------------------DFU_CPU3------------------------------//
+		case 2: {
+			if (!g_pszAppFile2)
+			{
+				*g_pOutputStream << "ERROR: No flash application specified for CPU3 Flash Programming!" << std::endl;
+				exitApp(-1);
+			}
+
+			// Construct packet to send DFU command
+			packetLength = constructPacket(packet, DFU_CPU3, 0, nullptr);
+			*g_pOutputStream << ("\nSending device firmware update command packet\n");
+			sendPacket(uartHandle, packet, packetLength);
+
+			// Allow time for flash to be erased
+			std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+
+			// Send the application image
+			downloadImage(uartHandle, g_pszAppFile2);
+			commandType = getPacket(uartHandle, packet, &tempLength);
+			if (commandType != DFU_CPU3)
+			{
+				*g_pOutputStream << "validation ERROR with returned command!" << std::endl;
+			}
+			parseFlashStatus(packet, flashStatus);
+			if (flashStatus->status != NO_COMMAND_ERROR)
+			{
+				printErrorStatus(flashStatus->status);
+				*g_pOutputStream << std::hex << std::showbase << "ERROR Flashing Address: " << flashStatus->address << std::endl;
+				printErrorStatus(flashStatus->flashAPIError);
+				*g_pOutputStream << std::hex << std::showbase << "FMSTAT Register contents: " << flashStatus->flashAPIFsmStatus << std::endl;
+			}
+
+			// Retrieve data logging messages
+			*g_pOutputStream << ("\nWaiting for logging messages...\n");
+			getPacket(uartHandle, packet, &tempLength);
+			*g_pOutputStream << ("Received message:\n");
+			(*g_pOutputStream).write((char*)packet.data(), tempLength) << std::endl;
+
+			break;
+		}
 
 			//------------------------------------HSMRt------------------------------//
-		case 2:
+		case 3:
 			if (!g_pszHSMRunTimeFile)
 			{
 				*g_pOutputStream << "ERROR: No HSMRt Image specified for programming!" << std::endl;
@@ -283,7 +307,7 @@ int main(int argc, char* argv[])
 			break;
 
 			//------------------------------------HSM_KEYS------------------------------//
-		case 3:
+		case 4:
 			if (!g_pszHSMKeysFile)
 			{
 				*g_pOutputStream << "ERROR: No HSM Keys specified for programming!" << std::endl;
@@ -321,7 +345,7 @@ int main(int argc, char* argv[])
 
 			break;
 
-		case 4:
+		case 5:
 			//------------------------------------SEC_CFG_PROGRAM------------------------------//
 			if (!g_pszSecCfgProgramFile)
 			{
@@ -361,22 +385,49 @@ int main(int argc, char* argv[])
 			break;
 
 			//------------------------------------HSM_CP_LOAD------------------------------//
-		case 5:
+		case 6:
+		{
 			if (!g_pszHSMFlashCodeProvisionFile)
 			{
 				*g_pOutputStream << "ERROR: No HSM Flash Code Provisioning File specified for programming!" << std::endl;
 				exitApp(-1);
 			}
 
+			std::size_t fileSize = std::filesystem::file_size(g_pszHSMFlashCodeProvisionFile);
+
+			// Calculate the number of breakpoints
+
+			uint32_t numBps = (fileSize - CERT_SIZE) / CP_CHUNK_SIZE;
+
+			std::vector<uint32_t> hardCodedBps;
+
+			// First breakpoint occurs after certificate
+			hardCodedBps.push_back(CERT_SIZE);
+
+			// Add breakpoints after each chunk
+			// Note that there is a break point after the first 512 bits of the image as well
+			for (uint32_t i = (CERT_SIZE + 512); i < fileSize; i += CP_CHUNK_SIZE)
+			{
+				hardCodedBps.push_back(i);
+			}
+
+			// Add another break point if there is data that won't fill a whole chunk or 512 bits
+			uint32_t lastChunkSize = (fileSize - CERT_SIZE - 512) % CP_CHUNK_SIZE;
+			lastChunkSize = lastChunkSize % 512;
+			hardCodedBps.push_back((fileSize - lastChunkSize));
+
+			// Calculate number of breakpoints
+			std::size_t sizeBps = hardCodedBps.size();
+
 			// Construct packet to send HSM Code Provisioning Flash Image command
 			packetLength = constructPacket(packet, HSM_CP_FLASH_IMAGE, 0, nullptr);
-				
+
 			// Send packet with HSM_CP_FLASH_IMAGE command
 			*g_pOutputStream << ("\nSending HSM code provisioning flash image command packet\n");
 			sendPacket(uartHandle, packet, packetLength);
 
 			// Send the application image
-			downloadImage(uartHandle, g_pszHSMFlashCodeProvisionFile);
+			downloadImage(uartHandle, g_pszHSMFlashCodeProvisionFile, &hardCodedBps[0], sizeBps);
 			commandType = getPacket(uartHandle, packet, &tempLength);
 			if (commandType != HSM_CP_FLASH_IMAGE)
 			{
@@ -397,53 +448,52 @@ int main(int argc, char* argv[])
 			(*g_pOutputStream).write((char*)packet.data(), tempLength) << std::endl;
 
 			break;
+		}
 
-			//------------------------------------C29_CP_LOAD------------------------------//
-		case 6:
+			//------------------------------------C29_CPU1_CP_LOAD------------------------------//
+		case 7:
+		{
 			if (!g_pszCPU1FlashCodeProvisionFile)
 			{
 				*g_pOutputStream << "ERROR: No CPU1 Flash Code Provisioning File specified for programming!" << std::endl;
 				exitApp(-1);
 			}
 
-			//
-			// Optional Entry Address override
-			//
-			if (g_pszAppEntryAddress)
+			std::size_t fileSize = std::filesystem::file_size(g_pszCPU1FlashCodeProvisionFile);
+
+			// Calculate the number of breakpoints
+
+			uint32_t numBps = (fileSize - CERT_SIZE) / CP_CHUNK_SIZE;
+
+			std::vector<uint32_t> hardCodedBps;
+
+			// First breakpoint occurs after certificate
+			hardCodedBps.push_back(CERT_SIZE);
+
+			// Add breakpoints after each chunk
+			// Note that there is a break point after the first 512 bits of the image as well
+			for (uint32_t i = (CERT_SIZE + 512); i < fileSize; i += CP_CHUNK_SIZE)
 			{
-				// Convert entry and load address to uint32_t
-				entryAddr = strtoul(g_pszAppEntryAddress, nullptr, 16);
-
-				// Construct packet with app entry address selection
-				packetLength = constructPacket(packet, SET_APP_ENTRY_ADDRESS, sizeof(entryAddr), (uint8_t*)&entryAddr);
-
-				// Send packet with app entry address selection
-				*g_pOutputStream << "\nSending entry address command...\n";
-				sendPacket(uartHandle, packet, packetLength);
-				commandType = getPacket(uartHandle, packet, &tempLength);
-				if (commandType != SET_APP_ENTRY_ADDRESS)
-				{
-					*g_pOutputStream << "validation ERROR with returned command!" << std::endl;
-				}
-				parseFlashStatus(packet, flashStatus);
-				if (flashStatus->status != NO_COMMAND_ERROR)
-				{
-					printErrorStatus(flashStatus->status);
-					*g_pOutputStream << std::hex << std::showbase << "ERROR Flashing Address: " << flashStatus->address << std::endl;
-					printErrorStatus(flashStatus->flashAPIError);
-					*g_pOutputStream << std::hex << std::showbase << "FMSTAT Register contents: " << flashStatus->flashAPIFsmStatus << std::endl;
-				}
+				hardCodedBps.push_back(i);
 			}
+
+			// Add another break point if there is data that won't fill a whole chunk or 512 bits
+			uint32_t lastChunkSize = (fileSize - CERT_SIZE - 512) % CP_CHUNK_SIZE;
+			lastChunkSize = lastChunkSize % 512;
+			hardCodedBps.push_back((fileSize - lastChunkSize));
+
+			// Calculate number of breakpoints
+			std::size_t sizeBps = hardCodedBps.size();
 
 			// Construct packet to send CPU1_CP_FLASH_IMAGE command
 			packetLength = constructPacket(packet, CPU1_CP_FLASH_IMAGE, 0, nullptr);
 
 			// Send packet with CPU1_CP_FLASH_IMAGE command
-			*g_pOutputStream << ("\nSending HSM code provisioning flash image command packet\n");
+			*g_pOutputStream << ("\nSending CPU1 code provisioning flash image command packet\n");
 			sendPacket(uartHandle, packet, packetLength);
 
 			// Send the application image
-			downloadImage(uartHandle, g_pszCPU1FlashCodeProvisionFile);
+			downloadImage(uartHandle, g_pszCPU1FlashCodeProvisionFile, (void*) &hardCodedBps[0], sizeBps);
 			commandType = getPacket(uartHandle, packet, &tempLength);
 			if (commandType != CPU1_CP_FLASH_IMAGE)
 			{
@@ -465,13 +515,110 @@ int main(int argc, char* argv[])
 			(*g_pOutputStream).write((char*)packet.data(), tempLength) << std::endl;
 
 			break;
+		}
+
+		//------------------------------------C29_CPU3_CP_LOAD------------------------------//
+		case 8:
+		{
+			if (!g_pszCPU3FlashCodeProvisionFile)
+			{
+				*g_pOutputStream << "ERROR: No CPU3 Flash Code Provisioning File specified for programming!" << std::endl;
+				exitApp(-1);
+			}
+
+			std::size_t fileSize = std::filesystem::file_size(g_pszCPU3FlashCodeProvisionFile);
+
+			// Calculate the number of breakpoints
+
+			uint32_t numBps = (fileSize - CERT_SIZE) / CP_CHUNK_SIZE;
+
+			std::vector<uint32_t> hardCodedBps;
+
+			// First breakpoint occurs after certificate
+			hardCodedBps.push_back(CERT_SIZE);
+
+			// Add breakpoints after each chunk
+			// Note that there is a break point after the first 512 bits of the image as well
+			for (uint32_t i = (CERT_SIZE + 512); i < fileSize; i += CP_CHUNK_SIZE)
+			{
+				hardCodedBps.push_back(i);
+			}
+
+			// Add another break point if there is data that won't fill a whole chunk or 512 bits
+			uint32_t lastChunkSize = (fileSize - CERT_SIZE - 512) % CP_CHUNK_SIZE;
+			lastChunkSize = lastChunkSize % 512;
+			hardCodedBps.push_back((fileSize - lastChunkSize));
+
+			// Calculate number of breakpoints
+			std::size_t sizeBps = hardCodedBps.size();
+
+			// Construct packet to send CPU3_CP_FLASH_IMAGE command
+			packetLength = constructPacket(packet, CPU3_CP_FLASH_IMAGE, 0, nullptr);
+
+			// Send packet with CPU3_CP_FLASH_IMAGE command
+			*g_pOutputStream << ("\nSending CPU3 code provisioning flash image command packet\n");
+			sendPacket(uartHandle, packet, packetLength);
+
+			// Send the application image
+			downloadImage(uartHandle, g_pszCPU3FlashCodeProvisionFile, (void*)&hardCodedBps[0], sizeBps);
+			commandType = getPacket(uartHandle, packet, &tempLength);
+			if (commandType != CPU3_CP_FLASH_IMAGE)
+			{
+				*g_pOutputStream << "validation ERROR with returned command!" << std::endl;
+			}
+			parseFlashStatus(packet, flashStatus);
+			if (flashStatus->status != NO_COMMAND_ERROR)
+			{
+				printErrorStatus(flashStatus->status);
+				*g_pOutputStream << std::hex << std::showbase << "ERROR Flashing Address: " << flashStatus->address << std::endl;
+				printErrorStatus(flashStatus->flashAPIError);
+				*g_pOutputStream << std::hex << std::showbase << "FMSTAT Register contents: " << flashStatus->flashAPIFsmStatus << std::endl;
+			}
+
+			// Retrieve data logging messages
+			*g_pOutputStream << ("\nWaiting for logging messages...\n");
+			getPacket(uartHandle, packet, &tempLength);
+			*g_pOutputStream << ("Received message:\n");
+			(*g_pOutputStream).write((char*)packet.data(), tempLength) << std::endl;
+
+			break;
+		}
 
 			//------------------------------------RUN_CPU1----------------------------------//
-		case 7:
+		case 9:
 			if (g_bCpu1Status == false)
 			{
 				*g_pOutputStream << "ERROR: Cannot perform operations on CPU1 after CPU3 is booted and given control of UART!" << std::endl;
 				break;
+			}
+
+			//
+			// Optional Entry Address override
+			//
+			if (g_pszAppEntryAddress)
+			{
+				// Convert entry address to uint32_t
+				entryAddr = strtoul(g_pszAppEntryAddress, nullptr, 16);
+
+				// Construct packet with app entry address selection
+				packetLength = constructPacket(packet, SET_APP_ENTRY_ADDRESS, sizeof(entryAddr), (uint8_t*)&entryAddr);
+
+				// Send packet with app entry address selection
+				*g_pOutputStream << ("\nSending entry address command packet\n");
+				sendPacket(uartHandle, packet, packetLength);
+				commandType = getPacket(uartHandle, packet, &tempLength);
+				if (commandType != SET_APP_ENTRY_ADDRESS)
+				{
+					*g_pOutputStream << "validation ERROR with returned command!" << std::endl;
+				}
+				parseFlashStatus(packet, flashStatus);
+				if (flashStatus->status != NO_COMMAND_ERROR)
+				{
+					printErrorStatus(flashStatus->status);
+					*g_pOutputStream << std::hex << std::showbase << "ERROR Flashing Address: " << flashStatus->address << std::endl;
+					printErrorStatus(flashStatus->flashAPIError);
+					*g_pOutputStream << std::hex << std::showbase << "FMSTAT Register contents: " << flashStatus->flashAPIFsmStatus << std::endl;
+				}
 			}
 
 			// Construct packet with run cpu1 command
@@ -483,8 +630,86 @@ int main(int argc, char* argv[])
 
 			break;
 
+			//------------------------------------RUN_CPU3----------------------------------//
+		case 10:
+			if (g_bCpu1Status == false)
+			{
+				*g_pOutputStream << "ERROR: Cannot perform operations on CPU1 after CPU3 is booted and given control of UART!" << std::endl;
+				break;
+			}
+
+			//
+			// Optional Entry Address override
+			//
+			if (g_pszAppEntryAddress)
+			{
+				// Convert entry address to uint32_t
+				entryAddr = strtoul(g_pszAppEntryAddress, nullptr, 16);
+
+				// Construct packet with app entry address selection
+				packetLength = constructPacket(packet, SET_APP_ENTRY_ADDRESS, sizeof(entryAddr), (uint8_t*)&entryAddr);
+
+				// Send packet with app entry address selection
+				*g_pOutputStream << ("\nSending entry address command packet\n");
+				sendPacket(uartHandle, packet, packetLength);
+				commandType = getPacket(uartHandle, packet, &tempLength);
+				if (commandType != SET_APP_ENTRY_ADDRESS)
+				{
+					*g_pOutputStream << "validation ERROR with returned command!" << std::endl;
+				}
+				parseFlashStatus(packet, flashStatus);
+				if (flashStatus->status != NO_COMMAND_ERROR)
+				{
+					printErrorStatus(flashStatus->status);
+					*g_pOutputStream << std::hex << std::showbase << "ERROR Flashing Address: " << flashStatus->address << std::endl;
+					printErrorStatus(flashStatus->flashAPIError);
+					*g_pOutputStream << std::hex << std::showbase << "FMSTAT Register contents: " << flashStatus->flashAPIFsmStatus << std::endl;
+				}
+			}
+
+			// Construct packet with run cpu1 command
+			packetLength = constructPacket(packet, RUN_CPU3, 0, nullptr);
+
+			// Send packet with run cpu1 command
+			*g_pOutputStream << "\nSending run CPU3 command packet\n";
+			sendPacket(uartHandle, packet, packetLength);
+
+			break;
+
+			//------------------------------------SYNC_STATUS---------------------------------//
+		case 11:
+
+			// Construct packet with reset cpu1 command
+			packetLength = constructPacket(packet, SYNC_STATUS, 0, nullptr);
+
+			// Send packet with reset cpu1 command
+			*g_pOutputStream << "\nSending reset CPU1 command packet\n";
+			sendPacket(uartHandle, packet, packetLength);
+
+			// Retrieve data logging messages
+			*g_pOutputStream << "\nWaiting for logging messages...\n";
+			getPacket(uartHandle, packet, &tempLength);
+			*g_pOutputStream << ("Received message:\n");
+			(*g_pOutputStream).write((char*)packet.data(), tempLength) << std::endl;
+
+			commandType = getPacket(uartHandle, packet, &tempLength);
+			if (commandType != SYNC_STATUS)
+			{
+				*g_pOutputStream << "validation ERROR with returned command!" << std::endl;
+			}
+			parseFlashStatus(packet, flashStatus);
+			if (flashStatus->status != NO_COMMAND_ERROR)
+			{
+				printErrorStatus(flashStatus->status);
+				*g_pOutputStream << std::hex << std::showbase << "ERROR Flashing Address: " << flashStatus->address << std::endl;
+				printErrorStatus(flashStatus->flashAPIError);
+				*g_pOutputStream << std::hex << std::showbase << "FMSTAT Register contents: " << flashStatus->flashAPIFsmStatus << std::endl;
+			}
+
+			break;
+
 			//------------------------------------RESET_CPU1---------------------------------//
-		case 8:
+		case 12:
 			if (g_bCpu1Status == false)
 			{
 				*g_pOutputStream << "ERROR: Cannot perform operations on CPU1 after CPU3 is booted and given control of UART!" << std::endl;

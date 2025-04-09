@@ -56,7 +56,7 @@
 #include <iomanip>
 
 //
-// Cout Stream without needing a custom deleter to bypass freeing std::cout
+// Cout Stream with a static custom deleter
 //
 class CoutStream : public std::ostream
 {

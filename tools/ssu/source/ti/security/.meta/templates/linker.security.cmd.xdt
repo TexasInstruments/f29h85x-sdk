@@ -89,7 +89,11 @@ __SECSP`i`_START = `stack.$name`_start;
 % })
 %} else {
 --entry_point="code_start"
-
+% if((Common.isContextCPU2() == true) || (Common.isContextCPU3() == true))
+% {
+--retain="reset_vector"
+--retain="nmi_vector"
+% }
 
 MEMORY
 {

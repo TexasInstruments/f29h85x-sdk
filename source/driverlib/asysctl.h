@@ -703,11 +703,11 @@ ASysCtl_configCMPMux(AsysCtl_CMPselect selectMux)
 
     if(selectMux < ASYSCTL_CMP1_HN_0)
     {
-        bitMask = 0x7U << shift;
+        bitMask = (uint32_t)0x7U << shift;
     }
     else
     {
-        bitMask = 0x1U << shift;
+        bitMask = (uint32_t)0x1U << shift;
     }
 
     HWREG(ANALOGSUBSYS_BASE + ASYSCTL_O_CMPHPMXSEL + offset) =

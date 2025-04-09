@@ -1,0 +1,97 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --device "F29H85x" --part "F29H85x_256ZEX" --package "256ZEX" --context "CPU2" --product "MCU_SDK_F29H85x@1.00.00.00"
+ * @v2CliArgs --device "F29H850TU" --package "256ZEX" --variant "TMS320F29H850TU9" --context "CPU2" --product "MCU_SDK_F29H85x@1.00.00.00"
+ * @versions {"tool":"1.23.0+3968"}
+ */
+
+/**
+ * Import the modules used in this configuration.
+ */
+const rtdma2          = scripting.addModule("/driverlib/rtdma2.js", {}, false);
+const rtdma21         = rtdma2.addInstance();
+const APR             = scripting.addModule("/ti/security/APR");
+const APR1            = APR.addInstance();
+const APR2            = APR.addInstance();
+const OutputSection   = scripting.addModule("/ti/security/OutputSection", {}, false);
+const OutputSection1  = OutputSection.addInstance();
+const OutputSection2  = OutputSection.addInstance();
+const OutputSection3  = OutputSection.addInstance();
+const OutputSection4  = OutputSection.addInstance();
+const OutputSection5  = OutputSection.addInstance();
+const OutputSection6  = OutputSection.addInstance();
+const OutputSection7  = OutputSection.addInstance();
+const OutputSection8  = OutputSection.addInstance();
+const OutputSection9  = OutputSection.addInstance();
+const OutputSection10 = OutputSection.addInstance();
+const OutputSection11 = OutputSection.addInstance();
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+rtdma21.$name                = "myRTDMA2Ch0";
+rtdma21.enableTriggers       = true;
+rtdma21.srcAddressInputMode  = "VARIABLE";
+rtdma21.srcAddressVariable   = "srcAddr";
+rtdma21.destAddressInputMode = "VARIABLE";
+rtdma21.destAddressVariable  = "destAddr";
+rtdma21.useInterrupts        = true;
+rtdma21.registerInterrupts   = true;
+rtdma21.enableInterrupts     = true;
+rtdma21.interruptMode        = "DMA_INT_AT_END";
+rtdma21.burstSize            = 4;
+rtdma21.transferSize         = 16;
+rtdma21.srcBurstStep         = 4;
+rtdma21.srcTransferStep      = 4;
+rtdma21.destBurstStep        = 4;
+rtdma21.destTransferStep     = 4;
+
+APR.nmiVectorAddress   = 0x20100080;
+APR.resetVectorAddress = 0x20100040;
+
+APR1.memSize = 16;
+APR1.$name   = "SRAM_PROGRAM";
+APR1.share   = ["CPU1"];
+
+APR2.$name = "SRAM_DATA";
+APR2.type  = "Data";
+
+OutputSection1.$name              = ".text";
+OutputSection1.sectionMemory      = "SRAM_PROGRAM";
+OutputSection1.sectionAlignEnable = true;
+
+OutputSection2.sectionMemory      = "SRAM_PROGRAM";
+OutputSection2.sectionAlignEnable = true;
+OutputSection2.$name              = ".cinit";
+
+OutputSection3.sectionMemory      = "SRAM_PROGRAM";
+OutputSection3.sectionAlignEnable = true;
+OutputSection3.$name              = ".const";
+
+OutputSection4.sectionMemory      = "SRAM_PROGRAM";
+OutputSection4.sectionAlignEnable = true;
+OutputSection4.$name              = ".rodata";
+
+OutputSection5.sectionMemory      = "SRAM_PROGRAM";
+OutputSection5.sectionAlignEnable = true;
+OutputSection5.$name              = ".init_array";
+
+OutputSection6.sectionMemory      = "SRAM_PROGRAM";
+OutputSection6.sectionAlignEnable = true;
+OutputSection6.$name              = ".TI.ramfunc";
+
+OutputSection7.$name         = ".data";
+OutputSection7.sectionMemory = "SRAM_DATA";
+
+OutputSection8.sectionMemory = "SRAM_DATA";
+OutputSection8.$name         = ".bss";
+
+OutputSection9.sectionMemory = "SRAM_DATA";
+OutputSection9.$name         = ".stack";
+
+OutputSection10.sectionMemory = "SRAM_DATA";
+OutputSection10.$name         = ".sysmem";
+
+OutputSection11.sectionMemory = "SRAM_DATA";
+OutputSection11.$name         = ".cio";

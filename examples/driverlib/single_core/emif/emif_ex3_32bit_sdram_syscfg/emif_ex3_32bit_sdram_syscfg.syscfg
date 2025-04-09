@@ -1,0 +1,107 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --device "F29H85x" --package "256ZEX" --part "F29H85x_256ZEX" --context "CPU1" --product "MCU_SDK_F29H85x@1.00.00.00"
+ * @v2CliArgs --device "F29H850TU" --package "256ZEX" --variant "TMS320F29H850TU9" --context "CPU1" --product "MCU_SDK_F29H85x@1.00.00.00"
+ * @versions {"tool":"1.22.0+3877"}
+ */
+
+const divider15       = system.clockTree["PLL_REFDIV"];
+divider15.divideValue = 1;
+
+const multiplier1         = system.clockTree["PLL_IMULT"];
+multiplier1.multiplyValue = 40;
+
+const mux7       = system.clockTree["OSCCLKSRCSEL"];
+mux7.inputSelect = "INTOSC2";
+
+/**
+ * Import the modules used in this configuration.
+ */
+const emif1  = scripting.addModule("/driverlib/emif1.js", {}, false);
+const emif11 = emif1.addInstance();
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+const divider3       = system.clockTree["EMIF1CLKDIV"];
+divider3.divideValue = 4;
+emif11.$name                        = "myEMIF10";
+emif11.enableCS2                    = false;
+emif11.enableCS3                    = false;
+emif11.enableCS4                    = false;
+emif11.cs0tRFC                      = 7;
+emif11.cs0tXSR                      = 8;
+emif11.cs0CAS                       = "EMIF_SYNC_CAS_LAT_3";
+emif11.cs0tRP                       = 2;
+emif11.cs0tWR                       = 2;
+emif11.cs0tRAS                      = 5;
+emif11.cs0tRC                       = 7;
+emif11.cs0tRRD                      = 2;
+emif11.useCase                      = "SDRAM 32-bit";
+emif11.cs0CAWidth                   = "EMIF_SYNC_COLUMN_WIDTH_8";
+emif11.emif1.emif1_cs0nPin.$assign  = "GPIO32";
+emif11.emif1.emif1_sdckePin.$assign = "E6/A30, GPIO248";
+emif11.emif1.emif1_clkPin.$assign   = "GPIO30";
+emif11.emif1.emif1_wenPin.$assign   = "GPIO31";
+emif11.emif1.emif1_waitPin.$assign  = "GPIO36";
+emif11.emif1.emif1_casPin.$assign   = "GPIO86";
+emif11.emif1.emif1_rasPin.$assign   = "GPIO87";
+emif11.emif1.emif1_dqm0Pin.$assign  = "GPIO88";
+emif11.emif1.emif1_dqm1Pin.$assign  = "GPIO89";
+emif11.emif1.emif1_dqm2Pin.$assign  = "GPIO90";
+emif11.emif1.emif1_dqm3Pin.$assign  = "GPIO91";
+emif11.emif1.emif1_ba0Pin.$assign   = "GPIO93";
+emif11.emif1.emif1_ba1Pin.$assign   = "GPIO92";
+emif11.emif1.emif1_a0Pin.$assign    = "GPIO38";
+emif11.emif1.emif1_a1Pin.$assign    = "GPIO39";
+emif11.emif1.emif1_a2Pin.$assign    = "GPIO40";
+emif11.emif1.emif1_a3Pin.$assign    = "GPIO41";
+emif11.emif1.emif1_a4Pin.$assign    = "GPIO44";
+emif11.emif1.emif1_a5Pin.$assign    = "GPIO45";
+emif11.emif1.emif1_a6Pin.$assign    = "GPIO46";
+emif11.emif1.emif1_a7Pin.$assign    = "GPIO47";
+emif11.emif1.emif1_a8Pin.$assign    = "GPIO48";
+emif11.emif1.emif1_a9Pin.$assign    = "GPIO49";
+emif11.emif1.emif1_a10Pin.$assign   = "GPIO50";
+emif11.emif1.emif1_a11Pin.$assign   = "GPIO51";
+emif11.emif1.emif1_a12Pin.$assign   = "GPIO52";
+emif11.emif1.emif1_d0Pin.$assign    = "GPIO85";
+emif11.emif1.emif1_d1Pin.$assign    = "GPIO83";
+emif11.emif1.emif1_d2Pin.$assign    = "GPIO82";
+emif11.emif1.emif1_d3Pin.$assign    = "GPIO81";
+emif11.emif1.emif1_d4Pin.$assign    = "GPIO80";
+emif11.emif1.emif1_d5Pin.$assign    = "GPIO79";
+emif11.emif1.emif1_d6Pin.$assign    = "GPIO78";
+emif11.emif1.emif1_d7Pin.$assign    = "GPIO77";
+emif11.emif1.emif1_d8Pin.$assign    = "GPIO76";
+emif11.emif1.emif1_d9Pin.$assign    = "GPIO75";
+emif11.emif1.emif1_d10Pin.$assign   = "GPIO74";
+emif11.emif1.emif1_d11Pin.$assign   = "GPIO73";
+emif11.emif1.emif1_d12Pin.$assign   = "GPIO72";
+emif11.emif1.emif1_d13Pin.$assign   = "GPIO71";
+emif11.emif1.emif1_d14Pin.$assign   = "GPIO70";
+emif11.emif1.emif1_d15Pin.$assign   = "GPIO69";
+emif11.emif1.emif1_d16Pin.$assign   = "GPIO68";
+emif11.emif1.emif1_d17Pin.$assign   = "GPIO67";
+emif11.emif1.emif1_d18Pin.$assign   = "GPIO66";
+emif11.emif1.emif1_d19Pin.$assign   = "GPIO65";
+emif11.emif1.emif1_d20Pin.$assign   = "GPIO64";
+emif11.emif1.emif1_d21Pin.$assign   = "GPIO63";
+emif11.emif1.emif1_d22Pin.$assign   = "GPIO62";
+emif11.emif1.emif1_d23Pin.$assign   = "GPIO61";
+emif11.emif1.emif1_d24Pin.$assign   = "GPIO60";
+emif11.emif1.emif1_d25Pin.$assign   = "GPIO59";
+emif11.emif1.emif1_d26Pin.$assign   = "GPIO58";
+emif11.emif1.emif1_d27Pin.$assign   = "GPIO57";
+emif11.emif1.emif1_d28Pin.$assign   = "GPIO56";
+emif11.emif1.emif1_d29Pin.$assign   = "GPIO55";
+emif11.emif1.emif1_d30Pin.$assign   = "GPIO54";
+emif11.emif1.emif1_d31Pin.$assign   = "GPIO53";
+
+/**
+ * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
+ * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
+ * re-solve from scratch.
+ */
+emif11.emif1.$suggestSolution = "EMIF1";

@@ -18,6 +18,8 @@
             "source/rtlibs/dsp/fpu/fpu32/fir",
             "source/rtlibs/dsp/fpu/fpu32/iir",
             "source/rtlibs/fastmath/crc",
+            "source/rtlibs/fastmath/matrix",
+            "source/rtlibs/fastmath/binary_lut_search",
             "source/rtlibs/iqmath",
             "source/kernel/freertos/Source/include",
             "source/kernel/freertos/Source/portable/CCS/C2000_C29x",
@@ -52,6 +54,10 @@
             {
                 "macroName": "COM_TI_MCU_SDK_GENERIC_LNK_HSM_CMD_RAM",
                 "location": "examples/device_support/cmd/f29h85x_ram_lnk_hsm.cmd"
+            },
+            {
+                "macroName": "COM_TI_MCU_SDK_GENERIC_LNK_HSM_CMD_FLASH",
+                "location": "examples/device_support/cmd/f29h85x_flash_lnk_hsm.cmd"
             }
         ],
         "migrationSpecs": [

@@ -17,6 +17,7 @@ FILES := \
 	dcc.c \
 	dlt.c \
 	ecap.c \
+	emif.c \
 	epg.c \
 	epwm.c \
 	eqep.c \

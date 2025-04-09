@@ -41,12 +41,23 @@
 //###########################################################################
 #ifndef F65_H_
 #define F65_H_
-#include <stdint.h>
+
+//*****************************************************************************
+//
+// If building with a C++ compiler, make all of the definitions in this header
+// have a C binding.
+//
+//*****************************************************************************
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 #include "Registers.h"
 #include "hw_flash_command.h"
-#include "inc/hw_ssu.h"
 #include "Constants/F29H85x.h"
 #include "Types.h"
+#include "stdint.h"
 
 #if !defined(F65)
    #define F65
@@ -64,7 +75,10 @@ extern Fapi_StatusType Fapi_setActiveFlashBank(Fapi_FlashBankType oNewFlashBank)
 
 extern void Fapi_flushPipeline(uint32_t u32UserFlashConfig);
 
+
 extern Fapi_StatusType Fapi_setupBankSectorEnable(uint32_t *pu32StartAddress, uint32_t u32UserFlashConfig, uint32_t reg_address, uint32_t value);
+
+extern Fapi_StatusType Fapi_issueProgBankMode(Fapi_BankMgmtAddress u32StartAddress, Fapi_BankMode u32BankMode, Fapi_FlashStatusWordType *poFlashStatusWord, uint32_t u32UserFlashConfig);
 
 /* Device Family Dependent FSM commands */
 extern uint32_t * Fapi_remapEccAddress(uint32_t u32EccAddress);
@@ -193,6 +207,15 @@ extern uint32_t Fapi_getUserConfiguration(
                                         Fapi_FOTAStatus  FOTAStatus
                                         );
 
-extern Fapi_StatusType Fapi_SetFlashCPUConfiguration(uint32_t u32UserFlashConfig);
+extern Fapi_StatusType Fapi_SetFlashCPUConfiguration(Fapi_BankMode u32BankModeValue);
+
+//*****************************************************************************
+//
+// Mark the end of the C bindings section for C++ compilers.
+//
+//*****************************************************************************
+#ifdef __cplusplus
+}
+#endif
 
 #endif /*F65_H_*/
