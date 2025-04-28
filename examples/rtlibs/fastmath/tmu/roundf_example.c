@@ -248,6 +248,8 @@ int32_t main(void)
 
     printf("Completed roundf test Pass_count = %d, Fail_count = %d \n", pass, fail);
     printf("roundf Cycles = %d, Timer overhead = %d \n", differenceCounter, overheadCounter);
+    while(1)
+    {}
 }
 
 // End of File

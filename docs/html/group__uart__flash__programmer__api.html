@@ -43,7 +43,7 @@
   <td id="projectlogo"><a href="https://www.ti.com"><img alt="Logo" src="ti_logo.svg"/></a></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">F29H85x-SDK
-   &#160;<span id="projectnumber">1.00.00.00</span>
+   &#160;<span id="projectnumber">1.01.00.00</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -131,22 +131,28 @@ Functions</h2></td></tr>
 <tr class="memitem:ga862695efed18205ecb73cf037b1fbd05"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__uart__flash__programmer__api.html#ga862695efed18205ecb73cf037b1fbd05">loadProgram</a> (<a class="el" href="classFlashProgrammer_1_1UartHandler.html">FlashProgrammer::UartHandler</a> &amp;uartHandle, FILE *fptr)</td></tr>
 <tr class="memdesc:ga862695efed18205ecb73cf037b1fbd05"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads the program to device by sending the file to BootROM/flash kernel.  <a href="group__uart__flash__programmer__api.html#ga862695efed18205ecb73cf037b1fbd05">More...</a><br /></td></tr>
 <tr class="separator:ga862695efed18205ecb73cf037b1fbd05"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga732b6156b333d9efc3ec22e984698ee9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__uart__flash__programmer__api.html#ga732b6156b333d9efc3ec22e984698ee9">loadProgram</a> (<a class="el" href="classFlashProgrammer_1_1UartHandler.html">FlashProgrammer::UartHandler</a> &amp;uartHandle, FILE *fptr, const void *breakpointPtr, const std::size_t bpSize)</td></tr>
+<tr class="memdesc:ga732b6156b333d9efc3ec22e984698ee9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads the program to device by sending the file to flash kernel with specified breakpoints.  <a href="group__uart__flash__programmer__api.html#ga732b6156b333d9efc3ec22e984698ee9">More...</a><br /></td></tr>
+<tr class="separator:ga732b6156b333d9efc3ec22e984698ee9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaceecd03b24d6d157d776ee31bef34ec1"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__uart__flash__programmer__api.html#gaceecd03b24d6d157d776ee31bef34ec1">downloadKernel</a> (<a class="el" href="classFlashProgrammer_1_1UartHandler.html">FlashProgrammer::UartHandler</a> &amp;uartHandle, const char *kernelFile)</td></tr>
 <tr class="memdesc:gaceecd03b24d6d157d776ee31bef34ec1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Download a kernel to the device.  <a href="group__uart__flash__programmer__api.html#gaceecd03b24d6d157d776ee31bef34ec1">More...</a><br /></td></tr>
 <tr class="separator:gaceecd03b24d6d157d776ee31bef34ec1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga710fbba0bae66d4ec6117dfb1af7254c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__uart__flash__programmer__api.html#ga710fbba0bae66d4ec6117dfb1af7254c">downloadImage</a> (<a class="el" href="classFlashProgrammer_1_1UartHandler.html">FlashProgrammer::UartHandler</a> &amp;uartHandle, const char *applicationFile)</td></tr>
-<tr class="memdesc:ga710fbba0bae66d4ec6117dfb1af7254c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Download an application image with/or certificate to the device.  <a href="group__uart__flash__programmer__api.html#ga710fbba0bae66d4ec6117dfb1af7254c">More...</a><br /></td></tr>
+<tr class="memdesc:ga710fbba0bae66d4ec6117dfb1af7254c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Download an application image with certificate to the device.  <a href="group__uart__flash__programmer__api.html#ga710fbba0bae66d4ec6117dfb1af7254c">More...</a><br /></td></tr>
 <tr class="separator:ga710fbba0bae66d4ec6117dfb1af7254c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gabc0f19e933357dca0613ee464b1f0981"><td class="memItemLeft" align="right" valign="top">std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__uart__flash__programmer__api.html#gabc0f19e933357dca0613ee464b1f0981">constructPacket</a> (std::vector&lt; uint8_t &gt; &amp;packet, const uint16_t command, const uint16_t dataSize, const uint8_t *data)</td></tr>
+<tr class="memitem:ga52d569e53bcef4364e6d1b3c5d1949dd"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__uart__flash__programmer__api.html#ga52d569e53bcef4364e6d1b3c5d1949dd">downloadImage</a> (<a class="el" href="classFlashProgrammer_1_1UartHandler.html">FlashProgrammer::UartHandler</a> &amp;uartHandle, const char *applicationFile, const void *breakpointPtr, const std::size_t bpSize)</td></tr>
+<tr class="memdesc:ga52d569e53bcef4364e6d1b3c5d1949dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Download an application image with specified breakpoints.  <a href="group__uart__flash__programmer__api.html#ga52d569e53bcef4364e6d1b3c5d1949dd">More...</a><br /></td></tr>
+<tr class="separator:ga52d569e53bcef4364e6d1b3c5d1949dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabc0f19e933357dca0613ee464b1f0981"><td class="memItemLeft" align="right" valign="top">std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__uart__flash__programmer__api.html#gabc0f19e933357dca0613ee464b1f0981">constructPacket</a> (<a class="el" href="group__esm__api.html#gae2ec78615e9ab77af33c117ce6db38e0">std::vector</a>&lt; uint8_t &gt; &amp;packet, const uint16_t command, const uint16_t dataSize, const uint8_t *<a class="el" href="group__uart__api.html#ga325819a8e492ac69542e8b31705af6e9">data</a>)</td></tr>
 <tr class="memdesc:gabc0f19e933357dca0613ee464b1f0981"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function constructs the packet to be send to the device.  <a href="group__uart__flash__programmer__api.html#gabc0f19e933357dca0613ee464b1f0981">More...</a><br /></td></tr>
 <tr class="separator:gabc0f19e933357dca0613ee464b1f0981"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf10361be1bd0a5997c9b249baa44027b"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__uart__flash__programmer__api.html#gaf10361be1bd0a5997c9b249baa44027b">sendPacket</a> (<a class="el" href="classFlashProgrammer_1_1UartHandler.html">FlashProgrammer::UartHandler</a> &amp;uartHandle, std::vector&lt; uint8_t &gt; &amp;packet, const std::size_t size)</td></tr>
+<tr class="memitem:gaf10361be1bd0a5997c9b249baa44027b"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__uart__flash__programmer__api.html#gaf10361be1bd0a5997c9b249baa44027b">sendPacket</a> (<a class="el" href="classFlashProgrammer_1_1UartHandler.html">FlashProgrammer::UartHandler</a> &amp;uartHandle, <a class="el" href="group__esm__api.html#gae2ec78615e9ab77af33c117ce6db38e0">std::vector</a>&lt; uint8_t &gt; &amp;packet, const std::size_t <a class="el" href="group__i2c__api.html#ga683122200f17b0d006d8109a3eb8ec9e">size</a>)</td></tr>
 <tr class="memdesc:gaf10361be1bd0a5997c9b249baa44027b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send the command packet to the kernel running in the device. The flash kernel is expected to respond to the packet by sending an acknowledgement.  <a href="group__uart__flash__programmer__api.html#gaf10361be1bd0a5997c9b249baa44027b">More...</a><br /></td></tr>
 <tr class="separator:gaf10361be1bd0a5997c9b249baa44027b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4e65edfdeeba642656e137996bd59ff2"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__uart__flash__programmer__api.html#ga4e65edfdeeba642656e137996bd59ff2">getPacket</a> (<a class="el" href="classFlashProgrammer_1_1UartHandler.html">FlashProgrammer::UartHandler</a> &amp;uartHandle, std::vector&lt; uint8_t &gt; &amp;packet, uint16_t *dataSize)</td></tr>
+<tr class="memitem:ga4e65edfdeeba642656e137996bd59ff2"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__uart__flash__programmer__api.html#ga4e65edfdeeba642656e137996bd59ff2">getPacket</a> (<a class="el" href="classFlashProgrammer_1_1UartHandler.html">FlashProgrammer::UartHandler</a> &amp;uartHandle, <a class="el" href="group__esm__api.html#gae2ec78615e9ab77af33c117ce6db38e0">std::vector</a>&lt; uint8_t &gt; &amp;packet, uint16_t *dataSize)</td></tr>
 <tr class="memdesc:ga4e65edfdeeba642656e137996bd59ff2"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function receives the packet from the kernel running in the device. And sends ack/nak upon verifing the integrity of the packet content.  <a href="group__uart__flash__programmer__api.html#ga4e65edfdeeba642656e137996bd59ff2">More...</a><br /></td></tr>
 <tr class="separator:ga4e65edfdeeba642656e137996bd59ff2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga79cddc6c4d00d5bd93c5302856e4e29f"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__uart__flash__programmer__api.html#ga79cddc6c4d00d5bd93c5302856e4e29f">parseFlashStatus</a> (std::vector&lt; uint8_t &gt; &amp;packet, FlashStatusCode *flashStatus)</td></tr>
+<tr class="memitem:ga79cddc6c4d00d5bd93c5302856e4e29f"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__uart__flash__programmer__api.html#ga79cddc6c4d00d5bd93c5302856e4e29f">parseFlashStatus</a> (<a class="el" href="group__esm__api.html#gae2ec78615e9ab77af33c117ce6db38e0">std::vector</a>&lt; uint8_t &gt; &amp;packet, FlashStatusCode *flashStatus)</td></tr>
 <tr class="memdesc:ga79cddc6c4d00d5bd93c5302856e4e29f"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function parses the received flash status packet.  <a href="group__uart__flash__programmer__api.html#ga79cddc6c4d00d5bd93c5302856e4e29f">More...</a><br /></td></tr>
 <tr class="separator:ga79cddc6c4d00d5bd93c5302856e4e29f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga0a1220eed1b2e92a756d4a6fd2486718"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__uart__flash__programmer__api.html#ga0a1220eed1b2e92a756d4a6fd2486718">printErrorStatus</a> (uint16_t status)</td></tr>
@@ -203,7 +209,7 @@ Macros</h2></td></tr>
 </div>
 </div>
 <a id="ga862695efed18205ecb73cf037b1fbd05"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga862695efed18205ecb73cf037b1fbd05">&#9670;&nbsp;</a></span>loadProgram()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ga862695efed18205ecb73cf037b1fbd05">&#9670;&nbsp;</a></span>loadProgram() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -233,6 +239,57 @@ Macros</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">uartHandle</td><td>Handle to an instance of UART interface </td></tr>
     <tr><td class="paramname">fptr</td><td>File handler pointer </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga732b6156b333d9efc3ec22e984698ee9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga732b6156b333d9efc3ec22e984698ee9">&#9670;&nbsp;</a></span>loadProgram() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void loadProgram </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classFlashProgrammer_1_1UartHandler.html">FlashProgrammer::UartHandler</a> &amp;&#160;</td>
+          <td class="paramname"><em>uartHandle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">FILE *&#160;</td>
+          <td class="paramname"><em>fptr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const void *&#160;</td>
+          <td class="paramname"><em>breakpointPtr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::size_t&#160;</td>
+          <td class="paramname"><em>bpSize</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Loads the program to device by sending the file to flash kernel with specified breakpoints. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">uartHandle</td><td>Handle to an instance of UART interface </td></tr>
+    <tr><td class="paramname">fptr</td><td>File handler pointer </td></tr>
+    <tr><td class="paramname">breakpointPtr</td><td>The pointer to an array of breakpoints, needs to be uint32_t </td></tr>
+    <tr><td class="paramname">bpSize</td><td>The size of the breakpoint array </td></tr>
   </table>
   </dd>
 </dl>
@@ -278,7 +335,7 @@ Macros</h2></td></tr>
 </div>
 </div>
 <a id="ga710fbba0bae66d4ec6117dfb1af7254c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga710fbba0bae66d4ec6117dfb1af7254c">&#9670;&nbsp;</a></span>downloadImage()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ga710fbba0bae66d4ec6117dfb1af7254c">&#9670;&nbsp;</a></span>downloadImage() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -303,11 +360,63 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Download an application image with/or certificate to the device. </p>
+<p>Download an application image with certificate to the device. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">uartHandle</td><td>Handle to an instance of UART interface </td></tr>
     <tr><td class="paramname">applicationFile</td><td>The name of the application image</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 upon success, -1 if error occurs </dd></dl>
+
+</div>
+</div>
+<a id="ga52d569e53bcef4364e6d1b3c5d1949dd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga52d569e53bcef4364e6d1b3c5d1949dd">&#9670;&nbsp;</a></span>downloadImage() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int downloadImage </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classFlashProgrammer_1_1UartHandler.html">FlashProgrammer::UartHandler</a> &amp;&#160;</td>
+          <td class="paramname"><em>uartHandle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>applicationFile</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const void *&#160;</td>
+          <td class="paramname"><em>breakpointPtr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::size_t&#160;</td>
+          <td class="paramname"><em>bpSize</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Download an application image with specified breakpoints. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">uartHandle</td><td>Handle to an instance of UART interface </td></tr>
+    <tr><td class="paramname">applicationFile</td><td>The name of the application image </td></tr>
+    <tr><td class="paramname">breakpointPtr</td><td>The pointer to an array of breakpoints, needs to be uint32_t </td></tr>
+    <tr><td class="paramname">bpSize</td><td>The size of the breakpoint array</td></tr>
   </table>
   </dd>
 </dl>
@@ -324,7 +433,7 @@ Macros</h2></td></tr>
         <tr>
           <td class="memname">std::size_t constructPacket </td>
           <td>(</td>
-          <td class="paramtype">std::vector&lt; uint8_t &gt; &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="group__esm__api.html#gae2ec78615e9ab77af33c117ce6db38e0">std::vector</a>&lt; uint8_t &gt; &amp;&#160;</td>
           <td class="paramname"><em>packet</em>, </td>
         </tr>
         <tr>
@@ -383,7 +492,7 @@ Macros</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">std::vector&lt; uint8_t &gt; &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="group__esm__api.html#gae2ec78615e9ab77af33c117ce6db38e0">std::vector</a>&lt; uint8_t &gt; &amp;&#160;</td>
           <td class="paramname"><em>packet</em>, </td>
         </tr>
         <tr>
@@ -428,7 +537,7 @@ Macros</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">std::vector&lt; uint8_t &gt; &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="group__esm__api.html#gae2ec78615e9ab77af33c117ce6db38e0">std::vector</a>&lt; uint8_t &gt; &amp;&#160;</td>
           <td class="paramname"><em>packet</em>, </td>
         </tr>
         <tr>
@@ -467,7 +576,7 @@ Macros</h2></td></tr>
         <tr>
           <td class="memname">int parseFlashStatus </td>
           <td>(</td>
-          <td class="paramtype">std::vector&lt; uint8_t &gt; &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="group__esm__api.html#gae2ec78615e9ab77af33c117ce6db38e0">std::vector</a>&lt; uint8_t &gt; &amp;&#160;</td>
           <td class="paramname"><em>packet</em>, </td>
         </tr>
         <tr>
@@ -733,6 +842,20 @@ Macros</h2></td></tr>
 
 </div>
 </div>
+<a id="ga6e51dcbfe52f2958ca0dd755c5f8a88d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga6e51dcbfe52f2958ca0dd755c5f8a88d">&#9670;&nbsp;</a></span>g_pszCPU3FlashCodeProvisionFile</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">char* g_pszCPU3FlashCodeProvisionFile = nullptr</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="ga0904722c3e880d36f96f20b84add8f6c"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga0904722c3e880d36f96f20b84add8f6c">&#9670;&nbsp;</a></span>g_pszHSMRunTimeFile</h2>
 
@@ -797,6 +920,34 @@ Macros</h2></td></tr>
       <table class="memname">
         <tr>
           <td class="memname">char* g_pszLogFile = nullptr</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ga027b20d2f7fb4dcd5d486c26e711f094"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga027b20d2f7fb4dcd5d486c26e711f094">&#9670;&nbsp;</a></span>CERT_SIZE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t CERT_SIZE = 4096</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="gace0377b6e1c2f6da381d3ecc0189e3ed"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gace0377b6e1c2f6da381d3ecc0189e3ed">&#9670;&nbsp;</a></span>CP_CHUNK_SIZE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t CP_CHUNK_SIZE = 14336</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -967,76 +1118,6 @@ Macros</h2></td></tr>
 <span class="mlabels"><span class="mlabel">extern</span></span>  </td>
   </tr>
 </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="ga33f4b442a592b3c4070fe67de1872628"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga33f4b442a592b3c4070fe67de1872628">&#9670;&nbsp;</a></span>prevTime</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">thread_local std::size_t prevTime</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="gade71c7676cab14478275386c79a11462"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gade71c7676cab14478275386c79a11462">&#9670;&nbsp;</a></span>currTime</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">thread_local std::size_t currTime</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="ga2a26221efb7b0e4081ef0359a99f4638"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga2a26221efb7b0e4081ef0359a99f4638">&#9670;&nbsp;</a></span>timeElapsed</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">thread_local std::size_t timeElapsed</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="gae9bad0492a158d9a6058dd483fdc7a2a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gae9bad0492a158d9a6058dd483fdc7a2a">&#9670;&nbsp;</a></span>getTickCount_ms</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">auto getTickCount_ms = []() { return std::chrono::duration_cast&lt;std::chrono::milliseconds&gt;(std::chrono::steady_clock::now().time_since_epoch()).count(); }</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="gadffdbe2f2ce4e7be875c9e5090f92a6d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gadffdbe2f2ce4e7be875c9e5090f92a6d">&#9670;&nbsp;</a></span>benchmarkTime_ms</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">auto benchmarkTime_ms = []() { <a class="el" href="group__uart__flash__programmer__api.html#gade71c7676cab14478275386c79a11462">currTime</a> = <a class="el" href="group__uart__flash__programmer__api.html#gae9bad0492a158d9a6058dd483fdc7a2a">getTickCount_ms</a>(); <a class="el" href="group__uart__flash__programmer__api.html#ga2a26221efb7b0e4081ef0359a99f4638">timeElapsed</a> = <a class="el" href="group__uart__flash__programmer__api.html#gade71c7676cab14478275386c79a11462">currTime</a> - <a class="el" href="group__uart__flash__programmer__api.html#ga33f4b442a592b3c4070fe67de1872628">prevTime</a>; <a class="el" href="group__uart__flash__programmer__api.html#ga33f4b442a592b3c4070fe67de1872628">prevTime</a> = <a class="el" href="group__uart__flash__programmer__api.html#gade71c7676cab14478275386c79a11462">currTime</a>; }</td>
-        </tr>
-      </table>
 </div><div class="memdoc">
 
 </div>

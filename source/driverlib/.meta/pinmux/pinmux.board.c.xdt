@@ -32,7 +32,7 @@ Used GPIO,Selected Mode
 % var modulesCPU2 = []
 % if (Common.isMultiCoreDevice())
 % {
-%	modulesCPU2 = Common.getAllModulesForCore(Common.CONTEXT_CPU2);	
+%	modulesCPU2 = Common.getAllModulesForCore(Common.CONTEXT_CPU2);
 % 	let cpu2Keys = Common.getModulePaths(modulesCPU2);
 % }
 % var contextNames = Common.getContextNames()
@@ -42,7 +42,7 @@ Used GPIO,Selected Mode
 	//
 	// PinMux for modules assigned to `Common.getContextDisplayName(cntx)`
 	//
-	
+
 	% }
 	% let keys = Object.keys(Common.getAllModulesForCore(cntx)).sort();
 	% /* loop over all modules in the current configuration */
@@ -66,8 +66,8 @@ Used GPIO,Selected Mode
 	%	if (nameOfModule.includes(skipPinMuxPeripheralIfIncludes[skipModuleIndex]))
 	%	{	skip = true;	}
 	% }
-	%if (module != null && module.peripheralName != "GPIO" && 
-	%	 module.peripheralName != "AIO" && 
+	%if (module != null && module.peripheralName != "GPIO" &&
+	%	 module.peripheralName != "AIO" &&
 	%	 !skip && module.peripheralName != null &&
 	%	 module.peripheralName != "EPWMXBAR" &&
 	%	 module.peripheralName != "CLBXBAR" &&
@@ -130,7 +130,7 @@ Used GPIO,Selected Mode
 				%	if (!instance[nameOfModule][pinName].$solution.devicePinName.includes("GPIO"))
 				%	{
 				%		isAioPin = true;
-				%		//AIO used for digital				
+				%		//AIO used for digital
 				% 		var selectedName = instance[nameOfModule][pinName].$solution.devicePinName;
 				%		var selecteddevicePin = null;
 				%		for (const pinNumber in system.deviceData.devicePins) {
@@ -150,14 +150,14 @@ Used GPIO,Selected Mode
 				%			gpioNumber = Common.gpioNameToNumber(gpioNumber);
 				%			//console.log(gpioNumber);
 				%		}
-				%	} else 
+				%	} else
 				%	{
 				% 		gpioName = instance[nameOfModule][pinName].$solution.devicePinName;
 				%		if (!gpioName.startsWith("GPIO"))
 				%		{ isAgpioPin = true }
 				%		gpioName = gpioName.substring(gpioName.indexOf("GPIO"))
 				%		if ((gpioName.match(/GPIO/g) || []).length > 1)
-				%		{ 
+				%		{
 				%			//console.log("DUAL PIN");
 				%			//console.log("Interface Name: " + interfaceName)
 				%			//console.log("Peripheral Name: " + peripheral.name)
@@ -166,7 +166,7 @@ Used GPIO,Selected Mode
 				%			gpiosOnThisPin.splice(0, 1)
 				%			//console.log(gpiosOnThisPin);
 				%			for (const pinNumber in system.deviceData.devicePins) {
-				%				if (system.deviceData.devicePins[pinNumber].designSignalName == 
+				%				if (system.deviceData.devicePins[pinNumber].designSignalName ==
 				%					instance[nameOfModule][pinName].$solution.devicePinName)
 				%				{
 				%					selecteddevicePin = system.deviceData.devicePins[pinNumber];
@@ -199,7 +199,7 @@ Used GPIO,Selected Mode
 				%				if (correctGpioFound) { break; }
 				%				//console.log(gpioOptions)
 				%			}
-				%			
+				%
 				% 		}
 				% 		gpioNumber = gpioName.substring(4); // determine which GPIO
 				%		gpioNumber = Common.gpioNameToNumber(gpioNumber);
@@ -214,7 +214,7 @@ Used GPIO,Selected Mode
 				%				}
 				%				if (isAioPin) {
 	// AIO -> Analog mode selected
-				%				}	
+				%				}
 				%				if (isAgpioPin && Common.getDevicePart() == "F28003x_100PZ") {
 				%				}
 	GPIO_setAnalogMode(`gpioNumber`, GPIO_ANALOG_ENABLED);
@@ -237,9 +237,9 @@ Used GPIO,Selected Mode
 	// AIO -> Digital mode selected
 				%				}
 				%				if (isAgpioPin && Common.getDevicePart() == "F28003x_100PZ") {
-	// On 100PZ package for F28003x, if "B5, GPIO20" is used in peripheral signal digital mode, 
+	// On 100PZ package for F28003x, if "B5, GPIO20" is used in peripheral signal digital mode,
 	// then "B5" can be used for ADC
-	// On 100PZ package for F28003x, if "B11, GPIO21" is used in peripheral signal digital mode, 
+	// On 100PZ package for F28003x, if "B11, GPIO21" is used in peripheral signal digital mode,
 	// then "B11" can be used for ADC
 	GPIO_setAnalogMode(`gpioNumber`, GPIO_ANALOG_DISABLED);
 				%				} else {
@@ -255,14 +255,14 @@ Used GPIO,Selected Mode
 				%   } else if (output_mode == pinmux_h_source_mode) {
 				%		if (peripheral.name != "ANALOG") {
 				% 	// console.log(interfaceName, peripheral.name, nameOfPeripheral)
-//	
+//
 // `DriverlibPinmap.getDriverlibName(interfaceName, peripheral.name, nameOfPeripheral)` - GPIO Settings
 //
 #define GPIO_PIN_`DriverlibPinmap.getDriverlibName(interfaceName, peripheral.name, nameOfPeripheral)` `gpioNumber`
 #define `instance.$name`_`DriverlibPinmap.getInterfaceCCodeName(interfaceName, nameOfPeripheral)`_GPIO `gpioNumber`
 #define `instance.$name`_`DriverlibPinmap.getInterfaceCCodeName(interfaceName, nameOfPeripheral)`_PIN_CONFIG GPIO_`gpioNumber`_`DriverlibPinmap.getDriverlibName(interfaceName, peripheral.name, "NOPERIPHERAL")`
 				%		}
-				%   } else if (output_mode == function_mode) { 
+				%   } else if (output_mode == function_mode) {
 				%		if (gpio_to_find == ("GPIO"+gpioNumber)) {
 `DriverlibPinmap.getDriverlibName(interfaceName, peripheral.name, nameOfPeripheral)`
 				%		}
@@ -279,14 +279,14 @@ GPIO`gpioNumber`,`DriverlibPinmap.getDriverlibName(interfaceName, peripheral.nam
 			% var instance = module.$instances[i];
 			% var gpioName = instance.gpioPin.$solution.devicePinName;
 			% var isAgpioPin = false;
-			% if (gpioName == null) { 
+			% if (gpioName == null) {
 			%	// TopoAria double bonded GPIOs
-			%	gpioName = instance.gpioPin.$solution.peripheralName; 
+			%	gpioName = instance.gpioPin.$solution.peripheralName;
 			%	if (!instance.gpioPin["GPIO#"].$solution.devicePinName.startsWith("GPIO"))
 			%	{
 			%		isAgpioPin = true;
 			%	}
-			%	
+			%
 			% } else
 			% {
 			%	if (!gpioName.startsWith("GPIO"))
@@ -307,9 +307,9 @@ GPIO`gpioNumber`,`DriverlibPinmap.getDriverlibName(interfaceName, peripheral.nam
 			%	if (isAgpioPin) {
 	// AGPIO -> GPIO mode selected
 			%		if (Common.getDevicePart() == "F28003x_100PZ") {
-	// On 100PZ package for F28003x, if "B5, GPIO20" is used in 
+	// On 100PZ package for F28003x, if "B5, GPIO20" is used in
 	// GPIO mode, then "B5" can be used for ADC
-	// On 100PZ package for F28003x, if "B11, GPIO21" is used in 
+	// On 100PZ package for F28003x, if "B11, GPIO21" is used in
 	// GPIO mode, then "B11" can be used for ADC
 	GPIO_setAnalogMode(`gpioNumber`, GPIO_ANALOG_DISABLED);
 			%		} else {
@@ -356,7 +356,7 @@ GPIO`gpioNumber`,GPIO`gpioNumber`
 AIO`gpioNumber`
 			%		}
 			% } else if (output_mode == csv_mode){
-GPIO`gpioNumber`,GPIO`gpioNumber` 
+GPIO`gpioNumber`,GPIO`gpioNumber`
 			% }
 		%}
 	%}
@@ -374,7 +374,7 @@ USB
 			%		}
 			%		else if (gpio_to_find == "GPIO43") {
 USB
-			%		}				
+			%		}
 			%} else if (output_mode == csv_mode){
 GPIO42,USB
 GPIO43,USB
@@ -395,7 +395,7 @@ DCDC
 			%		}
 			%		else if (gpio_to_find == "GPIO23_VSW") {
 DCDC
-			%		}				
+			%		}
 			%} else if (output_mode == csv_mode){
 GPIO22,DCDC
 GPIO23,DCDC
@@ -420,12 +420,12 @@ GPIO23,DCDC
 	//
 	// `peripheral.name` -> `module.peripheralName` Pinmux
 	//
-	GPIO_setPinConfig(`module.peripheralName`_`DriverlibPinmap.getInterfaceCCodeName(interfaceName, nameOfPeripheral)`_PIN_CONFIG);	
+	GPIO_setPinConfig(`module.peripheralName`_`DriverlibPinmap.getInterfaceCCodeName(interfaceName, nameOfPeripheral)`_PIN_CONFIG);
 			% } else if (output_mode == pinmux_h_source_mode) {
 //
 // `peripheral.name` -> `module.peripheralName` Pinmux
-//				
-//	
+//
+//
 // `DriverlibPinmap.getDriverlibName(interfaceName, peripheral.name, nameOfPeripheral)` - GPIO Settings
 //
 #define GPIO_PIN_`DriverlibPinmap.getDriverlibName(interfaceName, peripheral.name, nameOfPeripheral)` `gpioNumber`

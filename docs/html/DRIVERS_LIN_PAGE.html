@@ -43,7 +43,7 @@
   <td id="projectlogo"><a href="https://www.ti.com"><img alt="Logo" src="ti_logo.svg"/></a></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">F29H85x-SDK
-   &#160;<span id="projectnumber">1.00.00.00</span>
+   &#160;<span id="projectnumber">1.01.00.00</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -92,16 +92,16 @@ $(document).ready(function(){initNavTree('DRIVERS_LIN_PAGE.html',''); initResiza
 </div><!--header-->
 <div class="contents">
 <div class="toc"><h3>Table of Contents</h3>
-<ul><li class="level1"><a href="#autotoc_md141">Features Supported</a></li>
-<li class="level1"><a href="#autotoc_md142">SysConfig Features</a></li>
-<li class="level1"><a href="#autotoc_md143">Features NOT Supported</a></li>
-<li class="level1"><a href="#autotoc_md144">Example Usage</a></li>
-<li class="level1"><a href="#autotoc_md145">API</a></li>
+<ul><li class="level1"><a href="#autotoc_md148">Features Supported</a></li>
+<li class="level1"><a href="#autotoc_md149">SysConfig Features</a></li>
+<li class="level1"><a href="#autotoc_md150">Features NOT Supported</a></li>
+<li class="level1"><a href="#autotoc_md151">Example Usage</a></li>
+<li class="level1"><a href="#autotoc_md152">API</a></li>
 </ul>
 </div>
 <div class="textblock"><p><a class="anchor" id="md_components_drivers_lin"></a></p>
 <p>The LIN driver provides API to configure the LIN module. Below are the high level features supported by the LIN driver.</p>
-<h1><a class="anchor" id="autotoc_md141"></a>
+<h1><a class="anchor" id="autotoc_md148"></a>
 Features Supported</h1>
 <ul>
 <li>Operable in (a) LIN Mode (2.1 protocol, compatible with 1.3 &amp; 2.0) (b) SCI mode (standard NRZ UART)</li>
@@ -111,7 +111,7 @@ Features Supported</h1>
 <li>Multibuffered receive &amp; transmit units, two individually enabled interrupt lines</li>
 <li>Support for dual interrupt lines, DMA, multiprocessor mode, sleep mode</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md142"></a>
+<h1><a class="anchor" id="autotoc_md149"></a>
 SysConfig Features</h1>
 <dl class="section note"><dt>Note</dt><dd>It is strongly recommend to use SysConfig where it is available instead of using direct SW API calls. This will help simplify the SW application and also catch common mistakes early in the development cycle.</dd></dl>
 <ul>
@@ -122,15 +122,15 @@ SysConfig Features</h1>
 <li>LIN clocks configurable through Clocktree</li>
 <li>Integrated support for interrupt &amp; RTDMA modules</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md143"></a>
+<h1><a class="anchor" id="autotoc_md150"></a>
 Features NOT Supported</h1>
 <ul>
 <li>Superfractional baud rate divider configuration not available via driver functions</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md144"></a>
+<h1><a class="anchor" id="autotoc_md151"></a>
 Example Usage</h1>
 <p>Include the below file to access the APIs #include &lt;<a class="el" href="lin_8h.html">lin.h</a>&gt;</p>
-<h1><a class="anchor" id="autotoc_md145"></a>
+<h1><a class="anchor" id="autotoc_md152"></a>
 API</h1>
 <p><a class="el" href="group__lin__api.html">LIN</a> </p>
 </div></div><!-- contents -->

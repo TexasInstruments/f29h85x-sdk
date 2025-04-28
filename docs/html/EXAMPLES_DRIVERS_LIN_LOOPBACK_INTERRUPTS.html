@@ -43,7 +43,7 @@
   <td id="projectlogo"><a href="https://www.ti.com"><img alt="Logo" src="ti_logo.svg"/></a></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">F29H85x-SDK
-   &#160;<span id="projectnumber">1.00.00.00</span>
+   &#160;<span id="projectnumber">1.01.00.00</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -92,18 +92,18 @@ $(document).ready(function(){initNavTree('EXAMPLES_DRIVERS_LIN_LOOPBACK_INTERRUP
 </div><!--header-->
 <div class="contents">
 <div class="toc"><h3>Table of Contents</h3>
-<ul><li class="level1"><a href="#autotoc_md508">Introduction</a></li>
-<li class="level1"><a href="#autotoc_md509">Watch  Variables</a></li>
-<li class="level1"><a href="#autotoc_md510">External Connections</a></li>
-<li class="level1"><a href="#autotoc_md511">Steps to Run the Example</a></li>
-<li class="level1"><a href="#autotoc_md512">See Also</a></li>
+<ul><li class="level1"><a href="#autotoc_md525">Introduction</a></li>
+<li class="level1"><a href="#autotoc_md526">Watch  Variables</a></li>
+<li class="level1"><a href="#autotoc_md527">External Connections</a></li>
+<li class="level1"><a href="#autotoc_md528">Steps to Run the Example</a></li>
+<li class="level1"><a href="#autotoc_md529">See Also</a></li>
 </ul>
 </div>
 <div class="textblock"><p><a class="anchor" id="md_examples_drivers_lin_loopback_interrupts"></a></p>
-<h1><a class="anchor" id="autotoc_md508"></a>
+<h1><a class="anchor" id="autotoc_md525"></a>
 Introduction</h1>
 <p>This example configures the LIN module in commander mode for internal loopback with interrupts. The module is setup to perform 8 data transmissions with different transmit IDs and varying transmit data. Upon reception of an ID header, an interrupt is triggered on line 0 and an interrupt service routine (ISR) is called. The received data is then checked for accuracy.</p>
-<h1><a class="anchor" id="autotoc_md509"></a>
+<h1><a class="anchor" id="autotoc_md526"></a>
 Watch  Variables</h1>
 <ul>
 <li>txData - An array with the data being sent</li>
@@ -112,12 +112,12 @@ Watch  Variables</h1>
 <li>level0Count - The number of line 0 interrupts</li>
 <li>level1Count - The number of line 1 interrupts</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md510"></a>
+<h1><a class="anchor" id="autotoc_md527"></a>
 External Connections</h1>
 <ul>
 <li>None</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md511"></a>
+<h1><a class="anchor" id="autotoc_md528"></a>
 Steps to Run the Example</h1>
 <ul>
 <li><b>When using CCS projects to build</b>, import the CCS project for the required combination and build it using the CCS project menu (see <a class="el" href="CCS_PROJECTS_PAGE.html">CCS Build Project</a>).</li>
@@ -126,7 +126,7 @@ Steps to Run the Example</h1>
 <li>Launch a CCS debug session and run the executable, see <a class="el" href="CCS_LAUNCH_PAGE.html">Build, Load and Run</a></li>
 <li>Wait for transmissions to complete, then check result flag and received data</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md512"></a>
+<h1><a class="anchor" id="autotoc_md529"></a>
 See Also</h1>
 <p><a class="el" href="DRIVERS_LIN_PAGE.html">LIN</a> </p>
 </div></div><!-- contents -->

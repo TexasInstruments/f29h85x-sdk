@@ -359,6 +359,7 @@ function validate(inst, vo)
 {
     let APRList = Common.allocateAllMemoryRegions()[system.context]
     const sysSec    = Common.modStaticByCPU('/ti/security/System_Security', "CPU1");
+    let bankMode = Common.getBankModeConfig();
 
     // CERT name is reserved
     if(inst.$name == "CERT"){
@@ -433,11 +434,16 @@ function validate(inst, vo)
         }
     }
 
-    // CPU2 Flash access unavailable
-    if(inst.memType == "Flash" && system.context == Common.CONTEXT_CPU2 &&  inst.$name != "APR_FlashLoad_CPU2")
+    // Flash access availability checks
+    if(inst.memType == "Flash" && system.context == Common.CONTEXT_CPU2 && inst.$name != "APR_FlashLoad_CPU2")
     {
         vo.logError("Cannot create flash regions on current core", inst, 'memType')
     }
+    if(inst.memType == "Flash" && system.context == Common.CONTEXT_CPU3 && inst.$name != "APR_FlashLoad_CPU3" && bankMode < 2 )
+    {
+        vo.logError("Cannot create flash regions on current core", inst, 'memType')
+    }
+    
 }
 
 exports = {

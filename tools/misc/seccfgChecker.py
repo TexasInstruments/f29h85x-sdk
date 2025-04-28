@@ -22,6 +22,8 @@ DEBUG_CFG           = 0x7A0
 STACK_CFG           = 0x7D3
 LINK_CFG            = 0x7DB
 SECCFG_UPDATE_CFG   = 0x6BE
+BOOTPIN_CONFIG_KEY  = 0x7AB
+BOOTDEF             = 0x7C8
 
 # Defines
 NUM_APR             = 64
@@ -43,6 +45,7 @@ L1_RD               = 0x04
 L1_RW               = 0x0C
 SECCFG_UPDATE_CFG_M3= 0xC101
 ZONE_CFG_M3         = 0xC101
+NUM_BOOTDEF         = 8
 
 # Necessary APRs
 necessaryAprAddr    = [0x10000000, 0x30226000, 0x30227000, 0x302C0000, 0x60080000, 0x6008C000, 0x60090000]
@@ -375,6 +378,18 @@ if(linkCheckResult == -1):
     print("SECCFG-ERROR:CPU3 Link settings are invalid")
 
 ###############################################################################
+# Check Boot configurations
+###############################################################################
+if(secCfgCpu1Data[BOOTPIN_CONFIG_KEY] == 0x5A):
+    numuartboot = 0
+    for i in range(0, NUM_BOOTDEF):
+        if((secCfgCpu1Data[BOOTDEF + i] == 0x01) or (secCfgCpu1Data[BOOTDEF + i] == 0x21) or (secCfgCpu1Data[BOOTDEF + i] == 0x41) or (secCfgCpu1Data[BOOTDEF + i] == 0x61) or (secCfgCpu1Data[BOOTDEF + i] == 0x81)):
+            numuartboot += 1
+    if(numuartboot == 0):
+        errorCount += 1
+        print("SECCFG-ERROR:Custom bootmodes doesn't include UART bootmode")
+
+###############################################################################
 # Check for error count
 ###############################################################################
 print("SECCFG-CHECK:Error count = ", errorCount)
@@ -388,4 +403,5 @@ os.remove("seccfgCpu4.bin")
 if(errorCount == 0):
     exit(0)
 else:
+    os.remove(sys.argv[2])
     exit(1)

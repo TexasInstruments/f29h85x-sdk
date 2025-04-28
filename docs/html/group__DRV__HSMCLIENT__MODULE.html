@@ -43,7 +43,7 @@
   <td id="projectlogo"><a href="https://www.ti.com"><img alt="Logo" src="ti_logo.svg"/></a></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">F29H85x-SDK
-   &#160;<span id="projectnumber">1.00.00.00</span>
+   &#160;<span id="projectnumber">1.01.00.00</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -107,17 +107,17 @@ Data Structures</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structHsmClient__t.html">HsmClient_t</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">This is a HSMClient type which holds the information needed by hsm client to communicate with HSM .  <a href="structHsmClient__t.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structEfuseRead__t.html">EfuseRead_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">This is a EfuseRead type which holds the information of eFuse row index and row data corresponding to it .  <a href="structEfuseRead__t.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structNvmOtpRead__t.html">NvmOtpRead_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">This is an NvmOtpRead type which holds the information of NvmOtp row index and row data corresponding to it . For F29H85x, the rowdIdx corresponds to the Flash Offsets. For AM26x, the rowIdx corresponds to efuse row offsets.  <a href="structNvmOtpRead__t.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structEfuseRowWrite__t.html">EfuseRowWrite_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">This is a EfuseRowWrite type which holds the information regarding programming eFuse row.  <a href="structEfuseRowWrite__t.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structNvmOtpRowWrite__t.html">NvmOtpRowWrite_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">This is an NvmOtpRowWrite type which holds the information regarding programming NvmOtp row. For F29H85x, the rowdIdx corresponds to the Flash Offsets. For AM26x, the rowIdx corresponds to efuse row offsets.  <a href="structNvmOtpRowWrite__t.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structEfuseRowCount__t.html">EfuseRowCount_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">This is a EfuseRowCount type which holds the information regarding eFuse row count and size of each row in bits.  <a href="structEfuseRowCount__t.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structNvmOtpRowCount__t.html">NvmOtpRowCount_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">This is an NvmOtpRowCount type which holds the information regarding NvmOtp row count and size of each row in bits.  <a href="structNvmOtpRowCount__t.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structEfuseRowProt__t.html">EfuseRowProt_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">This is a EfuseRowProt type which holds the information of eFuse row index and protection status corresponding to the row index.  <a href="structEfuseRowProt__t.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structNvmOtpRowProt__t.html">NvmOtpRowProt_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">This is a NvmOtpRowProt type which holds the information of NvmOtp row index and protection status corresponding to the row index. This structure is not valid for f29h85x.  <a href="structNvmOtpRowProt__t.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structKeyWriterCertHeader__t.html">KeyWriterCertHeader_t</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">This is a keywriter_cert_header type which holds the information of customer key certificate and debug responce.  <a href="structKeyWriterCertHeader__t.html#details">More...</a><br /></td></tr>
@@ -146,6 +146,15 @@ Data Structures</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFirmwareUpdateReq__t.html">FirmwareUpdateReq_t</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">This is Firmware Update request structure passed to HSM core via SIPC as argument, these parameters are required by the service handler.  <a href="structFirmwareUpdateReq__t.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structOTFA__Region__t.html">OTFA_Region_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">This is the OTFA Region structure which holds individual region specific information to be written to corresponding OTFA registers. In AM263Px and AM261x, there are 4 OTFA regions.  <a href="structOTFA__Region__t.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structOTFA__readRegion__t.html">OTFA_readRegion_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">This is the OTFA Region structure which holds individual region specific information to be read from OTFA registers.  <a href="structOTFA__readRegion__t.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structOTFA__Config__t.html">OTFA_Config_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">This is the entire OTFA structure which holds all regions' information 4 regions in AM263Px and AM261x.  <a href="structOTFA__Config__t.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structHsmMsg__t__.html">HsmMsg_t_</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">HSM client / server message format struct.  <a href="structHsmMsg__t__.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -164,6 +173,9 @@ Functions</h2></td></tr>
 <tr class="memitem:gae44cff19b801c9299bac8eaaea14c88d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DRV__HSMCLIENT__MODULE.html#gae44cff19b801c9299bac8eaaea14c88d">HsmClient_deInit</a> (void)</td></tr>
 <tr class="memdesc:gae44cff19b801c9299bac8eaaea14c88d"><td class="mdescLeft">&#160;</td><td class="mdescRight">De initialize the HSM client for current core.  <a href="group__DRV__HSMCLIENT__MODULE.html#gae44cff19b801c9299bac8eaaea14c88d">More...</a><br /></td></tr>
 <tr class="separator:gae44cff19b801c9299bac8eaaea14c88d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga56b1b7c7c3aa0dbc595b196c63520357"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DRV__HSMCLIENT__MODULE.html#ga56b1b7c7c3aa0dbc595b196c63520357">HsmClient_SecureBootQueueInit</a> (uint32_t configured_hsm_client_msg_queue_size)</td></tr>
+<tr class="memdesc:ga56b1b7c7c3aa0dbc595b196c63520357"><td class="mdescLeft">&#160;</td><td class="mdescRight">Customize the size of the HSM client message queue.  <a href="group__DRV__HSMCLIENT__MODULE.html#ga56b1b7c7c3aa0dbc595b196c63520357">More...</a><br /></td></tr>
+<tr class="separator:ga56b1b7c7c3aa0dbc595b196c63520357"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga70b2b53821f5782e083984e34df972b7"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DRV__HSMCLIENT__MODULE.html#ga70b2b53821f5782e083984e34df972b7">HsmClient_getVersion</a> (<a class="el" href="structHsmClient__t.html">HsmClient_t</a> *HsmClient, HsmVer_t *verId, uint32_t timeToWaitInTick)</td></tr>
 <tr class="memdesc:ga70b2b53821f5782e083984e34df972b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">populates the current HSMRT version Id by default the hsm flag is set to HSM_FLAG_AOP for this service  <a href="group__DRV__HSMCLIENT__MODULE.html#ga70b2b53821f5782e083984e34df972b7">More...</a><br /></td></tr>
 <tr class="separator:ga70b2b53821f5782e083984e34df972b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -176,21 +188,21 @@ Functions</h2></td></tr>
 <tr class="memitem:ga44bd1d6da427b7614a34969d2ef5ec17"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DRV__HSMCLIENT__MODULE.html#ga44bd1d6da427b7614a34969d2ef5ec17">HsmClient_importKeyring</a> (<a class="el" href="structHsmClient__t.html">HsmClient_t</a> *HsmClient, uint8_t *cert, uint32_t cert_size, uint32_t timeout)</td></tr>
 <tr class="memdesc:ga44bd1d6da427b7614a34969d2ef5ec17"><td class="mdescLeft">&#160;</td><td class="mdescRight">The service issued to HSM Server verifies the certificate and imports the keys from the certificate.  <a href="group__DRV__HSMCLIENT__MODULE.html#ga44bd1d6da427b7614a34969d2ef5ec17">More...</a><br /></td></tr>
 <tr class="separator:ga44bd1d6da427b7614a34969d2ef5ec17"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5130fcb75f1250880f48c4294bac706c"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DRV__HSMCLIENT__MODULE.html#ga5130fcb75f1250880f48c4294bac706c">HsmClient_readOTPRow</a> (<a class="el" href="structHsmClient__t.html">HsmClient_t</a> *HsmClient, <a class="el" href="structEfuseRead__t.html">EfuseRead_t</a> *readRow)</td></tr>
-<tr class="memdesc:ga5130fcb75f1250880f48c4294bac706c"><td class="mdescLeft">&#160;</td><td class="mdescRight">The service issued to HSM Server retrieves the data of GP OTP row based on row index provided as param.  <a href="group__DRV__HSMCLIENT__MODULE.html#ga5130fcb75f1250880f48c4294bac706c">More...</a><br /></td></tr>
-<tr class="separator:ga5130fcb75f1250880f48c4294bac706c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga29aa1dd1f15e7d038bec257ec916ea8d"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DRV__HSMCLIENT__MODULE.html#ga29aa1dd1f15e7d038bec257ec916ea8d">HsmClient_writeOTPRow</a> (<a class="el" href="structHsmClient__t.html">HsmClient_t</a> *HsmClient, <a class="el" href="structEfuseRowWrite__t.html">EfuseRowWrite_t</a> *writeRow)</td></tr>
-<tr class="memdesc:ga29aa1dd1f15e7d038bec257ec916ea8d"><td class="mdescLeft">&#160;</td><td class="mdescRight">The service issued to HSM Server writes the data to extended OTP efuse row based on row index provided as param.  <a href="group__DRV__HSMCLIENT__MODULE.html#ga29aa1dd1f15e7d038bec257ec916ea8d">More...</a><br /></td></tr>
-<tr class="separator:ga29aa1dd1f15e7d038bec257ec916ea8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7960519eeac66f9fbe300d8d1c3b02cf"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DRV__HSMCLIENT__MODULE.html#ga7960519eeac66f9fbe300d8d1c3b02cf">HsmClient_lockOTPRow</a> (<a class="el" href="structHsmClient__t.html">HsmClient_t</a> *HsmClient, <a class="el" href="structEfuseRowProt__t.html">EfuseRowProt_t</a> *rowProt)</td></tr>
-<tr class="memdesc:ga7960519eeac66f9fbe300d8d1c3b02cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">The service issued to HSM Server sets the protection status bit of the specified row to 1.  <a href="group__DRV__HSMCLIENT__MODULE.html#ga7960519eeac66f9fbe300d8d1c3b02cf">More...</a><br /></td></tr>
-<tr class="separator:ga7960519eeac66f9fbe300d8d1c3b02cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae1ad70f4ef9597ea874869df933b4d6a"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DRV__HSMCLIENT__MODULE.html#gae1ad70f4ef9597ea874869df933b4d6a">HsmClient_getOTPRowCount</a> (<a class="el" href="structHsmClient__t.html">HsmClient_t</a> *HsmClient, <a class="el" href="structEfuseRowCount__t.html">EfuseRowCount_t</a> *rowCount)</td></tr>
-<tr class="memdesc:gae1ad70f4ef9597ea874869df933b4d6a"><td class="mdescLeft">&#160;</td><td class="mdescRight">The service issued to HSM Server retrieves the count of extended OTP rows.  <a href="group__DRV__HSMCLIENT__MODULE.html#gae1ad70f4ef9597ea874869df933b4d6a">More...</a><br /></td></tr>
-<tr class="separator:gae1ad70f4ef9597ea874869df933b4d6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad830e0858457a98e4f281b4e212b4232"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DRV__HSMCLIENT__MODULE.html#gad830e0858457a98e4f281b4e212b4232">HsmClient_getOTPRowProtection</a> (<a class="el" href="structHsmClient__t.html">HsmClient_t</a> *HsmClient, <a class="el" href="structEfuseRowProt__t.html">EfuseRowProt_t</a> *rowProt)</td></tr>
-<tr class="memdesc:gad830e0858457a98e4f281b4e212b4232"><td class="mdescLeft">&#160;</td><td class="mdescRight">The service issued to HSM Server retrieves the extended otp efuse row protection status.  <a href="group__DRV__HSMCLIENT__MODULE.html#gad830e0858457a98e4f281b4e212b4232">More...</a><br /></td></tr>
-<tr class="separator:gad830e0858457a98e4f281b4e212b4232"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gace3361fd0f3fc438e9b7e0a1acfe2122"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DRV__HSMCLIENT__MODULE.html#gace3361fd0f3fc438e9b7e0a1acfe2122">HsmClient_readOTPRow</a> (<a class="el" href="structHsmClient__t.html">HsmClient_t</a> *HsmClient, <a class="el" href="structNvmOtpRead__t.html">NvmOtpRead_t</a> *readRow)</td></tr>
+<tr class="memdesc:gace3361fd0f3fc438e9b7e0a1acfe2122"><td class="mdescLeft">&#160;</td><td class="mdescRight">The service issued to HSM Server retrieves the data of GP OTP row based on row index provided as param.  <a href="group__DRV__HSMCLIENT__MODULE.html#gace3361fd0f3fc438e9b7e0a1acfe2122">More...</a><br /></td></tr>
+<tr class="separator:gace3361fd0f3fc438e9b7e0a1acfe2122"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga96f53cf958e70929245d0f21e10f038e"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DRV__HSMCLIENT__MODULE.html#ga96f53cf958e70929245d0f21e10f038e">HsmClient_writeOTPRow</a> (<a class="el" href="structHsmClient__t.html">HsmClient_t</a> *HsmClient, <a class="el" href="structNvmOtpRowWrite__t.html">NvmOtpRowWrite_t</a> *writeRow)</td></tr>
+<tr class="memdesc:ga96f53cf958e70929245d0f21e10f038e"><td class="mdescLeft">&#160;</td><td class="mdescRight">The service issued to HSM Server writes the data to extended OTP efuse row based on row index provided as param.  <a href="group__DRV__HSMCLIENT__MODULE.html#ga96f53cf958e70929245d0f21e10f038e">More...</a><br /></td></tr>
+<tr class="separator:ga96f53cf958e70929245d0f21e10f038e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab43e961650612c91157c0587b3d2746f"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DRV__HSMCLIENT__MODULE.html#gab43e961650612c91157c0587b3d2746f">HsmClient_lockOTPRow</a> (<a class="el" href="structHsmClient__t.html">HsmClient_t</a> *HsmClient, <a class="el" href="structNvmOtpRowProt__t.html">NvmOtpRowProt_t</a> *rowProt)</td></tr>
+<tr class="memdesc:gab43e961650612c91157c0587b3d2746f"><td class="mdescLeft">&#160;</td><td class="mdescRight">The service issued to HSM Server sets the protection status bit of the specified row to 1. This API is not valid for F29H85x.  <a href="group__DRV__HSMCLIENT__MODULE.html#gab43e961650612c91157c0587b3d2746f">More...</a><br /></td></tr>
+<tr class="separator:gab43e961650612c91157c0587b3d2746f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae625624727a8de14944f65d25fececd5"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DRV__HSMCLIENT__MODULE.html#gae625624727a8de14944f65d25fececd5">HsmClient_getOTPRowCount</a> (<a class="el" href="structHsmClient__t.html">HsmClient_t</a> *HsmClient, <a class="el" href="structNvmOtpRowCount__t.html">NvmOtpRowCount_t</a> *rowCount)</td></tr>
+<tr class="memdesc:gae625624727a8de14944f65d25fececd5"><td class="mdescLeft">&#160;</td><td class="mdescRight">The service issued to HSM Server retrieves the count of extended OTP rows.  <a href="group__DRV__HSMCLIENT__MODULE.html#gae625624727a8de14944f65d25fececd5">More...</a><br /></td></tr>
+<tr class="separator:gae625624727a8de14944f65d25fececd5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaca8f5f005b283ec144d9e178b12388ca"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DRV__HSMCLIENT__MODULE.html#gaca8f5f005b283ec144d9e178b12388ca">HsmClient_getOTPRowProtection</a> (<a class="el" href="structHsmClient__t.html">HsmClient_t</a> *HsmClient, <a class="el" href="structNvmOtpRowProt__t.html">NvmOtpRowProt_t</a> *rowProt)</td></tr>
+<tr class="memdesc:gaca8f5f005b283ec144d9e178b12388ca"><td class="mdescLeft">&#160;</td><td class="mdescRight">The service issued to HSM Server retrieves the extended otp efuse row protection status. This API is not valid for F29H85x.  <a href="group__DRV__HSMCLIENT__MODULE.html#gaca8f5f005b283ec144d9e178b12388ca">More...</a><br /></td></tr>
+<tr class="separator:gaca8f5f005b283ec144d9e178b12388ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga210471c61013f15ddf77447071a5b0c2"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DRV__HSMCLIENT__MODULE.html#ga210471c61013f15ddf77447071a5b0c2">HsmClient_procAuthBoot</a> (<a class="el" href="structHsmClient__t.html">HsmClient_t</a> *HsmClient, uint8_t *cert, uint32_t cert_size, uint32_t timeout)</td></tr>
 <tr class="memdesc:ga210471c61013f15ddf77447071a5b0c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">The service issued to HSM Server helps with extended secure boot for applications.  <a href="group__DRV__HSMCLIENT__MODULE.html#ga210471c61013f15ddf77447071a5b0c2">More...</a><br /></td></tr>
 <tr class="separator:ga210471c61013f15ddf77447071a5b0c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -248,6 +260,18 @@ Functions</h2></td></tr>
 <tr class="memitem:ga607526aad2aa236e8227e9c0f20fcd5c"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DRV__HSMCLIENT__MODULE.html#ga607526aad2aa236e8227e9c0f20fcd5c">HsmClient_firmwareUpdate_CodeVerify</a> (<a class="el" href="structHsmClient__t.html">HsmClient_t</a> *HsmClient, <a class="el" href="structFirmwareUpdateReq__t.html">FirmwareUpdateReq_t</a> *pFirmwareUpdateObject)</td></tr>
 <tr class="memdesc:ga607526aad2aa236e8227e9c0f20fcd5c"><td class="mdescLeft">&#160;</td><td class="mdescRight">service request issued to HSM server to decrypt the firmware programmed in dormant flash bank in place, perform integrity checks on the decrypted firmware and program the certificate in flash memory This service is valid only for F29H85x SOC  <a href="group__DRV__HSMCLIENT__MODULE.html#ga607526aad2aa236e8227e9c0f20fcd5c">More...</a><br /></td></tr>
 <tr class="separator:ga607526aad2aa236e8227e9c0f20fcd5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1ffcf953c8b05aabe050f14f0919fd23"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DRV__HSMCLIENT__MODULE.html#ga1ffcf953c8b05aabe050f14f0919fd23">HsmClient_VerifyROTSwitchingCertificate</a> (<a class="el" href="structHsmClient__t.html">HsmClient_t</a> *HsmClient, uint8_t *cert, uint32_t cert_size, uint32_t timeout)</td></tr>
+<tr class="memdesc:ga1ffcf953c8b05aabe050f14f0919fd23"><td class="mdescLeft">&#160;</td><td class="mdescRight">service request issued to HSM server to validate RoT Switching Certificate  <a href="group__DRV__HSMCLIENT__MODULE.html#ga1ffcf953c8b05aabe050f14f0919fd23">More...</a><br /></td></tr>
+<tr class="separator:ga1ffcf953c8b05aabe050f14f0919fd23"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga530b1603d591126ac346c31f30414f7d"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DRV__HSMCLIENT__MODULE.html#ga530b1603d591126ac346c31f30414f7d">HsmClient_UpdateKeyRevsion</a> (<a class="el" href="structHsmClient__t.html">HsmClient_t</a> *HsmClient, uint32_t timeout)</td></tr>
+<tr class="memdesc:ga530b1603d591126ac346c31f30414f7d"><td class="mdescLeft">&#160;</td><td class="mdescRight">service request issued to HSM server to update key revision to 0x2 which changes the root of trust key from secondary keys to back up keys.  <a href="group__DRV__HSMCLIENT__MODULE.html#ga530b1603d591126ac346c31f30414f7d">More...</a><br /></td></tr>
+<tr class="separator:ga530b1603d591126ac346c31f30414f7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5ea570bc441bb6c6a9dff879b0600e27"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DRV__HSMCLIENT__MODULE.html#ga5ea570bc441bb6c6a9dff879b0600e27">HsmClient_configOTFARegions</a> (<a class="el" href="structHsmClient__t.html">HsmClient_t</a> *HsmClient, <a class="el" href="structOTFA__Config__t.html">OTFA_Config_t</a> *OTFA_ConfigInfo, uint32_t timeout)</td></tr>
+<tr class="memdesc:ga5ea570bc441bb6c6a9dff879b0600e27"><td class="mdescLeft">&#160;</td><td class="mdescRight">Client request to configure the OTFA regions.  <a href="group__DRV__HSMCLIENT__MODULE.html#ga5ea570bc441bb6c6a9dff879b0600e27">More...</a><br /></td></tr>
+<tr class="separator:ga5ea570bc441bb6c6a9dff879b0600e27"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae655894963d794110ea5de532102ef64"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DRV__HSMCLIENT__MODULE.html#gae655894963d794110ea5de532102ef64">HsmClient_readOTFARegions</a> (<a class="el" href="structHsmClient__t.html">HsmClient_t</a> *HsmClient, <a class="el" href="structOTFA__readRegion__t.html">OTFA_readRegion_t</a> *OTFA_readRegion, uint32_t timeout)</td></tr>
+<tr class="memdesc:gae655894963d794110ea5de532102ef64"><td class="mdescLeft">&#160;</td><td class="mdescRight">Client request to read the OTFA regions.  <a href="group__DRV__HSMCLIENT__MODULE.html#gae655894963d794110ea5de532102ef64">More...</a><br /></td></tr>
+<tr class="separator:gae655894963d794110ea5de532102ef64"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
@@ -350,6 +374,18 @@ Macros</h2></td></tr>
 <tr class="memitem:gaf4083171109dd06124c9e017cd3b48e7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DRV__HSMCLIENT__MODULE.html#gaf4083171109dd06124c9e017cd3b48e7">HSM_MSG_FW_UPDATE_CODE_VERIFY</a>&#160;&#160;&#160;(0x9043)</td></tr>
 <tr class="memdesc:gaf4083171109dd06124c9e017cd3b48e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Program firmware during firmware update/code provisioning.  <a href="group__DRV__HSMCLIENT__MODULE.html#gaf4083171109dd06124c9e017cd3b48e7">More...</a><br /></td></tr>
 <tr class="separator:gaf4083171109dd06124c9e017cd3b48e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab744690a05eb6b161e2e12cdb5e1e624"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DRV__HSMCLIENT__MODULE.html#gab744690a05eb6b161e2e12cdb5e1e624">HSM_MSG_VERIFY_ROT_CERT</a>&#160;&#160;&#160;(0x9044)</td></tr>
+<tr class="memdesc:gab744690a05eb6b161e2e12cdb5e1e624"><td class="mdescLeft">&#160;</td><td class="mdescRight">Veriy RoT Switching Certificate Service type ID.  <a href="group__DRV__HSMCLIENT__MODULE.html#gab744690a05eb6b161e2e12cdb5e1e624">More...</a><br /></td></tr>
+<tr class="separator:gab744690a05eb6b161e2e12cdb5e1e624"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga084b34edef554076dbfb4b91ee88ccad"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DRV__HSMCLIENT__MODULE.html#ga084b34edef554076dbfb4b91ee88ccad">HSM_MSG_UPDATE_KEY_REV</a>&#160;&#160;&#160;(0x9045)</td></tr>
+<tr class="memdesc:ga084b34edef554076dbfb4b91ee88ccad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update Key Revision Service type ID.  <a href="group__DRV__HSMCLIENT__MODULE.html#ga084b34edef554076dbfb4b91ee88ccad">More...</a><br /></td></tr>
+<tr class="separator:ga084b34edef554076dbfb4b91ee88ccad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8a621825ddd676ee8ad7a2a365d91c75"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DRV__HSMCLIENT__MODULE.html#ga8a621825ddd676ee8ad7a2a365d91c75">HSM_MSG_CONFIGURE_OTFA</a>&#160;&#160;&#160;(0x9056)</td></tr>
+<tr class="memdesc:ga8a621825ddd676ee8ad7a2a365d91c75"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure OTFA service ID.  <a href="group__DRV__HSMCLIENT__MODULE.html#ga8a621825ddd676ee8ad7a2a365d91c75">More...</a><br /></td></tr>
+<tr class="separator:ga8a621825ddd676ee8ad7a2a365d91c75"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga23d267eaff2aca3dc800e6944ff9b1dd"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DRV__HSMCLIENT__MODULE.html#ga23d267eaff2aca3dc800e6944ff9b1dd">HSM_MSG_READ_OTFA</a>&#160;&#160;&#160;(0x9057)</td></tr>
+<tr class="memdesc:ga23d267eaff2aca3dc800e6944ff9b1dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read OTFA service ID.  <a href="group__DRV__HSMCLIENT__MODULE.html#ga23d267eaff2aca3dc800e6944ff9b1dd">More...</a><br /></td></tr>
+<tr class="separator:ga23d267eaff2aca3dc800e6944ff9b1dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga0842e3d812796be34207849e8dc8dc3a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DRV__HSMCLIENT__MODULE.html#ga0842e3d812796be34207849e8dc8dc3a">HSM_FLAG_AOP</a>&#160;&#160;&#160;(0x11)</td></tr>
 <tr class="memdesc:ga0842e3d812796be34207849e8dc8dc3a"><td class="mdescLeft">&#160;</td><td class="mdescRight">HSM FLAG used by HSM client to indicate that it expects ACK messasge from HSM and will wait for a response message.  <a href="group__DRV__HSMCLIENT__MODULE.html#ga0842e3d812796be34207849e8dc8dc3a">More...</a><br /></td></tr>
 <tr class="separator:ga0842e3d812796be34207849e8dc8dc3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -841,6 +877,70 @@ Macros</h2></td></tr>
 
 </div>
 </div>
+<a id="gab744690a05eb6b161e2e12cdb5e1e624"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gab744690a05eb6b161e2e12cdb5e1e624">&#9670;&nbsp;</a></span>HSM_MSG_VERIFY_ROT_CERT</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define HSM_MSG_VERIFY_ROT_CERT&#160;&#160;&#160;(0x9044)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Veriy RoT Switching Certificate Service type ID. </p>
+
+</div>
+</div>
+<a id="ga084b34edef554076dbfb4b91ee88ccad"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga084b34edef554076dbfb4b91ee88ccad">&#9670;&nbsp;</a></span>HSM_MSG_UPDATE_KEY_REV</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define HSM_MSG_UPDATE_KEY_REV&#160;&#160;&#160;(0x9045)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Update Key Revision Service type ID. </p>
+
+</div>
+</div>
+<a id="ga8a621825ddd676ee8ad7a2a365d91c75"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga8a621825ddd676ee8ad7a2a365d91c75">&#9670;&nbsp;</a></span>HSM_MSG_CONFIGURE_OTFA</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define HSM_MSG_CONFIGURE_OTFA&#160;&#160;&#160;(0x9056)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Configure OTFA service ID. </p>
+
+</div>
+</div>
+<a id="ga23d267eaff2aca3dc800e6944ff9b1dd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga23d267eaff2aca3dc800e6944ff9b1dd">&#9670;&nbsp;</a></span>HSM_MSG_READ_OTFA</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define HSM_MSG_READ_OTFA&#160;&#160;&#160;(0x9057)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Read OTFA service ID. </p>
+
+</div>
+</div>
 <a id="ga0842e3d812796be34207849e8dc8dc3a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga0842e3d812796be34207849e8dc8dc3a">&#9670;&nbsp;</a></span>HSM_FLAG_AOP</h2>
 
@@ -1106,6 +1206,32 @@ Macros</h2></td></tr>
 
 </div>
 </div>
+<a id="ga56b1b7c7c3aa0dbc595b196c63520357"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga56b1b7c7c3aa0dbc595b196c63520357">&#9670;&nbsp;</a></span>HsmClient_SecureBootQueueInit()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void HsmClient_SecureBootQueueInit </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>configured_hsm_client_msg_queue_size</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Customize the size of the HSM client message queue. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">configured_hsm_client_msg_queue_size</td><td>Desired size of the HSM client message queue passed by the user. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="ga70b2b53821f5782e083984e34df972b7"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga70b2b53821f5782e083984e34df972b7">&#9670;&nbsp;</a></span>HsmClient_getVersion()</h2>
 
@@ -1320,8 +1446,8 @@ Macros</h2></td></tr>
 
 </div>
 </div>
-<a id="ga5130fcb75f1250880f48c4294bac706c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga5130fcb75f1250880f48c4294bac706c">&#9670;&nbsp;</a></span>HsmClient_readOTPRow()</h2>
+<a id="gace3361fd0f3fc438e9b7e0a1acfe2122"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gace3361fd0f3fc438e9b7e0a1acfe2122">&#9670;&nbsp;</a></span>HsmClient_readOTPRow()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1335,7 +1461,7 @@ Macros</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="structEfuseRead__t.html">EfuseRead_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="structNvmOtpRead__t.html">NvmOtpRead_t</a> *&#160;</td>
           <td class="paramname"><em>readRow</em>&#160;</td>
         </tr>
         <tr>
@@ -1350,7 +1476,7 @@ Macros</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">HsmClient</td><td>[IN] HsmClient object. </td></tr>
-    <tr><td class="paramname">readRow</td><td>[IN] populates <a class="el" href="structEfuseRead__t.html" title="This is a EfuseRead type which holds the information of eFuse row index and row data corresponding to...">EfuseRead_t</a> struct with rowData corresponding to rowIdx. </td></tr>
+    <tr><td class="paramname">readRow</td><td>[IN] populates <a class="el" href="structNvmOtpRead__t.html" title="This is an NvmOtpRead type which holds the information of NvmOtp row index and row data corresponding...">NvmOtpRead_t</a> struct with rowData corresponding to rowIdx. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1362,8 +1488,8 @@ Macros</h2></td></tr>
 
 </div>
 </div>
-<a id="ga29aa1dd1f15e7d038bec257ec916ea8d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga29aa1dd1f15e7d038bec257ec916ea8d">&#9670;&nbsp;</a></span>HsmClient_writeOTPRow()</h2>
+<a id="ga96f53cf958e70929245d0f21e10f038e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga96f53cf958e70929245d0f21e10f038e">&#9670;&nbsp;</a></span>HsmClient_writeOTPRow()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1377,7 +1503,7 @@ Macros</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="structEfuseRowWrite__t.html">EfuseRowWrite_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="structNvmOtpRowWrite__t.html">NvmOtpRowWrite_t</a> *&#160;</td>
           <td class="paramname"><em>writeRow</em>&#160;</td>
         </tr>
         <tr>
@@ -1392,7 +1518,7 @@ Macros</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">HsmClient</td><td>[IN] HsmClient object. </td></tr>
-    <tr><td class="paramname">writeRow</td><td>[IN] populates <a class="el" href="structEfuseRowWrite__t.html" title="This is a EfuseRowWrite type which holds the information regarding programming eFuse row.">EfuseRowWrite_t</a> struct with rowData corresponding to rowIdx. </td></tr>
+    <tr><td class="paramname">writeRow</td><td>[IN] populates <a class="el" href="structNvmOtpRowWrite__t.html" title="This is an NvmOtpRowWrite type which holds the information regarding programming NvmOtp row....">NvmOtpRowWrite_t</a> struct with rowData corresponding to rowIdx. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1404,8 +1530,8 @@ Macros</h2></td></tr>
 
 </div>
 </div>
-<a id="ga7960519eeac66f9fbe300d8d1c3b02cf"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga7960519eeac66f9fbe300d8d1c3b02cf">&#9670;&nbsp;</a></span>HsmClient_lockOTPRow()</h2>
+<a id="gab43e961650612c91157c0587b3d2746f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gab43e961650612c91157c0587b3d2746f">&#9670;&nbsp;</a></span>HsmClient_lockOTPRow()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1419,7 +1545,7 @@ Macros</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="structEfuseRowProt__t.html">EfuseRowProt_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="structNvmOtpRowProt__t.html">NvmOtpRowProt_t</a> *&#160;</td>
           <td class="paramname"><em>rowProt</em>&#160;</td>
         </tr>
         <tr>
@@ -1430,11 +1556,11 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>The service issued to HSM Server sets the protection status bit of the specified row to 1. </p>
+<p>The service issued to HSM Server sets the protection status bit of the specified row to 1. This API is not valid for F29H85x. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">HsmClient</td><td>[IN] HsmClient object. </td></tr>
-    <tr><td class="paramname">rowProt</td><td>[IN] Pointer to <a class="el" href="structEfuseRowProt__t.html" title="This is a EfuseRowProt type which holds the information of eFuse row index and protection status corr...">EfuseRowProt_t</a> struct which contains the row index and row protection status </td></tr>
+    <tr><td class="paramname">rowProt</td><td>[IN] Pointer to <a class="el" href="structNvmOtpRowProt__t.html" title="This is a NvmOtpRowProt type which holds the information of NvmOtp row index and protection status co...">NvmOtpRowProt_t</a> struct which contains the row index and row protection status </td></tr>
   </table>
   </dd>
 </dl>
@@ -1446,8 +1572,8 @@ Macros</h2></td></tr>
 
 </div>
 </div>
-<a id="gae1ad70f4ef9597ea874869df933b4d6a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gae1ad70f4ef9597ea874869df933b4d6a">&#9670;&nbsp;</a></span>HsmClient_getOTPRowCount()</h2>
+<a id="gae625624727a8de14944f65d25fececd5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gae625624727a8de14944f65d25fececd5">&#9670;&nbsp;</a></span>HsmClient_getOTPRowCount()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1461,7 +1587,7 @@ Macros</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="structEfuseRowCount__t.html">EfuseRowCount_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="structNvmOtpRowCount__t.html">NvmOtpRowCount_t</a> *&#160;</td>
           <td class="paramname"><em>rowCount</em>&#160;</td>
         </tr>
         <tr>
@@ -1476,7 +1602,7 @@ Macros</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">HsmClient</td><td>[IN] HsmClient object. </td></tr>
-    <tr><td class="paramname">rowCount</td><td>[IN] Pointer to <a class="el" href="structEfuseRowCount__t.html" title="This is a EfuseRowCount type which holds the information regarding eFuse row count and size of each r...">EfuseRowCount_t</a> struct which is populated by HSM server with row count and row size </td></tr>
+    <tr><td class="paramname">rowCount</td><td>[IN] Pointer to <a class="el" href="structNvmOtpRowCount__t.html" title="This is an NvmOtpRowCount type which holds the information regarding NvmOtp row count and size of eac...">NvmOtpRowCount_t</a> struct which is populated by HSM server with row count and row size </td></tr>
   </table>
   </dd>
 </dl>
@@ -1488,8 +1614,8 @@ Macros</h2></td></tr>
 
 </div>
 </div>
-<a id="gad830e0858457a98e4f281b4e212b4232"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gad830e0858457a98e4f281b4e212b4232">&#9670;&nbsp;</a></span>HsmClient_getOTPRowProtection()</h2>
+<a id="gaca8f5f005b283ec144d9e178b12388ca"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaca8f5f005b283ec144d9e178b12388ca">&#9670;&nbsp;</a></span>HsmClient_getOTPRowProtection()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1503,7 +1629,7 @@ Macros</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="structEfuseRowProt__t.html">EfuseRowProt_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="structNvmOtpRowProt__t.html">NvmOtpRowProt_t</a> *&#160;</td>
           <td class="paramname"><em>rowProt</em>&#160;</td>
         </tr>
         <tr>
@@ -1514,11 +1640,11 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>The service issued to HSM Server retrieves the extended otp efuse row protection status. </p>
+<p>The service issued to HSM Server retrieves the extended otp efuse row protection status. This API is not valid for F29H85x. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">HsmClient</td><td>[IN] HsmClient object. </td></tr>
-    <tr><td class="paramname">rowProt</td><td>[IN] Pointer to <a class="el" href="structEfuseRowProt__t.html" title="This is a EfuseRowProt type which holds the information of eFuse row index and protection status corr...">EfuseRowProt_t</a> struct which is populated by HSM server with row protection status </td></tr>
+    <tr><td class="paramname">rowProt</td><td>[IN] Pointer to <a class="el" href="structNvmOtpRowProt__t.html" title="This is a NvmOtpRowProt type which holds the information of NvmOtp row index and protection status co...">NvmOtpRowProt_t</a> struct which is populated by HSM server with row protection status </td></tr>
   </table>
   </dd>
 </dl>
@@ -2352,6 +2478,204 @@ Macros</h2></td></tr>
 <li>SystemP_SUCCESS if returns successfully</li>
 <li>SystemP_FAILURE if NACK message is received or client id not registered.</li>
 <li>SystemP_TIMEOUT if timeout exception occours. </li>
+</ol>
+</dd></dl>
+
+</div>
+</div>
+<a id="ga1ffcf953c8b05aabe050f14f0919fd23"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga1ffcf953c8b05aabe050f14f0919fd23">&#9670;&nbsp;</a></span>HsmClient_VerifyROTSwitchingCertificate()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int32_t HsmClient_VerifyROTSwitchingCertificate </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structHsmClient__t.html">HsmClient_t</a> *&#160;</td>
+          <td class="paramname"><em>HsmClient</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>cert</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>cert_size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>timeout</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>service request issued to HSM server to validate RoT Switching Certificate </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">timeout</td><td>[IN] amount of time to block waiting for semaphore to be available, in units of system ticks (see KERNEL_DPL_CLOCK_PAGE) </td></tr>
+    <tr><td class="paramname">HsmClient</td><td>[IN] Client object which is using this RoT Switching API. </td></tr>
+    <tr><td class="paramname">cert</td><td>[IN] point to the location of certificate in the device memory. </td></tr>
+    <tr><td class="paramname">cert_size</td><td>[IN] size of certificate.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><ol type="1">
+<li>SystemP_SUCCESS if returns successfully</li>
+<li>SystemP_FAILURE if NACK message is received or client id not registered.</li>
+<li>SystemP_TIMEOUT if timeout exception occours. </li>
+</ol>
+</dd></dl>
+
+</div>
+</div>
+<a id="ga530b1603d591126ac346c31f30414f7d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga530b1603d591126ac346c31f30414f7d">&#9670;&nbsp;</a></span>HsmClient_UpdateKeyRevsion()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int32_t HsmClient_UpdateKeyRevsion </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structHsmClient__t.html">HsmClient_t</a> *&#160;</td>
+          <td class="paramname"><em>HsmClient</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>timeout</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>service request issued to HSM server to update key revision to 0x2 which changes the root of trust key from secondary keys to back up keys. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">timeout</td><td>[IN] amount of time to block waiting for semaphore to be available, in units of system ticks (see KERNEL_DPL_CLOCK_PAGE) </td></tr>
+    <tr><td class="paramname">HsmClient</td><td>[IN] Client object which is using this RoT Switching API.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><ol type="1">
+<li>SystemP_SUCCESS if returns successfully</li>
+<li>SystemP_FAILURE if NACK message is received or client id not registered.</li>
+<li>SystemP_TIMEOUT if timeout exception occours. </li>
+</ol>
+</dd></dl>
+
+</div>
+</div>
+<a id="ga5ea570bc441bb6c6a9dff879b0600e27"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga5ea570bc441bb6c6a9dff879b0600e27">&#9670;&nbsp;</a></span>HsmClient_configOTFARegions()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int32_t HsmClient_configOTFARegions </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structHsmClient__t.html">HsmClient_t</a> *&#160;</td>
+          <td class="paramname"><em>HsmClient</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structOTFA__Config__t.html">OTFA_Config_t</a> *&#160;</td>
+          <td class="paramname"><em>OTFA_ConfigInfo</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>timeout</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Client request to configure the OTFA regions. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">HsmClient</td><td>[IN] HsmClient object </td></tr>
+    <tr><td class="paramname">OTFA_ConfigInfo</td><td>[IN] OTFA Config Info </td></tr>
+    <tr><td class="paramname">timeout</td><td>[IN] timeout</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><ol type="1">
+<li>SystemP_SUCCESS if returns successfully</li>
+<li>SystemP_FAILURE if NACK message is received or client id not registered. </li>
+</ol>
+</dd></dl>
+
+</div>
+</div>
+<a id="gae655894963d794110ea5de532102ef64"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gae655894963d794110ea5de532102ef64">&#9670;&nbsp;</a></span>HsmClient_readOTFARegions()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int32_t HsmClient_readOTFARegions </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structHsmClient__t.html">HsmClient_t</a> *&#160;</td>
+          <td class="paramname"><em>HsmClient</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structOTFA__readRegion__t.html">OTFA_readRegion_t</a> *&#160;</td>
+          <td class="paramname"><em>OTFA_readRegion</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>timeout</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Client request to read the OTFA regions. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">HsmClient</td><td>[IN] HsmClient object </td></tr>
+    <tr><td class="paramname">OTFA_readRegion</td><td>[IN] OTFA Read Region </td></tr>
+    <tr><td class="paramname">timeout</td><td>[IN] timeout</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><ol type="1">
+<li>SystemP_SUCCESS if reading done successfully</li>
+<li>SystemP_FAILURE if NACK message is received or client id not registered. </li>
 </ol>
 </dd></dl>
 

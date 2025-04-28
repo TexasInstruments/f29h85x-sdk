@@ -43,7 +43,7 @@
   <td id="projectlogo"><a href="https://www.ti.com"><img alt="Logo" src="ti_logo.svg"/></a></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">F29H85x-SDK
-   &#160;<span id="projectnumber">1.00.00.00</span>
+   &#160;<span id="projectnumber">1.01.00.00</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -92,18 +92,18 @@ $(document).ready(function(){initNavTree('EXAMPLES_DRIVERS_SPI_EXTERNAL_LOOPBACK
 </div><!--header-->
 <div class="contents">
 <div class="toc"><h3>Table of Contents</h3>
-<ul><li class="level1"><a href="#autotoc_md581">Introduction</a></li>
-<li class="level1"><a href="#autotoc_md582">Watch  Variables</a></li>
-<li class="level1"><a href="#autotoc_md583">External Connections</a></li>
-<li class="level1"><a href="#autotoc_md584">Steps to Run the Example</a></li>
-<li class="level1"><a href="#autotoc_md585">See Also</a></li>
+<ul><li class="level1"><a href="#autotoc_md598">Introduction</a></li>
+<li class="level1"><a href="#autotoc_md599">Watch  Variables</a></li>
+<li class="level1"><a href="#autotoc_md600">External Connections</a></li>
+<li class="level1"><a href="#autotoc_md601">Steps to Run the Example</a></li>
+<li class="level1"><a href="#autotoc_md602">See Also</a></li>
 </ul>
 </div>
 <div class="textblock"><p><a class="anchor" id="md_examples_drivers_spi_external_loopback"></a></p>
-<h1><a class="anchor" id="autotoc_md581"></a>
+<h1><a class="anchor" id="autotoc_md598"></a>
 Introduction</h1>
 <p>This program uses the external loopback between two SPI modules. Both the SPI FIFOs and interrupts are not used in this example. SPIA is configured as a peripheral and SPI B is configured as controller. This example demonstrates full duplex communication where both controller and peripheral transmits and receives data simultaneously.</p>
-<h1><a class="anchor" id="autotoc_md582"></a>
+<h1><a class="anchor" id="autotoc_md599"></a>
 Watch  Variables</h1>
 <ul>
 <li>TxData_SPIA : Data send from SPIA (peripheral)</li>
@@ -111,7 +111,7 @@ Watch  Variables</h1>
 <li>RxData_SPIA : Data received by SPIA (peripheral)</li>
 <li>RxData_SPIB : Data received by SPIB (controller)</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md583"></a>
+<h1><a class="anchor" id="autotoc_md600"></a>
 External Connections</h1>
 <ul>
 <li>GPIO16 and GPIO63 - SPIPICO</li>
@@ -119,7 +119,7 @@ External Connections</h1>
 <li>GPIO34 and GPIO26 - SPICLK</li>
 <li>GPIO61 and GPIO27 - SPISTE</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md584"></a>
+<h1><a class="anchor" id="autotoc_md601"></a>
 Steps to Run the Example</h1>
 <ul>
 <li><b>When using CCS projects to build</b>, import the CCS project for the required combination and build it using the CCS project menu (see <a class="el" href="CCS_PROJECTS_PAGE.html">CCS Build Project</a>).</li>
@@ -128,7 +128,7 @@ Steps to Run the Example</h1>
 <li>Launch a CCS debug session and run the executable, see <a class="el" href="CCS_LAUNCH_PAGE.html">Build, Load and Run</a></li>
 <li>Wait for transmissions to complete and program to enter idle while loop, then inspect the received data</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md585"></a>
+<h1><a class="anchor" id="autotoc_md602"></a>
 See Also</h1>
 <p><a class="el" href="DRIVERS_SPI_PAGE.html">SPI</a> </p>
 </div></div><!-- contents -->

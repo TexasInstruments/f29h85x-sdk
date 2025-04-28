@@ -69,7 +69,6 @@ extern "C"
 #include "inc/hw_xint.h"
 #include "inc/hw_asysctl.h"
 #include "cpu.h"
-#include "interrupt.h"
 #include "xbar.h"
 #include "debug.h"
 

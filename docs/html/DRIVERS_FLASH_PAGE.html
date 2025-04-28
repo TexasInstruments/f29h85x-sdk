@@ -43,7 +43,7 @@
   <td id="projectlogo"><a href="https://www.ti.com"><img alt="Logo" src="ti_logo.svg"/></a></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">F29H85x-SDK
-   &#160;<span id="projectnumber">1.00.00.00</span>
+   &#160;<span id="projectnumber">1.01.00.00</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -92,17 +92,17 @@ $(document).ready(function(){initNavTree('DRIVERS_FLASH_PAGE.html',''); initResi
 </div><!--header-->
 <div class="contents">
 <div class="toc"><h3>Table of Contents</h3>
-<ul><li class="level1"><a href="#autotoc_md110">Features Supported</a></li>
-<li class="level1"><a href="#autotoc_md111">SysConfig Features</a></li>
-<li class="level1"><a href="#autotoc_md112">Features NOT Supported</a></li>
-<li class="level1"><a href="#autotoc_md113">Important Usage Guidelines</a></li>
-<li class="level1"><a href="#autotoc_md114">Example Usage</a></li>
-<li class="level1"><a href="#autotoc_md115">API</a></li>
+<ul><li class="level1"><a href="#autotoc_md117">Features Supported</a></li>
+<li class="level1"><a href="#autotoc_md118">SysConfig Features</a></li>
+<li class="level1"><a href="#autotoc_md119">Features NOT Supported</a></li>
+<li class="level1"><a href="#autotoc_md120">Important Usage Guidelines</a></li>
+<li class="level1"><a href="#autotoc_md121">Example Usage</a></li>
+<li class="level1"><a href="#autotoc_md122">API</a></li>
 </ul>
 </div>
 <div class="textblock"><p><a class="anchor" id="md_components_drivers_flash"></a></p>
 <p>The Flash driver provides an API to configure the Flash module. Below are the high level features supported by the Flash driver.</p>
-<h1><a class="anchor" id="autotoc_md110"></a>
+<h1><a class="anchor" id="autotoc_md117"></a>
 Features Supported</h1>
 <ul>
 <li>Configure data cache, code cache, prefetch, and data preread for Flash Read Interface (FRI) 1-4</li>
@@ -110,7 +110,7 @@ Features Supported</h1>
 <li>Configure flash parity test</li>
 <li>Flash initialization routine</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md111"></a>
+<h1><a class="anchor" id="autotoc_md118"></a>
 SysConfig Features</h1>
 <dl class="section note"><dt>Note</dt><dd>It is strongly recommend to use SysConfig where it is available instead of using direct SW API calls. This will help simplify the SW application and also catch common mistakes early in the development cycle.</dd></dl>
 <ul>
@@ -118,16 +118,16 @@ SysConfig Features</h1>
 <li>Configure flash wait states</li>
 <li>Flash initialization routine</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md112"></a>
+<h1><a class="anchor" id="autotoc_md119"></a>
 Features NOT Supported</h1>
 <p>NA</p>
-<h1><a class="anchor" id="autotoc_md113"></a>
+<h1><a class="anchor" id="autotoc_md120"></a>
 Important Usage Guidelines</h1>
 <p>It is important to look at your device's datasheet for information about what the required minimum flash wait state is for your selected SYSCLK frequency. See the Flash section of the TRM for more info.</p>
-<h1><a class="anchor" id="autotoc_md114"></a>
+<h1><a class="anchor" id="autotoc_md121"></a>
 Example Usage</h1>
 <p>Include the below file to access the APIs #include &lt;flash.h&gt;</p>
-<h1><a class="anchor" id="autotoc_md115"></a>
+<h1><a class="anchor" id="autotoc_md122"></a>
 API</h1>
 <p>flash_api </p>
 </div></div><!-- contents -->

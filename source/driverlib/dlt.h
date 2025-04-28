@@ -69,7 +69,6 @@ extern "C"
 #include "cpu.h"
 #include "debug.h"
 #include "ssu.h"
-#include "rtdma.h"
 
 
 //*****************************************************************************

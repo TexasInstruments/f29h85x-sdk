@@ -1,8 +1,8 @@
 var ECAT_UG =
 [
     [ "Introduction", "ECAT_INTRODUCTION.html", [
-      [ "Terms and Abbreviations", "ECAT_INTRODUCTION.html#autotoc_md816", null ],
-      [ "EtherCAT References and Resources", "ECAT_INTRODUCTION.html#autotoc_md817", null ]
+      [ "Terms and Abbreviations", "ECAT_INTRODUCTION.html#autotoc_md886", null ],
+      [ "EtherCAT References and Resources", "ECAT_INTRODUCTION.html#autotoc_md887", null ]
     ] ],
     [ "EtherCAT Software Development Overview", "ETHERCAT_DEV_OVERVIEW.html", [
       [ "EtherCAT Application Software Stack", "ETHERCAT_DEV_OVERVIEW.html#ETHERCAT_APPLICATION_SOFTWARE_STACK", null ],
@@ -10,10 +10,19 @@ var ECAT_UG =
       [ "EtherCAT Development Overview", "ETHERCAT_DEV_OVERVIEW.html#ETHERCAT_DEVELOPMENT_OVERVIEW", null ]
     ] ],
     [ "Getting Started Using Examples", "ETHERCAT_GETTING_STARTED.html", [
-      [ "CPU1 PDI HAL Test Example", "ETHERCAT_GETTING_STARTED.html#CPU1_PDI_HAL_TEST_EXAMPLE", null ]
+      [ "CPU1 PDI HAL Test Example", "ETHERCAT_GETTING_STARTED.html#CPU1_PDI_HAL_TEST_EXAMPLE", null ],
+      [ "CPU1 Echoback Solution Example", "ETHERCAT_GETTING_STARTED.html#CPU1_ECHOBACK_SOLUTION_EXAMPLE", [
+        [ "Steps to Run the Example", "ETHERCAT_GETTING_STARTED.html#autotoc_md888", null ]
+      ] ],
+      [ "CPU1 CiA402 Solution Example", "ETHERCAT_GETTING_STARTED.html#CPU1_CIA402_SOLUTION_EXAMPLE", [
+        [ "Steps to Run the Example", "ETHERCAT_GETTING_STARTED.html#autotoc_md889", null ]
+      ] ],
+      [ "CPU1 FoE Download Solution Example", "ETHERCAT_GETTING_STARTED.html#CPU1_FOE_DOWNLOAD_SOLUTION_EXAMPLE", [
+        [ "Steps to Run the Example", "ETHERCAT_GETTING_STARTED.html#autotoc_md890", null ]
+      ] ]
     ] ],
     [ "EtherCAT How-To Procedures", "ECAT_HOW_TO_PROCEDURES.html", [
-      [ "Example External Connections", "ECAT_HOW_TO_PROCEDURES.html#autotoc_md818", null ],
+      [ "Example External Connections", "ECAT_HOW_TO_PROCEDURES.html#EXTERNAL_CONNECTIONS", null ],
       [ "Setup TwinCAT", "ECAT_HOW_TO_PROCEDURES.html#TWINCAT_SETUP", null ],
       [ "Scanning for EtherCAT SubDevices via TwinCAT", "ECAT_HOW_TO_PROCEDURES.html#TWINCAT_SCAN", null ],
       [ "Program ControlCard EEPROM", "ECAT_HOW_TO_PROCEDURES.html#PROGRAM_EEPROM", null ],

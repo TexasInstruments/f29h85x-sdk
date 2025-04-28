@@ -7,6 +7,10 @@
 //!
 //! This example is an empty project setup for Driverlib development with
 //! Security configurations
+//!
+//! Build and load the example only in 'FLASH-HSFS' configuration
+//! This example is used to modify the default 'Error Status Pin'
+//!
 //! The following Security Settings can be mofified in syscfg:
 //!     ->  SSU Mode
 //!     ->  Boot Settings
@@ -18,9 +22,16 @@
 //! After making changes to the security settings follow the below steps
 //!     ->  Save syscfg
 //!     ->  Rebuild example project
-//!     ->  Make sure the current BANKMODE is 0
-//!     ->  Load the example.out
-//!     ->  Power cycle EVM or issue XRSn
+//!     ->  Using the Flash Plug-In,
+//!         ->  In 'User Config Settings', Program FLASH BANKMODE to BANKMODE2, if not already done.
+//!         ->  In 'Download Settings', Unselect 'Verify Flash after Program (SSU Mode 1 Usage Only)', if not already done.
+//!         ->  In 'Download Settings', Unselect 'Perform Blank Check before loading data to Flash memory (SSU Mode 1 Usage Only)', if not already done.
+//!         ->  In 'NonMain Erase Settings', Select 'Allow NonMain Flash erase before loading data to Flash memory' (click checkbox), if not already done.
+//!         Refer to Flash Plug-In documentation for further instructions.
+//!     ->  Issue an XRSN to the device.
+//!     ->  Load the CPU1.out.
+//!     ->  After the program is loaded, issue an XRSN to the device.
+//!         Connect to CPU1 and load symbols.
 //
 //#############################################################################
 //

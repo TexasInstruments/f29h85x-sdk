@@ -192,6 +192,8 @@ int32_t main(void)
     test_error[0] = err.f32;
     printf("IIR sample Pass_count = %d, Fail_count = %d \n", pass, fail);
     printf("IIR sample Cycles = %d, Timer overhead = %d \n", differenceCounter, overheadCounter);
+    while(1)
+    {}
 
 }
 

@@ -94,11 +94,6 @@
 int main(void)
 {
     //
-    // Disable Lockstep
-    //
-    SysCtl_disableLockStep();
-
-    //
     // Initialize device clock, peripheral clocks and interrupts
     //
     Device_init();

@@ -43,7 +43,7 @@
   <td id="projectlogo"><a href="https://www.ti.com"><img alt="Logo" src="ti_logo.svg"/></a></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">F29H85x-SDK
-   &#160;<span id="projectnumber">1.00.00.00</span>
+   &#160;<span id="projectnumber">1.01.00.00</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -92,30 +92,30 @@ $(document).ready(function(){initNavTree('EXAMPLES_DRIVERS_LIN_SCI_DMA_SINGLE_BU
 </div><!--header-->
 <div class="contents">
 <div class="toc"><h3>Table of Contents</h3>
-<ul><li class="level1"><a href="#autotoc_md523">Introduction</a></li>
-<li class="level1"><a href="#autotoc_md524">Watch  Variables</a></li>
-<li class="level1"><a href="#autotoc_md525">External Connections</a></li>
-<li class="level1"><a href="#autotoc_md526">Steps to Run the Example</a></li>
-<li class="level1"><a href="#autotoc_md527">See Also</a></li>
+<ul><li class="level1"><a href="#autotoc_md540">Introduction</a></li>
+<li class="level1"><a href="#autotoc_md541">Watch  Variables</a></li>
+<li class="level1"><a href="#autotoc_md542">External Connections</a></li>
+<li class="level1"><a href="#autotoc_md543">Steps to Run the Example</a></li>
+<li class="level1"><a href="#autotoc_md544">See Also</a></li>
 </ul>
 </div>
 <div class="textblock"><p><a class="anchor" id="md_examples_drivers_lin_sci_dma_single_buffer"></a></p>
-<h1><a class="anchor" id="autotoc_md523"></a>
+<h1><a class="anchor" id="autotoc_md540"></a>
 Introduction</h1>
 <p>This example configures the LIN module in SCI mode for internal loopback with the use of the DMA. The LIN module performs as SCI with a set character and frame length in single-buffer compatibility mode. When the transmit buffer i.e. the SCITD register is free, the DMA will transfer data from global variable sData into this register. Once the received buffer, i.e. the SCIRD register contains data, the DMA will transfer the data into the global variable rdata.</p>
 <p>When all data has been placed into rData, a check of the validity of the data will be performed in one of the DMA channels' ISRs.</p>
-<h1><a class="anchor" id="autotoc_md524"></a>
+<h1><a class="anchor" id="autotoc_md541"></a>
 Watch  Variables</h1>
 <ul>
 <li>sData - Data to send</li>
 <li>rData - Received data</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md525"></a>
+<h1><a class="anchor" id="autotoc_md542"></a>
 External Connections</h1>
 <ul>
 <li>None</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md526"></a>
+<h1><a class="anchor" id="autotoc_md543"></a>
 Steps to Run the Example</h1>
 <ul>
 <li><b>When using CCS projects to build</b>, import the CCS project for the required combination and build it using the CCS project menu (see <a class="el" href="CCS_PROJECTS_PAGE.html">CCS Build Project</a>).</li>
@@ -124,7 +124,7 @@ Steps to Run the Example</h1>
 <li>Launch a CCS debug session and run the executable, see <a class="el" href="CCS_LAUNCH_PAGE.html">Build, Load and Run</a></li>
 <li>Wait for transmissions to complete and program to halt, then check received data</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md527"></a>
+<h1><a class="anchor" id="autotoc_md544"></a>
 See Also</h1>
 <p><a class="el" href="DRIVERS_LIN_PAGE.html">LIN</a> </p>
 </div></div><!-- contents -->

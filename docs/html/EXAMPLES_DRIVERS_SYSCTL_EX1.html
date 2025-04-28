@@ -43,7 +43,7 @@
   <td id="projectlogo"><a href="https://www.ti.com"><img alt="Logo" src="ti_logo.svg"/></a></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">F29H85x-SDK
-   &#160;<span id="projectnumber">1.00.00.00</span>
+   &#160;<span id="projectnumber">1.01.00.00</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -92,23 +92,23 @@ $(document).ready(function(){initNavTree('EXAMPLES_DRIVERS_SYSCTL_EX1.html','');
 </div><!--header-->
 <div class="contents">
 <div class="toc"><h3>Table of Contents</h3>
-<ul><li class="level1"><a href="#autotoc_md616">Introduction</a></li>
-<li class="level1"><a href="#autotoc_md617">External Connections</a></li>
-<li class="level1"><a href="#autotoc_md618">Watch Variables</a></li>
+<ul><li class="level1"><a href="#autotoc_md633">Introduction</a></li>
+<li class="level1"><a href="#autotoc_md634">External Connections</a></li>
+<li class="level1"><a href="#autotoc_md635">Watch Variables</a></li>
 </ul>
 </div>
 <div class="textblock"><p><a class="anchor" id="md_examples_drivers_sysctl_ex1"></a></p>
-<h1><a class="anchor" id="autotoc_md616"></a>
+<h1><a class="anchor" id="autotoc_md633"></a>
 Introduction</h1>
 <p>This example demonstrates the missing clock detection functionality and the way to handle it. Once the MCD is simulated by disconnecting the OSCCLK to the MCD module an NMI would be generated. This NMI determines that an MCD was generated due to a clock failure which is handled in the ISR.</p>
 <p>Before an MCD the clock frequency would be as per device initialization (200Mhz). Post MCD the frequency would move to 10Mhz or INTOSC1.</p>
 <p>The example also shows how we can lock the PLL after missing clock, detection, by first explicitly switching the clock source to INTOSC1, resetting the missing clock detect circuit and then re-locking the PLL. Post a re-lock the clock frequency would be 200Mhz but using the INTOSC1 as clock source.</p>
-<h1><a class="anchor" id="autotoc_md617"></a>
+<h1><a class="anchor" id="autotoc_md634"></a>
 External Connections</h1>
 <ul>
 <li>None.</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md618"></a>
+<h1><a class="anchor" id="autotoc_md635"></a>
 Watch Variables</h1>
 <ul>
 <li><b>fail</b> - Indicates that a missing clock was either not detected or was not handled correctly.</li>

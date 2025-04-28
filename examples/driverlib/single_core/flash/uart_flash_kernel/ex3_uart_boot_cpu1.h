@@ -65,7 +65,11 @@ extern bootLoadStatus_t g_bootLoadStatus;
 // Defines
 //
 #define FLASH_BUFFER_SIZE 0x80U
-#define FLASH_IMAGE_SIZE (0x400000U)
+#ifdef BANKMODE0
+#define FLASH_IMAGE_SIZE (0x200000U - MAX_CERT_SIZE)
+#else
+#define FLASH_IMAGE_SIZE (0x100000U - MAX_CERT_SIZE)
+#endif
 
 //
 // Functions
@@ -74,3 +78,4 @@ void CopyApplication(uint32_t LoadAddr, uint32_t ImageSize);
 void ConstructInterleavedData1024Bits(uint8_t* arrPtr_1024Bits);
 extern void sendACK(void);
 extern void sendNAK(void);
+void ProgramBankModeToDataFlash(uint8_t bankMode, uint32_t u32UserFlashConfig);

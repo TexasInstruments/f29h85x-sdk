@@ -43,7 +43,7 @@
   <td id="projectlogo"><a href="https://www.ti.com"><img alt="Logo" src="ti_logo.svg"/></a></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">F29H85x-SDK
-   &#160;<span id="projectnumber">1.00.00.00</span>
+   &#160;<span id="projectnumber">1.01.00.00</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -92,14 +92,14 @@ $(document).ready(function(){initNavTree('EXAMPLES_DRIVERS_EQEP_EX5_SPEED_DIR_MO
 </div><!--header-->
 <div class="contents">
 <div class="toc"><h3>Table of Contents</h3>
-<ul><li class="level1"><a href="#autotoc_md408">Introduction</a></li>
-<li class="level1"><a href="#autotoc_md409">External Connections</a></li>
-<li class="level1"><a href="#autotoc_md410">Steps to Run the Example</a></li>
-<li class="level1"><a href="#autotoc_md411">See Also</a></li>
+<ul><li class="level1"><a href="#autotoc_md433">Introduction</a></li>
+<li class="level1"><a href="#autotoc_md434">External Connections</a></li>
+<li class="level1"><a href="#autotoc_md435">Steps to Run the Example</a></li>
+<li class="level1"><a href="#autotoc_md436">See Also</a></li>
 </ul>
 </div>
 <div class="textblock"><p><a class="anchor" id="md_examples_drivers_eqep_ex5_speed_dir_motor"></a></p>
-<h1><a class="anchor" id="autotoc_md408"></a>
+<h1><a class="anchor" id="autotoc_md433"></a>
 Introduction</h1>
 <p>This example can be used to sense the speed and direction of motor using eQEP in quadrature encoder mode. ePWM1A is configured to simulate motor encoder signals with frequency of 5 kHz on both A and B pins with 90 degree phase shift (so as to run this example without motor).EQEP unit timeout is set which will generate an interrupt every UNIT_PERIOD microseconds and speed calculation occurs continuously based on the direction of motor.</p>
 <p>The example does the below</p><ul>
@@ -115,7 +115,7 @@ Introduction</h1>
 <li>dir : Indicates clockwise (1) or anticlockwise (-1)</li>
 <li>pass - If measured qudrature frequency matches with i.e. input quadrature frequency (4 * PWM frequency) then pass = 1 else fail = 1 (** only when "MOTOR" is commented out)</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md409"></a>
+<h1><a class="anchor" id="autotoc_md434"></a>
 External Connections</h1>
 <p>if motor encoder signals are simulated by ePWM</p><ul>
 <li>Connect GPIO20/eQEP1A to GPIO0/ePWM1A</li>
@@ -126,7 +126,7 @@ External Connections</h1>
 <li>Connect GPIO20/eQEP1A to encoder A output</li>
 <li>Connect GPIO21/eQEP1B to encoder B output</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md410"></a>
+<h1><a class="anchor" id="autotoc_md435"></a>
 Steps to Run the Example</h1>
 <ul>
 <li><b>When using CCS projects to build</b>, import the CCS project for the required combination and build it using the CCS project menu (see <a class="el" href="CCS_PROJECTS_PAGE.html">CCS Build Project</a>).</li>
@@ -135,7 +135,7 @@ Steps to Run the Example</h1>
 <li>Launch a CCS debug session and run the executable, see <a class="el" href="CCS_LAUNCH_PAGE.html">Build, Load and Run</a></li>
 <li>Using the watch variables, view the frequency, speed and direction calculated for the motor.</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md411"></a>
+<h1><a class="anchor" id="autotoc_md436"></a>
 See Also</h1>
 <p><a class="el" href="DRIVERS_EQEP_PAGE.html">EQEP</a> </p>
 </div></div><!-- contents -->

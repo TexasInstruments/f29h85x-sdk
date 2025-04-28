@@ -145,6 +145,8 @@ int32_t main(void)
     (test_golden == crcResultAsm)? pass++ : fail++;
 
     printf("Completed CRC-8 Pass_count = %d, Fail_count = %d \n", pass, fail);
+    while(1)
+    {}
     
 }
 

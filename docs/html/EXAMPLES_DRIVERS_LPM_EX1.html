@@ -43,7 +43,7 @@
   <td id="projectlogo"><a href="https://www.ti.com"><img alt="Logo" src="ti_logo.svg"/></a></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">F29H85x-SDK
-   &#160;<span id="projectnumber">1.00.00.00</span>
+   &#160;<span id="projectnumber">1.01.00.00</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -92,18 +92,18 @@ $(document).ready(function(){initNavTree('EXAMPLES_DRIVERS_LPM_EX1.html',''); in
 </div><!--header-->
 <div class="contents">
 <div class="toc"><h3>Table of Contents</h3>
-<ul><li class="level1"><a href="#autotoc_md533">Introduction</a></li>
-<li class="level1"><a href="#autotoc_md534">External Connections</a></li>
+<ul><li class="level1"><a href="#autotoc_md550">Introduction</a></li>
+<li class="level1"><a href="#autotoc_md551">External Connections</a></li>
 </ul>
 </div>
 <div class="textblock"><p><a class="anchor" id="md_examples_drivers_lpm_ex1"></a></p>
-<h1><a class="anchor" id="autotoc_md533"></a>
+<h1><a class="anchor" id="autotoc_md550"></a>
 Introduction</h1>
 <p>This example puts the device into IDLE mode and then wakes up the device from IDLE using XINT1 which triggers on a falling edge of GPIO0.</p>
 <p>The GPIO0 pin must be pulled from high to low by an external agent for wakeup. GPIO0 is configured as an XINT1 pin to trigger an XINT1 interrupt upon detection of a falling edge.</p>
 <p>Initially, pull GPIO0 high externally. To wake device from IDLE mode by triggering an XINT1 interrupt, pull GPIO0 low (falling edge). The wakeup process begins as soon as GPIO0 is held low for the time indicated in the device datasheet.</p>
 <p>GPIO1 is pulled high before entering the IDLE mode and is pulled low when in the external interrupt ISR.</p>
-<h1><a class="anchor" id="autotoc_md534"></a>
+<h1><a class="anchor" id="autotoc_md551"></a>
 External Connections</h1>
 <ul>
 <li>GPIO0 needs to be pulled low to wake up the device.</li>

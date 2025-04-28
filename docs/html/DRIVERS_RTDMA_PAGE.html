@@ -43,7 +43,7 @@
   <td id="projectlogo"><a href="https://www.ti.com"><img alt="Logo" src="ti_logo.svg"/></a></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">F29H85x-SDK
-   &#160;<span id="projectnumber">1.00.00.00</span>
+   &#160;<span id="projectnumber">1.01.00.00</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -92,17 +92,17 @@ $(document).ready(function(){initNavTree('DRIVERS_RTDMA_PAGE.html',''); initResi
 </div><!--header-->
 <div class="contents">
 <div class="toc"><h3>Table of Contents</h3>
-<ul><li class="level1"><a href="#autotoc_md158">Features Supported</a></li>
-<li class="level1"><a href="#autotoc_md159">SysConfig Features</a></li>
-<li class="level1"><a href="#autotoc_md160">Features NOT Supported</a></li>
-<li class="level1"><a href="#autotoc_md161">Important Usage Guidelines</a></li>
-<li class="level1"><a href="#autotoc_md162">Example Usage</a></li>
-<li class="level1"><a href="#autotoc_md163">API</a></li>
+<ul><li class="level1"><a href="#autotoc_md165">Features Supported</a></li>
+<li class="level1"><a href="#autotoc_md166">SysConfig Features</a></li>
+<li class="level1"><a href="#autotoc_md167">Features NOT Supported</a></li>
+<li class="level1"><a href="#autotoc_md168">Important Usage Guidelines</a></li>
+<li class="level1"><a href="#autotoc_md169">Example Usage</a></li>
+<li class="level1"><a href="#autotoc_md170">API</a></li>
 </ul>
 </div>
 <div class="textblock"><p><a class="anchor" id="md_components_drivers_rtdma"></a></p>
 <p>The RTDMA driver provides API to configure the RTDMA module. Below are the high level features supported by the RTDMA driver.</p>
-<h1><a class="anchor" id="autotoc_md158"></a>
+<h1><a class="anchor" id="autotoc_md165"></a>
 Features Supported</h1>
 <ul>
 <li>10 RTDMA channels with software configurable priority levels and independent PIPE interrupts</li>
@@ -116,7 +116,7 @@ Features Supported</h1>
 <li>Burst Mode Support (for transfers with EMIF)</li>
 <li>Support for access protection through the Memory Protection Unit (MPU)</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md159"></a>
+<h1><a class="anchor" id="autotoc_md166"></a>
 SysConfig Features</h1>
 <dl class="section note"><dt>Note</dt><dd>It is strongly recommend to use SysConfig where it is available instead of using direct SW API calls. This will help simplify the SW application and also catch common mistakes early in the development cycle.</dd></dl>
 <ul>
@@ -127,18 +127,18 @@ SysConfig Features</h1>
 <li>Enabling RTDMA MPU</li>
 <li>MPU Region selection and configuration.</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md160"></a>
+<h1><a class="anchor" id="autotoc_md167"></a>
 Features NOT Supported</h1>
 <p>NA</p>
-<h1><a class="anchor" id="autotoc_md161"></a>
+<h1><a class="anchor" id="autotoc_md168"></a>
 Important Usage Guidelines</h1>
 <ul>
 <li>RTDMA MPU is enabled by default and the channels have no access to any memory region. Configure RTDMA MPU to make transfers.</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md162"></a>
+<h1><a class="anchor" id="autotoc_md169"></a>
 Example Usage</h1>
 <p>Include the below file to access the APIs #include &lt;<a class="el" href="rtdma_8h.html">rtdma.h</a>&gt;</p>
-<h1><a class="anchor" id="autotoc_md163"></a>
+<h1><a class="anchor" id="autotoc_md170"></a>
 API</h1>
 <p><a class="el" href="group__rtdma__api.html">RTDMA</a> </p>
 </div></div><!-- contents -->

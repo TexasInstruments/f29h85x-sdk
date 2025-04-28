@@ -43,7 +43,7 @@
   <td id="projectlogo"><a href="https://www.ti.com"><img alt="Logo" src="ti_logo.svg"/></a></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">F29H85x-SDK
-   &#160;<span id="projectnumber">1.00.00.00</span>
+   &#160;<span id="projectnumber">1.01.00.00</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -92,23 +92,24 @@ $(document).ready(function(){initNavTree('UART_FLASH_PROGRAMMER_PAGE.html',''); 
 </div><!--header-->
 <div class="contents">
 <div class="toc"><h3>Table of Contents</h3>
-<ul><li class="level1"><a href="#autotoc_md820">Introduction</a></li>
-<li class="level1"><a href="#autotoc_md821">Project Build Setup</a></li>
-<li class="level1"><a href="#autotoc_md822">Running the Precompiled Program</a></li>
-<li class="level1"><a href="#autotoc_md823">Key &amp; Code Provisioning</a></li>
-<li class="level1"><a href="#autotoc_md824">Flash Programmer Supported Parameters</a></li>
-<li class="level1"><a href="#autotoc_md825">Flash Programmer Operations</a></li>
-<li class="level1"><a href="#autotoc_md826">Generating Combined Image with X.509 Certificate</a></li>
-<li class="level1"><a href="#autotoc_md827">API usage</a></li>
+<ul><li class="level1"><a href="#autotoc_md892">Introduction</a></li>
+<li class="level1"><a href="#autotoc_md893">Project Build Setup</a></li>
+<li class="level1"><a href="#autotoc_md894">Running the Precompiled Program</a></li>
+<li class="level1"><a href="#autotoc_md895">Key &amp; Code Provisioning</a></li>
+<li class="level1"><a href="#autotoc_md896">Flash Programmer Supported Parameters</a></li>
+<li class="level1"><a href="#autotoc_md897">Flash Programmer Operations</a></li>
+<li class="level1"><a href="#autotoc_md898">Generating Combined Image with X.509 Certificate</a></li>
+<li class="level1"><a href="#autotoc_md899">Changelog</a></li>
+<li class="level1"><a href="#autotoc_md900">API usage</a></li>
 </ul>
 </div>
 <div class="textblock"><p><a class="anchor" id="md_components_tools_uart_flash_programmer"></a></p>
 <p>Texas Instruments F29x UART Flash Programmer CLI Example Package</p>
-<h1><a class="anchor" id="autotoc_md820"></a>
+<h1><a class="anchor" id="autotoc_md892"></a>
 Introduction</h1>
 <p>This page provides a brief rundown of the F29x UART Flash Programmer CLI tool that can be ran in host PC and to be interfaced with BootROM/UART flash kernel on the target device. <br  />
  </p><dl class="section attention"><dt>Attention</dt><dd>For more information, please see Application Note on <a href="https://www.ti.com/lit/pdf/spradn0" target="_blank"><b>Serial Flash Programming for F29x Device</b></a>.</dd></dl>
-<h1><a class="anchor" id="autotoc_md821"></a>
+<h1><a class="anchor" id="autotoc_md893"></a>
 Project Build Setup</h1>
 <p>Two methods are provided to build and compile the project</p>
 <ul>
@@ -134,7 +135,7 @@ Project Build Setup</h1>
 </ul>
 </li>
 </ul>
-<h1><a class="anchor" id="autotoc_md822"></a>
+<h1><a class="anchor" id="autotoc_md894"></a>
 Running the Precompiled Program</h1>
 <p>Two precompiled executable were provided for this example:</p><ul>
 <li>uart_flash_programmer.exe (x86_64)<ul>
@@ -155,12 +156,12 @@ Running the Precompiled Program</h1>
 </li>
 </ul>
 <p>For linux users, it is advised to run <code>build_cmake.sh</code> in order to generate an executable with ease. The default source code defines the macro "KERNEL" so the program is identical to uart_flash_programmer.exe, undefine the macro if user wants to bypass the kernel analogous to uart_flash_programmer_appIn.exe.</p>
-<h1><a class="anchor" id="autotoc_md823"></a>
+<h1><a class="anchor" id="autotoc_md895"></a>
 Key &amp; Code Provisioning</h1>
 <p>By default, any out-of-box device comes with HS-FS (High Security - Field Securable) security governor. Where operations like DFU are permitted without HSM (hardware security module) authentication. In order to upgrade the device to HS-KP (High Security - Key Provision, an intermediate step prior to HS-SE) or HS-SE (High Security - Security Enabled), one must flashs the device through processes known as Key &amp; Code Provision.</p>
 <p>In Key Provision, user would be able to replace TI-provided keys with its custom keys for future HSM authentications. And with any subsequent programming operations in flash using the new custom key in forms of X.509 certificate, it'll upgrade the device into HS-KP. The uart flash programmer has the support for Key &amp; Code Provisioning as part of the operation options.</p>
 <dl class="section note"><dt>Note</dt><dd>For more information regarding HSM, security governors, and the provisioning flows in detail, please request for the restricted security package under the same TI download page as F29H85X-SDK for F29H85x.</dd></dl>
-<h1><a class="anchor" id="autotoc_md824"></a>
+<h1><a class="anchor" id="autotoc_md896"></a>
 Flash Programmer Supported Parameters</h1>
 <div class="fragment"><div class="line">Syntax:</div>
 <div class="line">uart_flash_programmer.exe -d f29h85x -p &lt;COM/tty Port&gt; -k &lt;uart kernel image&gt;.bin </div>
@@ -174,14 +175,16 @@ Flash Programmer Supported Parameters</h1>
                                 (f29h85x)
     -p, --port   &lt;port&gt;       - Serial COM/tty port used for UART communication.
                                 (port format: COM&lt;num&gt;, /dev/ttyUSB&lt;num&gt;, /dev/ttyACM&lt;num&gt;)
-    -k, --kernel    &lt;file&gt;    - File path for uart flash kernel
-    -a, --appcpu1   &lt;file&gt;    - File path for Flash-based C29 CPU1 application image (HS-FS Only)
-    -r, --hsmrt     &lt;file&gt;    - File path for RAM-based HSM runtime (HSMRt) image    (Prerequisite for KP &amp; CP)
-    -f, --hsmkeys   &lt;file&gt;    - File path for HSM keys image                         (HS-KP key provision)
-    -t, --cpappcpu1 &lt;file&gt;    - File path for Flash-based CPU1 application image     (HS-SE code provision)
-    -g, --cpapphsm  &lt;file&gt;    - File path for Flash-based HSM application image      (HS-SE code provision)
-    -s, --cpseccfg  &lt;file&gt;    - File path for Sec Cfg program image                  (HS-SE code provision)
-    -e, --entryaddr &lt;hex_num&gt; - (optional) Override entry address of the C29 CPU1 application
+    -k,  --kernel    &lt;file&gt;    - File path for uart flash kernel
+    -a1, --appcpu1   &lt;file&gt;    - File path for Flash-based C29 CPU1 application image (HS-FS Only)
+    -a3, --appcpu3   &lt;file&gt;    - File path for Flash-based C29 CPU3 application image (HS-FS Only)
+    -sr, --hsmrt     &lt;file&gt;    - File path for RAM-based HSM runtime (HSMRt) image    (Prerequisite for KP &amp; CP)
+    -sk, --hsmkeys   &lt;file&gt;    - File path for HSM keys image                         (HS-KP key provision)
+    -s1, --cpappcpu1 &lt;file&gt;    - File path for Flash-based CPU1 application image     (HS-SE code provision)
+    -s3, --cpappcpu3 &lt;file&gt;    - File path for Flash-based C29 CPU3 application image (HS-SE code provision)
+    -sh, --cpapphsm  &lt;file&gt;    - File path for Flash-based HSM application image      (HS-SE code provision)
+    -sc, --cpseccfg  &lt;file&gt;    - File path for Sec Cfg program image                  (HS-SE code provision)
+    -e1, --entryaddr &lt;hex_num&gt; - (optional) Override entry address of the C29 CPU1 application
 
     Note: -d, -p, -k are mandatory parameters.
     Note: Images must be in the binary format and includes an X.509 certificate.
@@ -192,48 +195,60 @@ Flash Programmer Supported Parameters</h1>
     -w               - Wait on keypress before exiting
 
     Syntax: -d f29h85x -p COM41 -k ex3_uart_flash_kernel.bin --appcpu1 c29_cpu1_application.bin --entryaddr 10001000 --hsmrt HSM_runtimeImage.bin --hsmkeys HSM_customKeyCert.bin --cpseccfg sec_cfg_cert.bin --cpappcpu1 c29_cpu1_application.bin -cpapphsm hsm_application.bin -l output.log
-</pre> <h1><a class="anchor" id="autotoc_md825"></a>
+</pre> <h1><a class="anchor" id="autotoc_md897"></a>
 Flash Programmer Operations</h1>
 <p>After running uart_flash_programmer.exe, the host will immediately start sending the flash kernel image to the device and proceeds to boot the flash kernel in CPU1. Once successfully programmed to RAM, user will be prompted with the following options:</p>
 <ol type="1">
 <li>DFU CPU1<ul>
 <li>Only valid if device is in HS-FS state</li>
 <li>If selected, host will send the C29 CPU1 Flash-based application image to the device</li>
-<li>Mandatory parameter: -a (&ndash;appcpu1)</li>
-<li>Note: any unused flash sections on the application image should be filled with 0xFF (logic 0), otherwise the image will be filled with 0s and subsequently programmed to flash<ul>
-<li>linker example: <code>FLASH_RP0 : o=0x10000030, l=0x100000, FILL(0xFF)</code></li>
+<li>Mandatory parameter: -a1 (&ndash;appcpu1)</li>
+<li></li>
 </ul>
 </li>
+<li>DFU CPU3<ul>
+<li>Only valid if device is in HS-FS state</li>
+<li>If selected, host will send the C29 CPU3 Flash-based application image to the device</li>
+<li>Mandatory parameter: -a3 (&ndash;appcpu3)</li>
+<li>Note: any unused flash sections on the application image should be filled with 0xFF (logic 0), otherwise the image will be filled with 0s and subsequently programmed to flash</li>
 </ul>
 </li>
 <li>Load HSMRt Image<ul>
 <li>This step is the prerequisite for the rest of Key Provision &amp; Code Provision flow</li>
 <li>If selected, host will send a RAM-based HSMRt image to the device and subsequently boot up the runtime (SBL) image in HSM.</li>
-<li>Mandatory parameter: -r (&ndash;hsmrt)</li>
+<li>Mandatory parameter: -sr (&ndash;hsmrt)</li>
 </ul>
 </li>
 <li>Load HSM Key<ul>
 <li>This step is to transition the device into HS-KP by supplying a user HSM key</li>
 <li>If selected, host will send the custom keys to the device's HSM and transition into HS-KP upon success.</li>
-<li>Mandatory parameter: -f (&ndash;hsmkeys)</li>
+<li>Mandatory parameter: -sk (&ndash;hsmkeys)</li>
 </ul>
 </li>
 <li>Program Sec Cfg<ul>
 <li>Device must be in HS-KP or HS-SE</li>
 <li>If selected, host will send the image to program Sec Cfg sections. If the device is in HS-KP, it'll be transitioned into HS-SE upon success.</li>
-<li>Mandatory parameter: -s (&ndash;cpseccfg)</li>
+<li>Mandatory parameter: -sc (&ndash;cpseccfg)</li>
 </ul>
 </li>
 <li>Load HSM Image<ul>
 <li>Device must be in HS-KP or HS-SE</li>
 <li>If selected, host will send the Flash-based HSM application image. If the device is in HS-KP, it'll be transitioned into HS-SE upon success.</li>
-<li>Mandatory parameter: -g (&ndash;cpapphsm)</li>
+<li>Mandatory parameter: -sh (&ndash;cpapphsm)</li>
 </ul>
 </li>
 <li>Load C29 CPU1 Image<ul>
 <li>Device must be in HS-KP or HS-SE</li>
 <li>If selected, host will send the Flash-based CPU1 application image. If the device is in HS-KP, it'll be transitioned into HS-SE upon success.</li>
-<li>Mandatory parameter: -t (&ndash;cpappcpu1)</li>
+<li>Mandatory parameter: -s1 (&ndash;cpappcpu1)</li>
+</ul>
+</li>
+</ol>
+<ol type="1">
+<li>Load C29 CPU3 Image<ul>
+<li>Device must be in HS-KP or HS-SE</li>
+<li>If selected, host will send the Flash-based CPU3 application image. If the device is in HS-KP, it'll be transitioned into HS-SE upon success.</li>
+<li>Mandatory parameter: -s3 (&ndash;cpappcpu3)</li>
 </ul>
 </li>
 <li>Run CPU1<ul>
@@ -241,6 +256,13 @@ Flash Programmer Operations</h1>
 <li>Optional parameter: -e &ndash;entryaddr</li>
 </ul>
 </li>
+<li>Run CPU3<ul>
+<li>If selected, CPU3 will either branch to the default entry address or to an alternate entry address if -e (&ndash;entryaddr) is provided.</li>
+<li>Optional parameter: -e &ndash;entryaddr</li>
+</ul>
+</li>
+</ol>
+<ol type="1">
 <li>Reset CPU1<ul>
 <li>If selected, CPU1 will invoke watchdog timer and reset the CPU.</li>
 </ul>
@@ -250,14 +272,28 @@ Flash Programmer Operations</h1>
 </ul>
 </li>
 </ol>
-<h1><a class="anchor" id="autotoc_md826"></a>
+<h1><a class="anchor" id="autotoc_md898"></a>
 Generating Combined Image with X.509 Certificate</h1>
 <p>All images (application, kernel) must be in binary format and be combined with a X.509 certificate in order to be validated by HSM and subsequently load into the device. If the certificate on the image is invalid, the image download will be halted. On the host programmer, this would result in an abrupt stop shortly after 4096 Bytes of reception.</p>
 <p>To generate the combined image with X.509 certificate, please refer to the post-build steps in the flash kernel example (located in examples/driverlib/single_core/flash/uart_flash_kernel)</p><ul>
 <li>In CCS-theia/CCS 12.20+, Post-build steps can be found under (Project) Properties-&gt;Build-&gt;Steps</li>
 </ul>
 <p>Please note that the default post-build step uses TI-provided keys which is only applicable to authenticate HS-FS device, for devices in or transition to HS-KP and HS-SE, please supply a custom key that will be used by HSM for authentication moving forward.</p>
-<h1><a class="anchor" id="autotoc_md827"></a>
+<h1><a class="anchor" id="autotoc_md899"></a>
+Changelog</h1>
+<p>Shown below lists all the software revision history for the uart flash programmer:</p>
+<table class="doxtable">
+<tr>
+<th>Software Version </th><th>SDK Release </th><th>Changelog  </th></tr>
+<tr>
+<td>v1.00.00 </td><td>1.00.00.00 </td><td>First release, in F29H85X-SDK   </td></tr>
+<tr>
+<td>v1.01.00 </td><td>1.01.00.00 </td><td>Enhancements:<ul>
+<li>Added cpu3 support   </li>
+</ul>
+</td></tr>
+</table>
+<h1><a class="anchor" id="autotoc_md900"></a>
 API usage</h1>
 <p><a class="el" href="group__uart__flash__programmer__api.html">APIs for Uart Flash Programmer</a> </p>
 </div></div><!-- contents -->

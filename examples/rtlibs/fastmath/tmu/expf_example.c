@@ -115,6 +115,8 @@ int32_t main(void)
     printf("Completed expf test Pass_count = %d, Fail_count = %d \n", pass, fail);
     printf("expf with RTS Cycles = %d, Timer overhead = %d \n", differenceCounter_rts/INPUT_SIZE, overheadCounter);
     printf("expf with TMU Cycles = %d, Timer overhead = %d \n", differenceCounter_tmu/INPUT_SIZE, overheadCounter);
+    while(1)
+    {}
 }
 
 // End of File

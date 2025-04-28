@@ -21,15 +21,31 @@ else
 endif
 
 ifeq ($(CCS_HOST_OS),win32)
-    CPU2APP_REL_PATH    := ..\\..\\cpu2App.bin
-    CPU3APP_REL_PATH    := ..\\..\\cpu3App.bin ..\\..\\cpu3App.cert.bin
-    SECCFGCPU3_REL_PATH := ..\\..\\seccfgCpu3.bin
-    SECCFGCPU2_REL_PATH := ..\\..\\seccfgCpu2.bin
+    CPU2APP_REL_PATH        := ..\\..\\cpu2App.bin
+    CPU3APP_PATH            := ..\\..\\cpu3App.bin
+    CPU3APP_REL_PATH        := ..\\..\\cpu3App.bin ..\\..\\cpu3App.cert.bin
+    CPU3APP_CERT_REL_PATH   := ..\\..\\cpu3App.cert.bin
+    SECCFGCPU3_REL_PATH     := ..\\..\\seccfgCpu3.bin
+    SECCFGCPU2_REL_PATH     := ..\\..\\seccfgCpu2.bin
+    DUMMY_CERT_RAM          := ..\\dummy_cert_ram.cert
+    DUMMY_CERT_FLASH        := ..\\dummy_cert_flash.cert
+    DUMMY_CERT_FLASH_CPU3   := ..\\dummy_cert_flash_cpu3.cert
+    UPDATEDUMMYCERT         := updateDummyCert.exe
+    UPDATESYSCFG            := updateSysCfg.exe
+    CONCAT                  := type
 else
-    CPU2APP_REL_PATH    := ../../cpu2App.bin
-    CPU3APP_REL_PATH    := ../../cpu3App.bin ../../cpu3App.cert.bin
-    SECCFGCPU3_REL_PATH := ../../seccfgCpu3.bin
-    SECCFGCPU2_REL_PATH := ../../seccfgCpu2.bin
+    CPU2APP_REL_PATH        := ../../cpu2App.bin
+    CPU3APP_PATH            := ../../cpu3App.bin
+    CPU3APP_REL_PATH        := ../../cpu3App.bin ../../cpu3App.cert.bin
+    CPU3APP_CERT_REL_PATH   := ../../cpu3App.cert.bin
+    SECCFGCPU3_REL_PATH     := ../../seccfgCpu3.bin
+    SECCFGCPU2_REL_PATH     := ../../seccfgCpu2.bin
+    DUMMY_CERT_RAM          := ../dummy_cert_ram.cert
+    DUMMY_CERT_FLASH        := ../dummy_cert_flash.cert
+    DUMMY_CERT_FLASH_CPU3   := ../dummy_cert_flash_cpu3.cert
+    UPDATEDUMMYCERT         := updateDummyCert.bin
+    UPDATESYSCFG            := updateSysCfg.bin
+    CONCAT                  := cat
 endif
 
 ifeq ($(CCS_HOST_OS),win32)

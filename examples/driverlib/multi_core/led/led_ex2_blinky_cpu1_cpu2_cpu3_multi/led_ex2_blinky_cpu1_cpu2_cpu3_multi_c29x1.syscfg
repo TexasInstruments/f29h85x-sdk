@@ -22,6 +22,7 @@ const gpio  = scripting.addModule("/driverlib/gpio.js", {}, false);
 const gpio1 = gpio.addInstance();
 const gpio2 = gpio.addInstance();
 const jtag  = scripting.addModule("/driverlib/jtag.js");
+const sysctl = scripting.addModule("/driverlib/sysctl.js");
 
 /**
  * Write custom configuration values to the imported modules.
@@ -37,6 +38,7 @@ gpio2.direction      = "GPIO_DIR_MODE_OUT";
 gpio2.controllerCore = "GPIO_CORE_CPU3";
 gpio2.gpioPin.$assign = "GPIO23";
 
+sysctl.LSConfig = "SplitLock";
 
 /**
  * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future

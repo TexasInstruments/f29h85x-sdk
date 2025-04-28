@@ -19,27 +19,26 @@ var group__DRV__HSMCLIENT__MODULE =
       [ "RespFlag", "structHsmClient__t.html#aca5698f283bb2661ff38e9350d973278", null ],
       [ "ClientId", "structHsmClient__t.html#ae827a9b61005b18ad00ff52186663ec0", null ]
     ] ],
-    [ "EfuseRead_t", "structEfuseRead__t.html", [
-      [ "rowData", "structEfuseRead__t.html#a5d9a201f7277e94a04bf0c201acbf2e7", null ],
-      [ "rowIdx", "structEfuseRead__t.html#a2642739d5b086817a91f8022af5bc05e", null ],
-      [ "rsvd", "structEfuseRead__t.html#a2fdb953bcb11b0a62cc7424bd71ecd6c", null ]
+    [ "NvmOtpRead_t", "structNvmOtpRead__t.html", [
+      [ "rowData", "structNvmOtpRead__t.html#a571eb786ba88a2d052c831bac3f5bcd9", null ],
+      [ "rowIdx", "structNvmOtpRead__t.html#a2a95199e7ce2f4a3dc0e1c4e6bd10e00", null ],
+      [ "rsvd", "structNvmOtpRead__t.html#a353803d37077762c61e623b50b789ab1", null ]
     ] ],
-    [ "EfuseRowWrite_t", "structEfuseRowWrite__t.html", [
-      [ "rowData", "structEfuseRowWrite__t.html#a7bb73b7c2df2ac5fc06b6e859f766b40", null ],
-      [ "rowBitMask", "structEfuseRowWrite__t.html#a3f0d17218008d71035a0a4315c0bde8a", null ],
-      [ "rowIdx", "structEfuseRowWrite__t.html#aec06d668914aefebcd9bf2a06f74e486", null ],
-      [ "rsvd", "structEfuseRowWrite__t.html#a9682f3791f8980b8597837f57f18527a", null ]
+    [ "NvmOtpRowWrite_t", "structNvmOtpRowWrite__t.html", [
+      [ "rowData", "structNvmOtpRowWrite__t.html#aa9235b996bd0e62cf8747898d8e2e32d", null ],
+      [ "rowBitMask", "structNvmOtpRowWrite__t.html#a48a28ba607d5da273a433ec353dfd6d1", null ],
+      [ "rowIdx", "structNvmOtpRowWrite__t.html#acc2d3fdf546814e4a6eb21834a430872", null ],
+      [ "rsvd", "structNvmOtpRowWrite__t.html#a9fead7996007ae34ef4b63f212fd9728", null ]
     ] ],
-    [ "EfuseRowCount_t", "structEfuseRowCount__t.html", [
-      [ "rowCount", "structEfuseRowCount__t.html#abbe95eac3f05ad20803682ea3fb7c051", null ],
-      [ "rowSize", "structEfuseRowCount__t.html#abae2bd45773ba178bad9e2b814e781ac", null ],
-      [ "rsvd", "structEfuseRowCount__t.html#a85488e09d7e2752fe522915d2aa54ef5", null ]
+    [ "NvmOtpRowCount_t", "structNvmOtpRowCount__t.html", [
+      [ "rowCount", "structNvmOtpRowCount__t.html#a8119948c52eecdc11c7309ba8d0fcb55", null ],
+      [ "rowSize", "structNvmOtpRowCount__t.html#a5b8fbe952a36f539af19e9538623bc0d", null ],
+      [ "rsvd", "structNvmOtpRowCount__t.html#a984bfff2d473d11a02b346e71e9f6260", null ]
     ] ],
-    [ "EfuseRowProt_t", "structEfuseRowProt__t.html", [
-      [ "rowidx", "structEfuseRowProt__t.html#a44150fe26f87b8f1ce99c3fb25c15b8b", null ],
-      [ "readProt", "structEfuseRowProt__t.html#aa12681bfb04669656973f28a0f623d1f", null ],
-      [ "writeProt", "structEfuseRowProt__t.html#a2102e72397ed60b42c64f26f7e91d493", null ],
-      [ "rsvd", "structEfuseRowProt__t.html#a0ebcdedddd545ea4257678b0f7d39112", null ]
+    [ "NvmOtpRowProt_t", "structNvmOtpRowProt__t.html", [
+      [ "rowidx", "structNvmOtpRowProt__t.html#a53d250b1fc167e82203155255613ca74", null ],
+      [ "readProt", "structNvmOtpRowProt__t.html#a7c5a7992c5966cc1c9d8fd86556783d9", null ],
+      [ "writeProt", "structNvmOtpRowProt__t.html#a715daa763ddb8c86296ebfa89737599b", null ]
     ] ],
     [ "KeyWriterCertHeader_t", "structKeyWriterCertHeader__t.html", [
       [ "certAddress", "structKeyWriterCertHeader__t.html#ae9b90a224e0f7a5529d517f530dbe9bc", null ],
@@ -96,6 +95,36 @@ var group__DRV__HSMCLIENT__MODULE =
       [ "dataLength", "structFirmwareUpdateReq__t.html#a1e35264b745dbd898621ac266168e101", null ],
       [ "bankMode", "structFirmwareUpdateReq__t.html#a1585c4ce4bca3e295f35a9ffd09fece9", null ]
     ] ],
+    [ "OTFA_Region_t", "structOTFA__Region__t.html", [
+      [ "authMode", "structOTFA__Region__t.html#a236b3066e5cde785b75cf16ad3b7455c", null ],
+      [ "encMode", "structOTFA__Region__t.html#a1435efd6cd94f12f15ab7abd82d5f6b1", null ],
+      [ "reservedArea", "structOTFA__Region__t.html#ae6c243b1ea673231a1b8d9cd3521e410", null ],
+      [ "regionStAddr", "structOTFA__Region__t.html#ae914583d5d1205e1321af285377606ad", null ],
+      [ "regionSize", "structOTFA__Region__t.html#a8d6ffb1fbb7f52f5032522729474d0ca", null ],
+      [ "authKeyID", "structOTFA__Region__t.html#ac7ff83d7afd98fdb743dda899850b126", null ],
+      [ "encrKeyID", "structOTFA__Region__t.html#ac421959f3c07dde1bfd0dc27887961fa", null ],
+      [ "encrKeyFetchMode", "structOTFA__Region__t.html#aa4d71b5db9af35fc8fdf5623d6cbe064", null ],
+      [ "authAesKey", "structOTFA__Region__t.html#a1c5d1c86503c7f6a134d5b141ea9b2c9", null ],
+      [ "encrAesKey", "structOTFA__Region__t.html#a7cdd18580fb63bba643053b27ff7e276", null ],
+      [ "regionIV", "structOTFA__Region__t.html#a4fb86253339968bc95bece68df15903a", null ]
+    ] ],
+    [ "OTFA_readRegion_t", "structOTFA__readRegion__t.html", [
+      [ "regionNumber", "structOTFA__readRegion__t.html#a9dec6bef5a644ca08d5749f07783150c", null ],
+      [ "authMode", "structOTFA__readRegion__t.html#a5c1192a6b2c9ef5c02d9769a021bb20e", null ],
+      [ "encMode", "structOTFA__readRegion__t.html#a8cbb6fffd6fd74732439da5405b9cd52", null ],
+      [ "authKeyHash", "structOTFA__readRegion__t.html#a9d96af01f19f729a7003945c44a32a54", null ],
+      [ "encKeyHash", "structOTFA__readRegion__t.html#ad329051e95175f465497f2b687f772ca", null ],
+      [ "regionStAddr", "structOTFA__readRegion__t.html#a18f23ccdc1ca0fb33eda6667ee23425f", null ],
+      [ "regionSize", "structOTFA__readRegion__t.html#ae674ff28d6e5c20d6cc2d5a32c4b5c58", null ],
+      [ "regionIV", "structOTFA__readRegion__t.html#aa9fd572011ce72c62e9b9c55f515f3ec", null ]
+    ] ],
+    [ "OTFA_Config_t", "structOTFA__Config__t.html", [
+      [ "OTFA_Reg", "structOTFA__Config__t.html#af0af656c74b9d1d3eb6c5243c9421efc", null ],
+      [ "numRegions", "structOTFA__Config__t.html#ac57d9ff49cbb848e026bf4a518dcd262", null ],
+      [ "keySize", "structOTFA__Config__t.html#aae9b1fe56ace4712160ea79238b203a3", null ],
+      [ "macSize", "structOTFA__Config__t.html#a523e667f9c6cef57b463c68a74b5239c", null ],
+      [ "masterEnable", "structOTFA__Config__t.html#a278cf42eedc223b75bc24988de8242d2", null ]
+    ] ],
     [ "HsmMsg_t_", "structHsmMsg__t__.html", [
       [ "destClientId", "structHsmMsg__t__.html#af7693475522e1a00bad5144d3369373e", null ],
       [ "srcClientId", "structHsmMsg__t__.html#aa2fad9ffe66fecc74ef1ec07402e7993", null ],
@@ -134,6 +163,10 @@ var group__DRV__HSMCLIENT__MODULE =
     [ "HSM_MSG_FW_UPDATE_CERT_PROCESS", "group__DRV__HSMCLIENT__MODULE.html#ga2e90671f1c2eab08c262f9c8f6a3c0b2", null ],
     [ "HSM_MSG_FW_UPDATE_CODE_PROGRAM", "group__DRV__HSMCLIENT__MODULE.html#ga6fc0516fd1fd7d27371ed347c0cd4793", null ],
     [ "HSM_MSG_FW_UPDATE_CODE_VERIFY", "group__DRV__HSMCLIENT__MODULE.html#gaf4083171109dd06124c9e017cd3b48e7", null ],
+    [ "HSM_MSG_VERIFY_ROT_CERT", "group__DRV__HSMCLIENT__MODULE.html#gab744690a05eb6b161e2e12cdb5e1e624", null ],
+    [ "HSM_MSG_UPDATE_KEY_REV", "group__DRV__HSMCLIENT__MODULE.html#ga084b34edef554076dbfb4b91ee88ccad", null ],
+    [ "HSM_MSG_CONFIGURE_OTFA", "group__DRV__HSMCLIENT__MODULE.html#ga8a621825ddd676ee8ad7a2a365d91c75", null ],
+    [ "HSM_MSG_READ_OTFA", "group__DRV__HSMCLIENT__MODULE.html#ga23d267eaff2aca3dc800e6944ff9b1dd", null ],
     [ "HSM_FLAG_AOP", "group__DRV__HSMCLIENT__MODULE.html#ga0842e3d812796be34207849e8dc8dc3a", null ],
     [ "HSM_FLAG_NAOP", "group__DRV__HSMCLIENT__MODULE.html#ga5f0c48b13ab8d657a61ff359466f16e8", null ],
     [ "HSM_FLAG_ACK", "group__DRV__HSMCLIENT__MODULE.html#gae54cfaab6d2e23b938c84ac9979ad5c3", null ],
@@ -154,15 +187,16 @@ var group__DRV__HSMCLIENT__MODULE =
     [ "HsmClient_checkAndWaitForBootNotification", "group__DRV__HSMCLIENT__MODULE.html#gadf502ebd6e67f563777ec1345822cdb3", null ],
     [ "HsmClient_init", "group__DRV__HSMCLIENT__MODULE.html#ga3b55ad3229c657ca509f9b29451e37e5", null ],
     [ "HsmClient_deInit", "group__DRV__HSMCLIENT__MODULE.html#gae44cff19b801c9299bac8eaaea14c88d", null ],
+    [ "HsmClient_SecureBootQueueInit", "group__DRV__HSMCLIENT__MODULE.html#ga56b1b7c7c3aa0dbc595b196c63520357", null ],
     [ "HsmClient_getVersion", "group__DRV__HSMCLIENT__MODULE.html#ga70b2b53821f5782e083984e34df972b7", null ],
     [ "HsmClient_getUID", "group__DRV__HSMCLIENT__MODULE.html#gad9f5c4c23d11b16ef7ff0eb03a7fa740", null ],
     [ "HsmClient_openDbgFirewall", "group__DRV__HSMCLIENT__MODULE.html#ga3746ff39aab53e9aa4ed690a7dd33b15", null ],
     [ "HsmClient_importKeyring", "group__DRV__HSMCLIENT__MODULE.html#ga44bd1d6da427b7614a34969d2ef5ec17", null ],
-    [ "HsmClient_readOTPRow", "group__DRV__HSMCLIENT__MODULE.html#ga5130fcb75f1250880f48c4294bac706c", null ],
-    [ "HsmClient_writeOTPRow", "group__DRV__HSMCLIENT__MODULE.html#ga29aa1dd1f15e7d038bec257ec916ea8d", null ],
-    [ "HsmClient_lockOTPRow", "group__DRV__HSMCLIENT__MODULE.html#ga7960519eeac66f9fbe300d8d1c3b02cf", null ],
-    [ "HsmClient_getOTPRowCount", "group__DRV__HSMCLIENT__MODULE.html#gae1ad70f4ef9597ea874869df933b4d6a", null ],
-    [ "HsmClient_getOTPRowProtection", "group__DRV__HSMCLIENT__MODULE.html#gad830e0858457a98e4f281b4e212b4232", null ],
+    [ "HsmClient_readOTPRow", "group__DRV__HSMCLIENT__MODULE.html#gace3361fd0f3fc438e9b7e0a1acfe2122", null ],
+    [ "HsmClient_writeOTPRow", "group__DRV__HSMCLIENT__MODULE.html#ga96f53cf958e70929245d0f21e10f038e", null ],
+    [ "HsmClient_lockOTPRow", "group__DRV__HSMCLIENT__MODULE.html#gab43e961650612c91157c0587b3d2746f", null ],
+    [ "HsmClient_getOTPRowCount", "group__DRV__HSMCLIENT__MODULE.html#gae625624727a8de14944f65d25fececd5", null ],
+    [ "HsmClient_getOTPRowProtection", "group__DRV__HSMCLIENT__MODULE.html#gaca8f5f005b283ec144d9e178b12388ca", null ],
     [ "HsmClient_procAuthBoot", "group__DRV__HSMCLIENT__MODULE.html#ga210471c61013f15ddf77447071a5b0c2", null ],
     [ "HsmClient_procAuthBootStart", "group__DRV__HSMCLIENT__MODULE.html#gaf7d1b7f1f395db8af308fc8bfc723262", null ],
     [ "HsmClient_procAuthBootUpdate", "group__DRV__HSMCLIENT__MODULE.html#gaf2f86243a283d118581e6aadfbfc1a38", null ],
@@ -181,5 +215,9 @@ var group__DRV__HSMCLIENT__MODULE =
     [ "HsmClient_getRandomNum", "group__DRV__HSMCLIENT__MODULE.html#ga8748595521349c269558061b568f3acd", null ],
     [ "HsmClient_firmwareUpdate_CertProcess", "group__DRV__HSMCLIENT__MODULE.html#ga7e11bffb33e2a74e2380ebc3161a33e9", null ],
     [ "HsmClient_firmwareUpdate_CodeProgram", "group__DRV__HSMCLIENT__MODULE.html#ga5dcdae29f13a16b7d685d945f6fcb42a", null ],
-    [ "HsmClient_firmwareUpdate_CodeVerify", "group__DRV__HSMCLIENT__MODULE.html#ga607526aad2aa236e8227e9c0f20fcd5c", null ]
+    [ "HsmClient_firmwareUpdate_CodeVerify", "group__DRV__HSMCLIENT__MODULE.html#ga607526aad2aa236e8227e9c0f20fcd5c", null ],
+    [ "HsmClient_VerifyROTSwitchingCertificate", "group__DRV__HSMCLIENT__MODULE.html#ga1ffcf953c8b05aabe050f14f0919fd23", null ],
+    [ "HsmClient_UpdateKeyRevsion", "group__DRV__HSMCLIENT__MODULE.html#ga530b1603d591126ac346c31f30414f7d", null ],
+    [ "HsmClient_configOTFARegions", "group__DRV__HSMCLIENT__MODULE.html#ga5ea570bc441bb6c6a9dff879b0600e27", null ],
+    [ "HsmClient_readOTFARegions", "group__DRV__HSMCLIENT__MODULE.html#gae655894963d794110ea5de532102ef64", null ]
 ];

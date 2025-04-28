@@ -6,6 +6,9 @@
 
 #include "dcl_df22.h"
 
+volatile const uint32_t testSize = NUM_ELEMENTS; 
+int errors = 0;
+
 //
 // ek = Servo error value
 // uk = Output control effort
@@ -20,7 +23,8 @@ uint32_t endCounter = 0;
 uint32_t overheadCount = 0;
 uint32_t totalCount = 0;
 
-int main(void) {
+int main(void) 
+{
   // Timer configured in Sysconfig (Period set to 10s)
   Board_init();
 
@@ -35,12 +39,15 @@ int main(void) {
 
   DF22_runTest(df22_controller);
 
-  uint32_t avgCount = totalCount / NUM_ELEMENTS;
+  uint32_t avgCount = totalCount / testSize;
   printf("DCL DF22 total cycles = %d\nDCL DF22 average cycles = %d\n",
          totalCount, avgCount);
+  while(1)
+  {}
 }
 
-int DF22_runTest(DCL_DF22 *ctrl_handle) {
+int DF22_runTest(DCL_DF22 *ctrl_handle) 
+{
   //
   // Define DFLOG pointers that will be used to access the data buffer
   //
@@ -55,8 +62,8 @@ int DF22_runTest(DCL_DF22 *ctrl_handle) {
   DCL_initLog(&ctlBuf, (float32_t *)ctl_buffer, DATA_LENGTH);
   DCL_clearLog(&outBuf);
 
-  int i;
-  for (i = 0; i < NUM_ELEMENTS; i++) {
+  for (int i = 0; i < testSize; i++) 
+  {
     //
     // Read the input data buffers
     //
@@ -95,11 +102,12 @@ int DF22_runTest(DCL_DF22 *ctrl_handle) {
   //
   // Check output against reference output with tolerance
   //
-  int errors = 0;
-  for (i = 0; i < NUM_ELEMENTS; i++) {
+  for (int i = 0; i < testSize; i++) 
+  {
     float32_t output = DCL_readLog(&outBuf);   // out_buffer[i]
     float32_t expected = DCL_readLog(&ctlBuf); // ctl_buffer[i]
-    if (!DCL_isZero(output - expected)) {
+    if (!DCL_isZero(output - expected)) 
+    {
       errors++;
 
       printf("FAIL at sample %d, outputs %f, should be %f\n", i, output,

@@ -361,6 +361,8 @@ int main(void)
     #endif
     
     printf("IQmath example complete\n");
+    while(1)
+    {}
     
 
 }

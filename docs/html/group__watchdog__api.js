@@ -30,18 +30,6 @@ var group__watchdog__api =
       [ "SYSCTL_WD_PRESCALE_32", "group__watchdog__api.html#ggaad355f0335e50fd3157277781b3a432ca0e33debe85f1d26871aec8fc7b228520", null ],
       [ "SYSCTL_WD_PRESCALE_64", "group__watchdog__api.html#ggaad355f0335e50fd3157277781b3a432caed1467ca008366209fca1f67c3dc497a", null ]
     ] ],
-    [ "SysCtl_setWatchdogMode", "group__watchdog__api.html#gace6f1e8796fc7be153dfd3024c36b8cf", null ],
-    [ "SysCtl_isWatchdogInterruptActive", "group__watchdog__api.html#gae94262ac78a6baab8080987f2da40637", null ],
-    [ "SysCtl_disableWatchdog", "group__watchdog__api.html#ga09d8ef03c43a6f4f98cbd2c9f0e949ca", null ],
-    [ "SysCtl_enableWatchdog", "group__watchdog__api.html#gae4c4ce93ddb47fc8604a931bbc499151", null ],
-    [ "SysCtl_serviceWatchdog", "group__watchdog__api.html#ga9748f435e7f7427a097bada323c112df", null ],
-    [ "SysCtl_enableWatchdogReset", "group__watchdog__api.html#gafd72aa81a6100876ef32b7362a1bea36", null ],
-    [ "SysCtl_resetWatchdog", "group__watchdog__api.html#ga7dfa6c17e175a296c770a674df577528", null ],
-    [ "SysCtl_setWatchdogPredivider", "group__watchdog__api.html#gac359009ec34b621e28b234b1d46c403f", null ],
-    [ "SysCtl_setWatchdogPrescaler", "group__watchdog__api.html#gaddfa7f6f3265d168e23211705b869974", null ],
-    [ "SysCtl_getWatchdogCounterValue", "group__watchdog__api.html#ga61e6f9926383a2b36699e011ed06ba55", null ],
-    [ "SysCtl_getWatchdogResetStatus", "group__watchdog__api.html#gae1f8d2eaf2c1f80b25915eb64bfd0aba", null ],
-    [ "SysCtl_clearWatchdogResetStatus", "group__watchdog__api.html#ga0a4a1330c101f92d54457581bbdf00c1", null ],
-    [ "SysCtl_setWatchdogWindowValue", "group__watchdog__api.html#ga6a8bcbbbe055d27660ec05a245061416", null ],
-    [ "SysCtl_clearWatchdogOverride", "group__watchdog__api.html#gaf6595bb219f9a79bfb4fdac1adbe4bcc", null ]
+    [ "SysCtl_pollSyncBusyWd", "group__watchdog__api.html#gaca144007320dd266b7e514a52bb61bc6", null ],
+    [ "__attribute__", "group__watchdog__api.html#ga4851d05eec35360d4a02ae20d50137cf", null ]
 ];

@@ -20,6 +20,9 @@ const aprTags = [
         name: "signature_CPU1"
     },
     {
+        name: "signature_CPU3"
+    },
+    {
         name: "flash_load_CPU1"
     },
     {

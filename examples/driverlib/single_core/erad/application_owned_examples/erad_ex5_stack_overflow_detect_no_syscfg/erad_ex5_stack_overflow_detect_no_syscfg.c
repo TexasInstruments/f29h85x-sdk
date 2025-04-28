@@ -163,6 +163,12 @@ ERAD_enableInterruptOnStackOverflow(ERAD_BusCompInstance instance)
     buscomp_params.enable_stack_qual = true;
 
     //
+    // Configure the Stack pointer select
+    //
+    buscomp_params.enable_spsel_match = false;
+    buscomp_params.spsel = 0x0U;
+
+    //
     // Configure the bus comparator
     //
     ERAD_configBusComp(instance, &buscomp_params);

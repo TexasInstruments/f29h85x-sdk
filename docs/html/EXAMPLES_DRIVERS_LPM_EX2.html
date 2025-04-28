@@ -43,7 +43,7 @@
   <td id="projectlogo"><a href="https://www.ti.com"><img alt="Logo" src="ti_logo.svg"/></a></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">F29H85x-SDK
-   &#160;<span id="projectnumber">1.00.00.00</span>
+   &#160;<span id="projectnumber">1.01.00.00</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -92,17 +92,17 @@ $(document).ready(function(){initNavTree('EXAMPLES_DRIVERS_LPM_EX2.html',''); in
 </div><!--header-->
 <div class="contents">
 <div class="toc"><h3>Table of Contents</h3>
-<ul><li class="level1"><a href="#autotoc_md535">Introduction</a></li>
-<li class="level1"><a href="#autotoc_md536">External Connections</a></li>
+<ul><li class="level1"><a href="#autotoc_md552">Introduction</a></li>
+<li class="level1"><a href="#autotoc_md553">External Connections</a></li>
 </ul>
 </div>
 <div class="textblock"><p><a class="anchor" id="md_examples_drivers_lpm_ex2"></a></p>
-<h1><a class="anchor" id="autotoc_md535"></a>
+<h1><a class="anchor" id="autotoc_md552"></a>
 Introduction</h1>
 <p>This example puts the device into IDLE mode and then wakes up the device from IDLE using watchdog timer.</p>
 <p>The device wakes up from the IDLE mode when the watchdog timer overflows, triggering an interrupt. A pre scalar is set for the watchdog timer to change the counter overflow time.</p>
 <p>GPIO1 is pulled high before entering the IDLE mode and is pulled low when in the wakeup ISR.</p>
-<h1><a class="anchor" id="autotoc_md536"></a>
+<h1><a class="anchor" id="autotoc_md553"></a>
 External Connections</h1>
 <ul>
 <li>On device wakeup, the GPIO1 will be low and LED1 will start blinking </li>

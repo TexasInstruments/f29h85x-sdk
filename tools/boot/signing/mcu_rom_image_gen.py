@@ -459,9 +459,11 @@ with open(cert_file_name, "w+") as f:
     f.write(cert_str)
 
 if(args.device == 'f29h85x'):
-    cert_name = "C29-cert-pad.bin"
+    cert_name = "C29-cert-pad_in.bin"
+    cert_name_final = "C29-cert-pad.bin"
 else:
     cert_name = "cert"+str(randint(111, 999))
+    cert_name_final = "temp.bin"
 
 out_name = args.out_image
 
@@ -472,7 +474,7 @@ subprocess.check_output('openssl req -new -x509 -key {} -nodes -outform DER -out
 # Concatenate the certificate and  input binary
 final_fh = open(args.out_image, 'wb+')
 cert_fh = open(cert_name, 'rb')
-
+cert_fh_out = open(cert_name_final,'wb+')
 if os.path.getsize(args.image_bin) >= g_sbl_hsm_max_size and (args.boot != 'FLASH'):
     except_msg = f'SBL/HSM size should be less than {g_sbl_hsm_max_size}'
     raise Exception(except_msg)
@@ -489,6 +491,7 @@ if(((args.device == 'f29h85x') and (args.core == 'HSM')) or ((args.device == 'f2
     temp_cert = cert_data + (b'\x00' * (4096 - cert_size))  # Pad certificate with 0 if size less than 4 KB
     load_data = bin_fh.read()
     final_fh.write(temp_cert + load_data)
+    cert_fh_out.write(temp_cert)
 else:
     shutil.copyfileobj(cert_fh, final_fh)
     shutil.copyfileobj(bin_fh, final_fh)
@@ -496,12 +499,13 @@ else:
 final_fh.close()
 cert_fh.close()
 bin_fh.close()
-
+cert_fh_out.close()
 
 # Delete the temporary files
 os.remove(cert_file_name)
+os.remove(cert_name)
 if(args.device != 'f29h85x'):
-    os.remove(cert_name)
+    os.remove(cert_name_final)
 
 if args.sbl_enc or args.tifs_enc:
     os.remove(get_enc_filename(args.image_bin))

@@ -82,6 +82,7 @@ typedef struct
 #define HSM_KEYS                    0x000E
 #define LFU_CPU1                    0x000F
 #define CPU1_CP_FLASH_IMAGE         0x0010
+#define CPU3_CP_FLASH_IMAGE         0x0011
 #define GENERIC_DATA_PACKET         0x0012
 #define RUN_CPU3                    0x0019
 #define RESET_CPU3                  0x0020
@@ -90,6 +91,7 @@ typedef struct
 #define SET_APP_LOAD_ADDRESS        0x00E0
 #define SET_APP_ENTRY_ADDRESS       0x00F0
 #define SET_APP_SIZE                0x00F1
+#define SYNC_STATUS                 0x00F2
 #define DECIPHER_PACKET_ERROR		0x00A0
 
 //

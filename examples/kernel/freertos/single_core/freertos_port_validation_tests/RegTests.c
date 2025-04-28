@@ -49,7 +49,6 @@ static volatile uint32_t ulRegisterTest2Counter = 0;
 static void prvRegisterTest1Task( void *pvParameters )
 {
     ( void ) pvParameters;
-    portTASK_USES_FLOATING_POINT();
 
     /* 1. Fill the registers stored as part of task context with known values.*/
     __asm("reg1_loop:                       \n"                       \
@@ -205,7 +204,6 @@ static void prvRegisterTest1Task( void *pvParameters )
 static void prvRegisterTest2Task( void *pvParameters )
 {
     ( void ) pvParameters;
-    portTASK_USES_FLOATING_POINT();
 
     /* 1. Fill the registers stored as part of task context with known values.*/
     __asm("reg2_loop:                       \n"                       \

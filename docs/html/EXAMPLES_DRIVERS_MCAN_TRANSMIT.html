@@ -43,7 +43,7 @@
   <td id="projectlogo"><a href="https://www.ti.com"><img alt="Logo" src="ti_logo.svg"/></a></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">F29H85x-SDK
-   &#160;<span id="projectnumber">1.00.00.00</span>
+   &#160;<span id="projectnumber">1.01.00.00</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -92,16 +92,16 @@ $(document).ready(function(){initNavTree('EXAMPLES_DRIVERS_MCAN_TRANSMIT.html','
 </div><!--header-->
 <div class="contents">
 <div class="toc"><h3>Table of Contents</h3>
-<ul><li class="level1"><a href="#autotoc_md561">Introduction</a></li>
-<li class="level1"><a href="#autotoc_md562">Clock source configuration</a></li>
-<li class="level1"><a href="#autotoc_md563">Watch  Variables</a></li>
-<li class="level1"><a href="#autotoc_md564">External Connections</a></li>
-<li class="level1"><a href="#autotoc_md565">Steps to Run the Example</a></li>
-<li class="level1"><a href="#autotoc_md566">See Also</a></li>
+<ul><li class="level1"><a href="#autotoc_md578">Introduction</a></li>
+<li class="level1"><a href="#autotoc_md579">Clock source configuration</a></li>
+<li class="level1"><a href="#autotoc_md580">Watch  Variables</a></li>
+<li class="level1"><a href="#autotoc_md581">External Connections</a></li>
+<li class="level1"><a href="#autotoc_md582">Steps to Run the Example</a></li>
+<li class="level1"><a href="#autotoc_md583">See Also</a></li>
 </ul>
 </div>
 <div class="textblock"><p><a class="anchor" id="md_examples_drivers_mcan_transmit"></a></p>
-<h1><a class="anchor" id="autotoc_md561"></a>
+<h1><a class="anchor" id="autotoc_md578"></a>
 Introduction</h1>
 <p>This example demonstrates the MCAN transmit message functionality. The standard CAN-FD message is transmitted with the following configuration:</p><ul>
 <li>MACN clock = 20 Mhz</li>
@@ -109,7 +109,7 @@ Introduction</h1>
 <li>Data bitrate = 2 mbps</li>
 <li>Data size = 64 bytes MCAN-A is used with GPIO 64 and 65. The MCAN parameters are configured in the example code and syscfg tool is not used.</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md562"></a>
+<h1><a class="anchor" id="autotoc_md579"></a>
 Clock source configuration</h1>
 <ul>
 <li>Select XTAL clock source by making the following change in the device.h file:<ul>
@@ -118,17 +118,17 @@ Clock source configuration</h1>
 </ul>
 </li>
 </ul>
-<h1><a class="anchor" id="autotoc_md563"></a>
+<h1><a class="anchor" id="autotoc_md580"></a>
 Watch  Variables</h1>
 <ul>
 <li>None</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md564"></a>
+<h1><a class="anchor" id="autotoc_md581"></a>
 External Connections</h1>
 <ul>
 <li>CAN transceiver and PEAK connector</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md565"></a>
+<h1><a class="anchor" id="autotoc_md582"></a>
 Steps to Run the Example</h1>
 <ul>
 <li><b>When using CCS projects to build</b>, import the CCS project for the required combination and build it using the CCS project menu (see <a class="el" href="CCS_PROJECTS_PAGE.html">CCS Build Project</a>).</li>
@@ -137,7 +137,7 @@ Steps to Run the Example</h1>
 <li>Launch a CCS debug session and run the executable, see <a class="el" href="CCS_LAUNCH_PAGE.html">Build, Load and Run</a></li>
 <li>Wait for transmissions to complete, check the PEAK application on the PC for received message</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md566"></a>
+<h1><a class="anchor" id="autotoc_md583"></a>
 See Also</h1>
 <p><a class="el" href="DRIVERS_MCAN_PAGE.html">MCAN</a> </p>
 </div></div><!-- contents -->

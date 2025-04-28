@@ -43,7 +43,7 @@
   <td id="projectlogo"><a href="https://www.ti.com"><img alt="Logo" src="ti_logo.svg"/></a></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">F29H85x-SDK
-   &#160;<span id="projectnumber">1.00.00.00</span>
+   &#160;<span id="projectnumber">1.01.00.00</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -92,37 +92,37 @@ $(document).ready(function(){initNavTree('EXAMPLES_DRIVERS_UART_LOOPBACK.html','
 </div><!--header-->
 <div class="contents">
 <div class="toc"><h3>Table of Contents</h3>
-<ul><li class="level1"><a href="#autotoc_md641">Introduction</a><ul><li class="level2"><a href="#autotoc_md642">Note</a></li>
+<ul><li class="level1"><a href="#autotoc_md658">Introduction</a><ul><li class="level2"><a href="#autotoc_md659">Note</a></li>
 </ul>
 </li>
-<li class="level1"><a href="#autotoc_md643">Watch  Variables</a></li>
-<li class="level1"><a href="#autotoc_md644">External Connections</a></li>
-<li class="level1"><a href="#autotoc_md645">Steps to Run the Example</a></li>
-<li class="level1"><a href="#autotoc_md646">See Also</a></li>
+<li class="level1"><a href="#autotoc_md660">Watch  Variables</a></li>
+<li class="level1"><a href="#autotoc_md661">External Connections</a></li>
+<li class="level1"><a href="#autotoc_md662">Steps to Run the Example</a></li>
+<li class="level1"><a href="#autotoc_md663">See Also</a></li>
 </ul>
 </div>
 <div class="textblock"><p><a class="anchor" id="md_examples_drivers_uart_loopback"></a></p>
-<h1><a class="anchor" id="autotoc_md641"></a>
+<h1><a class="anchor" id="autotoc_md658"></a>
 Introduction</h1>
 <p>This example uses the internal loopback test mode of the UART module. This is a very basic loopback that does not use the FIFOs or interrupts. Data is sent byte by byte, then compared to received data in an infinite loop. The pinmux and UART modules are configured through the sysconfig file.</p>
 <p>The sent data looks like this:</p>
 <div class="fragment"><div class="line">01 02 03 04 05 06 07 .... FE FF 00</div>
 </div><!-- fragment --><p>This pattern is repeated forever.</p>
-<h2><a class="anchor" id="autotoc_md642"></a>
+<h2><a class="anchor" id="autotoc_md659"></a>
 Note</h2>
 <p>Avoid keeping the memory browser open while the execution is in progress.</p>
-<h1><a class="anchor" id="autotoc_md643"></a>
+<h1><a class="anchor" id="autotoc_md660"></a>
 Watch  Variables</h1>
 <ul>
 <li>sData : Data to send</li>
 <li>rData : Received data</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md644"></a>
+<h1><a class="anchor" id="autotoc_md661"></a>
 External Connections</h1>
 <ul>
 <li>None</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md645"></a>
+<h1><a class="anchor" id="autotoc_md662"></a>
 Steps to Run the Example</h1>
 <ul>
 <li><b>When using CCS projects to build</b>, import the CCS project for the required combination and build it using the CCS project menu (see <a class="el" href="CCS_PROJECTS_PAGE.html">CCS Build Project</a>).</li>
@@ -131,7 +131,7 @@ Steps to Run the Example</h1>
 <li>Launch a CCS debug session and run the executable, see <a class="el" href="CCS_LAUNCH_PAGE.html">Build, Load and Run</a></li>
 <li>Using the watch variables, monitor data transmission</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md646"></a>
+<h1><a class="anchor" id="autotoc_md663"></a>
 See Also</h1>
 <p><a class="el" href="DRIVERS_UART_PAGE.html">UART</a> </p>
 </div></div><!-- contents -->

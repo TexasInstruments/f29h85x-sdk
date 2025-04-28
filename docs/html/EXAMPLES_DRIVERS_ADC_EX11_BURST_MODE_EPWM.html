@@ -43,7 +43,7 @@
   <td id="projectlogo"><a href="https://www.ti.com"><img alt="Logo" src="ti_logo.svg"/></a></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">F29H85x-SDK
-   &#160;<span id="projectnumber">1.00.00.00</span>
+   &#160;<span id="projectnumber">1.01.00.00</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -92,14 +92,14 @@ $(document).ready(function(){initNavTree('EXAMPLES_DRIVERS_ADC_EX11_BURST_MODE_E
 </div><!--header-->
 <div class="contents">
 <div class="toc"><h3>Table of Contents</h3>
-<ul><li class="level1"><a href="#autotoc_md256">Introduction</a></li>
-<li class="level1"><a href="#autotoc_md257">External Connections</a></li>
-<li class="level1"><a href="#autotoc_md258">Steps to Run the Example</a></li>
-<li class="level1"><a href="#autotoc_md259">See Also</a></li>
+<ul><li class="level1"><a href="#autotoc_md263">Introduction</a></li>
+<li class="level1"><a href="#autotoc_md264">External Connections</a></li>
+<li class="level1"><a href="#autotoc_md265">Steps to Run the Example</a></li>
+<li class="level1"><a href="#autotoc_md266">See Also</a></li>
 </ul>
 </div>
 <div class="textblock"><p><a class="anchor" id="md_examples_drivers_adc_ex11_burst_mode_epwm"></a></p>
-<h1><a class="anchor" id="autotoc_md256"></a>
+<h1><a class="anchor" id="autotoc_md263"></a>
 Introduction</h1>
 <p>This example sets up ePWM1 to periodically trigger ADCA using burst mode. This allows for different channels to be sampled with each burst.</p>
 <p>Each burst triggers 3 conversions. A0 and A1 are part of every burst while the third conversion rotates between A2, A3, and A4. This allows high importance signals to be sampled at high speed while lower priority signals can be sampled at a lower rate.</p>
@@ -111,12 +111,12 @@ Introduction</h1>
 <li>adcAResult3 - Digital representation of the voltage on pin A3.</li>
 <li>adcAResult4 - Digital representation of the voltage on pin A4.</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md257"></a>
+<h1><a class="anchor" id="autotoc_md264"></a>
 External Connections</h1>
 <ul>
 <li>A0, A1, A2, A3, A4.</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md258"></a>
+<h1><a class="anchor" id="autotoc_md265"></a>
 Steps to Run the Example</h1>
 <ul>
 <li><b>When using CCS projects to build</b>, import the CCS project for the required combination and build it using the CCS project menu (see <a class="el" href="CCS_PROJECTS_PAGE.html">CCS Build Project</a>).</li>
@@ -125,7 +125,7 @@ Steps to Run the Example</h1>
 <li>Launch a CCS debug session and run the executable, see <a class="el" href="CCS_LAUNCH_PAGE.html">Build, Load and Run</a></li>
 <li>Using the watch variables, view the ADC conversion results.</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md259"></a>
+<h1><a class="anchor" id="autotoc_md266"></a>
 See Also</h1>
 <p><a class="el" href="DRIVERS_ADC_PAGE.html">ADC</a> </p>
 </div></div><!-- contents -->

@@ -7,6 +7,9 @@
 #include "dcl_pid.h"
 #include "device.h"
 
+volatile const uint32_t testSize = NUM_ELEMENTS; 
+int errors = 0;
+
 //
 // rk = Target referenced value
 // yk = Current feedback value
@@ -44,8 +47,10 @@ int main(void)
     //
     PID_runTest(pid_controller, &DCL_runPIDSeries); 
 
-    uint32_t avgCount = totalCount / NUM_ELEMENTS;
+    uint32_t avgCount = totalCount / testSize;
     printf("DCL PID total cycles = %d\nDCL PID average cycles = %d\n", totalCount, avgCount);
+    while(1)
+    {}
 }
 
 int PID_runTest(DCL_PID *ctrl_handle, DCL_PID_FUNC dcl_pid_func)
@@ -70,8 +75,7 @@ int PID_runTest(DCL_PID *ctrl_handle, DCL_PID_FUNC dcl_pid_func)
     DCL_initLog(&ctlBuf, (float32_t*)ctl_buffer, DATA_LENGTH);
     DCL_clearLog(&outBuf);
 
-    int i;
-    for (i = 0; i < NUM_ELEMENTS; i++)
+    for (int i = 0; i < testSize; i++)
     {   
         //
         // Read the input data buffers
@@ -110,8 +114,7 @@ int PID_runTest(DCL_PID *ctrl_handle, DCL_PID_FUNC dcl_pid_func)
     //
     // Check output against expected output with tolerance (1e-06)
     //
-    int errors = 0;
-    for (i = 0; i < NUM_ELEMENTS; i++)
+    for (int i = 0; i < testSize; i++)
     {
         float32_t output = DCL_readLog(&outBuf);   // out_buffer[i]
         float32_t expected = DCL_readLog(&ctlBuf); // ctl_buffer[i]

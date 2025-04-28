@@ -43,7 +43,7 @@
   <td id="projectlogo"><a href="https://www.ti.com"><img alt="Logo" src="ti_logo.svg"/></a></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">F29H85x-SDK
-   &#160;<span id="projectnumber">1.00.00.00</span>
+   &#160;<span id="projectnumber">1.01.00.00</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -92,18 +92,18 @@ $(document).ready(function(){initNavTree('DRIVERS_SIPC_NOTIFY_PAGE.html',''); in
 </div><!--header-->
 <div class="contents">
 <div class="toc"><h3>Table of Contents</h3>
-<ul><li class="level1"><a href="#autotoc_md203">Introduction</a></li>
-<li class="level1"><a href="#autotoc_md204">Secure IPC design description</a><ul><li class="level2"><a href="#Mailbox-mechanism-for-sipc">Mailbox mechanism for SIPC</a></li>
-<li class="level2"><a href="#autotoc_md205">SIPC initialization</a></li>
-<li class="level2"><a href="#autotoc_md206">Message format.</a></li>
+<ul><li class="level1"><a href="#autotoc_md210">Introduction</a></li>
+<li class="level1"><a href="#autotoc_md211">Secure IPC design description</a><ul><li class="level2"><a href="#Mailbox-mechanism-for-sipc">Mailbox mechanism for SIPC</a></li>
+<li class="level2"><a href="#autotoc_md212">SIPC initialization</a></li>
+<li class="level2"><a href="#autotoc_md213">Message format.</a></li>
 </ul>
 </li>
-<li class="level1"><a href="#autotoc_md207">Example usage.</a></li>
+<li class="level1"><a href="#autotoc_md214">Example usage.</a></li>
 </ul>
 </div>
 <div class="textblock"><p><a class="anchor" id="md_components_drivers_sipc_notify"></a></p>
 <dl class="section note"><dt>Note</dt><dd>Secure IPC Notify driver enables IPC communication between C29 cores and HSM M4 core. This driver cannot be used without TIFS-MCU for HS-SE devices (available on secure resources).</dd></dl>
-<h1><a class="anchor" id="autotoc_md203"></a>
+<h1><a class="anchor" id="autotoc_md210"></a>
 Introduction</h1>
 <ul>
 <li>The <b>secure IPC notify(SIPC Notify)</b> driver enables IPC communication between C29 cores and HSM M4 core for <b>HS-SE</b> devices.</li>
@@ -111,7 +111,7 @@ Introduction</h1>
 <li>The trusted C29 cores which can post a request for services from HSM are termed as <b>secure hosts</b>. A non-secure host cannot communicate with HSM, moreover, the shared memory used in SIPC communication is not accessible to non-secure hosts. The cores that are going to be secure hosts are defined via <b>sysconfig</b> and this will be a static configuration at compile time. At a time there can only be atmost two secure hosts which can talk to HSM via SIPC, thus the name <b>secure IPC</b>.</li>
 </ul>
 <dl class="section note"><dt>Note</dt><dd>Sysconfig initialization has to be handled by <b>HSM client</b>. For Secure IPC, Sysconfig is not supported in this release. It will be available with upcoming SDK releases along with <b>HSM client</b> </dd></dl>
-<h1><a class="anchor" id="autotoc_md204"></a>
+<h1><a class="anchor" id="autotoc_md211"></a>
 Secure IPC design description</h1>
 <ul>
 <li>SIPC supports RTOS-based implementation on the C29 side. The concept of <b>CLIENT IDs</b> is borrowed from DRIVERS_IPC_NOTIFY_PAGE, where in the RTOS scenario each task has a callback registered of type SIPC_FxnCallback. This function will be called when a message is received for a respective CLIENT ID. Refer to IPC_GUIDE to know more about CLIENT IDs.</li>
@@ -131,7 +131,7 @@ Mailbox mechanism for SIPC</h2>
 <li>The swQx is a struct holding pointer to actual queue location in HSM MBOX. There can be atmost 2 secure hosts at a time, so the total number of queues will be 4. If C29 wants to send a message to HSM then C29 writes into C29 -&gt; HSM queue and sends an interrupt to HSM M4, once acknowledged HSM will read the message from the same queue. Similarly, If HSM wants to send a message then HSM will write into HSM --&gt; C29 queues and sends an interrupt to C29.</li>
 </ul>
 <dl class="section note"><dt>Note</dt><dd>The entire HSM MBOX memory must be read and write protected for non-secure hosts. setting up this firewall configuration is the responsibility of the HSM server running on M4.</dd></dl>
-<h2><a class="anchor" id="autotoc_md205"></a>
+<h2><a class="anchor" id="autotoc_md212"></a>
 SIPC initialization</h2>
 <ul>
 <li>Following parameters are user-configurable.<ol type="1">
@@ -150,7 +150,7 @@ SIPC initialization</h2>
 </li>
 <li>In order to inherit the HSM services, the application must comply the uses of IPC via shared memory i.e. a memory region should be designated to both the CPUs.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md206"></a>
+<h2><a class="anchor" id="autotoc_md213"></a>
 Message format.</h2>
 <p>The message size of SIPC can be in the range of 3 to 100 bytes.</p><ul>
 <li>The minimum message size is 3 bytes i.e [ <b>Dest ClientId</b> ][ <b>Src ClientId</b> ][<b>data</b>]. Users can change SIPC_MSG_SIZE based on a protocol that is implemented on top of SIPC.</li>
@@ -161,7 +161,7 @@ Message format.</h2>
 <div class="caption">
 message format used by HSM client</div></div>
 <dl class="section note"><dt>Note</dt><dd>It is recommended to use 13 bytes message format as mentioned above for optimal latency.</dd></dl>
-<h1><a class="anchor" id="autotoc_md207"></a>
+<h1><a class="anchor" id="autotoc_md214"></a>
 Example usage.</h1>
 <ul>
 <li>Please refer to example part of TIFS-MCU package to see SIPC demonstration.</li>

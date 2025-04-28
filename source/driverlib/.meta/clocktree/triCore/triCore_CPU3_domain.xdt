@@ -1,6 +1,9 @@
 %%{
 let clocktree_common   = system.getScript("../clocktree_common.js");
 var clockTree_CPU3 	= Common.getClockTree();
+let peripheralInfo	   = system.getScript("/driverlib/device/peripheral_instances.js");
+const deviceGPN = system.deviceData.gpnVariant.replace("TMS320", "")
+let availablePeripherals = peripheralInfo.peripheralCounts[deviceGPN]
 
 const PLL_type1 = clocktree_common.PLL_type1;
 const PLL_type2 = clocktree_common.PLL_type2;
@@ -182,12 +185,14 @@ const CPU3_CPUCLK_d	= clockTree_CPU3.CPU3_CPUCLK.in
 //
 //*****************************************************************************
 //
+% if(availablePeripherals["ECAT"]){
 // Ethercat Domain (`ECATCLK_d` MHz) 
 //
 //*****************************************************************************
 // `clockTree_CPU3.EtherCAT_domain.$ipInstance.modulePins[0].name`
 //
 //*****************************************************************************
+% }
 //
 // EMIF Domain (`EMIFCLK_d` MHz) 
 //

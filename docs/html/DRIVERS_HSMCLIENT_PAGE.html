@@ -43,7 +43,7 @@
   <td id="projectlogo"><a href="https://www.ti.com"><img alt="Logo" src="ti_logo.svg"/></a></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">F29H85x-SDK
-   &#160;<span id="projectnumber">1.00.00.00</span>
+   &#160;<span id="projectnumber">1.01.00.00</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -92,19 +92,19 @@ $(document).ready(function(){initNavTree('DRIVERS_HSMCLIENT_PAGE.html',''); init
 </div><!--header-->
 <div class="contents">
 <div class="toc"><h3>Table of Contents</h3>
-<ul><li class="level1"><a href="#autotoc_md194">Introduction</a></li>
-<li class="level1"><a href="#autotoc_md195">HSM Client message format.</a><ul><ul><li class="level3"><a href="#autotoc_md196">Message structure description.</a></li>
+<ul><li class="level1"><a href="#autotoc_md201">Introduction</a></li>
+<li class="level1"><a href="#autotoc_md202">HSM Client message format.</a><ul><ul><li class="level3"><a href="#autotoc_md203">Message structure description.</a></li>
 </ul>
 </ul>
 </li>
-<li class="level1"><a href="#autotoc_md197">HSM client Initialization.</a></li>
-<li class="level1"><a href="#autotoc_md198">HSM Client generic service flow.</a></li>
-<li class="level1"><a href="#autotoc_md199">HSM Client Load TIFS-MCU API and BootNotify message.</a></li>
-<li class="level1"><a href="#DRIVERS_HSMCLIENT_GET_VERSION">HSM Client GetVersion Service.</a><ul><ul><li class="level3"><a href="#autotoc_md200">Example Usage</a></li>
+<li class="level1"><a href="#autotoc_md204">HSM client Initialization.</a></li>
+<li class="level1"><a href="#autotoc_md205">HSM Client generic service flow.</a></li>
+<li class="level1"><a href="#autotoc_md206">HSM Client Load TIFS-MCU API and BootNotify message.</a></li>
+<li class="level1"><a href="#DRIVERS_HSMCLIENT_GET_VERSION">HSM Client GetVersion Service.</a><ul><ul><li class="level3"><a href="#autotoc_md207">Example Usage</a></li>
 </ul>
 </ul>
 </li>
-<li class="level1"><a href="#DRIVERS_HSMCLIENT_GET_UID">HSM Client GetUID Service.</a><ul><ul><li class="level3"><a href="#autotoc_md201">Example Usage</a></li>
+<li class="level1"><a href="#DRIVERS_HSMCLIENT_GET_UID">HSM Client GetUID Service.</a><ul><ul><li class="level3"><a href="#autotoc_md208">Example Usage</a></li>
 </ul>
 </ul>
 </li>
@@ -112,12 +112,22 @@ $(document).ready(function(){initNavTree('DRIVERS_HSMCLIENT_PAGE.html',''); init
 <li class="level1"><a href="#DRIVERS_HSMCLIENT_GET_KEK">HSM Client Get Derived KEK Service.</a></li>
 <li class="level1"><a href="#DRIVERS_HSMCLIENT_KEYWRITER">HSM Client Key Writer Service.</a></li>
 <li class="level1"><a href="#DRIVERS_HSMCLIENT_getRandomNum">HSM Client Get Random Number Service.</a></li>
-<li class="level1"><a href="#autotoc_md202">APIs</a></li>
+<li class="level1"><a href="#DRIVERS_HSMCLIENT_firmwareUpdate_CertProcess">HSM Client Firmware Update Certificate Process Service.</a></li>
+<li class="level1"><a href="#DRIVERS_HSMCLIENT_firmwareUpdate_CodeProgram">HSM Client Firmware Update Code Program Service.</a></li>
+<li class="level1"><a href="#DRIVERS_HSMCLIENT_firmwareUpdate_CodeVerify">HSM Client Firmware Update Code Verify Service.</a></li>
+<li class="level1"><a href="#DRIVERS_HSMCLIENT_VerifyROTSwitchingCertificate">HSM Client Verify RoT Switching Certificate</a></li>
+<li class="level1"><a href="#DRIVERS_HSMCLIENT_UpdateKeyRevsion">HSM Client Update Key Revision</a></li>
+<li class="level1"><a href="#DRIVERS_HSMCLIENT_READ_OTP_ROW">HSM Client Read OTP Row Service.</a></li>
+<li class="level1"><a href="#DRIVERS_HSMCLIENT_WRITE_OTP_ROW">HSM Client Write OTP Row Service.</a></li>
+<li class="level1"><a href="#DRIVERS_HSMCLIENT_GET_OTP_ROW_COUNT">HSM Client Get OTP Row Count Service.</a></li>
+<li class="level1"><a href="#DRIVERS_HSMCLIENT_READ_SW_REVISION">HSM Client Read SW Revision Service.</a></li>
+<li class="level1"><a href="#DRIVERS_HSMCLIENT_WRITE_SW_REVISION">HSM Client Write SW Revision Service.</a></li>
+<li class="level1"><a href="#autotoc_md209">APIs</a></li>
 </ul>
 </div>
 <div class="textblock"><p><a class="anchor" id="md_components_drivers_hsmclient"></a></p>
 <dl class="section note"><dt>Note</dt><dd>In the following document and in <b>TIFS-MCU</b> document the term used to refer to the Firmware which runs on HSM core is <b>TIFS-MCU Firmware</b>. Please note that the terms 1.**HSMRt Firmware** and 2.**HSMRt** are synonymous to <b>TIFS-MCU Firmware</b>.</dd></dl>
-<h1><a class="anchor" id="autotoc_md194"></a>
+<h1><a class="anchor" id="autotoc_md201"></a>
 Introduction</h1>
 <ul>
 <li>The objective of HSM client is to provide APIs for accessing HSM services. Below given model explains the use of HSM client graphically. It uses <a class="el" href="DRIVERS_SIPC_NOTIFY_PAGE.html">SIPC Notify</a> driver as a low level message passing mechanism to talk to HSM M4 core. HSM client APIs can be used with either <b>FreeRTOS</b> or <b>noRTOS</b> application.</li>
@@ -144,7 +154,7 @@ HSM CLIENT communication model</div></div>
 </ul>
 </li>
 </ul>
-<h1><a class="anchor" id="autotoc_md195"></a>
+<h1><a class="anchor" id="autotoc_md202"></a>
 HSM Client message format.</h1>
 <ul>
 <li>Which public cores are going to be <b>secure hosts</b> will be decided by sysconfig configurations of <b>TIFS-MCU</b> at compile time and user has to make sure that similar configurations is done on the C29 side as well.</li>
@@ -154,7 +164,7 @@ HSM Client message format.</h1>
 <img src="sipc_message_ex.png" alt=""/>
 <div class="caption">
 SIPC message structure</div></div>
-<h3><a class="anchor" id="autotoc_md196"></a>
+<h3><a class="anchor" id="autotoc_md203"></a>
 Message structure description.</h3>
 <ul>
 <li><b>DestClientID</b> -: Client Id to which a message is going to be sent. In case of C29 -&gt; HSM ( C29 send message to HSM ) this field will always be <b>equal to 1</b> because TIFS-MCU is a NORTOS application and only one client is required.</li>
@@ -171,7 +181,7 @@ Message structure description.</h3>
 <li>The argument will reside in <b>LDAx</b> and only its pointer is going to be passed in the message itself. When HSM receive the message it reads the argument content from LDAx RAM and process it. Thus other information needed by HSM server can be passed along with the message through HSM MBOX. <dl class="section note"><dt>Note</dt><dd>It is strongly suggested that user application must cleary define a boundary between secure C29 CPU and non secure C29 CPU core's LDAx RAM memory so that non secure core cannot access the parameters of HSM message.</dd></dl>
 </li>
 </ul>
-<h1><a class="anchor" id="autotoc_md197"></a>
+<h1><a class="anchor" id="autotoc_md204"></a>
 HSM client Initialization.</h1>
 <ul>
 <li>User needs to add an instance of HSM client in <b>Secure C29's</b> sysconfig configuration.</li>
@@ -189,7 +199,7 @@ HSM Client sysconfig</div></div>
 <li><dl class="section note"><dt>Note</dt><dd>If user is not using sysconfig then it is important to call <b><a class="el" href="group__DRV__HSMCLIENT__MODULE.html#ga3b55ad3229c657ca509f9b29451e37e5" title="Initialize the HSM client for current core.">HsmClient_init()</a></b> with appropriate SIPC_Params before any service function calls.</dd></dl>
 </li>
 </ul>
-<h1><a class="anchor" id="autotoc_md198"></a>
+<h1><a class="anchor" id="autotoc_md205"></a>
 HSM Client generic service flow.</h1>
 <ul>
 <li>Below mentioned are the generic steps that every service request made by HSM client follows except <a class="el" href="group__DRV__HSMCLIENT__MODULE.html#ga65e1efbec7ecc3f8a2c27e8a26b9ead0">HSM_MSG_BOOT_NOTIFY</a></li>
@@ -216,7 +226,7 @@ HSM Client generic service flow</div></div>
 <li>check RespMsg integrity i.e CRC16 for HSM message and CRC16 for args. if integrity check fails then return SystemP_FAILURE.</li>
 <li>If HSM_FLAG_ACK is received then returns SystemP_SUCCESS else SystemP_FAILURE.</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md199"></a>
+<h1><a class="anchor" id="autotoc_md206"></a>
 HSM Client Load TIFS-MCU API and BootNotify message.</h1>
 <ul>
 <li>HSM client Module is used by <b>Flash Kernel</b> to program <b>TIFS-MCU Fiwmware</b> on HSM core.</li>
@@ -243,7 +253,7 @@ HSM Client GetVersion Service.</h1>
 <li>Refer to <a class="el" href="unionHsmVer__t__.html" title="type for reading HSMRt version.">HsmVer_t_</a> for the description of different fields that defines a unique TIFS-MCU Firmware version. If User needs to know just the unique 64 bit version ID then, user should read <a class="el" href="unionHsmVer__t__.html#a8c5ddfe5a8c5a319511da15173f1bddf">HsmVer_t_::HsmrtVer</a> a 64 bit field which combines all the different fields of <a class="el" href="unionHsmVer__t__.html" title="type for reading HSMRt version.">HsmVer_t_</a>.</li>
 <li><a class="el" href="group__DRV__HSMCLIENT__MODULE.html#ga70b2b53821f5782e083984e34df972b7" title="populates the current HSMRT version Id by default the hsm flag is set to HSM_FLAG_AOP for this servic...">HsmClient_getVersion()</a> API takes <b>timeToWaitInTicks</b> parameter as input which dictates how long application will wait for the response from HSM core. If the timeout exception occurs <a class="el" href="group__DRV__HSMCLIENT__MODULE.html#ga70b2b53821f5782e083984e34df972b7" title="populates the current HSMRT version Id by default the hsm flag is set to HSM_FLAG_AOP for this servic...">HsmClient_getVersion()</a> API return SystemP_TIMEOUT.</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md200"></a>
+<h3><a class="anchor" id="autotoc_md207"></a>
 Example Usage</h3>
 <ul>
 <li>Please refer to examples provided in TIFS-MCU package.</li>
@@ -259,7 +269,7 @@ HSM Client GetUID Service.</h1>
 <li>This service is used to get UID or Unique ID of the device running TIFS_MCU Firmware.</li>
 <li>UID is a 64 byte unique ID for a device which user needs to instantiate as an uint8_t * object and call <a class="el" href="group__DRV__HSMCLIENT__MODULE.html#gad9f5c4c23d11b16ef7ff0eb03a7fa740" title="The service issued to HSM Server populates the Device UID by default the hsm flag is set to HSM_FLAG_...">HsmClient_getUID()</a> API to get the device UID.</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md201"></a>
+<h3><a class="anchor" id="autotoc_md208"></a>
 Example Usage</h3>
 <ul>
 <li>Please refer to examples provided in TIFS-MCU package.</li>
@@ -310,7 +320,101 @@ HSM Client Get Random Number Service.</h1>
 Demo Get Random Number log</div></div>
 </li>
 </ul>
-<h1><a class="anchor" id="autotoc_md202"></a>
+<h1><a class="anchor" id="DRIVERS_HSMCLIENT_firmwareUpdate_CertProcess"></a>
+HSM Client Firmware Update Certificate Process Service.</h1>
+<dl class="section note"><dt>Note</dt><dd>Please note that this service is only valid for F29H85x</dd></dl>
+<ul>
+<li>This service is expected to be in used in combination with <a class="el" href="group__DRV__HSMCLIENT__MODULE.html#ga5dcdae29f13a16b7d685d945f6fcb42a" title="service request issued to HSM server to program the incoming firmware to device dormant banks This se...">HsmClient_firmwareUpdate_CodeProgram()</a> and <a class="el" href="group__DRV__HSMCLIENT__MODULE.html#ga607526aad2aa236e8227e9c0f20fcd5c" title="service request issued to HSM server to decrypt the firmware programmed in dormant flash bank in plac...">HsmClient_firmwareUpdate_CodeVerify()</a> services.</li>
+<li>This service is to be called before <a class="el" href="group__DRV__HSMCLIENT__MODULE.html#ga5dcdae29f13a16b7d685d945f6fcb42a" title="service request issued to HSM server to program the incoming firmware to device dormant banks This se...">HsmClient_firmwareUpdate_CodeProgram()</a> and <a class="el" href="group__DRV__HSMCLIENT__MODULE.html#ga607526aad2aa236e8227e9c0f20fcd5c" title="service request issued to HSM server to decrypt the firmware programmed in dormant flash bank in plac...">HsmClient_firmwareUpdate_CodeVerify()</a> services.</li>
+<li>This service is used to process the certificate of the incoming firmware, this service helps verify the source of the incoming firmware and determine the flash location where new firmware is expected to be programmed</li>
+<li>Once the request is processed, HSM responds with an ACK or NACK depending on the inputs given by the user and whether or not the certificate is signed using the correct Root of Trust keys</li>
+<li>The status of <a class="el" href="group__DRV__HSMCLIENT__MODULE.html#ga7e11bffb33e2a74e2380ebc3161a33e9" title="service request issued to HSM server to parse the certificate to validate authenticity and identify t...">HsmClient_firmwareUpdate_CertProcess()</a> will return SystemP_SUCCESS only when the certificate is validated by HSM.</li>
+</ul>
+<h1><a class="anchor" id="DRIVERS_HSMCLIENT_firmwareUpdate_CodeProgram"></a>
+HSM Client Firmware Update Code Program Service.</h1>
+<dl class="section note"><dt>Note</dt><dd>Please note that this service is only valid for F29H85x</dd></dl>
+<ul>
+<li>This service is expected to be in used in combination with <a class="el" href="group__DRV__HSMCLIENT__MODULE.html#ga7e11bffb33e2a74e2380ebc3161a33e9" title="service request issued to HSM server to parse the certificate to validate authenticity and identify t...">HsmClient_firmwareUpdate_CertProcess()</a> and <a class="el" href="group__DRV__HSMCLIENT__MODULE.html#ga607526aad2aa236e8227e9c0f20fcd5c" title="service request issued to HSM server to decrypt the firmware programmed in dormant flash bank in plac...">HsmClient_firmwareUpdate_CodeVerify()</a> services.</li>
+<li>This service is to be called after <a class="el" href="group__DRV__HSMCLIENT__MODULE.html#ga7e11bffb33e2a74e2380ebc3161a33e9" title="service request issued to HSM server to parse the certificate to validate authenticity and identify t...">HsmClient_firmwareUpdate_CertProcess()</a> and before <a class="el" href="group__DRV__HSMCLIENT__MODULE.html#ga607526aad2aa236e8227e9c0f20fcd5c" title="service request issued to HSM server to decrypt the firmware programmed in dormant flash bank in plac...">HsmClient_firmwareUpdate_CodeVerify()</a> services.</li>
+<li>This service is used to program the flash memory with the incoming firmware stored temporarily in LDAx RAM.</li>
+<li>Once the request is processed, HSM responds with an ACK or NACK depending on the inputs given by the user and whether or not flash programming was successful.</li>
+<li>The status of <a class="el" href="group__DRV__HSMCLIENT__MODULE.html#ga5dcdae29f13a16b7d685d945f6fcb42a" title="service request issued to HSM server to program the incoming firmware to device dormant banks This se...">HsmClient_firmwareUpdate_CodeProgram()</a> will return SystemP_SUCCESS only when the flash memory is programmed by HSM.</li>
+</ul>
+<h1><a class="anchor" id="DRIVERS_HSMCLIENT_firmwareUpdate_CodeVerify"></a>
+HSM Client Firmware Update Code Verify Service.</h1>
+<dl class="section note"><dt>Note</dt><dd>Please note that this service is only valid for F29H85x</dd></dl>
+<ul>
+<li>This service is expected to be in used in combination with <a class="el" href="group__DRV__HSMCLIENT__MODULE.html#ga7e11bffb33e2a74e2380ebc3161a33e9" title="service request issued to HSM server to parse the certificate to validate authenticity and identify t...">HsmClient_firmwareUpdate_CertProcess()</a> and <a class="el" href="group__DRV__HSMCLIENT__MODULE.html#ga5dcdae29f13a16b7d685d945f6fcb42a" title="service request issued to HSM server to program the incoming firmware to device dormant banks This se...">HsmClient_firmwareUpdate_CodeProgram()</a> services.</li>
+<li>This service is to be called after <a class="el" href="group__DRV__HSMCLIENT__MODULE.html#ga5dcdae29f13a16b7d685d945f6fcb42a" title="service request issued to HSM server to program the incoming firmware to device dormant banks This se...">HsmClient_firmwareUpdate_CodeProgram()</a> service.</li>
+<li>This service is used to verify the new firmware programmed in flash memory by performing integrity checks on the same.</li>
+<li>Once the request is processed, HSM responds with an ACK or NACK depending on the inputs given by the user and whether or not the new firmware programmed in the flash memory passed the integrity checks or not.</li>
+<li>The status of <a class="el" href="group__DRV__HSMCLIENT__MODULE.html#ga607526aad2aa236e8227e9c0f20fcd5c" title="service request issued to HSM server to decrypt the firmware programmed in dormant flash bank in plac...">HsmClient_firmwareUpdate_CodeVerify()</a> will return SystemP_SUCCESS only when the new firmware in flash memory is verified by HSM.</li>
+</ul>
+<h1><a class="anchor" id="DRIVERS_HSMCLIENT_VerifyROTSwitchingCertificate"></a>
+HSM Client Verify RoT Switching Certificate</h1>
+<ul>
+<li>This service is available on <b>HS_SE</b> devices.</li>
+<li>The service issued to HSM Server to validate the RoT Switching Certificate. Once the certificate is validated, the RoT will switch to backup keys temporily (current power cycle).</li>
+<li>This then can be used to authenticate images against backup keys.</li>
+<li>To permanently switch to backup keys, the <a class="el" href="group__DRV__HSMCLIENT__MODULE.html#ga530b1603d591126ac346c31f30414f7d" title="service request issued to HSM server to update key revision to 0x2 which changes the root of trust ke...">HsmClient_UpdateKeyRevsion()</a> API is invoked</li>
+</ul>
+<h1><a class="anchor" id="DRIVERS_HSMCLIENT_UpdateKeyRevsion"></a>
+HSM Client Update Key Revision</h1>
+<ul>
+<li>For F29H85x devices it is recommended to update the firmware and SECCFG (mandatory) with backup keys before issuing this command. For more information, refer to TIFS-MCU documentation.</li>
+<li>This service is available on <b>HS_SE</b> devices.</li>
+<li>This service is responsible for switching the RoT to backup keys permanently.</li>
+</ul>
+<h1><a class="anchor" id="DRIVERS_HSMCLIENT_READ_OTP_ROW"></a>
+HSM Client Read OTP Row Service.</h1>
+<ul>
+<li>This service is available on <b>HS-SE</b> devices.</li>
+<li>The service issued to HSM Server retrieves the data of Extended OTP row based on row index provided as param.</li>
+<li>User needs to instantiate <a class="el" href="structNvmOtpRead__t.html" title="This is an NvmOtpRead type which holds the information of NvmOtp row index and row data corresponding...">NvmOtpRead_t</a> object and call <a class="el" href="group__DRV__HSMCLIENT__MODULE.html#gace3361fd0f3fc438e9b7e0a1acfe2122" title="The service issued to HSM Server retrieves the data of GP OTP row based on row index provided as para...">HsmClient_readOTPRow()</a> API to get the data of Extended OTP row.</li>
+</ul>
+<h1><a class="anchor" id="DRIVERS_HSMCLIENT_WRITE_OTP_ROW"></a>
+HSM Client Write OTP Row Service.</h1>
+<ul>
+<li>This service is available on <b>HS-SE</b> devices.</li>
+<li>The service issued to HSM Server writes the data to Extended OTP efuse row based on row index provided as param.</li>
+<li>User needs to instantiate <a class="el" href="structNvmOtpRowWrite__t.html" title="This is an NvmOtpRowWrite type which holds the information regarding programming NvmOtp row....">NvmOtpRowWrite_t</a> object and call <a class="el" href="group__DRV__HSMCLIENT__MODULE.html#ga96f53cf958e70929245d0f21e10f038e" title="The service issued to HSM Server writes the data to extended OTP efuse row based on row index provide...">HsmClient_writeOTPRow()</a> API to writes the data to Extended OTP row.</li>
+</ul>
+<h1><a class="anchor" id="DRIVERS_HSMCLIENT_GET_OTP_ROW_COUNT"></a>
+HSM Client Get OTP Row Count Service.</h1>
+<ul>
+<li>This service is available on <b>HS-SE</b> devices.</li>
+<li>The service issued to HSM Server retrieves the count of Extended OTP rows.</li>
+<li>User needs to instantiate <a class="el" href="structNvmOtpRowCount__t.html" title="This is an NvmOtpRowCount type which holds the information regarding NvmOtp row count and size of eac...">NvmOtpRowCount_t</a> object and call <a class="el" href="group__DRV__HSMCLIENT__MODULE.html#gae625624727a8de14944f65d25fececd5" title="The service issued to HSM Server retrieves the count of extended OTP rows.">HsmClient_getOTPRowCount()</a> API to to get the Extended OTP rows.</li>
+</ul>
+<h1><a class="anchor" id="DRIVERS_HSMCLIENT_READ_SW_REVISION"></a>
+HSM Client Read SW Revision Service.</h1>
+<ul>
+<li>This service is available on <b>HS-SE</b> devices.</li>
+<li>The service issued to HSM Server retrieves the Software Revision value based on the revision identifier. <table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Component   </th><th class="markdownTableHeadNone">Revision Identifier Value    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">SWREV SBL   </td><td class="markdownTableBodyNone">0x33    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">SWREV HSM   </td><td class="markdownTableBodyNone">0x55    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">SWREV APP   </td><td class="markdownTableBodyNone">0xAA    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">SWREV SECCFG   </td><td class="markdownTableBodyNone">0xFF   </td></tr>
+</table>
+</li>
+<li>User needs to instantiate <a class="el" href="structSWRev__t.html" title="This is SWRev type which holds the information regarding Revision identifier and value corresponding ...">SWRev_t</a> object and call <a class="el" href="group__DRV__HSMCLIENT__MODULE.html#gaa04564fc8949545d87b1058f4e9b42df" title="The service issued to HSM Server retrieves the SWRevision value based on identifier as param.">HsmClient_readSWRev()</a> API to read SW revision.</li>
+</ul>
+<h1><a class="anchor" id="DRIVERS_HSMCLIENT_WRITE_SW_REVISION"></a>
+HSM Client Write SW Revision Service.</h1>
+<ul>
+<li>This service is available on <b>HS-SE</b> devices.</li>
+<li>The service issued to HSM Server is responsible for updating the software revision of HSM, SBL, SECCFG and Application.</li>
+<li>User needs to instantiate <a class="el" href="structSWRev__t.html" title="This is SWRev type which holds the information regarding Revision identifier and value corresponding ...">SWRev_t</a> object and call <a class="el" href="group__DRV__HSMCLIENT__MODULE.html#ga6cb697a7edc9ed0cda9e18cf4c9fcb01" title="The service issued to HSM Server writes the SWRevision value based on identifier as param.">HsmClient_writeSWRev()</a> API to write SW revision.</li>
+<li>The SW revision change is a permanent change in the NVM OTP. Any revision less than the programmed revision will not be allowed to boot. Make sure the SECCCFG programmed should have the SW Revision greater than the programmed revision.</li>
+<li>For F29H85x devices it is recommended to update the firmware and SECCFG (mandatory) with the greater SW revision before issuing this command. For more information, refer to TIFS-MCU documentation.</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md209"></a>
 APIs</h1>
 <dl class="section note"><dt>Note</dt><dd>Please note that all the service APIs descried below are not supported in this release</dd></dl>
 <p><a class="el" href="group__DRV__HSMCLIENT__MODULE.html">APIs for HSMCLIENT</a> </p>

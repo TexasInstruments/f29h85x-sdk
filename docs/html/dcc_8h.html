@@ -43,7 +43,7 @@
   <td id="projectlogo"><a href="https://www.ti.com"><img alt="Logo" src="ti_logo.svg"/></a></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">F29H85x-SDK
-   &#160;<span id="projectnumber">1.00.00.00</span>
+   &#160;<span id="projectnumber">1.01.00.00</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -90,7 +90,8 @@ $(document).ready(function(){initNavTree('dcc_8h.html',''); initResizable(); });
   <div class="summary">
 <a href="#define-members">Macros</a> &#124;
 <a href="#enum-members">Enumerations</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#func-members">Functions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
 <div class="title">dcc.h File Reference</div>  </div>
 </div><!--header-->
@@ -171,52 +172,41 @@ Enumerations</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga4856bb4dd7be9a92bf347aa46ccb48f3"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dcc__api.html#ga4856bb4dd7be9a92bf347aa46ccb48f3">DCC_enableModule</a> (uint32_t base)</td></tr>
-<tr class="separator:ga4856bb4dd7be9a92bf347aa46ccb48f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7789fd5c1952044b1cec6fdffc467473"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dcc__api.html#ga7789fd5c1952044b1cec6fdffc467473">DCC_disableModule</a> (uint32_t base)</td></tr>
-<tr class="separator:ga7789fd5c1952044b1cec6fdffc467473"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gace0792dfcd8667a45dcc6762d52f14ee"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dcc__api.html#gace0792dfcd8667a45dcc6762d52f14ee">DCC_enableErrorSignal</a> (uint32_t base)</td></tr>
-<tr class="separator:gace0792dfcd8667a45dcc6762d52f14ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gafecc8e4c9691e996491d00b814d828b3"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dcc__api.html#gafecc8e4c9691e996491d00b814d828b3">DCC_enableDoneSignal</a> (uint32_t base)</td></tr>
-<tr class="separator:gafecc8e4c9691e996491d00b814d828b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9c5ad523ddb73d90bae09d225485bfe3"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dcc__api.html#ga9c5ad523ddb73d90bae09d225485bfe3">DCC_disableErrorSignal</a> (uint32_t base)</td></tr>
-<tr class="separator:ga9c5ad523ddb73d90bae09d225485bfe3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga372d9f87583a12129564806f155f3811"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dcc__api.html#ga372d9f87583a12129564806f155f3811">DCC_disableDoneSignal</a> (uint32_t base)</td></tr>
-<tr class="separator:ga372d9f87583a12129564806f155f3811"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8ad2c0ee8d248b9bf0e56a69216ccffd"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dcc__api.html#ga8ad2c0ee8d248b9bf0e56a69216ccffd">DCC_enableSingleShotMode</a> (uint32_t base)</td></tr>
-<tr class="separator:ga8ad2c0ee8d248b9bf0e56a69216ccffd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7fb7843bec8a2059311331a09d1cc360"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dcc__api.html#ga7fb7843bec8a2059311331a09d1cc360">DCC_disableSingleShotMode</a> (uint32_t base)</td></tr>
-<tr class="separator:ga7fb7843bec8a2059311331a09d1cc360"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gafac2fc09894e43928b814e8dd830fc14"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dcc__api.html#gafac2fc09894e43928b814e8dd830fc14">DCC_getErrorStatus</a> (uint32_t base)</td></tr>
-<tr class="separator:gafac2fc09894e43928b814e8dd830fc14"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaeefddaf0b46e5c99e3dc43ebae12ac8c"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dcc__api.html#gaeefddaf0b46e5c99e3dc43ebae12ac8c">DCC_getSingleShotStatus</a> (uint32_t base)</td></tr>
-<tr class="separator:gaeefddaf0b46e5c99e3dc43ebae12ac8c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaca66a598c255a41717bcace3dc3700f6"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dcc__api.html#gaca66a598c255a41717bcace3dc3700f6">DCC_clearErrorFlag</a> (uint32_t base)</td></tr>
-<tr class="separator:gaca66a598c255a41717bcace3dc3700f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga701b2b19be81e3ef6869e529948fc036"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dcc__api.html#ga701b2b19be81e3ef6869e529948fc036">DCC_clearDoneFlag</a> (uint32_t base)</td></tr>
-<tr class="separator:ga701b2b19be81e3ef6869e529948fc036"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1530f9ab9d44ed0589fb8bb996ad6090"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dcc__api.html#ga1530f9ab9d44ed0589fb8bb996ad6090">DCC_getCounter0Value</a> (uint32_t base)</td></tr>
-<tr class="separator:ga1530f9ab9d44ed0589fb8bb996ad6090"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga39e7b7928b9d0caa57f50d7b43de20d8"><td class="memItemLeft" align="right" valign="top">static uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dcc__api.html#ga39e7b7928b9d0caa57f50d7b43de20d8">DCC_getValidCounter0Value</a> (uint32_t base)</td></tr>
-<tr class="separator:ga39e7b7928b9d0caa57f50d7b43de20d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6f00fd2b233f5af7577450a52c35ac31"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dcc__api.html#ga6f00fd2b233f5af7577450a52c35ac31">DCC_getCounter1Value</a> (uint32_t base)</td></tr>
-<tr class="separator:ga6f00fd2b233f5af7577450a52c35ac31"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga160cec37375b01f3dc09a1396dc071eb"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dcc__api.html#ga160cec37375b01f3dc09a1396dc071eb">DCC_setCounter1ClkSource</a> (uint32_t base, <a class="el" href="group__dcc__api.html#ga7add4a61bd1021a4544f99b59180c076">DCC_Count1ClockSource</a> <a class="el" href="group__xbar__api.html#ga1e2754bcfe037d89628bdaab31e07af7">source</a>)</td></tr>
-<tr class="separator:ga160cec37375b01f3dc09a1396dc071eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1b2acdeb98d5ce042cd8e867276ec59e"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dcc__api.html#ga1b2acdeb98d5ce042cd8e867276ec59e">DCC_setCounter0ClkSource</a> (uint32_t base, <a class="el" href="group__dcc__api.html#ga882339b23939a26439e16b9361080ea3">DCC_Count0ClockSource</a> <a class="el" href="group__xbar__api.html#ga1e2754bcfe037d89628bdaab31e07af7">source</a>)</td></tr>
-<tr class="separator:ga1b2acdeb98d5ce042cd8e867276ec59e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga31ada622995e50157b2d0ddd2ee05c1d"><td class="memItemLeft" align="right" valign="top">static uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dcc__api.html#ga31ada622995e50157b2d0ddd2ee05c1d">DCC_getCounter1ClkSource</a> (uint32_t base)</td></tr>
-<tr class="separator:ga31ada622995e50157b2d0ddd2ee05c1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga95d9ad7033905001d1d3aa5dcff024d0"><td class="memItemLeft" align="right" valign="top">static uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dcc__api.html#ga95d9ad7033905001d1d3aa5dcff024d0">DCC_getCounter0ClkSource</a> (uint32_t base)</td></tr>
-<tr class="separator:ga95d9ad7033905001d1d3aa5dcff024d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3ae107141988aad7b1ed0f9b376c25eb"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dcc__api.html#ga3ae107141988aad7b1ed0f9b376c25eb">DCC_setCounterSeeds</a> (uint32_t base, uint32_t counter0, uint32_t validCounter0, uint32_t counter1)</td></tr>
-<tr class="separator:ga3ae107141988aad7b1ed0f9b376c25eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga337c8343635bbae9e6f52f382c7f6f10"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dcc__api.html#ga337c8343635bbae9e6f52f382c7f6f10">DCC_verifyClockFrequency</a> (uint32_t base, <a class="el" href="group__dcc__api.html#ga7add4a61bd1021a4544f99b59180c076">DCC_Count1ClockSource</a> clock1, float32_t freq1, <a class="el" href="group__dcc__api.html#ga882339b23939a26439e16b9361080ea3">DCC_Count0ClockSource</a> clock0, float32_t freq0, float32_t tolerance, float32_t freqerr, float32_t freq_sysclk)</td></tr>
+<tr class="memitem:ga0e844d8b1f223f9e4b913405630a1153"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dcc__api.html#ga0e844d8b1f223f9e4b913405630a1153">__attribute__</a> ((always_inline)) static inline void DCC_enableModule(uint32_t base)</td></tr>
+<tr class="separator:ga0e844d8b1f223f9e4b913405630a1153"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5e1cf7e8c16ad93d2aabf6c4ad85d21b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dcc__api.html#ga5e1cf7e8c16ad93d2aabf6c4ad85d21b">HWREGH</a> (base+DCC_O_CLKSRC1)</td></tr>
+<tr class="separator:ga5e1cf7e8c16ad93d2aabf6c4ad85d21b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf220d5260d6e88ce91255151decedb5f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dcc__api.html#gaf220d5260d6e88ce91255151decedb5f">ASSERT</a> (<a class="el" href="group__dcc__api.html#gac6df0f0e61a5a68079fd3348f38f1147">validCounter0</a> &gt;=<a class="el" href="group__dcc__api.html#gacfd369897cfaeb43936234ba5e5bb4f7">DCC_VALIDSEED_MIN</a>)</td></tr>
+<tr class="separator:gaf220d5260d6e88ce91255151decedb5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac882e7ebbfa161cd99a32db5c9f99552"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dcc__api.html#gac882e7ebbfa161cd99a32db5c9f99552">ASSERT</a> (<a class="el" href="group__dcc__api.html#gac4adee439fad71b784fc3eb193b640d3">counter0</a> &gt;=<a class="el" href="group__dcc__api.html#gaa678f03d89e6a52268d31967d01a139f">DCC_COUNTSEED_MIN</a>)</td></tr>
+<tr class="separator:gac882e7ebbfa161cd99a32db5c9f99552"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3fa17447fc35284508110692a0242ae1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dcc__api.html#ga3fa17447fc35284508110692a0242ae1">ASSERT</a> (<a class="el" href="group__dcc__api.html#ga3a186ff9ce6823b4284804eaae6218c2">counter1</a> &gt;=<a class="el" href="group__dcc__api.html#gaa678f03d89e6a52268d31967d01a139f">DCC_COUNTSEED_MIN</a>)</td></tr>
+<tr class="separator:ga3fa17447fc35284508110692a0242ae1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga504023caea84b78c1e5962c997008080"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dcc__api.html#ga504023caea84b78c1e5962c997008080">ASSERT</a> (<a class="el" href="group__dcc__api.html#gac6df0f0e61a5a68079fd3348f38f1147">validCounter0</a>&lt;=<a class="el" href="group__dcc__api.html#ga87167c5a5647aedfd18d43cd931e0bbc">DCC_VALIDSEED_MAX</a>)</td></tr>
+<tr class="separator:ga504023caea84b78c1e5962c997008080"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf11efaabbc0292dc2999dd19d4af8a75"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dcc__api.html#gaf11efaabbc0292dc2999dd19d4af8a75">ASSERT</a> (<a class="el" href="group__dcc__api.html#gac4adee439fad71b784fc3eb193b640d3">counter0</a>&lt;=<a class="el" href="group__dcc__api.html#gabc92c04a8fac330b0f3b9c45bbcea69c">DCC_COUNTSEED_MAX</a>)</td></tr>
+<tr class="separator:gaf11efaabbc0292dc2999dd19d4af8a75"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf6e854e314d125e3e5573ce59de4cfc8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dcc__api.html#gaf6e854e314d125e3e5573ce59de4cfc8">ASSERT</a> (<a class="el" href="group__dcc__api.html#ga3a186ff9ce6823b4284804eaae6218c2">counter1</a>&lt;=<a class="el" href="group__dcc__api.html#gabc92c04a8fac330b0f3b9c45bbcea69c">DCC_COUNTSEED_MAX</a>)</td></tr>
+<tr class="separator:gaf6e854e314d125e3e5573ce59de4cfc8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1de9fdcfe79e144eba35527ec8a351a9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dcc__api.html#ga1de9fdcfe79e144eba35527ec8a351a9">HWREG</a> (base+DCC_O_CNTSEED0)</td></tr>
+<tr class="separator:ga1de9fdcfe79e144eba35527ec8a351a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga337c8343635bbae9e6f52f382c7f6f10"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dcc__api.html#ga337c8343635bbae9e6f52f382c7f6f10">DCC_verifyClockFrequency</a> (uint32_t base, <a class="el" href="group__dcc__api.html#ga7add4a61bd1021a4544f99b59180c076">DCC_Count1ClockSource</a> clock1, float32_t freq1, <a class="el" href="group__dcc__api.html#ga882339b23939a26439e16b9361080ea3">DCC_Count0ClockSource</a> clock0, float32_t freq0, float32_t <a class="el" href="group__adc__api.html#ga0c2bf3e18f553a6c2d34b58094ba5402">tolerance</a>, float32_t freqerr, float32_t freq_sysclk)</td></tr>
 <tr class="separator:ga337c8343635bbae9e6f52f382c7f6f10"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gadc29cccc1525f8029b83b9d2ffeba37e"><td class="memItemLeft" align="right" valign="top">float32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dcc__api.html#gadc29cccc1525f8029b83b9d2ffeba37e">DCC_measureClockFrequency</a> (uint32_t base, <a class="el" href="group__dcc__api.html#ga7add4a61bd1021a4544f99b59180c076">DCC_Count1ClockSource</a> clock1, <a class="el" href="group__dcc__api.html#ga882339b23939a26439e16b9361080ea3">DCC_Count0ClockSource</a> clock0, float32_t freq0, float32_t tolerance, float32_t freqerr, float32_t freq_sysclk)</td></tr>
+<tr class="memitem:gadc29cccc1525f8029b83b9d2ffeba37e"><td class="memItemLeft" align="right" valign="top">float32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dcc__api.html#gadc29cccc1525f8029b83b9d2ffeba37e">DCC_measureClockFrequency</a> (uint32_t base, <a class="el" href="group__dcc__api.html#ga7add4a61bd1021a4544f99b59180c076">DCC_Count1ClockSource</a> clock1, <a class="el" href="group__dcc__api.html#ga882339b23939a26439e16b9361080ea3">DCC_Count0ClockSource</a> clock0, float32_t freq0, float32_t <a class="el" href="group__adc__api.html#ga0c2bf3e18f553a6c2d34b58094ba5402">tolerance</a>, float32_t freqerr, float32_t freq_sysclk)</td></tr>
 <tr class="separator:gadc29cccc1525f8029b83b9d2ffeba37e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9d0cea773d6d05b71b5eb1d9ff56e05a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dcc__api.html#ga9d0cea773d6d05b71b5eb1d9ff56e05a">DCC_continuousMonitor</a> (uint32_t base, <a class="el" href="group__dcc__api.html#ga7add4a61bd1021a4544f99b59180c076">DCC_Count1ClockSource</a> clock1, float32_t freq1, <a class="el" href="group__dcc__api.html#ga882339b23939a26439e16b9361080ea3">DCC_Count0ClockSource</a> clock0, float32_t freq0, float32_t tolerance, float32_t freqerr, float32_t freq_sysclk)</td></tr>
+<tr class="memitem:ga9d0cea773d6d05b71b5eb1d9ff56e05a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dcc__api.html#ga9d0cea773d6d05b71b5eb1d9ff56e05a">DCC_continuousMonitor</a> (uint32_t base, <a class="el" href="group__dcc__api.html#ga7add4a61bd1021a4544f99b59180c076">DCC_Count1ClockSource</a> clock1, float32_t freq1, <a class="el" href="group__dcc__api.html#ga882339b23939a26439e16b9361080ea3">DCC_Count0ClockSource</a> clock0, float32_t freq0, float32_t <a class="el" href="group__adc__api.html#ga0c2bf3e18f553a6c2d34b58094ba5402">tolerance</a>, float32_t freqerr, float32_t freq_sysclk)</td></tr>
 <tr class="separator:ga9d0cea773d6d05b71b5eb1d9ff56e05a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:ga1bb9af3974c49583b3ee8d9163e5131f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__dcc__api.html#ga7add4a61bd1021a4544f99b59180c076">DCC_Count1ClockSource</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dcc__api.html#ga1bb9af3974c49583b3ee8d9163e5131f">source</a></td></tr>
+<tr class="separator:ga1bb9af3974c49583b3ee8d9163e5131f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac4adee439fad71b784fc3eb193b640d3"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dcc__api.html#gac4adee439fad71b784fc3eb193b640d3">counter0</a></td></tr>
+<tr class="separator:gac4adee439fad71b784fc3eb193b640d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac6df0f0e61a5a68079fd3348f38f1147"><td class="memItemLeft" align="right" valign="top">uint32_t uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dcc__api.html#gac6df0f0e61a5a68079fd3348f38f1147">validCounter0</a></td></tr>
+<tr class="separator:gac6df0f0e61a5a68079fd3348f38f1147"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3a186ff9ce6823b4284804eaae6218c2"><td class="memItemLeft" align="right" valign="top">uint32_t uint32_t uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dcc__api.html#ga3a186ff9ce6823b4284804eaae6218c2">counter1</a></td></tr>
+<tr class="separator:ga3a186ff9ce6823b4284804eaae6218c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 </div><!-- doc-content -->

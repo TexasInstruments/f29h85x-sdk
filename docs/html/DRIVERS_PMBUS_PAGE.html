@@ -43,7 +43,7 @@
   <td id="projectlogo"><a href="https://www.ti.com"><img alt="Logo" src="ti_logo.svg"/></a></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">F29H85x-SDK
-   &#160;<span id="projectnumber">1.00.00.00</span>
+   &#160;<span id="projectnumber">1.01.00.00</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -92,17 +92,17 @@ $(document).ready(function(){initNavTree('DRIVERS_PMBUS_PAGE.html',''); initResi
 </div><!--header-->
 <div class="contents">
 <div class="toc"><h3>Table of Contents</h3>
-<ul><li class="level1"><a href="#autotoc_md152">Features Supported</a></li>
-<li class="level1"><a href="#autotoc_md153">SysConfig Features</a></li>
-<li class="level1"><a href="#autotoc_md154">Features NOT Supported</a></li>
-<li class="level1"><a href="#autotoc_md155">Important Usage Guidelines</a></li>
-<li class="level1"><a href="#autotoc_md156">Example Usage</a></li>
-<li class="level1"><a href="#autotoc_md157">API</a></li>
+<ul><li class="level1"><a href="#autotoc_md159">Features Supported</a></li>
+<li class="level1"><a href="#autotoc_md160">SysConfig Features</a></li>
+<li class="level1"><a href="#autotoc_md161">Features NOT Supported</a></li>
+<li class="level1"><a href="#autotoc_md162">Important Usage Guidelines</a></li>
+<li class="level1"><a href="#autotoc_md163">Example Usage</a></li>
+<li class="level1"><a href="#autotoc_md164">API</a></li>
 </ul>
 </div>
 <div class="textblock"><p><a class="anchor" id="md_components_drivers_pmbus"></a></p>
 <p>The PMBus driver provides API to configure the PMBus module. Below are the high level features supported by the PMBus driver.</p>
-<h1><a class="anchor" id="autotoc_md152"></a>
+<h1><a class="anchor" id="autotoc_md159"></a>
 Features Supported</h1>
 <ul>
 <li>Each PMBus has 2 selectable mode i.e. Controller and Target with bit rate upto 1 Mbps</li>
@@ -110,7 +110,7 @@ Features Supported</h1>
 <li>Zero hold time</li>
 <li>Multiple PMBus use case supporting ALERT, 2-WIRE and CONTROL mode</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md153"></a>
+<h1><a class="anchor" id="autotoc_md160"></a>
 SysConfig Features</h1>
 <dl class="section note"><dt>Note</dt><dd>It is strongly recommend to use SysConfig where it is available instead of using direct SW API calls. This will help simplify the SW application and also catch common mistakes early in the development cycle.</dd></dl>
 <ul>
@@ -119,18 +119,18 @@ SysConfig Features</h1>
 <li>Specifying target configuration such as PEC processing, issue ACK on EOM, disable target address masking and auto acknowledge on RX bytes</li>
 <li>Enabling and configuring PMBus interrupts and features such as Zero Hold time support</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md154"></a>
+<h1><a class="anchor" id="autotoc_md161"></a>
 Features NOT Supported</h1>
 <p>NA</p>
-<h1><a class="anchor" id="autotoc_md155"></a>
+<h1><a class="anchor" id="autotoc_md162"></a>
 Important Usage Guidelines</h1>
 <ul>
 <li>PMBus has all pins i.e. ALERT, CTL, SDA, SCL pin qualification set as Open-drain output with pull-up enabled and no synchronization. A pull-up register is required for SDA, SCL and ALERT channel for proper functioning of PMBus module. Push-Pull and Inverted pin type is invalid for PMBus module.</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md156"></a>
+<h1><a class="anchor" id="autotoc_md163"></a>
 Example Usage</h1>
 <p>Include the below file to access the APIs #include &lt;<a class="el" href="pmbus_8h.html">pmbus.h</a>&gt;</p>
-<h1><a class="anchor" id="autotoc_md157"></a>
+<h1><a class="anchor" id="autotoc_md164"></a>
 API</h1>
 <p><a class="el" href="group__pmbus__api.html">PMBus</a> </p>
 </div></div><!-- contents -->

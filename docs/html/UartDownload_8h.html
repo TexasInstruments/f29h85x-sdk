@@ -43,7 +43,7 @@
   <td id="projectlogo"><a href="https://www.ti.com"><img alt="Logo" src="ti_logo.svg"/></a></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">F29H85x-SDK
-   &#160;<span id="projectnumber">1.00.00.00</span>
+   &#160;<span id="projectnumber">1.01.00.00</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -103,12 +103,18 @@ Functions</h2></td></tr>
 <tr class="memitem:ga862695efed18205ecb73cf037b1fbd05"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__uart__flash__programmer__api.html#ga862695efed18205ecb73cf037b1fbd05">loadProgram</a> (<a class="el" href="classFlashProgrammer_1_1UartHandler.html">FlashProgrammer::UartHandler</a> &amp;uartHandle, FILE *fptr)</td></tr>
 <tr class="memdesc:ga862695efed18205ecb73cf037b1fbd05"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads the program to device by sending the file to BootROM/flash kernel.  <a href="group__uart__flash__programmer__api.html#ga862695efed18205ecb73cf037b1fbd05">More...</a><br /></td></tr>
 <tr class="separator:ga862695efed18205ecb73cf037b1fbd05"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga732b6156b333d9efc3ec22e984698ee9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__uart__flash__programmer__api.html#ga732b6156b333d9efc3ec22e984698ee9">loadProgram</a> (<a class="el" href="classFlashProgrammer_1_1UartHandler.html">FlashProgrammer::UartHandler</a> &amp;uartHandle, FILE *fptr, const void *breakpointPtr, const std::size_t bpSize)</td></tr>
+<tr class="memdesc:ga732b6156b333d9efc3ec22e984698ee9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads the program to device by sending the file to flash kernel with specified breakpoints.  <a href="group__uart__flash__programmer__api.html#ga732b6156b333d9efc3ec22e984698ee9">More...</a><br /></td></tr>
+<tr class="separator:ga732b6156b333d9efc3ec22e984698ee9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaceecd03b24d6d157d776ee31bef34ec1"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__uart__flash__programmer__api.html#gaceecd03b24d6d157d776ee31bef34ec1">downloadKernel</a> (<a class="el" href="classFlashProgrammer_1_1UartHandler.html">FlashProgrammer::UartHandler</a> &amp;uartHandle, const char *kernelFile)</td></tr>
 <tr class="memdesc:gaceecd03b24d6d157d776ee31bef34ec1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Download a kernel to the device.  <a href="group__uart__flash__programmer__api.html#gaceecd03b24d6d157d776ee31bef34ec1">More...</a><br /></td></tr>
 <tr class="separator:gaceecd03b24d6d157d776ee31bef34ec1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga710fbba0bae66d4ec6117dfb1af7254c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__uart__flash__programmer__api.html#ga710fbba0bae66d4ec6117dfb1af7254c">downloadImage</a> (<a class="el" href="classFlashProgrammer_1_1UartHandler.html">FlashProgrammer::UartHandler</a> &amp;uartHandle, const char *applicationFile)</td></tr>
-<tr class="memdesc:ga710fbba0bae66d4ec6117dfb1af7254c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Download an application image with/or certificate to the device.  <a href="group__uart__flash__programmer__api.html#ga710fbba0bae66d4ec6117dfb1af7254c">More...</a><br /></td></tr>
+<tr class="memdesc:ga710fbba0bae66d4ec6117dfb1af7254c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Download an application image with certificate to the device.  <a href="group__uart__flash__programmer__api.html#ga710fbba0bae66d4ec6117dfb1af7254c">More...</a><br /></td></tr>
 <tr class="separator:ga710fbba0bae66d4ec6117dfb1af7254c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga52d569e53bcef4364e6d1b3c5d1949dd"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__uart__flash__programmer__api.html#ga52d569e53bcef4364e6d1b3c5d1949dd">downloadImage</a> (<a class="el" href="classFlashProgrammer_1_1UartHandler.html">FlashProgrammer::UartHandler</a> &amp;uartHandle, const char *applicationFile, const void *breakpointPtr, const std::size_t bpSize)</td></tr>
+<tr class="memdesc:ga52d569e53bcef4364e6d1b3c5d1949dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Download an application image with specified breakpoints.  <a href="group__uart__flash__programmer__api.html#ga52d569e53bcef4364e6d1b3c5d1949dd">More...</a><br /></td></tr>
+<tr class="separator:ga52d569e53bcef4364e6d1b3c5d1949dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 </div><!-- doc-content -->

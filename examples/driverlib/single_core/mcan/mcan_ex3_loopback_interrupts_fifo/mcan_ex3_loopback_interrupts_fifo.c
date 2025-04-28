@@ -23,8 +23,7 @@
 //!  - None.
 //!
 //! \b Watch \b Variables \n
-//!  - error - Checks if there is an error that occurred when the data was
-//!            sent using internal loopback.
+//!  - rxMsgCnt - Number of received messages should be equal to 'NUM_FRAMES'
 //!
 //
 //#############################################################################
@@ -96,7 +95,7 @@
 //
 volatile uint32_t isrIntrFlag0  = 0U;
 volatile uint32_t isrIntrFlag1  = 0U;
-volatile uint32_t error         = 0;
+volatile uint32_t rxMsgCnt      = 0U;
 
 //
 // Function Prototype.
@@ -110,7 +109,6 @@ void MCANIntr1ISR(void);
 int main(void)
 {
     uint32_t                cnt;
-    uint32_t                rxMsgCnt;
     MCAN_RxFIFOStatus       rxFifoSts;
     MCAN_TxBufElement       txMsg;
     MCAN_TxEventFIFOStatus  txEventFifoSts;
@@ -286,11 +284,7 @@ void MCANIntr0ISR(void)
     uint32_t intrStatus;
     intrStatus = MCAN_getIntrStatus(myMCAN0_BASE);
 
-    if (MCAN_IR_MASK != intrStatus)
-    {
-        error++;
-    }
-    else
+    if (MCAN_IR_MASK == intrStatus)
     {
         isrIntrFlag0++;
     }
@@ -314,11 +308,7 @@ void MCANIntr1ISR(void)
     uint32_t intrStatus;
 
     intrStatus = MCAN_getIntrStatus(myMCAN0_BASE);
-    if (MCAN_IR_MASK != intrStatus)
-    {
-        error++;
-    }
-    else
+    if (MCAN_IR_MASK == intrStatus)
     {
         isrIntrFlag1++;
     }

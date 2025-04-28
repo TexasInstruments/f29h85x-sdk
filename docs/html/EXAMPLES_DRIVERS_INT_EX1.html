@@ -43,7 +43,7 @@
   <td id="projectlogo"><a href="https://www.ti.com"><img alt="Logo" src="ti_logo.svg"/></a></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">F29H85x-SDK
-   &#160;<span id="projectnumber">1.00.00.00</span>
+   &#160;<span id="projectnumber">1.01.00.00</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -92,14 +92,14 @@ $(document).ready(function(){initNavTree('EXAMPLES_DRIVERS_INT_EX1.html',''); in
 </div><!--header-->
 <div class="contents">
 <div class="toc"><h3>Table of Contents</h3>
-<ul><li class="level1"><a href="#autotoc_md486">Introduction</a></li>
-<li class="level1"><a href="#autotoc_md487">External Connections</a></li>
-<li class="level1"><a href="#autotoc_md488">Watch Variables</a></li>
-<li class="level1"><a href="#autotoc_md489">Expected  results : (With opt level = 1)</a></li>
+<ul><li class="level1"><a href="#autotoc_md503">Introduction</a></li>
+<li class="level1"><a href="#autotoc_md504">External Connections</a></li>
+<li class="level1"><a href="#autotoc_md505">Watch Variables</a></li>
+<li class="level1"><a href="#autotoc_md506">Expected  results : (With opt level = 1)</a></li>
 </ul>
 </div>
 <div class="textblock"><p><a class="anchor" id="md_examples_drivers_interrupt_ex1"></a></p>
-<h1><a class="anchor" id="autotoc_md486"></a>
+<h1><a class="anchor" id="autotoc_md503"></a>
 Introduction</h1>
 <p>This example demonstrates the interrupt latencies of INT and RTINT. This configures 2 CPU timer interrupts with following priorities.</p><ul>
 <li>RTINT Threshold = 15</li>
@@ -109,12 +109,12 @@ Introduction</h1>
 <p>User can set the macro ENABLE_FUNCTION_CALL_IN_ISR to 1 to configure both the ISRs to invoke a function call, hence multiple core registers needs to be saved and restored. If the macro is set to 0, both ISRs just updates a counter variable, hence requires only 1 register to be saved and restored. In case of RTINT, register saves and restores are done by the hardware. In case of INT, register saves and restores are done by the software.</p>
 <p>The ERAD module is configured to measure the cycles taken between the timer interrupt event to the first instruction in the ISR.</p>
 <p>Note : Run the example for some duration to get the min and max values. The watch variables are arrays with min and max values [Min, Max]</p>
-<h1><a class="anchor" id="autotoc_md487"></a>
+<h1><a class="anchor" id="autotoc_md504"></a>
 External Connections</h1>
 <ul>
 <li>None</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md488"></a>
+<h1><a class="anchor" id="autotoc_md505"></a>
 Watch Variables</h1>
 <ul>
 <li>timer0_intEvent_to_isr : Min and Max cycles count between the timer event to the ISR entry</li>
@@ -122,7 +122,7 @@ Watch Variables</h1>
 <li>timer1_intEvent_to_isr : Min and Max cycles count between the timer event to the ISR entry</li>
 <li>timer1_isr_to_data : Min and Max cycle count between the ISR entry to the first C instruction (data access to cpuTimer1IntCount variable)</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md489"></a>
+<h1><a class="anchor" id="autotoc_md506"></a>
 Expected  results : (With opt level = 1)</h1>
 <table class="markdownTable">
 <tr class="markdownTableHead">

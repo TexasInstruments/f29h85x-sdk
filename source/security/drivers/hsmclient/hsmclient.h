@@ -120,54 +120,58 @@ extern "C"
 
     /**
      * @brief
-     * This is a EfuseRead type which holds the information
-     * of eFuse row index and row data corresponding to it .
+     * This is an NvmOtpRead type which holds the information
+     * of NvmOtp row index and row data corresponding to it .
+     * For F29H85x, the rowdIdx corresponds to the Flash Offsets.
+     * For AM26x, the rowIdx corresponds to efuse row offsets.
      */
-    typedef struct EfuseRead_t_
+    typedef struct NvmOtpRead_t_
     {
-        uint32_t rowData; /** Points to data retrieved from gp otp registers.*/
-        uint8_t rowIdx;   /** Points index of eFuse row to be read.*/
-        uint8_t rsvd[3];  /** Reserved **/
-    } EfuseRead_t;
+        uint32_t rowData; /** Points to data retrieved from gp otp registers or fw otp region.*/
+        uint16_t rowIdx;  /** Points index of an NvmOtp row to be read.*/
+        uint8_t rsvd[2];  /** Reserved **/
+    } NvmOtpRead_t;
 
     /**
      * @brief
-     * This is a EfuseRowWrite type which holds the information
-     * regarding programming eFuse row.
+     * This is an NvmOtpRowWrite type which holds the information
+     * regarding programming NvmOtp row.
+     * For F29H85x, the rowdIdx corresponds to the Flash Offsets.
+     * For AM26x, the rowIdx corresponds to efuse row offsets.
      */
-    typedef struct EfuseRowWrite_t_
+    typedef struct NvmOtpRowWrite_t_
     {
-        uint32_t rowData;    /** Data to be written in eFuse row **/
-        uint32_t rowBitMask; /** Bit mask to apply to eFuse row data bits **/
-        uint8_t rowIdx;      /** Index of eFuse row. **/
-        uint8_t rsvd[3];     /** Reserved **/
-    } EfuseRowWrite_t;
+        uint32_t rowData;    /** Data to be written in an NvmOtp row **/
+        uint32_t rowBitMask; /** Bit mask to apply to an NvmOtp row data bits **/
+        uint16_t rowIdx;     /** Index of an NvmOtp row. **/
+        uint8_t rsvd[2];     /** Reserved **/
+    } NvmOtpRowWrite_t;
 
     /**
      * @brief
-     * This is a EfuseRowCount type which holds the information
-     * regarding eFuse row count and size of each row in bits.
+     * This is an NvmOtpRowCount type which holds the information
+     * regarding NvmOtp row count and size of each row in bits.
      */
-    typedef struct EfuseRowCount_t_
+    typedef struct NvmOtpRowCount_t_
     {
-        uint32_t rowCount; /** eFuse row count **/
-        uint8_t rowSize;   /** Size of an eFuse row in bits. **/
+        uint32_t rowCount; /** NvmOtp row count **/
+        uint8_t rowSize;   /** Size of an NvmOtp row in bits. **/
         uint8_t rsvd[3];   /** Reserved **/
-    } EfuseRowCount_t;
+    } NvmOtpRowCount_t;
 
     /**
      * @brief
-     * This is a EfuseRowProt type which holds the information
-     * of eFuse row index and protection status corresponding
+     * This is a NvmOtpRowProt type which holds the information
+     * of NvmOtp row index and protection status corresponding
      * to the row index.
+     * This structure is not valid for f29h85x
      */
-    typedef struct EfuseRowProt_t_
+    typedef struct NvmOtpRowProt_t_
     {
-        uint8_t rowidx;    /** Index of eFuse row. **/
-        uint8_t readProt;  /** Read row protection information used in getting or setting an eFuse row protection **/
-        uint8_t writeProt; /** Write row protection information used in getting or setting an eFuse row protection **/
-        uint8_t rsvd[1];   /** Reserved **/
-    } EfuseRowProt_t;
+        uint16_t rowidx;   /** Index of an NvmOtp row. **/
+        uint8_t readProt;  /** Read row protection information used in getting or setting an NvmOtp row protection. **/
+        uint8_t writeProt; /** Write row protection information used in getting or setting an NvmOtp row protection. **/
+    } NvmOtpRowProt_t;
 
     /**
      * @brief
@@ -307,6 +311,56 @@ extern "C"
     } FirmwareUpdateReq_t;
 
 
+/**
+ * @brief
+ * This is the OTFA Region structure which holds individual region specific information to be written to corresponding OTFA registers.
+ * In AM263Px and AM261x, there are 4 OTFA regions
+ */
+typedef struct OTFA_Region_t
+{
+    uint8_t   authMode ;         /* mode of authentication - disable-0/GMAC-1/CMAC-2 ; */
+    uint8_t   encMode ;          /* mode of decryption - disable-0 or AES_CTR-1 */
+    uint16_t  reservedArea ;     /* reserved to align with 4kB structure */
+    uint32_t  regionStAddr ;     /* start address of the flash region for which the configuration should apply */
+    uint32_t  regionSize ;       /* size of the flash region in kB for which the configuration should apply */
+    uint8_t   authKeyID ;        /* Keyring ID of key to be used for authentication */    
+    uint8_t   encrKeyID ;        /* Keyring ID of key to be used for encryption */
+    uint8_t   encrKeyFetchMode ; /* specify which 16 bytes of DSMEK are to be used - 1 for fist 16/2 for last 16/ 3 for XOR of both */
+    uint8_t   authAesKey [16] ;  /* actual key value to be written to the register for authentication ; fetched from keyring */
+    uint8_t   encrAesKey [16] ;  /* actual key value to be written to the register for decryption ; fetched from keyring */
+    uint8_t   regionIV[16] ;     /* IV to be used for encryption */
+}OTFA_Region_t ;
+
+/**
+ * @brief
+ * This is the OTFA Region structure which holds individual region specific information to be read from OTFA registers.
+ */
+typedef struct OTFA_readRegion_t
+{
+    uint8_t   regionNumber ;    /* Index of the region - 0/1/2/3 */
+    uint8_t   authMode ;        /* mode of authentication - disable-0/GMAC-1/CMAC-2 ; */
+    uint8_t   encMode ;         /* mode of decryption - disable-0 or AES_CTR-1 */
+    uint8_t   authKeyHash[64] ; /* hash of the authentication key stored in OTFA register */
+    uint8_t   encKeyHash[64] ;  /* hash of the encryption key stored in OTFA register */
+    uint32_t  regionStAddr ;    /* start address of the flash region for which the configuration should apply */
+    uint32_t  regionSize ;      /* size of the flash region in kB for which the configuration should apply */
+    uint16_t  regionIV[16] ;    /* IV to be used for encryption */
+}OTFA_readRegion_t ;
+
+/**
+ * @brief
+ * This is the entire OTFA structure which holds all regions' information 
+ * 4 regions in AM263Px and AM261x
+ */
+typedef struct OTFA_Config_t
+{
+    OTFA_Region_t  OTFA_Reg[4] ;    /* array of all registers' information of 4 OTFA Regions */
+    uint8_t        numRegions ;     /* number of OTFA regions to be configured */
+    uint8_t        keySize   ;      /* options - 128/256 */
+    uint8_t        macSize   ;      /* options - 4/8/12/16 */
+    uint8_t        masterEnable ;   /* specifies whether OTFA IP has to be enabled/disabled ; 0 or 1 */
+}OTFA_Config_t ;
+
     /**
      * @brief
      * This API waits for HSMRT load if requested
@@ -429,14 +483,14 @@ int32_t HsmClient_getVersion(HsmClient_t *HsmClient ,
      *  based on row index provided as param.
      *
      * @param HsmClient [IN] HsmClient object.
-     * @param readRow   [IN] populates EfuseRead_t struct with rowData
+     * @param readRow   [IN] populates NvmOtpRead_t struct with rowData
      *                       corresponding to rowIdx.
      * @return
      * 1. SystemP_SUCCESS if returns successfully
      * 2. SystemP_FAILURE if NACK message is received or client id not registered.
      */
     int32_t HsmClient_readOTPRow(HsmClient_t *HsmClient,
-                                 EfuseRead_t *readRow);
+                                 NvmOtpRead_t *readRow);
 
     /**
      * @brief
@@ -444,29 +498,29 @@ int32_t HsmClient_getVersion(HsmClient_t *HsmClient ,
      *  OTP efuse row based on row index provided as param.
      *
      * @param HsmClient  [IN] HsmClient object.
-     * @param writeRow   [IN] populates EfuseRowWrite_t struct with rowData
+     * @param writeRow   [IN] populates NvmOtpRowWrite_t struct with rowData
      *                       corresponding to rowIdx.
      * @return
      * 1. SystemP_SUCCESS if returns successfully
      * 2. SystemP_FAILURE if NACK message is received or client id not registered.
      */
     int32_t HsmClient_writeOTPRow(HsmClient_t *HsmClient,
-                                  EfuseRowWrite_t *writeRow);
+                                  NvmOtpRowWrite_t *writeRow);
 
     /**
      * @brief
      *  The service issued to HSM Server sets the protection status bit of
-     *  the specified row to 1.
+     *  the specified row to 1. This API is not valid for F29H85x.
      *
      * @param HsmClient [IN] HsmClient object.
-     * @param rowProt   [IN] Pointer to EfuseRowProt_t struct which contains
+     * @param rowProt   [IN] Pointer to NvmOtpRowProt_t struct which contains
      *                       the row index and row protection status
      * @return
      * 1. SystemP_SUCCESS if returns successfully
      * 2. SystemP_FAILURE if NACK message is received or client id not registered.
      */
     int32_t HsmClient_lockOTPRow(HsmClient_t *HsmClient,
-                                 EfuseRowProt_t *rowProt);
+                                 NvmOtpRowProt_t *rowProt);
 
     /**
      * @brief
@@ -474,29 +528,29 @@ int32_t HsmClient_getVersion(HsmClient_t *HsmClient ,
      *  rows.
      *
      * @param HsmClient [IN] HsmClient object.
-     * @param rowCount  [IN] Pointer to EfuseRowCount_t struct which is
+     * @param rowCount  [IN] Pointer to NvmOtpRowCount_t struct which is
      *                       populated by HSM server with row count and row size
      * @return
      * 1. SystemP_SUCCESS if returns successfully
      * 2. SystemP_FAILURE if NACK message is received or client id not registered.
      */
     int32_t HsmClient_getOTPRowCount(HsmClient_t *HsmClient,
-                                     EfuseRowCount_t *rowCount);
+                                     NvmOtpRowCount_t *rowCount);
 
     /**
      * @brief
      *  The service issued to HSM Server retrieves the extended otp efuse row
-     *  protection status
+     *  protection status. This API is not valid for F29H85x.
      *
      * @param HsmClient [IN] HsmClient object.
-     * @param rowProt  [IN]  Pointer to EfuseRowProt_t struct which is
+     * @param rowProt  [IN]  Pointer to NvmOtpRowProt_t struct which is
      *                       populated by HSM server with row protection status
      * @return
      * 1. SystemP_SUCCESS if returns successfully
      * 2. SystemP_FAILURE if NACK message is received or client id not registered.
      */
     int32_t HsmClient_getOTPRowProtection(HsmClient_t *HsmClient,
-                                          EfuseRowProt_t *rowProt);
+                                          NvmOtpRowProt_t *rowProt);
 
     /**
      * @brief
@@ -799,8 +853,7 @@ int32_t HsmClient_getVersion(HsmClient_t *HsmClient ,
 
     /**
      * @brief
-     *  service request issued to HSM server to perform RoT Switching which changes the root of trust key from
-     *  secondary keys to back up keys.
+     *  service request issued to HSM server to validate RoT Switching Certificate
      *
      * @param timeout           [IN] amount of time to block waiting for
      * semaphore to be available, in units of system ticks (see KERNEL_DPL_CLOCK_PAGE)
@@ -817,7 +870,55 @@ int32_t HsmClient_getVersion(HsmClient_t *HsmClient ,
                                   uint8_t *cert,
                                   uint32_t cert_size,
                                   uint32_t timeout);
-    /** @} */
+
+    /**
+     * @brief
+     *  service request issued to HSM server to update key revision to 0x2 which changes the root of trust key from
+     *  secondary keys to back up keys.
+     *
+     * @param timeout           [IN] amount of time to block waiting for
+     * semaphore to be available, in units of system ticks (see KERNEL_DPL_CLOCK_PAGE)
+     * @param HsmClient         [IN] Client object which is using this RoT Switching API.
+     *
+     * @return
+     * 1. SystemP_SUCCESS if returns successfully
+     * 2. SystemP_FAILURE if NACK message is received or client id not registered.
+     * 3. SystemP_TIMEOUT if timeout exception occours.
+     */
+    int32_t HsmClient_UpdateKeyRevsion(HsmClient_t *HsmClient,
+                                       uint32_t timeout);
+
+/**
+ *  @brief  Client request to configure the OTFA regions
+ *
+ *  @param  HsmClient        [IN] HsmClient object
+ *  @param  OTFA_ConfigInfo  [IN] OTFA Config Info
+ *  @param  timeout          [IN] timeout
+ * 
+ * @return
+ * 1. SystemP_SUCCESS if returns successfully
+ * 2. SystemP_FAILURE if NACK message is received or client id not registered.
+ */
+int32_t HsmClient_configOTFARegions(HsmClient_t* HsmClient,
+                                        OTFA_Config_t* OTFA_ConfigInfo,
+                                        uint32_t timeout);
+
+/**
+ *  @brief  Client request to read the OTFA regions
+ *
+ *  @param  HsmClient        [IN] HsmClient object
+ *  @param  OTFA_readRegion  [IN] OTFA Read Region
+ *  @param  timeout          [IN] timeout
+ * 
+ * @return
+ * 1. SystemP_SUCCESS if reading done successfully
+ * 2. SystemP_FAILURE if NACK message is received or client id not registered.
+ */
+int32_t HsmClient_readOTFARegions(HsmClient_t* HsmClient,
+                                        OTFA_readRegion_t* OTFA_readRegion,
+                                        uint32_t timeout);
+
+/** @} */
 
 #ifdef __cplusplus
 }

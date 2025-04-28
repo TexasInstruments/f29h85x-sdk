@@ -109,8 +109,10 @@ int32_t main(void)
     
     #endif
 
-    printf("Completed atanf, acosf test Pass_count = %d, Fail_count = %d \n", pass, fail);
+    printf("Completed acosf test Pass_count = %d, Fail_count = %d \n", pass, fail);
     printf("acosf Cycles = %d, Timer overhead = %d \n", differenceCounter, overheadCounter);
+    while(1)
+    {}
 }
 
 // End of File

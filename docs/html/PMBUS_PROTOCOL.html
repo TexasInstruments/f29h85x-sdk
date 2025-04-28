@@ -43,7 +43,7 @@
   <td id="projectlogo"><a href="https://www.ti.com"><img alt="Logo" src="ti_logo.svg"/></a></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">F29H85x-SDK
-   &#160;<span id="projectnumber">1.00.00.00</span>
+   &#160;<span id="projectnumber">1.01.00.00</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -92,7 +92,7 @@ $(document).ready(function(){initNavTree('PMBUS_PROTOCOL.html',''); initResizabl
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p><a class="anchor" id="md_components_communication_stack_pmbus_5_Protocol"></a> </p>
-<h2><a class="anchor" id="autotoc_md783"></a>
+<h2><a class="anchor" id="autotoc_md853"></a>
 PMBus Target Mode</h2>
 <p>In target mode, the device only responds to messages from the Controller. The target cannot initiate messages, with the exception of asserting the alert line to notify the controller of a fault in the system. The target mode state machine is handled through PMBus Module interrupts. The Interrupt Ser- vice Routine invokes the state machine handler, which deciphers the transaction initiated by the controller, and takes appropriate action depending on the transaction type</p>
 <blockquote class="doxtable">
@@ -110,10 +110,10 @@ PMBus Target Mode</h2>
 <li>Group Commands</li>
 <li>Extended Commands</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md784"></a>
+<h3><a class="anchor" id="autotoc_md854"></a>
 Packet Error Checking</h3>
 <p>The PMBus Module has the option to work with, or without, packet error checking. While the option is available in the hardware, the software stack assumes that error checking is enabled. All transactions, with the exception of the quick command, must have a trailing Packet Error Check (PEC) value associated with it; this feature lends a measure of robustness to the communications. In the event of an invalid PEC, the state machine will abort its current processing and revert to its idle state (or issue a debugging halt if the emulator is connected), while a NACK is issued on the bus; the decision to either halt or retransmit lies with the controller</p>
-<h3><a class="anchor" id="autotoc_md785"></a>
+<h3><a class="anchor" id="autotoc_md855"></a>
 Target Mode Message Types</h3>
 <p>This section describes the different transaction (message types) that are recognized, and supported by the target state machine handler. During initialization, the target handler is setup to automatically acknowledge up to 4 bytes, with the final byte requiring a manual acknowledgment, and to verify the PEC received is correct. The primary handler is always called in the interrupt service routine of the following interrupt sources</p><ul>
 <li>DATA_READY</li>
@@ -145,82 +145,82 @@ Target Mode Message Types</h3>
 <img src="image9.png" alt=""/>
 </div>
 <p>&#160;</p>
-<h2><a class="anchor" id="autotoc_md786"></a>
+<h2><a class="anchor" id="autotoc_md856"></a>
 Quick Command</h2>
 <p>When a Quick Command is received, the EOM (End-of-Message) status bits is set, and the RD_BYTE_COUNT (Received Byte Count) field is 0. The Target manually ACKs the transaction by writing to the PMBACK register.</p>
 <div class="image">
 <img src="image10.png" alt=""/>
 </div>
-<h2><a class="anchor" id="autotoc_md787"></a>
+<h2><a class="anchor" id="autotoc_md857"></a>
 Send Byte</h2>
 <p>When a Send Byte is received, the DATA_READY and EOM (End-of-Message) status bits are set, and the RD_BYTE_COUNT (Received Byte Count) field is 2, indicating two bytes were received, the data byte and the PEC. The Target reads the data and manually ACKs the message by writing to the PMBACK register.</p>
 <div class="image">
 <img src="image11.png" alt=""/>
 </div>
-<h2><a class="anchor" id="autotoc_md788"></a>
+<h2><a class="anchor" id="autotoc_md858"></a>
 Write Byte</h2>
 <p>The Write Byte is identical to Send Byte, with the exception that RD_BYTE_COUNT (Received Byte Count) is now 3, that is, a command byte, a data byte and the PEC.</p>
 <div class="image">
 <img src="image12.png" alt=""/>
 </div>
-<h2><a class="anchor" id="autotoc_md789"></a>
+<h2><a class="anchor" id="autotoc_md859"></a>
 Write Word</h2>
 <p>The Write Byte is identical to Send Byte, with the exception that RD_BYTE_COUNT (Received Byte Count) is 4, that is, a command byte, 2 data bytes and the PEC.</p>
 <div class="image">
 <img src="image13.png" alt=""/>
 </div>
-<h2><a class="anchor" id="autotoc_md790"></a>
+<h2><a class="anchor" id="autotoc_md860"></a>
 Block Write</h2>
 <p>The Block Write is issued when the controller has to transfer more than 2 data bytes (up to a maximum of 255 bytes). The controller will transmit a command, a count (how many bytes it intends to send), followed by the bytes, ending with the PEC. For every 4 bytes the target receives, DATA_READY is asserted and RD_BYTE_COUNT is 4; no End-of-Message (EOM) is received at this point. The target must read the receive buffer, and manually ACK reception of 4 bytes before the controller can proceed sending the next 4 bytes. On the very last transmission DATA_READY and EOM are asserted indicating the end of transmission. The target must read the receive buffer (which has 1 to 4 bytes depending on the initial count) and manually ACK the transaction.</p>
 <div class="image">
 <img src="image14.png" alt=""/>
 </div>
-<h2><a class="anchor" id="autotoc_md791"></a>
+<h2><a class="anchor" id="autotoc_md861"></a>
 Receive Byte</h2>
 <p>The controller initiates a Receive Byte by putting the target’s address on the bus followed by a read bit. The target will automatically ACK its address, load its transmit buffer, and transmit a byte and its PEC. If there is no error in the transmission the controller will NACK the PEC indicating the end of the transaction. Both the NACK and EOM status bits are asserted at this point.</p>
 <div class="image">
 <img src="image15.png" alt=""/>
 </div>
-<h2><a class="anchor" id="autotoc_md792"></a>
+<h2><a class="anchor" id="autotoc_md862"></a>
 Alert Response</h2>
 <p>A special variant of the Receive Byte is the Alert Response transactions where the target device pulls the ALERT line low; the controller must respond with the ALERT RESPONSE ADDRESS and a read, the alerting target will respond by transmitting its own address as shown in Fig. 5.8. When the controller puts the Alert Response Address on the line with a read, the alerting target hardware will automatically respond with its address, without software intervention.</p>
 <dl class="section note"><dt>Note</dt><dd>THE 7 BIT DEVICE ADDRESS PROVIDED BY THE TARGET TRANSMIT DEVICE IS PLACED IN THE 7 MOST SIGNIFICANT BITS OF THE BYTE. THE EIGHTH BIT CAN BE A ZERO OR ONE.</dd></dl>
 <div class="image">
 <img src="image16.png" alt=""/>
 </div>
-<h2><a class="anchor" id="autotoc_md793"></a>
+<h2><a class="anchor" id="autotoc_md863"></a>
 Read Byte</h2>
 <p>The controller initiates a Read Byte by putting the target’s address on the bus followed by a write bit. The controller issues a command - a Read Byte command - followed by a repeated start, with the target address and the read bit. When the repeated start is issued on the bus the DATA_READY bit is asserted at the target end, with a RD_BYTE_COUNT of 1. At the read bit the DATA_REQUEST bit is asserted; the target responds by transmitting a single byte followed by the PEC. If there is no error in the transmission the controller will NACK the PEC indicating the end of the transaction. Both the NACK and EOM status bits are asserted at this point.</p>
 <div class="image">
 <img src="image17.png" alt=""/>
 </div>
-<h2><a class="anchor" id="autotoc_md794"></a>
+<h2><a class="anchor" id="autotoc_md864"></a>
 Read Word</h2>
 <p>Read Word is similar to Read Byte with the exception that the target responds to the repeated start (read bit) by transmitting two bytes followed by the PEC.</p>
 <div class="image">
 <img src="image18.png" alt=""/>
 </div>
-<h2><a class="anchor" id="autotoc_md795"></a>
+<h2><a class="anchor" id="autotoc_md865"></a>
 Block Read</h2>
 <p>If the controller transmits a Block Read command, the target responds by sending more than 2 bytes (up to a maximum of 255 bytes). The transaction, including the status bit assertions, is similar to the read word command. The first byte sent by the target is always the byte count, that is, the number of bytes it intends to transmit. It then follows this with the data bytes. For every 4 bytes sent by the target (and acknowledged by the controller) the DATA_REQUEST bit is asserted requesting the target to send the next set of bytes. The transaction is terminated by the controller by issuing a NACK on the bus; both the NACK and EOM status bits are asserted at the target end at this point. </p><div class="image">
 <img src="image19.png" alt=""/>
 </div>
-<h2><a class="anchor" id="autotoc_md796"></a>
+<h2><a class="anchor" id="autotoc_md866"></a>
 Process Call</h2>
 <p>This is basically a write word followed by a read word without the read word command field and the write word STOP bit. A repeated START seperates the write and the read transactions. </p><div class="image">
 <img src="image20.png" alt=""/>
 </div>
-<h2><a class="anchor" id="autotoc_md797"></a>
+<h2><a class="anchor" id="autotoc_md867"></a>
 Block Write/Read/Process Call</h2>
 <p>This is basically a block write followed by a block read. The key points to note here are the byte counts on the block write, and block read must be the same, and a single PEC is sent at the end of the block read. </p><div class="image">
 <img src="image21.png" alt=""/>
 </div>
-<h2><a class="anchor" id="autotoc_md798"></a>
+<h2><a class="anchor" id="autotoc_md868"></a>
 Group Command</h2>
 <p>The Controller writes to a group of targets in a single transaction. It does this by putting each target’s address (with a write) followed by a command, two bytes, and a PEC on the bus after a repeated start ( the exception is the first target address which follows the start). A target device will acknowledge its address on the bus, and its state machine will respond when the DATA_READY is asserted on the next repeated start (or on a stop, if the target in question is the last to be addressed) </p><div class="image">
 <img src="image22.png" alt=""/>
 </div>
-<h2><a class="anchor" id="autotoc_md799"></a>
+<h2><a class="anchor" id="autotoc_md869"></a>
 Extended Command</h2>
 <p>The extended commands, following PMBus specification v1.2, is supported for two transaction types</p><ol type="1">
 <li>Extended Read Byte</li>
@@ -234,63 +234,63 @@ Extended Command</h2>
 </div>
 </li>
 </ol>
-<h1><a class="anchor" id="autotoc_md800"></a>
+<h1><a class="anchor" id="autotoc_md870"></a>
 State Machine Description</h1>
 <p>This section describes the state machine. There are currently 6 states, each having their own function (sub-handler). They are: </p>
-<h3><a class="anchor" id="autotoc_md801"></a>
+<h3><a class="anchor" id="autotoc_md871"></a>
 PMBUS_STACK_STATE_IDLE</h3>
 <p>The idle state: the handler will enter this state on the first interrupt after power up; the handler will spend most of its time in this state. The sub-handler for this state is PMBusStack_targetIdleStateHandler. </p>
-<h3><a class="anchor" id="autotoc_md802"></a>
+<h3><a class="anchor" id="autotoc_md872"></a>
 PMBUS_STACK_STATE_RECEIVE_BYTE_WAIT_FOR_EOM</h3>
 <p>This is a special state to handle a Receive Byte command from the controller. The sub-handler for this state is PMBusStack_targetReceiveByteWaitForEOMStateHandler. </p>
-<h3><a class="anchor" id="autotoc_md803"></a>
+<h3><a class="anchor" id="autotoc_md873"></a>
 PMBUS_STACK_STATE_READ_BLOCK</h3>
 <p>The handler enters this state when it establishes a read block command was issued by the controller. The sub-handler for this state is PMBusStack_targetReadBlockStateHandler. </p>
-<h3><a class="anchor" id="autotoc_md804"></a>
+<h3><a class="anchor" id="autotoc_md874"></a>
 PMBUS_STACK_STATE_READ_WAIT_FOR_EOM</h3>
 <p>Once the handler establishes that a read command was issued by the controller, it transitions to this state awaiting an End Of Message (EOM) signal from the controller to terminate communications. The sub-handler for this state is PMBusStack_targetReadWaitForEOMStateHandler. </p>
-<h3><a class="anchor" id="autotoc_md805"></a>
+<h3><a class="anchor" id="autotoc_md875"></a>
 PMBUS_STACK_STATE_BLOCK_WRITE_OR_PROCESS_CALL</h3>
 <p>When a controller issues either a Block Write or Process Call the state machine transitions to this state.The sub-handler for this state is PMBusStack_targetBlockWriteOrProcessCallStateHandler. </p>
-<h3><a class="anchor" id="autotoc_md806"></a>
+<h3><a class="anchor" id="autotoc_md876"></a>
 PMBUS_STACK_STATE_EXTENDED_COMMAND</h3>
 <p>When a controller issues either an Extended Read/Write Byte/Word the state machine transitions to this state.The sub-handler for this state is PMBusStack_targetExtendedCommandStateHandler. </p>
-<h2><a class="anchor" id="autotoc_md807"></a>
+<h2><a class="anchor" id="autotoc_md877"></a>
 TRANSITION DIAGRAM</h2>
 <div class="image">
 <img src="image24.png" alt=""/>
 </div>
-<h2><a class="anchor" id="autotoc_md808"></a>
+<h2><a class="anchor" id="autotoc_md878"></a>
 The Idle State</h2>
 <p>This is the very first state the state machine enters after a PMBus interrupt is received (and the ISR calls the main state machine handler). The processor tries to decipher the transaction (message) type received from the controller, and will either, read the contents of the receive buffer in the event of write transaction, or setup the hardware to transmit and change state accordingly</p>
 <div class="image">
 <img src="image25.png" alt=""/>
 </div>
-<h2><a class="anchor" id="autotoc_md809"></a>
+<h2><a class="anchor" id="autotoc_md879"></a>
 The Recieve Byte and Wait for End of Message State</h2>
 <p>This is a special state that handles a Receive Byte transaction. The state machine transitions from the idle state when it sees the DATA_REQUEST bit asserted, with bits EOM or DATA_READY set to 0. In this state, the target waits for the EOM signal from the controller; if any other conditions are set, it is a fault condition and the handler must log the fault and revert to the idle condition</p>
 <div class="image">
 <img src="image26.png" alt=""/>
 </div>
-<h2><a class="anchor" id="autotoc_md810"></a>
+<h2><a class="anchor" id="autotoc_md880"></a>
 The Read Block State</h2>
 <p>The state machine transitions into the Read Block state (from the idle state) once it determines that the current transaction type (command) is a Read Block request from the controller. The controller follows up with a repeated start and the target’s address followed by the read bit; at this point the DATA_REQUEST status bit is asserted at the target end, and its state machine calls the Read Block sub-handler. The target continues to remain in this state until it transmits all its data to the controller. The controller terminates the transaction by issuing a NACK on the bus line.</p>
 <div class="image">
 <img src="image27.png" alt=""/>
 </div>
-<h2><a class="anchor" id="autotoc_md811"></a>
+<h2><a class="anchor" id="autotoc_md881"></a>
 The Read and Wait for End-of-Message State</h2>
 <p>The state machine transitions to this state from two other states, the idle state when RD_BYTE_COUNT and DATA_READY are set to 1 in the status register, or from the Read Block state when all but the last (less than or equal to 4) bytes are pending transmission. The state ma- chine lingers in this state till the controller issues a NACK on the line (EOM = 1) terminating the read transaction.</p>
 <div class="image">
 <img src="image28.png" alt=""/>
 </div>
-<h2><a class="anchor" id="autotoc_md812"></a>
+<h2><a class="anchor" id="autotoc_md882"></a>
 The Block Write or Process Call State</h2>
 <p>When the controller issues a Block Write (or Block Write/ Read/ Process Call) command, the target state machine will transition from the Idle to the Block Write state. This state handles both Block Writes and Write Word commands. The state machine remains in this state till the controller com- pletes sending all its bytes, and returns to the idle state when an End-of-Message signal (with not transmitted bytes) is received.</p>
 <div class="image">
 <img src="image29.png" alt=""/>
 </div>
-<h2><a class="anchor" id="autotoc_md813"></a>
+<h2><a class="anchor" id="autotoc_md883"></a>
 The Extended Command State</h2>
 <p>When the controller issues an Extended Read/Write Byte/Word command, the target state machine will transition from the Idle to the Extended Command state. The target transition to this state, from idle, when the controller issues a repeated start, and only if the first byte sent (during the write phase) was the extension command byte. In the extended command state, the target determines if the command (the second byte sent during the write phase) was a read or write command, and accordingly proceeds to call the read byte/word handler (for an extended read transaction) or the write byte/word handler (extended write).</p>
 <div class="image">

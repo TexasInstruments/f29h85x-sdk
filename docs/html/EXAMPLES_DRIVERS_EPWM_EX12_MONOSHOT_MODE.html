@@ -43,7 +43,7 @@
   <td id="projectlogo"><a href="https://www.ti.com"><img alt="Logo" src="ti_logo.svg"/></a></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">F29H85x-SDK
-   &#160;<span id="projectnumber">1.00.00.00</span>
+   &#160;<span id="projectnumber">1.01.00.00</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -92,25 +92,25 @@ $(document).ready(function(){initNavTree('EXAMPLES_DRIVERS_EPWM_EX12_MONOSHOT_MO
 </div><!--header-->
 <div class="contents">
 <div class="toc"><h3>Table of Contents</h3>
-<ul><li class="level1"><a href="#autotoc_md388">Introduction</a></li>
-<li class="level1"><a href="#autotoc_md389">External Connections</a></li>
-<li class="level1"><a href="#autotoc_md390">Steps to Run the Example</a></li>
-<li class="level1"><a href="#autotoc_md391">See Also</a></li>
+<ul><li class="level1"><a href="#autotoc_md413">Introduction</a></li>
+<li class="level1"><a href="#autotoc_md414">External Connections</a></li>
+<li class="level1"><a href="#autotoc_md415">Steps to Run the Example</a></li>
+<li class="level1"><a href="#autotoc_md416">See Also</a></li>
 </ul>
 </div>
 <div class="textblock"><p><a class="anchor" id="md_examples_drivers_epwm_ex12_monoshot_mode"></a></p>
-<h1><a class="anchor" id="autotoc_md388"></a>
+<h1><a class="anchor" id="autotoc_md413"></a>
 Introduction</h1>
 <p>This example showcases how to generate monoshot PWM output based on external trigger i.e. generating just a single pulse output on receipt of an external trigger. And the next pulse will be generated only when the next trigger comes. The example utilizes external synchronization and T1 action qualifier event features to achieve the desired output.</p>
 <p>ePWM1 is used to generate the monoshot output and ePWM2 is used an external trigger for that. No external connections are required as ePWM2A is fed as the trigger using Input X-BAR automatically.</p>
 <p>ePWM1 is configured to generated a single pulse of 0.5us when received an external trigger. This is achieved by enabling the phase synchronization feature and configuring EPWMxSYNCI as EXTSYNCIN1. And this EPWMxSYNCI is also configured as T1 event of action qualifier to set output HIGH while "CTR = PRD" action is used to set output LOW.</p>
 <p>ePWM2 is configured to generate a 100 KHz signal with a duty of 1% (to simulate a rising edge trigger) which is routed to EXTSYNCIN1 using Input XBAR.</p>
-<h1><a class="anchor" id="autotoc_md389"></a>
+<h1><a class="anchor" id="autotoc_md414"></a>
 External Connections</h1>
 <ul>
 <li>Observe GPIO0 (EPWM1A : Monoshot Output) and GPIO2(EPWM2 : External Trigger) on oscilloscope.</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md390"></a>
+<h1><a class="anchor" id="autotoc_md415"></a>
 Steps to Run the Example</h1>
 <ul>
 <li><b>When using CCS projects to build</b>, import the CCS project for the required combination and build it using the CCS project menu (see <a class="el" href="CCS_PROJECTS_PAGE.html">CCS Build Project</a>).</li>
@@ -118,7 +118,7 @@ Steps to Run the Example</h1>
 <li>Establish connections as mentioned in External Connections section.</li>
 <li>Launch a CCS debug session and run the executable, see CCS_LAUNCH_PAGES</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md391"></a>
+<h1><a class="anchor" id="autotoc_md416"></a>
 See Also</h1>
 <p><a class="el" href="DRIVERS_EPWM_PAGE.html">EPWM</a> </p>
 </div></div><!-- contents -->

@@ -129,6 +129,8 @@ int32_t main(void)
 
     printf("binary_lut_search exact match Pass_count = %d, Fail_count = %d \n", pass, fail);
     printf("binary_lut_search exact match Cycles = %d, Timer overhead = %d \n", differenceCounter, overheadCounter);
+    while(1)
+    {}
     
 }
 

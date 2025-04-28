@@ -10,7 +10,7 @@ CFLAGS := $(CFLAGS_common) $(CFLAGS_$(PROFILE))
 LFLAGS := $(LFLAGS_common)
 INCLUDES_PATH := $(INCLUDES_common) $(INCLUDES_syscfg)
 INCLUDES = $(addprefix -I , $(INCLUDES_PATH) $(INCLUDES_PATH_common))
-FILES_PATH = $(FILES_PATH_common) $(C_SRCS_PATH_common)
+FILES_PATH = $(FILES_PATH_common)
 LIBS = $(LIB) $(LIBRARIES_common)
 OBJS = $(CMD_SRCS)
 

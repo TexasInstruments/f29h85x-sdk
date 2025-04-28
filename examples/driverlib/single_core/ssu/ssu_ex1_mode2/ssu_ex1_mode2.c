@@ -19,7 +19,19 @@
 //! Sysconfig inserts the required attributes to the ISR functions to inform
 //! the compiler that the function is an interrupt / realtime interrupt.
 //!
-//! After loading the example.out power cycle EVM to run and debug the example
+//! Follow these steps to use CCS to debug this multi-core example. After
+//! launching the debug session:
+//!     1. Connect to CPU1.
+//!     2. Using the Flash Plug-In,
+//!         - In 'User Config Settings', Program FLASH BANKMODE to BANKMODE0, if not already done.
+//!         - In 'Download Settings', Unselect 'Verify Flash after Program (SSU Mode 1 Usage Only)', if not already done.
+//!         - In 'Download Settings', Unselect 'Perform Blank Check before loading data to Flash memory (SSU Mode 1 Usage Only)', if not already done.
+//!         - In 'NonMain Erase Settings', Select 'Allow NonMain Flash erase before loading data to Flash memory' (click checkbox), if not already done.
+//!          Refer to Flash Plug-In documentation for further instructions.
+//!     3. Issue an XRSN to the device.
+//!     4. Load the CPU1.out.
+//!     5. After the program is loaded, issue an XRSN to the device.
+//!        Connect to CPU1 and load symbols.
 //!
 //! \b External \b Connections \n
 //!  - None

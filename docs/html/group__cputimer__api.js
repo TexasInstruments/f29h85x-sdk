@@ -12,16 +12,10 @@ var group__cputimer__api =
       [ "CPUTIMER_CLOCK_PRESCALER_8", "group__cputimer__api.html#ggafa70b7d5a2a5b33b6bd56e84ff1cec4dae82ed2a72019c42716c153e592368021", null ],
       [ "CPUTIMER_CLOCK_PRESCALER_16", "group__cputimer__api.html#ggafa70b7d5a2a5b33b6bd56e84ff1cec4da9cf1593619914c85d583a6e58ec58614", null ]
     ] ],
-    [ "CPUTimer_clearOverflowFlag", "group__cputimer__api.html#gae3b2e219398e21ab7dd29787f035ff59", null ],
-    [ "CPUTimer_disableInterrupt", "group__cputimer__api.html#ga58192d248e0d0de4054dd5bde76954b8", null ],
-    [ "CPUTimer_enableInterrupt", "group__cputimer__api.html#ga0a7c39ff546820eb43035b572ecc5a7c", null ],
-    [ "CPUTimer_reloadTimerCounter", "group__cputimer__api.html#ga06a8d5536106ea72ce195c8fc72c93a4", null ],
-    [ "CPUTimer_stopTimer", "group__cputimer__api.html#gab7d3df1344d594548b0dda9455ba9dae", null ],
-    [ "CPUTimer_resumeTimer", "group__cputimer__api.html#ga62a7963fafabc7fbb0452253617c4016", null ],
-    [ "CPUTimer_startTimer", "group__cputimer__api.html#ga7b48c39c1c03126fc5800d11f5c994bd", null ],
-    [ "CPUTimer_setPeriod", "group__cputimer__api.html#ga246fa1d4f1f3f4de27bf856d0dc95227", null ],
-    [ "CPUTimer_getTimerCount", "group__cputimer__api.html#ga5ec7266a6de00db24c8d1d1a18be3dd1", null ],
-    [ "CPUTimer_setPreScaler", "group__cputimer__api.html#gae2b419bee3c160e639cf41697e88362e", null ],
-    [ "CPUTimer_getTimerOverflowStatus", "group__cputimer__api.html#gab3614f19c2b8f346b3b75979b3c4433d", null ],
-    [ "CPUTimer_setEmulationMode", "group__cputimer__api.html#ga8e9243f5ea3917004c5b3205a2a72894", null ]
+    [ "__attribute__", "group__cputimer__api.html#ga81f30fc731101ae1cb93de6ad9048101", null ],
+    [ "HWREG", "group__cputimer__api.html#gac317d05df9f774e216ccc9993b2d84e0", null ],
+    [ "HWREGH", "group__cputimer__api.html#gad1c5b5f259df804937d848054cd5ce97", null ],
+    [ "CPUTimer_setEmulationMode", "group__cputimer__api.html#ga8e9243f5ea3917004c5b3205a2a72894", null ],
+    [ "periodCount", "group__cputimer__api.html#gaeff748e5255fcf0680bae66837dcaaff", null ],
+    [ "prescaler", "group__cputimer__api.html#gaed7c15ebb12ef4b8e90c0c0e79d414a7", null ]
 ];

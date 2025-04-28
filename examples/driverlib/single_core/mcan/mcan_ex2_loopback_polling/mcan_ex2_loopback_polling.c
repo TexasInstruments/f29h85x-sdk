@@ -16,8 +16,7 @@
 //!  - None.
 //!
 //! \b Watch \b Variables \n
-//!  - error - Checks if there is an error that occurred when the data was
-//!            sent using internal loopback.
+//!  - msgCount - No of messages received and should be 1
 //!
 //
 //#############################################################################

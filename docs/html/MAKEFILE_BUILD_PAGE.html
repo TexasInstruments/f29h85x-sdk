@@ -43,7 +43,7 @@
   <td id="projectlogo"><a href="https://www.ti.com"><img alt="Logo" src="ti_logo.svg"/></a></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">F29H85x-SDK
-   &#160;<span id="projectnumber">1.00.00.00</span>
+   &#160;<span id="projectnumber">1.01.00.00</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -92,20 +92,20 @@ $(document).ready(function(){initNavTree('MAKEFILE_BUILD_PAGE.html',''); initRes
 </div><!--header-->
 <div class="contents">
 <div class="toc"><h3>Table of Contents</h3>
-<ul><li class="level1"><a href="#autotoc_md30">Introduction</a></li>
-<li class="level1"><a href="#autotoc_md31">Enabling &quot;make&quot; in Windows</a></li>
-<li class="level1"><a href="#autotoc_md32">Building Driverilb with Makefiles</a></li>
+<ul><li class="level1"><a href="#autotoc_md31">Introduction</a></li>
+<li class="level1"><a href="#autotoc_md32">Enabling &quot;make&quot; in Windows</a></li>
+<li class="level1"><a href="#autotoc_md33">Building Driverilb with Makefiles</a></li>
 <li class="level1"><a href="#MAKEFILE_EXAMPLE_BUILD">Building examples with makefiles</a></li>
-<li class="level1"><a href="#autotoc_md33">Building the Whole SDK with Makefiles</a></li>
-<li class="level1"><a href="#autotoc_md34">Load and Run Executables Built with Makefiles</a></li>
-<li class="level1"><a href="#autotoc_md35">Tips and Tricks when working with Makefiles</a></li>
+<li class="level1"><a href="#autotoc_md34">Building the Whole SDK with Makefiles</a></li>
+<li class="level1"><a href="#autotoc_md35">Load and Run Executables Built with Makefiles</a></li>
+<li class="level1"><a href="#autotoc_md36">Tips and Tricks when working with Makefiles</a></li>
 </ul>
 </div>
 <div class="textblock"><p><a class="anchor" id="md_getting_started_makefile_build"></a></p>
-<h1><a class="anchor" id="autotoc_md30"></a>
+<h1><a class="anchor" id="autotoc_md31"></a>
 Introduction</h1>
 <p>All SDK examples and libraries can be built using makefiles via command line. This section provides basic instructions and tips on using makefiles.</p>
-<h1><a class="anchor" id="autotoc_md31"></a>
+<h1><a class="anchor" id="autotoc_md32"></a>
 Enabling "make" in Windows</h1>
 <dl class="section attention"><dt>Attention</dt><dd>This step needs to be done once on a Windows host machine. Nothing needs to be done for Linux.</dd></dl>
 <ul>
@@ -122,7 +122,7 @@ Enabling "make" in Windows</h1>
 <div class="line">There is NO WARRANTY, to the extent permitted by law.</div>
 </div><!-- fragment --></li>
 </ul>
-<h1><a class="anchor" id="autotoc_md32"></a>
+<h1><a class="anchor" id="autotoc_md33"></a>
 Building Driverilb with Makefiles</h1>
 <ul>
 <li>When SDK is installed the driverlib and other libraries are pre-built. However you can modify the library source code and rebuild all the libraries using makefiles.</li>
@@ -163,7 +163,7 @@ Building examples with makefiles</h1>
 <li>To clean all examples, do below from ${C29SDK_ROOT} <div class="fragment"><div class="line">gmake -s examples-clean-all</div>
 </div><!-- fragment --></li>
 </ul>
-<h1><a class="anchor" id="autotoc_md33"></a>
+<h1><a class="anchor" id="autotoc_md34"></a>
 Building the Whole SDK with Makefiles</h1>
 <ul>
 <li>The whole SDK can be built using makefiles by running below command from ${C29SDK_ROOT} <div class="fragment"><div class="line">gmake -s all</div>
@@ -171,7 +171,7 @@ Building the Whole SDK with Makefiles</h1>
 <li>Similarly to clean the whole SDK, do below <div class="fragment"><div class="line">gmake -s clean</div>
 </div><!-- fragment --></li>
 </ul>
-<h1><a class="anchor" id="autotoc_md34"></a>
+<h1><a class="anchor" id="autotoc_md35"></a>
 Load and Run Executables Built with Makefiles</h1>
 <ul>
 <li>The generated binary from makefile is located at the below path <div class="fragment"><div class="line">examples/{component or module}/{optional sub-module or sub-component}/{example_name}/ccs/{example_name}.out</div>
@@ -179,7 +179,7 @@ Load and Run Executables Built with Makefiles</h1>
 <li>Simply load and run binary .out on EVM using CCS (see <a class="el" href="CCS_LAUNCH_PAGE.html">Build, Load and Run</a>)</li>
 <li>The same folder also has .map files which have more information about the binary size and memory section used, and so on.</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md35"></a>
+<h1><a class="anchor" id="autotoc_md36"></a>
 Tips and Tricks when working with Makefiles</h1>
 <ul>
 <li>In general, the makefiles are written to be simple and use very basic GNU make syntax and options. You can simply open the makefile located within a example or library folder to see the different compile options, include paths, files, include directory, pre-processor defines etc that are used to build that example or library.</li>

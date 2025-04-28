@@ -208,6 +208,8 @@ int32_t main(void)
     printf("Completed CRC-32 Pass_count = %d, Fail_count = %d \n", pass, fail);
     printf("Computed CRC in C for Polynomial P1 = 0x%08x  Polynomial P2 = 0x%08x \n", crcResultC_P1, crcResultC_P2);
     printf("Computed CRC in Asm for Polynomial P1 = 0x%08x  Polynomial P2 = 0x%08x \n", crcResultAsm_P1, crcResultAsm_P2);
+    while(1)
+    {}
 }
 
 // End of File

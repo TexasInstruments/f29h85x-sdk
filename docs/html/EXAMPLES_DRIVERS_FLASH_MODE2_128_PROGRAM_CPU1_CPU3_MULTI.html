@@ -6,7 +6,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
-<title>F29H85x-SDK: Flash Mode 2 128-bit Programming on CPU1 and CPU3</title>
+<title>F29H85x-SDK: Flash Mode 2 128-bit Programming</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -43,7 +43,7 @@
   <td id="projectlogo"><a href="https://www.ti.com"><img alt="Logo" src="ti_logo.svg"/></a></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">F29H85x-SDK
-   &#160;<span id="projectnumber">1.00.00.00</span>
+   &#160;<span id="projectnumber">1.01.00.00</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -88,46 +88,53 @@ $(document).ready(function(){initNavTree('EXAMPLES_DRIVERS_FLASH_MODE2_128_PROGR
 <div id="doc-content">
 <div class="PageDoc"><div class="header">
   <div class="headertitle">
-<div class="title">Flash Mode 2 128-bit Programming on CPU1 and CPU3 </div>  </div>
+<div class="title">Flash Mode 2 128-bit Programming </div>  </div>
 </div><!--header-->
 <div class="contents">
 <div class="toc"><h3>Table of Contents</h3>
-<ul><li class="level1"><a href="#autotoc_md665">Introduction</a></li>
-<li class="level1"><a href="#autotoc_md666">External Connections</a></li>
-<li class="level1"><a href="#autotoc_md667">Steps to Run the Example</a></li>
+<ul><li class="level1"><a href="#autotoc_md682">Introduction</a></li>
+<li class="level1"><a href="#autotoc_md683">External Connections</a></li>
+<li class="level1"><a href="#autotoc_md684">Steps to Run the Example</a></li>
+<li class="level1"><a href="#autotoc_md685">See Also</a></li>
 </ul>
 </div>
 <div class="textblock"><p><a class="anchor" id="md_examples_drivers_flash_mode2_128_program_cpu1_cpu3"></a></p>
-<h1><a class="anchor" id="autotoc_md665"></a>
+<h1><a class="anchor" id="autotoc_md682"></a>
 Introduction</h1>
-<p>This example demonstrates how to use the various Flash API modes for 128-bit programming in bank mode 2 on CPU1 and CPU3.</p>
+<p>This example demonstrates how to use the various Flash API modes for 128-bit programming in bank mode 2.</p>
 <p>The programming modes demonstrated are:</p><ul>
 <li>Fapi_AutoEccGeneration</li>
 <li>Fapi_DataAndEcc</li>
 <li>Fapi_DataOnly</li>
 <li>Fapi_EccOnly</li>
 </ul>
-<p>Flash sempahore is exchanged between CPU1 and CPU3</p>
 <p>Watch Variables</p><ul>
-<li>None.</li>
-</ul>
-<h1><a class="anchor" id="autotoc_md666"></a>
-External Connections</h1>
-<ul>
 <li>None</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md667"></a>
+<h1><a class="anchor" id="autotoc_md683"></a>
+External Connections</h1>
+<ul>
+<li>None.</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md684"></a>
 Steps to Run the Example</h1>
 <ul>
-<li><b>When using CCS projects to build</b>, import the CCS project for the required combination and build it using the CCS project menu (see <a class="el" href="CCS_PROJECTS_PAGE.html">CCS Build Project</a>).</li>
-<li>Launch a CCS debug session, connect to CPU1 and load only the c29x1.out.</li>
-<li>After the program is loaded, run CPU1.</li>
-<li>Once c29x1 configures and releases CPU3 out of reset, the program stops.</li>
-<li>Connect to CPU3 target now. c29x3.out would have started execution as soon as it is released from reset.</li>
-<li>In case of RAM configuration, restart the CPU3 target and load the symbols.</li>
-<li>Note: For FLASH configuration, this example is run in FLASH BANKMODE2, where CPU3 has access to FLASH (FRI-2). Refer to the Flash Plugin documentation to know about changing FLASH BANKMODEs and more.</li>
-<li>View the watch variable in CPU1 to know the result of IPC message passing between CPU1 and CPU3. </li>
+<li><b>When using CCS projects to build</b>, import the CCS project for the required combination</li>
+<li>From the CPU1 project, right click on the target config and launch a projectless debug session</li>
+<li>Connect to CPU1</li>
+<li>In the top menu, go to Run &gt; Load &gt; Load Program and load the CPU1 .out file</li>
+<li>Run the CPU1-side code and observe the flash memory updates</li>
+<li>After hitting the ESTOP0 line, connect to CPU3</li>
+<li>In the top menu, go to Run &gt; Load &gt; Load Symbols and load the CPU3 .out symbols</li>
+<li>Set a breakpoint in the CPU3 program, then run it</li>
+<li>Go back to CPU1 and press run</li>
+<li>Observe the CPU3-side behavior and flash memory updates</li>
 </ul>
+<h1><a class="anchor" id="autotoc_md685"></a>
+See Also</h1>
+<p><a href="https://www.ti.com/lit/spruj79">F29H85x and F29P58x Real-Time Microcontrollers Technical Reference Manual</a></p>
+<p><a href="https://www.ti.com/lit/spruje7">F29H85x Flash API Guide</a></p>
+<p><a class="el" href="DRIVERS_FLASH_PAGE.html">FLASH</a> </p>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->
 </div><!-- doc-content -->

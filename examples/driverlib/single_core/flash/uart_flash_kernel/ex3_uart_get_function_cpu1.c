@@ -67,7 +67,8 @@ uint32_t uartGetFunction(uint32_t BootMode)
     uint16_t data[10];
     uint16_t length;
     uint32_t selected_bank;
-    uint16_t bank_mode;
+    uint8_t bankMode;
+    uint8_t deviceState;
 
 #ifdef DFU_CPU1_APP
     Fapi_StatusType oReturnCheck;
@@ -78,6 +79,12 @@ uint32_t uartGetFunction(uint32_t BootMode)
 
     // By default, entry address is expected to be CPU1 default address.
     EntryAddr = CPU1_FLASH_ENTRY_POINT;
+
+    //
+    // Get device state and bank mode
+    //
+    deviceState = getDeviceState();
+    bankMode = getBankMode();
 
     //
     // get user command through console.
@@ -97,10 +104,17 @@ uint32_t uartGetFunction(uint32_t BootMode)
         //
         if (command == DFU_CPU1)
         {
-            //
-            // loads application into CPU1 FLASH
-            //
-            uartBoot(BootMode, CPU1_FLASH_ENTRY_POINT, ImageSize);
+            if (deviceState == HS_SE) 
+            {
+                statusCode.status = COMMAND_ERROR;
+            } else 
+            {
+                //
+                // loads application into CPU1 FLASH
+                //
+                uartBoot(1, bankMode, BootMode, CPU1_FLASH_ENTRY_POINT, ImageSize);
+            }
+
 
             //
             // send the flash status packet and if NAK send again.
@@ -113,6 +127,40 @@ uint32_t uartGetFunction(uint32_t BootMode)
             // reply back with a message
             //
             char ch[] = "CPU1 image has been written to flash, please proceed to Run CPU1 or Reset CPU1(in flash boot mode) to start the new firmware.";
+            uartSendDataPacket(GENERIC_DATA_PACKET, (uint8_t*)ch, sizeof(ch));
+        }
+        //
+        // DFU_CPU3
+        //
+        else if (command == DFU_CPU3)
+        {
+
+            //
+            // DFU is not compatible with HS-SE Devices and
+            // cannot upgrade CPU3 firmware in Bank Mode 1
+            //
+            if ((deviceState == HS_SE) || (bankMode == Mode1)) 
+            {
+                statusCode.status = COMMAND_ERROR;
+            } else 
+            {
+                //
+                // loads application into CPU1 FLASH
+                //
+                uartBoot(3, bankMode, BootMode, CPU1_FLASH_ENTRY_POINT, ImageSize);
+            }
+
+            //
+            // send the flash status packet and if NAK send again.
+            //
+            while (uartSendFlashStatusPacket(command, &statusCode))
+            {
+            }
+
+            //
+            // reply back with a message
+            //
+            char ch[] = "CPU3 image has been written to flash, please proceed to Run CPU1 or Reset CPU1(in flash boot mode) to start the new firmware.";
             uartSendDataPacket(GENERIC_DATA_PACKET, (uint8_t*)ch, sizeof(ch));
         }
         //
@@ -221,9 +269,17 @@ uint32_t uartGetFunction(uint32_t BootMode)
         //
         // Load HSM Code Provisioning Flash Image
         //
-        else if ((command == HSM_CP_FLASH_IMAGE) || (command == CPU1_CP_FLASH_IMAGE))
+        else if ((command == HSM_CP_FLASH_IMAGE) || (command == CPU1_CP_FLASH_IMAGE) || (command == CPU3_CP_FLASH_IMAGE))
         {
-            if (provisionApplicationImgToHSM(BootMode, LDA1_RAM_BASE))
+
+            //
+            // Set error if CP command  is sent for HS-FS or if invalid bmode and CPU target are selected
+            //
+            if ((deviceState == HS_FS) || ((bankMode == Mode0) && (command == CPU3_CP_FLASH_IMAGE))) 
+            {
+                statusCode.status = COMMAND_ERROR;
+
+            } else if (provisionApplicationImgToHSM(BootMode, LDA1_RAM_BASE))
             {
                 statusCode.status = AUTHENTICATION_ERROR;
             }
@@ -283,6 +339,21 @@ uint32_t uartGetFunction(uint32_t BootMode)
             }
         }
 #endif /* defined (KP_APP) || defined (CP_APP) */
+
+        //
+        // SYNC STATUS
+        //
+        else if (command == SYNC_STATUS)
+        {
+            char testString[] = "!!! UART FLASH KERNEL LIVE !!!";
+            uint16_t testSize = sizeof(testString) / sizeof(*testString);
+            uartSendDataPacket(GENERIC_DATA_PACKET, (uint8_t *)testString, testSize);
+
+            //
+            // send the flash status packet
+            //
+            while(uartSendFlashStatusPacket(command, &statusCode)){}
+        }
         //
         // COMMAND_ERROR
         //
@@ -791,4 +862,23 @@ static void uartConfigureGPIO(uint32_t bootMode)
     //
     GPIO_setQualificationMode(gpioTXA, GPIO_QUAL_ASYNC);
     GPIO_setQualificationMode(gpioRXA, GPIO_QUAL_ASYNC);
+}
+
+//
+// Returns device state (HS-FS or HS-SE)
+//
+uint8_t getDeviceState() 
+{
+    //
+    // Read DEVCFG_BASE.DEVLIFECYCLE.HSSUBTYPE to determine device state
+    //
+    return ((HWREG((DEVCFG_BASE + 0x3D4)) & 0xF00) >> 8);
+}
+
+//
+// Returns CPU1 Bank Mode
+//
+uint8_t getBankMode()
+{
+    return((HWREG(SSUGEN_BASE + 0x5C)));
 }

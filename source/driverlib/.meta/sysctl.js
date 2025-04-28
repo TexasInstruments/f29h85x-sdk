@@ -101,7 +101,7 @@ let config = [
                 name: "standbyQualificationPeriod",
                 displayName: "Standby Qualification Period",
                 options : standbyOptions,
-                default: standbyOptions[0].name
+                default: 65
             }
         ]
     },

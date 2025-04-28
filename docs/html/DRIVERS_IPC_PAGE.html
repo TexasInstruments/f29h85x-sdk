@@ -43,7 +43,7 @@
   <td id="projectlogo"><a href="https://www.ti.com"><img alt="Logo" src="ti_logo.svg"/></a></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">F29H85x-SDK
-   &#160;<span id="projectnumber">1.00.00.00</span>
+   &#160;<span id="projectnumber">1.01.00.00</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -92,16 +92,16 @@ $(document).ready(function(){initNavTree('DRIVERS_IPC_PAGE.html',''); initResiza
 </div><!--header-->
 <div class="contents">
 <div class="toc"><h3>Table of Contents</h3>
-<ul><li class="level1"><a href="#autotoc_md136">Features Supported</a></li>
-<li class="level1"><a href="#autotoc_md137">SysConfig Features</a></li>
-<li class="level1"><a href="#autotoc_md138">Features NOT Supported</a></li>
-<li class="level1"><a href="#autotoc_md139">Example Usage</a></li>
-<li class="level1"><a href="#autotoc_md140">API</a></li>
+<ul><li class="level1"><a href="#autotoc_md143">Features Supported</a></li>
+<li class="level1"><a href="#autotoc_md144">SysConfig Features</a></li>
+<li class="level1"><a href="#autotoc_md145">Features NOT Supported</a></li>
+<li class="level1"><a href="#autotoc_md146">Example Usage</a></li>
+<li class="level1"><a href="#autotoc_md147">API</a></li>
 </ul>
 </div>
 <div class="textblock"><p><a class="anchor" id="md_components_drivers_ipc"></a></p>
 <p>The IPC driver provides API to configure the IPC module. Below are the high level features supported by the IPC driver.</p>
-<h1><a class="anchor" id="autotoc_md136"></a>
+<h1><a class="anchor" id="autotoc_md143"></a>
 Features Supported</h1>
 <ul>
 <li>Four blocks of IPC registers between any two C29x cores.</li>
@@ -110,21 +110,21 @@ Features Supported</h1>
 <li>IPC command registers to exchange complex messages. Each CPU has eight dedicated registers; four for sending messages and four for receiving messages.</li>
 <li>A 64-bit free-running counter to timestamp IPC events between processors.</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md137"></a>
+<h1><a class="anchor" id="autotoc_md144"></a>
 SysConfig Features</h1>
 <dl class="section note"><dt>Note</dt><dd>It is strongly recommend to use SysConfig where it is available instead of using direct SW API calls. This will help simplify the SW application and also catch common mistakes early in the development cycle.</dd></dl>
 <ul>
 <li>Configuring IPC interrupts between cores. This IPC interrupt can only be triggered by IPC flag 0.</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md138"></a>
+<h1><a class="anchor" id="autotoc_md145"></a>
 Features NOT Supported</h1>
 <ul>
 <li>No message RAM for devices with C29x processors, since it is possible to designate any memory as readable or writable by the various CPUs.</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md139"></a>
+<h1><a class="anchor" id="autotoc_md146"></a>
 Example Usage</h1>
 <p>Include the below file to access the APIs #include &lt;<a class="el" href="ipc_8h.html">ipc.h</a>&gt;</p>
-<h1><a class="anchor" id="autotoc_md140"></a>
+<h1><a class="anchor" id="autotoc_md147"></a>
 API</h1>
 <p><a class="el" href="group__ipc__api.html">IPC</a> </p>
 </div></div><!-- contents -->

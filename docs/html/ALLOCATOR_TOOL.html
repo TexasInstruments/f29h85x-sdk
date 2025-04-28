@@ -43,7 +43,7 @@
   <td id="projectlogo"><a href="https://www.ti.com"><img alt="Logo" src="ti_logo.svg"/></a></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">F29H85x-SDK
-   &#160;<span id="projectnumber">1.00.00.00</span>
+   &#160;<span id="projectnumber">1.01.00.00</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -92,19 +92,19 @@ $(document).ready(function(){initNavTree('ALLOCATOR_TOOL.html',''); initResizabl
 </div><!--header-->
 <div class="contents">
 <div class="toc"><h3>Table of Contents</h3>
-<ul><li class="level1"><a href="#autotoc_md828">Introduction</a></li>
-<li class="level1"><a href="#autotoc_md829">Multi-Core Support</a><ul><li class="level2"><a href="#autotoc_md830">CPU1 Context</a></li>
-<li class="level2"><a href="#autotoc_md831">CPU3 Context</a></li>
+<ul><li class="level1"><a href="#autotoc_md901">Introduction</a></li>
+<li class="level1"><a href="#autotoc_md902">Multi-Core Support</a><ul><li class="level2"><a href="#autotoc_md903">CPU1 Context</a></li>
+<li class="level2"><a href="#autotoc_md904">CPU3 Context</a></li>
 </ul>
 </li>
-<li class="level1"><a href="#autotoc_md832">Summarized Views</a><ul><li class="level2"><a href="#autotoc_md833">Memory Summary</a></li>
-<li class="level2"><a href="#autotoc_md834">SSU Summary</a></li>
+<li class="level1"><a href="#autotoc_md905">Summarized Views</a><ul><li class="level2"><a href="#autotoc_md906">Memory Summary</a></li>
+<li class="level2"><a href="#autotoc_md907">SSU Summary</a></li>
 </ul>
 </li>
 </ul>
 </div>
 <div class="textblock"><p><a class="anchor" id="md_components_alloc_tool_alloc_tool"></a></p>
-<h1><a class="anchor" id="autotoc_md828"></a>
+<h1><a class="anchor" id="autotoc_md901"></a>
 Introduction</h1>
 <p>This page contains the user guide for the combined C29 Resource Allocator tool used for Memory Allocation and SSU Configuration. This tool is part of the F29x-SDK Sysconfig offering.</p>
 <p>Usage of the tool is broadly divided into 2 profiles:</p>
@@ -112,36 +112,36 @@ Introduction</h1>
 <li><a class="el" href="MEM_TOOL_PAGE.html">Memory Allocation</a> : This profile is used only for memory partitioning between CPUs, i.e. creating input and output sections used in the linker command file. In this profile, SSU configurations are considered disabled</li>
 <li><a class="el" href="SSU_TOOL_PAGE.html">System Security Configuration</a> : This profile is used for configuring various SSU settings related to memory protection, task isolation, debug zone separation, flash settings, boot configurations etc. For quick setup, a number of one-click options are provided.</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md829"></a>
+<h1><a class="anchor" id="autotoc_md902"></a>
 Multi-Core Support</h1>
 <p>The SSU &amp; Memory Allocator tool includes full support for multi-core SysConfig applications. The auto-allocator functionality manages Memory Regions across all enabled CPUs, included regions shared between multiple CPUs. For Memory Allocation profile, multi-core mode can be setup by simply adding memory regions in the required Sysconfig contexts. To use multi-core functionality in System Security configuration, enable the required cores in System Security module, and add the corresponding cores in the MULTI CORE tab in Sysconfig.</p>
-<h2><a class="anchor" id="autotoc_md830"></a>
+<h2><a class="anchor" id="autotoc_md903"></a>
 CPU1 Context</h2>
 <p> <style>div.image img[src="sysecmulti1.png"]{width:60%}</style> </p><div class="image">
 <img src="sysecmulti1.png" alt=""/>
 <div class="caption">
 System Security - CPU1 context</div></div>
-<h2><a class="anchor" id="autotoc_md831"></a>
+<h2><a class="anchor" id="autotoc_md904"></a>
 CPU3 Context</h2>
 <p> <style>div.image img[src="sysecmulti2.png"]{width:60%}</style> </p><div class="image">
 <img src="sysecmulti2.png" alt=""/>
 <div class="caption">
 System Security - CPU3 context</div></div>
-<h1><a class="anchor" id="autotoc_md832"></a>
+<h1><a class="anchor" id="autotoc_md905"></a>
 Summarized Views</h1>
 <p>These views are provided for a quick overview of the configured Memory Region and SSU settings. They can be accessed by opening the "Options" menu in Sysconfig. The view is specific to the currently active context on Sysconfig. To see the same view for another core, simply switch cores in the context window.</p>
 <p> <style>div.image img[src="optionsmenupic.png"]{width:30%}</style> </p><div class="image">
 <img src="optionsmenupic.png" alt=""/>
 <div class="caption">
 Options Menu</div></div>
-<h2><a class="anchor" id="autotoc_md833"></a>
+<h2><a class="anchor" id="autotoc_md906"></a>
 Memory Summary</h2>
 <p>This view provides a glance of all the created memory regions. Implicitly created memory regions (such as Peripheral Auto Regions created by System Security module) are also available here for inspection, which are not visible directly in the Memory Regions module. A total count of created regions is also provided to account for the same</p>
 <p> <style>div.image img[src="memsum1.png"]{width:60%}</style> </p><div class="image">
 <img src="memsum1.png" alt=""/>
 <div class="caption">
 Memory Summary</div></div>
-<h2><a class="anchor" id="autotoc_md834"></a>
+<h2><a class="anchor" id="autotoc_md907"></a>
 SSU Summary</h2>
 <p>This view is applicable for System Security Configuration profile. It provides a summary of all the LINKs configured on the core, and the access permissions for the LINK's code memory regions to the data memory regions on the core.</p>
 <p> <style>div.image img[src="ssusum1.png"]{width:60%}</style> </p><div class="image">

@@ -43,7 +43,7 @@
   <td id="projectlogo"><a href="https://www.ti.com"><img alt="Logo" src="ti_logo.svg"/></a></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">F29H85x-SDK
-   &#160;<span id="projectnumber">1.00.00.00</span>
+   &#160;<span id="projectnumber">1.01.00.00</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -88,7 +88,8 @@ $(document).ready(function(){initNavTree('namespaceFlashProgrammer.html',''); in
 <div id="doc-content">
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Data Structures</a>  </div>
+<a href="#nested-classes">Data Structures</a> &#124;
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
 <div class="title">FlashProgrammer Namespace Reference</div>  </div>
 </div><!--header-->
@@ -98,7 +99,91 @@ $(document).ready(function(){initNavTree('namespaceFlashProgrammer.html',''); in
 Data Structures</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classFlashProgrammer_1_1UartHandler.html">UartHandler</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:a35bb7eaf77662bc73f8125d81e732a6d"><td class="memItemLeft" align="right" valign="top">thread_local std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFlashProgrammer.html#a35bb7eaf77662bc73f8125d81e732a6d">prevTime</a></td></tr>
+<tr class="separator:a35bb7eaf77662bc73f8125d81e732a6d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a47bac8565867f401660a590065d88800"><td class="memItemLeft" align="right" valign="top">thread_local std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFlashProgrammer.html#a47bac8565867f401660a590065d88800">currTime</a></td></tr>
+<tr class="separator:a47bac8565867f401660a590065d88800"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a22813c519c91b08f2fe69b7a744b73ee"><td class="memItemLeft" align="right" valign="top">thread_local std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFlashProgrammer.html#a22813c519c91b08f2fe69b7a744b73ee">timeElapsed</a></td></tr>
+<tr class="separator:a22813c519c91b08f2fe69b7a744b73ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adef4dd6e422d890bfbc28701b7962609"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFlashProgrammer.html#adef4dd6e422d890bfbc28701b7962609">getTickCount_ms</a> = []() { <a class="el" href="group__xbar__api.html#ga0f01e132aecb9854a3d569014d3a5785">return</a> std::chrono::duration_cast&lt;std::chrono::milliseconds&gt;(std::chrono::steady_clock::now().time_since_epoch()).<a class="el" href="group__i2c__api.html#gaf6a39bfc7e1dc3b6f9c997c1c43fa996">count</a>(); }</td></tr>
+<tr class="separator:adef4dd6e422d890bfbc28701b7962609"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a60b1c2b1c555c88e1eb3d460077d423f"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceFlashProgrammer.html#a60b1c2b1c555c88e1eb3d460077d423f">benchmarkTime_ms</a> = []() { <a class="el" href="namespaceFlashProgrammer.html#a47bac8565867f401660a590065d88800">currTime</a> = <a class="el" href="namespaceFlashProgrammer.html#adef4dd6e422d890bfbc28701b7962609">getTickCount_ms</a>(); <a class="el" href="namespaceFlashProgrammer.html#a22813c519c91b08f2fe69b7a744b73ee">timeElapsed</a> = <a class="el" href="namespaceFlashProgrammer.html#a47bac8565867f401660a590065d88800">currTime</a> - <a class="el" href="namespaceFlashProgrammer.html#a35bb7eaf77662bc73f8125d81e732a6d">prevTime</a>; <a class="el" href="namespaceFlashProgrammer.html#a35bb7eaf77662bc73f8125d81e732a6d">prevTime</a> = <a class="el" href="namespaceFlashProgrammer.html#a47bac8565867f401660a590065d88800">currTime</a>; }</td></tr>
+<tr class="separator:a60b1c2b1c555c88e1eb3d460077d423f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Variable Documentation</h2>
+<a id="a35bb7eaf77662bc73f8125d81e732a6d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a35bb7eaf77662bc73f8125d81e732a6d">&#9670;&nbsp;</a></span>prevTime</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">thread_local std::size_t FlashProgrammer::prevTime</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a47bac8565867f401660a590065d88800"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a47bac8565867f401660a590065d88800">&#9670;&nbsp;</a></span>currTime</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">thread_local std::size_t FlashProgrammer::currTime</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a22813c519c91b08f2fe69b7a744b73ee"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a22813c519c91b08f2fe69b7a744b73ee">&#9670;&nbsp;</a></span>timeElapsed</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">thread_local std::size_t FlashProgrammer::timeElapsed</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="adef4dd6e422d890bfbc28701b7962609"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adef4dd6e422d890bfbc28701b7962609">&#9670;&nbsp;</a></span>getTickCount_ms</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto FlashProgrammer::getTickCount_ms = []() { <a class="el" href="group__xbar__api.html#ga0f01e132aecb9854a3d569014d3a5785">return</a> std::chrono::duration_cast&lt;std::chrono::milliseconds&gt;(std::chrono::steady_clock::now().time_since_epoch()).<a class="el" href="group__i2c__api.html#gaf6a39bfc7e1dc3b6f9c997c1c43fa996">count</a>(); }</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a60b1c2b1c555c88e1eb3d460077d423f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a60b1c2b1c555c88e1eb3d460077d423f">&#9670;&nbsp;</a></span>benchmarkTime_ms</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto FlashProgrammer::benchmarkTime_ms = []() { <a class="el" href="namespaceFlashProgrammer.html#a47bac8565867f401660a590065d88800">currTime</a> = <a class="el" href="namespaceFlashProgrammer.html#adef4dd6e422d890bfbc28701b7962609">getTickCount_ms</a>(); <a class="el" href="namespaceFlashProgrammer.html#a22813c519c91b08f2fe69b7a744b73ee">timeElapsed</a> = <a class="el" href="namespaceFlashProgrammer.html#a47bac8565867f401660a590065d88800">currTime</a> - <a class="el" href="namespaceFlashProgrammer.html#a35bb7eaf77662bc73f8125d81e732a6d">prevTime</a>; <a class="el" href="namespaceFlashProgrammer.html#a35bb7eaf77662bc73f8125d81e732a6d">prevTime</a> = <a class="el" href="namespaceFlashProgrammer.html#a47bac8565867f401660a590065d88800">currTime</a>; }</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.11-->

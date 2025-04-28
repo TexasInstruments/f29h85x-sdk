@@ -91,6 +91,16 @@ if(Cmn.isContextCPU1()){
     )
 }
 
+if(Cmn.isContextCPU3()){
+    config_SecurityMode.config.unshift(
+        {
+            name            : "cpu3marker",
+            default         : true,
+            hidden          : true,
+        },
+    )
+}
+
 let config_WEPROT =
     {
         name       : "flashWEPROT",
@@ -654,6 +664,19 @@ function validate(inst, vo)
         }
     }
 
+    // Bankmode >= 2 for CPU3 usage validation
+    if(Cmn.isContextCPU3()){
+        let bankmode = Common.getConfigFromStaticModule("/ti/security/APR", "bankMode", Cmn.CONTEXT_CPU1)
+        if(!bankmode.available){
+            vo.logWarning("Bankmode setting not found on CPU1", inst)
+        }
+        else{
+            if(![2,3].includes(bankmode.value)){
+                vo.logError("Bankmode must be set to 2/3 on CPU1 to use System Security on CPU3", inst)
+            }
+        }
+    }
+
     if(inst.cpu2RunAPR && !(Cmn.getModuleForCore("/ti/security/System_Security", "CPU2"))){
         vo.logError("Please create security context in CPU2 first!!", inst);
     }
@@ -832,6 +855,25 @@ function moduleInstances(inst)
                 memType         : "Flash",
                 memSize         : 4,
                 specialAprStatus: "signature_CPU1"
+                //showUserSections: false
+            }
+        })
+    }
+
+    if(inst.cpu3marker){
+        modules.push({
+            name        : "APR_RESERVED_sign_CPU3",
+            displayName : "Flash Certificate APR",
+            moduleName  : "/ti/security/APR",
+            collapsed   : true,
+            hidden      : false,
+            group       : "addlAprs",
+            requiredArgs: {
+                $name           : "APR_RESERVED_sign_CPU3",
+                type            : "Data",
+                memType         : "Flash",
+                memSize         : 4,
+                specialAprStatus: "signature_CPU3"
                 //showUserSections: false
             }
         })

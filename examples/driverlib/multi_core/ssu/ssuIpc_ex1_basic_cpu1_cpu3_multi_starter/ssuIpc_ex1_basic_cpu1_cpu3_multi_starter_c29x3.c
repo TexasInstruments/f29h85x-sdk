@@ -16,8 +16,8 @@
 //!     1. Connect to CPU1.
 //!     2. Using the Flash Plug-In, 
 //!         - In 'User Config Settings', Program FLASH BANKMODE to BANKMODE2, if not already done.
-//!         - In 'Download Settings', Unselect ‘Verify Flash after Program (SSU Mode 1 Usage Only)’, if not already done.
-//!         - In 'Download Settings', Unselect ‘Perform Blank Check before loading data to Flash memory (SSU Mode 1 Usage Only)’, if not already done.
+//!         - In 'Download Settings', Unselect 'Verify Flash after Program (SSU Mode 1 Usage Only)', if not already done.
+//!         - In 'Download Settings', Unselect 'Perform Blank Check before loading data to Flash memory (SSU Mode 1 Usage Only)', if not already done.
 //!         - In 'NonMain Erase Settings', Select 'Allow NonMain Flash erase before loading data to Flash memory' (click checkbox), if not already done. 
 //!          Refer to Flash Plug-In documentation for further instructions.
 //!     3. Issue an XRSN to the device.

@@ -107,6 +107,8 @@ int32_t main(void)
         printf("Completed 4x4 matrix multiply in Asm, Pass_count = %d, Fail_count = %d \n", pass, fail);
     #endif    
     printf("matrix Cycles = %d, Timer overhead = %d \n", differenceCounter, overheadCounter);
+    while(1)
+    {}
 }
 
 // End of File

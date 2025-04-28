@@ -43,7 +43,7 @@
   <td id="projectlogo"><a href="https://www.ti.com"><img alt="Logo" src="ti_logo.svg"/></a></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">F29H85x-SDK
-   &#160;<span id="projectnumber">1.00.00.00</span>
+   &#160;<span id="projectnumber">1.01.00.00</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -92,18 +92,18 @@ $(document).ready(function(){initNavTree('EXAMPLES_DRIVERS_LPM_EX4.html',''); in
 </div><!--header-->
 <div class="contents">
 <div class="toc"><h3>Table of Contents</h3>
-<ul><li class="level1"><a href="#autotoc_md538">Introduction</a></li>
-<li class="level1"><a href="#autotoc_md539">External Connections</a></li>
+<ul><li class="level1"><a href="#autotoc_md555">Introduction</a></li>
+<li class="level1"><a href="#autotoc_md556">External Connections</a></li>
 </ul>
 </div>
 <div class="textblock"><p><a class="anchor" id="md_examples_drivers_lpm_ex4"></a></p>
-<h1><a class="anchor" id="autotoc_md538"></a>
+<h1><a class="anchor" id="autotoc_md555"></a>
 Introduction</h1>
 <p>This example puts the device into STANDBY mode. If the lowest possible current consumption in STANDBY mode is desired, the JTAG connector must be removed from the device board while the device is in STANDBY mode.</p>
 <p>This example puts the device into STANDBY mode then wakes up the device from STANDBY using watchdog timer.</p>
 <p>The device wakes up from the STANDBY mode when the watchdog timer flows triggering an interrupt. In the ISR, the GPIO1 is pulled low. the GPIO1 is toggled to indicate the device is out of STANDBY mode. A pre scalar is set for the watchdog timer to change the counter flow time.</p>
 <p>GPIO1 is pulled high before entering the STANDBY mode and is pulled low when in the wakeup ISR.</p>
-<h1><a class="anchor" id="autotoc_md539"></a>
+<h1><a class="anchor" id="autotoc_md556"></a>
 External Connections</h1>
 <ul>
 <li>On device wakeup, the GPIO1 will be low and LED1 will start blinking </li>

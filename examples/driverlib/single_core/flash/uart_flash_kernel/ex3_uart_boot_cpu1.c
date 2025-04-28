@@ -50,7 +50,7 @@
 //
 // UART Main Boot
 //
-void uartBoot(uint32_t bootMode, uint32_t LoadAddr, uint32_t ImageSize)
+void uartBoot(uint8_t targetCPU, uint8_t bankMode, uint32_t bootMode, uint32_t LoadAddr, uint32_t ImageSize)
 {
     bootLoadCtx_t blCtx;
     uint32_t status = BROM_STATUS_OK;
@@ -58,20 +58,15 @@ void uartBoot(uint32_t bootMode, uint32_t LoadAddr, uint32_t ImageSize)
     uint32_t Available_Flash = 0;
     uint32_t Size_Check = 0;
 
-    blCtx.maxImageSize  = (FLASH_IMAGE_SIZE - MAX_CERT_SIZE);
+    blCtx.maxImageSize  = FLASH_IMAGE_SIZE;
     blCtx.readDataCb    = &uartRead;
     blCtx.certAddr      = LDA7_RAM_BASE;
-    blCtx.imageAddr     = LoadAddr;
-    blCtx.certType      = CERT_TYPE_DFU_CPU1;
 
     //
     // FAPI parameters
     //
     Fapi_FlashBankType BankType = C29Bank;
-    //Fapi_CPUCore CPUCore = CPU_1;
     Fapi_FOTAStatus FOTAStatus = Active_Bank;
-    Fapi_CPU1BankSwap CPU1Swap = CPU1Swap0;
-    Fapi_CPU3BankSwap CPU3Swap = CPU3Swap0;
     uint32_t u32UserFlashConfig = 0;
     Fapi_StatusType oReturnCheck;
     Fapi_FlashStatusType  oFlashStatus;
@@ -84,7 +79,9 @@ void uartBoot(uint32_t bootMode, uint32_t LoadAddr, uint32_t ImageSize)
     u32UserFlashConfig = Fapi_getUserConfiguration(BankType,
                                                    FOTAStatus);
 
-    Fapi_SetFlashCPUConfiguration(Mode0);
+    Fapi_SetFlashCPUConfiguration(bankMode);
+
+    SSU_releaseFlashSemaphore();
 
     // Request semaphore for CPU1
     flashSemaphore = SSU_claimFlashSemaphore();
@@ -105,9 +102,35 @@ void uartBoot(uint32_t bootMode, uint32_t LoadAddr, uint32_t ImageSize)
                                       200);
 
     //
-    // Erase flash before writing
+    // If Bank Mode 0, erase all of flash.
+    // Else, only erase the target CPU flash
     //
-    EraseBanks(C29FlashBankFR1RP0StartAddress, u32UserFlashConfig);
+    if (bankMode == Mode0) 
+    {
+
+        blCtx.imageAddr     = 0x10000000 + MAX_CERT_SIZE;
+        EraseBanks(C29FlashBankFR1RP0StartAddress, u32UserFlashConfig);
+        EraseBanks(C29FlashBankFR1RP1StartAddress, u32UserFlashConfig);
+        EraseBanks(C29FlashBankFR1RP2StartAddress, u32UserFlashConfig);
+        EraseBanks(C29FlashBankFR1RP3StartAddress, u32UserFlashConfig);
+        
+    } else if (bankMode == Mode2) 
+    {
+        if (targetCPU == 3) 
+        {
+            blCtx.imageAddr = 0x10400000 + MAX_CERT_SIZE;
+            EraseBanks(C29FlashBankFR2RP0StartAddress, u32UserFlashConfig);
+            EraseBanks(C29FlashBankFR2RP1StartAddress, u32UserFlashConfig);
+
+        } else if (targetCPU == 1) 
+        {
+
+            blCtx.imageAddr = 0x10000000 + MAX_CERT_SIZE;
+            EraseBanks(C29FlashBankFR1RP0StartAddress, u32UserFlashConfig);
+            EraseBanks(C29FlashBankFR1RP1StartAddress, u32UserFlashConfig);
+
+        }
+    }
     
     //
     // Enable Sysclk and wait for 20U cycles
@@ -132,7 +155,7 @@ void uartBoot(uint32_t bootMode, uint32_t LoadAddr, uint32_t ImageSize)
                 //
                 ImageSize = bootloadProcess(&blCtx);
 
-                if ((ImageSize != 0) && (ImageSize <= (FLASH_IMAGE_SIZE - MAX_CERT_SIZE)))
+                if ((ImageSize != 0) && (ImageSize <= FLASH_IMAGE_SIZE))
                 {
 
                     //
@@ -161,6 +184,7 @@ void uartBoot(uint32_t bootMode, uint32_t LoadAddr, uint32_t ImageSize)
         Example_Error();
     }
 
+
     //
     // Now program cert to flash
     //
@@ -168,8 +192,21 @@ void uartBoot(uint32_t bootMode, uint32_t LoadAddr, uint32_t ImageSize)
     uint8_t certBuffer[16] = {0};
     uint32_t certOffset = 0;
     uint8_t * certPointer;
-
     uint32_t certProgramAddr = C29FlashBankFR1RP0StartAddress;
+
+    //
+    // FAPI parameters
+    //
+    oReturnCheck = Fapi_Status_Success;
+    oFlashStatus = 3;
+
+    //
+    // Set target address based on target CPU
+    //
+    if (targetCPU == 3) 
+    {
+        certProgramAddr = C29FlashBankFR2RP0StartAddress;
+    }
 
     for (i = 0; i < (MAX_CERT_SIZE / 16); i++) 
     {
@@ -251,6 +288,118 @@ void uartBoot(uint32_t bootMode, uint32_t LoadAddr, uint32_t ImageSize)
             certOffset += 16;
         }
     }
+
+    //
+    // Program the current bankMode
+    //
+    ProgramBankModeToDataFlash(bankMode, u32UserFlashConfig);
+
+    flashSemaphore = SSU_releaseFlashSemaphore();
+
+    if (!flashSemaphore) 
+    {
+        Example_Error();
+    }
+
+}
+
+void ProgramBankModeToDataFlash(uint8_t bankMode, uint32_t u32UserFlashConfig) 
+{
+
+    Fapi_StatusType oReturnCheck;
+    Fapi_FlashStatusType  oFlashStatus;
+    Fapi_FlashStatusWordType oFlashStatusWord;
+    uint32_t u32CurrentAddress = C29FlashBankFR4RP0StartAddress;
+
+    uint8_t bankModeBuffer[16] = {bankMode};
+
+    //
+    // Enable program/erase protection for select sectors
+    //
+    Fapi_setupBankSectorEnable((uint32_t*) u32CurrentAddress, u32UserFlashConfig, FLASH_NOWRAPPER_O_CMDWEPROTA, 0);
+    Fapi_setupBankSectorEnable((uint32_t*) u32CurrentAddress, u32UserFlashConfig, FLASH_NOWRAPPER_O_CMDWEPROTB, 0);
+
+    //
+    // Erase the flash bank
+    //
+    oReturnCheck = Fapi_issueBankEraseCommand((uint32_t*) u32CurrentAddress, 0, u32UserFlashConfig);
+
+    //
+    // Wait for completion and check for any programming errors
+    //
+    while(Fapi_checkFsmForReady((uint32_t) u32CurrentAddress, u32UserFlashConfig) == Fapi_Status_FsmBusy);
+
+    if (oReturnCheck != Fapi_Status_Success) 
+    {
+        Example_Error();
+    }
+
+    oFlashStatus = Fapi_getFsmStatus((uint32_t) u32CurrentAddress, u32UserFlashConfig);
+
+    if (oFlashStatus != 3)
+    {
+        Example_Error();
+    }
+
+
+    //
+    // Clear the status of the previous Flash operation
+    //
+    ClearFSMStatus(u32CurrentAddress, u32UserFlashConfig);
+
+    //
+    // Enable program/erase protection for select sectors
+    //
+    Fapi_setupBankSectorEnable((uint32_t*) u32CurrentAddress, u32UserFlashConfig, FLASH_NOWRAPPER_O_CMDWEPROTA, 0);
+    Fapi_setupBankSectorEnable((uint32_t*) u32CurrentAddress, u32UserFlashConfig, FLASH_NOWRAPPER_O_CMDWEPROTB, 0);
+
+
+    oReturnCheck = Fapi_issueProgrammingCommand((uint32_t*)u32CurrentAddress, bankModeBuffer,
+                                        16, 0, 0, Fapi_AutoEccGeneration, u32UserFlashConfig);
+
+    //
+    // Wait until the Flash program operation is over
+    //
+    while(Fapi_checkFsmForReady(u32CurrentAddress, u32UserFlashConfig) == Fapi_Status_FsmBusy);
+
+    if(oReturnCheck != Fapi_Status_Success)
+    {
+        //
+        // Check Flash API documentation for possible errors
+        //
+        Example_Error();
+    }
+
+    //
+    // Read FMSTAT register contents to know the status of FSM after
+    // program command to see if there are any program operation related
+    // errors
+    //
+    oFlashStatus = Fapi_getFsmStatus(u32CurrentAddress, u32UserFlashConfig);
+    if(oFlashStatus != 3)
+    {
+        //
+        //Check FMSTAT and debug accordingly
+        //
+        Example_Error();
+    }
+
+
+    //
+    // Verify the programmed values.  Check for any ECC errors.
+    //
+    oReturnCheck = Fapi_doVerify((uint32_t*)u32CurrentAddress,
+                                    4, (uint32_t*)(uint32_t)(bankModeBuffer),
+                                    &oFlashStatusWord, 0, u32UserFlashConfig);
+
+    if(oReturnCheck != Fapi_Status_Success)
+    {
+        //
+        // Check Flash API documentation for possible errors
+        //
+        Example_Error();
+    }
+
 }
 
 
@@ -669,6 +818,7 @@ void ClearFSMStatus(uint32_t u32StartAddress, uint32_t u32UserFlashConfig){
 //  Flash API functions used in this function are executed from RAM
 //
 //*****************************************************************************
+__attribute__((section(".TI.ramfunc")))
 void EraseBanks(uint32_t u32StartAddress, uint32_t FlashConfig)
 {
 
@@ -678,66 +828,62 @@ void EraseBanks(uint32_t u32StartAddress, uint32_t FlashConfig)
     Fapi_StatusType  oReturnCheck;
     Fapi_FlashStatusType  oFlashStatus;
     Fapi_FlashStatusWordType  oFlashStatusWord;
-    uint32_t u32CurrentAddress = 0;
-    uint8_t u8Iterator = 0;
-
-    //Issue Bank erase command for 4 interleaved banks(FLC1_B0_B1, FLC1_B2_B3)
-    for(u32CurrentAddress = C29FlashBankFR1RP0StartAddress; u32CurrentAddress < C29FlashBankFR1RP3EndAddressPlus1; u32CurrentAddress +=FlashC29BankOffset)
+    uint32_t u32CurrentAddress = u32StartAddress;
+    uint8_t  u8Iterator = 0;
+        
+    //loop for erasing 1 interleaved bank
+    for(u8Iterator = 1; u8Iterator <= 2; u8Iterator++)
     {
-        //loop for erasing 1 interleaved bank
-        for(u8Iterator = 1; u8Iterator <= 2; u8Iterator++)
-        {
-            ClearFSMStatus(u32CurrentAddress, FlashConfig);
+        ClearFSMStatus(u32CurrentAddress, FlashConfig);
 
-            // Enable program/erase protection for select sectors where this example is
-            // located  CMDWEPROTA, CMDWEPROTB
-            Fapi_setupBankSectorEnable((uint32_t*)(u32CurrentAddress), FlashConfig, FLASH_NOWRAPPER_O_CMDWEPROTA, 0x00000000);
-            Fapi_setupBankSectorEnable((uint32_t*)(u32CurrentAddress), FlashConfig, FLASH_NOWRAPPER_O_CMDWEPROTB, 0x00000000);
+        // Enable program/erase protection for select sectors where this example is
+        // located  CMDWEPROTA, CMDWEPROTB
+        Fapi_setupBankSectorEnable((uint32_t *)(u32CurrentAddress), FlashConfig, FLASH_NOWRAPPER_O_CMDWEPROTA, 0x00000000);
+        Fapi_setupBankSectorEnable((uint32_t *)(u32CurrentAddress), FlashConfig, FLASH_NOWRAPPER_O_CMDWEPROTB, 0x00000000);
 
 
-            //Issue bank erase command
-            oReturnCheck = Fapi_issueBankEraseCommand((uint32_t*)(u32CurrentAddress), u8Iterator ,  FlashConfig);
+        //Issue bank erase command
+        oReturnCheck = Fapi_issueBankEraseCommand((uint32_t *)(u32CurrentAddress), u8Iterator , FlashConfig);
 
 
-            // Wait until FSM is done with erase operation
-            while (Fapi_checkFsmForReady(u32CurrentAddress, FlashConfig) != Fapi_Status_FsmReady){}
-
-            if(oReturnCheck != Fapi_Status_Success)
-            {
-                // Check Flash API documentation for possible errors
-                Example_Error();
-            }
-
-            // Read FMSTAT register contents to know the status of FSM after
-            // erase command to see if there are any erase operation related errors
-            oFlashStatus = Fapi_getFsmStatus(u32CurrentAddress, FlashConfig);
-            if(oFlashStatus != 3)
-            {
-                // Check Flash API documentation for FMSTAT and debug accordingly
-                // Fapi_getFsmStatus() function gives the FMSTAT register contents.
-                // Check to see if any of the EV bit, ESUSP bit, CSTAT bit or
-                // VOLTSTAT bit is set (Refer to API documentation for more details).
-                Example_Error();
-            }
-
-        }
-        // Do blank check
-        // Blank check is performed on all the sectors that are not protected
-        // during Bank erase
-        // Verify that Bank 0 is erased.
-        // The Erase command itself does a verify as it goes.
-        // Hence erase verify by CPU reads (Fapi_doBlankCheck()) is optional.
-
-        oReturnCheck = Fapi_doBlankCheck((uint32_t*)u32CurrentAddress,
-                       (128*Sector2KB_u32length),
-                        &oFlashStatusWord, 0 , FlashConfig);
+        // Wait until FSM is done with erase operation
+        while (Fapi_checkFsmForReady(u32CurrentAddress, FlashConfig) != Fapi_Status_FsmReady){}
 
         if(oReturnCheck != Fapi_Status_Success)
         {
-            // Check Flash API documentation for error info
+            // Check Flash API documentation for possible errors
             Example_Error();
         }
 
+        // Read FMSTAT register contents to know the status of FSM after
+        // erase command to see if there are any erase operation related errors
+        oFlashStatus = Fapi_getFsmStatus(u32CurrentAddress, FlashConfig);
+        if(oFlashStatus != 3)
+        {
+            // Check Flash API documentation for FMSTAT and debug accordingly
+            // Fapi_getFsmStatus() function gives the FMSTAT register contents.
+            // Check to see if any of the EV bit, ESUSP bit, CSTAT bit or
+            // VOLTSTAT bit is set (Refer to API documentation for more details).
+            Example_Error();
+        }
+
+    }
+
+    // Do blank check
+    // Blank check is performed on all the sectors that are not protected
+    // during Bank erase
+    // Verify that Bank 0 is erased.
+    // The Erase command itself does a verify as it goes.
+    // Hence erase verify by CPU reads (Fapi_doBlankCheck()) is optional.
+    oReturnCheck = Fapi_doBlankCheck((uint32_t *)u32CurrentAddress,
+                (128*Sector2KB_u32length),
+                    &oFlashStatusWord, 0 , FlashConfig);
+
+
+    if(oReturnCheck != Fapi_Status_Success)
+    {
+        // Check Flash API documentation for error info
+        Example_Error();
     }
 
 }

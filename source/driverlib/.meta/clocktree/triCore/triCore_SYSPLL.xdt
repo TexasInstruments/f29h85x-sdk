@@ -160,9 +160,6 @@ if(PLL_type2.includes(device))
 % var OSCCLK_dvv =  OSCCLK_d * Math.pow(10,6)
 #define DEVICE_OSCSRC_FREQ		`OSCCLK_dvv`
 
-% let   TIMER2CLK_d       = system.clockTree.TIMER2CLK.in
-% TIMER2CLK_d *= Math.pow(10,6)
-#define DEVICE_TIMER2_FREQ   	`TIMER2CLK_d`
 %if(EPWM_div_support.includes(device)) {
 % let   EPWMCLK_d       = system.clockTree.PLLSYSCLK.in / system.clockTree.EPWMCLKDIV.divideValue
 % EPWMCLK_d *= Math.pow(10,6)

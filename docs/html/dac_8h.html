@@ -43,7 +43,7 @@
   <td id="projectlogo"><a href="https://www.ti.com"><img alt="Logo" src="ti_logo.svg"/></a></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">F29H85x-SDK
-   &#160;<span id="projectnumber">1.00.00.00</span>
+   &#160;<span id="projectnumber">1.01.00.00</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -90,7 +90,8 @@ $(document).ready(function(){initNavTree('dac_8h.html',''); initResizable(); });
   <div class="summary">
 <a href="#define-members">Macros</a> &#124;
 <a href="#enum-members">Enumerations</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#func-members">Functions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
 <div class="title">dac.h File Reference</div>  </div>
 </div><!--header-->
@@ -125,46 +126,47 @@ Enumerations</h2></td></tr>
 <tr class="memitem:ga29249fd6cbfdd286b0f99a8eb9acd173"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dac__api.html#ga29249fd6cbfdd286b0f99a8eb9acd173">DAC_GainMode</a> { <a class="el" href="group__dac__api.html#gga29249fd6cbfdd286b0f99a8eb9acd173adbbcf6c82c2163632cd3814c1fc876cb">DAC_GAIN_ONE</a> = 0
 , <a class="el" href="group__dac__api.html#gga29249fd6cbfdd286b0f99a8eb9acd173adad5438550b58724d7202289c7209d83">DAC_GAIN_TWO</a> = 2
  }</td></tr>
-<tr class="memdesc:ga29249fd6cbfdd286b0f99a8eb9acd173"><td class="mdescLeft">&#160;</td><td class="mdescRight">Values that can be passed to <a class="el" href="group__dac__api.html#ga3fdfb3c2d5d744a81ca41903914568f8">DAC_setGainMode()</a> as the <em>mode</em> parameter.  <a href="group__dac__api.html#ga29249fd6cbfdd286b0f99a8eb9acd173">More...</a><br /></td></tr>
+<tr class="memdesc:ga29249fd6cbfdd286b0f99a8eb9acd173"><td class="mdescLeft">&#160;</td><td class="mdescRight">Values that can be passed to DAC_setGainMode() as the <em>mode</em> parameter.  <a href="group__dac__api.html#ga29249fd6cbfdd286b0f99a8eb9acd173">More...</a><br /></td></tr>
 <tr class="separator:ga29249fd6cbfdd286b0f99a8eb9acd173"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga015ca6d4a2b55bd66d1a4effb180313e"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dac__api.html#ga015ca6d4a2b55bd66d1a4effb180313e">DAC_LoadMode</a> { <a class="el" href="group__dac__api.html#gga015ca6d4a2b55bd66d1a4effb180313ea0a0ced6aebc4887d4c6ae5b76d2de5f3">DAC_LOAD_SYSCLK</a> = 0
 , <a class="el" href="group__dac__api.html#gga015ca6d4a2b55bd66d1a4effb180313ea2bf545e512d58c2ddcc697e17ccb35a3">DAC_LOAD_PWMSYNC</a> = 4
  }</td></tr>
-<tr class="memdesc:ga015ca6d4a2b55bd66d1a4effb180313e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Values that can be passed to <a class="el" href="group__dac__api.html#gaaaac0e28836841d9f77e086bb8508be4">DAC_setLoadMode()</a> as the <em>mode</em> parameter.  <a href="group__dac__api.html#ga015ca6d4a2b55bd66d1a4effb180313e">More...</a><br /></td></tr>
+<tr class="memdesc:ga015ca6d4a2b55bd66d1a4effb180313e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Values that can be passed to DAC_setLoadMode() as the <em>mode</em> parameter.  <a href="group__dac__api.html#ga015ca6d4a2b55bd66d1a4effb180313e">More...</a><br /></td></tr>
 <tr class="separator:ga015ca6d4a2b55bd66d1a4effb180313e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:gabcf208b6278f0a6c9e24a821281e3e5a"><td class="memItemLeft" align="right" valign="top">static uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dac__api.html#gabcf208b6278f0a6c9e24a821281e3e5a">DAC_getRevision</a> (uint32_t base)</td></tr>
-<tr class="separator:gabcf208b6278f0a6c9e24a821281e3e5a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga77cfbc074fcc649200bd43cc6d941b75"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dac__api.html#ga77cfbc074fcc649200bd43cc6d941b75">DAC_setReferenceVoltage</a> (uint32_t base, <a class="el" href="group__dac__api.html#ga050286066cbfe396b9f3bf046247347f">DAC_ReferenceVoltage</a> <a class="el" href="group__xbar__api.html#ga1e2754bcfe037d89628bdaab31e07af7">source</a>)</td></tr>
-<tr class="separator:ga77cfbc074fcc649200bd43cc6d941b75"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3fdfb3c2d5d744a81ca41903914568f8"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dac__api.html#ga3fdfb3c2d5d744a81ca41903914568f8">DAC_setGainMode</a> (uint32_t base, <a class="el" href="group__dac__api.html#ga29249fd6cbfdd286b0f99a8eb9acd173">DAC_GainMode</a> <a class="el" href="group__rtdma__api.html#ga1a4d083986a30a02500d2c3d63be807c">mode</a>)</td></tr>
-<tr class="separator:ga3fdfb3c2d5d744a81ca41903914568f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaaaac0e28836841d9f77e086bb8508be4"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dac__api.html#gaaaac0e28836841d9f77e086bb8508be4">DAC_setLoadMode</a> (uint32_t base, <a class="el" href="group__dac__api.html#ga015ca6d4a2b55bd66d1a4effb180313e">DAC_LoadMode</a> <a class="el" href="group__rtdma__api.html#ga1a4d083986a30a02500d2c3d63be807c">mode</a>)</td></tr>
-<tr class="separator:gaaaac0e28836841d9f77e086bb8508be4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaebf57ad53a7191840664b10c22cc21af"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dac__api.html#gaebf57ad53a7191840664b10c22cc21af">DAC_setPWMSyncSignal</a> (uint32_t base, uint16_t pwmSignal)</td></tr>
-<tr class="separator:gaebf57ad53a7191840664b10c22cc21af"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4bbe4c35a3578bb9a4ad0413764aa90a"><td class="memItemLeft" align="right" valign="top">static uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dac__api.html#ga4bbe4c35a3578bb9a4ad0413764aa90a">DAC_getActiveValue</a> (uint32_t base)</td></tr>
-<tr class="separator:ga4bbe4c35a3578bb9a4ad0413764aa90a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga12d9dffb62b325ddc1b320435aefcb8b"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dac__api.html#ga12d9dffb62b325ddc1b320435aefcb8b">DAC_setShadowValue</a> (uint32_t base, uint16_t value)</td></tr>
-<tr class="separator:ga12d9dffb62b325ddc1b320435aefcb8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa8f9b6b182680770cee2850ff4311106"><td class="memItemLeft" align="right" valign="top">static uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dac__api.html#gaa8f9b6b182680770cee2850ff4311106">DAC_getShadowValue</a> (uint32_t base)</td></tr>
-<tr class="separator:gaa8f9b6b182680770cee2850ff4311106"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga12f9f3a884fa5bdebf6d94df8c2223d9"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dac__api.html#ga12f9f3a884fa5bdebf6d94df8c2223d9">DAC_enableOutput</a> (uint32_t base)</td></tr>
-<tr class="separator:ga12f9f3a884fa5bdebf6d94df8c2223d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac9b8d692a84f19a3d56017d22ca43c03"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dac__api.html#gac9b8d692a84f19a3d56017d22ca43c03">DAC_disableOutput</a> (uint32_t base)</td></tr>
-<tr class="separator:gac9b8d692a84f19a3d56017d22ca43c03"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9c3a8bc1177626cfe433e859c1f51239"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dac__api.html#ga9c3a8bc1177626cfe433e859c1f51239">DAC_setOffsetTrim</a> (uint32_t base, int16_t offset)</td></tr>
-<tr class="separator:ga9c3a8bc1177626cfe433e859c1f51239"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0950f801ddb49b8f54d3ba2806a47311"><td class="memItemLeft" align="right" valign="top">static int16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dac__api.html#ga0950f801ddb49b8f54d3ba2806a47311">DAC_getOffsetTrim</a> (uint32_t base)</td></tr>
-<tr class="separator:ga0950f801ddb49b8f54d3ba2806a47311"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga621868901853b971d84e3f1ac6980688"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dac__api.html#ga621868901853b971d84e3f1ac6980688">DAC_lockRegister</a> (uint32_t base, uint16_t reg)</td></tr>
-<tr class="separator:ga621868901853b971d84e3f1ac6980688"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga23b784679131976f9f91e5654dd423e8"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dac__api.html#ga23b784679131976f9f91e5654dd423e8">DAC_isRegisterLocked</a> (uint32_t base, uint16_t reg)</td></tr>
-<tr class="separator:ga23b784679131976f9f91e5654dd423e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3168ff58a52cf79b8e1d7192c4a993ba"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dac__api.html#ga3168ff58a52cf79b8e1d7192c4a993ba">__attribute__</a> ((always_inline)) static inline uint16_t DAC_getRevision(uint32_t base)</td></tr>
+<tr class="separator:ga3168ff58a52cf79b8e1d7192c4a993ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaba2295b6c820d0a39845f75583d847b2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dac__api.html#gaba2295b6c820d0a39845f75583d847b2">HWREGH</a> (base+DAC_O_CTL)</td></tr>
+<tr class="separator:gaba2295b6c820d0a39845f75583d847b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga086b0c58f7c6937f4b87ddb77124524e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dac__api.html#ga086b0c58f7c6937f4b87ddb77124524e">ASSERT</a> ((<a class="el" href="group__dac__api.html#ga3403318328e504780dbff81ce2489eda">pwmSignal</a> &gt; 0U) &amp;&amp;(<a class="el" href="group__dac__api.html#ga3403318328e504780dbff81ce2489eda">pwmSignal</a>&lt; 33U))</td></tr>
+<tr class="separator:ga086b0c58f7c6937f4b87ddb77124524e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga341055d50b909820734621b38d59ce91"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dac__api.html#ga341055d50b909820734621b38d59ce91">ASSERT</a> (<a class="el" href="group__sysctl__api.html#gae7f66047e6e39ba2bb6af8b95f00d1dd">value</a>&lt;=DAC_VALS_DACVALS_M)</td></tr>
+<tr class="separator:ga341055d50b909820734621b38d59ce91"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7708a3f14e29047905e94f26dabd29ca"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dac__api.html#ga7708a3f14e29047905e94f26dabd29ca">ASSERT</a> ((<a class="el" href="group__sdfm__api.html#ga7a229a4786deeddd59c6091247a8c8a6">offset</a> &gt; -129) &amp;&amp;(<a class="el" href="group__sdfm__api.html#ga7a229a4786deeddd59c6091247a8c8a6">offset</a>&lt; 128))</td></tr>
+<tr class="separator:ga7708a3f14e29047905e94f26dabd29ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga363fd669a9a900d15e9d010b88042ccc"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dac__api.html#ga363fd669a9a900d15e9d010b88042ccc">ASSERT</a> ((<a class="el" href="group__dac__api.html#ga11760f5020019f4aa8cb02e694f7cc44">reg</a> &amp;~(<a class="el" href="group__dac__api.html#gae96bc0110e0d07f9a0a89e2fdc20ee7e">DAC_LOCK_CONTROL</a>|<a class="el" href="group__dac__api.html#gab1d0208b2b8886ce1ccb641c950f8739">DAC_LOCK_SHADOW</a>|<a class="el" href="group__dac__api.html#ga4a656d3e836c49285cae5be09fd51d44">DAC_LOCK_OUTPUT</a>))==0U)</td></tr>
+<tr class="separator:ga363fd669a9a900d15e9d010b88042ccc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga90ef718ba6bb4ca150cc29b77f990876"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dac__api.html#ga90ef718ba6bb4ca150cc29b77f990876">return</a> (((<a class="el" href="group__xbar__api.html#gaea30ea7ef8d51d933a82ff1f684ee95f">HWREGH</a>(base+DAC_O_LOCK) &amp;<a class="el" href="group__dac__api.html#ga11760f5020019f4aa8cb02e694f7cc44">reg</a>) !=0U))</td></tr>
+<tr class="separator:ga90ef718ba6bb4ca150cc29b77f990876"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gafeb01961a37d91db7adf3f0815574035"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dac__api.html#gafeb01961a37d91db7adf3f0815574035">DAC_tuneOffsetTrim</a> (uint32_t base, float32_t referenceVoltage)</td></tr>
 <tr class="separator:gafeb01961a37d91db7adf3f0815574035"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:ga1e2754bcfe037d89628bdaab31e07af7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__dac__api.html#ga050286066cbfe396b9f3bf046247347f">DAC_ReferenceVoltage</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dac__api.html#ga1e2754bcfe037d89628bdaab31e07af7">source</a></td></tr>
+<tr class="separator:ga1e2754bcfe037d89628bdaab31e07af7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1cbaa4139cb00b5b2c1fb6ee8d9fe1cc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__dac__api.html#ga29249fd6cbfdd286b0f99a8eb9acd173">DAC_GainMode</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dac__api.html#ga1cbaa4139cb00b5b2c1fb6ee8d9fe1cc">mode</a></td></tr>
+<tr class="separator:ga1cbaa4139cb00b5b2c1fb6ee8d9fe1cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3403318328e504780dbff81ce2489eda"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dac__api.html#ga3403318328e504780dbff81ce2489eda">pwmSignal</a></td></tr>
+<tr class="separator:ga3403318328e504780dbff81ce2489eda"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga900b69af7d674b8db3bceae754b4955a"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dac__api.html#ga900b69af7d674b8db3bceae754b4955a">value</a></td></tr>
+<tr class="separator:ga900b69af7d674b8db3bceae754b4955a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga59f874d10bf763992bd4b427fdb7f0cd"><td class="memItemLeft" align="right" valign="top">int16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dac__api.html#ga59f874d10bf763992bd4b427fdb7f0cd">offset</a></td></tr>
+<tr class="separator:ga59f874d10bf763992bd4b427fdb7f0cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga11760f5020019f4aa8cb02e694f7cc44"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dac__api.html#ga11760f5020019f4aa8cb02e694f7cc44">reg</a></td></tr>
+<tr class="separator:ga11760f5020019f4aa8cb02e694f7cc44"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 </div><!-- doc-content -->

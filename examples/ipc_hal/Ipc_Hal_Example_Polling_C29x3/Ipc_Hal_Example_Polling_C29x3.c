@@ -13,7 +13,7 @@
 //!
 //! When using CCS for debugging this Multi-core example, after launching the
 //! debug session,
-//!     - Connect to CPU1 and load only the c29x1.out.
+//!     - Connect to CPU1 and load only the C29x1_merged.out.
 //!     - After the program is loaded, run CPU1.
 //!     - Once c29x1 configures and releases CPU3 out of reset, the program
 //!     stops.

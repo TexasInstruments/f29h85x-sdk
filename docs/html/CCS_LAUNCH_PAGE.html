@@ -43,7 +43,7 @@
   <td id="projectlogo"><a href="https://www.ti.com"><img alt="Logo" src="ti_logo.svg"/></a></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">F29H85x-SDK
-   &#160;<span id="projectnumber">1.00.00.00</span>
+   &#160;<span id="projectnumber">1.01.00.00</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -92,27 +92,27 @@ $(document).ready(function(){initNavTree('CCS_LAUNCH_PAGE.html',''); initResizab
 </div><!--header-->
 <div class="contents">
 <div class="toc"><h3>Table of Contents</h3>
-<ul><li class="level1"><a href="#autotoc_md16">Pre requisites</a></li>
-<li class="level1"><a href="#autotoc_md17">Build Configurations</a><ul><li class="level2"><a href="#autotoc_md18">RAM Build Configuration</a></li>
-<li class="level2"><a href="#autotoc_md19">FLASH Build Configuration</a></li>
+<ul><li class="level1"><a href="#autotoc_md17">Pre requisites</a></li>
+<li class="level1"><a href="#autotoc_md18">Build Configurations</a><ul><li class="level2"><a href="#autotoc_md19">RAM Build Configuration</a></li>
+<li class="level2"><a href="#autotoc_md20">FLASH Build Configuration</a></li>
 </ul>
 </li>
-<li class="level1"><a href="#autotoc_md20">Build and Load Program</a></li>
-<li class="level1"><a href="#autotoc_md21">Post build sequence for FLASH configuration</a></li>
-<li class="level1"><a href="#autotoc_md22">Run and Debug Program</a></li>
-<li class="level1"><a href="#autotoc_md23">Build and Load Multicore examples</a><ul><li class="level2"><a href="#autotoc_md24">Build</a></li>
-<li class="level2"><a href="#autotoc_md25">Load</a></li>
+<li class="level1"><a href="#autotoc_md21">Build and Load Program</a></li>
+<li class="level1"><a href="#autotoc_md22">Post build sequence for FLASH configuration</a></li>
+<li class="level1"><a href="#autotoc_md23">Run and Debug Program</a></li>
+<li class="level1"><a href="#autotoc_md24">Build and Load Multicore examples</a><ul><li class="level2"><a href="#autotoc_md25">Build</a></li>
+<li class="level2"><a href="#autotoc_md26">Load</a></li>
 </ul>
 </li>
-<li class="level1"><a href="#autotoc_md26">Build and Load SSU examples</a><ul><li class="level2"><a href="#autotoc_md27">Build</a></li>
-<li class="level2"><a href="#autotoc_md28">Load</a></li>
+<li class="level1"><a href="#autotoc_md27">Build and Load SSU examples</a><ul><li class="level2"><a href="#autotoc_md28">Build</a></li>
+<li class="level2"><a href="#autotoc_md29">Load</a></li>
 </ul>
 </li>
 </ul>
 </div>
 <div class="textblock"><p><a class="anchor" id="md_getting_started_ccs_launch"></a></p>
 <dl class="section note"><dt>Note</dt><dd>The steps on this page should be done each time EVM is power cycled or when a new CCS session is started.</dd></dl>
-<h1><a class="anchor" id="autotoc_md16"></a>
+<h1><a class="anchor" id="autotoc_md17"></a>
 Pre requisites</h1>
 <ul>
 <li>Setup the EVM in 'FLASH' boot mode<ul>
@@ -123,9 +123,9 @@ Pre requisites</h1>
 </li>
 </ul>
 </li>
-<li>Power on the EVM and launch CCS 20.0.1</li>
+<li>Power on the EVM and launch CCS 20.1.1</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md17"></a>
+<h1><a class="anchor" id="autotoc_md18"></a>
 Build Configurations</h1>
 <ul>
 <li>The following build configurations are supported for the majority of the examples<ul>
@@ -135,7 +135,7 @@ Build Configurations</h1>
 </li>
 <li>Some examples have only FLASH or only RAM build configurations</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md18"></a>
+<h2><a class="anchor" id="autotoc_md19"></a>
 RAM Build Configuration</h2>
 <ul>
 <li>The example program is loaded into and run from RAM memory</li>
@@ -162,7 +162,7 @@ RAM Build Configuration</div></div>
 </ul>
 </li>
 </ul>
-<h2><a class="anchor" id="autotoc_md19"></a>
+<h2><a class="anchor" id="autotoc_md20"></a>
 FLASH Build Configuration</h2>
 <dl class="section note"><dt>Note</dt><dd>The following pre requisites are required<ul>
 <li>Install Python 3.X<ul>
@@ -176,6 +176,7 @@ Python Version</div></div>
 </li>
 <li>Install OpenSSL 3.1.7<ul>
 <li>Download openSSL version 3.1.7 installer from <a href="https://slproweb.com/products/Win32OpenSSL.html">https://slproweb.com/products/Win32OpenSSL.html</a></li>
+<li>Light version which is smaller in size can be installed</li>
 <li>After installation completion add the openSSL path into the PATH environment variable<ul>
 <li>Navigate to 'System Properties -&gt; Environment Variables -&gt; System Variables -&gt; Path</li>
 <li>Add new entry for 'C:\Program Files\OpenSSL-Win64\bin' and move it up to make it the first entry using 'Move up' button  <style>div.image img[src="openssl_path.png"]{width:30%}</style> <div class="image">
@@ -188,6 +189,7 @@ openSSL Path</div></div>
 <div class="caption">
 openSSL Version</div></div>
 </li>
+<li>Once the installation is complete reboot the computer</li>
 </ul>
 </li>
 <li>On MAC installation if build failure due to openSSL certificate generation is observed then below steps should be followed:<ul>
@@ -228,7 +230,7 @@ FLASH Build Configuration</div></div>
 </ul>
 </li>
 </ul>
-<h1><a class="anchor" id="autotoc_md20"></a>
+<h1><a class="anchor" id="autotoc_md21"></a>
 Build and Load Program</h1>
 <ul>
 <li>Following are the options to build and load an example program<ul>
@@ -306,7 +308,7 @@ CCS Load Program</div></div>
 </ul>
 </li>
 </ul>
-<h1><a class="anchor" id="autotoc_md21"></a>
+<h1><a class="anchor" id="autotoc_md22"></a>
 Post build sequence for FLASH configuration</h1>
 <ul>
 <li>When an example project is built, an ELF file gets created (example.out)</li>
@@ -317,7 +319,7 @@ Post build sequence for FLASH configuration</h1>
 <li>The binary file is signed with X509 certificate, which creates 'C29-cert-pad.bin' file</li>
 <li>The ELF file 'cert' section is updated with the 'C29-cert-pad.bin' file</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md22"></a>
+<h1><a class="anchor" id="autotoc_md23"></a>
 Run and Debug Program</h1>
 <ul>
 <li>Run<ul>
@@ -398,9 +400,9 @@ Checking the Interrupt status</div></div>
 </ul>
 </li>
 </ul>
-<h1><a class="anchor" id="autotoc_md23"></a>
+<h1><a class="anchor" id="autotoc_md24"></a>
 Build and Load Multicore examples</h1>
-<h2><a class="anchor" id="autotoc_md24"></a>
+<h2><a class="anchor" id="autotoc_md25"></a>
 Build</h2>
 <ul>
 <li>Launch CCS</li>
@@ -416,7 +418,7 @@ Multicore Example Build</div></div>
 </ul>
 </li>
 </ul>
-<h2><a class="anchor" id="autotoc_md25"></a>
+<h2><a class="anchor" id="autotoc_md26"></a>
 Load</h2>
 <ul>
 <li>ELF for each core is generated</li>
@@ -424,9 +426,9 @@ Load</h2>
 <li>CPU1 ELF alone is required to be loaded</li>
 <li>Only the symbols for CPU2/CPU3 shall be loaded for debug purpose</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md26"></a>
+<h1><a class="anchor" id="autotoc_md27"></a>
 Build and Load SSU examples</h1>
-<h2><a class="anchor" id="autotoc_md27"></a>
+<h2><a class="anchor" id="autotoc_md28"></a>
 Build</h2>
 <ul>
 <li>The SSU single core and multi core examples support the following FLASH build configuration<ul>
@@ -441,7 +443,7 @@ Build</h2>
 </ul>
 </li>
 </ul>
-<h2><a class="anchor" id="autotoc_md28"></a>
+<h2><a class="anchor" id="autotoc_md29"></a>
 Load</h2>
 <ul>
 <li>HSFS<ul>

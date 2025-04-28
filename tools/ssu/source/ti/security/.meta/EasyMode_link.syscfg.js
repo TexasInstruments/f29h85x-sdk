@@ -107,7 +107,7 @@ let config = [
             {
                 name          : "link2DefaultAllSections",
                 displayName   : "Default sections included in Link2",
-                default       : "libc.a<copy_zero_init.c.obj>, libc.a<copy_decompress_lzss.c.obj>, libc.a<pre_init.c.obj>,libc.a<exit.c.obj>,libc.a<startup.c.obj>,device.o,board.o,ssu_config.o",
+                default       : "libc.a<copy_zero_init.c.obj>, libc.a<copy_decompress_lzss.c.obj>, libc.a<copy_decompress_none.c.obj>, libc.a<copy_decompress_rle.c.obj>, libc.a<pre_init.c.obj>,libc.a<exit.c.obj>,libc.a<startup.c.obj>,device.o,board.o,ssu_config.o",
                 multiline     : true,
                 hidden        : true,
                 readOnly      : true

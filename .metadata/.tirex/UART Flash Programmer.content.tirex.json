@@ -1,0 +1,20 @@
+[
+	{
+		"mainCategories": [["Devices"]],
+		"subCategories": ["Tools","clb_tool"],
+		"mainCategories": [["Devices"]],
+		"subCategories": ["Tools","clb_tool","Documents"],
+		"mainCategories": [["Devices"]],
+		"subCategories": ["Tools","ssu_tool"],
+		"mainCategories": [["Devices"]],
+		"subCategories": ["Tools","transfer_tool"],
+		"mainCategories": [["Devices"]],
+		"subCategories": ["Tools","Uart_Flash_Programmer"],
+		"name": "Explore Directory",
+		"resourceType": "folder",
+		"resourceClass": ["other"],
+		"devices": ["F29H85x"],
+		"location": "$(tools_path)/flash_programmers/uart_flash_programmer",
+		"description": ""
+	}
+]

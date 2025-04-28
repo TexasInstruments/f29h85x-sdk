@@ -8,8 +8,7 @@ MEMORY
     SRAM_LDAx_LOADABLE      : o=0x200FC000, l=0x2000                /* Address range 0x200E0000 - 0x200FC000 is reserved for HSM */
     SRAM_LDAx               : o=0x200FE000, l=0x2000
     APPL_ENTRY              : o=0x20100000, l=0x000040
-    SRAM_LPAx_RAM           : o=0x20100040, l=0x0450
-    SRAM_LPAx               : o=0x20100490, l=0x00FA70
+    SRAM_LPAx               : o=0x20100040, l=0x00FEC0
     SRAM_LDAX_CPAx_MIRROR   : o=0x20110000, l=0x2000
     SRAM_CPAx_LOADABLE      : o=0x20112000, l=0xE000
     SRAM_CDAx               : o=0x20120000, l=0x30000
@@ -30,7 +29,8 @@ SECTIONS
 {
     codestart     : {} > APPL_ENTRY
 
-    .TI.ramfunc   : {} > SRAM_LPAx_RAM
+    .TI.ramfunc   : {} > SRAM_LPAx
+    .hsm_accessible : {} > SRAM_LDAx
     .hsmlib       : {*(.text.Hsm*) *(.text.SIPC*)} RUN=SRAM_LDAx_LOADABLE, LOAD=SRAM_LDAX_CPAx_MIRROR, LOAD_START(__CPAX_START), RUN_START(__LDAX_START), RUN_END(__LDAX_END)
     .text         : {} > SRAM_LPAx
     .cinit        : {} > SRAM_LPAx
@@ -46,5 +46,6 @@ SECTIONS
 
     .bss.sipc_hsm_queue_mem   (NOLOAD) : {} > MAILBOX_HSM
     .bss.sipc_secure_host_queue_mem   (NOLOAD) : {} > MAILBOX_R5F
+    
 
 }

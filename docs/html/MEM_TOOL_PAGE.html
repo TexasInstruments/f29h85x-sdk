@@ -43,7 +43,7 @@
   <td id="projectlogo"><a href="https://www.ti.com"><img alt="Logo" src="ti_logo.svg"/></a></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">F29H85x-SDK
-   &#160;<span id="projectnumber">1.00.00.00</span>
+   &#160;<span id="projectnumber">1.01.00.00</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -92,9 +92,9 @@ $(document).ready(function(){initNavTree('MEM_TOOL_PAGE.html',''); initResizable
 </div><!--header-->
 <div class="contents">
 <div class="toc"><h3>Table of Contents</h3>
-<ul><li class="level1"><a href="#autotoc_md835">Memory Region</a></li>
-<li class="level1"><a href="#autotoc_md836">Sections</a></li>
-<li class="level1"><a href="#autotoc_md837">Generated Files</a></li>
+<ul><li class="level1"><a href="#autotoc_md908">Memory Region</a></li>
+<li class="level1"><a href="#autotoc_md909">Sections</a></li>
+<li class="level1"><a href="#autotoc_md910">Generated Files</a></li>
 </ul>
 </div>
 <div class="textblock"><p><a class="anchor" id="md_components_alloc_tool_mem_tool"></a></p>
@@ -104,9 +104,9 @@ $(document).ready(function(){initNavTree('MEM_TOOL_PAGE.html',''); initResizable
 <div class="caption">
 Memory Allocation overview</div></div>
 <dl class="section note"><dt>Note</dt><dd>This profile is valid only when used independent of the System Security module. When System Security is added, the memory region and section configurations are done according to the parameters defined by the SSU settings, which is part of the System Security Configuration profile.</dd></dl>
-<h1><a class="anchor" id="autotoc_md835"></a>
+<h1><a class="anchor" id="autotoc_md908"></a>
 Memory Region</h1>
-<p>This module is used to create named memory ranges, which will be listed under the MEMORY directive of the linker cmd file. In the global settings, the Flash BANKMODE configuration is specified. Note that this is only used for allocation purposes and does not actually perform any BANKMODE related setup on the device. For this configuration, please use the Flash Plugin provided with CCS.</p>
+<p>This module is used to create named memory ranges, which will be listed under the MEMORY directive of the linker cmd file. In the Global Parameters, the Flash BANKMODE configuration is specified. Note that this is only used for allocation purposes and does not actually perform any BANKMODE related setup on the device. For this configuration, please use the Flash Plugin provided with CCS.</p>
 <p> <style>div.image img[src="mem3.png"]{width:50%}</style> </p><div class="image">
 <img src="mem3.png" alt=""/>
 <div class="caption">
@@ -138,21 +138,24 @@ Shared Memory Region - Created on CPU1</div></div>
 <img src="sharecpu3.png" alt=""/>
 <div class="caption">
 Shared Memory Region - Shared with on CPU3</div></div>
-<h1><a class="anchor" id="autotoc_md836"></a>
+<h1><a class="anchor" id="autotoc_md909"></a>
 Sections</h1>
 <p>This module is used for creating output sections, and the constituent input sections, which will be listed under the SECTIONS directive of the linker cmd file.</p>
 <p>Currently, each output section can be assigned to exactly 1 Memory Region without splitting. It can also be assigned to be run from a different (single) Memory Region. Additional linker configurations like alignment, constant padding, and other special symbols are also available in the module.</p>
 <p>Zero/more input sections can be added for each output section. For each input section, user can specify the library name, object file and the specific input section name. If any of these are left blank, all relevant matches for that field will be assigned to the section (See below image).</p>
-<ul>
-<li><b>codestart</b> section is automatically assigned to the first Flash (or if it doesn't exist, then RAM) code memory region found. To change this assignment, simply create an Output Section named 'codestart' and assign to the required Load Memory</li>
-<li><b>cert</b> section is automatically added if any Flash Memory Regions are detected. This region is mandatory for CPU1. The CERT Flash memory region must be manually created at 0x10000000 having 4kB size (this will be the first created Flash Memory Region instance in Sysconfig)</li>
-</ul>
 <p> <style>div.image img[src="mem5.png"]{width:60%}</style> </p><div class="image">
 <img src="mem5.png" alt=""/>
 <div class="caption">
 Input &amp; Output Sections</div></div>
 <p>In case no input sections are added, the output section name itself is used to locate and match input sections.</p>
-<h1><a class="anchor" id="autotoc_md837"></a>
+<p>Certain "special" input sections are configured as follows:</p>
+<ul>
+<li><b>codestart</b> section is automatically assigned to the first Flash (or if it doesn't exist, then RAM) code memory region found. To change this assignment, simply create an Output Section named 'codestart' and assign to the required Load Memory. Note that this section will always be assigned to the starting address of the selected Memory Region.</li>
+<li><b>cert</b> section is automatically added if any Flash Memory Regions are detected. This region is mandatory for CPU1 and CPU3.</li>
+<li><b>nmivector</b> section can be placed at a specific address (<em>for CPU2 &amp; CPU3 only</em>) by configuring the same in Global Parameters in the Memory Regions module.</li>
+<li><b>resetvector</b> section can be placed at a specific address (<em>for CPU2 &amp; CPU3 only</em>) by configuring the same in Global Parameters in the Memory Regions module.</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md910"></a>
 Generated Files</h1>
 <p> <style>div.image img[src="genfiles_linker.png"]{width:40%}</style> </p><div class="image">
 <img src="genfiles_linker.png" alt=""/>

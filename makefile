@@ -67,6 +67,10 @@ BUILD_EXAMPLE_ALL += ecap_academy_lab
 BUILD_EXAMPLE_ALL += ecap_ex1_apwm
 BUILD_EXAMPLE_ALL += ecap_ex2_capture_pwm
 BUILD_EXAMPLE_ALL += ecap_ex3_apwm_phase_shift
+BUILD_EXAMPLE_ALL += emif_ex1_16bit_sdram_syscfg
+BUILD_EXAMPLE_ALL += emif_ex2_16bit_asram_syscfg
+BUILD_EXAMPLE_ALL += emif_ex3_32bit_sdram_syscfg
+BUILD_EXAMPLE_ALL += empty_driverlib_project
 BUILD_EXAMPLE_ALL += epg_ex1_generate_clocks
 BUILD_EXAMPLE_ALL += epg_ex2_generate_two_offset_clocks
 BUILD_EXAMPLE_ALL += epg_ex3_generate_two_offset_clocks_with_siggen
@@ -96,8 +100,18 @@ BUILD_EXAMPLE_ALL += erad_ex3_bus_monitor_no_syscfg
 BUILD_EXAMPLE_ALL += erad_ex4_bus_monitor_syscfg
 BUILD_EXAMPLE_ALL += erad_ex5_stack_overflow_detect_no_syscfg
 BUILD_EXAMPLE_ALL += erad_ex6_stack_overflow_detect_syscfg
+BUILD_EXAMPLE_ALL += erad_ex1_profile_interrupts
+BUILD_EXAMPLE_ALL += erad_ex2_stack_overflow
 BUILD_EXAMPLE_ALL += esm_ex1_tmuromparity_test
 BUILD_EXAMPLE_ALL += esm_ex2_safetyaggregator
+BUILD_EXAMPLE_ALL += flash_based_UART_SBL_with_FOTA
+BUILD_EXAMPLE_ALL += F29H85x_EEPROM
+BUILD_EXAMPLE_ALL += F29H85x_EEPROM_PingPong
+BUILD_EXAMPLE_ALL += flash_bankmode_fota
+BUILD_EXAMPLE_ALL += flash_mode0_128_program
+BUILD_EXAMPLE_ALL += flash_mode0_512_program
+BUILD_EXAMPLE_ALL += flash_mode1_128_program
+BUILD_EXAMPLE_ALL += flash_mode1_512_program
 BUILD_EXAMPLE_ALL += uart_flash_kernel
 BUILD_EXAMPLE_ALL += fsi_academy_lab
 BUILD_EXAMPLE_ALL += fsi_ex1_loopback_cpucontrol
@@ -115,6 +129,7 @@ BUILD_EXAMPLE_ALL += i2c_ex7_clock_stretching_controller_tx
 BUILD_EXAMPLE_ALL += i2c_ex7_clock_stretching_target_rx
 BUILD_EXAMPLE_ALL += interrupt_ex1_int_rtint_latency
 BUILD_EXAMPLE_ALL += interrupt_ex2_int_rtint_nesting
+BUILD_EXAMPLE_ALL += launchxl_ex1_led_blinky
 BUILD_EXAMPLE_ALL += led_ex1_blinky
 BUILD_EXAMPLE_ALL += lin_ex1_loopback_interrupts
 BUILD_EXAMPLE_ALL += lin_ex2_sci_loopback
@@ -166,6 +181,10 @@ BUILD_EXAMPLE_ALL += dcl_nlpid
 BUILD_EXAMPLE_ALL += dcl_pi
 BUILD_EXAMPLE_ALL += dcl_pi2
 BUILD_EXAMPLE_ALL += dcl_pid
+BUILD_EXAMPLE_ALL += control+rtos_demo
+BUILD_EXAMPLE_ALL += freertos_ex1_two_tasks_syscfg
+BUILD_EXAMPLE_ALL += freertos_ex2_interrupt_semaphore_syscfg
+BUILD_EXAMPLE_ALL += freertos_port_validation_tests
 
 examples: $(BUILD_EXAMPLE_ALL)
 
@@ -280,6 +299,18 @@ ecap_ex2_capture_pwm:
 ecap_ex3_apwm_phase_shift:
 	$(MAKE) -C examples/driverlib/single_core/ecap/ecap_ex3_apwm_phase_shift/ccs -f makefile all
 
+emif_ex1_16bit_sdram_syscfg:
+	$(MAKE) -C examples/driverlib/single_core/emif/emif_ex1_16bit_sdram_syscfg/ccs -f makefile all
+
+emif_ex2_16bit_asram_syscfg:
+	$(MAKE) -C examples/driverlib/single_core/emif/emif_ex2_16bit_asram_syscfg/ccs -f makefile all
+
+emif_ex3_32bit_sdram_syscfg:
+	$(MAKE) -C examples/driverlib/single_core/emif/emif_ex3_32bit_sdram_syscfg/ccs -f makefile all
+
+empty_driverlib_project:
+	$(MAKE) -C examples/driverlib/single_core/empty_projects/empty_driverlib_project/ccs -f makefile all
+
 epg_ex1_generate_clocks:
 	$(MAKE) -C examples/driverlib/single_core/epg/epg_ex1_generate_clocks/ccs -f makefile all
 
@@ -367,11 +398,41 @@ erad_ex5_stack_overflow_detect_no_syscfg:
 erad_ex6_stack_overflow_detect_syscfg:
 	$(MAKE) -C examples/driverlib/single_core/erad/application_owned_examples/erad_ex6_stack_overflow_detect_syscfg/ccs -f makefile all
 
+erad_ex1_profile_interrupts:
+	$(MAKE) -C examples/driverlib/single_core/erad/debugger_owned_examples/erad_ex1_profile_interrupts/ccs -f makefile all
+
+erad_ex2_stack_overflow:
+	$(MAKE) -C examples/driverlib/single_core/erad/debugger_owned_examples/erad_ex2_stack_overflow/ccs -f makefile all
+
 esm_ex1_tmuromparity_test:
 	$(MAKE) -C examples/driverlib/single_core/esm/esm_ex1_tmuromparity_test/ccs -f makefile all
 
 esm_ex2_safetyaggregator:
 	$(MAKE) -C examples/driverlib/single_core/esm/esm_ex2_safetyaggregator/ccs -f makefile all
+
+flash_based_UART_SBL_with_FOTA:
+	$(MAKE) -C examples/driverlib/single_core/flash/flash_based_UART_SBL_with_FOTA/ccs -f makefile all
+
+F29H85x_EEPROM:
+	$(MAKE) -C examples/driverlib/single_core/flash/F29H85x_EEPROM/ccs -f makefile all
+
+F29H85x_EEPROM_PingPong:
+	$(MAKE) -C examples/driverlib/single_core/flash/F29H85x_EEPROM_PingPong/ccs -f makefile all
+
+flash_bankmode_fota:
+	$(MAKE) -C examples/driverlib/single_core/flash/flash_bankmode_fota/ccs -f makefile all
+
+flash_mode0_128_program:
+	$(MAKE) -C examples/driverlib/single_core/flash/flash_mode0_128_program/ccs -f makefile all
+
+flash_mode0_512_program:
+	$(MAKE) -C examples/driverlib/single_core/flash/flash_mode0_512_program/ccs -f makefile all
+
+flash_mode1_128_program:
+	$(MAKE) -C examples/driverlib/single_core/flash/flash_mode1_128_program/ccs -f makefile all
+
+flash_mode1_512_program:
+	$(MAKE) -C examples/driverlib/single_core/flash/flash_mode1_512_program/ccs -f makefile all
 
 uart_flash_kernel:
 	$(MAKE) -C examples/driverlib/single_core/flash/uart_flash_kernel/ccs -f makefile all
@@ -423,6 +484,9 @@ interrupt_ex1_int_rtint_latency:
 
 interrupt_ex2_int_rtint_nesting:
 	$(MAKE) -C examples/driverlib/single_core/interrupt/interrupt_ex2_int_rtint_nesting/ccs -f makefile all
+
+launchxl_ex1_led_blinky:
+	$(MAKE) -C examples/driverlib/single_core/launchxl_f29h85x/launchxl_ex1_led_blinky/ccs -f makefile all BOARD=LAUNCHXL
 
 led_ex1_blinky:
 	$(MAKE) -C examples/driverlib/single_core/led/led_ex1_blinky/ccs -f makefile all
@@ -577,6 +641,17 @@ dcl_pi2:
 dcl_pid:
 	$(MAKE) -C examples/rtlibs/dcl/dcl_pid/ccs -f makefile all
 
+control+rtos_demo:
+	$(MAKE) -C examples/kernel/freertos/single_core/control+rtos_demo/ccs -f makefile all
+
+freertos_ex1_two_tasks_syscfg:
+	$(MAKE) -C examples/kernel/freertos/single_core/freertos_ex1_two_tasks_syscfg/ccs -f makefile all
+
+freertos_ex2_interrupt_semaphore_syscfg:
+	$(MAKE) -C examples/kernel/freertos/single_core/freertos_ex2_interrupt_semaphore_syscfg/ccs -f makefile all
+
+freertos_port_validation_tests:
+	$(MAKE) -C examples/kernel/freertos/single_core/freertos_port_validation_tests/ccs -f makefile all
 
 BUILD_EXAMPLE_CLEAN_ALL =
 BUILD_EXAMPLE_CLEAN_ALL += adc_ex1_soc_software_clean
@@ -616,6 +691,10 @@ BUILD_EXAMPLE_CLEAN_ALL += ecap_academy_lab_clean
 BUILD_EXAMPLE_CLEAN_ALL += ecap_ex1_apwm_clean
 BUILD_EXAMPLE_CLEAN_ALL += ecap_ex2_capture_pwm_clean
 BUILD_EXAMPLE_CLEAN_ALL += ecap_ex3_apwm_phase_shift_clean
+BUILD_EXAMPLE_CLEAN_ALL += emif_ex1_16bit_sdram_syscfg_clean
+BUILD_EXAMPLE_CLEAN_ALL += emif_ex2_16bit_asram_syscfg_clean
+BUILD_EXAMPLE_CLEAN_ALL += emif_ex3_32bit_sdram_syscfg_clean
+BUILD_EXAMPLE_CLEAN_ALL += empty_driverlib_project_clean
 BUILD_EXAMPLE_CLEAN_ALL += epg_ex1_generate_clocks_clean
 BUILD_EXAMPLE_CLEAN_ALL += epg_ex2_generate_two_offset_clocks_clean
 BUILD_EXAMPLE_CLEAN_ALL += epg_ex3_generate_two_offset_clocks_with_siggen_clean
@@ -645,8 +724,18 @@ BUILD_EXAMPLE_CLEAN_ALL += erad_ex3_bus_monitor_no_syscfg_clean
 BUILD_EXAMPLE_CLEAN_ALL += erad_ex4_bus_monitor_syscfg_clean
 BUILD_EXAMPLE_CLEAN_ALL += erad_ex5_stack_overflow_detect_no_syscfg_clean
 BUILD_EXAMPLE_CLEAN_ALL += erad_ex6_stack_overflow_detect_syscfg_clean
+BUILD_EXAMPLE_CLEAN_ALL += erad_ex1_profile_interrupts_clean
+BUILD_EXAMPLE_CLEAN_ALL += erad_ex2_stack_overflow_clean
 BUILD_EXAMPLE_CLEAN_ALL += esm_ex1_tmuromparity_test_clean
 BUILD_EXAMPLE_CLEAN_ALL += esm_ex2_safetyaggregator_clean
+BUILD_EXAMPLE_CLEAN_ALL += flash_based_UART_SBL_with_FOTA_clean
+BUILD_EXAMPLE_CLEAN_ALL += F29H85x_EEPROM_clean
+BUILD_EXAMPLE_CLEAN_ALL += F29H85x_EEPROM_PingPong_clean
+BUILD_EXAMPLE_CLEAN_ALL += flash_bankmode_fota_clean
+BUILD_EXAMPLE_CLEAN_ALL += flash_mode0_128_program_clean
+BUILD_EXAMPLE_CLEAN_ALL += flash_mode0_512_program_clean
+BUILD_EXAMPLE_CLEAN_ALL += flash_mode1_128_program_clean
+BUILD_EXAMPLE_CLEAN_ALL += flash_mode1_512_program_clean
 BUILD_EXAMPLE_CLEAN_ALL += uart_flash_kernel_clean
 BUILD_EXAMPLE_CLEAN_ALL += fsi_academy_lab_clean
 BUILD_EXAMPLE_CLEAN_ALL += fsi_ex1_loopback_cpucontrol_clean
@@ -664,6 +753,7 @@ BUILD_EXAMPLE_CLEAN_ALL += i2c_ex7_clock_stretching_controller_tx_clean
 BUILD_EXAMPLE_CLEAN_ALL += i2c_ex7_clock_stretching_target_rx_clean
 BUILD_EXAMPLE_CLEAN_ALL += interrupt_ex1_int_rtint_latency_clean
 BUILD_EXAMPLE_CLEAN_ALL += interrupt_ex2_int_rtint_nesting_clean
+BUILD_EXAMPLE_CLEAN_ALL += launchxl_ex1_led_blinky_clean
 BUILD_EXAMPLE_CLEAN_ALL += led_ex1_blinky_clean
 BUILD_EXAMPLE_CLEAN_ALL += lin_ex1_loopback_interrupts_clean
 BUILD_EXAMPLE_CLEAN_ALL += lin_ex2_sci_loopback_clean
@@ -715,6 +805,10 @@ BUILD_EXAMPLE_CLEAN_ALL += dcl_nlpid_clean
 BUILD_EXAMPLE_CLEAN_ALL += dcl_pi_clean
 BUILD_EXAMPLE_CLEAN_ALL += dcl_pi2_clean
 BUILD_EXAMPLE_CLEAN_ALL += dcl_pid_clean
+BUILD_EXAMPLE_CLEAN_ALL += control+rtos_demo_clean
+BUILD_EXAMPLE_CLEAN_ALL += freertos_ex1_two_tasks_syscfg_clean
+BUILD_EXAMPLE_CLEAN_ALL += freertos_ex2_interrupt_semaphore_syscfg_clean
+BUILD_EXAMPLE_CLEAN_ALL += freertos_port_validation_tests_clean
 
 examples-clean: $(BUILD_EXAMPLE_CLEAN_ALL)
 
@@ -829,6 +923,18 @@ ecap_ex2_capture_pwm_clean:
 ecap_ex3_apwm_phase_shift_clean:
 	$(MAKE) -C examples/driverlib/single_core/ecap/ecap_ex3_apwm_phase_shift/ccs -f makefile clean
 
+emif_ex1_16bit_sdram_syscfg_clean:
+	$(MAKE) -C examples/driverlib/single_core/emif/emif_ex1_16bit_sdram_syscfg/ccs -f makefile clean
+
+emif_ex2_16bit_asram_syscfg_clean:
+	$(MAKE) -C examples/driverlib/single_core/emif/emif_ex2_16bit_asram_syscfg/ccs -f makefile clean
+
+emif_ex3_32bit_sdram_syscfg_clean:
+	$(MAKE) -C examples/driverlib/single_core/emif/emif_ex3_32bit_sdram_syscfg/ccs -f makefile clean
+
+empty_driverlib_project_clean:
+	$(MAKE) -C examples/driverlib/single_core/empty_projects/empty_driverlib_project/ccs -f makefile clean
+
 epg_ex1_generate_clocks_clean:
 	$(MAKE) -C examples/driverlib/single_core/epg/epg_ex1_generate_clocks/ccs -f makefile clean
 
@@ -916,11 +1022,41 @@ erad_ex5_stack_overflow_detect_no_syscfg_clean:
 erad_ex6_stack_overflow_detect_syscfg_clean:
 	$(MAKE) -C examples/driverlib/single_core/erad/application_owned_examples/erad_ex6_stack_overflow_detect_syscfg/ccs -f makefile clean
 
+erad_ex1_profile_interrupts_clean:
+	$(MAKE) -C examples/driverlib/single_core/erad/debugger_owned_examples/erad_ex1_profile_interrupts/ccs -f makefile clean
+
+erad_ex2_stack_overflow_clean:
+	$(MAKE) -C examples/driverlib/single_core/erad/debugger_owned_examples/erad_ex2_stack_overflow/ccs -f makefile clean
+
 esm_ex1_tmuromparity_test_clean:
 	$(MAKE) -C examples/driverlib/single_core/esm/esm_ex1_tmuromparity_test/ccs -f makefile clean
 
 esm_ex2_safetyaggregator_clean:
 	$(MAKE) -C examples/driverlib/single_core/esm/esm_ex2_safetyaggregator/ccs -f makefile clean
+
+flash_based_UART_SBL_with_FOTA_clean:
+	$(MAKE) -C examples/driverlib/single_core/flash/flash_based_UART_SBL_with_FOTA/ccs -f makefile clean
+
+F29H85x_EEPROM_clean:
+	$(MAKE) -C examples/driverlib/single_core/flash/F29H85x_EEPROM/ccs -f makefile clean
+
+F29H85x_EEPROM_PingPong_clean:
+	$(MAKE) -C examples/driverlib/single_core/flash/F29H85x_EEPROM_PingPong/ccs -f makefile clean
+
+flash_bankmode_fota_clean:
+	$(MAKE) -C examples/driverlib/single_core/flash/flash_bankmode_fota/ccs -f makefile clean
+
+flash_mode0_128_program_clean:
+	$(MAKE) -C examples/driverlib/single_core/flash/flash_mode0_128_program/ccs -f makefile clean
+
+flash_mode0_512_program_clean:
+	$(MAKE) -C examples/driverlib/single_core/flash/flash_mode0_512_program/ccs -f makefile clean
+
+flash_mode1_128_program_clean:
+	$(MAKE) -C examples/driverlib/single_core/flash/flash_mode1_128_program/ccs -f makefile clean
+
+flash_mode1_512_program_clean:
+	$(MAKE) -C examples/driverlib/single_core/flash/flash_mode1_512_program/ccs -f makefile clean
 
 uart_flash_kernel_clean:
 	$(MAKE) -C examples/driverlib/single_core/flash/uart_flash_kernel/ccs -f makefile clean
@@ -972,6 +1108,9 @@ interrupt_ex1_int_rtint_latency_clean:
 
 interrupt_ex2_int_rtint_nesting_clean:
 	$(MAKE) -C examples/driverlib/single_core/interrupt/interrupt_ex2_int_rtint_nesting/ccs -f makefile clean
+
+launchxl_ex1_led_blinky_clean:
+	$(MAKE) -C examples/driverlib/single_core/launchxl_f29h85x/launchxl_ex1_led_blinky/ccs -f makefile clean
 
 led_ex1_blinky_clean:
 	$(MAKE) -C examples/driverlib/single_core/led/led_ex1_blinky/ccs -f makefile clean
@@ -1126,3 +1265,14 @@ dcl_pi2_clean:
 dcl_pid_clean:
 	$(MAKE) -C examples/rtlibs/dcl/dcl_pid/ccs -f makefile clean
 
+control+rtos_demo_clean:
+	$(MAKE) -C examples/kernel/freertos/single_core/control+rtos_demo/ccs -f makefile clean
+
+freertos_ex1_two_tasks_syscfg_clean:
+	$(MAKE) -C examples/kernel/freertos/single_core/freertos_ex1_two_tasks_syscfg/ccs -f makefile clean
+
+freertos_ex2_interrupt_semaphore_syscfg_clean:
+	$(MAKE) -C examples/kernel/freertos/single_core/freertos_ex2_interrupt_semaphore_syscfg/ccs -f makefile clean
+
+freertos_port_validation_tests_clean:
+	$(MAKE) -C examples/kernel/freertos/single_core/freertos_port_validation_tests/ccs -f makefile clean

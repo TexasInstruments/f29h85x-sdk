@@ -177,14 +177,14 @@ System_Security.STACK1.stackMem.type                            = scripting.forc
 System_Security.STACK1.stackMem.datasize                        = scripting.forceWrite(4);
 System_Security.STACK1.stack.size                               = scripting.forceWrite(256);
 System_Security.STACK1.stack.zone                               = scripting.forceWrite("ZONE1");
-System_Security.STACK1.stack.secGroupAttr                       = scripting.forceWrite("PUBLIC");
+System_Security.STACK1.stack.secGroupAttr                       = scripting.forceWrite("NONE");
 System_Security.STACK1.stack.stackAPR.memType                   = scripting.forceWrite("RAM");
 System_Security.STACK2.modules                                  = ["LINK2_Link","comms_Module_Link","control_Module_Link"];
 System_Security.STACK2.stackMem.type                            = scripting.forceWrite("RAM");
 System_Security.STACK2.stackMem.datasize                        = scripting.forceWrite(4);
 System_Security.STACK2.stack.size                               = scripting.forceWrite(256);
 System_Security.STACK2.stack.zone                               = scripting.forceWrite("ZONE1");
-System_Security.STACK2.stack.secGroupAttr                       = scripting.forceWrite("PUBLIC");
+System_Security.STACK2.stack.secGroupAttr                       = scripting.forceWrite("NONE");
 System_Security.STACK2.stack.stackAPR.memType                   = scripting.forceWrite("RAM");
 System_Security.sandbox.create(1);
 System_Security.sandbox[0].$name                                = "sbox_CommonCode";
@@ -193,7 +193,7 @@ System_Security.sandbox[0].stackMem.type                        = scripting.forc
 System_Security.sandbox[0].stackMem.datasize                    = scripting.forceWrite(4);
 System_Security.sandbox[0].stack.size                           = scripting.forceWrite(256);
 System_Security.sandbox[0].stack.zone                           = scripting.forceWrite("ZONE1");
-System_Security.sandbox[0].stack.secGroupAttr                   = scripting.forceWrite("PUBLIC");
+System_Security.sandbox[0].stack.secGroupAttr                   = scripting.forceWrite("NONE");
 System_Security.sandbox[0].stack.stackAPR.memType               = scripting.forceWrite("RAM");
 System_Security.sharedMem.create(1);
 System_Security.sharedMem[0].$name                              = "SharedMem0";

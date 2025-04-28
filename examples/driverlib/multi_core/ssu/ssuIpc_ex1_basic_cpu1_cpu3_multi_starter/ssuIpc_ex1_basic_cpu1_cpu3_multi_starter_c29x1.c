@@ -11,21 +11,21 @@
 //! C29x1 to C29x3 core without using message queues and configure the SSU. This example
 //! should be used to get started with the SSU as it uses the minimum APR/LINK/STACK configuration.
 //!
-//! Follow these steps to use CCS to debug this multi-core example. After 
+//! Follow these steps to use CCS to debug this multi-core example. After
 //! launching the debug session:
 //!     1. Connect to CPU1.
-//!     2. Using the Flash Plug-In, 
+//!     2. Using the Flash Plug-In,
 //!         - In 'User Config Settings', Program FLASH BANKMODE to BANKMODE2, if not already done.
-//!         - In 'Download Settings', Unselect ‘Verify Flash after Program (SSU Mode 1 Usage Only)’, if not already done.
-//!         - In 'Download Settings', Unselect ‘Perform Blank Check before loading data to Flash memory (SSU Mode 1 Usage Only)’, if not already done.
-//!         - In 'NonMain Erase Settings', Select 'Allow NonMain Flash erase before loading data to Flash memory' (click checkbox), if not already done. 
+//!         - In 'Download Settings', Unselect 'Verify Flash after Program (SSU Mode 1 Usage Only)', if not already done.
+//!         - In 'Download Settings', Unselect 'Perform Blank Check before loading data to Flash memory (SSU Mode 1 Usage Only)', if not already done.
+//!         - In 'NonMain Erase Settings', Select 'Allow NonMain Flash erase before loading data to Flash memory' (click checkbox), if not already done.
 //!          Refer to Flash Plug-In documentation for further instructions.
 //!     3. Issue an XRSN to the device.
 //!     4. Load only the CPU1.out.
-//!     5. After the program is loaded, issue an XRSN to the device. 
-//!        Connect to CPU1 and load symbols. 
+//!     5. After the program is loaded, issue an XRSN to the device.
+//!        Connect to CPU1 and load symbols.
 //!     6. At this point, CPU1 configures and releases CPU3 out of reset. CPU3 program
-//!     has started execution. To further debug, connect to CPU3 and load the symbols. 
+//!     has started execution. To further debug, connect to CPU3 and load the symbols.
 //!
 //! \note For FLASH configuration, this example is run in FLASH BANKMODE2,
 //! where CPU3 has access to FLASH (FRI-2). Refer to the Flash Plugin
@@ -34,7 +34,7 @@
 //! RAM sections.
 //!
 //!  CPU1 SSU Configurations:
-//!  APRs   - ipc_shared, APR_RESERVED_sign_CPU1 (CERT), APR_FlashLoad_CPU1, LINK2_codeAPR_Flash, 
+//!  APRs   - ipc_shared, APR_RESERVED_sign_CPU1 (CERT), APR_FlashLoad_CPU1, LINK2_codeAPR_Flash,
 //!           LINK2_codeAPR_RAM, LINK2_dataAPR_RW, LINK2_dataAPR_RO, STACK1_stackmem_apr, STACK2_stackmem_apr
 //!  LINKs  - LINK1, LINK2
 //!  STACKs - STACK1, STACK2
@@ -95,8 +95,8 @@
 // Defines
 //
 #ifdef _FLASH
-    #define CPU3_RESET_VECTOR   0x10400000U
-    #define CPU3_NMI_VECTOR     0x10400040U
+    #define CPU3_RESET_VECTOR   0x10401000U
+    #define CPU3_NMI_VECTOR     0x10401040U
 #else
     #define CPU3_RESET_VECTOR   0x20110000U
     #define CPU3_NMI_VECTOR     0x20110040U

@@ -43,7 +43,7 @@
   <td id="projectlogo"><a href="https://www.ti.com"><img alt="Logo" src="ti_logo.svg"/></a></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">F29H85x-SDK
-   &#160;<span id="projectnumber">1.00.00.00</span>
+   &#160;<span id="projectnumber">1.01.00.00</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -101,15 +101,12 @@ Macros</h2></td></tr>
 <tr class="memitem:a1bab7bce04b0b1a03beea7b504637419"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hsmclient_8c.html#a1bab7bce04b0b1a03beea7b504637419">GET_CACHE_ALIGNED_SIZE</a>(x)&#160;&#160;&#160;((x + CacheP_CACHELINE_ALIGNMENT) &amp; ~(CacheP_CACHELINE_ALIGNMENT - 1))</td></tr>
 <tr class="memdesc:a1bab7bce04b0b1a03beea7b504637419"><td class="mdescLeft">&#160;</td><td class="mdescRight">Macro calculates the cache-aligned size for a given buffer or data structure.  <a href="hsmclient_8c.html#a1bab7bce04b0b1a03beea7b504637419">More...</a><br /></td></tr>
 <tr class="separator:a1bab7bce04b0b1a03beea7b504637419"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a208aa1345a2bdb663ba0df5bc02bcbd4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hsmclient_8c.html#a208aa1345a2bdb663ba0df5bc02bcbd4">HSM_CLIENT_MSG_QUEUE_SIZE</a>&#160;&#160;&#160;(1028)</td></tr>
-<tr class="memdesc:a208aa1345a2bdb663ba0df5bc02bcbd4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum size of the HSM client message queue For Streaming Secure Boot, the break up is as follows, 1 start message (includes the certificate) + 1 finish message + 1 ELF Header Buffer update message + 1 PHT Buffer update message 1024 ELF segment update messages (including the two note segments)  <a href="hsmclient_8c.html#a208aa1345a2bdb663ba0df5bc02bcbd4">More...</a><br /></td></tr>
-<tr class="separator:a208aa1345a2bdb663ba0df5bc02bcbd4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a46b47b8c5129f793c8d56b98b86e8d33"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hsmclient_8c.html#a46b47b8c5129f793c8d56b98b86e8d33">Hsmclient_updateBootNotificationRegister</a> (void)</td></tr>
 <tr class="separator:a46b47b8c5129f793c8d56b98b86e8d33"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae4928e7937378570a991b4f785786dfd"><td class="memItemLeft" align="right" valign="top">static uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hsmclient_8c.html#ae4928e7937378570a991b4f785786dfd">crc16_ccit</a> (uint8_t *data, uint16_t <a class="el" href="group__xbar__api.html#gaa948b31868ed944eab03abbbca2672dc">length</a>)</td></tr>
+<tr class="memitem:ae4928e7937378570a991b4f785786dfd"><td class="memItemLeft" align="right" valign="top">static uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hsmclient_8c.html#ae4928e7937378570a991b4f785786dfd">crc16_ccit</a> (uint8_t *<a class="el" href="group__uart__api.html#ga325819a8e492ac69542e8b31705af6e9">data</a>, uint16_t <a class="el" href="group__xbar__api.html#gaa948b31868ed944eab03abbbca2672dc">length</a>)</td></tr>
 <tr class="memdesc:ae4928e7937378570a991b4f785786dfd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate crc16_ccit for a given data.  <a href="hsmclient_8c.html#ae4928e7937378570a991b4f785786dfd">More...</a><br /></td></tr>
 <tr class="separator:ae4928e7937378570a991b4f785786dfd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afea713f456ee5d1f49832fba2299c938"><td class="memItemLeft" align="right" valign="top">static int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hsmclient_8c.html#afea713f456ee5d1f49832fba2299c938">HsmClient_SendAndRecv</a> (<a class="el" href="structHsmClient__t.html">HsmClient_t</a> *HsmClient, uint32_t timeout)</td></tr>
@@ -135,6 +132,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ga3b55ad3229c657ca509f9b29451e37e5"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DRV__HSMCLIENT__MODULE.html#ga3b55ad3229c657ca509f9b29451e37e5">HsmClient_init</a> (SIPC_Params *params)</td></tr>
 <tr class="memdesc:ga3b55ad3229c657ca509f9b29451e37e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize the HSM client for current core.  <a href="group__DRV__HSMCLIENT__MODULE.html#ga3b55ad3229c657ca509f9b29451e37e5">More...</a><br /></td></tr>
 <tr class="separator:ga3b55ad3229c657ca509f9b29451e37e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga56b1b7c7c3aa0dbc595b196c63520357"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DRV__HSMCLIENT__MODULE.html#ga56b1b7c7c3aa0dbc595b196c63520357">HsmClient_SecureBootQueueInit</a> (uint32_t configured_hsm_client_msg_queue_size)</td></tr>
+<tr class="memdesc:ga56b1b7c7c3aa0dbc595b196c63520357"><td class="mdescLeft">&#160;</td><td class="mdescRight">Customize the size of the HSM client message queue.  <a href="group__DRV__HSMCLIENT__MODULE.html#ga56b1b7c7c3aa0dbc595b196c63520357">More...</a><br /></td></tr>
+<tr class="separator:ga56b1b7c7c3aa0dbc595b196c63520357"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4da682de97be0e01542fa48aff6b368b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hsmclient_8c.html#a4da682de97be0e01542fa48aff6b368b">HsmClient_deinit</a> (void)</td></tr>
 <tr class="separator:a4da682de97be0e01542fa48aff6b368b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga2d712c43bc058c71d3c1134a3b2501c5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DRV__HSMCLIENT__MODULE.html#ga2d712c43bc058c71d3c1134a3b2501c5">HsmClient_unregister</a> (<a class="el" href="structHsmClient__t.html">HsmClient_t</a> *HsmClient, uint8_t clientId)</td></tr>
@@ -152,21 +152,21 @@ Functions</h2></td></tr>
 <tr class="memitem:ga44bd1d6da427b7614a34969d2ef5ec17"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DRV__HSMCLIENT__MODULE.html#ga44bd1d6da427b7614a34969d2ef5ec17">HsmClient_importKeyring</a> (<a class="el" href="structHsmClient__t.html">HsmClient_t</a> *HsmClient, uint8_t *cert, uint32_t cert_size, uint32_t timeout)</td></tr>
 <tr class="memdesc:ga44bd1d6da427b7614a34969d2ef5ec17"><td class="mdescLeft">&#160;</td><td class="mdescRight">The service issued to HSM Server verifies the certificate and imports the keys from the certificate.  <a href="group__DRV__HSMCLIENT__MODULE.html#ga44bd1d6da427b7614a34969d2ef5ec17">More...</a><br /></td></tr>
 <tr class="separator:ga44bd1d6da427b7614a34969d2ef5ec17"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5130fcb75f1250880f48c4294bac706c"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DRV__HSMCLIENT__MODULE.html#ga5130fcb75f1250880f48c4294bac706c">HsmClient_readOTPRow</a> (<a class="el" href="structHsmClient__t.html">HsmClient_t</a> *HsmClient, <a class="el" href="structEfuseRead__t.html">EfuseRead_t</a> *readRow)</td></tr>
-<tr class="memdesc:ga5130fcb75f1250880f48c4294bac706c"><td class="mdescLeft">&#160;</td><td class="mdescRight">The service issued to HSM Server retrieves the data of GP OTP row based on row index provided as param.  <a href="group__DRV__HSMCLIENT__MODULE.html#ga5130fcb75f1250880f48c4294bac706c">More...</a><br /></td></tr>
-<tr class="separator:ga5130fcb75f1250880f48c4294bac706c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga29aa1dd1f15e7d038bec257ec916ea8d"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DRV__HSMCLIENT__MODULE.html#ga29aa1dd1f15e7d038bec257ec916ea8d">HsmClient_writeOTPRow</a> (<a class="el" href="structHsmClient__t.html">HsmClient_t</a> *HsmClient, <a class="el" href="structEfuseRowWrite__t.html">EfuseRowWrite_t</a> *writeRow)</td></tr>
-<tr class="memdesc:ga29aa1dd1f15e7d038bec257ec916ea8d"><td class="mdescLeft">&#160;</td><td class="mdescRight">The service issued to HSM Server writes the data to extended OTP efuse row based on row index provided as param.  <a href="group__DRV__HSMCLIENT__MODULE.html#ga29aa1dd1f15e7d038bec257ec916ea8d">More...</a><br /></td></tr>
-<tr class="separator:ga29aa1dd1f15e7d038bec257ec916ea8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7960519eeac66f9fbe300d8d1c3b02cf"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DRV__HSMCLIENT__MODULE.html#ga7960519eeac66f9fbe300d8d1c3b02cf">HsmClient_lockOTPRow</a> (<a class="el" href="structHsmClient__t.html">HsmClient_t</a> *HsmClient, <a class="el" href="structEfuseRowProt__t.html">EfuseRowProt_t</a> *protRow)</td></tr>
-<tr class="memdesc:ga7960519eeac66f9fbe300d8d1c3b02cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">The service issued to HSM Server sets the protection status bit of the specified row to 1.  <a href="group__DRV__HSMCLIENT__MODULE.html#ga7960519eeac66f9fbe300d8d1c3b02cf">More...</a><br /></td></tr>
-<tr class="separator:ga7960519eeac66f9fbe300d8d1c3b02cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae1ad70f4ef9597ea874869df933b4d6a"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DRV__HSMCLIENT__MODULE.html#gae1ad70f4ef9597ea874869df933b4d6a">HsmClient_getOTPRowCount</a> (<a class="el" href="structHsmClient__t.html">HsmClient_t</a> *HsmClient, <a class="el" href="structEfuseRowCount__t.html">EfuseRowCount_t</a> *rowCount)</td></tr>
-<tr class="memdesc:gae1ad70f4ef9597ea874869df933b4d6a"><td class="mdescLeft">&#160;</td><td class="mdescRight">The service issued to HSM Server retrieves the count of extended OTP rows.  <a href="group__DRV__HSMCLIENT__MODULE.html#gae1ad70f4ef9597ea874869df933b4d6a">More...</a><br /></td></tr>
-<tr class="separator:gae1ad70f4ef9597ea874869df933b4d6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad830e0858457a98e4f281b4e212b4232"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DRV__HSMCLIENT__MODULE.html#gad830e0858457a98e4f281b4e212b4232">HsmClient_getOTPRowProtection</a> (<a class="el" href="structHsmClient__t.html">HsmClient_t</a> *HsmClient, <a class="el" href="structEfuseRowProt__t.html">EfuseRowProt_t</a> *rowProt)</td></tr>
-<tr class="memdesc:gad830e0858457a98e4f281b4e212b4232"><td class="mdescLeft">&#160;</td><td class="mdescRight">The service issued to HSM Server retrieves the extended otp efuse row protection status.  <a href="group__DRV__HSMCLIENT__MODULE.html#gad830e0858457a98e4f281b4e212b4232">More...</a><br /></td></tr>
-<tr class="separator:gad830e0858457a98e4f281b4e212b4232"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gace3361fd0f3fc438e9b7e0a1acfe2122"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DRV__HSMCLIENT__MODULE.html#gace3361fd0f3fc438e9b7e0a1acfe2122">HsmClient_readOTPRow</a> (<a class="el" href="structHsmClient__t.html">HsmClient_t</a> *HsmClient, <a class="el" href="structNvmOtpRead__t.html">NvmOtpRead_t</a> *readRow)</td></tr>
+<tr class="memdesc:gace3361fd0f3fc438e9b7e0a1acfe2122"><td class="mdescLeft">&#160;</td><td class="mdescRight">The service issued to HSM Server retrieves the data of GP OTP row based on row index provided as param.  <a href="group__DRV__HSMCLIENT__MODULE.html#gace3361fd0f3fc438e9b7e0a1acfe2122">More...</a><br /></td></tr>
+<tr class="separator:gace3361fd0f3fc438e9b7e0a1acfe2122"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga96f53cf958e70929245d0f21e10f038e"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DRV__HSMCLIENT__MODULE.html#ga96f53cf958e70929245d0f21e10f038e">HsmClient_writeOTPRow</a> (<a class="el" href="structHsmClient__t.html">HsmClient_t</a> *HsmClient, <a class="el" href="structNvmOtpRowWrite__t.html">NvmOtpRowWrite_t</a> *writeRow)</td></tr>
+<tr class="memdesc:ga96f53cf958e70929245d0f21e10f038e"><td class="mdescLeft">&#160;</td><td class="mdescRight">The service issued to HSM Server writes the data to extended OTP efuse row based on row index provided as param.  <a href="group__DRV__HSMCLIENT__MODULE.html#ga96f53cf958e70929245d0f21e10f038e">More...</a><br /></td></tr>
+<tr class="separator:ga96f53cf958e70929245d0f21e10f038e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab43e961650612c91157c0587b3d2746f"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DRV__HSMCLIENT__MODULE.html#gab43e961650612c91157c0587b3d2746f">HsmClient_lockOTPRow</a> (<a class="el" href="structHsmClient__t.html">HsmClient_t</a> *HsmClient, <a class="el" href="structNvmOtpRowProt__t.html">NvmOtpRowProt_t</a> *protRow)</td></tr>
+<tr class="memdesc:gab43e961650612c91157c0587b3d2746f"><td class="mdescLeft">&#160;</td><td class="mdescRight">The service issued to HSM Server sets the protection status bit of the specified row to 1. This API is not valid for F29H85x.  <a href="group__DRV__HSMCLIENT__MODULE.html#gab43e961650612c91157c0587b3d2746f">More...</a><br /></td></tr>
+<tr class="separator:gab43e961650612c91157c0587b3d2746f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae625624727a8de14944f65d25fececd5"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DRV__HSMCLIENT__MODULE.html#gae625624727a8de14944f65d25fececd5">HsmClient_getOTPRowCount</a> (<a class="el" href="structHsmClient__t.html">HsmClient_t</a> *HsmClient, <a class="el" href="structNvmOtpRowCount__t.html">NvmOtpRowCount_t</a> *rowCount)</td></tr>
+<tr class="memdesc:gae625624727a8de14944f65d25fececd5"><td class="mdescLeft">&#160;</td><td class="mdescRight">The service issued to HSM Server retrieves the count of extended OTP rows.  <a href="group__DRV__HSMCLIENT__MODULE.html#gae625624727a8de14944f65d25fececd5">More...</a><br /></td></tr>
+<tr class="separator:gae625624727a8de14944f65d25fececd5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaca8f5f005b283ec144d9e178b12388ca"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DRV__HSMCLIENT__MODULE.html#gaca8f5f005b283ec144d9e178b12388ca">HsmClient_getOTPRowProtection</a> (<a class="el" href="structHsmClient__t.html">HsmClient_t</a> *HsmClient, <a class="el" href="structNvmOtpRowProt__t.html">NvmOtpRowProt_t</a> *rowProt)</td></tr>
+<tr class="memdesc:gaca8f5f005b283ec144d9e178b12388ca"><td class="mdescLeft">&#160;</td><td class="mdescRight">The service issued to HSM Server retrieves the extended otp efuse row protection status. This API is not valid for F29H85x.  <a href="group__DRV__HSMCLIENT__MODULE.html#gaca8f5f005b283ec144d9e178b12388ca">More...</a><br /></td></tr>
+<tr class="separator:gaca8f5f005b283ec144d9e178b12388ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga210471c61013f15ddf77447071a5b0c2"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DRV__HSMCLIENT__MODULE.html#ga210471c61013f15ddf77447071a5b0c2">HsmClient_procAuthBoot</a> (<a class="el" href="structHsmClient__t.html">HsmClient_t</a> *HsmClient, uint8_t *cert, uint32_t cert_size, uint32_t timeout)</td></tr>
 <tr class="memdesc:ga210471c61013f15ddf77447071a5b0c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">The service issued to HSM Server helps with extended secure boot for applications.  <a href="group__DRV__HSMCLIENT__MODULE.html#ga210471c61013f15ddf77447071a5b0c2">More...</a><br /></td></tr>
 <tr class="separator:ga210471c61013f15ddf77447071a5b0c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -209,10 +209,23 @@ Functions</h2></td></tr>
 <tr class="memitem:ga607526aad2aa236e8227e9c0f20fcd5c"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DRV__HSMCLIENT__MODULE.html#ga607526aad2aa236e8227e9c0f20fcd5c">HsmClient_firmwareUpdate_CodeVerify</a> (<a class="el" href="structHsmClient__t.html">HsmClient_t</a> *HsmClient, <a class="el" href="structFirmwareUpdateReq__t.html">FirmwareUpdateReq_t</a> *pFirmwareUpdateObject)</td></tr>
 <tr class="memdesc:ga607526aad2aa236e8227e9c0f20fcd5c"><td class="mdescLeft">&#160;</td><td class="mdescRight">service request issued to HSM server to decrypt the firmware programmed in dormant flash bank in place, perform integrity checks on the decrypted firmware and program the certificate in flash memory This service is valid only for F29H85x SOC  <a href="group__DRV__HSMCLIENT__MODULE.html#ga607526aad2aa236e8227e9c0f20fcd5c">More...</a><br /></td></tr>
 <tr class="separator:ga607526aad2aa236e8227e9c0f20fcd5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1ffcf953c8b05aabe050f14f0919fd23"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DRV__HSMCLIENT__MODULE.html#ga1ffcf953c8b05aabe050f14f0919fd23">HsmClient_VerifyROTSwitchingCertificate</a> (<a class="el" href="structHsmClient__t.html">HsmClient_t</a> *HsmClient, uint8_t *cert, uint32_t cert_size, uint32_t timeout)</td></tr>
+<tr class="memdesc:ga1ffcf953c8b05aabe050f14f0919fd23"><td class="mdescLeft">&#160;</td><td class="mdescRight">service request issued to HSM server to validate RoT Switching Certificate  <a href="group__DRV__HSMCLIENT__MODULE.html#ga1ffcf953c8b05aabe050f14f0919fd23">More...</a><br /></td></tr>
+<tr class="separator:ga1ffcf953c8b05aabe050f14f0919fd23"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga530b1603d591126ac346c31f30414f7d"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DRV__HSMCLIENT__MODULE.html#ga530b1603d591126ac346c31f30414f7d">HsmClient_UpdateKeyRevsion</a> (<a class="el" href="structHsmClient__t.html">HsmClient_t</a> *HsmClient, uint32_t timeout)</td></tr>
+<tr class="memdesc:ga530b1603d591126ac346c31f30414f7d"><td class="mdescLeft">&#160;</td><td class="mdescRight">service request issued to HSM server to update key revision to 0x2 which changes the root of trust key from secondary keys to back up keys.  <a href="group__DRV__HSMCLIENT__MODULE.html#ga530b1603d591126ac346c31f30414f7d">More...</a><br /></td></tr>
+<tr class="separator:ga530b1603d591126ac346c31f30414f7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5ea570bc441bb6c6a9dff879b0600e27"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DRV__HSMCLIENT__MODULE.html#ga5ea570bc441bb6c6a9dff879b0600e27">HsmClient_configOTFARegions</a> (<a class="el" href="structHsmClient__t.html">HsmClient_t</a> *HsmClient, <a class="el" href="structOTFA__Config__t.html">OTFA_Config_t</a> *OTFA_ConfigInfo, uint32_t timeout)</td></tr>
+<tr class="memdesc:ga5ea570bc441bb6c6a9dff879b0600e27"><td class="mdescLeft">&#160;</td><td class="mdescRight">Client request to configure the OTFA regions.  <a href="group__DRV__HSMCLIENT__MODULE.html#ga5ea570bc441bb6c6a9dff879b0600e27">More...</a><br /></td></tr>
+<tr class="separator:ga5ea570bc441bb6c6a9dff879b0600e27"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae655894963d794110ea5de532102ef64"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DRV__HSMCLIENT__MODULE.html#gae655894963d794110ea5de532102ef64">HsmClient_readOTFARegions</a> (<a class="el" href="structHsmClient__t.html">HsmClient_t</a> *HsmClient, <a class="el" href="structOTFA__readRegion__t.html">OTFA_readRegion_t</a> *OTFA_readRegion, uint32_t timeout)</td></tr>
+<tr class="memdesc:gae655894963d794110ea5de532102ef64"><td class="mdescLeft">&#160;</td><td class="mdescRight">Client request to read the OTFA regions.  <a href="group__DRV__HSMCLIENT__MODULE.html#gae655894963d794110ea5de532102ef64">More...</a><br /></td></tr>
+<tr class="separator:gae655894963d794110ea5de532102ef64"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
 <tr class="memitem:af04631aa89cf2fd00226e22bbdc85d85"><td class="memItemLeft" align="right" valign="top">volatile uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hsmclient_8c.html#af04631aa89cf2fd00226e22bbdc85d85">gHsmrtLoadStatus</a> = <a class="el" href="group__DRV__HSMCLIENT__MODULE.html#gae70b88f1db290b0e6c2a39af4b08bac5">HSMRT_LOAD_NOT_REQUESTED</a></td></tr>
+<tr class="memdesc:af04631aa89cf2fd00226e22bbdc85d85"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum size of the HSM client message queue For Streaming Secure Boot, the break up is as follows, 1 start message (includes the certificate) + 1 finish message + 1 ELF Header Buffer update message + 1 PHT Buffer update message 1024 ELF segment update messages (including the two note segments)  <a href="hsmclient_8c.html#af04631aa89cf2fd00226e22bbdc85d85">More...</a><br /></td></tr>
 <tr class="separator:af04631aa89cf2fd00226e22bbdc85d85"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af04d01d211eba3388ef4bf0813b111c4"><td class="memItemLeft" align="right" valign="top">static volatile int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hsmclient_8c.html#af04d01d211eba3388ef4bf0813b111c4">gSecureBootStatus</a> = SystemP_SUCCESS</td></tr>
 <tr class="separator:af04d01d211eba3388ef4bf0813b111c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -226,8 +239,10 @@ Variables</h2></td></tr>
 <tr class="separator:a88745c577cc2136c5dec737b69d37c32"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5e9b3c073ecbdc49976b79abfbdf7bdd"><td class="memItemLeft" align="right" valign="top">static volatile int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hsmclient_8c.html#a5e9b3c073ecbdc49976b79abfbdf7bdd">gNum_HsmResponseReceived</a> = 0</td></tr>
 <tr class="separator:a5e9b3c073ecbdc49976b79abfbdf7bdd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af591f9860a137b24baeaf126d3423d2b"><td class="memItemLeft" align="right" valign="top">static HsmMsg_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hsmclient_8c.html#af591f9860a137b24baeaf126d3423d2b">gHsmClientMsgQueue</a> [<a class="el" href="hsmclient_8c.html#a208aa1345a2bdb663ba0df5bc02bcbd4">HSM_CLIENT_MSG_QUEUE_SIZE</a>]</td></tr>
-<tr class="separator:af591f9860a137b24baeaf126d3423d2b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a296cdef879b3056b481d365c2d63748a"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hsmclient_8c.html#a296cdef879b3056b481d365c2d63748a">hsm_client_msg_queue_size</a> = 64U</td></tr>
+<tr class="separator:a296cdef879b3056b481d365c2d63748a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a239bcc865876ed0c0f5493ad4572a292"><td class="memItemLeft" align="right" valign="top">HsmMsg_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hsmclient_8c.html#a239bcc865876ed0c0f5493ad4572a292">gHsmClientMsgQueue</a> []</td></tr>
+<tr class="separator:a239bcc865876ed0c0f5493ad4572a292"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
 <a id="a1bab7bce04b0b1a03beea7b504637419"></a>
@@ -247,26 +262,6 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Macro calculates the cache-aligned size for a given buffer or data structure. </p>
-
-</div>
-</div>
-<a id="a208aa1345a2bdb663ba0df5bc02bcbd4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a208aa1345a2bdb663ba0df5bc02bcbd4">&#9670;&nbsp;</a></span>HSM_CLIENT_MSG_QUEUE_SIZE</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define HSM_CLIENT_MSG_QUEUE_SIZE&#160;&#160;&#160;(1028)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Maximum size of the HSM client message queue For Streaming Secure Boot, the break up is as follows, 1 start message (includes the certificate) + 1 finish message + 1 ELF Header Buffer update message + 1 PHT Buffer update message 1024 ELF segment update messages (including the two note segments) </p>
-<ul>
-<li>PT note for boot sequence info</li>
-<li>PT note containing Random string for decryption verification </li>
-</ul>
 
 </div>
 </div>
@@ -556,6 +551,12 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Maximum size of the HSM client message queue For Streaming Secure Boot, the break up is as follows, 1 start message (includes the certificate) + 1 finish message + 1 ELF Header Buffer update message + 1 PHT Buffer update message 1024 ELF segment update messages (including the two note segments) </p>
+<ul>
+<li>PT note for boot sequence info</li>
+<li>PT note containing Random string for decryption verification </li>
+</ul>
+
 </div>
 </div>
 <a id="af04d01d211eba3388ef4bf0813b111c4"></a>
@@ -690,8 +691,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="af591f9860a137b24baeaf126d3423d2b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af591f9860a137b24baeaf126d3423d2b">&#9670;&nbsp;</a></span>gHsmClientMsgQueue</h2>
+<a id="a296cdef879b3056b481d365c2d63748a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a296cdef879b3056b481d365c2d63748a">&#9670;&nbsp;</a></span>hsm_client_msg_queue_size</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -700,12 +701,34 @@ Variables</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">HsmMsg_t gHsmClientMsgQueue[<a class="el" href="hsmclient_8c.html#a208aa1345a2bdb663ba0df5bc02bcbd4">HSM_CLIENT_MSG_QUEUE_SIZE</a>]</td>
+          <td class="memname">uint32_t hsm_client_msg_queue_size = 64U</td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
 <span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a239bcc865876ed0c0f5493ad4572a292"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a239bcc865876ed0c0f5493ad4572a292">&#9670;&nbsp;</a></span>gHsmClientMsgQueue</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">HsmMsg_t gHsmClientMsgQueue[]</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">extern</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">

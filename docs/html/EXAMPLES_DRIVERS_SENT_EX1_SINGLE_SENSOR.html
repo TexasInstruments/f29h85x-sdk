@@ -43,7 +43,7 @@
   <td id="projectlogo"><a href="https://www.ti.com"><img alt="Logo" src="ti_logo.svg"/></a></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">F29H85x-SDK
-   &#160;<span id="projectnumber">1.00.00.00</span>
+   &#160;<span id="projectnumber">1.01.00.00</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -92,15 +92,15 @@ $(document).ready(function(){initNavTree('EXAMPLES_DRIVERS_SENT_EX1_SINGLE_SENSO
 </div><!--header-->
 <div class="contents">
 <div class="toc"><h3>Table of Contents</h3>
-<ul><li class="level1"><a href="#autotoc_md576">Introduction</a></li>
-<li class="level1"><a href="#autotoc_md577">Example Description</a></li>
-<li class="level1"><a href="#autotoc_md578">External Connections</a></li>
-<li class="level1"><a href="#autotoc_md579">Steps to Run the Example</a></li>
-<li class="level1"><a href="#autotoc_md580">See Also</a></li>
+<ul><li class="level1"><a href="#autotoc_md593">Introduction</a></li>
+<li class="level1"><a href="#autotoc_md594">Example Description</a></li>
+<li class="level1"><a href="#autotoc_md595">External Connections</a></li>
+<li class="level1"><a href="#autotoc_md596">Steps to Run the Example</a></li>
+<li class="level1"><a href="#autotoc_md597">See Also</a></li>
 </ul>
 </div>
 <div class="textblock"><p><a class="anchor" id="md_examples_drivers_sent_ex1_single_sensor"></a></p>
-<h1><a class="anchor" id="autotoc_md576"></a>
+<h1><a class="anchor" id="autotoc_md593"></a>
 Introduction</h1>
 <p>The Single Edge Nibble Transmission (SENT) Protocol is an unidirectional communication standard that uses single wire between two or more points to transmit signals from one or more sensors to a controller. SENT uses the open standard SAE J2716. It can transmit high resolution data from a sensor to MCU and is intended as a simple low cost alternative to CAN or LIN. SENT is mainly used for automotive applications such as electronic power steering, pedal sensing, throttle position sensing, mass airflow sensing, pressure sensing, temperature sensing and so on.</p>
 <p>The sensor sends out a signal that is made up of a string of pulses with data encoded as falling to falling edge periods.The data from a sensor is transmitted independently without any intervention of the data receiving module (e.g. the MCU) and without the receiver module sending a sync signal. The modulated signal with a constant amplitude voltage and an evaluation of the time interval between two falling edges (a single edge) is delivered in units of 4 bits (1 nibble), which can represent values ranging from 0 to 15. The messages are timed using clock tick time which is calculated during the calibration/synchronization pulse. The frame format for SENT is as follows:</p>
@@ -116,20 +116,20 @@ Introduction</h1>
 <img src="SENT_frame_format.png" alt=""/>
 <div class="caption">
 SENT Frame format</div></div>
-<h1><a class="anchor" id="autotoc_md577"></a>
+<h1><a class="anchor" id="autotoc_md594"></a>
 Example Description</h1>
 <p>This example configures SENT module to receive 6 Data-nibble per frame for fast channel. GPIO58 is configured to sense the sensor data. Sensor 1's fast channel is used to generate an interrupt when SENT receives fast channel frame data without any errors.</p>
 <p>Watch Variables</p><ul>
 <li>SENT_Frame[] - Frame received from the Sensor</li>
 <li>timestamp[] - Time stamp of the data nibble received</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md578"></a>
+<h1><a class="anchor" id="autotoc_md595"></a>
 External Connections</h1>
 <ul>
 <li>Connect GPIO58 to sensor's SENT channel 1 pin</li>
 <li>Connect GND to sensor's ground pin</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md579"></a>
+<h1><a class="anchor" id="autotoc_md596"></a>
 Steps to Run the Example</h1>
 <ul>
 <li><b>When using CCS projects to build</b>, import the CCS project for the required combination and build it using the CCS project menu (see <a class="el" href="CCS_PROJECTS_PAGE.html">CCS Build Project</a>).</li>
@@ -138,7 +138,7 @@ Steps to Run the Example</h1>
 <li>Launch a CCS debug session and run the executable, see <a class="el" href="CCS_LAUNCH_PAGE.html">Build, Load and Run</a></li>
 <li>Using the watch variable, view the Clock verification status.</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md580"></a>
+<h1><a class="anchor" id="autotoc_md597"></a>
 See Also</h1>
 <p><a class="el" href="DRIVERS_SENT_PAGE.html">SENT</a> </p>
 </div></div><!-- contents -->

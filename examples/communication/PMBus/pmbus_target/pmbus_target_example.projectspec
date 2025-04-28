@@ -10,15 +10,15 @@
         enableSysConfigTool="true"
         sysConfigBuildOptions="--product ${C29SDK_ROOT}/.metadata/sdk.json"
         >
-    
-    <configuration name="RAM" compilerBuildOptions="-O1 -g -DDEBUG -I${PROJECT_ROOT}/device -I${PMBUS_ROOT}/include -I${DLIB_ROOT} -I${BITFIELDS_ROOT} -I${PMBUS_EXAMPLE_COMMON_ROOT}/device_config -I${PMBUS_EXAMPLE_COMMON_ROOT}/target -I${PMBUS_EXAMPLE_COMMON_ROOT}/include -D_PMBUS_TARGET -D_RAM" linkerBuildOptions="-i${PMBUS_ROOT}/ccs/ -i${DLIB_ROOT}/ccs/ -lF29H85x_PMBus_Communication_Stack.lib -ldriverlib.lib --diag_suppress=10325-D --diag_suppress=10063-D --stack_size=0x2000 --heap_size=0x400" />
+
+    <configuration name="RAM" compilerBuildOptions="-O1 -g -DDEBUG -Qunused-arguments -I${PROJECT_ROOT}/device -I${PMBUS_ROOT}/include -I${DLIB_ROOT} -I${BITFIELDS_ROOT} -I${PMBUS_EXAMPLE_COMMON_ROOT}/device_config -I${PMBUS_EXAMPLE_COMMON_ROOT}/target -I${PMBUS_EXAMPLE_COMMON_ROOT}/include -D_PMBUS_TARGET -D_RAM" linkerBuildOptions="-i${PMBUS_ROOT}/ccs/ -i${DLIB_ROOT}/ccs/ -lF29H85x_PMBus_Communication_Stack.lib -ldriverlib.lib --diag_suppress=10325-D --diag_suppress=10063-D --stack_size=0x2000 --heap_size=0x400" />
 
     <pathVariable name="C29SDK_ROOT"                path="../../../../"                             scope="project" />
     <pathVariable name="DLIB_ROOT"                  path="../../../../source/driverlib/"    scope="project"/>
     <pathVariable name="BITFIELDS_ROOT"             path="../../../../source/bitfields/"    scope="project"/>
     <pathVariable name="PMBUS_ROOT"                 path="../../../../source/communication/PMBus/"  scope="project"/>
     <pathVariable name="PMBUS_EXAMPLE_COMMON_ROOT"  path="../common/"                               scope="project"/>
-    
+
     <file action="copy" path="../../../../examples/device_support/targetconfigs/TMS320F29H850TU9.ccxml"    targetDirectory="targetConfigs" />
     <file action="copy" path="../../../../examples/device_support/source/codestartbranch.asm"               targetDirectory="device" />
     <file action="copy" path="../../../../examples/device_support/include/driverlib.h"                      targetDirectory="device" />

@@ -43,7 +43,7 @@
   <td id="projectlogo"><a href="https://www.ti.com"><img alt="Logo" src="ti_logo.svg"/></a></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">F29H85x-SDK
-   &#160;<span id="projectnumber">1.00.00.00</span>
+   &#160;<span id="projectnumber">1.01.00.00</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -92,17 +92,17 @@ $(document).ready(function(){initNavTree('DRIVERS_INTERRUPT_PAGE.html',''); init
 </div><!--header-->
 <div class="contents">
 <div class="toc"><h3>Table of Contents</h3>
-<ul><li class="level1"><a href="#autotoc_md130">Features Supported</a></li>
-<li class="level1"><a href="#autotoc_md131">SysConfig Features</a></li>
-<li class="level1"><a href="#autotoc_md132">Features NOT Supported</a></li>
-<li class="level1"><a href="#autotoc_md133">Important Usage Guidelines</a></li>
-<li class="level1"><a href="#autotoc_md134">Example Usage</a></li>
-<li class="level1"><a href="#autotoc_md135">API</a></li>
+<ul><li class="level1"><a href="#autotoc_md137">Features Supported</a></li>
+<li class="level1"><a href="#autotoc_md138">SysConfig Features</a></li>
+<li class="level1"><a href="#autotoc_md139">Features NOT Supported</a></li>
+<li class="level1"><a href="#autotoc_md140">Important Usage Guidelines</a></li>
+<li class="level1"><a href="#autotoc_md141">Example Usage</a></li>
+<li class="level1"><a href="#autotoc_md142">API</a></li>
 </ul>
 </div>
 <div class="textblock"><p><a class="anchor" id="md_components_drivers_interrupt"></a></p>
 <p>The Interrupt driver provides API to configure the PIPE module. Below are the high level features supported by the Interrupt driver.</p>
-<h1><a class="anchor" id="autotoc_md130"></a>
+<h1><a class="anchor" id="autotoc_md137"></a>
 Features Supported</h1>
 <ul>
 <li>Initialization of PIPE module nad vector table</li>
@@ -110,7 +110,7 @@ Features Supported</h1>
 <li>PIPE Global configuration</li>
 <li>Interrupt channel configuration</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md131"></a>
+<h1><a class="anchor" id="autotoc_md138"></a>
 SysConfig Features</h1>
 <dl class="section note"><dt>Note</dt><dd>It is strongly recommend to use SysConfig where it is available instead of using direct SW API calls. This will help simplify the SW application and also catch common mistakes early in the development cycle.</dd></dl>
 <ul>
@@ -119,12 +119,12 @@ SysConfig Features</h1>
 <li>Generates the init code and the ISR protypes</li>
 <li>Generates a file named interrupt_list.txt with the list of all interrupts in the order of priority and grouped as per the nesting groups</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md132"></a>
+<h1><a class="anchor" id="autotoc_md139"></a>
 Features NOT Supported</h1>
 <ul>
 <li>Diagnostic features present in the PIPE module is not supported in the driver</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md133"></a>
+<h1><a class="anchor" id="autotoc_md140"></a>
 Important Usage Guidelines</h1>
 <ul>
 <li>Make sure the ISRs are defined with the interrupt attribute. Recommended to use Sysconfig for configuring interrupt. It generates the correct attribute based on whether the interrupt is INT/RTINT/NMI.<ul>
@@ -135,10 +135,10 @@ Important Usage Guidelines</h1>
 </li>
 <li>Make sure the RTINT threshold is aligned with nesting group mask. This is enforced in Sysconfig UI.</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md134"></a>
+<h1><a class="anchor" id="autotoc_md141"></a>
 Example Usage</h1>
 <p>Include the below file to access the APIs #include &lt;<a class="el" href="interrupt_8h.html">interrupt.h</a>&gt;</p>
-<h1><a class="anchor" id="autotoc_md135"></a>
+<h1><a class="anchor" id="autotoc_md142"></a>
 API</h1>
 <p><a class="el" href="group__interrupt__api.html">Interrupt</a> </p>
 </div></div><!-- contents -->

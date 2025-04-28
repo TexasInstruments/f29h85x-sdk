@@ -91,7 +91,7 @@ __asm("    .global SysCtl_delay         \n" \
 void SysCtl_pollSyncBusy(uint32_t mask)
 {
     uint32_t timeoutCnt = 0U;
-    uint32_t status = true;
+    uint32_t status = 1U;
 
     //
     //  Wait for BUSY bit to clear
@@ -100,7 +100,7 @@ void SysCtl_pollSyncBusy(uint32_t mask)
     {
         if(timeoutCnt >= SYSCTL_SYNCBUSY_TIMEOUT_CYCLES)
         {
-            status = false;
+            status = 0U;
             break;
         }
 
@@ -111,7 +111,7 @@ void SysCtl_pollSyncBusy(uint32_t mask)
     // When a timeout occurs, error function will be invoked.
     // Users can replace this with custom code.
     //
-    ASSERT(status == (uint32_t)true);
+    ASSERT(status == 1U);
 }
 
 //*****************************************************************************
@@ -122,7 +122,7 @@ void SysCtl_pollSyncBusy(uint32_t mask)
 void SysCtl_pollSyncBusyWd(uint32_t mask)
 {
     uint32_t timeoutCnt = 0U;
-    uint32_t status = true;
+    uint32_t status = 1U;
 
     //
     //  Wait for BUSY bit to clear
@@ -131,7 +131,7 @@ void SysCtl_pollSyncBusyWd(uint32_t mask)
     {
         if(timeoutCnt >= SYSCTL_SYNCBUSY_TIMEOUT_CYCLES)
         {
-            status = false;
+            status = 0U;
             break;
         }
 
@@ -142,7 +142,7 @@ void SysCtl_pollSyncBusyWd(uint32_t mask)
     // When a timeout occurs, error function will be invoked.
     // Users can replace this with custom code.
     //
-    ASSERT(status == (uint32_t)true);
+    ASSERT(status == 1U);
 }
 
 //*****************************************************************************
@@ -976,11 +976,11 @@ SysCtl_emulateDevice (SysCtl_DevicePartNumber partNumber)
             HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF1) = 0xFFFFU;
             HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF2) = 0xFFFFFFFFU;
             HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF4) = 0xFFFFU;
-            HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF7) = 0xFFFFU;
+            HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF7) = 0xFFFFFFFFU;
             HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF10) = 0xFFFFU;
             HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF13) = 0xFFFFU;
             HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF14) = 0xFFFFU;
-            HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF16) = 0xFFFFU;
+            HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF16) = 0xFFFFFFFFU;
             HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF17) = 0xFFFFU;
             HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF18) = 0xFFFFFFFFU;
             HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF19) = 0xFFFFU;
@@ -999,11 +999,11 @@ SysCtl_emulateDevice (SysCtl_DevicePartNumber partNumber)
             HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF1) = 0xFFFEU;
             HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF2) = 0xFFFFFFFFU;
             HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF4) = 0xFFFFU;
-            HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF7) = 0xFFFFU;
+            HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF7) = 0xFFFFFFFFU;
             HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF10) = 0xFFFFU;
             HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF13) = 0xFFFFU;
             HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF14) = 0xFFFFU;
-            HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF16) = 0xFFFFU;
+            HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF16) = 0xFFFFFFFFU;
             HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF17) = 0xFFFFU;
             HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF18) = 0xFFFFFFFFU;
             HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF19) = 0xFFFFU;
@@ -1022,11 +1022,11 @@ SysCtl_emulateDevice (SysCtl_DevicePartNumber partNumber)
             HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF1) = 0xFFFEU;
             HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF2) = 0xFFFFFFFFU;
             HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF4) = 0xFFFFU;
-            HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF7) = 0xFFFFU;
+            HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF7) = 0xFFFFFFFFU;
             HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF10) = 0xFFFFU;
             HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF13) = 0xFFFFU;
             HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF14) = 0xFFFFU;
-            HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF16) = 0xFFFFU;
+            HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF16) = 0xFFFFFFFFU;
             HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF17) = 0xFFFFU;
             HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF18) = 0xFFFFFFFFU;
             HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF19) = 0xFFFFU;
@@ -1045,11 +1045,11 @@ SysCtl_emulateDevice (SysCtl_DevicePartNumber partNumber)
             HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF1) = 0xFFFFU;
             HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF2) = 0xFFFFFFFFU;
             HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF4) = 0xFFFFU;
-            HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF7) = 0xFFFFU;
+            HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF7) = 0xFFFFFFFFU;
             HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF10) = 0xFFFFU;
             HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF13) = 0xFFFFU;
             HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF14) = 0xFFFFU;
-            HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF16) = 0xFFFFU;
+            HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF16) = 0xFFFFFFFFU;
             HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF17) = 0xFFFFU;
             HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF18) = 0xFFFFFFFFU;
             HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF19) = 0xFFFFU;
@@ -1068,11 +1068,11 @@ SysCtl_emulateDevice (SysCtl_DevicePartNumber partNumber)
             HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF1) = 0xFFFFU;
             HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF2) = 0xFFFFFFFFU;
             HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF4) = 0xFFFFU;
-            HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF7) = 0xFFFFU;
+            HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF7) = 0xFFFFFFFFU;
             HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF10) = 0xFFFFU;
             HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF13) = 0xFFFFU;
             HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF14) = 0xFFFFU;
-            HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF16) = 0xFFFFU;
+            HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF16) = 0xFFFFFFFFU;
             HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF17) = 0xFFFFU;
             HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF18) = 0xFFFFFFFFU;
             HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF19) = 0xFFFFU;
@@ -1091,11 +1091,11 @@ SysCtl_emulateDevice (SysCtl_DevicePartNumber partNumber)
             HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF1) = 0xFFFEU;
             HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF2) = 0xFFFFFFFFU;
             HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF4) = 0xFFFFU;
-            HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF7) = 0xFFFFU;
+            HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF7) = 0xFFFFFFFFU;
             HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF10) = 0xFFFFU;
             HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF13) = 0xFFFFU;
             HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF14) = 0xFFFFU;
-            HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF16) = 0xFFFFU;
+            HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF16) = 0xFFFFFFFFU;
             HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF17) = 0xFFFFU;
             HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF18) = 0xFFFFFFFFU;
             HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF19) = 0xFFFFU;
@@ -1114,11 +1114,11 @@ SysCtl_emulateDevice (SysCtl_DevicePartNumber partNumber)
             HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF1) = 0xFFFEU;
             HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF2) = 0xFFFFFFFFU;
             HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF4) = 0xFFFFU;
-            HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF7) = 0xFFFFU;
+            HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF7) = 0xFFFFFFFFU;
             HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF10) = 0xFFFFU;
             HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF13) = 0xFFFFU;
             HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF14) = 0xFFFFU;
-            HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF16) = 0xFFFFU;
+            HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF16) = 0xFFFFFFFFU;
             HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF17) = 0xFFFFU;
             HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF18) = 0xFFFFFFFFU;
             HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF19) = 0xFFFFU;
@@ -1137,11 +1137,11 @@ SysCtl_emulateDevice (SysCtl_DevicePartNumber partNumber)
             HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF1) = 0xFFFEU;
             HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF2) = 0xFFFC01FFU;
             HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF4) = 0xFFCFU;
-            HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF7) = 0xFFCFU;
+            HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF7) = 0xFFCFFFFFU;
             HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF10) = 0xFCFFU;
             HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF13) = 0xFFFFU;
             HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF14) = 0xF0FFU;
-            HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF16) = 0xFFFFU;
+            HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF16) = 0xFFFFFFFFU;
             HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF17) = 0xFFC7U;
             HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF18) = 0xFFF7FFF7U;
             HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF19) = 0xFFFDU;
@@ -1160,11 +1160,11 @@ SysCtl_emulateDevice (SysCtl_DevicePartNumber partNumber)
             HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF1) = 0xFFFEU;
             HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF2) = 0xFFFC01FFU;
             HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF4) = 0xFFCFU;
-            HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF7) = 0xFFCFU;
+            HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF7) = 0xFFCFFFFFU;
             HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF10) = 0xFCFFU;
             HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF13) = 0xFFFFU;
             HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF14) = 0xF0FFU;
-            HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF16) = 0xFFFFU;
+            HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF16) = 0xFFFFFFFFU;
             HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF17) = 0xFFC7U;
             HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF18) = 0xFFF7FFF7U;
             HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF19) = 0xFFFDU;
@@ -1183,11 +1183,11 @@ SysCtl_emulateDevice (SysCtl_DevicePartNumber partNumber)
             HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF1) = 0xFFFEU;
             HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF2) = 0xFFFC01FFU;
             HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF4) = 0xFFCFU;
-            HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF7) = 0xFFCFU;
+            HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF7) = 0xFFCFFFFFU;
             HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF10) = 0xFCFFU;
             HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF13) = 0xFFFFU;
             HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF14) = 0xF0FFU;
-            HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF16) = 0xFFFFU;
+            HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF16) = 0xFFFFFFFFU;
             HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF17) = 0xFFC7U;
             HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF18) = 0xFFF7FFF7U;
             HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF19) = 0xFFFDU;
@@ -1201,6 +1201,29 @@ SysCtl_emulateDevice (SysCtl_DevicePartNumber partNumber)
             HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF78) = 0xFFFFU;
             HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF79) = 0xFFFFU;
             HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF81) = 0xFFFFU;
+            break;
+        case SYSCTL_EMULATE_F29P329SM2:
+            HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF1)   = 0xFFFFFFFEU;              //  EMIF is not preent
+            HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF2)   = 0xFFFC00FFU;              //  EPWM        = 8/18
+            HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF4)   = 0xFFFFFFCFU;              //  EQEP        = 4/6
+            HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF7)   = 0xFFC3FFFFU;              //  UART        = 2/6
+            HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF10)  = 0xFFFFFC7FU;              //  MCAN        = 3/6
+            HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF13)  = 0xFFFFFFEFU;              //  ADC         = 4/5
+            HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF14)  = 0xFFFFF00FU;              //  CMPSS       = 4/12
+            HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF16)  = 0xFFFCFFFFU;              //  DAC         = 0/2
+            HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF17)  = 0xFFFFFFC0U;              //  CLB         = 0/6
+            HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF18)  = 0xFFF3FFF3U;              //  FSI         = 2/4
+            HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF19)  = 0xFFFFFFFFU;              //  LIN         = 2/2
+            HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF23)  = 0xFFFFFFFEU;              //  Ethercat is not present
+            HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF26)  = 0xFFFFFFFFU;              //  AES, SHA, PKA and TRNG
+            HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF31)  = 0xFFFFFFFFU;              //  SM2, SM3 and SM4
+            HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF64)  = 0xFFFFFFEFU;              //  CPU3 is not present
+            HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF65)  = 0xF000FFFFU;              //  CDA0-11 are absent
+            HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF74)  = 0xFFFFFFFFU;              //  FLC1B0/B1 flash
+            HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF76)  = 0xFFFFFFFFU;              //  FLC1B2/B3 flash
+            HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF78)  = 0xFFFFFF0FU;              //  FLC1B4 flash
+            HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF79)  = 0xFFFF0000U;              //  FLC2B0/B1 flash is not present
+            HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF81)  = 0xFFFF0000U;              //  FLC2B2/B3 flash is not present
             break;
 
 

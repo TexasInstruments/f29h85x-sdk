@@ -29,7 +29,7 @@
        "${CG_TOOL_OBJCOPY} --update-section cpu2app=../../cpu2App.bin ${ProjName}.out ${ProjName}_updated.out;
         ${CG_TOOL_OBJCOPY} --update-section cpu3app=../../cpu3App.bin ${ProjName}_updated.out ${ProjName}.out;
         $(DELETE) ${ProjName}_updated.out;
-        $(DELETE) $(CPU2APP_REL_PATH) $(CPU3APP_REL_PATH)"
+        $(DELETE) $(CPU2APP_REL_PATH) $(CPU3APP_PATH)"
     />
     <configuration name="FLASH" compilerBuildOptions="-O1 -g -DDEBUG -Qunused-arguments -D_FLASH" linkerBuildOptions="--stack_size=0x400 --heap_size=0x400 --diag_suppress=10325-D --diag_suppress=10063-D"
     preBuildStep=

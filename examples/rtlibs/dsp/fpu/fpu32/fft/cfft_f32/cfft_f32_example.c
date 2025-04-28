@@ -237,6 +237,8 @@ int32_t main(void)
         test_error[j] = err.f32;
     }
     printf("Completed %d-pt CFFT Pass_count = %d, Fail_count = %d \n", FFT_SIZE, pass, fail);
+    while(1)
+    {}
 }
 
 // End of File

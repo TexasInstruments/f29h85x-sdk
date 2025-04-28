@@ -96,6 +96,8 @@ int32_t main(void)
 
     printf("Completed divf test Pass_count = %d, Fail_count = %d \n", pass, fail);
     printf("divf Cycles = %d, Timer overhead = %d \n", differenceCounter, overheadCounter);
+    while(1)
+    {}
 }
 
 // End of File

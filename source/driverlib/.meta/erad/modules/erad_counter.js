@@ -79,7 +79,7 @@ var config = [
 var counterModeConfig = [
     {
         name        : "counterPeriod",
-        displayName : "Counter Period",
+        displayName : "Counter Reference Value",
         description : "The reference value for the counter to count up to!",
         default     : 0xFFFFFFFF,
         displayFormat: "hex",

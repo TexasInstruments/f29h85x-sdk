@@ -91,23 +91,6 @@ if(PLL_type2.includes(device))
 //////////////////////////////////////////////////
 // Clock Domains
 //////////////////////////////////////////////////
-var TIMER2_divide_dv = clockTree_CPU2.TMR2CLKPRESCALE.divideValue
-var TIMER2_divide    = "SYSCTL_TIMER2CLK_DIV_" + TIMER2_divide_dv 
-var TIMER2_source = "SYSCTL_TIMER2CLK_SOURCE_SYSCLK"
-switch(clockTree_CPU2.TMR2CLKSRCSEL.inputSelect){
-	case "CPU1_CPUCLK":
-		TIMER2_source 		= "SYSCTL_TIMER2CLK_SOURCE_SYSCLK"
-		break
-	case "INTOSC1":
-		TIMER2_source 		= "SYSCTL_TIMER2CLK_SOURCE_INTOSC1"
-		break
-	case "INTOSC2":
-		TIMER2_source 	 	= "SYSCTL_TIMER2CLK_SOURCE_INTOSC2"
-		break
-	case "X1_XTAL":
-		TIMER2_source 	 	= "SYSCTL_TIMER2CLK_SOURCE_XTAL"
-		break
-} 
 var EPWM_divide_dv = clockTree_CPU2.EPWMCLKDIV.divideValue
 var EPWM_divide    = "SYSCTL_EPWMCLK_DIV_" + EPWM_divide_dv   
 var EMIF1_divide_dv = clockTree_CPU2.EMIF1CLKDIV.divideValue

@@ -25,7 +25,6 @@
 #define DEVICE_PLLRAW_FREQ   `inst.pllrawClk`
 #define DEVICE_SYSCLK_FREQ   `inst.sysClk`
 
-#define DEVICE_TIMER2_FREQ   `inst.timer2Clk`
 #define DEVICE_EPWM_FREQ     `inst.epwmClk`
 #define DEVICE_EMIF1_FREQ    `inst.emif1Clk`
 #define DEVICE_LINA_FREQ     `inst.linAClk`

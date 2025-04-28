@@ -58,6 +58,10 @@
             {
                 "macroName": "COM_TI_MCU_SDK_GENERIC_LNK_HSM_CMD_FLASH",
                 "location": "examples/device_support/cmd/f29h85x_flash_lnk_hsm.cmd"
+            },
+            {
+                "macroName": "COM_TI_MCU_SDK_GENERIC_LNK_HSM_DTHE_CMD_FLASH",
+                "location": "examples/device_support/cmd/f29h85x_flash_lnk_hsm_dthe.cmd"
             }
         ],
         "migrationSpecs": [

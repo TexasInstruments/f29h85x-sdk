@@ -43,7 +43,7 @@
   <td id="projectlogo"><a href="https://www.ti.com"><img alt="Logo" src="ti_logo.svg"/></a></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">F29H85x-SDK
-   &#160;<span id="projectnumber">1.00.00.00</span>
+   &#160;<span id="projectnumber">1.01.00.00</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -92,17 +92,17 @@ $(document).ready(function(){initNavTree('DRIVERS_I2C_PAGE.html',''); initResiza
 </div><!--header-->
 <div class="contents">
 <div class="toc"><h3>Table of Contents</h3>
-<ul><li class="level1"><a href="#autotoc_md124">Features Supported</a></li>
-<li class="level1"><a href="#autotoc_md125">SysConfig Features</a></li>
-<li class="level1"><a href="#autotoc_md126">Features NOT Supported</a></li>
-<li class="level1"><a href="#autotoc_md127">Important Usage Guidelines</a></li>
-<li class="level1"><a href="#autotoc_md128">Example Usage</a></li>
-<li class="level1"><a href="#autotoc_md129">API</a></li>
+<ul><li class="level1"><a href="#autotoc_md131">Features Supported</a></li>
+<li class="level1"><a href="#autotoc_md132">SysConfig Features</a></li>
+<li class="level1"><a href="#autotoc_md133">Features NOT Supported</a></li>
+<li class="level1"><a href="#autotoc_md134">Important Usage Guidelines</a></li>
+<li class="level1"><a href="#autotoc_md135">Example Usage</a></li>
+<li class="level1"><a href="#autotoc_md136">API</a></li>
 </ul>
 </div>
 <div class="textblock"><p><a class="anchor" id="md_components_drivers_i2c"></a></p>
 <p>The I2C driver provides API to configure the I2C module. Below are the high level features supported by the I2C driver.</p>
-<h1><a class="anchor" id="autotoc_md124"></a>
+<h1><a class="anchor" id="autotoc_md131"></a>
 Features Supported</h1>
 <ul>
 <li>Each I2C has 2 selectable mode i.e. Controller and Target with bit rate upto 400Kbps</li>
@@ -111,7 +111,7 @@ Features Supported</h1>
 <li>Support for 7-bit and 10-bit addressing mode and 16 FIFO level interrupt</li>
 <li>Support for Manual and Automatic Extended Clock Stretching via hardware and software interrupts</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md125"></a>
+<h1><a class="anchor" id="autotoc_md132"></a>
 SysConfig Features</h1>
 <dl class="section note"><dt>Note</dt><dd>It is strongly recommend to use SysConfig where it is available instead of using direct SW API calls. This will help simplify the SW application and also catch common mistakes early in the development cycle.</dd></dl>
 <ul>
@@ -121,18 +121,18 @@ SysConfig Features</h1>
 <li>Enabling and configuring I2C FIFO and non-FIFO interrupts and registering interrupt handlers.</li>
 <li>Configuring I2C GPIO Pinmux and Interrupt Levelfor each I2C SOC.</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md126"></a>
+<h1><a class="anchor" id="autotoc_md133"></a>
 Features NOT Supported</h1>
 <p>NA</p>
-<h1><a class="anchor" id="autotoc_md127"></a>
+<h1><a class="anchor" id="autotoc_md134"></a>
 Important Usage Guidelines</h1>
 <ul>
 <li>I2C has both SDA and SCL pin qualification set as Open-drain output with pull-up enabled and no synchronization. A pull-up register is required for both SDA and SCL channel for proper functioning of I2C module. Push-Pull and Inverted pin type is invalid for I2C module.</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md128"></a>
+<h1><a class="anchor" id="autotoc_md135"></a>
 Example Usage</h1>
 <p>Include the below file to access the APIs #include &lt;<a class="el" href="i2c_8h.html">i2c.h</a>&gt;</p>
-<h1><a class="anchor" id="autotoc_md129"></a>
+<h1><a class="anchor" id="autotoc_md136"></a>
 API</h1>
 <p><a class="el" href="group__i2c__api.html">I2C</a> </p>
 </div></div><!-- contents -->

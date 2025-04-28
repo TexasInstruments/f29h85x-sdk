@@ -12,6 +12,7 @@ var modules =
     [ "DAC", "group__dac__api.html", "group__dac__api" ],
     [ "DCC", "group__dcc__api.html", "group__dcc__api" ],
     [ "DLT", "group__dlt__api.html", "group__dlt__api" ],
+    [ "EMIF", "group__emif__api.html", "group__emif__api" ],
     [ "EPG", "group__epg__api.html", "group__epg__api" ],
     [ "ERAD", "group__erad__api.html", "group__erad__api" ],
     [ "ESC CPU1 HAL", "group__esc__cpu1__hal__api.html", "group__esc__cpu1__hal__api" ],

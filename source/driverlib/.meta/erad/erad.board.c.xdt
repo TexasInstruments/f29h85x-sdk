@@ -46,9 +46,16 @@ void `nameOfPeripheral`_init(){
     % if(BusCompInstance.stackQual) {
     buscomp_params.enable_stack_qual = `BusCompInstance.stackQual`;
     % }
+    % else{
+    buscomp_params.enable_stack_qual = false;
+    % }
     % if(BusCompInstance.spselEnable) {
-    buscomp_params.enable_spsel = `BusCompInstance.spselEnable`;
-    buscomp_params.spsel_match = `BusCompInstance.spsel`;
+    buscomp_params.enable_spsel_match = `BusCompInstance.spselEnable`;
+    buscomp_params.spsel = `BusCompInstance.spsel`;
+    % }
+    % else{
+    buscomp_params.enable_spsel_match = false;
+    buscomp_params.spsel = 0x0;
     % }
     ERAD_configBusComp(`BusCompInstance.$name`, &buscomp_params);
     % modulesEnable = modulesEnable + "\tERAD_enableBusCompModule(" + BusCompInstance.$name + ");\n"

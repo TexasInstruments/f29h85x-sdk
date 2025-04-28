@@ -68,7 +68,6 @@ extern "C"
 #include "inc/hw_types.h"
 #include "inc/hw_uart.h"
 #include "debug.h"
-#include "interrupt.h"
 
 //*****************************************************************************
 //

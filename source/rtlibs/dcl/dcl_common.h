@@ -57,7 +57,8 @@ typedef double        float64_t;
 #if defined (__TMS320C28XX__)   //C28 ISA
     #define DCL_setBreakPoint() asm(" ESTOP")
 #elif defined (__ARM_ARCH)      //ARM ISA
-    #define DCL_setBreakPoint()  __asm(" bkpt #0")#elif defined (__C29__)
+    #define DCL_setBreakPoint()  __asm(" bkpt #0")
+#elif defined (__C29__)
     #define DCL_setBreakPoint() __asm(" EMUSTOP0")
 #else
     #define DCL_setBreakPoint()
@@ -74,7 +75,8 @@ typedef double        float64_t;
     #include <kernel/dpl/HwiP.h>
     #define DCL_disableInts()   HwiP_disable()
     #define DCL_restoreInts(v)  HwiP_restore(v)
-    typedef uint32_t            dcl_interrupt_t;#elif defined (__C29__)
+    typedef uint32_t            dcl_interrupt_t;
+#elif defined (__C29__)
     #define DCL_disableInts()   0; __asm(" DISINT")
     #define DCL_restoreInts(v)  __asm(" ENINT")
     typedef uint32_t            dcl_interrupt_t;

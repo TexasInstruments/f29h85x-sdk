@@ -100,6 +100,8 @@ int32_t main(void)
 
     printf("Completed sinf test Pass_count = %d, Fail_count = %d \n", pass, fail);
     printf("sinf Cycles = %d, Timer overhead = %d \n", differenceCounter, overheadCounter);
+    while(1)
+    {}
 }
 
 // End of File

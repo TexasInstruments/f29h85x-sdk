@@ -43,7 +43,7 @@
   <td id="projectlogo"><a href="https://www.ti.com"><img alt="Logo" src="ti_logo.svg"/></a></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">F29H85x-SDK
-   &#160;<span id="projectnumber">1.00.00.00</span>
+   &#160;<span id="projectnumber">1.01.00.00</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -100,493 +100,461 @@ $(document).ready(function(){initNavTree('pmbus__controller__test_8h_source.html
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="comment">//###########################################################################</span></div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="comment">//</span></div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="comment">//</span></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="comment">// //</span></div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="comment">//  Copyright: Copyright (C) Texas Instruments Incorporated</span></div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="comment">//  All rights reserved not granted herein.</span></div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="comment">//</span></div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="comment">//  Redistribution and use in source and binary forms, with or without </span></div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="comment">//  modification, are permitted provided that the following conditions </span></div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="comment">//  are met:</span></div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="comment">//</span></div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="comment">//  Redistributions of source code must retain the above copyright </span></div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="comment">//  notice, this list of conditions and the following disclaimer.</span></div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="comment">//</span></div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="comment">//  Redistributions in binary form must reproduce the above copyright</span></div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="comment">//  notice, this list of conditions and the following disclaimer in the </span></div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="comment">//  documentation and/or other materials provided with the   </span></div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="comment">//  distribution.</span></div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="comment">//</span></div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="comment">//  Neither the name of Texas Instruments Incorporated nor the names of</span></div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="comment">//  its contributors may be used to endorse or promote products derived</span></div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="comment">//  from this software without specific prior written permission.</span></div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="comment">//</span></div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="comment">//  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS </span></div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="comment">//  &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT </span></div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="comment">//  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR</span></div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="comment">//  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT </span></div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="comment">//  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, </span></div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="comment">//  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT </span></div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="comment">//  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,</span></div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="comment">//  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY</span></div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="comment">//  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT </span></div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="comment">//  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE </span></div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="comment">//  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</span></div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="comment">//</span></div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160; </div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="comment">//###########################################################################</span></div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="preprocessor">#ifndef PMBUS_CONTROLLER_TEST_H</span></div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="preprocessor">#define PMBUS_CONTROLLER_TEST_H</span></div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; </div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="comment">//*****************************************************************************</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="comment">// $Copyright: $</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="comment">//###########################################################################</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#ifndef PMBUS_CONTROLLER_TEST_H</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#define PMBUS_CONTROLLER_TEST_H</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160; </div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="comment">//*****************************************************************************</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="comment">//</span></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="comment">// If building with a C++ compiler, make all of the definitions in this header</span></div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="comment">// have a C binding.</span></div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="comment">//</span></div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="comment">//*****************************************************************************</span></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#ifdef __cplusplus</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;{</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160; </div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="comment">//*****************************************************************************</span></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="comment">//</span></div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="comment"></span><span class="comment">// </span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="comment">//</span></div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="comment">//*****************************************************************************</span></div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; </div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="comment">//</span></div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="comment">// Includes</span></div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="comment">//</span></div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="preprocessor">#include &lt;stdint.h&gt;</span></div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="preprocessor">#include &lt;stdbool.h&gt;</span></div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="preprocessor">#include &lt;string.h&gt;</span></div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="preprocessor">#include &quot;pmbus_examples_setup.h&quot;</span></div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="pmbus__stack__handler_8h.html">pmbus_stack_handler.h</a>&quot;</span></div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160; </div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="comment">//</span></div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="comment">// Defines</span></div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="comment">//</span></div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="comment">// If building with a C++ compiler, make all of the definitions in this header</span></div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="comment">// have a C binding.</span></div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="comment">//</span></div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="comment">//*****************************************************************************</span></div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="preprocessor">#ifdef __cplusplus</span></div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span></div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;{</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160; </div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="comment">//*****************************************************************************</span></div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="comment">//</span></div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="comment"></span><span class="comment">// </span></div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="comment">//</span></div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="comment">//*****************************************************************************</span></div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160; </div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;<span class="comment">//</span></div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="comment">// Includes</span></div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="comment">//</span></div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<span class="preprocessor">#include &lt;stdint.h&gt;</span></div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;<span class="preprocessor">#include &lt;stdbool.h&gt;</span></div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<span class="preprocessor">#include &lt;string.h&gt;</span></div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;<span class="preprocessor">#include &quot;pmbus_examples_setup.h&quot;</span></div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="pmbus__stack__handler_8h.html">pmbus_stack_handler.h</a>&quot;</span></div>
+<div class="line"><a name="l00049"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#ga11e4097fdeb535bd2721537440b937f0">   49</a></span>&#160;<span class="preprocessor">#define ENABLE_TEST_1       1 </span><span class="comment">// Send Byte</span></div>
+<div class="line"><a name="l00050"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#gae5b1d9bf9b5a7183e29d6bebe4a34070">   50</a></span>&#160;<span class="preprocessor">#define ENABLE_TEST_2       1 </span><span class="comment">// Write Byte</span></div>
+<div class="line"><a name="l00051"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#ga1237b5927e1706f665fe0ff962128c5c">   51</a></span>&#160;<span class="preprocessor">#define ENABLE_TEST_3       1 </span><span class="comment">// Write Word</span></div>
+<div class="line"><a name="l00052"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#gabbddf68b7495923137a12452c8af8e0e">   52</a></span>&#160;<span class="preprocessor">#define ENABLE_TEST_4       1 </span><span class="comment">// Block Write</span></div>
+<div class="line"><a name="l00053"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#ga28f4c09efa62dc9a1acd88fb206bd63c">   53</a></span>&#160;<span class="preprocessor">#define ENABLE_TEST_5       1 </span><span class="comment">// Receive Byte</span></div>
+<div class="line"><a name="l00054"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#ga33eabc5c24d000e7e06237a239235d2c">   54</a></span>&#160;<span class="preprocessor">#define ENABLE_TEST_6       1 </span><span class="comment">// Read Byte</span></div>
+<div class="line"><a name="l00055"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#ga168001e9ed04860959ea62c27be69caa">   55</a></span>&#160;<span class="preprocessor">#define ENABLE_TEST_7       1 </span><span class="comment">// Read Word</span></div>
+<div class="line"><a name="l00056"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#ga2f7fd5b2b337e820ebb7239b0a9d4bf4">   56</a></span>&#160;<span class="preprocessor">#define ENABLE_TEST_8       1 </span><span class="comment">// Block Read</span></div>
+<div class="line"><a name="l00057"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#ga2033ec22dbfd6dbaec6cf0659bfefb9f">   57</a></span>&#160;<span class="preprocessor">#define ENABLE_TEST_9       1 </span><span class="comment">// Block Write/ Read/ Process Call</span></div>
+<div class="line"><a name="l00058"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#gae04ecf028f01bbc87b8d7f60c3405869">   58</a></span>&#160;<span class="preprocessor">#define ENABLE_TEST_10      1 </span><span class="comment">// Quick Command</span></div>
+<div class="line"><a name="l00059"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#ga93d04776cd6fcdbba797947c557298df">   59</a></span>&#160;<span class="preprocessor">#define ENABLE_TEST_11      1 </span><span class="comment">// Block Write (command, byte count, 2 bytes)</span></div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;                              <span class="comment">// - this is actually a write word</span></div>
+<div class="line"><a name="l00061"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#ga6c49d9d4b064129e33289d7764f328a2">   61</a></span>&#160;<span class="preprocessor">#define ENABLE_TEST_12      1 </span><span class="comment">// Block Write (command, byte count, 3 bytes)</span></div>
+<div class="line"><a name="l00062"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#ga341f2ac718c77a64d6992fcae124fb5d">   62</a></span>&#160;<span class="preprocessor">#define ENABLE_TEST_13      1 </span><span class="comment">// Block Read (3 bytes)</span></div>
+<div class="line"><a name="l00063"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#ga85359642c2e79bf4341bcfc169ed830c">   63</a></span>&#160;<span class="preprocessor">#define ENABLE_TEST_14      1 </span><span class="comment">// Process call (write word then read word)</span></div>
+<div class="line"><a name="l00064"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#ga2861592b606d673c34ba44cdc9d826a5">   64</a></span>&#160;<span class="preprocessor">#define ENABLE_TEST_15      0 </span><span class="comment">// Alert</span></div>
+<div class="line"><a name="l00065"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#gabbb85b13adbaae7836f068990c3f7d5b">   65</a></span>&#160;<span class="preprocessor">#define ENABLE_TEST_16      0 </span><span class="comment">// Alert (from non-existent target)</span></div>
+<div class="line"><a name="l00066"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#ga0be077911acce783f7b66035d2449c39">   66</a></span>&#160;<span class="preprocessor">#define ENABLE_TEST_17      1 </span><span class="comment">// Group Command (target 1st to be addressed)</span></div>
+<div class="line"><a name="l00067"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#ga472a8743424881c2bf80bb89c6de8739">   67</a></span>&#160;<span class="preprocessor">#define ENABLE_TEST_18      1 </span><span class="comment">// Extended Write Byte</span></div>
+<div class="line"><a name="l00068"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#ga3734e85fadec5e8b22367db8b10d13e9">   68</a></span>&#160;<span class="preprocessor">#define ENABLE_TEST_19      1 </span><span class="comment">// Extended Write Word</span></div>
+<div class="line"><a name="l00069"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#ga61d1adbb05805af38e65ce84f729edb8">   69</a></span>&#160;<span class="preprocessor">#define ENABLE_TEST_20      1 </span><span class="comment">// Extended Read Byte</span></div>
+<div class="line"><a name="l00070"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#gae3902ccff15f88fb305898ab526eaf57">   70</a></span>&#160;<span class="preprocessor">#define ENABLE_TEST_21      1 </span><span class="comment">// Extended Read Word</span></div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160; </div>
+<div class="line"><a name="l00072"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#gab41b411d713b58a63b440b16f984c04b">   72</a></span>&#160;<span class="preprocessor">#define TARGET_ADDRESS_MASK  0xFEU</span></div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160; </div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<span class="comment">//</span></div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;<span class="comment">// Typedefs</span></div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;<span class="comment">//</span></div>
 <div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160; </div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;<span class="comment">//</span></div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;<span class="comment">// Defines</span></div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;<span class="comment">//</span></div>
-<div class="line"><a name="l00081"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#ga11e4097fdeb535bd2721537440b937f0">   81</a></span>&#160;<span class="preprocessor">#define ENABLE_TEST_1       1 </span><span class="comment">// Send Byte</span></div>
-<div class="line"><a name="l00082"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#gae5b1d9bf9b5a7183e29d6bebe4a34070">   82</a></span>&#160;<span class="preprocessor">#define ENABLE_TEST_2       1 </span><span class="comment">// Write Byte</span></div>
-<div class="line"><a name="l00083"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#ga1237b5927e1706f665fe0ff962128c5c">   83</a></span>&#160;<span class="preprocessor">#define ENABLE_TEST_3       1 </span><span class="comment">// Write Word</span></div>
-<div class="line"><a name="l00084"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#gabbddf68b7495923137a12452c8af8e0e">   84</a></span>&#160;<span class="preprocessor">#define ENABLE_TEST_4       1 </span><span class="comment">// Block Write</span></div>
-<div class="line"><a name="l00085"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#ga28f4c09efa62dc9a1acd88fb206bd63c">   85</a></span>&#160;<span class="preprocessor">#define ENABLE_TEST_5       1 </span><span class="comment">// Receive Byte</span></div>
-<div class="line"><a name="l00086"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#ga33eabc5c24d000e7e06237a239235d2c">   86</a></span>&#160;<span class="preprocessor">#define ENABLE_TEST_6       1 </span><span class="comment">// Read Byte</span></div>
-<div class="line"><a name="l00087"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#ga168001e9ed04860959ea62c27be69caa">   87</a></span>&#160;<span class="preprocessor">#define ENABLE_TEST_7       1 </span><span class="comment">// Read Word</span></div>
-<div class="line"><a name="l00088"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#ga2f7fd5b2b337e820ebb7239b0a9d4bf4">   88</a></span>&#160;<span class="preprocessor">#define ENABLE_TEST_8       1 </span><span class="comment">// Block Read</span></div>
-<div class="line"><a name="l00089"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#ga2033ec22dbfd6dbaec6cf0659bfefb9f">   89</a></span>&#160;<span class="preprocessor">#define ENABLE_TEST_9       1 </span><span class="comment">// Block Write/ Read/ Process Call</span></div>
-<div class="line"><a name="l00090"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#gae04ecf028f01bbc87b8d7f60c3405869">   90</a></span>&#160;<span class="preprocessor">#define ENABLE_TEST_10      1 </span><span class="comment">// Quick Command</span></div>
-<div class="line"><a name="l00091"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#ga93d04776cd6fcdbba797947c557298df">   91</a></span>&#160;<span class="preprocessor">#define ENABLE_TEST_11      1 </span><span class="comment">// Block Write (command, byte count, 2 bytes)</span></div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;                              <span class="comment">// - this is actually a write word</span></div>
-<div class="line"><a name="l00093"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#ga6c49d9d4b064129e33289d7764f328a2">   93</a></span>&#160;<span class="preprocessor">#define ENABLE_TEST_12      1 </span><span class="comment">// Block Write (command, byte count, 3 bytes)</span></div>
-<div class="line"><a name="l00094"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#ga341f2ac718c77a64d6992fcae124fb5d">   94</a></span>&#160;<span class="preprocessor">#define ENABLE_TEST_13      1 </span><span class="comment">// Block Read (3 bytes)</span></div>
-<div class="line"><a name="l00095"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#ga85359642c2e79bf4341bcfc169ed830c">   95</a></span>&#160;<span class="preprocessor">#define ENABLE_TEST_14      1 </span><span class="comment">// Process call (write word then read word)</span></div>
-<div class="line"><a name="l00096"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#ga2861592b606d673c34ba44cdc9d826a5">   96</a></span>&#160;<span class="preprocessor">#define ENABLE_TEST_15      0 </span><span class="comment">// Alert</span></div>
-<div class="line"><a name="l00097"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#gabbb85b13adbaae7836f068990c3f7d5b">   97</a></span>&#160;<span class="preprocessor">#define ENABLE_TEST_16      0 </span><span class="comment">// Alert (from non-existent target)</span></div>
-<div class="line"><a name="l00098"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#ga0be077911acce783f7b66035d2449c39">   98</a></span>&#160;<span class="preprocessor">#define ENABLE_TEST_17      1 </span><span class="comment">// Group Command (target 1st to be addressed)</span></div>
-<div class="line"><a name="l00099"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#ga472a8743424881c2bf80bb89c6de8739">   99</a></span>&#160;<span class="preprocessor">#define ENABLE_TEST_18      1 </span><span class="comment">// Extended Write Byte</span></div>
-<div class="line"><a name="l00100"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#ga3734e85fadec5e8b22367db8b10d13e9">  100</a></span>&#160;<span class="preprocessor">#define ENABLE_TEST_19      1 </span><span class="comment">// Extended Write Word</span></div>
-<div class="line"><a name="l00101"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#ga61d1adbb05805af38e65ce84f729edb8">  101</a></span>&#160;<span class="preprocessor">#define ENABLE_TEST_20      1 </span><span class="comment">// Extended Read Byte</span></div>
-<div class="line"><a name="l00102"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#gae3902ccff15f88fb305898ab526eaf57">  102</a></span>&#160;<span class="preprocessor">#define ENABLE_TEST_21      1 </span><span class="comment">// Extended Read Word</span></div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160; </div>
-<div class="line"><a name="l00104"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#gab41b411d713b58a63b440b16f984c04b">  104</a></span>&#160;<span class="preprocessor">#define TARGET_ADDRESS_MASK  0xFEU</span></div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;<span class="comment">//*****************************************************************************</span></div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;<span class="comment">//</span></div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;<span class="comment"></span><span class="comment">//</span></div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;<span class="comment">//*****************************************************************************</span></div>
+<div class="line"><a name="l00083"></a><span class="lineno"><a class="line" href="structPMBus__TestObject.html">   83</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct</span></div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;{</div>
+<div class="line"><a name="l00085"></a><span class="lineno"><a class="line" href="structPMBus__TestObject.html#a163faf0885efe8edc7e8f6f590dda5fa">   85</a></span>&#160;    uint16_t    <a class="code" href="structPMBus__TestObject.html#a163faf0885efe8edc7e8f6f590dda5fa">count</a>;          </div>
+<div class="line"><a name="l00086"></a><span class="lineno"><a class="line" href="structPMBus__TestObject.html#a873eaa62f8f0f93d11ed33e8bae14b44">   86</a></span>&#160;    int16_t     <a class="code" href="structPMBus__TestObject.html#a873eaa62f8f0f93d11ed33e8bae14b44">pass</a>;           </div>
+<div class="line"><a name="l00087"></a><span class="lineno"><a class="line" href="structPMBus__TestObject.html#a07b7756969827b6344895156053b242f">   87</a></span>&#160;    int16_t     <a class="code" href="structPMBus__TestObject.html#a07b7756969827b6344895156053b242f">fail</a>;           </div>
+<div class="line"><a name="l00088"></a><span class="lineno"><a class="line" href="structPMBus__TestObject.html#aa88aaeda9bf2d97dbf7d833b75238914">   88</a></span>&#160;    <span class="keywordtype">bool</span>        <a class="code" href="structPMBus__TestObject.html#aa88aaeda9bf2d97dbf7d833b75238914">enabled</a>;        </div>
+<div class="line"><a name="l00089"></a><span class="lineno"><a class="line" href="structPMBus__TestObject.html#a22e7b3c77a5b3ea9db1a55d0d05e51cc">   89</a></span>&#160;    void (*init)(<span class="keywordtype">void</span> *);       </div>
+<div class="line"><a name="l00090"></a><span class="lineno"><a class="line" href="structPMBus__TestObject.html#ad82641cec8ba34c572936edf0aa92122">   90</a></span>&#160;    void (*run)(<span class="keywordtype">void</span> *);        </div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;} <a class="code" href="structPMBus__TestObject.html">PMBus_TestObject</a>;</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160; </div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;<span class="comment">//*****************************************************************************</span></div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;<span class="comment">//</span></div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;<span class="comment"></span><span class="comment">//</span></div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;<span class="comment">//*****************************************************************************</span></div>
+<div class="line"><a name="l00098"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#ga057838e93d5a1fa1eea141352de58f7e">   98</a></span>&#160;<span class="keyword">typedef</span> <a class="code" href="structPMBus__TestObject.html">PMBus_TestObject</a> *<a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga057838e93d5a1fa1eea141352de58f7e">PMBus_TestHandle</a>;</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160; </div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;<span class="comment">//</span></div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;<span class="comment">// Globals</span></div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;<span class="comment">//</span></div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;<span class="keyword">extern</span> <a class="code" href="structPMBus__TestObject.html">PMBus_TestObject</a> <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga0ad97991b9aca3f979bd7a5380e07e54">PMBUS_TESTS</a>[NTESTS];</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;<span class="keyword">extern</span> <a class="code" href="structPMBus__TestObject.html">PMBus_TestHandle</a> <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga95bf8ad8eaf70a229c32cda25c6376fb">handle</a>;</div>
 <div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160; </div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;<span class="comment">//</span></div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;<span class="comment">// Typedefs</span></div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;<span class="comment">//</span></div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160; </div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;<span class="comment">//*****************************************************************************</span></div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;<span class="comment">//</span></div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;<span class="comment"></span><span class="comment">//</span></div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;<span class="comment">//*****************************************************************************</span></div>
-<div class="line"><a name="l00115"></a><span class="lineno"><a class="line" href="structPMBus__TestObject.html">  115</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct</span></div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;{</div>
-<div class="line"><a name="l00117"></a><span class="lineno"><a class="line" href="structPMBus__TestObject.html#a163faf0885efe8edc7e8f6f590dda5fa">  117</a></span>&#160;    uint16_t    <a class="code" href="structPMBus__TestObject.html#a163faf0885efe8edc7e8f6f590dda5fa">count</a>;          </div>
-<div class="line"><a name="l00118"></a><span class="lineno"><a class="line" href="structPMBus__TestObject.html#a873eaa62f8f0f93d11ed33e8bae14b44">  118</a></span>&#160;    int16_t     <a class="code" href="structPMBus__TestObject.html#a873eaa62f8f0f93d11ed33e8bae14b44">pass</a>;           </div>
-<div class="line"><a name="l00119"></a><span class="lineno"><a class="line" href="structPMBus__TestObject.html#a07b7756969827b6344895156053b242f">  119</a></span>&#160;    int16_t     <a class="code" href="structPMBus__TestObject.html#a07b7756969827b6344895156053b242f">fail</a>;           </div>
-<div class="line"><a name="l00120"></a><span class="lineno"><a class="line" href="structPMBus__TestObject.html#aa88aaeda9bf2d97dbf7d833b75238914">  120</a></span>&#160;    <span class="keywordtype">bool</span>        <a class="code" href="structPMBus__TestObject.html#aa88aaeda9bf2d97dbf7d833b75238914">enabled</a>;        </div>
-<div class="line"><a name="l00121"></a><span class="lineno"><a class="line" href="structPMBus__TestObject.html#a22e7b3c77a5b3ea9db1a55d0d05e51cc">  121</a></span>&#160;    void (*init)(<span class="keywordtype">void</span> *);       </div>
-<div class="line"><a name="l00122"></a><span class="lineno"><a class="line" href="structPMBus__TestObject.html#ad82641cec8ba34c572936edf0aa92122">  122</a></span>&#160;    void (*run)(<span class="keywordtype">void</span> *);        </div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;} <a class="code" href="structPMBus__TestObject.html">PMBus_TestObject</a>;</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;<span class="keyword">extern</span> void (*<a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#gadb2306d16dc88848e78b6a5f2db72fd4">runTestList</a>[NTESTS])(<a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga057838e93d5a1fa1eea141352de58f7e">PMBus_TestHandle</a>);</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;<span class="keyword">extern</span> void (*<a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#gad55338498d1becc63ab9ea8715fdcfed">initTestList</a>[NTESTS])(<a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga057838e93d5a1fa1eea141352de58f7e">PMBus_TestHandle</a>);</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160; </div>
+<div class="line"><a name="l00109"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#ga4500107753d6b026e408ebc42511c17a">  109</a></span>&#160;<span class="keyword">extern</span> <span class="keyword">volatile</span> int16_t <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#gab9b3aacaae36a7958a5d9f7be15bf84d">pass</a>, <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga4500107753d6b026e408ebc42511c17a">fail</a>;</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160; </div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;<span class="keyword">extern</span> <a class="code" href="structPMBus__StackObject.html">PMBus_StackObject</a> <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga3bd8ba86aea6bc8ab6a97e942d630170">pmbusStackController</a>;</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;<span class="keyword">extern</span> <a class="code" href="structPMBus__StackObject.html">PMBus_StackHandle</a> <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga4ce6e1770107b80970d03b6e26111986">pmbusStackControllerHandle</a>;</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;<span class="keyword">extern</span> uint16_t <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#gafed916cc4ed660bc7af212a988760591">pmbusControllerBuffer</a>[256];</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160; </div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;<span class="keyword">extern</span> <span class="keyword">volatile</span> <span class="keywordtype">bool</span> <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga4228594b3bc28f577b52c3e2b4c59a25">targetAckReceived</a>;</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;<span class="keyword">extern</span> <span class="keyword">volatile</span> <span class="keywordtype">bool</span> <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga38a06931c960c046d84cc4e29bc79fd0">endOfMessage</a>;</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;<span class="keyword">extern</span> <span class="keyword">volatile</span> <span class="keywordtype">bool</span> <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga4f4d733a970e67f2c8633ebba478e940">controllerDataAvailable</a>;</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;<span class="keyword">extern</span> <span class="keyword">volatile</span> <span class="keywordtype">bool</span> <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga4de360fb6c4ba62765fe7b4432205819">controllerDataRequested</a>;</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;<span class="keyword">extern</span> <span class="keyword">volatile</span> <span class="keywordtype">bool</span> <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga669c66c4bd5118e6915c61ce47acd7cc">receivedPecValid</a>;</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;<span class="keyword">extern</span> <span class="keyword">volatile</span> <span class="keywordtype">bool</span> <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga0e05ac131db1d8c0d6742157f43d662f">alertEdgeAsserted</a>;</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;<span class="keyword">extern</span> <span class="keyword">volatile</span> <span class="keywordtype">bool</span> <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga31163292d9da5029efedeb7ef83b02de">clockLowTimeout</a>;</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;<span class="keyword">extern</span> <span class="keyword">volatile</span> uint16_t <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#gae708886d870fb930c6b53e5d389f3fd2">bytesReceived</a>;</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;<span class="keyword">extern</span> <span class="keyword">volatile</span> uint32_t <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga6fe6208eb83ac33b365c71131cd3a8eb">pmbusStatus</a>;</div>
 <div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160; </div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;<span class="comment">//*****************************************************************************</span></div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;<span class="comment">//</span></div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;<span class="comment"></span><span class="comment">//</span></div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;<span class="comment">//</span></div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;<span class="comment">// Function Prototypes</span></div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;<span class="comment">//</span></div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160; </div>
 <div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;<span class="comment">//*****************************************************************************</span></div>
-<div class="line"><a name="l00130"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#ga057838e93d5a1fa1eea141352de58f7e">  130</a></span>&#160;<span class="keyword">typedef</span> <a class="code" href="structPMBus__TestObject.html">PMBus_TestObject</a> *<a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga057838e93d5a1fa1eea141352de58f7e">PMBus_TestHandle</a>;</div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160; </div>
-<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;<span class="comment">//</span></div>
-<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;<span class="comment">// Globals</span></div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;<span class="comment">//</span></div>
-<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;<span class="keyword">extern</span> <a class="code" href="structPMBus__TestObject.html">PMBus_TestObject</a> <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga0ad97991b9aca3f979bd7a5380e07e54">PMBUS_TESTS</a>[NTESTS];</div>
-<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;<span class="keyword">extern</span> <a class="code" href="structPMBus__TestObject.html">PMBus_TestHandle</a> <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga95bf8ad8eaf70a229c32cda25c6376fb">handle</a>;</div>
-<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160; </div>
-<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;<span class="keyword">extern</span> void (*<a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#gadb2306d16dc88848e78b6a5f2db72fd4">runTestList</a>[NTESTS])(<a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga057838e93d5a1fa1eea141352de58f7e">PMBus_TestHandle</a>);</div>
-<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;<span class="keyword">extern</span> void (*<a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#gad55338498d1becc63ab9ea8715fdcfed">initTestList</a>[NTESTS])(<a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga057838e93d5a1fa1eea141352de58f7e">PMBus_TestHandle</a>);</div>
-<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160; </div>
-<div class="line"><a name="l00141"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#ga4500107753d6b026e408ebc42511c17a">  141</a></span>&#160;<span class="keyword">extern</span> <span class="keyword">volatile</span> int16_t <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#gab9b3aacaae36a7958a5d9f7be15bf84d">pass</a>, <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga4500107753d6b026e408ebc42511c17a">fail</a>;</div>
-<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160; </div>
-<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;<span class="keyword">extern</span> <a class="code" href="structPMBus__StackObject.html">PMBus_StackObject</a> <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga3bd8ba86aea6bc8ab6a97e942d630170">pmbusStackController</a>;</div>
-<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;<span class="keyword">extern</span> <a class="code" href="structPMBus__StackObject.html">PMBus_StackHandle</a> <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga4ce6e1770107b80970d03b6e26111986">pmbusStackControllerHandle</a>;</div>
-<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;<span class="keyword">extern</span> uint16_t <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#gafed916cc4ed660bc7af212a988760591">pmbusControllerBuffer</a>[256];</div>
-<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160; </div>
-<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;<span class="keyword">extern</span> <span class="keyword">volatile</span> <span class="keywordtype">bool</span> <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga4228594b3bc28f577b52c3e2b4c59a25">targetAckReceived</a>;</div>
-<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;<span class="keyword">extern</span> <span class="keyword">volatile</span> <span class="keywordtype">bool</span> <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga38a06931c960c046d84cc4e29bc79fd0">endOfMessage</a>;</div>
-<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;<span class="keyword">extern</span> <span class="keyword">volatile</span> <span class="keywordtype">bool</span> <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga4f4d733a970e67f2c8633ebba478e940">controllerDataAvailable</a>;</div>
-<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;<span class="keyword">extern</span> <span class="keyword">volatile</span> <span class="keywordtype">bool</span> <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga4de360fb6c4ba62765fe7b4432205819">controllerDataRequested</a>;</div>
-<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;<span class="keyword">extern</span> <span class="keyword">volatile</span> <span class="keywordtype">bool</span> <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga669c66c4bd5118e6915c61ce47acd7cc">receivedPecValid</a>;</div>
-<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;<span class="keyword">extern</span> <span class="keyword">volatile</span> <span class="keywordtype">bool</span> <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga0e05ac131db1d8c0d6742157f43d662f">alertEdgeAsserted</a>;</div>
-<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;<span class="keyword">extern</span> <span class="keyword">volatile</span> <span class="keywordtype">bool</span> <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga31163292d9da5029efedeb7ef83b02de">clockLowTimeout</a>;</div>
-<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;<span class="keyword">extern</span> <span class="keyword">volatile</span> uint16_t <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#gae708886d870fb930c6b53e5d389f3fd2">bytesReceived</a>;</div>
-<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;<span class="keyword">extern</span> <span class="keyword">volatile</span> uint32_t <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga6fe6208eb83ac33b365c71131cd3a8eb">pmbusStatus</a>;</div>
-<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160; </div>
-<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;<span class="comment">//</span></div>
-<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;<span class="comment">// Function Prototypes</span></div>
-<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;<span class="comment">//</span></div>
-<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160; </div>
-<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;<span class="comment">//*****************************************************************************</span></div>
-<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;<span class="comment">//</span></div>
-<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;<span class="comment"></span><span class="comment">//</span></div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;<span class="comment">//</span></div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;<span class="comment"></span><span class="comment">//</span></div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;<span class="comment">//*****************************************************************************</span></div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;<span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">void</span></div>
+<div class="line"><a name="l00137"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#gaeb24f4855d84d98d2437cba8bae78d54">  137</a></span>&#160;<a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#gaeb24f4855d84d98d2437cba8bae78d54">PMBusController_resetGlobalFlags</a>(<span class="keywordtype">void</span>)</div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;{</div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;    <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga4228594b3bc28f577b52c3e2b4c59a25">targetAckReceived</a> = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;    <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga38a06931c960c046d84cc4e29bc79fd0">endOfMessage</a> = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;    <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga4f4d733a970e67f2c8633ebba478e940">controllerDataAvailable</a> = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;    <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga4de360fb6c4ba62765fe7b4432205819">controllerDataRequested</a> = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;    <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga669c66c4bd5118e6915c61ce47acd7cc">receivedPecValid</a> = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;    <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga0e05ac131db1d8c0d6742157f43d662f">alertEdgeAsserted</a> = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;    <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga31163292d9da5029efedeb7ef83b02de">clockLowTimeout</a> = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;    <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#gae708886d870fb930c6b53e5d389f3fd2">bytesReceived</a> = 0U;</div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;}</div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160; </div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;<span class="comment">//*****************************************************************************</span></div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;<span class="comment">//</span></div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;<span class="comment"></span><span class="comment">//</span></div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;<span class="comment">//*****************************************************************************</span></div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;<span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">void</span></div>
+<div class="line"><a name="l00159"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#gaa336217211e85060c28c01e8098fec4b">  159</a></span>&#160;<a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#gaa336217211e85060c28c01e8098fec4b">PMBusController_resetTestObject</a>(<a class="code" href="structPMBus__TestObject.html">PMBus_TestHandle</a> <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga95bf8ad8eaf70a229c32cda25c6376fb">handle</a>)</div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;{</div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;    <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga95bf8ad8eaf70a229c32cda25c6376fb">handle</a>-&gt;<a class="code" href="structPMBus__TestObject.html#a163faf0885efe8edc7e8f6f590dda5fa">count</a> = 0U;</div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;    <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga95bf8ad8eaf70a229c32cda25c6376fb">handle</a>-&gt;<a class="code" href="structPMBus__TestObject.html#a873eaa62f8f0f93d11ed33e8bae14b44">pass</a> = 0U;</div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;    <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga95bf8ad8eaf70a229c32cda25c6376fb">handle</a>-&gt;<a class="code" href="structPMBus__TestObject.html#a07b7756969827b6344895156053b242f">fail</a> = 0U;</div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;    <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga95bf8ad8eaf70a229c32cda25c6376fb">handle</a>-&gt;<a class="code" href="structPMBus__TestObject.html#aa88aaeda9bf2d97dbf7d833b75238914">enabled</a> = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;}</div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160; </div>
 <div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;<span class="comment">//*****************************************************************************</span></div>
-<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;<span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">void</span></div>
-<div class="line"><a name="l00169"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#gaeb24f4855d84d98d2437cba8bae78d54">  169</a></span>&#160;<a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#gaeb24f4855d84d98d2437cba8bae78d54">PMBusController_resetGlobalFlags</a>(<span class="keywordtype">void</span>)</div>
-<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;{</div>
-<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;    <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga4228594b3bc28f577b52c3e2b4c59a25">targetAckReceived</a> = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;    <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga38a06931c960c046d84cc4e29bc79fd0">endOfMessage</a> = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;    <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga4f4d733a970e67f2c8633ebba478e940">controllerDataAvailable</a> = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;    <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga4de360fb6c4ba62765fe7b4432205819">controllerDataRequested</a> = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;    <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga669c66c4bd5118e6915c61ce47acd7cc">receivedPecValid</a> = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;    <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga0e05ac131db1d8c0d6742157f43d662f">alertEdgeAsserted</a> = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;    <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga31163292d9da5029efedeb7ef83b02de">clockLowTimeout</a> = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;    <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#gae708886d870fb930c6b53e5d389f3fd2">bytesReceived</a> = 0U;</div>
-<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;}</div>
-<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160; </div>
-<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;<span class="comment">//*****************************************************************************</span></div>
-<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;<span class="comment">//</span></div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;<span class="comment">//</span></div>
+<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;<span class="comment"></span><span class="comment">//</span></div>
+<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;<span class="comment">//*****************************************************************************</span></div>
+<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;<span class="keywordtype">void</span></div>
+<div class="line"><a name="l00177"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#ga6460fa474a8637f79d2934334c9b9729">  177</a></span>&#160;<a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga6460fa474a8637f79d2934334c9b9729">PMBusController_initSendByteTest</a>(<a class="code" href="structPMBus__TestObject.html">PMBus_TestHandle</a> <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga95bf8ad8eaf70a229c32cda25c6376fb">handle</a>);</div>
+<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160; </div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;<span class="comment">//*****************************************************************************</span></div>
+<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;<span class="comment">//</span></div>
 <div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;<span class="comment"></span><span class="comment">//</span></div>
 <div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;<span class="comment">//*****************************************************************************</span></div>
-<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;<span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">void</span></div>
-<div class="line"><a name="l00191"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#gaa336217211e85060c28c01e8098fec4b">  191</a></span>&#160;<a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#gaa336217211e85060c28c01e8098fec4b">PMBusController_resetTestObject</a>(<a class="code" href="structPMBus__TestObject.html">PMBus_TestHandle</a> <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga95bf8ad8eaf70a229c32cda25c6376fb">handle</a>)</div>
-<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;{</div>
-<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;    <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga95bf8ad8eaf70a229c32cda25c6376fb">handle</a>-&gt;<a class="code" href="structPMBus__TestObject.html#a163faf0885efe8edc7e8f6f590dda5fa">count</a> = 0U;</div>
-<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;    <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga95bf8ad8eaf70a229c32cda25c6376fb">handle</a>-&gt;<a class="code" href="structPMBus__TestObject.html#a873eaa62f8f0f93d11ed33e8bae14b44">pass</a> = 0U;</div>
-<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;    <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga95bf8ad8eaf70a229c32cda25c6376fb">handle</a>-&gt;<a class="code" href="structPMBus__TestObject.html#a07b7756969827b6344895156053b242f">fail</a> = 0U;</div>
-<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;    <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga95bf8ad8eaf70a229c32cda25c6376fb">handle</a>-&gt;<a class="code" href="structPMBus__TestObject.html#aa88aaeda9bf2d97dbf7d833b75238914">enabled</a> = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;}</div>
-<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160; </div>
-<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;<span class="comment">//*****************************************************************************</span></div>
-<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;<span class="comment">//</span></div>
-<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;<span class="comment"></span><span class="comment">//</span></div>
-<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;<span class="comment">//*****************************************************************************</span></div>
-<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;<span class="keywordtype">void</span></div>
-<div class="line"><a name="l00209"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#ga6460fa474a8637f79d2934334c9b9729">  209</a></span>&#160;<a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga6460fa474a8637f79d2934334c9b9729">PMBusController_initSendByteTest</a>(<a class="code" href="structPMBus__TestObject.html">PMBus_TestHandle</a> <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga95bf8ad8eaf70a229c32cda25c6376fb">handle</a>);</div>
-<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160; </div>
-<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;<span class="comment">//*****************************************************************************</span></div>
-<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;<span class="comment">//</span></div>
-<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;<span class="comment"></span><span class="comment">//</span></div>
-<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;<span class="comment">//*****************************************************************************</span></div>
-<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;<span class="keywordtype">void</span></div>
-<div class="line"><a name="l00223"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#ga363664e3b91921d7771c91c1e027b6df">  223</a></span>&#160;<a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga363664e3b91921d7771c91c1e027b6df">PMBusController_runSendByteTest</a>(<a class="code" href="structPMBus__TestObject.html">PMBus_TestHandle</a> <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga95bf8ad8eaf70a229c32cda25c6376fb">handle</a>);</div>
-<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160; </div>
-<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;<span class="comment">//*****************************************************************************</span></div>
-<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;<span class="comment">//</span></div>
-<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;<span class="comment"></span><span class="comment">//</span></div>
-<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;<span class="comment">//*****************************************************************************</span></div>
-<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;<span class="keywordtype">void</span></div>
-<div class="line"><a name="l00235"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#ga7b0f2836b8aac16cb13de0b8eec603e5">  235</a></span>&#160;<a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga7b0f2836b8aac16cb13de0b8eec603e5">PMBusController_initWriteByteTest</a>(<a class="code" href="structPMBus__TestObject.html">PMBus_TestHandle</a> <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga95bf8ad8eaf70a229c32cda25c6376fb">handle</a>);</div>
-<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160; </div>
-<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;<span class="comment">//*****************************************************************************</span></div>
-<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;<span class="comment">//</span></div>
-<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;<span class="comment"></span><span class="comment">//</span></div>
-<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;<span class="comment">//*****************************************************************************</span></div>
-<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;<span class="keywordtype">void</span></div>
-<div class="line"><a name="l00249"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#ga5119c3a5080941008c16b36025aaacc2">  249</a></span>&#160;<a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga5119c3a5080941008c16b36025aaacc2">PMBusController_runWriteByteTest</a>(<a class="code" href="structPMBus__TestObject.html">PMBus_TestHandle</a> <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga95bf8ad8eaf70a229c32cda25c6376fb">handle</a>);</div>
-<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160; </div>
-<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;<span class="comment">//*****************************************************************************</span></div>
-<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;<span class="comment">//</span></div>
-<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;<span class="comment"></span><span class="comment">//</span></div>
-<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;<span class="comment">//*****************************************************************************</span></div>
-<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;<span class="keywordtype">void</span></div>
-<div class="line"><a name="l00261"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#ga3acc3d071220698e94f9aaa73a2a38ce">  261</a></span>&#160;<a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga3acc3d071220698e94f9aaa73a2a38ce">PMBusController_initWriteWordTest</a>(<a class="code" href="structPMBus__TestObject.html">PMBus_TestHandle</a> <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga95bf8ad8eaf70a229c32cda25c6376fb">handle</a>);</div>
-<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160; </div>
-<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;<span class="comment">//*****************************************************************************</span></div>
-<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;<span class="comment">//</span></div>
-<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;<span class="comment"></span><span class="comment">//</span></div>
-<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;<span class="comment">//*****************************************************************************</span></div>
-<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;<span class="keywordtype">void</span></div>
-<div class="line"><a name="l00275"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#ga0f4c1b69df1c39decedd016312332cfa">  275</a></span>&#160;<a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga0f4c1b69df1c39decedd016312332cfa">PMBusController_runWriteWordTest</a>(<a class="code" href="structPMBus__TestObject.html">PMBus_TestHandle</a> <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga95bf8ad8eaf70a229c32cda25c6376fb">handle</a>);</div>
-<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160; </div>
-<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;<span class="comment">//*****************************************************************************</span></div>
-<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;<span class="comment">//</span></div>
-<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;<span class="comment"></span><span class="comment">//</span></div>
-<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;<span class="comment">//*****************************************************************************</span></div>
-<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;<span class="keywordtype">void</span></div>
-<div class="line"><a name="l00287"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#ga830b9f3bef18a930da75328ae49c5b32">  287</a></span>&#160;<a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga830b9f3bef18a930da75328ae49c5b32">PMBusController_initBlockWriteTest</a>(<a class="code" href="structPMBus__TestObject.html">PMBus_TestHandle</a> <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga95bf8ad8eaf70a229c32cda25c6376fb">handle</a>);</div>
-<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160; </div>
-<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;<span class="comment">//*****************************************************************************</span></div>
-<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;<span class="comment">//</span></div>
-<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;<span class="comment"></span><span class="comment">//</span></div>
-<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;<span class="comment">//*****************************************************************************</span></div>
-<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;<span class="keywordtype">void</span></div>
-<div class="line"><a name="l00301"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#ga75a65727b93285d121b7462c8b04563b">  301</a></span>&#160;<a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga75a65727b93285d121b7462c8b04563b">PMBusController_runBlockWriteTest</a>(<a class="code" href="structPMBus__TestObject.html">PMBus_TestHandle</a> <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga95bf8ad8eaf70a229c32cda25c6376fb">handle</a>);</div>
-<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160; </div>
-<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;<span class="comment">//*****************************************************************************</span></div>
-<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;<span class="comment">//</span></div>
-<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;<span class="comment"></span><span class="comment">//</span></div>
-<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;<span class="comment">//*****************************************************************************</span></div>
-<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;<span class="keywordtype">void</span></div>
-<div class="line"><a name="l00313"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#gadcfc6edf7460fbd5cd3fcbbb43416b6e">  313</a></span>&#160;<a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#gadcfc6edf7460fbd5cd3fcbbb43416b6e">PMBusController_initReceiveByteTest</a>(<a class="code" href="structPMBus__TestObject.html">PMBus_TestHandle</a> <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga95bf8ad8eaf70a229c32cda25c6376fb">handle</a>);</div>
-<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160; </div>
-<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;<span class="comment">//*****************************************************************************</span></div>
-<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;<span class="comment">//</span></div>
-<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;<span class="comment"></span><span class="comment">//</span></div>
-<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;<span class="comment">//*****************************************************************************</span></div>
-<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;<span class="keywordtype">void</span></div>
-<div class="line"><a name="l00327"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#ga30738ec3474ed6c17fee763bee30ca4e">  327</a></span>&#160;<a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga30738ec3474ed6c17fee763bee30ca4e">PMBusController_runReceiveByteTest</a>(<a class="code" href="structPMBus__TestObject.html">PMBus_TestHandle</a> <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga95bf8ad8eaf70a229c32cda25c6376fb">handle</a>);</div>
-<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160; </div>
-<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;<span class="comment">//*****************************************************************************</span></div>
-<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;<span class="comment">//</span></div>
-<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;<span class="comment"></span><span class="comment">//</span></div>
-<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;<span class="comment">//*****************************************************************************</span></div>
-<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;<span class="keywordtype">void</span></div>
-<div class="line"><a name="l00339"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#gac665fc41a880f1fbe97f0794d318aa37">  339</a></span>&#160;<a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#gac665fc41a880f1fbe97f0794d318aa37">PMBusController_initReadByteTest</a>(<a class="code" href="structPMBus__TestObject.html">PMBus_TestHandle</a> <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga95bf8ad8eaf70a229c32cda25c6376fb">handle</a>);</div>
-<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160; </div>
-<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;<span class="comment">//*****************************************************************************</span></div>
-<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;<span class="comment">//</span></div>
-<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;<span class="comment"></span><span class="comment">//</span></div>
-<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;<span class="comment">//*****************************************************************************</span></div>
-<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;<span class="keywordtype">void</span></div>
-<div class="line"><a name="l00353"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#gabe628a9662758d253979732655e50d15">  353</a></span>&#160;<a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#gabe628a9662758d253979732655e50d15">PMBusController_runReadByteTest</a>(<a class="code" href="structPMBus__TestObject.html">PMBus_TestHandle</a> <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga95bf8ad8eaf70a229c32cda25c6376fb">handle</a>);</div>
-<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160; </div>
-<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;<span class="comment">//*****************************************************************************</span></div>
-<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;<span class="comment">//</span></div>
-<div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160;<span class="comment"></span><span class="comment">//</span></div>
-<div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160;<span class="comment">//*****************************************************************************</span></div>
-<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;<span class="keywordtype">void</span></div>
-<div class="line"><a name="l00365"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#ga46a584668c10adbd1227def47bcc4678">  365</a></span>&#160;<a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga46a584668c10adbd1227def47bcc4678">PMBusController_initReadWordTest</a>(<a class="code" href="structPMBus__TestObject.html">PMBus_TestHandle</a> <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga95bf8ad8eaf70a229c32cda25c6376fb">handle</a>);</div>
-<div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160; </div>
-<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;<span class="comment">//*****************************************************************************</span></div>
-<div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;<span class="comment">//</span></div>
-<div class="line"><a name="l00376"></a><span class="lineno">  376</span>&#160;<span class="comment"></span><span class="comment">//</span></div>
-<div class="line"><a name="l00377"></a><span class="lineno">  377</span>&#160;<span class="comment">//*****************************************************************************</span></div>
-<div class="line"><a name="l00378"></a><span class="lineno">  378</span>&#160;<span class="keywordtype">void</span></div>
-<div class="line"><a name="l00379"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#gacc58a0098f5994397967a2c5845e6738">  379</a></span>&#160;<a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#gacc58a0098f5994397967a2c5845e6738">PMBusController_runReadWordTest</a>(<a class="code" href="structPMBus__TestObject.html">PMBus_TestHandle</a> <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga95bf8ad8eaf70a229c32cda25c6376fb">handle</a>);</div>
-<div class="line"><a name="l00380"></a><span class="lineno">  380</span>&#160; </div>
-<div class="line"><a name="l00381"></a><span class="lineno">  381</span>&#160;<span class="comment">//*****************************************************************************</span></div>
-<div class="line"><a name="l00382"></a><span class="lineno">  382</span>&#160;<span class="comment">//</span></div>
-<div class="line"><a name="l00388"></a><span class="lineno">  388</span>&#160;<span class="comment"></span><span class="comment">//</span></div>
-<div class="line"><a name="l00389"></a><span class="lineno">  389</span>&#160;<span class="comment">//*****************************************************************************</span></div>
-<div class="line"><a name="l00390"></a><span class="lineno">  390</span>&#160;<span class="keywordtype">void</span></div>
-<div class="line"><a name="l00391"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#gaa191b02b112da516db9bbdeb9c412bd1">  391</a></span>&#160;<a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#gaa191b02b112da516db9bbdeb9c412bd1">PMBusController_initBlockReadTest</a>(<a class="code" href="structPMBus__TestObject.html">PMBus_TestHandle</a> <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga95bf8ad8eaf70a229c32cda25c6376fb">handle</a>);</div>
-<div class="line"><a name="l00392"></a><span class="lineno">  392</span>&#160; </div>
-<div class="line"><a name="l00393"></a><span class="lineno">  393</span>&#160;<span class="comment">//*****************************************************************************</span></div>
-<div class="line"><a name="l00394"></a><span class="lineno">  394</span>&#160;<span class="comment">//</span></div>
-<div class="line"><a name="l00402"></a><span class="lineno">  402</span>&#160;<span class="comment"></span><span class="comment">//</span></div>
-<div class="line"><a name="l00403"></a><span class="lineno">  403</span>&#160;<span class="comment">//*****************************************************************************</span></div>
-<div class="line"><a name="l00404"></a><span class="lineno">  404</span>&#160;<span class="keywordtype">void</span></div>
-<div class="line"><a name="l00405"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#ga880eff6538cb8b76452b53b2cf531371">  405</a></span>&#160;<a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga880eff6538cb8b76452b53b2cf531371">PMBusController_runBlockReadTest</a>(<a class="code" href="structPMBus__TestObject.html">PMBus_TestHandle</a> <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga95bf8ad8eaf70a229c32cda25c6376fb">handle</a>);</div>
-<div class="line"><a name="l00406"></a><span class="lineno">  406</span>&#160; </div>
-<div class="line"><a name="l00407"></a><span class="lineno">  407</span>&#160;<span class="comment">//*****************************************************************************</span></div>
-<div class="line"><a name="l00408"></a><span class="lineno">  408</span>&#160;<span class="comment">//</span></div>
-<div class="line"><a name="l00414"></a><span class="lineno">  414</span>&#160;<span class="comment"></span><span class="comment">//</span></div>
-<div class="line"><a name="l00415"></a><span class="lineno">  415</span>&#160;<span class="comment">//*****************************************************************************</span></div>
-<div class="line"><a name="l00416"></a><span class="lineno">  416</span>&#160;<span class="keywordtype">void</span></div>
-<div class="line"><a name="l00417"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#ga8f376dff6c88b64283eecc9d0ebbbc29">  417</a></span>&#160;<a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga8f376dff6c88b64283eecc9d0ebbbc29">PMBusController_initBlockRead3BytesTest</a>(<a class="code" href="structPMBus__TestObject.html">PMBus_TestHandle</a> <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga95bf8ad8eaf70a229c32cda25c6376fb">handle</a>);</div>
-<div class="line"><a name="l00418"></a><span class="lineno">  418</span>&#160; </div>
-<div class="line"><a name="l00419"></a><span class="lineno">  419</span>&#160;<span class="comment">//*****************************************************************************</span></div>
-<div class="line"><a name="l00420"></a><span class="lineno">  420</span>&#160;<span class="comment">//</span></div>
-<div class="line"><a name="l00428"></a><span class="lineno">  428</span>&#160;<span class="comment"></span><span class="comment">//</span></div>
-<div class="line"><a name="l00429"></a><span class="lineno">  429</span>&#160;<span class="comment">//*****************************************************************************</span></div>
-<div class="line"><a name="l00430"></a><span class="lineno">  430</span>&#160;<span class="keywordtype">void</span></div>
-<div class="line"><a name="l00431"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#ga5e13824beb8a8f8278395dc856959a87">  431</a></span>&#160;<a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga5e13824beb8a8f8278395dc856959a87">PMBusController_runBlockRead3BytesTest</a>(<a class="code" href="structPMBus__TestObject.html">PMBus_TestHandle</a> <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga95bf8ad8eaf70a229c32cda25c6376fb">handle</a>);</div>
-<div class="line"><a name="l00432"></a><span class="lineno">  432</span>&#160; </div>
-<div class="line"><a name="l00433"></a><span class="lineno">  433</span>&#160;<span class="comment">//*****************************************************************************</span></div>
-<div class="line"><a name="l00434"></a><span class="lineno">  434</span>&#160;<span class="comment">//</span></div>
-<div class="line"><a name="l00440"></a><span class="lineno">  440</span>&#160;<span class="comment"></span><span class="comment">//</span></div>
-<div class="line"><a name="l00441"></a><span class="lineno">  441</span>&#160;<span class="comment">//*****************************************************************************</span></div>
-<div class="line"><a name="l00442"></a><span class="lineno">  442</span>&#160;<span class="keywordtype">void</span></div>
-<div class="line"><a name="l00443"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#gab1b5289b5d506640decc3bdaa2166840">  443</a></span>&#160;<a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#gab1b5289b5d506640decc3bdaa2166840">PMBusController_initBlockWriteReadProcessCallTest</a>(<a class="code" href="structPMBus__TestObject.html">PMBus_TestHandle</a> <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga95bf8ad8eaf70a229c32cda25c6376fb">handle</a>);</div>
-<div class="line"><a name="l00444"></a><span class="lineno">  444</span>&#160; </div>
-<div class="line"><a name="l00445"></a><span class="lineno">  445</span>&#160;<span class="comment">//*****************************************************************************</span></div>
-<div class="line"><a name="l00446"></a><span class="lineno">  446</span>&#160;<span class="comment">//</span></div>
-<div class="line"><a name="l00454"></a><span class="lineno">  454</span>&#160;<span class="comment"></span><span class="comment">//</span></div>
-<div class="line"><a name="l00455"></a><span class="lineno">  455</span>&#160;<span class="comment">//*****************************************************************************</span></div>
-<div class="line"><a name="l00456"></a><span class="lineno">  456</span>&#160;<span class="keywordtype">void</span></div>
-<div class="line"><a name="l00457"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#gaa8d023aa005049ac6c8dd0d3fc47b772">  457</a></span>&#160;<a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#gaa8d023aa005049ac6c8dd0d3fc47b772">PMBusController_runBlockWriteReadProcessCallTest</a>(<a class="code" href="structPMBus__TestObject.html">PMBus_TestHandle</a> <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga95bf8ad8eaf70a229c32cda25c6376fb">handle</a>);</div>
-<div class="line"><a name="l00458"></a><span class="lineno">  458</span>&#160; </div>
-<div class="line"><a name="l00459"></a><span class="lineno">  459</span>&#160;<span class="comment">//*****************************************************************************</span></div>
-<div class="line"><a name="l00460"></a><span class="lineno">  460</span>&#160;<span class="comment">//</span></div>
-<div class="line"><a name="l00466"></a><span class="lineno">  466</span>&#160;<span class="comment"></span><span class="comment">//</span></div>
-<div class="line"><a name="l00467"></a><span class="lineno">  467</span>&#160;<span class="comment">//*****************************************************************************</span></div>
-<div class="line"><a name="l00468"></a><span class="lineno">  468</span>&#160;<span class="keywordtype">void</span></div>
-<div class="line"><a name="l00469"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#gab95ea47400f51774b457940df0032242">  469</a></span>&#160;<a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#gab95ea47400f51774b457940df0032242">PMBusController_initQuickCommandTest</a>(<a class="code" href="structPMBus__TestObject.html">PMBus_TestHandle</a> <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga95bf8ad8eaf70a229c32cda25c6376fb">handle</a>);</div>
-<div class="line"><a name="l00470"></a><span class="lineno">  470</span>&#160; </div>
-<div class="line"><a name="l00471"></a><span class="lineno">  471</span>&#160;<span class="comment">//*****************************************************************************</span></div>
-<div class="line"><a name="l00472"></a><span class="lineno">  472</span>&#160;<span class="comment">//</span></div>
-<div class="line"><a name="l00480"></a><span class="lineno">  480</span>&#160;<span class="comment"></span><span class="comment">//</span></div>
-<div class="line"><a name="l00481"></a><span class="lineno">  481</span>&#160;<span class="comment">//*****************************************************************************</span></div>
-<div class="line"><a name="l00482"></a><span class="lineno">  482</span>&#160;<span class="keywordtype">void</span></div>
-<div class="line"><a name="l00483"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#ga852b693805fcfb40b443e85be94530b8">  483</a></span>&#160;<a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga852b693805fcfb40b443e85be94530b8">PMBusController_runQuickCommandTest</a>(<a class="code" href="structPMBus__TestObject.html">PMBus_TestHandle</a> <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga95bf8ad8eaf70a229c32cda25c6376fb">handle</a>);</div>
-<div class="line"><a name="l00484"></a><span class="lineno">  484</span>&#160; </div>
-<div class="line"><a name="l00485"></a><span class="lineno">  485</span>&#160;<span class="comment">//*****************************************************************************</span></div>
-<div class="line"><a name="l00486"></a><span class="lineno">  486</span>&#160;<span class="comment">//</span></div>
-<div class="line"><a name="l00492"></a><span class="lineno">  492</span>&#160;<span class="comment"></span><span class="comment">//</span></div>
-<div class="line"><a name="l00493"></a><span class="lineno">  493</span>&#160;<span class="comment">//*****************************************************************************</span></div>
-<div class="line"><a name="l00494"></a><span class="lineno">  494</span>&#160;<span class="keywordtype">void</span></div>
-<div class="line"><a name="l00495"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#ga083bd36816352f56283835ae43d08990">  495</a></span>&#160;<a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga083bd36816352f56283835ae43d08990">PMBusController_initBlockWrite2BytesTest</a>(<a class="code" href="structPMBus__TestObject.html">PMBus_TestHandle</a> <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga95bf8ad8eaf70a229c32cda25c6376fb">handle</a>);</div>
-<div class="line"><a name="l00496"></a><span class="lineno">  496</span>&#160; </div>
-<div class="line"><a name="l00497"></a><span class="lineno">  497</span>&#160;<span class="comment">//*****************************************************************************</span></div>
-<div class="line"><a name="l00498"></a><span class="lineno">  498</span>&#160;<span class="comment">//</span></div>
-<div class="line"><a name="l00506"></a><span class="lineno">  506</span>&#160;<span class="comment"></span><span class="comment">//</span></div>
-<div class="line"><a name="l00507"></a><span class="lineno">  507</span>&#160;<span class="comment">//*****************************************************************************</span></div>
-<div class="line"><a name="l00508"></a><span class="lineno">  508</span>&#160;<span class="keywordtype">void</span></div>
-<div class="line"><a name="l00509"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#gadb569fe1ab31a830291d8d7df4b6e5c3">  509</a></span>&#160;<a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#gadb569fe1ab31a830291d8d7df4b6e5c3">PMBusController_runBlockWrite2BytesTest</a>(<a class="code" href="structPMBus__TestObject.html">PMBus_TestHandle</a> <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga95bf8ad8eaf70a229c32cda25c6376fb">handle</a>);</div>
-<div class="line"><a name="l00510"></a><span class="lineno">  510</span>&#160; </div>
-<div class="line"><a name="l00511"></a><span class="lineno">  511</span>&#160;<span class="comment">//*****************************************************************************</span></div>
-<div class="line"><a name="l00512"></a><span class="lineno">  512</span>&#160;<span class="comment">//</span></div>
-<div class="line"><a name="l00518"></a><span class="lineno">  518</span>&#160;<span class="comment"></span><span class="comment">//</span></div>
-<div class="line"><a name="l00519"></a><span class="lineno">  519</span>&#160;<span class="comment">//*****************************************************************************</span></div>
-<div class="line"><a name="l00520"></a><span class="lineno">  520</span>&#160;<span class="keywordtype">void</span></div>
-<div class="line"><a name="l00521"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#gab75371df4b6624ea8b632ca10ecd4b16">  521</a></span>&#160;<a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#gab75371df4b6624ea8b632ca10ecd4b16">PMBusController_initBlockWrite3BytesTest</a>(<a class="code" href="structPMBus__TestObject.html">PMBus_TestHandle</a> <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga95bf8ad8eaf70a229c32cda25c6376fb">handle</a>);</div>
-<div class="line"><a name="l00522"></a><span class="lineno">  522</span>&#160; </div>
-<div class="line"><a name="l00523"></a><span class="lineno">  523</span>&#160;<span class="comment">//*****************************************************************************</span></div>
-<div class="line"><a name="l00524"></a><span class="lineno">  524</span>&#160;<span class="comment">//</span></div>
-<div class="line"><a name="l00532"></a><span class="lineno">  532</span>&#160;<span class="comment"></span><span class="comment">//</span></div>
-<div class="line"><a name="l00533"></a><span class="lineno">  533</span>&#160;<span class="comment">//*****************************************************************************</span></div>
-<div class="line"><a name="l00534"></a><span class="lineno">  534</span>&#160;<span class="keywordtype">void</span></div>
-<div class="line"><a name="l00535"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#gafcf58a069718a925a7c6f4f5c6f5ce00">  535</a></span>&#160;<a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#gafcf58a069718a925a7c6f4f5c6f5ce00">PMBusController_runBlockWrite3BytesTest</a>(<a class="code" href="structPMBus__TestObject.html">PMBus_TestHandle</a> <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga95bf8ad8eaf70a229c32cda25c6376fb">handle</a>);</div>
-<div class="line"><a name="l00536"></a><span class="lineno">  536</span>&#160; </div>
-<div class="line"><a name="l00537"></a><span class="lineno">  537</span>&#160;<span class="comment">//*****************************************************************************</span></div>
-<div class="line"><a name="l00538"></a><span class="lineno">  538</span>&#160;<span class="comment">//</span></div>
-<div class="line"><a name="l00544"></a><span class="lineno">  544</span>&#160;<span class="comment"></span><span class="comment">//</span></div>
-<div class="line"><a name="l00545"></a><span class="lineno">  545</span>&#160;<span class="comment">//*****************************************************************************</span></div>
-<div class="line"><a name="l00546"></a><span class="lineno">  546</span>&#160;<span class="keywordtype">void</span></div>
-<div class="line"><a name="l00547"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#gac2d29143caf78053465a12786dddd90b">  547</a></span>&#160;<a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#gac2d29143caf78053465a12786dddd90b">PMBusController_initProcessCallTest</a>(<a class="code" href="structPMBus__TestObject.html">PMBus_TestHandle</a> <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga95bf8ad8eaf70a229c32cda25c6376fb">handle</a>);</div>
-<div class="line"><a name="l00548"></a><span class="lineno">  548</span>&#160; </div>
-<div class="line"><a name="l00549"></a><span class="lineno">  549</span>&#160;<span class="comment">//*****************************************************************************</span></div>
-<div class="line"><a name="l00550"></a><span class="lineno">  550</span>&#160;<span class="comment">//</span></div>
-<div class="line"><a name="l00558"></a><span class="lineno">  558</span>&#160;<span class="comment"></span><span class="comment">//</span></div>
-<div class="line"><a name="l00559"></a><span class="lineno">  559</span>&#160;<span class="comment">//*****************************************************************************</span></div>
-<div class="line"><a name="l00560"></a><span class="lineno">  560</span>&#160;<span class="keywordtype">void</span></div>
-<div class="line"><a name="l00561"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#gad489c90d37a86c03d034bcb4f3dceda6">  561</a></span>&#160;<a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#gad489c90d37a86c03d034bcb4f3dceda6">PMBusController_runProcessCallTest</a>(<a class="code" href="structPMBus__TestObject.html">PMBus_TestHandle</a> <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga95bf8ad8eaf70a229c32cda25c6376fb">handle</a>);</div>
-<div class="line"><a name="l00562"></a><span class="lineno">  562</span>&#160; </div>
-<div class="line"><a name="l00563"></a><span class="lineno">  563</span>&#160;<span class="comment">//*****************************************************************************</span></div>
-<div class="line"><a name="l00564"></a><span class="lineno">  564</span>&#160;<span class="comment">//</span></div>
-<div class="line"><a name="l00570"></a><span class="lineno">  570</span>&#160;<span class="comment"></span><span class="comment">//</span></div>
-<div class="line"><a name="l00571"></a><span class="lineno">  571</span>&#160;<span class="comment">//*****************************************************************************</span></div>
-<div class="line"><a name="l00572"></a><span class="lineno">  572</span>&#160;<span class="keywordtype">void</span></div>
-<div class="line"><a name="l00573"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#ga315f080cb43d83eebecb5cdaa27ea751">  573</a></span>&#160;<a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga315f080cb43d83eebecb5cdaa27ea751">PMBusController_initAlertTest</a>(<a class="code" href="structPMBus__TestObject.html">PMBus_TestHandle</a> <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga95bf8ad8eaf70a229c32cda25c6376fb">handle</a>);</div>
-<div class="line"><a name="l00574"></a><span class="lineno">  574</span>&#160; </div>
-<div class="line"><a name="l00575"></a><span class="lineno">  575</span>&#160;<span class="comment">//*****************************************************************************</span></div>
-<div class="line"><a name="l00576"></a><span class="lineno">  576</span>&#160;<span class="comment">//</span></div>
-<div class="line"><a name="l00584"></a><span class="lineno">  584</span>&#160;<span class="comment"></span><span class="comment">//</span></div>
+<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;<span class="keywordtype">void</span></div>
+<div class="line"><a name="l00191"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#ga363664e3b91921d7771c91c1e027b6df">  191</a></span>&#160;<a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga363664e3b91921d7771c91c1e027b6df">PMBusController_runSendByteTest</a>(<a class="code" href="structPMBus__TestObject.html">PMBus_TestHandle</a> <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga95bf8ad8eaf70a229c32cda25c6376fb">handle</a>);</div>
+<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160; </div>
+<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;<span class="comment">//*****************************************************************************</span></div>
+<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;<span class="comment">//</span></div>
+<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;<span class="comment"></span><span class="comment">//</span></div>
+<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;<span class="comment">//*****************************************************************************</span></div>
+<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;<span class="keywordtype">void</span></div>
+<div class="line"><a name="l00203"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#ga7b0f2836b8aac16cb13de0b8eec603e5">  203</a></span>&#160;<a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga7b0f2836b8aac16cb13de0b8eec603e5">PMBusController_initWriteByteTest</a>(<a class="code" href="structPMBus__TestObject.html">PMBus_TestHandle</a> <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga95bf8ad8eaf70a229c32cda25c6376fb">handle</a>);</div>
+<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160; </div>
+<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;<span class="comment">//*****************************************************************************</span></div>
+<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;<span class="comment">//</span></div>
+<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;<span class="comment"></span><span class="comment">//</span></div>
+<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;<span class="comment">//*****************************************************************************</span></div>
+<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;<span class="keywordtype">void</span></div>
+<div class="line"><a name="l00217"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#ga5119c3a5080941008c16b36025aaacc2">  217</a></span>&#160;<a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga5119c3a5080941008c16b36025aaacc2">PMBusController_runWriteByteTest</a>(<a class="code" href="structPMBus__TestObject.html">PMBus_TestHandle</a> <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga95bf8ad8eaf70a229c32cda25c6376fb">handle</a>);</div>
+<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160; </div>
+<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;<span class="comment">//*****************************************************************************</span></div>
+<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;<span class="comment">//</span></div>
+<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;<span class="comment"></span><span class="comment">//</span></div>
+<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;<span class="comment">//*****************************************************************************</span></div>
+<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;<span class="keywordtype">void</span></div>
+<div class="line"><a name="l00229"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#ga3acc3d071220698e94f9aaa73a2a38ce">  229</a></span>&#160;<a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga3acc3d071220698e94f9aaa73a2a38ce">PMBusController_initWriteWordTest</a>(<a class="code" href="structPMBus__TestObject.html">PMBus_TestHandle</a> <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga95bf8ad8eaf70a229c32cda25c6376fb">handle</a>);</div>
+<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160; </div>
+<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;<span class="comment">//*****************************************************************************</span></div>
+<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;<span class="comment">//</span></div>
+<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;<span class="comment"></span><span class="comment">//</span></div>
+<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;<span class="comment">//*****************************************************************************</span></div>
+<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;<span class="keywordtype">void</span></div>
+<div class="line"><a name="l00243"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#ga0f4c1b69df1c39decedd016312332cfa">  243</a></span>&#160;<a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga0f4c1b69df1c39decedd016312332cfa">PMBusController_runWriteWordTest</a>(<a class="code" href="structPMBus__TestObject.html">PMBus_TestHandle</a> <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga95bf8ad8eaf70a229c32cda25c6376fb">handle</a>);</div>
+<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160; </div>
+<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;<span class="comment">//*****************************************************************************</span></div>
+<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;<span class="comment">//</span></div>
+<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;<span class="comment"></span><span class="comment">//</span></div>
+<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;<span class="comment">//*****************************************************************************</span></div>
+<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;<span class="keywordtype">void</span></div>
+<div class="line"><a name="l00255"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#ga830b9f3bef18a930da75328ae49c5b32">  255</a></span>&#160;<a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga830b9f3bef18a930da75328ae49c5b32">PMBusController_initBlockWriteTest</a>(<a class="code" href="structPMBus__TestObject.html">PMBus_TestHandle</a> <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga95bf8ad8eaf70a229c32cda25c6376fb">handle</a>);</div>
+<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160; </div>
+<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;<span class="comment">//*****************************************************************************</span></div>
+<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;<span class="comment">//</span></div>
+<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;<span class="comment"></span><span class="comment">//</span></div>
+<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;<span class="comment">//*****************************************************************************</span></div>
+<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;<span class="keywordtype">void</span></div>
+<div class="line"><a name="l00269"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#ga75a65727b93285d121b7462c8b04563b">  269</a></span>&#160;<a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga75a65727b93285d121b7462c8b04563b">PMBusController_runBlockWriteTest</a>(<a class="code" href="structPMBus__TestObject.html">PMBus_TestHandle</a> <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga95bf8ad8eaf70a229c32cda25c6376fb">handle</a>);</div>
+<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160; </div>
+<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;<span class="comment">//*****************************************************************************</span></div>
+<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;<span class="comment">//</span></div>
+<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;<span class="comment"></span><span class="comment">//</span></div>
+<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;<span class="comment">//*****************************************************************************</span></div>
+<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;<span class="keywordtype">void</span></div>
+<div class="line"><a name="l00281"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#gadcfc6edf7460fbd5cd3fcbbb43416b6e">  281</a></span>&#160;<a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#gadcfc6edf7460fbd5cd3fcbbb43416b6e">PMBusController_initReceiveByteTest</a>(<a class="code" href="structPMBus__TestObject.html">PMBus_TestHandle</a> <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga95bf8ad8eaf70a229c32cda25c6376fb">handle</a>);</div>
+<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160; </div>
+<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;<span class="comment">//*****************************************************************************</span></div>
+<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;<span class="comment">//</span></div>
+<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;<span class="comment"></span><span class="comment">//</span></div>
+<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;<span class="comment">//*****************************************************************************</span></div>
+<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;<span class="keywordtype">void</span></div>
+<div class="line"><a name="l00295"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#ga30738ec3474ed6c17fee763bee30ca4e">  295</a></span>&#160;<a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga30738ec3474ed6c17fee763bee30ca4e">PMBusController_runReceiveByteTest</a>(<a class="code" href="structPMBus__TestObject.html">PMBus_TestHandle</a> <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga95bf8ad8eaf70a229c32cda25c6376fb">handle</a>);</div>
+<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160; </div>
+<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;<span class="comment">//*****************************************************************************</span></div>
+<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;<span class="comment">//</span></div>
+<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;<span class="comment"></span><span class="comment">//</span></div>
+<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;<span class="comment">//*****************************************************************************</span></div>
+<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;<span class="keywordtype">void</span></div>
+<div class="line"><a name="l00307"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#gac665fc41a880f1fbe97f0794d318aa37">  307</a></span>&#160;<a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#gac665fc41a880f1fbe97f0794d318aa37">PMBusController_initReadByteTest</a>(<a class="code" href="structPMBus__TestObject.html">PMBus_TestHandle</a> <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga95bf8ad8eaf70a229c32cda25c6376fb">handle</a>);</div>
+<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160; </div>
+<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;<span class="comment">//*****************************************************************************</span></div>
+<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;<span class="comment">//</span></div>
+<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;<span class="comment"></span><span class="comment">//</span></div>
+<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;<span class="comment">//*****************************************************************************</span></div>
+<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;<span class="keywordtype">void</span></div>
+<div class="line"><a name="l00321"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#gabe628a9662758d253979732655e50d15">  321</a></span>&#160;<a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#gabe628a9662758d253979732655e50d15">PMBusController_runReadByteTest</a>(<a class="code" href="structPMBus__TestObject.html">PMBus_TestHandle</a> <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga95bf8ad8eaf70a229c32cda25c6376fb">handle</a>);</div>
+<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160; </div>
+<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;<span class="comment">//*****************************************************************************</span></div>
+<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;<span class="comment">//</span></div>
+<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;<span class="comment"></span><span class="comment">//</span></div>
+<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;<span class="comment">//*****************************************************************************</span></div>
+<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;<span class="keywordtype">void</span></div>
+<div class="line"><a name="l00333"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#ga46a584668c10adbd1227def47bcc4678">  333</a></span>&#160;<a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga46a584668c10adbd1227def47bcc4678">PMBusController_initReadWordTest</a>(<a class="code" href="structPMBus__TestObject.html">PMBus_TestHandle</a> <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga95bf8ad8eaf70a229c32cda25c6376fb">handle</a>);</div>
+<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160; </div>
+<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;<span class="comment">//*****************************************************************************</span></div>
+<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;<span class="comment">//</span></div>
+<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;<span class="comment"></span><span class="comment">//</span></div>
+<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;<span class="comment">//*****************************************************************************</span></div>
+<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;<span class="keywordtype">void</span></div>
+<div class="line"><a name="l00347"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#gacc58a0098f5994397967a2c5845e6738">  347</a></span>&#160;<a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#gacc58a0098f5994397967a2c5845e6738">PMBusController_runReadWordTest</a>(<a class="code" href="structPMBus__TestObject.html">PMBus_TestHandle</a> <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga95bf8ad8eaf70a229c32cda25c6376fb">handle</a>);</div>
+<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160; </div>
+<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;<span class="comment">//*****************************************************************************</span></div>
+<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;<span class="comment">//</span></div>
+<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;<span class="comment"></span><span class="comment">//</span></div>
+<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;<span class="comment">//*****************************************************************************</span></div>
+<div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;<span class="keywordtype">void</span></div>
+<div class="line"><a name="l00359"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#gaa191b02b112da516db9bbdeb9c412bd1">  359</a></span>&#160;<a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#gaa191b02b112da516db9bbdeb9c412bd1">PMBusController_initBlockReadTest</a>(<a class="code" href="structPMBus__TestObject.html">PMBus_TestHandle</a> <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga95bf8ad8eaf70a229c32cda25c6376fb">handle</a>);</div>
+<div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160; </div>
+<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;<span class="comment">//*****************************************************************************</span></div>
+<div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160;<span class="comment">//</span></div>
+<div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160;<span class="comment"></span><span class="comment">//</span></div>
+<div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160;<span class="comment">//*****************************************************************************</span></div>
+<div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;<span class="keywordtype">void</span></div>
+<div class="line"><a name="l00373"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#ga880eff6538cb8b76452b53b2cf531371">  373</a></span>&#160;<a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga880eff6538cb8b76452b53b2cf531371">PMBusController_runBlockReadTest</a>(<a class="code" href="structPMBus__TestObject.html">PMBus_TestHandle</a> <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga95bf8ad8eaf70a229c32cda25c6376fb">handle</a>);</div>
+<div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160; </div>
+<div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160;<span class="comment">//*****************************************************************************</span></div>
+<div class="line"><a name="l00376"></a><span class="lineno">  376</span>&#160;<span class="comment">//</span></div>
+<div class="line"><a name="l00382"></a><span class="lineno">  382</span>&#160;<span class="comment"></span><span class="comment">//</span></div>
+<div class="line"><a name="l00383"></a><span class="lineno">  383</span>&#160;<span class="comment">//*****************************************************************************</span></div>
+<div class="line"><a name="l00384"></a><span class="lineno">  384</span>&#160;<span class="keywordtype">void</span></div>
+<div class="line"><a name="l00385"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#ga8f376dff6c88b64283eecc9d0ebbbc29">  385</a></span>&#160;<a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga8f376dff6c88b64283eecc9d0ebbbc29">PMBusController_initBlockRead3BytesTest</a>(<a class="code" href="structPMBus__TestObject.html">PMBus_TestHandle</a> <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga95bf8ad8eaf70a229c32cda25c6376fb">handle</a>);</div>
+<div class="line"><a name="l00386"></a><span class="lineno">  386</span>&#160; </div>
+<div class="line"><a name="l00387"></a><span class="lineno">  387</span>&#160;<span class="comment">//*****************************************************************************</span></div>
+<div class="line"><a name="l00388"></a><span class="lineno">  388</span>&#160;<span class="comment">//</span></div>
+<div class="line"><a name="l00396"></a><span class="lineno">  396</span>&#160;<span class="comment"></span><span class="comment">//</span></div>
+<div class="line"><a name="l00397"></a><span class="lineno">  397</span>&#160;<span class="comment">//*****************************************************************************</span></div>
+<div class="line"><a name="l00398"></a><span class="lineno">  398</span>&#160;<span class="keywordtype">void</span></div>
+<div class="line"><a name="l00399"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#ga5e13824beb8a8f8278395dc856959a87">  399</a></span>&#160;<a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga5e13824beb8a8f8278395dc856959a87">PMBusController_runBlockRead3BytesTest</a>(<a class="code" href="structPMBus__TestObject.html">PMBus_TestHandle</a> <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga95bf8ad8eaf70a229c32cda25c6376fb">handle</a>);</div>
+<div class="line"><a name="l00400"></a><span class="lineno">  400</span>&#160; </div>
+<div class="line"><a name="l00401"></a><span class="lineno">  401</span>&#160;<span class="comment">//*****************************************************************************</span></div>
+<div class="line"><a name="l00402"></a><span class="lineno">  402</span>&#160;<span class="comment">//</span></div>
+<div class="line"><a name="l00408"></a><span class="lineno">  408</span>&#160;<span class="comment"></span><span class="comment">//</span></div>
+<div class="line"><a name="l00409"></a><span class="lineno">  409</span>&#160;<span class="comment">//*****************************************************************************</span></div>
+<div class="line"><a name="l00410"></a><span class="lineno">  410</span>&#160;<span class="keywordtype">void</span></div>
+<div class="line"><a name="l00411"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#gab1b5289b5d506640decc3bdaa2166840">  411</a></span>&#160;<a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#gab1b5289b5d506640decc3bdaa2166840">PMBusController_initBlockWriteReadProcessCallTest</a>(<a class="code" href="structPMBus__TestObject.html">PMBus_TestHandle</a> <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga95bf8ad8eaf70a229c32cda25c6376fb">handle</a>);</div>
+<div class="line"><a name="l00412"></a><span class="lineno">  412</span>&#160; </div>
+<div class="line"><a name="l00413"></a><span class="lineno">  413</span>&#160;<span class="comment">//*****************************************************************************</span></div>
+<div class="line"><a name="l00414"></a><span class="lineno">  414</span>&#160;<span class="comment">//</span></div>
+<div class="line"><a name="l00422"></a><span class="lineno">  422</span>&#160;<span class="comment"></span><span class="comment">//</span></div>
+<div class="line"><a name="l00423"></a><span class="lineno">  423</span>&#160;<span class="comment">//*****************************************************************************</span></div>
+<div class="line"><a name="l00424"></a><span class="lineno">  424</span>&#160;<span class="keywordtype">void</span></div>
+<div class="line"><a name="l00425"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#gaa8d023aa005049ac6c8dd0d3fc47b772">  425</a></span>&#160;<a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#gaa8d023aa005049ac6c8dd0d3fc47b772">PMBusController_runBlockWriteReadProcessCallTest</a>(<a class="code" href="structPMBus__TestObject.html">PMBus_TestHandle</a> <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga95bf8ad8eaf70a229c32cda25c6376fb">handle</a>);</div>
+<div class="line"><a name="l00426"></a><span class="lineno">  426</span>&#160; </div>
+<div class="line"><a name="l00427"></a><span class="lineno">  427</span>&#160;<span class="comment">//*****************************************************************************</span></div>
+<div class="line"><a name="l00428"></a><span class="lineno">  428</span>&#160;<span class="comment">//</span></div>
+<div class="line"><a name="l00434"></a><span class="lineno">  434</span>&#160;<span class="comment"></span><span class="comment">//</span></div>
+<div class="line"><a name="l00435"></a><span class="lineno">  435</span>&#160;<span class="comment">//*****************************************************************************</span></div>
+<div class="line"><a name="l00436"></a><span class="lineno">  436</span>&#160;<span class="keywordtype">void</span></div>
+<div class="line"><a name="l00437"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#gab95ea47400f51774b457940df0032242">  437</a></span>&#160;<a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#gab95ea47400f51774b457940df0032242">PMBusController_initQuickCommandTest</a>(<a class="code" href="structPMBus__TestObject.html">PMBus_TestHandle</a> <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga95bf8ad8eaf70a229c32cda25c6376fb">handle</a>);</div>
+<div class="line"><a name="l00438"></a><span class="lineno">  438</span>&#160; </div>
+<div class="line"><a name="l00439"></a><span class="lineno">  439</span>&#160;<span class="comment">//*****************************************************************************</span></div>
+<div class="line"><a name="l00440"></a><span class="lineno">  440</span>&#160;<span class="comment">//</span></div>
+<div class="line"><a name="l00448"></a><span class="lineno">  448</span>&#160;<span class="comment"></span><span class="comment">//</span></div>
+<div class="line"><a name="l00449"></a><span class="lineno">  449</span>&#160;<span class="comment">//*****************************************************************************</span></div>
+<div class="line"><a name="l00450"></a><span class="lineno">  450</span>&#160;<span class="keywordtype">void</span></div>
+<div class="line"><a name="l00451"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#ga852b693805fcfb40b443e85be94530b8">  451</a></span>&#160;<a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga852b693805fcfb40b443e85be94530b8">PMBusController_runQuickCommandTest</a>(<a class="code" href="structPMBus__TestObject.html">PMBus_TestHandle</a> <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga95bf8ad8eaf70a229c32cda25c6376fb">handle</a>);</div>
+<div class="line"><a name="l00452"></a><span class="lineno">  452</span>&#160; </div>
+<div class="line"><a name="l00453"></a><span class="lineno">  453</span>&#160;<span class="comment">//*****************************************************************************</span></div>
+<div class="line"><a name="l00454"></a><span class="lineno">  454</span>&#160;<span class="comment">//</span></div>
+<div class="line"><a name="l00460"></a><span class="lineno">  460</span>&#160;<span class="comment"></span><span class="comment">//</span></div>
+<div class="line"><a name="l00461"></a><span class="lineno">  461</span>&#160;<span class="comment">//*****************************************************************************</span></div>
+<div class="line"><a name="l00462"></a><span class="lineno">  462</span>&#160;<span class="keywordtype">void</span></div>
+<div class="line"><a name="l00463"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#ga083bd36816352f56283835ae43d08990">  463</a></span>&#160;<a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga083bd36816352f56283835ae43d08990">PMBusController_initBlockWrite2BytesTest</a>(<a class="code" href="structPMBus__TestObject.html">PMBus_TestHandle</a> <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga95bf8ad8eaf70a229c32cda25c6376fb">handle</a>);</div>
+<div class="line"><a name="l00464"></a><span class="lineno">  464</span>&#160; </div>
+<div class="line"><a name="l00465"></a><span class="lineno">  465</span>&#160;<span class="comment">//*****************************************************************************</span></div>
+<div class="line"><a name="l00466"></a><span class="lineno">  466</span>&#160;<span class="comment">//</span></div>
+<div class="line"><a name="l00474"></a><span class="lineno">  474</span>&#160;<span class="comment"></span><span class="comment">//</span></div>
+<div class="line"><a name="l00475"></a><span class="lineno">  475</span>&#160;<span class="comment">//*****************************************************************************</span></div>
+<div class="line"><a name="l00476"></a><span class="lineno">  476</span>&#160;<span class="keywordtype">void</span></div>
+<div class="line"><a name="l00477"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#gadb569fe1ab31a830291d8d7df4b6e5c3">  477</a></span>&#160;<a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#gadb569fe1ab31a830291d8d7df4b6e5c3">PMBusController_runBlockWrite2BytesTest</a>(<a class="code" href="structPMBus__TestObject.html">PMBus_TestHandle</a> <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga95bf8ad8eaf70a229c32cda25c6376fb">handle</a>);</div>
+<div class="line"><a name="l00478"></a><span class="lineno">  478</span>&#160; </div>
+<div class="line"><a name="l00479"></a><span class="lineno">  479</span>&#160;<span class="comment">//*****************************************************************************</span></div>
+<div class="line"><a name="l00480"></a><span class="lineno">  480</span>&#160;<span class="comment">//</span></div>
+<div class="line"><a name="l00486"></a><span class="lineno">  486</span>&#160;<span class="comment"></span><span class="comment">//</span></div>
+<div class="line"><a name="l00487"></a><span class="lineno">  487</span>&#160;<span class="comment">//*****************************************************************************</span></div>
+<div class="line"><a name="l00488"></a><span class="lineno">  488</span>&#160;<span class="keywordtype">void</span></div>
+<div class="line"><a name="l00489"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#gab75371df4b6624ea8b632ca10ecd4b16">  489</a></span>&#160;<a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#gab75371df4b6624ea8b632ca10ecd4b16">PMBusController_initBlockWrite3BytesTest</a>(<a class="code" href="structPMBus__TestObject.html">PMBus_TestHandle</a> <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga95bf8ad8eaf70a229c32cda25c6376fb">handle</a>);</div>
+<div class="line"><a name="l00490"></a><span class="lineno">  490</span>&#160; </div>
+<div class="line"><a name="l00491"></a><span class="lineno">  491</span>&#160;<span class="comment">//*****************************************************************************</span></div>
+<div class="line"><a name="l00492"></a><span class="lineno">  492</span>&#160;<span class="comment">//</span></div>
+<div class="line"><a name="l00500"></a><span class="lineno">  500</span>&#160;<span class="comment"></span><span class="comment">//</span></div>
+<div class="line"><a name="l00501"></a><span class="lineno">  501</span>&#160;<span class="comment">//*****************************************************************************</span></div>
+<div class="line"><a name="l00502"></a><span class="lineno">  502</span>&#160;<span class="keywordtype">void</span></div>
+<div class="line"><a name="l00503"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#gafcf58a069718a925a7c6f4f5c6f5ce00">  503</a></span>&#160;<a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#gafcf58a069718a925a7c6f4f5c6f5ce00">PMBusController_runBlockWrite3BytesTest</a>(<a class="code" href="structPMBus__TestObject.html">PMBus_TestHandle</a> <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga95bf8ad8eaf70a229c32cda25c6376fb">handle</a>);</div>
+<div class="line"><a name="l00504"></a><span class="lineno">  504</span>&#160; </div>
+<div class="line"><a name="l00505"></a><span class="lineno">  505</span>&#160;<span class="comment">//*****************************************************************************</span></div>
+<div class="line"><a name="l00506"></a><span class="lineno">  506</span>&#160;<span class="comment">//</span></div>
+<div class="line"><a name="l00512"></a><span class="lineno">  512</span>&#160;<span class="comment"></span><span class="comment">//</span></div>
+<div class="line"><a name="l00513"></a><span class="lineno">  513</span>&#160;<span class="comment">//*****************************************************************************</span></div>
+<div class="line"><a name="l00514"></a><span class="lineno">  514</span>&#160;<span class="keywordtype">void</span></div>
+<div class="line"><a name="l00515"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#gac2d29143caf78053465a12786dddd90b">  515</a></span>&#160;<a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#gac2d29143caf78053465a12786dddd90b">PMBusController_initProcessCallTest</a>(<a class="code" href="structPMBus__TestObject.html">PMBus_TestHandle</a> <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga95bf8ad8eaf70a229c32cda25c6376fb">handle</a>);</div>
+<div class="line"><a name="l00516"></a><span class="lineno">  516</span>&#160; </div>
+<div class="line"><a name="l00517"></a><span class="lineno">  517</span>&#160;<span class="comment">//*****************************************************************************</span></div>
+<div class="line"><a name="l00518"></a><span class="lineno">  518</span>&#160;<span class="comment">//</span></div>
+<div class="line"><a name="l00526"></a><span class="lineno">  526</span>&#160;<span class="comment"></span><span class="comment">//</span></div>
+<div class="line"><a name="l00527"></a><span class="lineno">  527</span>&#160;<span class="comment">//*****************************************************************************</span></div>
+<div class="line"><a name="l00528"></a><span class="lineno">  528</span>&#160;<span class="keywordtype">void</span></div>
+<div class="line"><a name="l00529"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#gad489c90d37a86c03d034bcb4f3dceda6">  529</a></span>&#160;<a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#gad489c90d37a86c03d034bcb4f3dceda6">PMBusController_runProcessCallTest</a>(<a class="code" href="structPMBus__TestObject.html">PMBus_TestHandle</a> <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga95bf8ad8eaf70a229c32cda25c6376fb">handle</a>);</div>
+<div class="line"><a name="l00530"></a><span class="lineno">  530</span>&#160; </div>
+<div class="line"><a name="l00531"></a><span class="lineno">  531</span>&#160;<span class="comment">//*****************************************************************************</span></div>
+<div class="line"><a name="l00532"></a><span class="lineno">  532</span>&#160;<span class="comment">//</span></div>
+<div class="line"><a name="l00538"></a><span class="lineno">  538</span>&#160;<span class="comment"></span><span class="comment">//</span></div>
+<div class="line"><a name="l00539"></a><span class="lineno">  539</span>&#160;<span class="comment">//*****************************************************************************</span></div>
+<div class="line"><a name="l00540"></a><span class="lineno">  540</span>&#160;<span class="keywordtype">void</span></div>
+<div class="line"><a name="l00541"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#ga315f080cb43d83eebecb5cdaa27ea751">  541</a></span>&#160;<a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga315f080cb43d83eebecb5cdaa27ea751">PMBusController_initAlertTest</a>(<a class="code" href="structPMBus__TestObject.html">PMBus_TestHandle</a> <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga95bf8ad8eaf70a229c32cda25c6376fb">handle</a>);</div>
+<div class="line"><a name="l00542"></a><span class="lineno">  542</span>&#160; </div>
+<div class="line"><a name="l00543"></a><span class="lineno">  543</span>&#160;<span class="comment">//*****************************************************************************</span></div>
+<div class="line"><a name="l00544"></a><span class="lineno">  544</span>&#160;<span class="comment">//</span></div>
+<div class="line"><a name="l00552"></a><span class="lineno">  552</span>&#160;<span class="comment"></span><span class="comment">//</span></div>
+<div class="line"><a name="l00553"></a><span class="lineno">  553</span>&#160;<span class="comment">//*****************************************************************************</span></div>
+<div class="line"><a name="l00554"></a><span class="lineno">  554</span>&#160;<span class="keywordtype">void</span></div>
+<div class="line"><a name="l00555"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#ga046139ac90c09c35209ab8f07c6171aa">  555</a></span>&#160;<a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga046139ac90c09c35209ab8f07c6171aa">PMBusController_runAlertTest</a>(<a class="code" href="structPMBus__TestObject.html">PMBus_TestHandle</a> <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga95bf8ad8eaf70a229c32cda25c6376fb">handle</a>);</div>
+<div class="line"><a name="l00556"></a><span class="lineno">  556</span>&#160; </div>
+<div class="line"><a name="l00557"></a><span class="lineno">  557</span>&#160;<span class="comment">//*****************************************************************************</span></div>
+<div class="line"><a name="l00558"></a><span class="lineno">  558</span>&#160;<span class="comment">//</span></div>
+<div class="line"><a name="l00564"></a><span class="lineno">  564</span>&#160;<span class="comment"></span><span class="comment">//</span></div>
+<div class="line"><a name="l00565"></a><span class="lineno">  565</span>&#160;<span class="comment">//*****************************************************************************</span></div>
+<div class="line"><a name="l00566"></a><span class="lineno">  566</span>&#160;<span class="keywordtype">void</span></div>
+<div class="line"><a name="l00567"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#ga02ef3e4a8a8f7df61b56cd7db07ccbfe">  567</a></span>&#160;<a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga02ef3e4a8a8f7df61b56cd7db07ccbfe">PMBusController_initNoAlertTest</a>(<a class="code" href="structPMBus__TestObject.html">PMBus_TestHandle</a> <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga95bf8ad8eaf70a229c32cda25c6376fb">handle</a>);</div>
+<div class="line"><a name="l00568"></a><span class="lineno">  568</span>&#160; </div>
+<div class="line"><a name="l00569"></a><span class="lineno">  569</span>&#160;<span class="comment">//*****************************************************************************</span></div>
+<div class="line"><a name="l00570"></a><span class="lineno">  570</span>&#160;<span class="comment">//</span></div>
+<div class="line"><a name="l00580"></a><span class="lineno">  580</span>&#160;<span class="comment"></span><span class="comment">//</span></div>
+<div class="line"><a name="l00581"></a><span class="lineno">  581</span>&#160;<span class="comment">//*****************************************************************************</span></div>
+<div class="line"><a name="l00582"></a><span class="lineno">  582</span>&#160;<span class="keywordtype">void</span></div>
+<div class="line"><a name="l00583"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#gadcc8243728c083743825fba51a849c36">  583</a></span>&#160;<a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#gadcc8243728c083743825fba51a849c36">PMBusController_runNoAlertTest</a>(<a class="code" href="structPMBus__TestObject.html">PMBus_TestHandle</a> <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga95bf8ad8eaf70a229c32cda25c6376fb">handle</a>);</div>
+<div class="line"><a name="l00584"></a><span class="lineno">  584</span>&#160; </div>
 <div class="line"><a name="l00585"></a><span class="lineno">  585</span>&#160;<span class="comment">//*****************************************************************************</span></div>
-<div class="line"><a name="l00586"></a><span class="lineno">  586</span>&#160;<span class="keywordtype">void</span></div>
-<div class="line"><a name="l00587"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#ga046139ac90c09c35209ab8f07c6171aa">  587</a></span>&#160;<a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga046139ac90c09c35209ab8f07c6171aa">PMBusController_runAlertTest</a>(<a class="code" href="structPMBus__TestObject.html">PMBus_TestHandle</a> <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga95bf8ad8eaf70a229c32cda25c6376fb">handle</a>);</div>
-<div class="line"><a name="l00588"></a><span class="lineno">  588</span>&#160; </div>
-<div class="line"><a name="l00589"></a><span class="lineno">  589</span>&#160;<span class="comment">//*****************************************************************************</span></div>
-<div class="line"><a name="l00590"></a><span class="lineno">  590</span>&#160;<span class="comment">//</span></div>
-<div class="line"><a name="l00596"></a><span class="lineno">  596</span>&#160;<span class="comment"></span><span class="comment">//</span></div>
+<div class="line"><a name="l00586"></a><span class="lineno">  586</span>&#160;<span class="comment">//</span></div>
+<div class="line"><a name="l00592"></a><span class="lineno">  592</span>&#160;<span class="comment"></span><span class="comment">//</span></div>
+<div class="line"><a name="l00593"></a><span class="lineno">  593</span>&#160;<span class="comment">//*****************************************************************************</span></div>
+<div class="line"><a name="l00594"></a><span class="lineno">  594</span>&#160;<span class="keywordtype">void</span></div>
+<div class="line"><a name="l00595"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#gae4bb2e0319e02b2da23888e54482cc94">  595</a></span>&#160;<a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#gae4bb2e0319e02b2da23888e54482cc94">PMBusController_initGroupCommandTest</a>(<a class="code" href="structPMBus__TestObject.html">PMBus_TestHandle</a> <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga95bf8ad8eaf70a229c32cda25c6376fb">handle</a>);</div>
+<div class="line"><a name="l00596"></a><span class="lineno">  596</span>&#160; </div>
 <div class="line"><a name="l00597"></a><span class="lineno">  597</span>&#160;<span class="comment">//*****************************************************************************</span></div>
-<div class="line"><a name="l00598"></a><span class="lineno">  598</span>&#160;<span class="keywordtype">void</span></div>
-<div class="line"><a name="l00599"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#ga02ef3e4a8a8f7df61b56cd7db07ccbfe">  599</a></span>&#160;<a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga02ef3e4a8a8f7df61b56cd7db07ccbfe">PMBusController_initNoAlertTest</a>(<a class="code" href="structPMBus__TestObject.html">PMBus_TestHandle</a> <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga95bf8ad8eaf70a229c32cda25c6376fb">handle</a>);</div>
-<div class="line"><a name="l00600"></a><span class="lineno">  600</span>&#160; </div>
-<div class="line"><a name="l00601"></a><span class="lineno">  601</span>&#160;<span class="comment">//*****************************************************************************</span></div>
-<div class="line"><a name="l00602"></a><span class="lineno">  602</span>&#160;<span class="comment">//</span></div>
-<div class="line"><a name="l00612"></a><span class="lineno">  612</span>&#160;<span class="comment"></span><span class="comment">//</span></div>
-<div class="line"><a name="l00613"></a><span class="lineno">  613</span>&#160;<span class="comment">//*****************************************************************************</span></div>
-<div class="line"><a name="l00614"></a><span class="lineno">  614</span>&#160;<span class="keywordtype">void</span></div>
-<div class="line"><a name="l00615"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#gadcc8243728c083743825fba51a849c36">  615</a></span>&#160;<a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#gadcc8243728c083743825fba51a849c36">PMBusController_runNoAlertTest</a>(<a class="code" href="structPMBus__TestObject.html">PMBus_TestHandle</a> <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga95bf8ad8eaf70a229c32cda25c6376fb">handle</a>);</div>
-<div class="line"><a name="l00616"></a><span class="lineno">  616</span>&#160; </div>
-<div class="line"><a name="l00617"></a><span class="lineno">  617</span>&#160;<span class="comment">//*****************************************************************************</span></div>
-<div class="line"><a name="l00618"></a><span class="lineno">  618</span>&#160;<span class="comment">//</span></div>
-<div class="line"><a name="l00624"></a><span class="lineno">  624</span>&#160;<span class="comment"></span><span class="comment">//</span></div>
-<div class="line"><a name="l00625"></a><span class="lineno">  625</span>&#160;<span class="comment">//*****************************************************************************</span></div>
-<div class="line"><a name="l00626"></a><span class="lineno">  626</span>&#160;<span class="keywordtype">void</span></div>
-<div class="line"><a name="l00627"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#gae4bb2e0319e02b2da23888e54482cc94">  627</a></span>&#160;<a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#gae4bb2e0319e02b2da23888e54482cc94">PMBusController_initGroupCommandTest</a>(<a class="code" href="structPMBus__TestObject.html">PMBus_TestHandle</a> <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga95bf8ad8eaf70a229c32cda25c6376fb">handle</a>);</div>
-<div class="line"><a name="l00628"></a><span class="lineno">  628</span>&#160; </div>
-<div class="line"><a name="l00629"></a><span class="lineno">  629</span>&#160;<span class="comment">//*****************************************************************************</span></div>
-<div class="line"><a name="l00630"></a><span class="lineno">  630</span>&#160;<span class="comment">//</span></div>
-<div class="line"><a name="l00638"></a><span class="lineno">  638</span>&#160;<span class="comment"></span><span class="comment">//</span></div>
-<div class="line"><a name="l00639"></a><span class="lineno">  639</span>&#160;<span class="comment">//*****************************************************************************</span></div>
-<div class="line"><a name="l00640"></a><span class="lineno">  640</span>&#160;<span class="keywordtype">void</span></div>
-<div class="line"><a name="l00641"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#ga169fca28609b53d2a10d8d4fe591880b">  641</a></span>&#160;<a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga169fca28609b53d2a10d8d4fe591880b">PMBusController_runGroupCommandTest</a>(<a class="code" href="structPMBus__TestObject.html">PMBus_TestHandle</a> <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga95bf8ad8eaf70a229c32cda25c6376fb">handle</a>);</div>
-<div class="line"><a name="l00642"></a><span class="lineno">  642</span>&#160; </div>
-<div class="line"><a name="l00643"></a><span class="lineno">  643</span>&#160;<span class="comment">//*****************************************************************************</span></div>
-<div class="line"><a name="l00644"></a><span class="lineno">  644</span>&#160;<span class="comment">//</span></div>
-<div class="line"><a name="l00650"></a><span class="lineno">  650</span>&#160;<span class="comment"></span><span class="comment">//</span></div>
-<div class="line"><a name="l00651"></a><span class="lineno">  651</span>&#160;<span class="comment">//*****************************************************************************</span></div>
-<div class="line"><a name="l00652"></a><span class="lineno">  652</span>&#160;<span class="keywordtype">void</span></div>
-<div class="line"><a name="l00653"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#gac9bc2ac1b837772591ec273c5c2150a8">  653</a></span>&#160;<a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#gac9bc2ac1b837772591ec273c5c2150a8">PMBusController_initExtendedWriteByteTest</a>(<a class="code" href="structPMBus__TestObject.html">PMBus_TestHandle</a> <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga95bf8ad8eaf70a229c32cda25c6376fb">handle</a>);</div>
-<div class="line"><a name="l00654"></a><span class="lineno">  654</span>&#160; </div>
-<div class="line"><a name="l00655"></a><span class="lineno">  655</span>&#160;<span class="comment">//*****************************************************************************</span></div>
-<div class="line"><a name="l00656"></a><span class="lineno">  656</span>&#160;<span class="comment">//</span></div>
-<div class="line"><a name="l00664"></a><span class="lineno">  664</span>&#160;<span class="comment"></span><span class="comment">//</span></div>
-<div class="line"><a name="l00665"></a><span class="lineno">  665</span>&#160;<span class="comment">//*****************************************************************************</span></div>
-<div class="line"><a name="l00666"></a><span class="lineno">  666</span>&#160;<span class="keywordtype">void</span></div>
-<div class="line"><a name="l00667"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#ga1d56082358ebff6498d50abb5519ac07">  667</a></span>&#160;<a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga1d56082358ebff6498d50abb5519ac07">PMBusController_runExtendedWriteByteTest</a>(<a class="code" href="structPMBus__TestObject.html">PMBus_TestHandle</a> <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga95bf8ad8eaf70a229c32cda25c6376fb">handle</a>);</div>
-<div class="line"><a name="l00668"></a><span class="lineno">  668</span>&#160; </div>
-<div class="line"><a name="l00669"></a><span class="lineno">  669</span>&#160;<span class="comment">//*****************************************************************************</span></div>
-<div class="line"><a name="l00670"></a><span class="lineno">  670</span>&#160;<span class="comment">//</span></div>
-<div class="line"><a name="l00676"></a><span class="lineno">  676</span>&#160;<span class="comment"></span><span class="comment">//</span></div>
-<div class="line"><a name="l00677"></a><span class="lineno">  677</span>&#160;<span class="comment">//*****************************************************************************</span></div>
-<div class="line"><a name="l00678"></a><span class="lineno">  678</span>&#160;<span class="keywordtype">void</span></div>
-<div class="line"><a name="l00679"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#ga8cc6fc499050001fcc9331963f565bf6">  679</a></span>&#160;<a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga8cc6fc499050001fcc9331963f565bf6">PMBusController_initExtendedWriteWordTest</a>(<a class="code" href="structPMBus__TestObject.html">PMBus_TestHandle</a> <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga95bf8ad8eaf70a229c32cda25c6376fb">handle</a>);</div>
-<div class="line"><a name="l00680"></a><span class="lineno">  680</span>&#160; </div>
-<div class="line"><a name="l00681"></a><span class="lineno">  681</span>&#160;<span class="comment">//*****************************************************************************</span></div>
-<div class="line"><a name="l00682"></a><span class="lineno">  682</span>&#160;<span class="comment">//</span></div>
-<div class="line"><a name="l00690"></a><span class="lineno">  690</span>&#160;<span class="comment"></span><span class="comment">//</span></div>
-<div class="line"><a name="l00691"></a><span class="lineno">  691</span>&#160;<span class="comment">//*****************************************************************************</span></div>
-<div class="line"><a name="l00692"></a><span class="lineno">  692</span>&#160;<span class="keywordtype">void</span></div>
-<div class="line"><a name="l00693"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#gaf57f8c521e14cf2a9ebf8c43ff8aae4d">  693</a></span>&#160;<a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#gaf57f8c521e14cf2a9ebf8c43ff8aae4d">PMBusController_runExtendedWriteWordTest</a>(<a class="code" href="structPMBus__TestObject.html">PMBus_TestHandle</a> <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga95bf8ad8eaf70a229c32cda25c6376fb">handle</a>);</div>
-<div class="line"><a name="l00694"></a><span class="lineno">  694</span>&#160; </div>
-<div class="line"><a name="l00695"></a><span class="lineno">  695</span>&#160;<span class="comment">//*****************************************************************************</span></div>
-<div class="line"><a name="l00696"></a><span class="lineno">  696</span>&#160;<span class="comment">//</span></div>
-<div class="line"><a name="l00702"></a><span class="lineno">  702</span>&#160;<span class="comment"></span><span class="comment">//</span></div>
-<div class="line"><a name="l00703"></a><span class="lineno">  703</span>&#160;<span class="comment">//*****************************************************************************</span></div>
-<div class="line"><a name="l00704"></a><span class="lineno">  704</span>&#160;<span class="keywordtype">void</span></div>
-<div class="line"><a name="l00705"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#ga0816b00fb546be8872f8e83c3cede930">  705</a></span>&#160;<a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga0816b00fb546be8872f8e83c3cede930">PMBusController_initExtendedReadByteTest</a>(<a class="code" href="structPMBus__TestObject.html">PMBus_TestHandle</a> <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga95bf8ad8eaf70a229c32cda25c6376fb">handle</a>);</div>
-<div class="line"><a name="l00706"></a><span class="lineno">  706</span>&#160; </div>
-<div class="line"><a name="l00707"></a><span class="lineno">  707</span>&#160;<span class="comment">//*****************************************************************************</span></div>
-<div class="line"><a name="l00708"></a><span class="lineno">  708</span>&#160;<span class="comment">//</span></div>
-<div class="line"><a name="l00716"></a><span class="lineno">  716</span>&#160;<span class="comment"></span><span class="comment">//</span></div>
-<div class="line"><a name="l00717"></a><span class="lineno">  717</span>&#160;<span class="comment">//*****************************************************************************</span></div>
-<div class="line"><a name="l00718"></a><span class="lineno">  718</span>&#160;<span class="keywordtype">void</span></div>
-<div class="line"><a name="l00719"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#gadb9199ea031a631adceae4c60cb5e99b">  719</a></span>&#160;<a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#gadb9199ea031a631adceae4c60cb5e99b">PMBusController_runExtendedReadByteTest</a>(<a class="code" href="structPMBus__TestObject.html">PMBus_TestHandle</a> <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga95bf8ad8eaf70a229c32cda25c6376fb">handle</a>);</div>
-<div class="line"><a name="l00720"></a><span class="lineno">  720</span>&#160; </div>
-<div class="line"><a name="l00721"></a><span class="lineno">  721</span>&#160;<span class="comment">//*****************************************************************************</span></div>
-<div class="line"><a name="l00722"></a><span class="lineno">  722</span>&#160;<span class="comment">//</span></div>
-<div class="line"><a name="l00728"></a><span class="lineno">  728</span>&#160;<span class="comment"></span><span class="comment">//</span></div>
-<div class="line"><a name="l00729"></a><span class="lineno">  729</span>&#160;<span class="comment">//*****************************************************************************</span></div>
-<div class="line"><a name="l00730"></a><span class="lineno">  730</span>&#160;<span class="keywordtype">void</span></div>
-<div class="line"><a name="l00731"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#ga21cefd9578ad068dc868a0ad88302cd6">  731</a></span>&#160;<a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga21cefd9578ad068dc868a0ad88302cd6">PMBusController_initExtendedReadWordTest</a>(<a class="code" href="structPMBus__TestObject.html">PMBus_TestHandle</a> <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga95bf8ad8eaf70a229c32cda25c6376fb">handle</a>);</div>
-<div class="line"><a name="l00732"></a><span class="lineno">  732</span>&#160; </div>
-<div class="line"><a name="l00733"></a><span class="lineno">  733</span>&#160;<span class="comment">//*****************************************************************************</span></div>
-<div class="line"><a name="l00734"></a><span class="lineno">  734</span>&#160;<span class="comment">//</span></div>
-<div class="line"><a name="l00742"></a><span class="lineno">  742</span>&#160;<span class="comment"></span><span class="comment">//</span></div>
-<div class="line"><a name="l00743"></a><span class="lineno">  743</span>&#160;<span class="comment">//*****************************************************************************</span></div>
-<div class="line"><a name="l00744"></a><span class="lineno">  744</span>&#160;<span class="keywordtype">void</span></div>
-<div class="line"><a name="l00745"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#ga56e3e6c8dc5cdfaa3c17ede7adb1aca3">  745</a></span>&#160;<a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga56e3e6c8dc5cdfaa3c17ede7adb1aca3">PMBusController_runExtendedReadWordTest</a>(<a class="code" href="structPMBus__TestObject.html">PMBus_TestHandle</a> <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga95bf8ad8eaf70a229c32cda25c6376fb">handle</a>);</div>
-<div class="line"><a name="l00746"></a><span class="lineno">  746</span>&#160; </div>
-<div class="line"><a name="l00747"></a><span class="lineno">  747</span>&#160;<span class="comment">//*****************************************************************************</span></div>
-<div class="line"><a name="l00748"></a><span class="lineno">  748</span>&#160;<span class="comment">//</span></div>
-<div class="line"><a name="l00749"></a><span class="lineno">  749</span>&#160;<span class="comment">// Close the Doxygen group.</span></div>
-<div class="line"><a name="l00751"></a><span class="lineno">  751</span>&#160;<span class="comment"></span><span class="comment">//</span></div>
-<div class="line"><a name="l00752"></a><span class="lineno">  752</span>&#160;<span class="comment">//*****************************************************************************</span></div>
-<div class="line"><a name="l00753"></a><span class="lineno">  753</span>&#160; </div>
-<div class="line"><a name="l00754"></a><span class="lineno">  754</span>&#160;<span class="comment">//*****************************************************************************</span></div>
-<div class="line"><a name="l00755"></a><span class="lineno">  755</span>&#160;<span class="comment">//</span></div>
-<div class="line"><a name="l00756"></a><span class="lineno">  756</span>&#160;<span class="comment">// Mark the end of the C bindings section for C++ compilers.</span></div>
-<div class="line"><a name="l00757"></a><span class="lineno">  757</span>&#160;<span class="comment">//</span></div>
-<div class="line"><a name="l00758"></a><span class="lineno">  758</span>&#160;<span class="comment">//*****************************************************************************</span></div>
-<div class="line"><a name="l00759"></a><span class="lineno">  759</span>&#160;<span class="preprocessor">#ifdef __cplusplus</span></div>
-<div class="line"><a name="l00760"></a><span class="lineno">  760</span>&#160;}</div>
-<div class="line"><a name="l00761"></a><span class="lineno">  761</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00762"></a><span class="lineno">  762</span>&#160; </div>
-<div class="line"><a name="l00763"></a><span class="lineno">  763</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// PMBUS_CONTROLLER_TEST_H</span></div>
+<div class="line"><a name="l00598"></a><span class="lineno">  598</span>&#160;<span class="comment">//</span></div>
+<div class="line"><a name="l00606"></a><span class="lineno">  606</span>&#160;<span class="comment"></span><span class="comment">//</span></div>
+<div class="line"><a name="l00607"></a><span class="lineno">  607</span>&#160;<span class="comment">//*****************************************************************************</span></div>
+<div class="line"><a name="l00608"></a><span class="lineno">  608</span>&#160;<span class="keywordtype">void</span></div>
+<div class="line"><a name="l00609"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#ga169fca28609b53d2a10d8d4fe591880b">  609</a></span>&#160;<a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga169fca28609b53d2a10d8d4fe591880b">PMBusController_runGroupCommandTest</a>(<a class="code" href="structPMBus__TestObject.html">PMBus_TestHandle</a> <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga95bf8ad8eaf70a229c32cda25c6376fb">handle</a>);</div>
+<div class="line"><a name="l00610"></a><span class="lineno">  610</span>&#160; </div>
+<div class="line"><a name="l00611"></a><span class="lineno">  611</span>&#160;<span class="comment">//*****************************************************************************</span></div>
+<div class="line"><a name="l00612"></a><span class="lineno">  612</span>&#160;<span class="comment">//</span></div>
+<div class="line"><a name="l00618"></a><span class="lineno">  618</span>&#160;<span class="comment"></span><span class="comment">//</span></div>
+<div class="line"><a name="l00619"></a><span class="lineno">  619</span>&#160;<span class="comment">//*****************************************************************************</span></div>
+<div class="line"><a name="l00620"></a><span class="lineno">  620</span>&#160;<span class="keywordtype">void</span></div>
+<div class="line"><a name="l00621"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#gac9bc2ac1b837772591ec273c5c2150a8">  621</a></span>&#160;<a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#gac9bc2ac1b837772591ec273c5c2150a8">PMBusController_initExtendedWriteByteTest</a>(<a class="code" href="structPMBus__TestObject.html">PMBus_TestHandle</a> <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga95bf8ad8eaf70a229c32cda25c6376fb">handle</a>);</div>
+<div class="line"><a name="l00622"></a><span class="lineno">  622</span>&#160; </div>
+<div class="line"><a name="l00623"></a><span class="lineno">  623</span>&#160;<span class="comment">//*****************************************************************************</span></div>
+<div class="line"><a name="l00624"></a><span class="lineno">  624</span>&#160;<span class="comment">//</span></div>
+<div class="line"><a name="l00632"></a><span class="lineno">  632</span>&#160;<span class="comment"></span><span class="comment">//</span></div>
+<div class="line"><a name="l00633"></a><span class="lineno">  633</span>&#160;<span class="comment">//*****************************************************************************</span></div>
+<div class="line"><a name="l00634"></a><span class="lineno">  634</span>&#160;<span class="keywordtype">void</span></div>
+<div class="line"><a name="l00635"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#ga1d56082358ebff6498d50abb5519ac07">  635</a></span>&#160;<a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga1d56082358ebff6498d50abb5519ac07">PMBusController_runExtendedWriteByteTest</a>(<a class="code" href="structPMBus__TestObject.html">PMBus_TestHandle</a> <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga95bf8ad8eaf70a229c32cda25c6376fb">handle</a>);</div>
+<div class="line"><a name="l00636"></a><span class="lineno">  636</span>&#160; </div>
+<div class="line"><a name="l00637"></a><span class="lineno">  637</span>&#160;<span class="comment">//*****************************************************************************</span></div>
+<div class="line"><a name="l00638"></a><span class="lineno">  638</span>&#160;<span class="comment">//</span></div>
+<div class="line"><a name="l00644"></a><span class="lineno">  644</span>&#160;<span class="comment"></span><span class="comment">//</span></div>
+<div class="line"><a name="l00645"></a><span class="lineno">  645</span>&#160;<span class="comment">//*****************************************************************************</span></div>
+<div class="line"><a name="l00646"></a><span class="lineno">  646</span>&#160;<span class="keywordtype">void</span></div>
+<div class="line"><a name="l00647"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#ga8cc6fc499050001fcc9331963f565bf6">  647</a></span>&#160;<a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga8cc6fc499050001fcc9331963f565bf6">PMBusController_initExtendedWriteWordTest</a>(<a class="code" href="structPMBus__TestObject.html">PMBus_TestHandle</a> <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga95bf8ad8eaf70a229c32cda25c6376fb">handle</a>);</div>
+<div class="line"><a name="l00648"></a><span class="lineno">  648</span>&#160; </div>
+<div class="line"><a name="l00649"></a><span class="lineno">  649</span>&#160;<span class="comment">//*****************************************************************************</span></div>
+<div class="line"><a name="l00650"></a><span class="lineno">  650</span>&#160;<span class="comment">//</span></div>
+<div class="line"><a name="l00658"></a><span class="lineno">  658</span>&#160;<span class="comment"></span><span class="comment">//</span></div>
+<div class="line"><a name="l00659"></a><span class="lineno">  659</span>&#160;<span class="comment">//*****************************************************************************</span></div>
+<div class="line"><a name="l00660"></a><span class="lineno">  660</span>&#160;<span class="keywordtype">void</span></div>
+<div class="line"><a name="l00661"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#gaf57f8c521e14cf2a9ebf8c43ff8aae4d">  661</a></span>&#160;<a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#gaf57f8c521e14cf2a9ebf8c43ff8aae4d">PMBusController_runExtendedWriteWordTest</a>(<a class="code" href="structPMBus__TestObject.html">PMBus_TestHandle</a> <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga95bf8ad8eaf70a229c32cda25c6376fb">handle</a>);</div>
+<div class="line"><a name="l00662"></a><span class="lineno">  662</span>&#160; </div>
+<div class="line"><a name="l00663"></a><span class="lineno">  663</span>&#160;<span class="comment">//*****************************************************************************</span></div>
+<div class="line"><a name="l00664"></a><span class="lineno">  664</span>&#160;<span class="comment">//</span></div>
+<div class="line"><a name="l00670"></a><span class="lineno">  670</span>&#160;<span class="comment"></span><span class="comment">//</span></div>
+<div class="line"><a name="l00671"></a><span class="lineno">  671</span>&#160;<span class="comment">//*****************************************************************************</span></div>
+<div class="line"><a name="l00672"></a><span class="lineno">  672</span>&#160;<span class="keywordtype">void</span></div>
+<div class="line"><a name="l00673"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#ga0816b00fb546be8872f8e83c3cede930">  673</a></span>&#160;<a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga0816b00fb546be8872f8e83c3cede930">PMBusController_initExtendedReadByteTest</a>(<a class="code" href="structPMBus__TestObject.html">PMBus_TestHandle</a> <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga95bf8ad8eaf70a229c32cda25c6376fb">handle</a>);</div>
+<div class="line"><a name="l00674"></a><span class="lineno">  674</span>&#160; </div>
+<div class="line"><a name="l00675"></a><span class="lineno">  675</span>&#160;<span class="comment">//*****************************************************************************</span></div>
+<div class="line"><a name="l00676"></a><span class="lineno">  676</span>&#160;<span class="comment">//</span></div>
+<div class="line"><a name="l00684"></a><span class="lineno">  684</span>&#160;<span class="comment"></span><span class="comment">//</span></div>
+<div class="line"><a name="l00685"></a><span class="lineno">  685</span>&#160;<span class="comment">//*****************************************************************************</span></div>
+<div class="line"><a name="l00686"></a><span class="lineno">  686</span>&#160;<span class="keywordtype">void</span></div>
+<div class="line"><a name="l00687"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#gadb9199ea031a631adceae4c60cb5e99b">  687</a></span>&#160;<a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#gadb9199ea031a631adceae4c60cb5e99b">PMBusController_runExtendedReadByteTest</a>(<a class="code" href="structPMBus__TestObject.html">PMBus_TestHandle</a> <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga95bf8ad8eaf70a229c32cda25c6376fb">handle</a>);</div>
+<div class="line"><a name="l00688"></a><span class="lineno">  688</span>&#160; </div>
+<div class="line"><a name="l00689"></a><span class="lineno">  689</span>&#160;<span class="comment">//*****************************************************************************</span></div>
+<div class="line"><a name="l00690"></a><span class="lineno">  690</span>&#160;<span class="comment">//</span></div>
+<div class="line"><a name="l00696"></a><span class="lineno">  696</span>&#160;<span class="comment"></span><span class="comment">//</span></div>
+<div class="line"><a name="l00697"></a><span class="lineno">  697</span>&#160;<span class="comment">//*****************************************************************************</span></div>
+<div class="line"><a name="l00698"></a><span class="lineno">  698</span>&#160;<span class="keywordtype">void</span></div>
+<div class="line"><a name="l00699"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#ga21cefd9578ad068dc868a0ad88302cd6">  699</a></span>&#160;<a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga21cefd9578ad068dc868a0ad88302cd6">PMBusController_initExtendedReadWordTest</a>(<a class="code" href="structPMBus__TestObject.html">PMBus_TestHandle</a> <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga95bf8ad8eaf70a229c32cda25c6376fb">handle</a>);</div>
+<div class="line"><a name="l00700"></a><span class="lineno">  700</span>&#160; </div>
+<div class="line"><a name="l00701"></a><span class="lineno">  701</span>&#160;<span class="comment">//*****************************************************************************</span></div>
+<div class="line"><a name="l00702"></a><span class="lineno">  702</span>&#160;<span class="comment">//</span></div>
+<div class="line"><a name="l00710"></a><span class="lineno">  710</span>&#160;<span class="comment"></span><span class="comment">//</span></div>
+<div class="line"><a name="l00711"></a><span class="lineno">  711</span>&#160;<span class="comment">//*****************************************************************************</span></div>
+<div class="line"><a name="l00712"></a><span class="lineno">  712</span>&#160;<span class="keywordtype">void</span></div>
+<div class="line"><a name="l00713"></a><span class="lineno"><a class="line" href="group__PMBUS__CONTROLLER__TESTS.html#ga56e3e6c8dc5cdfaa3c17ede7adb1aca3">  713</a></span>&#160;<a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga56e3e6c8dc5cdfaa3c17ede7adb1aca3">PMBusController_runExtendedReadWordTest</a>(<a class="code" href="structPMBus__TestObject.html">PMBus_TestHandle</a> <a class="code" href="group__PMBUS__CONTROLLER__TESTS.html#ga95bf8ad8eaf70a229c32cda25c6376fb">handle</a>);</div>
+<div class="line"><a name="l00714"></a><span class="lineno">  714</span>&#160; </div>
+<div class="line"><a name="l00715"></a><span class="lineno">  715</span>&#160;<span class="comment">//*****************************************************************************</span></div>
+<div class="line"><a name="l00716"></a><span class="lineno">  716</span>&#160;<span class="comment">//</span></div>
+<div class="line"><a name="l00717"></a><span class="lineno">  717</span>&#160;<span class="comment">// Close the Doxygen group.</span></div>
+<div class="line"><a name="l00719"></a><span class="lineno">  719</span>&#160;<span class="comment"></span><span class="comment">//</span></div>
+<div class="line"><a name="l00720"></a><span class="lineno">  720</span>&#160;<span class="comment">//*****************************************************************************</span></div>
+<div class="line"><a name="l00721"></a><span class="lineno">  721</span>&#160; </div>
+<div class="line"><a name="l00722"></a><span class="lineno">  722</span>&#160;<span class="comment">//*****************************************************************************</span></div>
+<div class="line"><a name="l00723"></a><span class="lineno">  723</span>&#160;<span class="comment">//</span></div>
+<div class="line"><a name="l00724"></a><span class="lineno">  724</span>&#160;<span class="comment">// Mark the end of the C bindings section for C++ compilers.</span></div>
+<div class="line"><a name="l00725"></a><span class="lineno">  725</span>&#160;<span class="comment">//</span></div>
+<div class="line"><a name="l00726"></a><span class="lineno">  726</span>&#160;<span class="comment">//*****************************************************************************</span></div>
+<div class="line"><a name="l00727"></a><span class="lineno">  727</span>&#160;<span class="preprocessor">#ifdef __cplusplus</span></div>
+<div class="line"><a name="l00728"></a><span class="lineno">  728</span>&#160;}</div>
+<div class="line"><a name="l00729"></a><span class="lineno">  729</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00730"></a><span class="lineno">  730</span>&#160; </div>
+<div class="line"><a name="l00731"></a><span class="lineno">  731</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// PMBUS_CONTROLLER_TEST_H</span></div>
 <div class="ttc" id="agroup__PMBUS__CONTROLLER__TESTS_html_ga02ef3e4a8a8f7df61b56cd7db07ccbfe"><div class="ttname"><a href="group__PMBUS__CONTROLLER__TESTS.html#ga02ef3e4a8a8f7df61b56cd7db07ccbfe">PMBusController_initNoAlertTest</a></div><div class="ttdeci">void PMBusController_initNoAlertTest(PMBus_TestHandle handle)</div></div>
 <div class="ttc" id="agroup__PMBUS__CONTROLLER__TESTS_html_ga046139ac90c09c35209ab8f07c6171aa"><div class="ttname"><a href="group__PMBUS__CONTROLLER__TESTS.html#ga046139ac90c09c35209ab8f07c6171aa">PMBusController_runAlertTest</a></div><div class="ttdeci">void PMBusController_runAlertTest(PMBus_TestHandle handle)</div></div>
-<div class="ttc" id="agroup__PMBUS__CONTROLLER__TESTS_html_ga057838e93d5a1fa1eea141352de58f7e"><div class="ttname"><a href="group__PMBUS__CONTROLLER__TESTS.html#ga057838e93d5a1fa1eea141352de58f7e">PMBus_TestHandle</a></div><div class="ttdeci">PMBus_TestObject * PMBus_TestHandle</div><div class="ttdoc">Handle to the PMBUS_TEST structure.</div><div class="ttdef"><b>Definition:</b> pmbus_controller_test.h:130</div></div>
+<div class="ttc" id="agroup__PMBUS__CONTROLLER__TESTS_html_ga057838e93d5a1fa1eea141352de58f7e"><div class="ttname"><a href="group__PMBUS__CONTROLLER__TESTS.html#ga057838e93d5a1fa1eea141352de58f7e">PMBus_TestHandle</a></div><div class="ttdeci">PMBus_TestObject * PMBus_TestHandle</div><div class="ttdoc">Handle to the PMBUS_TEST structure.</div><div class="ttdef"><b>Definition:</b> pmbus_controller_test.h:98</div></div>
 <div class="ttc" id="agroup__PMBUS__CONTROLLER__TESTS_html_ga0816b00fb546be8872f8e83c3cede930"><div class="ttname"><a href="group__PMBUS__CONTROLLER__TESTS.html#ga0816b00fb546be8872f8e83c3cede930">PMBusController_initExtendedReadByteTest</a></div><div class="ttdeci">void PMBusController_initExtendedReadByteTest(PMBus_TestHandle handle)</div></div>
 <div class="ttc" id="agroup__PMBUS__CONTROLLER__TESTS_html_ga083bd36816352f56283835ae43d08990"><div class="ttname"><a href="group__PMBUS__CONTROLLER__TESTS.html#ga083bd36816352f56283835ae43d08990">PMBusController_initBlockWrite2BytesTest</a></div><div class="ttdeci">void PMBusController_initBlockWrite2BytesTest(PMBus_TestHandle handle)</div></div>
 <div class="ttc" id="agroup__PMBUS__CONTROLLER__TESTS_html_ga0ad97991b9aca3f979bd7a5380e07e54"><div class="ttname"><a href="group__PMBUS__CONTROLLER__TESTS.html#ga0ad97991b9aca3f979bd7a5380e07e54">PMBUS_TESTS</a></div><div class="ttdeci">PMBus_TestObject PMBUS_TESTS[NTESTS]</div></div>
@@ -603,7 +571,7 @@ $(document).ready(function(){initNavTree('pmbus__controller__test_8h_source.html
 <div class="ttc" id="agroup__PMBUS__CONTROLLER__TESTS_html_ga3acc3d071220698e94f9aaa73a2a38ce"><div class="ttname"><a href="group__PMBUS__CONTROLLER__TESTS.html#ga3acc3d071220698e94f9aaa73a2a38ce">PMBusController_initWriteWordTest</a></div><div class="ttdeci">void PMBusController_initWriteWordTest(PMBus_TestHandle handle)</div></div>
 <div class="ttc" id="agroup__PMBUS__CONTROLLER__TESTS_html_ga3bd8ba86aea6bc8ab6a97e942d630170"><div class="ttname"><a href="group__PMBUS__CONTROLLER__TESTS.html#ga3bd8ba86aea6bc8ab6a97e942d630170">pmbusStackController</a></div><div class="ttdeci">PMBus_StackObject pmbusStackController</div></div>
 <div class="ttc" id="agroup__PMBUS__CONTROLLER__TESTS_html_ga4228594b3bc28f577b52c3e2b4c59a25"><div class="ttname"><a href="group__PMBUS__CONTROLLER__TESTS.html#ga4228594b3bc28f577b52c3e2b4c59a25">targetAckReceived</a></div><div class="ttdeci">volatile bool targetAckReceived</div></div>
-<div class="ttc" id="agroup__PMBUS__CONTROLLER__TESTS_html_ga4500107753d6b026e408ebc42511c17a"><div class="ttname"><a href="group__PMBUS__CONTROLLER__TESTS.html#ga4500107753d6b026e408ebc42511c17a">fail</a></div><div class="ttdeci">volatile int16_t fail</div><div class="ttdef"><b>Definition:</b> pmbus_controller_test.h:141</div></div>
+<div class="ttc" id="agroup__PMBUS__CONTROLLER__TESTS_html_ga4500107753d6b026e408ebc42511c17a"><div class="ttname"><a href="group__PMBUS__CONTROLLER__TESTS.html#ga4500107753d6b026e408ebc42511c17a">fail</a></div><div class="ttdeci">volatile int16_t fail</div><div class="ttdef"><b>Definition:</b> pmbus_controller_test.h:109</div></div>
 <div class="ttc" id="agroup__PMBUS__CONTROLLER__TESTS_html_ga46a584668c10adbd1227def47bcc4678"><div class="ttname"><a href="group__PMBUS__CONTROLLER__TESTS.html#ga46a584668c10adbd1227def47bcc4678">PMBusController_initReadWordTest</a></div><div class="ttdeci">void PMBusController_initReadWordTest(PMBus_TestHandle handle)</div></div>
 <div class="ttc" id="agroup__PMBUS__CONTROLLER__TESTS_html_ga4ce6e1770107b80970d03b6e26111986"><div class="ttname"><a href="group__PMBUS__CONTROLLER__TESTS.html#ga4ce6e1770107b80970d03b6e26111986">pmbusStackControllerHandle</a></div><div class="ttdeci">PMBus_StackHandle pmbusStackControllerHandle</div></div>
 <div class="ttc" id="agroup__PMBUS__CONTROLLER__TESTS_html_ga4de360fb6c4ba62765fe7b4432205819"><div class="ttname"><a href="group__PMBUS__CONTROLLER__TESTS.html#ga4de360fb6c4ba62765fe7b4432205819">controllerDataRequested</a></div><div class="ttdeci">volatile bool controllerDataRequested</div></div>
@@ -623,7 +591,7 @@ $(document).ready(function(){initNavTree('pmbus__controller__test_8h_source.html
 <div class="ttc" id="agroup__PMBUS__CONTROLLER__TESTS_html_ga8f376dff6c88b64283eecc9d0ebbbc29"><div class="ttname"><a href="group__PMBUS__CONTROLLER__TESTS.html#ga8f376dff6c88b64283eecc9d0ebbbc29">PMBusController_initBlockRead3BytesTest</a></div><div class="ttdeci">void PMBusController_initBlockRead3BytesTest(PMBus_TestHandle handle)</div></div>
 <div class="ttc" id="agroup__PMBUS__CONTROLLER__TESTS_html_ga95bf8ad8eaf70a229c32cda25c6376fb"><div class="ttname"><a href="group__PMBUS__CONTROLLER__TESTS.html#ga95bf8ad8eaf70a229c32cda25c6376fb">handle</a></div><div class="ttdeci">PMBus_TestHandle handle</div></div>
 <div class="ttc" id="agroup__PMBUS__CONTROLLER__TESTS_html_gaa191b02b112da516db9bbdeb9c412bd1"><div class="ttname"><a href="group__PMBUS__CONTROLLER__TESTS.html#gaa191b02b112da516db9bbdeb9c412bd1">PMBusController_initBlockReadTest</a></div><div class="ttdeci">void PMBusController_initBlockReadTest(PMBus_TestHandle handle)</div></div>
-<div class="ttc" id="agroup__PMBUS__CONTROLLER__TESTS_html_gaa336217211e85060c28c01e8098fec4b"><div class="ttname"><a href="group__PMBUS__CONTROLLER__TESTS.html#gaa336217211e85060c28c01e8098fec4b">PMBusController_resetTestObject</a></div><div class="ttdeci">static void PMBusController_resetTestObject(PMBus_TestHandle handle)</div><div class="ttdef"><b>Definition:</b> pmbus_controller_test.h:191</div></div>
+<div class="ttc" id="agroup__PMBUS__CONTROLLER__TESTS_html_gaa336217211e85060c28c01e8098fec4b"><div class="ttname"><a href="group__PMBUS__CONTROLLER__TESTS.html#gaa336217211e85060c28c01e8098fec4b">PMBusController_resetTestObject</a></div><div class="ttdeci">static void PMBusController_resetTestObject(PMBus_TestHandle handle)</div><div class="ttdef"><b>Definition:</b> pmbus_controller_test.h:159</div></div>
 <div class="ttc" id="agroup__PMBUS__CONTROLLER__TESTS_html_gaa8d023aa005049ac6c8dd0d3fc47b772"><div class="ttname"><a href="group__PMBUS__CONTROLLER__TESTS.html#gaa8d023aa005049ac6c8dd0d3fc47b772">PMBusController_runBlockWriteReadProcessCallTest</a></div><div class="ttdeci">void PMBusController_runBlockWriteReadProcessCallTest(PMBus_TestHandle handle)</div></div>
 <div class="ttc" id="agroup__PMBUS__CONTROLLER__TESTS_html_gab1b5289b5d506640decc3bdaa2166840"><div class="ttname"><a href="group__PMBUS__CONTROLLER__TESTS.html#gab1b5289b5d506640decc3bdaa2166840">PMBusController_initBlockWriteReadProcessCallTest</a></div><div class="ttdeci">void PMBusController_initBlockWriteReadProcessCallTest(PMBus_TestHandle handle)</div></div>
 <div class="ttc" id="agroup__PMBUS__CONTROLLER__TESTS_html_gab75371df4b6624ea8b632ca10ecd4b16"><div class="ttname"><a href="group__PMBUS__CONTROLLER__TESTS.html#gab75371df4b6624ea8b632ca10ecd4b16">PMBusController_initBlockWrite3BytesTest</a></div><div class="ttdeci">void PMBusController_initBlockWrite3BytesTest(PMBus_TestHandle handle)</div></div>
@@ -643,17 +611,17 @@ $(document).ready(function(){initNavTree('pmbus__controller__test_8h_source.html
 <div class="ttc" id="agroup__PMBUS__CONTROLLER__TESTS_html_gadcfc6edf7460fbd5cd3fcbbb43416b6e"><div class="ttname"><a href="group__PMBUS__CONTROLLER__TESTS.html#gadcfc6edf7460fbd5cd3fcbbb43416b6e">PMBusController_initReceiveByteTest</a></div><div class="ttdeci">void PMBusController_initReceiveByteTest(PMBus_TestHandle handle)</div></div>
 <div class="ttc" id="agroup__PMBUS__CONTROLLER__TESTS_html_gae4bb2e0319e02b2da23888e54482cc94"><div class="ttname"><a href="group__PMBUS__CONTROLLER__TESTS.html#gae4bb2e0319e02b2da23888e54482cc94">PMBusController_initGroupCommandTest</a></div><div class="ttdeci">void PMBusController_initGroupCommandTest(PMBus_TestHandle handle)</div></div>
 <div class="ttc" id="agroup__PMBUS__CONTROLLER__TESTS_html_gae708886d870fb930c6b53e5d389f3fd2"><div class="ttname"><a href="group__PMBUS__CONTROLLER__TESTS.html#gae708886d870fb930c6b53e5d389f3fd2">bytesReceived</a></div><div class="ttdeci">volatile uint16_t bytesReceived</div></div>
-<div class="ttc" id="agroup__PMBUS__CONTROLLER__TESTS_html_gaeb24f4855d84d98d2437cba8bae78d54"><div class="ttname"><a href="group__PMBUS__CONTROLLER__TESTS.html#gaeb24f4855d84d98d2437cba8bae78d54">PMBusController_resetGlobalFlags</a></div><div class="ttdeci">static void PMBusController_resetGlobalFlags(void)</div><div class="ttdef"><b>Definition:</b> pmbus_controller_test.h:169</div></div>
+<div class="ttc" id="agroup__PMBUS__CONTROLLER__TESTS_html_gaeb24f4855d84d98d2437cba8bae78d54"><div class="ttname"><a href="group__PMBUS__CONTROLLER__TESTS.html#gaeb24f4855d84d98d2437cba8bae78d54">PMBusController_resetGlobalFlags</a></div><div class="ttdeci">static void PMBusController_resetGlobalFlags(void)</div><div class="ttdef"><b>Definition:</b> pmbus_controller_test.h:137</div></div>
 <div class="ttc" id="agroup__PMBUS__CONTROLLER__TESTS_html_gaf57f8c521e14cf2a9ebf8c43ff8aae4d"><div class="ttname"><a href="group__PMBUS__CONTROLLER__TESTS.html#gaf57f8c521e14cf2a9ebf8c43ff8aae4d">PMBusController_runExtendedWriteWordTest</a></div><div class="ttdeci">void PMBusController_runExtendedWriteWordTest(PMBus_TestHandle handle)</div></div>
 <div class="ttc" id="agroup__PMBUS__CONTROLLER__TESTS_html_gafcf58a069718a925a7c6f4f5c6f5ce00"><div class="ttname"><a href="group__PMBUS__CONTROLLER__TESTS.html#gafcf58a069718a925a7c6f4f5c6f5ce00">PMBusController_runBlockWrite3BytesTest</a></div><div class="ttdeci">void PMBusController_runBlockWrite3BytesTest(PMBus_TestHandle handle)</div></div>
 <div class="ttc" id="agroup__PMBUS__CONTROLLER__TESTS_html_gafed916cc4ed660bc7af212a988760591"><div class="ttname"><a href="group__PMBUS__CONTROLLER__TESTS.html#gafed916cc4ed660bc7af212a988760591">pmbusControllerBuffer</a></div><div class="ttdeci">uint16_t pmbusControllerBuffer[256]</div></div>
 <div class="ttc" id="apmbus__stack__handler_8h_html"><div class="ttname"><a href="pmbus__stack__handler_8h.html">pmbus_stack_handler.h</a></div></div>
 <div class="ttc" id="astructPMBus__StackObject_html"><div class="ttname"><a href="structPMBus__StackObject.html">PMBus_StackObject</a></div><div class="ttdoc">PMBUS Target Mode Object.</div><div class="ttdef"><b>Definition:</b> pmbus_stack_config.h:155</div></div>
-<div class="ttc" id="astructPMBus__TestObject_html"><div class="ttname"><a href="structPMBus__TestObject.html">PMBus_TestObject</a></div><div class="ttdoc">PMBUS_TEST structure.</div><div class="ttdef"><b>Definition:</b> pmbus_controller_test.h:116</div></div>
-<div class="ttc" id="astructPMBus__TestObject_html_a07b7756969827b6344895156053b242f"><div class="ttname"><a href="structPMBus__TestObject.html#a07b7756969827b6344895156053b242f">PMBus_TestObject::fail</a></div><div class="ttdeci">int16_t fail</div><div class="ttdoc">fail metric</div><div class="ttdef"><b>Definition:</b> pmbus_controller_test.h:119</div></div>
-<div class="ttc" id="astructPMBus__TestObject_html_a163faf0885efe8edc7e8f6f590dda5fa"><div class="ttname"><a href="structPMBus__TestObject.html#a163faf0885efe8edc7e8f6f590dda5fa">PMBus_TestObject::count</a></div><div class="ttdeci">uint16_t count</div><div class="ttdoc">#bytes (block transactions &gt; 4)</div><div class="ttdef"><b>Definition:</b> pmbus_controller_test.h:117</div></div>
-<div class="ttc" id="astructPMBus__TestObject_html_a873eaa62f8f0f93d11ed33e8bae14b44"><div class="ttname"><a href="structPMBus__TestObject.html#a873eaa62f8f0f93d11ed33e8bae14b44">PMBus_TestObject::pass</a></div><div class="ttdeci">int16_t pass</div><div class="ttdoc">pass metric</div><div class="ttdef"><b>Definition:</b> pmbus_controller_test.h:118</div></div>
-<div class="ttc" id="astructPMBus__TestObject_html_aa88aaeda9bf2d97dbf7d833b75238914"><div class="ttname"><a href="structPMBus__TestObject.html#aa88aaeda9bf2d97dbf7d833b75238914">PMBus_TestObject::enabled</a></div><div class="ttdeci">bool enabled</div><div class="ttdoc">bool if this test is enabled or not</div><div class="ttdef"><b>Definition:</b> pmbus_controller_test.h:120</div></div>
+<div class="ttc" id="astructPMBus__TestObject_html"><div class="ttname"><a href="structPMBus__TestObject.html">PMBus_TestObject</a></div><div class="ttdoc">PMBUS_TEST structure.</div><div class="ttdef"><b>Definition:</b> pmbus_controller_test.h:84</div></div>
+<div class="ttc" id="astructPMBus__TestObject_html_a07b7756969827b6344895156053b242f"><div class="ttname"><a href="structPMBus__TestObject.html#a07b7756969827b6344895156053b242f">PMBus_TestObject::fail</a></div><div class="ttdeci">int16_t fail</div><div class="ttdoc">fail metric</div><div class="ttdef"><b>Definition:</b> pmbus_controller_test.h:87</div></div>
+<div class="ttc" id="astructPMBus__TestObject_html_a163faf0885efe8edc7e8f6f590dda5fa"><div class="ttname"><a href="structPMBus__TestObject.html#a163faf0885efe8edc7e8f6f590dda5fa">PMBus_TestObject::count</a></div><div class="ttdeci">uint16_t count</div><div class="ttdoc">#bytes (block transactions &gt; 4)</div><div class="ttdef"><b>Definition:</b> pmbus_controller_test.h:85</div></div>
+<div class="ttc" id="astructPMBus__TestObject_html_a873eaa62f8f0f93d11ed33e8bae14b44"><div class="ttname"><a href="structPMBus__TestObject.html#a873eaa62f8f0f93d11ed33e8bae14b44">PMBus_TestObject::pass</a></div><div class="ttdeci">int16_t pass</div><div class="ttdoc">pass metric</div><div class="ttdef"><b>Definition:</b> pmbus_controller_test.h:86</div></div>
+<div class="ttc" id="astructPMBus__TestObject_html_aa88aaeda9bf2d97dbf7d833b75238914"><div class="ttname"><a href="structPMBus__TestObject.html#aa88aaeda9bf2d97dbf7d833b75238914">PMBus_TestObject::enabled</a></div><div class="ttdeci">bool enabled</div><div class="ttdoc">bool if this test is enabled or not</div><div class="ttdef"><b>Definition:</b> pmbus_controller_test.h:88</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.11-->

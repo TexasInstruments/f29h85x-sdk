@@ -21,8 +21,7 @@ int main(void)
 
     /* infinite loop */
     while(1)
-
-    return 1;
+    {}
 }
 
 void GSM_Routine(void)

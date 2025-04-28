@@ -109,7 +109,7 @@ var moduleInstances = (inst) => {
         mods.push({
             name       : "inputSection",
             displayName: "Input Sections",
-            moduleName : "/ti/security/InputSection.js",
+            moduleName : "/ti/security/inputSection.js",
             useArray   : true,
             collapsed  : false,
         })

@@ -4,7 +4,7 @@ const ssuData       = system.getScript('/ti/security/device_specific_information
 
 let config = [
     {
-        name: '$name', 
+        name: '$name',
         startingIndex:  3
     },
     {
@@ -51,14 +51,14 @@ let config = [
                             list = list.filter(x => x.type == "Data" && !inst.readAPRsEasy.includes(x.name))
                         }
                         return list.filter(x => x.type != "Code" && !x.name.endsWith("_stackmem_apr") && //!! tag
-                                                x.name != "APR_RESERVED_sign_CPU1") //!! tag
+                                                x.name != "APR_RESERVED_sign_CPU1" && x.name != "APR_RESERVED_sign_CPU3") //!! tag
                                     .map(x => {return {name: x.name}})
-                    } 
+                    }
                     return []
                 },
                 disableSelectAll : true,
             },
-            
+
             {
                 name             : 'readwriteAPRs',
                 displayName      : 'Regions with Read-Write access',
@@ -70,14 +70,14 @@ let config = [
                             list = list.filter(x => x.type == "Data" && !inst.readwriteAPRsEasy.includes(x.name))
                         }
                         return list.filter(x => x.type != "Code" && !x.name.endsWith("_stackmem_apr") && //!! tag
-                                                x.name != "APR_RESERVED_sign_CPU1") //!! tag
+                                                x.name != "APR_RESERVED_sign_CPU1" && x.name != "APR_RESERVED_sign_CPU3") //!! tag
                                     .map(x => {return {name: x.name}})
-                    } 
+                    }
                     return []
                 },
                 disableSelectAll : true,
             },
-            
+
             {
                 name             : 'APIAPRs',
                 displayName      : 'Regions with Access Protection Inheritance',
@@ -85,7 +85,7 @@ let config = [
                 options          : () => {
                     let list = Common.allocateAllMemoryRegions()[system.context]
                     if(list) return list.filter(x => x.type != "Code" &&
-                                                    x.name != "APR_RESERVED_sign_CPU1" /* &&   //!! tag
+                                                    x.name != "APR_RESERVED_sign_CPU1" && x.name != "APR_RESERVED_sign_CPU3" /* &&   //!! tag
                                                     !x.name.includes("APR_Boot_") */)
                                                     .map(x => {return {name: x.name}})
                     return []
@@ -130,17 +130,20 @@ let config = [
                 getValue         : (inst) => {
                     var list = []
                     if(inst.easyModeGenerated) {
-                        if(inst.$ownedBy.dataAPR_RO) 
+                        if(inst.$ownedBy.dataAPR_RO)
                             list.push(inst.$ownedBy.dataAPR_RO.$name)
 
                         if(inst.$ownedBy.$name == "LINK1" && Cmn.isContextCPU1())
                                 list.push("APR_RESERVED_sign_CPU1")
 
+                        if(inst.$ownedBy.$name == "LINK1" && Cmn.isContextCPU3())
+                                list.push("APR_RESERVED_sign_CPU3")
+
                         Common.modInstances('/ti/security/EasyMode_sharedMem').forEach(x=> {
                             if(x.module_ro.includes(inst.$ownedBy))
                                 list.push(x.APR.$name)
                         })
-                        
+
                         let autoPeriphPermissions = Common.getAutoPeriphAPRsByLink(inst.$ownedBy.$name, system.context)
                         autoPeriphPermissions["RO"].forEach(x => list.push(x))
                     }
@@ -194,7 +197,7 @@ let config = [
                         if(list) return list.filter(x => x.type != "Code" &&
                                                         !inst.readAPRsEasy.includes(x.name) &&
                                                         !inst.readwriteAPRsEasy.includes(x.name) && //!! tag
-                                                        x.name != "APR_RESERVED_sign_CPU1"/*  &&
+                                                        x.name != "APR_RESERVED_sign_CPU1" && x.name != "APR_RESERVED_sign_CPU3"/*  &&
                                                         !x.name.includes("APR_Boot_") */)
                                                         .map(x=>x.name)
                         else return []
@@ -341,7 +344,7 @@ function validateGlobal(inst, vo)
     const sysSec = Common.modStatic('/ti/security/System_Security');
     if(!sysSec)
         vo.logError("System security module must be added to configure Links", inst)
-    
+
     // Check for duplicate link1
     var link1 = Common.modInstances('/ti/security/Link').filter(x=>x.isLink1)
     if (link1.length > 1) {

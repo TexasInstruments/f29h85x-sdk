@@ -15,7 +15,7 @@
     />
     <configuration name="RAM_FASTMATH"   compilerBuildOptions="-O3 -ffast-math -DFASTMATH -Qunused-arguments" linkerBuildOptions="--stack_size=0x2000 --heap_size=0x400 --diag_suppress=10325-D --diag_suppress=10063-D"
     />
-    <configuration name="FLASH" compilerBuildOptions="-O3 -Qunused-arguments -D_FLASH" linkerBuildOptions="--stack_size=0x2000 --heap_size=0x400 --diag_suppress=10325-D --diag_suppress=10063-D"
+    <configuration name="FLASH" compilerBuildOptions="-O3 -ffast-math -DFASTMATH -Qunused-arguments -D_FLASH" linkerBuildOptions="--stack_size=0x2000 --heap_size=0x400 --diag_suppress=10325-D --diag_suppress=10063-D"
      postBuildStep=
        "${CG_TOOL_OBJCOPY} --remove-section=cert -O binary ${ProjName}.out ${ProjName}.bin;
         $(PYTHON) ${COM_TI_MCU_SDK_INSTALL_DIR}/tools/boot/signing/mcu_rom_image_gen.py --image-bin ${ProjName}.bin --core C29 --swrv 1 --loadaddr 0x10001000 --sign-key ${COM_TI_MCU_SDK_INSTALL_DIR}/tools/boot/signing/mcu_gpkey.pem --out-image ${ProjName}_cert.bin --device f29h85x --boot FLASH --img_integ no;
@@ -44,7 +44,7 @@
     
 
     <file action="link" path="${COM_TI_MCU_SDK_INSTALL_DIR}/source/rtlibs/fastmath/matrix/matrix_c.c" targetDirectory="libs" />
-    <file action="link" path="${COM_TI_MCU_SDK_INSTALL_DIR}/source/rtlibs/fastmath/matrix/matrix_f32_asm.S" targetDirectory="libs" />
+    <file action="link" path="${COM_TI_MCU_SDK_INSTALL_DIR}/source/rtlibs/fastmath/matrix/matrix_f32_asm.s" targetDirectory="libs" />
     
     <file action="copy" path="../matrix_example.c" targetDirectory="" />
     <file action="copy" path="../matrix_example.h" targetDirectory="" />

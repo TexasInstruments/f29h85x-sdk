@@ -27,9 +27,8 @@ const System_Security = scripting.addModule("/ti/security/System_Security");
  * Write custom configuration values to the imported modules.
  */
 
-sysctl.LSConfig                   = "SplitLock";
-sysctl.ESM_RESET                  = true;
-sysctl.standbyQualificationPeriod = 65;
+sysctl.LSConfig  = "SplitLock";
+sysctl.ESM_RESET = true;
 
 APR1.$name = "ipc_shared";
 APR1.type  = "Data";

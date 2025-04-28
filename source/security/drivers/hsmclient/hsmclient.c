@@ -445,7 +445,7 @@ int32_t HsmClient_register(HsmClient_t *HsmClient, uint8_t clientId)
 
     if (HsmClient == NULL)
     {
-        DebugP_log(" \r\n [HSM_CLIENT] HsmCliet_t type error. \r\n");
+        DebugP_log(" \r\n [HSM_CLIENT] HsmClient_t type error. \r\n");
         return SystemP_FAILURE;
     }
     else
@@ -782,7 +782,7 @@ int32_t HsmClient_importKeyring(HsmClient_t *HsmClient,
 }
 
 int32_t HsmClient_readOTPRow(HsmClient_t *HsmClient,
-                             EfuseRead_t *readRow)
+                             NvmOtpRead_t *readRow)
 {
     /* make the message */
     int32_t status;
@@ -799,13 +799,13 @@ int32_t HsmClient_readOTPRow(HsmClient_t *HsmClient,
     HsmClient->ReqMsg.args = (void *)(uintptr_t)SOC_virtToPhy(readRow);
 
     /* Add arg crc */
-    HsmClient->ReqMsg.crcArgs = crc16_ccit((uint8_t *)readRow, sizeof(EfuseRead_t));
+    HsmClient->ReqMsg.crcArgs = crc16_ccit((uint8_t *)readRow, sizeof(NvmOtpRead_t));
 
     /*
        Write back the EfuseRead struct and
        invalidate the cache before passing it to HSM
     */
-    CacheP_wbInv(readRow, GET_CACHE_ALIGNED_SIZE(sizeof(EfuseRead_t)), CacheP_TYPE_ALL);
+    CacheP_wbInv(readRow, GET_CACHE_ALIGNED_SIZE(sizeof(NvmOtpRead_t)), CacheP_TYPE_ALL);
 
     status = HsmClient_SendAndRecv(HsmClient, timeout);
     if (status == SystemP_SUCCESS)
@@ -824,7 +824,7 @@ int32_t HsmClient_readOTPRow(HsmClient_t *HsmClient,
             HsmClient->RespMsg.args = (void *)SOC_phyToVirt((uint64_t)HsmClient->RespMsg.args);
 
             /* check the integrity of args */
-            crcArgs = crc16_ccit((uint8_t *)HsmClient->RespMsg.args, sizeof(EfuseRead_t));
+            crcArgs = crc16_ccit((uint8_t *)HsmClient->RespMsg.args, sizeof(NvmOtpRead_t));
             if (crcArgs == HsmClient->RespMsg.crcArgs)
             {
                 status = SystemP_SUCCESS;
@@ -850,7 +850,7 @@ int32_t HsmClient_readOTPRow(HsmClient_t *HsmClient,
 }
 
 int32_t HsmClient_writeOTPRow(HsmClient_t *HsmClient,
-                              EfuseRowWrite_t *writeRow)
+                              NvmOtpRowWrite_t *writeRow)
 {
     /* make the message */
     int32_t status;
@@ -867,13 +867,13 @@ int32_t HsmClient_writeOTPRow(HsmClient_t *HsmClient,
     HsmClient->ReqMsg.args = (void *)(uintptr_t)SOC_virtToPhy(writeRow);
 
     /* Add arg crc */
-    HsmClient->ReqMsg.crcArgs = crc16_ccit((uint8_t *)writeRow, sizeof(EfuseRowWrite_t));
+    HsmClient->ReqMsg.crcArgs = crc16_ccit((uint8_t *)writeRow, sizeof(NvmOtpRowWrite_t));
 
     /*
        Write back the EfuseRowWrite struct and
        invalidate the cache before passing it to HSM
     */
-    CacheP_wbInv(writeRow, GET_CACHE_ALIGNED_SIZE(sizeof(EfuseRowWrite_t)), CacheP_TYPE_ALL);
+    CacheP_wbInv(writeRow, GET_CACHE_ALIGNED_SIZE(sizeof(NvmOtpRowWrite_t)), CacheP_TYPE_ALL);
 
     status = HsmClient_SendAndRecv(HsmClient, timeout);
     if (status == SystemP_SUCCESS)
@@ -891,7 +891,7 @@ int32_t HsmClient_writeOTPRow(HsmClient_t *HsmClient,
             HsmClient->RespMsg.args = (void *)SOC_phyToVirt((uint64_t)HsmClient->RespMsg.args);
 
             /* check the integrity of args */
-            crcArgs = crc16_ccit((uint8_t *)HsmClient->RespMsg.args, sizeof(EfuseRowWrite_t));
+            crcArgs = crc16_ccit((uint8_t *)HsmClient->RespMsg.args, sizeof(NvmOtpRowWrite_t));
             if (crcArgs == HsmClient->RespMsg.crcArgs)
             {
                 status = SystemP_SUCCESS;
@@ -917,7 +917,7 @@ int32_t HsmClient_writeOTPRow(HsmClient_t *HsmClient,
 }
 
 int32_t HsmClient_lockOTPRow(HsmClient_t *HsmClient,
-                             EfuseRowProt_t *protRow)
+                             NvmOtpRowProt_t *protRow)
 {
     /* make the message */
     int32_t status;
@@ -934,13 +934,13 @@ int32_t HsmClient_lockOTPRow(HsmClient_t *HsmClient,
     HsmClient->ReqMsg.args = (void *)(uintptr_t)SOC_virtToPhy(protRow);
 
     /* Add arg crc */
-    HsmClient->ReqMsg.crcArgs = crc16_ccit((uint8_t *)protRow, sizeof(EfuseRowProt_t));
+    HsmClient->ReqMsg.crcArgs = crc16_ccit((uint8_t *)protRow, sizeof(NvmOtpRowProt_t));
 
     /*
        Write back the EfuseRowProt struct and
        invalidate the cache before passing it to HSM
     */
-    CacheP_wbInv(protRow, GET_CACHE_ALIGNED_SIZE(sizeof(EfuseRowProt_t)), CacheP_TYPE_ALL);
+    CacheP_wbInv(protRow, GET_CACHE_ALIGNED_SIZE(sizeof(NvmOtpRowProt_t)), CacheP_TYPE_ALL);
 
     status = HsmClient_SendAndRecv(HsmClient, timeout);
     if (status == SystemP_SUCCESS)
@@ -958,7 +958,7 @@ int32_t HsmClient_lockOTPRow(HsmClient_t *HsmClient,
             HsmClient->RespMsg.args = (void *)SOC_phyToVirt((uint64_t)HsmClient->RespMsg.args);
 
             /* check the integrity of args */
-            crcArgs = crc16_ccit((uint8_t *)HsmClient->RespMsg.args, sizeof(EfuseRowProt_t));
+            crcArgs = crc16_ccit((uint8_t *)HsmClient->RespMsg.args, sizeof(NvmOtpRowProt_t));
             if (crcArgs == HsmClient->RespMsg.crcArgs)
             {
                 status = SystemP_SUCCESS;
@@ -984,7 +984,7 @@ int32_t HsmClient_lockOTPRow(HsmClient_t *HsmClient,
 }
 
 int32_t HsmClient_getOTPRowCount(HsmClient_t *HsmClient,
-                                 EfuseRowCount_t *rowCount)
+                                 NvmOtpRowCount_t *rowCount)
 {
     /* make the message */
     int32_t status;
@@ -1001,13 +1001,13 @@ int32_t HsmClient_getOTPRowCount(HsmClient_t *HsmClient,
     HsmClient->ReqMsg.args = (void *)(uintptr_t)SOC_virtToPhy(rowCount);
 
     /* Add arg crc */
-    HsmClient->ReqMsg.crcArgs = crc16_ccit((uint8_t *)rowCount, sizeof(EfuseRowCount_t));
+    HsmClient->ReqMsg.crcArgs = crc16_ccit((uint8_t *)rowCount, sizeof(NvmOtpRowCount_t));
 
     /*
        Write back the EfuseRowCount struct and
        invalidate the cache before passing it to HSM
     */
-    CacheP_wbInv(rowCount, GET_CACHE_ALIGNED_SIZE(sizeof(EfuseRowCount_t)), CacheP_TYPE_ALL);
+    CacheP_wbInv(rowCount, GET_CACHE_ALIGNED_SIZE(sizeof(NvmOtpRowCount_t)), CacheP_TYPE_ALL);
 
     status = HsmClient_SendAndRecv(HsmClient, timeout);
     if (status == SystemP_SUCCESS)
@@ -1025,7 +1025,7 @@ int32_t HsmClient_getOTPRowCount(HsmClient_t *HsmClient,
             HsmClient->RespMsg.args = (void *)SOC_phyToVirt((uint64_t)HsmClient->RespMsg.args);
 
             /* check the integrity of args */
-            crcArgs = crc16_ccit((uint8_t *)HsmClient->RespMsg.args, sizeof(EfuseRowCount_t));
+            crcArgs = crc16_ccit((uint8_t *)HsmClient->RespMsg.args, sizeof(NvmOtpRowCount_t));
             if (crcArgs == HsmClient->RespMsg.crcArgs)
             {
                 status = SystemP_SUCCESS;
@@ -1051,7 +1051,7 @@ int32_t HsmClient_getOTPRowCount(HsmClient_t *HsmClient,
 }
 
 int32_t HsmClient_getOTPRowProtection(HsmClient_t *HsmClient,
-                                      EfuseRowProt_t *rowProt)
+                                      NvmOtpRowProt_t *rowProt)
 {
     /* make the message */
     int32_t status;
@@ -1068,13 +1068,13 @@ int32_t HsmClient_getOTPRowProtection(HsmClient_t *HsmClient,
     HsmClient->ReqMsg.args = (void *)(uintptr_t)SOC_virtToPhy(rowProt);
 
     /* Add arg crc */
-    HsmClient->ReqMsg.crcArgs = crc16_ccit((uint8_t *)rowProt, sizeof(EfuseRowProt_t));
+    HsmClient->ReqMsg.crcArgs = crc16_ccit((uint8_t *)rowProt, sizeof(NvmOtpRowProt_t));
 
     /*
        Write back the EfuseRowProt struct and
        invalidate the cache before passing it to HSM
     */
-    CacheP_wbInv(rowProt, GET_CACHE_ALIGNED_SIZE(sizeof(EfuseRowProt_t)), CacheP_TYPE_ALL);
+    CacheP_wbInv(rowProt, GET_CACHE_ALIGNED_SIZE(sizeof(NvmOtpRowProt_t)), CacheP_TYPE_ALL);
 
     status = HsmClient_SendAndRecv(HsmClient, timeout);
     if (status == SystemP_SUCCESS)
@@ -1092,7 +1092,7 @@ int32_t HsmClient_getOTPRowProtection(HsmClient_t *HsmClient,
             HsmClient->RespMsg.args = (void *)SOC_phyToVirt((uint64_t)HsmClient->RespMsg.args);
 
             /* check the integrity of args */
-            crcArgs = crc16_ccit((uint8_t *)HsmClient->RespMsg.args, sizeof(EfuseRowProt_t));
+            crcArgs = crc16_ccit((uint8_t *)HsmClient->RespMsg.args, sizeof(NvmOtpRowProt_t));
             if (crcArgs == HsmClient->RespMsg.crcArgs)
             {
                 status = SystemP_SUCCESS;
@@ -2032,7 +2032,7 @@ int32_t HsmClient_VerifyROTSwitchingCertificate(HsmClient_t *HsmClient,
     int32_t status;
     uint16_t crcArgs;
 
-    /*populate the send message structure */
+    /* populate the send message structure */
     HsmClient->ReqMsg.destClientId = HSM_CLIENT_ID_1;
     HsmClient->ReqMsg.srcClientId = HsmClient->ClientId;
 
@@ -2048,17 +2048,16 @@ int32_t HsmClient_VerifyROTSwitchingCertificate(HsmClient_t *HsmClient,
     HsmClient->ReqMsg.args = (void *)(uintptr_t)SOC_virtToPhy(cert);
 
     /*
-    Write back the debug cert and
+    Write back the RoT cert and
     invalidate the cache before passing it to HSM
     */
     CacheP_wbInv(cert, GET_CACHE_ALIGNED_SIZE(cert_size), CacheP_TYPE_ALL);
 
     status = HsmClient_SendAndRecv(HsmClient, timeout);
-    if (status == SystemP_SUCCESS)
-    {
+    if (SystemP_SUCCESS == status) {
         /* the RoT Switch has been populated by HSM server
          * if this request has been processed correctly */
-        if (HsmClient->RespFlag == HSM_FLAG_NACK)
+        if (HSM_FLAG_NACK == HsmClient->RespFlag)
         {
             DebugP_log("\r\n [HSM_CLIENT] RoT Switching Certificate Verification request NACKed by HSM server\r\n");
             status = SystemP_FAILURE;
@@ -2083,6 +2082,124 @@ int32_t HsmClient_VerifyROTSwitchingCertificate(HsmClient_t *HsmClient,
         }
     }
     /* If failure occur due to some reason */
+    else if (SystemP_FAILURE == status) {
+        status = SystemP_FAILURE;
+    }
+    /* Indicate timeout error */
+    else
+    {
+        status = SystemP_TIMEOUT;
+    }
+    return status;
+}
+
+int32_t HsmClient_UpdateKeyRevsion(HsmClient_t *HsmClient, uint32_t timeout) {
+    /* make the message */
+    int32_t status;
+    uint16_t crcArgs;
+
+    /* populate the send message structure */
+    HsmClient->ReqMsg.destClientId = HSM_CLIENT_ID_1;
+    HsmClient->ReqMsg.srcClientId = HsmClient->ClientId;
+
+    /* Always expect acknowledgement from HSM server */
+    HsmClient->ReqMsg.flags = HSM_FLAG_AOP;
+    HsmClient->ReqMsg.serType = HSM_MSG_UPDATE_KEY_REV;
+
+    /* Add arg crc */
+    HsmClient->ReqMsg.crcArgs = crc16_ccit((uint8_t *)NULL, 0U);
+
+    /* Change the Arguments Address in Physical Address */
+    HsmClient->ReqMsg.args = NULL;
+
+    status = HsmClient_SendAndRecv(HsmClient, timeout);
+
+    if (SystemP_SUCCESS == status) {
+        /* the verifyApp has been populated by HSM server
+        * if this request has been processed correctly */
+        if (HSM_FLAG_NACK == HsmClient->RespFlag) {
+            DebugP_log("\r\n [HSM_CLIENT] Update Key Revision request NACKed by HSM server\r\n");
+            status = SystemP_FAILURE;
+        } else {
+            /* Change the Arguments Address in Physical Address */
+            HsmClient->RespMsg.args = (void *)SOC_phyToVirt((uint64_t)HsmClient->RespMsg.args);
+
+            /* check the integrity of args */
+            crcArgs = crc16_ccit((uint8_t *)(HsmClient->RespMsg.args),0);
+            if (crcArgs == HsmClient->RespMsg.crcArgs) {
+                status = SystemP_SUCCESS;
+            } else {
+                DebugP_log("\r\n [HSM_CLIENT] CRC check for update key revision response failed \r\n");
+                status = SystemP_FAILURE;
+            }
+        }
+    } else if (SystemP_FAILURE == status) {
+        /* If failure occur due to some reason */
+        status = SystemP_FAILURE;
+    } else {
+        /* Indicate timeout error */
+        status = SystemP_TIMEOUT;
+    }
+    return status;
+}
+
+
+int32_t HsmClient_configOTFARegions(HsmClient_t* HsmClient,OTFA_Config_t* OTFA_ConfigInfo,uint32_t timeout)
+{
+    /* make the message */
+    int32_t status ;
+    uint16_t crcArgs;
+
+    /*populate the send message structure */
+    HsmClient->ReqMsg.destClientId = HSM_CLIENT_ID_1;
+    HsmClient->ReqMsg.srcClientId = HsmClient->ClientId;
+
+    /* Always expect acknowledgement from HSM server */
+    HsmClient->ReqMsg.flags = HSM_FLAG_AOP;
+    HsmClient->ReqMsg.serType = HSM_MSG_CONFIGURE_OTFA;
+
+    /* Add arg crc */
+    HsmClient->ReqMsg.crcArgs = crc16_ccit((uint8_t*)OTFA_ConfigInfo,sizeof(OTFA_Config_t));
+
+    /* Change the Arguments Address in Physical Address */
+    HsmClient->ReqMsg.args = (void*)(uintptr_t)SOC_virtToPhy(OTFA_ConfigInfo);
+
+    /*
+       Write back the OTFA_ConfigInfo struct and
+       invalidate the cache before passing it to HSM
+    */
+    CacheP_wbInv(OTFA_ConfigInfo, GET_CACHE_ALIGNED_SIZE(sizeof(OTFA_Config_t)), CacheP_TYPE_ALL);
+
+    status = HsmClient_SendAndRecv(HsmClient,timeout);
+
+    if(status == SystemP_SUCCESS)
+    {
+        /* the hsmVer has been populated by HSM server
+         * if this request has been processed correctly */
+        if(HsmClient->RespFlag == HSM_FLAG_NACK)
+        {
+            DebugP_log("\r\n [HSM_CLIENT] Configure OTFA request NACKed by HSM server\r\n");
+            status = SystemP_FAILURE;
+        }
+        else
+        {
+            /* Change the Arguments Address in Physical Address */
+            HsmClient->RespMsg.args = (void*)SOC_phyToVirt((uint64_t)HsmClient->RespMsg.args);
+
+            /* check the integrity of args */
+            crcArgs = crc16_ccit((uint8_t*)(HsmClient->RespMsg.args),sizeof(OTFA_Config_t));
+            if(crcArgs == HsmClient->RespMsg.crcArgs)
+            {
+                status = SystemP_SUCCESS;
+            }
+            else
+            {
+                DebugP_log("\r\n [HSM_CLIENT] CRC check for OTFA_configuration response failed \r\n");
+                status = SystemP_FAILURE ;
+            }
+        }
+    }
+    /* If failure occur due to some reason */
     else if (status == SystemP_FAILURE)
     {
         status = SystemP_FAILURE;
@@ -2094,3 +2211,72 @@ int32_t HsmClient_VerifyROTSwitchingCertificate(HsmClient_t *HsmClient,
     }
     return status;
 }
+
+int32_t HsmClient_readOTFARegions(HsmClient_t* HsmClient,OTFA_readRegion_t* OTFA_readRegion,uint32_t timeout)
+{
+    /* make the message */
+    int32_t status ;
+    uint16_t crcArgs;
+
+    /*populate the send message structure */
+    HsmClient->ReqMsg.destClientId = HSM_CLIENT_ID_1;
+    HsmClient->ReqMsg.srcClientId = HsmClient->ClientId;
+
+    /* Always expect acknowledgement from HSM server */
+    HsmClient->ReqMsg.flags = HSM_FLAG_AOP;
+    HsmClient->ReqMsg.serType = HSM_MSG_READ_OTFA;
+
+    /* Add arg crc */
+    HsmClient->ReqMsg.crcArgs = crc16_ccit((uint8_t*)OTFA_readRegion,sizeof(OTFA_readRegion_t));
+
+    /* Change the Arguments Address in Physical Address */
+    HsmClient->ReqMsg.args = (void*)(uintptr_t)SOC_virtToPhy(OTFA_readRegion);
+
+    /*
+       Write back the OTFA_readRegion struct and
+       invalidate the cache before passing it to HSM
+    */
+    CacheP_wbInv(OTFA_readRegion, GET_CACHE_ALIGNED_SIZE(sizeof(OTFA_readRegion_t)), CacheP_TYPE_ALL);
+
+    status = HsmClient_SendAndRecv(HsmClient,timeout);
+
+    if(status == SystemP_SUCCESS)
+    {
+        /* the hsmVer has been populated by HSM server
+         * if this request has been processed correctly */
+        if(HsmClient->RespFlag == HSM_FLAG_NACK)
+        {
+            DebugP_log("\r\n [HSM_CLIENT] Read OTFA request NACKed by HSM server\r\n");
+            status = SystemP_FAILURE;
+        }
+        else
+        {
+            /* Change the Arguments Address in Physical Address */
+            HsmClient->RespMsg.args = (void*)SOC_phyToVirt((uint64_t)HsmClient->RespMsg.args);
+
+            /* check the integrity of args */
+            crcArgs = crc16_ccit((uint8_t*)(HsmClient->RespMsg.args),sizeof(OTFA_readRegion_t));
+            if(crcArgs == HsmClient->RespMsg.crcArgs)
+            {
+                status = SystemP_SUCCESS;
+            }
+            else
+            {
+                DebugP_log("\r\n [HSM_CLIENT] CRC check for OTFA_read response failed \r\n");
+                status = SystemP_FAILURE ;
+            }
+        }
+    }
+    /* If failure occur due to some reason */
+    else if (status == SystemP_FAILURE)
+    {
+        status = SystemP_FAILURE;
+    }
+    /* Indicate timeout error */
+    else
+    {
+        status = SystemP_TIMEOUT;
+    }
+    return status;
+}
+

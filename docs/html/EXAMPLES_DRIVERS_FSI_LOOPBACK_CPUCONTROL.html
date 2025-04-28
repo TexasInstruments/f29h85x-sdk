@@ -43,7 +43,7 @@
   <td id="projectlogo"><a href="https://www.ti.com"><img alt="Logo" src="ti_logo.svg"/></a></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">F29H85x-SDK
-   &#160;<span id="projectnumber">1.00.00.00</span>
+   &#160;<span id="projectnumber">1.01.00.00</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -92,20 +92,20 @@ $(document).ready(function(){initNavTree('EXAMPLES_DRIVERS_FSI_LOOPBACK_CPUCONTR
 </div><!--header-->
 <div class="contents">
 <div class="toc"><h3>Table of Contents</h3>
-<ul><li class="level1"><a href="#autotoc_md464">Introduction</a></li>
-<li class="level1"><a href="#autotoc_md465">Configurable Parameters</a></li>
-<li class="level1"><a href="#autotoc_md466">Watch  Variables</a></li>
-<li class="level1"><a href="#autotoc_md467">External Connections</a></li>
-<li class="level1"><a href="#autotoc_md468">Steps to Run the Example</a></li>
-<li class="level1"><a href="#autotoc_md469">See Also</a></li>
+<ul><li class="level1"><a href="#autotoc_md481">Introduction</a></li>
+<li class="level1"><a href="#autotoc_md482">Configurable Parameters</a></li>
+<li class="level1"><a href="#autotoc_md483">Watch  Variables</a></li>
+<li class="level1"><a href="#autotoc_md484">External Connections</a></li>
+<li class="level1"><a href="#autotoc_md485">Steps to Run the Example</a></li>
+<li class="level1"><a href="#autotoc_md486">See Also</a></li>
 </ul>
 </div>
 <div class="textblock"><p><a class="anchor" id="md_examples_drivers_fsi_loopback_cpucontrol"></a></p>
-<h1><a class="anchor" id="autotoc_md464"></a>
+<h1><a class="anchor" id="autotoc_md481"></a>
 Introduction</h1>
 <p>Example sets up infinite data frame transfers where trigger happens through CPU. Automatic(Hw triggered) Ping frame transmission is also setup along with data.</p>
 <p>For any errors during transfers i.e. <b>error</b> events such as Frame Overrun, Underrun, Watchdog timeout and CRC/EOF/TYPE errors, execution will stop immediately and status variables can be looked into for more details. Execution will also stop for any mismatch between received data and sent ones and also if transfers takes unusually long time (detected through software counters - txTimeOutCntr and rxTimeOutCntr)</p>
-<h1><a class="anchor" id="autotoc_md465"></a>
+<h1><a class="anchor" id="autotoc_md482"></a>
 Configurable Parameters</h1>
 <p>User can edit some of configuration parameters as per usecase. These are as below. Default values can be referred in code where these globals are defined</p>
 <ul>
@@ -113,18 +113,18 @@ Configurable Parameters</h1>
 <li>txDataFrameTag - Frame tag used for Data transfers</li>
 <li>txPingFrameTag - Frame tag used for Ping transfers</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md466"></a>
+<h1><a class="anchor" id="autotoc_md483"></a>
 Watch  Variables</h1>
 <ul>
 <li>dataFrameCntr - Number of Data frames transferred</li>
 <li>error - Non zero in case of transmit/receive data mismatch</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md467"></a>
+<h1><a class="anchor" id="autotoc_md484"></a>
 External Connections</h1>
 <ul>
 <li>None</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md468"></a>
+<h1><a class="anchor" id="autotoc_md485"></a>
 Steps to Run the Example</h1>
 <ul>
 <li><b>When using CCS projects to build</b>, import the CCS project for the required combination and build it using the CCS project menu (see <a class="el" href="CCS_PROJECTS_PAGE.html">CCS Build Project</a>).</li>
@@ -133,7 +133,7 @@ Steps to Run the Example</h1>
 <li>Launch a CCS debug session and run the executable, see <a class="el" href="CCS_LAUNCH_PAGE.html">Build, Load and Run</a></li>
 <li>Wait for transmissions to complete, then check error flag and received data + count</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md469"></a>
+<h1><a class="anchor" id="autotoc_md486"></a>
 See Also</h1>
 <p><a class="el" href="DRIVERS_FSI_PAGE.html">FSI</a> </p>
 </div></div><!-- contents -->

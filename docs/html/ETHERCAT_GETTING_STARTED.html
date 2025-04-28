@@ -43,7 +43,7 @@
   <td id="projectlogo"><a href="https://www.ti.com"><img alt="Logo" src="ti_logo.svg"/></a></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">F29H85x-SDK
-   &#160;<span id="projectnumber">1.00.00.00</span>
+   &#160;<span id="projectnumber">1.01.00.00</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -93,6 +93,9 @@ $(document).ready(function(){initNavTree('ETHERCAT_GETTING_STARTED.html',''); in
 <div class="contents">
 <div class="textblock"><p><a class="anchor" id="md_components_communication_stack_EtherCAT_3_ExamplesGettingStarted"></a> This chapter details how to get setup and begin using the EtherCAT examples. These instructions use Beckhoff’s TwinCAT as the EtherCAT MainDevice. The EtherCAT software includes the following:</p><ul>
 <li><a class="el" href="ETHERCAT_GETTING_STARTED.html#CPU1_PDI_HAL_TEST_EXAMPLE">CPU1 PDI HAL Test Example</a></li>
+<li><a class="el" href="ETHERCAT_GETTING_STARTED.html#CPU1_ECHOBACK_SOLUTION_EXAMPLE">CPU1 Echoback Solution Example</a></li>
+<li><a class="el" href="ETHERCAT_GETTING_STARTED.html#CPU1_CIA402_SOLUTION_EXAMPLE">CPU1 CiA402 Solution Example</a></li>
+<li><a class="el" href="ETHERCAT_GETTING_STARTED.html#CPU1_FOE_DOWNLOAD_SOLUTION_EXAMPLE">CPU1 FoE Download Solution Example</a></li>
 </ul>
 <h1><a class="anchor" id="CPU1_PDI_HAL_TEST_EXAMPLE"></a>
 CPU1 PDI HAL Test Example</h1>
@@ -120,7 +123,150 @@ CPU1 PDI HAL Test Example</h1>
 <li>Once EEPROM is programmed or re-programmed for the correct core, reset the CPU and restart the example.</li>
 <li>Set a breakpoint on ESC_debugUpdateESCRegLogs() in pdi_test_app.c and the CPU should hit the breakpoint. The pass signal should be indicated by the controlCARD LEDs. If not, pause the execution and investigate further.</li>
 <li>The ESC_debugUpdateESCRegLogs() will continually update the ESC_escRegs data structure with the EtherCAT register and RAM values added for monitoring as part of ESC_setupPDITestInterface(). This data structure can be viewed using the CCS Expressions window.</li>
-<li>You can now restart the example and set various breakpoints within ESC_setupPDITestInterface() to observe the reads/writes from CCS as well as the TwinCAT MainDevice memory window. Additionally, you can change values via either interface to introduce failures in the PDI test. Refer <a class="el" href="ECAT_HOW_TO_PROCEDURES.html#TWINCAT_MEM_WINDOW">Use TwinCAT Memory Window</a> for information on using the TwinCAT MainDevice memory window. </li>
+<li>You can now restart the example and set various breakpoints within ESC_setupPDITestInterface() to observe the reads/writes from CCS as well as the TwinCAT MainDevice memory window. Additionally, you can change values via either interface to introduce failures in the PDI test. Refer <a class="el" href="ECAT_HOW_TO_PROCEDURES.html#TWINCAT_MEM_WINDOW">Use TwinCAT Memory Window</a> for information on using the TwinCAT MainDevice memory window.</li>
+</ol>
+<h1><a class="anchor" id="CPU1_ECHOBACK_SOLUTION_EXAMPLE"></a>
+CPU1 Echoback Solution Example</h1>
+<ul>
+<li>This example requires application and SubordinateDevice stack files to be generated via the SSC tool before building/running.</li>
+<li>This example emulates a bank of switches (inputs) and LEDs (outputs). The EtherCAT MainDevice controls the LEDs' states and the EtherCAT SubordinateDevice loops back the virtual LED signals into the virtual switches so that the MainDevice can read back the LED output state.</li>
+</ul>
+<h2><a class="anchor" id="autotoc_md888"></a>
+Steps to Run the Example</h2>
+<ol type="1">
+<li>First, TwinCAT must be installed and setup. Refer to <a class="el" href="ECAT_HOW_TO_PROCEDURES.html#TWINCAT_SETUP">Setup TwinCAT</a>.</li>
+<li>Install the SSC tool V5.13<ul>
+<li><b>Important</b>: Only V5.13 is supported. Only download this version.</li>
+<li>Download at <a href="https://www.ethercat.org/memberarea/stack_code.aspx">ETG SSC ET9300</a></li>
+</ul>
+</li>
+<li>Check your external connections: (<a class="el" href="ECAT_HOW_TO_PROCEDURES.html#EXTERNAL_CONNECTIONS">Example External Connections</a>)</li>
+<li>Run <code>ethercat_subdevice_ssc_and_demo_setup.exe</code> installer to extract the F29H85x SSC configuration and echoback application files required by the SSC tool. These will be located in the newly created <code>ssc_configuration</code> directory.</li>
+<li>Open the SSC tool and a <b>New Project</b> dialog box will open. Select <b>Import</b> and locate the <code>f29x_ssc_config.xml</code>. Then click <b>Open</b>.</li>
+<li><p class="startli">Use the Custom drop-down menu to select <b>TI F29H85x CPU1 Echoback Solution</b> and click <b>OK</b>. </p><center> <img src="ssc_configuration.jpg" alt="" width="40%" class="inline"/></center><center> <em>SSC Configuration Window</em> </center></li>
+<li>Click <b>Yes</b> when the pop up window asks about requiring external files to proceed.</li>
+<li>Save the SSC project.</li>
+<li>Within SSC tool, go to <b>Project -&gt; Create new SubordinateDevice Files</b><ul>
+<li>Change the Source Folder directory to the <code>~/examples/f29h85x_cpu1_echoback_solution</code> directory.</li>
+<li>Leave the ESI file directory location as is.</li>
+<li>Click <b>Start</b> and then <b>OK</b>.</li>
+</ul>
+</li>
+<li>Import the example from <code>~/examples/f29h85x_cpu1_echoback_solution</code> into CCS and build it for <b>RAM</b>.</li>
+<li>Within CCS, verify to be in the CCS Debug view and connect to CPU1.</li>
+<li>Once connected to CPU1, go to <b>Run -&gt; Load -&gt; Load Program</b> and select <code>f29h85x_cpu1_echoback_solution.out</code>. Then click <b>Resume</b>.</li>
+<li>Copy the ESI file (<code>F29H85x CPU1 EtherCAT SubDevice.xml</code>) generated by the SSC tool into the TwinCAT directory (Default location: <code>C:/TwinCAT/3.1/Config/Io/EtherCAT</code>) If the TwinCAT application is already opened, it must first be closed and re-opened for the ESI file to be discovered.</li>
+<li>Refer to <a class="el" href="ECAT_HOW_TO_PROCEDURES.html#PROGRAM_EEPROM">Program ControlCard EEPROM</a> on how to program the EEPROM.</li>
+<li>Once EEPROM is programmed, do the following:<ul>
+<li>Disconnect and power cycle the board</li>
+<li>Reload CPU1 application and press Resume in the CCS debug perspective to start running the code.</li>
+<li><p class="startli">Reconnect to board to TwinCAT, rescan for devices, and restart TwinCAT in <b>config mode</b> </p><center> <img src="twincat_restart.jpg" alt="" class="inline"/></center><center> <em>Twincat Restart in Config Mode</em> </center></li>
+</ul>
+</li>
+<li><p class="startli">Within TwinCAT, double-click on the discovered EtherCAT box and observe that the EtherCAT SubordinateDevice is running in OP mode.</p>
+<center> <img src="twincat_box_op.jpg" alt="" class="inline"/></center><center> <em>EtherCAT SubordinateDevice in OP Mode</em> </center></li>
+<li><p class="startli">Within TwinCAT, expand the explorer to the EtherCAT box and find the various output/input mappings. </p><center> <img src="twincat_box_inputs_outputs.jpg" alt="" class="inline"/></center><center> <em>TwinCAT Solution Explorer Inputs and Outputs</em> </center></li>
+<li>Select the <b>LEDS process data mapping</b> in the solution explorer and in the window on the right, you can change the value of any of the virtual LEDs. Switch to the <b>switches process data mapping</b> to see the looped back values. For example, if LED1 is set to 1, then Switch1 should also be 1.</li>
+<li>Select the <b>Output mapping 1</b> in the solution explorer and in the window on the right, you can change the values of the 3 data variables. Once set, the looped back value can be observed from the <b>Input mapping 1</b> variables.</li>
+</ol>
+<h1><a class="anchor" id="CPU1_CIA402_SOLUTION_EXAMPLE"></a>
+CPU1 CiA402 Solution Example</h1>
+<p>This example requires application and subdevice stack files to be generated via the SSC tool before building/running. This example integrates the sample CiA402 application from Beckhoff.</p>
+<h2><a class="anchor" id="autotoc_md889"></a>
+Steps to Run the Example</h2>
+<ol type="1">
+<li>First, TwinCAT must be installed and setup. Refer to <a class="el" href="ECAT_HOW_TO_PROCEDURES.html#TWINCAT_SETUP">Setup TwinCAT</a>.</li>
+<li>Install the SSC tool V5.13<ul>
+<li><b>Important</b>: Only V5.13 is supported. Only download this version.</li>
+<li>Download at <a href="https://www.ethercat.org/memberarea/stack_code.aspx">ETG SSC ET9300</a></li>
+</ul>
+</li>
+<li>Check your external connections: (<a class="el" href="ECAT_HOW_TO_PROCEDURES.html#EXTERNAL_CONNECTIONS">Example External Connections</a>)</li>
+<li>Run <code>ethercat_subdevice_ssc_and_demo_setup.exe</code> installer to extract the F29H85x SSC configuration and echoback application files required by the SSC tool. These will be located in the newly created <code>ssc_configuration</code> directory.</li>
+<li>Open the SSC tool and a <b>New Project</b> dialog box will open. Select <b>Import</b> and locate the <code>f29h85x_ssc_config.xml</code>. Then click <b>Open</b>.</li>
+<li><p class="startli">Use the Custom drop-down menu to select <b>TI F29H85x CPU1 Sample</b> (the one WITHOUT the sample application) and click <b>OK</b>.</p>
+<center> <img src="ssc_configuration.jpg" alt="" width="40%" class="inline"/></center><center> <em>SSC Configuration Window</em> </center></li>
+<li>Click <b>Yes</b> when the pop up window asks about requiring external files to proceed.</li>
+<li><p class="startli">In the subdevice Project Navigation, select <b>Application</b> and for the <b>CiA402_DEVICE</b> subdevice setting, set the value to <b>1</b>.</p>
+<center> <img src="cia402_ssc_app_enable.jpg" alt="" width="40%" class="inline"/></center><center> <em>SSC Application Window</em> </center></li>
+<li>Save the SSC project.</li>
+<li>Within SSC tool, go to <b>Project -&gt; Create new subdevice Files</b><ul>
+<li>Change the Source Folder directory to the <code>~/examples/f29h85x_cpu1_cia402_solution</code> directory.</li>
+<li>Leave the ESI file directory location as is.</li>
+<li>Click <b>Start</b> and then <b>OK</b>.</li>
+</ul>
+</li>
+<li>Import the example from <code>~/examples/f29h85x_cpu1_cia402_solution</code> into CCS and build it for <b>RAM</b></li>
+<li>Within CCS, verify to be in the CCS Debug view and connect to the CPU1 core.</li>
+<li>Once connected to the CPU1 core, go to <b>Run -&gt; Load -&gt; Load Program</b> and select <code>f29h85x_cpu1_cia402_solution.out</code>. Then click <b>Resume</b>.</li>
+<li>Copy the ESI file (<code>F29H85x CPU1 EtherCAT subdevice.xml</code>) generated by the SSC tool into the TwinCAT directory (Default location: <code>C:/TwinCAT/3.1/Config/Io/EtherCAT</code>) If the TwinCAT application is already opened, it must first be closed and re-opened for the ESI file to be discovered.</li>
+<li>Refer to <a class="el" href="ECAT_HOW_TO_PROCEDURES.html#PROGRAM_EEPROM">Program ControlCard EEPROM</a> on how to program the EEPROM (can follow the echoback example steps).</li>
+<li><p class="startli">Once EEPROM is programmed, do the following:</p><ul>
+<li>Disconnect and power cycle the board</li>
+<li>Reload CPU1 application and press Resume in the CCS debug perspective to start running the code.</li>
+<li>Reconnect to board to TwinCAT and rescan for devices</li>
+</ul>
+<center> <img src="twincat_restart.jpg" alt="" class="inline"/></center><center> <em>Twincat Restart in Config Mode</em> </center></li>
+<li><p class="startli">With the ESI indicating CiA402 support, TwinCAT will ask about how to append the linked axis. Select whichever makes sense for your axis.</p>
+<center> <img src="cia402_twincat_drives.jpg" alt="" width="40%" class="inline"/></center><center> <em>TwinCAT Drives Configuration</em> </center></li>
+<li><p class="startli">Within TwinCAT, double-click on the discovered EtherCAT box and observe that the EtherCAT subdevice is running in OP mode.</p>
+<center> <img src="twincat_box_op.jpg" alt="" class="inline"/></center><center> <em>EtherCAT SubordinateDevice in OP Mode</em> </center></li>
+<li>For further details on configuring and running this example as well as details on the CiA402 drive profile objects refer to <b>Chapter 10</b> in the following Beckhoff document: <a href="https://download.beckhoff.com/download/document/io/ethercat-development-products/an_et9300_v1i8.pdf">Application Note ET9300 (EtherCAT subdevice Stack Code)</a></li>
+</ol>
+<ul>
+<li>Any questions regarding the CiA402 sample implementation, post on the ETG developer forums: <a href="https://www.ethercat.org/memberarea/en/forum.htm">Link</a></li>
+</ul>
+<h1><a class="anchor" id="CPU1_FOE_DOWNLOAD_SOLUTION_EXAMPLE"></a>
+CPU1 FoE Download Solution Example</h1>
+<p>This example requires application and subdevice stack files to be generated via the SSC tool before building/running. This example emulates a transfer of data from the Master to the subdevice using FoE Protocol. Dummy data is sent from the master using TwinCAT, which is received by the subdevice and can be read from the memory using Code Composer Studio.</p>
+<h2><a class="anchor" id="autotoc_md890"></a>
+Steps to Run the Example</h2>
+<ol type="1">
+<li>First, TwinCAT must be installed and setup. Refer to <a class="el" href="ECAT_HOW_TO_PROCEDURES.html#TWINCAT_SETUP">Setup TwinCAT</a>.</li>
+<li>Install the SSC tool V5.13<ul>
+<li><b>Important</b>: Only V5.13 is supported. Only download this version.</li>
+<li>Download at <a href="https://www.ethercat.org/memberarea/stack_code.aspx">ETG SSC ET9300</a></li>
+</ul>
+</li>
+<li>Check your external connections: (<a class="el" href="ECAT_HOW_TO_PROCEDURES.html#EXTERNAL_CONNECTIONS">Example External Connections</a>)</li>
+<li>Run <code>ethercat_subdevice_ssc_and_demo_setup.exe</code> installer to extract the F29H85x SSC configuration and echoback application files required by the SSC tool. These will be located in the newly created <code>ssc_configuration</code> directory.</li>
+<li>Open the SSC tool and a <b>New Project</b> dialog box will open. Select <b>Import</b> and locate the <code>f29h85x_ssc_config.xml</code>. Then click <b>Open</b>.</li>
+<li><p class="startli">Use the Custom drop-down menu to select <b>TI F29H85x CPU1 FoE Download Solution</b> and click <b>OK</b>.</p>
+<center> <img src="ssc_configuration.jpg" alt="" width="40%" class="inline"/></center><center> <em>SSC Configuration Window</em> </center></li>
+<li>Click <b>Yes</b> when the pop up window asks about requiring external files to proceed.</li>
+<li>Save the SSC project.</li>
+<li>Within SSC tool, go to <b>Project -&gt; Create new subdevice Files</b><ul>
+<li>Change the Source Folder directory to the <code>~/examples/f29h85x_cpu1_echoback_solution</code> directory.</li>
+<li>Leave the ESI file directory location as is.</li>
+<li>Click <b>Start</b> and then <b>OK</b>.</li>
+</ul>
+</li>
+<li>Import the example from <code>~/examples/f29h85x_cpu1_foe_download_solution</code> into CCS and build it for <b>RAM</b> or <b>FLASH</b>.</li>
+<li>Within CCS, verify to be in the CCS Debug view and connect to CPU1.</li>
+<li>Once connected to CPU1, go to <b>Run -&gt; Load -&gt; Load Program</b> and select <code>f29h85x_cpu1_foe_download_solution.out</code>. Then click <b>Resume</b>.</li>
+<li>Copy the ESI file (<code>F29H85x CPU1 EtherCAT subdevice (FoE).xml</code>) generated by the SSC tool into the TwinCAT directory (Default location: <code>C:/TwinCAT/3.1/Config/Io/EtherCAT</code>) If the TwinCAT application is already opened, it must first be closed and re-opened for the ESI file to be discovered.</li>
+<li>Refer to <a class="el" href="ECAT_HOW_TO_PROCEDURES.html#PROGRAM_EEPROM">Program ControlCard EEPROM</a> on how to program the EEPROM.</li>
+<li><p class="startli">Once EEPROM is programmed, do the following:</p><ul>
+<li>Disconnect and power cycle the board</li>
+<li>Reload CPU1 application and press Resume in the CCS debug perspective to start running the code.</li>
+<li>Reconnect to board to TwinCAT, rescan for devices, and restart TwinCAT in <b>config mode</b></li>
+</ul>
+<center> <img src="twincat_restart.jpg" alt="" class="inline"/></center><center> <em>Twincat Restart in Config Mode</em> </center></li>
+<li><p class="startli">Within TwinCAT, double-click on the discovered EtherCAT box and observe that the EtherCAT subdevice is running in OP mode.</p>
+<center> <img src="twincat_box_op.jpg" alt="" class="inline"/></center><center> <em>EtherCAT SubordinateDevice in OP Mode</em> </center></li>
+<li>Select Bootstrap under the Online tab, to change the EtherCAT subdevice to BOOT mode. (FoE transfer is only possible in BOOT mode)</li>
+<li>In order to choose the file to be sent from the master to the subdevice<ul>
+<li>Scroll down on the Online tab and under File Access over EtherCAT, click download.</li>
+<li>Within C2000ware, browse for the file <code>test.bin</code> from the <code>~/EtherCAT/f29h85x/ssc_configuration/test</code> directory and click Open.</li>
+<li>Click OK.</li>
+</ul>
+</li>
+<li>To verify that the file has been transferred, the memory contents can be verified in CCS.<ul>
+<li>In CCS, halt the execution and click on View-&gt;Memory Browser</li>
+<li>In the box next to the field "Data", enter the address of the memory location to be accessed (0x20110000U as set in tiescfoe.c for this example)</li>
+<li>In the drop-down menu below, select "Packed Char" to directly see the contents of the .bin file stored in the memory. </li>
+</ul>
+</li>
 </ol>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->

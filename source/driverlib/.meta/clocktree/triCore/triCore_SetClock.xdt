@@ -90,25 +90,8 @@ if(PLL_type2.includes(device))
 //////////////////////////////////////////////////
 // Clock Domains
 //////////////////////////////////////////////////
-var TIMER2_divide_dv = system.clockTree.TMR2CLKPRESCALE.divideValue
-var TIMER2_divide    = "SYSCTL_TIMER2CLK_DIV_" + TIMER2_divide_dv 
-var TIMER2_source = "SYSCTL_TIMER2CLK_SOURCE_SYSCLK"
-switch(system.clockTree.TMR2CLKSRCSEL.inputSelect){
-	case "CPU1_CPUCLK":
-		TIMER2_source 		= "SYSCTL_TIMER2CLK_SOURCE_SYSCLK"
-		break
-	case "INTOSC1":
-		TIMER2_source 		= "SYSCTL_TIMER2CLK_SOURCE_INTOSC1"
-		break
-	case "INTOSC2":
-		TIMER2_source 	 	= "SYSCTL_TIMER2CLK_SOURCE_INTOSC2"
-		break
-	case "X1_XTAL":
-		TIMER2_source 	 	= "SYSCTL_TIMER2CLK_SOURCE_XTAL"
-		break
-} 
 var EPWM_divide_dv = system.clockTree.EPWMCLKDIV.divideValue
-var EPWM_divide    = "SYSCTL_EPWMCLK_DIV_" + EPWM_divide_dv   
+var EPWM_divide    = "SYSCTL_EPWMCLK_DIV_" + EPWM_divide_dv
 var EMIF1_divide_dv = system.clockTree.EMIF1CLKDIV.divideValue
 var EMIF1_divide    = "SYSCTL_EMIFCLK_DIV_" + EMIF1_divide_dv
 var LINA_divide_dv = system.clockTree.LINACLKDIV.divideValue
@@ -117,7 +100,7 @@ var LINB_divide_dv = system.clockTree.LINBCLKDIV.divideValue
 var LINB_divide    = "SYSCTL_LINCLK_DIV_" + LINB_divide_dv
 var ECAT_divide_dv = system.clockTree.ECATDIV.divideValue
 var ECAT_divide    = "SYSCTL_ECATCLKOUT_DIV_" + ECAT_divide_dv
-var ECAT_enable    = "SYSCTL_ECAT_PHYCLK_ENABLE" 
+var ECAT_enable    = "SYSCTL_ECAT_PHYCLK_ENABLE"
 var HSM_divide_dv = system.clockTree.HSMCLKDIV.divideValue
 var HSM_divide    = "SYSCTL_HSMCLK_DIV_" + HSM_divide_dv
 
@@ -210,14 +193,14 @@ switch(system.clockTree.MCANFBCLKSEL.inputSelect){
 % }
 	bool clkConfigStatus = false;
 
-	//	
+	//
     // From ClockTree Configurations
 	//
 
 	//
     // Set up PLL control and clock dividers
     //
-	clkConfigStatus = SysCtl_setClock(`oscclkSrc`, `PLL_STS`, `PLL_REFDIV`, 
+	clkConfigStatus = SysCtl_setClock(`oscclkSrc`, `PLL_STS`, `PLL_REFDIV`,
 					  `PLL_IMULT`, `PLL_ODIV`, `PLL_DIVSEL`, DCC1_BASE);
 
     //
@@ -232,30 +215,60 @@ switch(system.clockTree.MCANFBCLKSEL.inputSelect){
 	//
     SysCtl_setEPWMClock(`EPWM_divide`);
 %	if(availablePeripherals["EMIF1"]){
-    SysCtl_setEMIF1Clock(`EMIF1_divide`);
+    if(SYSCTL_MCUCNF1_EMIF1 == (HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF1) & SYSCTL_MCUCNF1_EMIF1))
+    {
+        SysCtl_setEMIF1Clock(`EMIF1_divide`);
+    }
 %	}
-    SysCtl_setLINAClock(`LINA_divide`);
+    if(SYSCTL_MCUCNF19_LIN_A == (HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF19) & SYSCTL_MCUCNF19_LIN_A))
+    {
+        SysCtl_setLINAClock(`LINA_divide`);
+    }
 %	if(availablePeripherals["LINB"]){
-    SysCtl_setLINBClock(`LINB_divide`);
+    if(SYSCTL_MCUCNF19_LIN_B == (HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF19) & SYSCTL_MCUCNF19_LIN_B))
+    {
+        SysCtl_setLINBClock(`LINB_divide`);
+    }
 %	}
 %	if(availablePeripherals["ECAT"]){
-    SysCtl_setECatClock(`ECAT_divide`, `ECAT_enable`);
+    if(SYSCTL_MCUCNF23_ETHERCAT == (HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF23) & SYSCTL_MCUCNF23_ETHERCAT))
+    {
+        SysCtl_setECatClock(`ECAT_divide`, `ECAT_enable`);
+    }
 %	}
     SysCtl_setHSMClock(`HSM_divide`);
 
-    SysCtl_setMCANClock(SYSCTL_MCAN_A, `MCANA_source`, `MCANA_divide`);
-    SysCtl_setMCANClock(SYSCTL_MCAN_B, `MCANB_source`, `MCANB_divide`);
+    if(SYSCTL_MCUCNF10_MCAN_A == (HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF10) & SYSCTL_MCUCNF10_MCAN_A))
+    {
+        SysCtl_setMCANClock(SYSCTL_MCAN_A, `MCANA_source`, `MCANA_divide`);
+    }
+    if(SYSCTL_MCUCNF10_MCAN_B == (HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF10) & SYSCTL_MCUCNF10_MCAN_B))
+    {
+        SysCtl_setMCANClock(SYSCTL_MCAN_B, `MCANB_source`, `MCANB_divide`);
+    }
 %	if(availablePeripherals["MCANC"]){
-    SysCtl_setMCANClock(SYSCTL_MCAN_C, `MCANC_source`, `MCANC_divide`);
+    if(SYSCTL_MCUCNF10_MCAN_C == (HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF10) & SYSCTL_MCUCNF10_MCAN_C))
+    {
+        SysCtl_setMCANClock(SYSCTL_MCAN_C, `MCANC_source`, `MCANC_divide`);
+    }
 %	}
 %	if(availablePeripherals["MCAND"]){
-    SysCtl_setMCANClock(SYSCTL_MCAN_D, `MCAND_source`, `MCAND_divide`);
+    if(SYSCTL_MCUCNF10_MCAN_D == (HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF10) & SYSCTL_MCUCNF10_MCAN_D))
+    {
+        SysCtl_setMCANClock(SYSCTL_MCAN_D, `MCAND_source`, `MCAND_divide`);
+    }
 %	}
 %	if(availablePeripherals["MCANE"]){
-    SysCtl_setMCANClock(SYSCTL_MCAN_E, `MCANE_source`, `MCANE_divide`);
+    if(SYSCTL_MCUCNF10_MCAN_E == (HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF10) & SYSCTL_MCUCNF10_MCAN_E))
+    {
+        SysCtl_setMCANClock(SYSCTL_MCAN_E, `MCANE_source`, `MCANE_divide`);
+    }
 %	}
 %	if(availablePeripherals["MCANF"]){
-    SysCtl_setMCANClock(SYSCTL_MCAN_F, `MCANF_source`, `MCANF_divide`);
+    if(SYSCTL_MCUCNF10_MCAN_F == (HWREG(DEVCFG_BASE + SYSCTL_O_MCUCNF10) & SYSCTL_MCUCNF10_MCAN_F))
+    {
+        SysCtl_setMCANClock(SYSCTL_MCAN_F, `MCANF_source`, `MCANF_divide`);
+    }
 %	}
 
 	//

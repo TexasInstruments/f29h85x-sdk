@@ -1,7 +1,7 @@
 let Common   = system.getScript("/driverlib/Common.js");
 let Pinmux   = system.getScript("/driverlib/pinmux.js");
-let device_driverlib_peripheral = 
-    system.getScript("/driverlib/device_driverlib_peripherals/" + 
+let device_driverlib_peripheral =
+    system.getScript("/driverlib/device_driverlib_peripherals/" +
         Common.getDeviceName().toLowerCase() + "_epwm.js");
 // input 1 is the channel's output, input 2 is other channel's output
 let EPWM_MINDB_ICL_LUT_A = [
@@ -18,7 +18,7 @@ let EPWM_MINDB_ICL_LUT_A = [
 let EPWM_MINDB_ICL_LUT_B = [
     { name: "EPWM_MINDB_ICL_LUT_DEC0", displayName: "ICLXBAR = LOW | MINDBxA = LOW | MINDBxB = LOW" },
     { name: "EPWM_MINDB_ICL_LUT_DEC1", displayName: "ICLXBAR = LOW | MINDBxA = LOW | MINDBxB = HIGH" },
-    { name: "EPWM_MINDB_ICL_LUT_DEC2", displayName: "ICLXBAR = LOW | MINDBxA = HIGH | MINDBxB = HIGH" },
+    { name: "EPWM_MINDB_ICL_LUT_DEC2", displayName: "ICLXBAR = LOW | MINDBxA = HIGH | MINDBxB = LOW" },
     { name: "EPWM_MINDB_ICL_LUT_DEC3", displayName: "ICLXBAR = LOW | MINDBxA = HIGH | MINDBxB = HIGH" },
     { name: "EPWM_MINDB_ICL_LUT_DEC4", displayName: "ICLXBAR = HIGH | MINDBxA = LOW | MINDBxB = LOW" },
     { name: "EPWM_MINDB_ICL_LUT_DEC5", displayName: "ICLXBAR = HIGH | MINDBxA = LOW | MINDBxB = HIGH" },
@@ -32,7 +32,7 @@ function set_LUT_table(inst, ui, dbOutput, reset)
     var output_LUT_low = inst["epwmICL_" + dbOutput.name.replace("EPWM_DB_OUTPUT_", "") + "_OUTLOW"];
     var output_high = "1";
     var output_low = "0";
-    
+
     if(reset)
     {
         // inst["epwmICL_" + dbOutput.name.replace("EPWM_DB_OUTPUT_", "") + "_OUTHIGH"].;
@@ -42,7 +42,7 @@ function set_LUT_table(inst, ui, dbOutput, reset)
     {
         for(var index_high_options in output_LUT_high)
         {
-            switch(output_LUT_high[index_high_options]) 
+            switch(output_LUT_high[index_high_options])
             {
                 case "EPWM_MINDB_ICL_LUT_DEC0":
                     inst["epwmICL_LUT0" + dbOutput.name.replace("EPWM_DB_OUTPUT_", "")] = output_high;
@@ -70,11 +70,11 @@ function set_LUT_table(inst, ui, dbOutput, reset)
                     break;
             }
         }
-    
+
         for(var index_low_options in output_LUT_low)
         {
             // check if LUT high does not have LUT low option and set that defautl to low
-            switch(output_LUT_low[index_low_options]) 
+            switch(output_LUT_low[index_low_options])
             {
                 case "EPWM_MINDB_ICL_LUT_DEC0":
                     inst["epwmICL_LUT0" + dbOutput.name.replace("EPWM_DB_OUTPUT_", "")] = output_low;
@@ -103,7 +103,7 @@ function set_LUT_table(inst, ui, dbOutput, reset)
             }
         }
     }
-    
+
 }
 
 function onChangeEnableDisable(inst, ui)
@@ -153,7 +153,7 @@ function onChangeEnableDisable(inst, ui)
             inst["epwmICL_LUT7" + dbOutput.name.replace("EPWM_DB_OUTPUT_", "")] = "0";
 
         }
-        
+
     }
 }
 
@@ -191,7 +191,7 @@ for (var dbOutputIndex in device_driverlib_peripheral.EPWM_DeadBandOutput)
             options     : device_driverlib_peripheral.EPWM_MINDB_SEL,
 		},
         {
-            name: "epwmMinDeadBand_" + dbOutput.name.replace("EPWM_DB_OUTPUT_", "") + "_invertInput", 
+            name: "epwmMinDeadBand_" + dbOutput.name.replace("EPWM_DB_OUTPUT_", "") + "_invertInput",
             displayName : "Invert Input Reference Signal",
             description : 'Invert input reference signal to the Minimum Dead-Band Logic',
             hidden      : true,
@@ -203,7 +203,7 @@ for (var dbOutputIndex in device_driverlib_peripheral.EPWM_DeadBandOutput)
             displayName : "Minimum Dead-Band Delay for" + dbOutput.displayName.replace("DB output is", "") + " (SYSCLK Cycles)",
             description : 'Set minimum dead-band delay applied to reference signal',
             hidden      : true,
-            default     : 1            
+            default     : 1
         },
         {
             name: "epwmMinDeadBand_" + dbOutput.name.replace("EPWM_DB_OUTPUT_", "") + "_configBlockSignal",
@@ -211,7 +211,7 @@ for (var dbOutputIndex in device_driverlib_peripheral.EPWM_DeadBandOutput)
             description : 'Select blocking signal for' + dbOutput.displayName.replace("DB output is", ""),
             hidden      : true,
             default     : device_driverlib_peripheral.EPWM_MINDB_BLOCKING_SIGNAL[0].name,
-            options     : device_driverlib_peripheral.EPWM_MINDB_BLOCKING_SIGNAL    
+            options     : device_driverlib_peripheral.EPWM_MINDB_BLOCKING_SIGNAL
         },
         {
             name: "epwmMinDeadBand_" + dbOutput.name.replace("EPWM_DB_OUTPUT_", "") + "_configANDOR",
@@ -247,7 +247,7 @@ for (var dbOutputIndex in device_driverlib_peripheral.EPWM_DeadBandOutput)
             onChange    : onChangeEnableDisable
         },
         {
-            name: "epwmICL_" + dbOutput.name.replace("EPWM_DB_OUTPUT_", "") + "_selXBAR", 
+            name: "epwmICL_" + dbOutput.name.replace("EPWM_DB_OUTPUT_", "") + "_selXBAR",
             displayName : "Input XBAR Reference Signal",
             description : 'Select input XBAR signal to the Illegal Combo Logic',
             hidden      : true,
@@ -262,49 +262,49 @@ for (var dbOutputIndex in device_driverlib_peripheral.EPWM_DeadBandOutput)
             default     : "0" ,
         },
         {
-            name: "epwmICL_LUT1" + dbOutput.name.replace("EPWM_DB_OUTPUT_", ""), 
+            name: "epwmICL_LUT1" + dbOutput.name.replace("EPWM_DB_OUTPUT_", ""),
             displayName : "Backend",
             description : 'Select input XBAR signal to the Illegal Combo Logic',
             hidden      : true,
             default     : "0" ,
         },
         {
-            name: "epwmICL_LUT2" + dbOutput.name.replace("EPWM_DB_OUTPUT_", ""), 
+            name: "epwmICL_LUT2" + dbOutput.name.replace("EPWM_DB_OUTPUT_", ""),
             displayName : "Backend",
             description : 'Select input XBAR signal to the Illegal Combo Logic',
             hidden      : true,
             default     : "0" ,
         },
         {
-            name: "epwmICL_LUT3" + dbOutput.name.replace("EPWM_DB_OUTPUT_", ""), 
+            name: "epwmICL_LUT3" + dbOutput.name.replace("EPWM_DB_OUTPUT_", ""),
             displayName : "Backend",
-	    description : 'Select input XBAR signal to the Illegal Combo Logic', 
+	    description : 'Select input XBAR signal to the Illegal Combo Logic',
 	    hidden      : true,
             default     : "0" ,
         },
         {
-            name: "epwmICL_LUT4" + dbOutput.name.replace("EPWM_DB_OUTPUT_", ""), 
+            name: "epwmICL_LUT4" + dbOutput.name.replace("EPWM_DB_OUTPUT_", ""),
             displayName : "Backend",
             description : 'Select input XBAR signal to the Illegal Combo Logic',
             hidden      : true,
             default     : "0" ,
         },
         {
-            name: "epwmICL_LUT5" + dbOutput.name.replace("EPWM_DB_OUTPUT_", ""), 
+            name: "epwmICL_LUT5" + dbOutput.name.replace("EPWM_DB_OUTPUT_", ""),
             displayName : "Backend",
             description : 'Select input XBAR signal to the Illegal Combo Logic',
             hidden      : true,
             default     : "0" ,
         },
         {
-            name: "epwmICL_LUT6" + dbOutput.name.replace("EPWM_DB_OUTPUT_", ""), 
+            name: "epwmICL_LUT6" + dbOutput.name.replace("EPWM_DB_OUTPUT_", ""),
             displayName : "Backend",
             description : 'Select input XBAR signal to the Illegal Combo Logic',
             hidden      : true,
             default     : "0" ,
         },
         {
-            name: "epwmICL_LUT7" + dbOutput.name.replace("EPWM_DB_OUTPUT_", ""), 
+            name: "epwmICL_LUT7" + dbOutput.name.replace("EPWM_DB_OUTPUT_", ""),
             displayName : "Backend",
             description : 'Select input XBAR signal to the Illegal Combo Logic',
             hidden      : true,
@@ -314,7 +314,7 @@ for (var dbOutputIndex in device_driverlib_peripheral.EPWM_DeadBandOutput)
     if(dbOutput.name.replace("EPWM_DB_OUTPUT_", "")== "A")
     {
         dbOutput_Configs = dbOutput_Configs.concat([{
-            name: "epwmICL_" + dbOutput.name.replace("EPWM_DB_OUTPUT_", "") + "_OUTHIGH", 
+            name: "epwmICL_" + dbOutput.name.replace("EPWM_DB_OUTPUT_", "") + "_OUTHIGH",
             displayName : "Output High",
             description : 'Select which combinations of inputs to output high',
             hidden      : true,
@@ -325,7 +325,7 @@ for (var dbOutputIndex in device_driverlib_peripheral.EPWM_DeadBandOutput)
 
         },
         {
-            name: "epwmICL_" + dbOutput.name.replace("EPWM_DB_OUTPUT_", "") + "_OUTLOW", 
+            name: "epwmICL_" + dbOutput.name.replace("EPWM_DB_OUTPUT_", "") + "_OUTLOW",
             displayName : "Output Low",
             description : 'Select which combinations of inputs to output low',
             hidden      : true,
@@ -345,7 +345,7 @@ for (var dbOutputIndex in device_driverlib_peripheral.EPWM_DeadBandOutput)
     }else
     {
         dbOutput_Configs = dbOutput_Configs.concat([{
-            name: "epwmICL_" + dbOutput.name.replace("EPWM_DB_OUTPUT_", "") + "_OUTHIGH", 
+            name: "epwmICL_" + dbOutput.name.replace("EPWM_DB_OUTPUT_", "") + "_OUTHIGH",
             displayName : "Output High",
             description : 'Select which combinations of inputs to output high',
             hidden      : true,
@@ -356,7 +356,7 @@ for (var dbOutputIndex in device_driverlib_peripheral.EPWM_DeadBandOutput)
 
         },
         {
-            name: "epwmICL_" + dbOutput.name.replace("EPWM_DB_OUTPUT_", "") + "_OUTLOW", 
+            name: "epwmICL_" + dbOutput.name.replace("EPWM_DB_OUTPUT_", "") + "_OUTLOW",
             displayName : "Output Low",
             description : 'Select which combinations of inputs to output low',
             hidden      : true,
@@ -387,9 +387,9 @@ for (var dbOutputIndex in device_driverlib_peripheral.EPWM_DeadBandOutput)
                 default: device_driverlib_peripheral.EPWM_MINDB_ICL_XBAR_OUT[0].name.replace("A/B", dbOutput.displayName.replace("DB output is ePWM", "")),
                 options: device_driverlib_peripheral.EPWM_MINDB_ICL_XBAR_OUT
             }
-            
+
 ]);
-    } 
+    }
     config = config.concat([{
             name:  "GROUP_ICL_" +dbOutput.name.replace("EPWM_DB_OUTPUT_", ""),
             displayName: "ICL Channel " + dbOutput.name.replace("EPWM_DB_OUTPUT_", "").replace("EPWM_DB_OUTPUT_", ""),
@@ -410,6 +410,6 @@ var epwmMinimumDeadbandIllegalComboLogicSubmodule = {
         boardh : ""//"/gpio/gpio.board.h.xdt"
     },
 };
-        
+
 
 exports = epwmMinimumDeadbandIllegalComboLogicSubmodule;

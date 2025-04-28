@@ -43,7 +43,7 @@
   <td id="projectlogo"><a href="https://www.ti.com"><img alt="Logo" src="ti_logo.svg"/></a></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">F29H85x-SDK
-   &#160;<span id="projectnumber">1.00.00.00</span>
+   &#160;<span id="projectnumber">1.01.00.00</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -92,17 +92,17 @@ $(document).ready(function(){initNavTree('EXAMPLES_DRIVERS_SPI_INTERNAL_LOOPBACK
 </div><!--header-->
 <div class="contents">
 <div class="toc"><h3>Table of Contents</h3>
-<ul><li class="level1"><a href="#autotoc_md597">Introduction</a><ul><li class="level2"><a href="#autotoc_md598">Note</a></li>
+<ul><li class="level1"><a href="#autotoc_md614">Introduction</a><ul><li class="level2"><a href="#autotoc_md615">Note</a></li>
 </ul>
 </li>
-<li class="level1"><a href="#autotoc_md599">Watch  Variables</a></li>
-<li class="level1"><a href="#autotoc_md600">External Connections</a></li>
-<li class="level1"><a href="#autotoc_md601">Steps to Run the Example</a></li>
-<li class="level1"><a href="#autotoc_md602">See Also</a></li>
+<li class="level1"><a href="#autotoc_md616">Watch  Variables</a></li>
+<li class="level1"><a href="#autotoc_md617">External Connections</a></li>
+<li class="level1"><a href="#autotoc_md618">Steps to Run the Example</a></li>
+<li class="level1"><a href="#autotoc_md619">See Also</a></li>
 </ul>
 </div>
 <div class="textblock"><p><a class="anchor" id="md_examples_drivers_spi_internal_loopback_interrupts"></a></p>
-<h1><a class="anchor" id="autotoc_md597"></a>
+<h1><a class="anchor" id="autotoc_md614"></a>
 Introduction</h1>
 <p>This program uses the internal loopback test mode of the SPI module. Both the SPI FIFOs are used, and SPI RX interrupt is used. A stream of data is sent and then compared to the received stream.</p>
 <p>The sent data looks like this:</p>
@@ -114,22 +114,22 @@ Introduction</h1>
 <div class="line">FFFF 0000</div>
 <div class="line">etc..</div>
 </div><!-- fragment --><p>This pattern is repeated forever.</p>
-<h2><a class="anchor" id="autotoc_md598"></a>
+<h2><a class="anchor" id="autotoc_md615"></a>
 Note</h2>
 <p>The SPI peripheral generates level interrupts, which should be cleared in ISR to avoid generating false pending interrupt on clear edge, followed by some wait cycles</p>
-<h1><a class="anchor" id="autotoc_md599"></a>
+<h1><a class="anchor" id="autotoc_md616"></a>
 Watch  Variables</h1>
 <ul>
 <li>sData : Data to send</li>
 <li>rData : Received data</li>
 <li>rDataPoint : Used to keep track of the last position in the receive stream for error checking</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md600"></a>
+<h1><a class="anchor" id="autotoc_md617"></a>
 External Connections</h1>
 <ul>
 <li>None</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md601"></a>
+<h1><a class="anchor" id="autotoc_md618"></a>
 Steps to Run the Example</h1>
 <ul>
 <li><b>When using CCS projects to build</b>, import the CCS project for the required combination and build it using the CCS project menu (see <a class="el" href="CCS_PROJECTS_PAGE.html">CCS Build Project</a>).</li>
@@ -138,7 +138,7 @@ Steps to Run the Example</h1>
 <li>Launch a CCS debug session and run the executable, see <a class="el" href="CCS_LAUNCH_PAGE.html">Build, Load and Run</a></li>
 <li>Using the watch variables, monitor data transmission</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md602"></a>
+<h1><a class="anchor" id="autotoc_md619"></a>
 See Also</h1>
 <p><a class="el" href="DRIVERS_SPI_PAGE.html">SPI</a> </p>
 </div></div><!-- contents -->

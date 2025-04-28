@@ -43,7 +43,7 @@
   <td id="projectlogo"><a href="https://www.ti.com"><img alt="Logo" src="ti_logo.svg"/></a></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">F29H85x-SDK
-   &#160;<span id="projectnumber">1.00.00.00</span>
+   &#160;<span id="projectnumber">1.01.00.00</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -92,20 +92,20 @@ $(document).ready(function(){initNavTree('EXAMPLES_DRIVERS_ADC_BURST_MODE_OVERSA
 </div><!--header-->
 <div class="contents">
 <div class="toc"><h3>Table of Contents</h3>
-<ul><li class="level1"><a href="#autotoc_md208">Introduction</a></li>
-<li class="level1"><a href="#autotoc_md209">External Connections</a><ul><li class="level2"><a href="#autotoc_md210">AM263PX-CC E2 or AM263X-CC E2</a></li>
-<li class="level2"><a href="#autotoc_md211">AM263X-CC E1</a></li>
-<li class="level2"><a href="#autotoc_md212">AM263PX-LP or AM263X-LP</a></li>
+<ul><li class="level1"><a href="#autotoc_md215">Introduction</a></li>
+<li class="level1"><a href="#autotoc_md216">External Connections</a><ul><li class="level2"><a href="#autotoc_md217">AM263PX-CC E2 or AM263X-CC E2</a></li>
+<li class="level2"><a href="#autotoc_md218">AM263X-CC E1</a></li>
+<li class="level2"><a href="#autotoc_md219">AM263PX-LP or AM263X-LP</a></li>
 </ul>
 </li>
 <li class="level1"><a href="#EXAMPLES_DRIVERS_ADC_BURST_MODE_OVERSAMPLING_COMBOS">Supported Combinations</a></li>
-<li class="level1"><a href="#autotoc_md213">Steps to Run the Example</a></li>
-<li class="level1"><a href="#autotoc_md214">See Also</a></li>
-<li class="level1"><a href="#autotoc_md215">Sample Output</a></li>
+<li class="level1"><a href="#autotoc_md220">Steps to Run the Example</a></li>
+<li class="level1"><a href="#autotoc_md221">See Also</a></li>
+<li class="level1"><a href="#autotoc_md222">Sample Output</a></li>
 </ul>
 </div>
 <div class="textblock"><p><a class="anchor" id="md_examples_drivers_adc_burst_mode_oversampling"></a></p>
-<h1><a class="anchor" id="autotoc_md208"></a>
+<h1><a class="anchor" id="autotoc_md215"></a>
 Introduction</h1>
 <p>This example sets up ePWM0 to periodically trigger a set of conversions (SOC0,1,12,13,14,15) on ADC1 for conversion of inputs on ADC_AIN0, ADC_AIN1 and burst mode conversion on ADC_AIN3. This demonstrates a batch of conversion on ADC1 (inputs on ADC_AIN0 and ADC_AIN1) and burst mode conversion on ADC1 (input ADC_AIN3). ADC1 Interrupt ISR is used to read results of ADC1 (i.e. digital representations of inputs ADC_AIN0, ADC_AIN1 and average of oversampled ADC_AIN3)</p>
 <p> <style>div.image img[src="am263_adc_burst_mode_oversampling.png"]{width:50%}</style> </p><div class="image">
@@ -120,12 +120,12 @@ Module Block diagram</div></div>
 <p>Watch Variables</p><ul>
 <li>The watch variables gAdc1Result0, gAdc1Result1, gAdc1Result2 storing ADC conversion outputs can be used to view the results.</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md209"></a>
+<h1><a class="anchor" id="autotoc_md216"></a>
 External Connections</h1>
 <ul>
 <li>ADC1_AIN0, ADC1_AIN1, ADC1_AIN3 pins should be connected to signals to be converted.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md210"></a>
+<h2><a class="anchor" id="autotoc_md217"></a>
 AM263PX-CC E2 or AM263X-CC E2</h2>
 <p>When using AM263x-CC E2 with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking Station)</p><ul>
 <li>Feed analog inputs<ul>
@@ -135,7 +135,7 @@ AM263PX-CC E2 or AM263X-CC E2</h2>
 </ul>
 </li>
 </ul>
-<h2><a class="anchor" id="autotoc_md211"></a>
+<h2><a class="anchor" id="autotoc_md218"></a>
 AM263X-CC E1</h2>
 <p>When using AM263x-CC E1 with TMDSHSECDOCK (HSEC180 controlCARD Baseboard Docking Station)</p><ul>
 <li>Feed analog inputs<ul>
@@ -145,7 +145,7 @@ AM263X-CC E1</h2>
 </ul>
 </li>
 </ul>
-<h2><a class="anchor" id="autotoc_md212"></a>
+<h2><a class="anchor" id="autotoc_md219"></a>
 AM263PX-LP or AM263X-LP</h2>
 <p>When using LP</p><ul>
 <li>Feed analog inputs (non-zero volatage) to Boosterpack header Pin 24, Pin 29 and Pin 6.</li>
@@ -164,7 +164,7 @@ Supported Combinations</h1>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone">Example folder   </td><td class="markdownTableBodyNone">examples/drivers/adc/adc_burst_mode_oversampling/   </td></tr>
 </table>
-<h1><a class="anchor" id="autotoc_md213"></a>
+<h1><a class="anchor" id="autotoc_md220"></a>
 Steps to Run the Example</h1>
 <ul>
 <li><b>When using CCS projects to build</b>, import the CCS project for the required combination and build it using the CCS project menu (see <a class="el" href="CCS_PROJECTS_PAGE.html">CCS Build Project</a>).</li>
@@ -174,10 +174,10 @@ Steps to Run the Example</h1>
 <li>Using the watch variables, view the ADC conversion results.</li>
 <li>View the ADC conversion results in UART console logs</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md214"></a>
+<h1><a class="anchor" id="autotoc_md221"></a>
 See Also</h1>
 <p><a class="el" href="DRIVERS_ADC_PAGE.html">ADC</a></p>
-<h1><a class="anchor" id="autotoc_md215"></a>
+<h1><a class="anchor" id="autotoc_md222"></a>
 Sample Output</h1>
 <p>Shown below is a sample output when the application is run,</p>
 <div class="fragment"><div class="line">ADC EPWM Triggered Burst Mode Conversions Test Started ...</div>

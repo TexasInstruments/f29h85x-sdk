@@ -43,7 +43,7 @@
   <td id="projectlogo"><a href="https://www.ti.com"><img alt="Logo" src="ti_logo.svg"/></a></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">F29H85x-SDK
-   &#160;<span id="projectnumber">1.00.00.00</span>
+   &#160;<span id="projectnumber">1.01.00.00</span>
    </div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
@@ -92,14 +92,14 @@ $(document).ready(function(){initNavTree('EXAMPLES_DRIVERS_EQEP_EX2_FREQ_CAL_INT
 </div><!--header-->
 <div class="contents">
 <div class="toc"><h3>Table of Contents</h3>
-<ul><li class="level1"><a href="#autotoc_md404">Introduction</a></li>
-<li class="level1"><a href="#autotoc_md405">External Connections</a></li>
-<li class="level1"><a href="#autotoc_md406">Steps to Run the Example</a></li>
-<li class="level1"><a href="#autotoc_md407">See Also</a></li>
+<ul><li class="level1"><a href="#autotoc_md429">Introduction</a></li>
+<li class="level1"><a href="#autotoc_md430">External Connections</a></li>
+<li class="level1"><a href="#autotoc_md431">Steps to Run the Example</a></li>
+<li class="level1"><a href="#autotoc_md432">See Also</a></li>
 </ul>
 </div>
 <div class="textblock"><p><a class="anchor" id="md_examples_drivers_eqep_ex2_freq_cal_interrupt"></a></p>
-<h1><a class="anchor" id="autotoc_md404"></a>
+<h1><a class="anchor" id="autotoc_md429"></a>
 Introduction</h1>
 <p>This example will calculate the frequency of an input signal using the eQEP module. ePWM1A is configured to generate this input signal with a frequency of 5 kHz. EQEP unit timeout is set which will generate an interrupt every UNIT_PERIOD microseconds and frequency calculation occurs continuously.</p>
 <p>The example does the below</p><ul>
@@ -113,12 +113,12 @@ Introduction</h1>
 <li>freq - Frequency measurement using position counter/unit time out</li>
 <li>pass - If measured frequency matches with PWM frequency then pass = 1 else 0.</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md405"></a>
+<h1><a class="anchor" id="autotoc_md430"></a>
 External Connections</h1>
 <ul>
 <li>Connect GPIO20/eQEP1A to GPIO0/ePWM1A.</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md406"></a>
+<h1><a class="anchor" id="autotoc_md431"></a>
 Steps to Run the Example</h1>
 <ul>
 <li><b>When using CCS projects to build</b>, import the CCS project for the required combination and build it using the CCS project menu (see <a class="el" href="CCS_PROJECTS_PAGE.html">CCS Build Project</a>).</li>
@@ -127,7 +127,7 @@ Steps to Run the Example</h1>
 <li>Launch a CCS debug session and run the executable, see <a class="el" href="CCS_LAUNCH_PAGE.html">Build, Load and Run</a></li>
 <li>Using the watch variables, view the frequency calculated for EPWM and verify it with the original frequency.</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md407"></a>
+<h1><a class="anchor" id="autotoc_md432"></a>
 See Also</h1>
 <p><a class="el" href="DRIVERS_EQEP_PAGE.html">EQEP</a> </p>
 </div></div><!-- contents -->

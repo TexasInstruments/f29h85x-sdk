@@ -82,9 +82,11 @@ uint16_t checksum;
 #define UART_BOOT_ALT3                              (0x61U)
 #define UART_BOOT_ALT4                              (0x81U)
 
+#define HS_FS                                       (0x0AU)
+#define HS_SE                                       (0x00U)
 
 uint32_t UART_AutoBaud(void);
-extern void uartBoot(uint32_t bootMode, uint32_t LoadAddr, uint32_t ImageSize);
+extern void uartBoot(uint8_t targetCPU, uint8_t bankMode, uint32_t bootMode, uint32_t LoadAddr, uint32_t ImageSize);
 uint32_t uartBootInit(uint32_t bootMode);
 uint16_t uartGetPacket(uint16_t* length, uint16_t* data);
 uint16_t uartaGetACK();
@@ -107,5 +109,7 @@ uint8_t copyKeysToRAM(uint32_t bootMode, uint32_t BaseAddress);
 uint8_t provisionApplicationImgToHSM(uint32_t bootMode, uint32_t BaseAddress);
 uint8_t copyC29ImageToFlash(uint32_t bootMode, uint32_t BaseAddress);
 uint8_t provisionSecCfgImg(uint32_t bootMode, uint32_t BaseAddress);
+uint8_t getDeviceState();
+uint8_t getBankMode();
 
 #endif

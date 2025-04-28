@@ -41,9 +41,8 @@ volatile uint32_t ulCriticalNesting = portINITIAL_CRITICAL_NESTING;
 volatile uint16_t bYield = 0;
 volatile uint16_t bPreemptive = 0;
 
-// Saved as part of the task context, off be default. Set to pdTRUE if task
-// requires FPU.
-uint32_t ulTaskHasFPUContext = 0;
+// Saved as part of the task context, always ON.
+uint32_t ulTaskHasFPUContext = pdTRUE;
 
 //-------------------------------------------------------------------------------------------------
 // Initialise the stack of a task to look exactly as if
@@ -62,7 +61,7 @@ StackType_t *pxPortInitialiseStack( StackType_t *pxTopOfStack, TaskFunction_t px
     pxTopOfStack[base]  = 0x00020101; base+=1; // ESTS
 
     // Fill the rest of the registers with dummy values.
-    for(i = 0; i <= (A_REGISTERS + D_REGISTERS -2 -1); i++)
+    for(i = 0; i <= (A_REGISTERS + D_REGISTERS + M_REGISTERS -2 -1); i++)
     {
         uint32_t value  = 0xDEADDEAD;
 
@@ -75,8 +74,8 @@ StackType_t *pxPortInitialiseStack( StackType_t *pxTopOfStack, TaskFunction_t px
     }
     base += i ;
 
-    // Initially not saving FPU registers
-    pxTopOfStack[base] = pdFALSE; base+=1;  //FPU context
+    // Always saving FPU registers
+    pxTopOfStack[base] = pdTRUE; base+=1;  //FPU context
     base+=1; // Alignment
 
     // Return a pointer to the top of the stack we have generated so this can
@@ -193,8 +192,3 @@ void vPortExitCritical( void )
     }
 }
 
-//-------------------------------------------------------------------------------------------------
-void vPortTaskUsesFPU( void )
-{
-    ulTaskHasFPUContext = pdTRUE;
-}

@@ -113,10 +113,6 @@ referenced anyway. */
 #define INCLUDE_xSemaphoreGetMutexHolder        1
 #define INCLUDE_xTimerPendFunctionCall          1
 
-//
-// FPU
-//
-#define portTASK_USES_FLOATING_POINT() vPortTaskUsesFPU()
 
 //
 // Adding for test project

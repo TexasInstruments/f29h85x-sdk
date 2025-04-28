@@ -6,6 +6,9 @@
 
 #include "dcl_nlpid.h"
 
+volatile const uint32_t testSize = NUM_ELEMENTS; 
+int errors = 0;
+
 //
 // rk = Target referenced value
 // yk = Current feedback value
@@ -22,7 +25,8 @@ uint32_t endCounter = 0;
 uint32_t overheadCount = 0;
 uint32_t totalCount = 0;
 
-int main(void) {
+int main(void) 
+{
   // Timer configured in Sysconfig (Period set to 10s)
   Board_init();
 
@@ -37,12 +41,15 @@ int main(void) {
 
   NLPID_runTest(nlpid_controller);
 
-  uint32_t avgCount = totalCount / NUM_ELEMENTS;
+  uint32_t avgCount = totalCount / testSize;
   printf("DCL NLPID total cycles = %d\nDCL NLPID average cycles = %d\n", totalCount,
          avgCount);
+  while(1)
+  {}
 }
 
-int NLPID_runTest(DCL_NLPID *ctrl_handle) {
+int NLPID_runTest(DCL_NLPID *ctrl_handle) 
+{
   //
   // Define DFLOG pointers that will be used to access the data buffer
   //
@@ -63,8 +70,8 @@ int NLPID_runTest(DCL_NLPID *ctrl_handle) {
   DCL_initLog(&ctlBuf, (float32_t *)ctl_buffer, DATA_LENGTH);
   DCL_clearLog(&outBuf);
 
-  int i;
-  for (i = 0; i < NUM_ELEMENTS; i++) {
+  for (int i = 0; i < testSize; i++) 
+  {
 
     //
     // Read the input data buffers
@@ -102,11 +109,12 @@ int NLPID_runTest(DCL_NLPID *ctrl_handle) {
   //
   // Check output against expected output with tolerance (1e-06)
   //
-  int errors = 0;
-  for (i = 0; i < NUM_ELEMENTS; i++) {
+  for (int i = 0; i < testSize; i++) 
+  {
     float32_t output = DCL_readLog(&outBuf);   // out_buffer[i]
     float32_t expected = DCL_readLog(&ctlBuf); // ctl_buffer[i]
-    if (!DCL_isValue(output, expected)) {
+    if (!DCL_isValue(output, expected)) 
+    {
       errors++;
       printf("FAIL at sample %d, outputs %f, should be %f\n", i, output,
              expected);
@@ -117,7 +125,8 @@ int NLPID_runTest(DCL_NLPID *ctrl_handle) {
   return errors;
 }
 
-bool NLPID_updateParams(DCL_NLPID *nlpid_ptr) {
+bool NLPID_updateParams(DCL_NLPID *nlpid_ptr) 
+{
   bool is_updated;
 
   nlpid_ptr->sps->Kp = 3.5f;

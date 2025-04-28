@@ -28,13 +28,11 @@
     <file action="link" path="${COM_TI_MCU_SDK_INSTALL_DIR}/examples/device_support/include/driverlib.h"        targetDirectory="device" />
 
     <file action="link" path="${COM_TI_MCU_SDK_INSTALL_DIR}/source/security/ccs/security_drivers.lib" targetDirectory="" />
-    <file action="link" path="${COM_TI_MCU_SDK_INSTALL_DIR}/source/flash_api/lib/F29H85x_NWFlashAPI_v21.00.00.00.lib" targetDirectory="" />
-
+    <file action="link" path="${COM_TI_MCU_SDK_INSTALL_DIR}/source/flash_api/lib/F29H85x_NWFlashAPI_v21.00.00.00.lib" targetDirectory="" />    
+    
     <file action="link" path="${COM_TI_MCU_SDK_INSTALL_DIR}/source/bitfields/bitfield_structs.c"                targetDirectory="device" />
     <file action="copy" path="${COM_TI_MCU_SDK_INSTALL_DIR}/examples/device_support/makefile.defs"              targetDirectory="" />
-    <file action="copy" path="${COM_TI_MCU_SDK_GENERIC_LNK_HSM_CMD_RAM}"  targetDirectory="" applicableConfigurations="CPU1_APP" />
-    <file action="copy" path="f29h85x_ram_lnk_hsm_cp.cmd"  targetDirectory="" applicableConfigurations="CP_APP" />
-    <file action="copy" path="f29h85x_ram_lnk_hsm_kp.cmd"  targetDirectory="" applicableConfigurations="KP_APP" />
+    <file action="copy" path="${COM_TI_MCU_SDK_GENERIC_LNK_HSM_CMD_RAM}"  targetDirectory="" />
     <pathVariable name="FlashTech_INCLUDE_ROOT" path = "${COM_TI_MCU_SDK_INSTALL_DIR}/tools/flash_api/FlashAPI/Include/FlashTech" scope="project" />
     <file action="copy" path="../ex3_cpubrom_sysctl.h" targetDirectory="" />
     <file action="copy" path="../ex3_cpubrom_uartBoot.h" targetDirectory="" />
