@@ -1,7 +1,9 @@
-let references = system.getScript("/kernel/freertos_tool/FREERTOSReferences.js");
-var freertos_export = {}
+let Common      = system.getScript("/driverlib/Common.js");
+let references  = system.getScript("/kernel/freertos_tool/FREERTOSReferences.js");
+let freertos_export = {}
 
-if ([ "F29H85x"].includes(system.deviceData.device))
+if ([ "F29H85x"].includes(system.deviceData.device) &&
+    !Common.isAllocationSetupMode())
 {
     freertos_export = {
         displayName: "FreeRTOS Configuration Tool",

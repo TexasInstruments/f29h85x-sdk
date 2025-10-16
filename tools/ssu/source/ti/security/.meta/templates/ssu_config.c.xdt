@@ -2,13 +2,9 @@
 #include "board.h"
 
 % const Common = system.getScript('/ti/security/Common.js');
-% const Cmn    = system.getScript("/driverlib/Common.js");
 % const sysSec = Common.modStatic('/ti/security/System_Security');
 % const sysSecMain = Common.modStaticByCPU('/ti/security/System_Security', "CPU1")
 % let ssumode = (sysSecMain) ? sysSecMain.ssumode : 1;
-% //aprList.forEach(x=> {
-% // `x.aprEntry.$name` `x.aprEntry.ramMem`
-% //})
 
 void Interrupt_SSU_Init()
 {

@@ -44,7 +44,7 @@ $(BINDIR):
 
 $(OBJDIR):
 	$(MKDIR) $@
- 
+
 $(OBJDIR)/%.o %.o: %.c
 	@echo  Compiling: $<
 	$(COMPILER) -c $(CFLAGS) $(INCLUDES) -MMD -o $(OBJDIR)/$@ $<
@@ -70,24 +70,35 @@ $(Target).out:  $(SYSTEM_COMMAND)
 	$(LINKER) $(INCLUDES) $(LFLAGS) $(addprefix -Wl$(comma)-i, $(LIBS_PATH)) -Wl,-m=$(BINDIR)/$(Target).map -o $(BINDIR)/$@ $(addprefix $(OBJDIR), $(OBJS)) $(ASM_OBJS) $(addprefix -l,$(LIBS)) $(CMD_SRCS)
 	@echo  Linking: $(Target) $@ Done !!!
 	@echo  .
-
 ifeq ($(CONFIG),FLASH)
 	@echo 'Post build steps'
 	$(CG_TOOL_OBJCOPY) --remove-section=cert -O binary  $(BINDIR)/$(Target).out  $(BINDIR)/$(Target).bin
+ifeq ($(DUMMY_CERT),1)
+	$(COPY) $(DUMMY_CERT_FLASH) dummy_cert_crypto_unlock.cert
+	$(C29SDK_ROOT)/tools/misc/$(UPDATEDUMMYCERT) dummy_cert_crypto_unlock.cert $(BINDIR)/$(Target).bin
+	$(CONCAT) $(DUMMY_CERT_FLASH) $(BINDIR)/$(Target).bin > $(BINDIR)/$(Target)_cert.bin
+	$(CG_TOOL_OBJCOPY) --update-section cert=dummy_cert_crypto_unlock.cert $(BINDIR)/$(Target).out $(BINDIR)/$(Target).out
+	$(DELETE) dummy_cert_crypto_unlock.cert
+else
 	$(PYTHON) $(C29SDK_ROOT)/tools/boot/signing/mcu_rom_image_gen.py --image-bin  $(BINDIR)/$(Target).bin --core C29 --swrv 1 --loadaddr 0x10001000 --sign-key $(C29SDK_ROOT)/tools/boot/signing/mcu_gpkey.pem --out-image  $(BINDIR)/$(Target)_cert.bin --device f29h85x --boot FLASH --img_integ no
-	$(CG_TOOL_OBJCOPY) --update-section cert=C29-cert-pad.bin  $(BINDIR)/$(Target).out  $(BINDIR)/$(Target)_cert.out
-	$(DELETE)  $(BINDIR)/$(Target).out C29-cert-pad.bin
-	$(RENAME)  $(BINDIR)/$(Target)_cert.out  $(BINDIR)/$(Target).out
+	$(CG_TOOL_OBJCOPY) --update-section cert=C29-cert-pad.bin  $(BINDIR)/$(Target).out  $(BINDIR)/$(Target).out
+endif
 else
 	@echo 'Post build steps'
 	$(CG_TOOL_OBJCOPY) -O binary  $(BINDIR)/$(Target).out  $(BINDIR)/$(Target).bin
+ifeq ($(DUMMY_CERT),1)
+	$(COPY) $(DUMMY_CERT_RAM) dummy_cert_crypto_unlock.cert
+	$(C29SDK_ROOT)/tools/misc/$(UPDATEDUMMYCERT) dummy_cert_crypto_unlock.cert $(BINDIR)/$(Target).bin
+	$(CONCAT) dummy_cert_crypto_unlock.cert $(BINDIR)/$(Target).bin > $(BINDIR)/$(Target)_cert.bin
+	$(DELETE) dummy_cert_crypto_unlock.cert
+else
 	$(PYTHON) $(C29SDK_ROOT)/tools/boot/signing/mcu_rom_image_gen.py --image-bin  $(BINDIR)/$(Target).bin --core C29 --swrv 1 --loadaddr 0x200E1000 --sign-key $(C29SDK_ROOT)/tools/boot/signing/mcu_gpkey.pem --out-image  $(BINDIR)/$(Target)_cert.bin --device f29h85x --boot RAM --img_integ no
-	$(DELETE) C29-cert-pad.bin
+endif
 endif
 	@echo ' '
 
 clean:
-	-$(RM) $(Target).out $(Target).bin $(Target)_cert.bin $(Target).map
-	-$(RMDIR) $(OBJDIR) $(BINDIR) syscfg obj
+	-$(RM) C29-cert-pad.bin dummy_cert_crypto_unlock.cert
+	-$(RMDIR) $(OBJDIR) $(BINDIR) $(BOARD) syscfg obj
 	-@echo 'Finished clean for $(Target)'
 	-@echo ' '

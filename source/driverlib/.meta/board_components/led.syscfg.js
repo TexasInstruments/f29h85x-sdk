@@ -71,7 +71,8 @@ function moduleInstances(inst)
         },
         requiredArgs: {
             direction : "GPIO_DIR_MODE_OUT"
-        }
+        },
+        shouldBeAllocatedAsResource : true,
     };
     devInstance.hardware = inst.$hardware;
     return ([devInstance]);
@@ -115,6 +116,7 @@ let base = {
         boardh: "/driverlib/board_components/led/led.board.h.xdt"
     },
 
+    shouldBeAllocatedAsResource : true,
     _getPinResources: _getPinResources
 };
 

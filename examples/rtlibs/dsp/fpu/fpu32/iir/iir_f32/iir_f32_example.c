@@ -67,7 +67,7 @@
 //  globals
 //*****************************************************************************
 // The global pass, fail values
-uint16_t pass = 0U, fail = 0U;
+uint16_t pass[2],fail[2];
 // The absolute error between the result and expected values
 float32_t tolerance = 1.0e-6;
 
@@ -148,21 +148,23 @@ int32_t main(void)
     differenceCounter = startCounter - endCounter - overheadCounter;
     CPUTimer_stopTimer(CPUTIMER0_BASE);
 
+    pass[0]=0;
+    fail[0]=0;
     for(i = 0U; i < INPUT_SIZE; i++)
     {
         err.f32 = fabsf(test_output[i] - test_golden[i]);
 
         if(err.f32 < tolerance)
         {
-            pass++;
+            pass[0]++;
         }
         else
         {
-            fail++;
+            fail[0]++;
         }
         test_error[i] = err.f32;
     }
-    printf("IIR loop Pass_count = %d, Fail_count = %d \n", pass, fail);
+    printf("IIR loop Pass_count = %d, Fail_count = %d \n", pass[0], fail[0]);
     printf("IIR loop Cycles = %d, Timer overhead = %d \n", differenceCounter, overheadCounter);
 
     // Run the initialization function again
@@ -177,20 +179,20 @@ int32_t main(void)
     differenceCounter = startCounter - endCounter - overheadCounter;
     CPUTimer_stopTimer(CPUTIMER0_BASE);
 
-    pass=0;
-    fail=0;
     err.f32 = fabsf(test_output[0] - test_golden[0]);
-
+    
+    pass[1]=0;
+    fail[1]=0;
     if(err.f32 < tolerance)
     {
-        pass++;
+        pass[1]++;
     }
     else
     {
-        fail++;
+        fail[1]++;
     }
     test_error[0] = err.f32;
-    printf("IIR sample Pass_count = %d, Fail_count = %d \n", pass, fail);
+    printf("IIR sample Pass_count = %d, Fail_count = %d \n", pass[1], fail[1]);
     printf("IIR sample Cycles = %d, Timer overhead = %d \n", differenceCounter, overheadCounter);
     while(1)
     {}

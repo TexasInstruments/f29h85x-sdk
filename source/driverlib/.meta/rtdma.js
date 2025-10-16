@@ -69,7 +69,7 @@ function onChangePeripheralTXLinked(inst,ui)
         ui.destAddressInputMode.readOnly = true
         ui.destAddressLinked.hidden = false
         ui.destAddressLinked.readOnly = true
-        inst.destWrapSize = 65535;
+        inst.destWrapSize = 65536;
     }
 }
 
@@ -88,7 +88,7 @@ function onChangePeripheralRXLinked(inst,ui)
         ui.srcAddressInputMode.readOnly = true
         ui.srcAddressLinked.hidden = false
         ui.srcAddressLinked.readOnly = true
-        inst.srcWrapSize = 65535;
+        inst.srcWrapSize = 65536;
         //ui.srcWrapSize.readOnly = true
     }
 }
@@ -187,7 +187,7 @@ function onChangeDestAddressInputMode(inst,ui)
 function getRTDMAGlobalConfig(rtdma_instance)
 {
     var globalConfig = []
-    if(!Common.isContextCPU1()) {
+    if((system.resourceAllocation.mode == "OFF") && !Common.isContextCPU1()) {
         return globalConfig
     }
 
@@ -198,6 +198,7 @@ function getRTDMAGlobalConfig(rtdma_instance)
             description : 'RTDMA Instance used.',
             default     : DMA_INSTANCE[0].displayName,
             readOnly    : true,
+            shouldBeAllocatedAsResource : true,
         })
     }
     else if(rtdma_instance == "RTDMA2"){
@@ -207,6 +208,7 @@ function getRTDMAGlobalConfig(rtdma_instance)
             description : 'RTDMA Instance used.',
             default     : DMA_INSTANCE[1].displayName,
             readOnly    : true,
+            shouldBeAllocatedAsResource : true,
         })
     }
 
@@ -217,7 +219,8 @@ function getRTDMAGlobalConfig(rtdma_instance)
             description : "Set emulation mode for the selected channel.",
             hidden      : false,
             default     : device_driverlib_peripheral.DMA_EmulationMode[0].name,
-            options     : device_driverlib_peripheral.DMA_EmulationMode
+            options     : device_driverlib_peripheral.DMA_EmulationMode,
+            shouldBeAllocatedAsResource : true,
         },
         {
             name        : "enableSoftwarePriority",
@@ -225,6 +228,7 @@ function getRTDMAGlobalConfig(rtdma_instance)
             description : "Enable Software configurable priority",
             hidden      : false,
             default     : false,
+            shouldBeAllocatedAsResource : true,
             // onChange    : onChangePriorityMode
         },
         {
@@ -233,6 +237,7 @@ function getRTDMAGlobalConfig(rtdma_instance)
             description : "Lock the DMA Configuration registers.",
             hidden      : false,
             default     : false,
+            shouldBeAllocatedAsResource : true,
         },
         {
             name        : "commitDMAConfig",
@@ -240,6 +245,7 @@ function getRTDMAGlobalConfig(rtdma_instance)
             description : "Commit the lock on the DMA Configuration registers.",
             hidden      : false,
             default     : false,
+            shouldBeAllocatedAsResource : true,
         },
         {
             name        : "enableMPU",
@@ -247,6 +253,7 @@ function getRTDMAGlobalConfig(rtdma_instance)
             description : 'Enable MPU',
             hidden      : false,
             default     : false,
+            shouldBeAllocatedAsResource : true,
         }, 
     );
 
@@ -311,6 +318,7 @@ function getRTDMAConfig(rtdma_instance){
                     hidden      : false,
                     default     : chOptions[0].name,
                     options     : chOptions,
+                    shouldBeAllocatedAsResource: true,
                 },  
                 {
                     name        : "peripheralRXLinked",
@@ -337,6 +345,7 @@ function getRTDMAConfig(rtdma_instance){
                     hidden      : false, 
                     default     : device_driverlib_peripheral.DMA_ChannelPriority[1].name,
                     options     : device_driverlib_peripheral.DMA_ChannelPriority,
+                    shouldBeAllocatedAsResource : true,
                 },
 
                 {
@@ -496,7 +505,7 @@ function getRTDMAConfig(rtdma_instance){
                             displayName : "Source Wrap Size",
                             description : "Set number of bursts before wrap on source address occurs.",
                             hidden      : false,
-                            default     : 65535,
+                            default     : 65536,
                         },
                     
                         {
@@ -571,7 +580,7 @@ function getRTDMAConfig(rtdma_instance){
                             displayName : "Destination Wrap Size",
                             description : "Set number of bursts before wrap on destination address occurs.",
                             hidden      : false,
-                            default     : 65535,
+                            default     : 65536,
                         },
                     
                         {
@@ -736,15 +745,15 @@ function onValidate(inst, validation)
     }
 
     if (inst.transferSize > 65536 || inst.transferSize < 1 || !Number.isInteger(inst.transferSize)) {
-        validation.logError("Transfer size must be an integer between 0 and 65,536!", inst, "transferSize");
+        validation.logError("Transfer size must be an integer between 1 and 65,536!", inst, "transferSize");
     }
 
     if (inst.srcWrapSize > 65536 || inst.srcWrapSize < 1 || !Number.isInteger(inst.srcWrapSize)) {
-        validation.logError("Source address wrap size must be an integer between 0 and 65,536!", inst, "srcWrapSize");
+        validation.logError("Source address wrap size must be an integer between 1 and 65,536!", inst, "srcWrapSize");
     }
 
     if (inst.destWrapSize > 65536 || inst.destWrapSize < 1 || !Number.isInteger(inst.destWrapSize)) {
-        validation.logError("Destination address wrap size must be an integer between 0 and 65,536!", inst, "destWrapSize");
+        validation.logError("Destination address wrap size must be an integer between 1 and 65,536!", inst, "destWrapSize");
     }
 
     if (inst.oneShotConfig == device_driverlib_peripheral.DMA_CFG_ONESHOT[1].name && inst.channelPriority == 0) {

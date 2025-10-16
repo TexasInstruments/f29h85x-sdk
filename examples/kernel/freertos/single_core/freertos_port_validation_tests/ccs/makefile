@@ -21,6 +21,7 @@ LFLAGS      := $(LFLAGS_common)
 
 ASM_SRCS    += $(ASM_SRCS_FREERTOS)
 C_SRCS      += $(C_SRCS_FREERTOS)
+S_SRCS      += $(S_SRCS_FREERTOS)
 
 INCLUDES += \
 -I "$(C29SDK_ROOT)/examples/kernel/freertos/single_core/freertos_port_validation_tests/include" \
@@ -73,11 +74,12 @@ OBJDIR   := obj/$(BOARD)/$(CONFIG)/
 BINDIR   := $(BOARD)/$(CONFIG)
 OBJS     := $(C_SRCS:%.c=%.o)
 ASM_OBJS := $(ASM_SRCS:%.S=%.o)
+S_OBJS   := $(S_SRCS:%.S=%.o)
 DEPS     := $(C_SRCS:%.c=%.d)
 
 vpath %.o $(OBJDIR)
 vpath %.c $(C_SRCS_PATH)
-vpath %.S $(C_SRCS_PATH)
+vpath %.S $(C_SRCS_PATH) $(S_SRCS_PATH_common)
 vpath %.lib $(LIBS_PATH)
 vpath %.a $(LIBS_PATH)
 
@@ -88,14 +90,14 @@ $(OBJDIR):
 
 $(BINDIR):
 	$(MKDIR) $@
- 
+
 $(OBJDIR)/%.o %.o: %.c
 	@echo  Compiling: $<
 	$(COMPILER) -c $(CFLAGS) $(INCLUDES) -MMD -o $(OBJDIR)/$@ $<
 
 $(OBJDIR)/%.o %.o: %.S
 	@echo  Compiling: $<
-	$(COMPILER) -c $(CFLAGS) -o $(OBJDIR)/$@ $<
+	$(COMPILER) -c $(CFLAGS) $(INCLUDES) -o $(OBJDIR)/$@ $< -l$(C29SDK_ROOT)/source/driverlib/ccs/driverlib.lib
 
 # All Target
 all: $(Target).out
@@ -103,15 +105,15 @@ all: $(Target).out
 SYSCFG_FLAG ?= true
 
 ifeq ($(SYSCFG_FLAG), true)
-	SYSTEM_COMMAND := syscfg $(SYSCFG_GEN_FILES) $(OBJS) $(CMD_SRCS) $(LIBS)
+	SYSTEM_COMMAND := syscfg $(SYSCFG_GEN_FILES) $(OBJS) $(S_OBJS) $(CMD_SRCS) $(LIBS)
 else
-	SYSTEM_COMMAND := $(OBJS) $(CMD_SRCS) $(LIBS)
+	SYSTEM_COMMAND := $(OBJS) $(S_OBJS) $(CMD_SRCS) $(LIBS)
 endif
 
 $(Target).out:  $(SYSTEM_COMMAND)
 	@echo  .
 	@echo  Linking: $(Target) $@ ...
-	$(LINKER) $(INCLUDES) $(LFLAGS) $(addprefix -Wl$(comma)-i, $(LIBS_PATH)) -Wl,-m=$(BINDIR)/$(Target).map -o $(BINDIR)/$@ $(addprefix $(OBJDIR), $(OBJS)) $(ASM_OBJS) $(addprefix -l,$(LIBS)) $(CMD_SRCS)
+	$(LINKER) $(INCLUDES) $(LFLAGS) $(addprefix -Wl$(comma)-i, $(LIBS_PATH)) -Wl,-m=$(BINDIR)/$(Target).map -o $(BINDIR)/$@ $(addprefix $(OBJDIR), $(OBJS)) $(ASM_OBJS) $(addprefix $(OBJDIR), $(S_OBJS)) $(addprefix -l,$(LIBS)) $(CMD_SRCS)
 	@echo  Linking: $(Target) $@ Done !!!
 	@echo  .
 

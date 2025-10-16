@@ -53,7 +53,7 @@ let ADDITIONAL_USECASES = {
                 "ESC_TX1_DATA3",
                 "ESC_MDIO_CLK",
                 "ESC_MDIO_DATA",
-                "ESC_PHY_CLK",
+                //"ESC_PHY_CLK",
                 "ESC_RX1_CLK",
                 "ESC_RX1_DV",
                 "ESC_RX1_ERR",

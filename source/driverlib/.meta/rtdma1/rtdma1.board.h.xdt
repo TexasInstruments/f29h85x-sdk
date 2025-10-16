@@ -1,19 +1,19 @@
 % var moduleName = "rtdma1"
 % var module = system.modules['/driverlib/' + moduleName + '.js'];
 % let Common = system.getScript("/driverlib/Common.js");
-%if (module != null)
-%{
-% var stat = module.$static
 //*****************************************************************************
 //
 // RTDMA1 Configurations
 //
 //*****************************************************************************
-void `module.peripheralName`_init();
 %   if (Common.isContextCPU1())
 %   {
-void `module.peripheralName`_global_init();
+void RTDMA1_global_init();
 %   }
+%
+%if (module != null)
+%{
+% var stat = module.$static
 % for(var i = 0; i < module.$instances.length; i++) {
     % var instance = module.$instances[i];
         % if (instance.srcAddressInputMode == "MANUAL") {

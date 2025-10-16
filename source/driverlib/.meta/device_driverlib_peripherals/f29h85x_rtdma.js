@@ -249,7 +249,7 @@ let DMA_PriorityMode = [
 	{ name: "DMA_PRIORITY_SOFTWARE_CONFIG", displayName: "Continue DMA operation regardless of emulation suspend" },
 ]
 let DMA_BurstSignalingMode = [
-	{ name: "DMA_BURST_SIGNALING_DISABLE", displayName: "Burst signaling disabled. Last=First=1 though the burst (FIFOs)" },
+	{ name: "DMA_BURST_SIGNALING_DISABLE", displayName: "Burst signaling disabled" },
 	{ name: "DMA_BURST_SIGNALING_ENABLE_NO_INT", displayName: "Burst signaling enabled and can't be interrupted (can use with EMIF)" },
 ]
 let DMA_MPUAccessPermission = [

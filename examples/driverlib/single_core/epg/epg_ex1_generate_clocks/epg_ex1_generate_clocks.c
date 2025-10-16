@@ -62,7 +62,7 @@ int main(void)
     // Initialize GPIO and configure GPIO pins 2, 3 for EPG OUT
     //
     Device_initGPIO();
-    
+
     GPIO_setPinConfig(GPIO_2_OUTPUTXBAR1);
     GPIO_setDirectionMode(2, GPIO_DIR_MODE_OUT);
     GPIO_setPadConfig(2, GPIO_PIN_TYPE_STD);
@@ -108,7 +108,7 @@ int main(void)
     //
     // Set the source of signal generator 0 to clk generator output 0
     //
-    EPG_selectSigGenClkSource(EPG_BASE, EPG_SIGGEN0, EPG_CLKGEN0_CLKOUT0_DCLK);
+    EPG_selectSigGenClkSource(EPG_BASE, EPG_SIGGEN0, EPG_CLKGEN0_CLKOUT0_GCLK);
 
     //
     // Set signal generator bit length to 12. When it completes

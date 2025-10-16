@@ -2,7 +2,7 @@
   <project
         name="Ipc_Hal_Example_Polling_C29x3"
         device="F29H850TU9"
-        cgtVersion="1.0.0"
+        cgtVersion="2.0.0"
         toolChain="TICLANG"
         products="sysconfig;f29h85x-sdk"
         launchWizard="False"

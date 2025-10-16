@@ -681,7 +681,7 @@ typedef struct
      *   00= Timestamp counter value always 0x0000
      *   01= Timestamp counter value incremented according to tsPrescalar
      *   10= External timestamp counter value used
-     *   11= Same as “00”
+     *   11= Same as "00"
      */
     uint32_t              timeoutSelect;
     /**< Time-out counter source select.
@@ -1318,7 +1318,7 @@ typedef struct
      *   110 = Set priority and store in FIFO 1 if filter matches   (MCAN_STDFILTEC_PRI_FIFO1)
      *   111 = Store into Rx Buffer or as debug message,            (MCAN_STDFILTEC_RXBUFF)
      *         configuration of SFT[1:0] ignored.
-     *   If SFEC = “100”, “101”, or “110” a match sets high priority
+     *   If SFEC = "100", "101", or "110" a match sets high priority
      *   message event is generated.
      */
     uint32_t sft;
@@ -1348,7 +1348,7 @@ typedef struct
      *   110 = Set priority and store in FIFO 1 if filter matches   (MCAN_EXTFILTEC_PRI_FIFO1)
      *   111 = Store into Rx Buffer or as debug message,            (MCAN_EXTFILTEC_RXBUFF)
      *         configuration of SFT[1:0] ignored.
-     *   If EFEC = “100”, “101”, or “110” a match sets high priority
+     *   If EFEC = "100", "101", or "110" a match sets high priority
      *   message event is generated.
      */
     uint32_t efid2;
@@ -1570,7 +1570,7 @@ void MCAN_readMsgRam(uint32_t           baseAddr,
                      uint32_t           memType,
                      uint32_t           bufNum,
                      uint32_t           fifoNum,
-                     MCAN_RxBufElement *elem);                    
+                     MCAN_RxBufElement *elem);
 
 /**
  * \brief   This API is used to read from Tx Event FIFO.
@@ -1760,7 +1760,7 @@ void  MCAN_getHighPriorityMsgStatus(uint32_t                  baseAddr,
  * \return  None.
  */
 void MCAN_readHighPriorityMsgRam(uint32_t           baseAddr,
-                                        MCAN_RxBufElement *elem);                                      
+                                        MCAN_RxBufElement *elem);
 
 /**
  * \brief   This API will Rx FIFO status.

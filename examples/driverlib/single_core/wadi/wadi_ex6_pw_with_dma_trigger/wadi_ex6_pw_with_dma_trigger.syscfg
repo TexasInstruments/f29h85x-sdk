@@ -1,0 +1,148 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --device "F29H85x" --package "256ZEX" --part "F29H85x_256ZEX" --context "CPU1" --product "MCU_SDK_F29H85x@1.02.02.00"
+ * @v2CliArgs --device "F29H850TU" --package "256ZEX" --variant "TMS320F29H850TU9" --context "CPU1" --product "MCU_SDK_F29H85x@1.02.02.00"
+ * @versions {"tool":"1.25.0+4237"}
+ */
+
+    
+const divider15       = system.clockTree["PLL_REFDIV"];
+divider15.divideValue = 1;
+
+const multiplier1         = system.clockTree["PLL_IMULT"];
+multiplier1.multiplyValue = 40;
+
+const mux7       = system.clockTree["OSCCLKSRCSEL"];
+mux7.inputSelect = "INTOSC2";
+
+/**
+ * Import the modules used in this configuration.
+ */
+const epwm             = scripting.addModule("/driverlib/epwm.js", {}, false);
+const epwm1            = epwm.addInstance();
+const epwm2            = epwm.addInstance();
+const gpio             = scripting.addModule("/driverlib/gpio.js", {}, false);
+const gpio1            = gpio.addInstance();
+const gpio2            = gpio.addInstance();
+const inputxbar_input  = scripting.addModule("/driverlib/inputxbar_input.js", {}, false);
+const inputxbar_input1 = inputxbar_input.addInstance();
+const inputxbar_input2 = inputxbar_input.addInstance();
+const inputxbar_input3 = inputxbar_input.addInstance();
+const inputxbar_input4 = inputxbar_input.addInstance();
+const rtdma1           = scripting.addModule("/driverlib/rtdma1.js");
+const rtdma11          = rtdma1.addInstance();
+const rtdma12          = rtdma1.addInstance();
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+epwm1.$name                                                    = "myEPWM0";
+epwm1.epwmTimebase_syncOutPulseMode                            = ["EPWM_SYNC_OUT_PULSE_ON_CNTR_ZERO"];
+epwm1.epwmTimebase_hsClockDiv                                  = "EPWM_HSCLOCK_DIVIDER_1";
+epwm1.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_ZERO    = "EPWM_AQ_OUTPUT_HIGH";
+epwm1.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_UP_CMPA = "EPWM_AQ_OUTPUT_LOW";
+epwm1.epwmActionQualifier_EPWM_AQ_OUTPUT_B_ON_TIMEBASE_UP_CMPA = "EPWM_AQ_OUTPUT_HIGH";
+epwm1.epwmActionQualifier_EPWM_AQ_OUTPUT_B_ON_TIMEBASE_ZERO    = "EPWM_AQ_OUTPUT_LOW";
+epwm1.epwmDeadband_polarityFED                                 = "EPWM_DB_POLARITY_ACTIVE_LOW";
+epwm1.epwmDeadband_enableRED                                   = true;
+epwm1.epwmDeadband_enableFED                                   = true;
+epwm1.epwmDeadband_redShadowMode                               = true;
+epwm1.epwmDeadband_fedShadowMode                               = true;
+epwm1.epwmDeadband_controlShadowMode                           = true;
+epwm1.epwmDeadband_delayRED                                    = 10;
+epwm1.epwmDeadband_delayFED                                    = 10;
+epwm1.epwmCounterCompare_cmpB                                  = 125;
+epwm1.epwmTimebase_period                                      = 1000;
+epwm1.epwmCounterCompare_cmpA                                  = 500;
+epwm1.epwm.$assign                                             = "EPWM1";
+epwm1.periphClock.$name                                        = "driverlib_perClock0";
+epwm1.periphConfig.$name                                       = "driverlib_perConfig0";
+
+epwm2.$name                                                    = "myEPWM1";
+epwm2.epwmTimebase_syncOutPulseMode                            = ["EPWM_SYNC_OUT_PULSE_ON_CNTR_ZERO"];
+epwm2.epwmTimebase_hsClockDiv                                  = "EPWM_HSCLOCK_DIVIDER_1";
+epwm2.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_ZERO    = "EPWM_AQ_OUTPUT_HIGH";
+epwm2.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_UP_CMPA = "EPWM_AQ_OUTPUT_LOW";
+epwm2.epwmActionQualifier_EPWM_AQ_OUTPUT_B_ON_TIMEBASE_UP_CMPA = "EPWM_AQ_OUTPUT_HIGH";
+epwm2.epwmActionQualifier_EPWM_AQ_OUTPUT_B_ON_TIMEBASE_ZERO    = "EPWM_AQ_OUTPUT_LOW";
+epwm2.epwmDeadband_polarityFED                                 = "EPWM_DB_POLARITY_ACTIVE_LOW";
+epwm2.epwmDeadband_enableRED                                   = true;
+epwm2.epwmDeadband_enableFED                                   = true;
+epwm2.epwmDeadband_redShadowMode                               = true;
+epwm2.epwmDeadband_fedShadowMode                               = true;
+epwm2.epwmDeadband_controlShadowMode                           = true;
+epwm2.epwmDeadband_delayRED                                    = 20;
+epwm2.epwmDeadband_delayFED                                    = 20;
+epwm2.epwmCounterCompare_cmpB                                  = 175;
+epwm2.epwmTimebase_period                                      = 1500;
+epwm2.epwmCounterCompare_cmpA                                  = 1000;
+epwm2.epwm.$assign                                             = "EPWM2";
+epwm2.periphClock.$name                                        = "driverlib_perClock1";
+epwm2.periphConfig.$name                                       = "driverlib_perConfig1";
+
+gpio1.$name           = "myGPIO0";
+gpio1.direction       = "GPIO_DIR_MODE_OUT";
+gpio1.gpioPin.$assign = "GPIO5";
+
+gpio2.$name           = "myGPIO1";
+gpio2.direction       = "GPIO_DIR_MODE_OUT";
+gpio2.gpioPin.$assign = "GPIO6";
+
+inputxbar_input1.$name          = "sig2";
+inputxbar_input1.inputxbarInput = "XBAR_INPUT34";
+inputxbar_input1.inputxbarGpio  = "GPIO0";
+
+inputxbar_input2.$name          = "trig1";
+inputxbar_input2.inputxbarInput = "XBAR_INPUT44";
+inputxbar_input2.inputxbarGpio  = "GPIO5";
+
+inputxbar_input3.$name          = "trig2";
+inputxbar_input3.inputxbarGpio  = "GPIO6";
+inputxbar_input3.inputxbarInput = "XBAR_INPUT38";
+
+inputxbar_input4.$name          = "sig1";
+inputxbar_input4.inputxbarInput = "XBAR_INPUT36";
+inputxbar_input4.inputxbarGpio  = "GPIO2";
+
+rtdma1.periphClock.$name  = "driverlib_perClock2";
+rtdma1.periphConfig.$name = "driverlib_perConfig2";
+
+rtdma11.$name                = "myRTDMA1Ch0";
+rtdma11.triggerSource        = "DMA_TRIGGER_WADI1";
+rtdma11.enableTriggers       = true;
+rtdma11.srcAddressInputMode  = "VARIABLE";
+rtdma11.destAddressInputMode = "VARIABLE";
+rtdma11.srcBurstStep         = 4;
+rtdma11.srcTransferStep      = 4;
+rtdma11.databusWidthConfig   = "DMA_CFG_READ_SIZE_32BIT";
+rtdma11.writeDatasizeConfig  = "DMA_CFG_WRT_SIZE_32BIT";
+rtdma11.burstSize            = 4;
+rtdma11.startChannel         = true;
+rtdma11.destAddressVariable  = "destAddr2";
+rtdma11.srcAddressVariable   = "srcAddr2";
+
+rtdma12.$name                = "myRTDMA1Ch1";
+rtdma12.chBase               = "RTDMA1CH2_BASE";
+rtdma12.triggerSource        = "DMA_TRIGGER_WADI1";
+rtdma12.databusWidthConfig   = "DMA_CFG_READ_SIZE_32BIT";
+rtdma12.writeDatasizeConfig  = "DMA_CFG_WRT_SIZE_32BIT";
+rtdma12.burstSize            = 4;
+rtdma12.enableTriggers       = true;
+rtdma12.startChannel         = true;
+rtdma12.srcAddressInputMode  = "VARIABLE";
+rtdma12.destAddressInputMode = "VARIABLE";
+rtdma12.srcAddressVariable   = "srcAddr1";
+rtdma12.destAddressVariable  = "destAddr1";
+rtdma12.srcBurstStep         = 4;
+rtdma12.srcTransferStep      = 4;
+
+/**
+ * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
+ * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
+ * re-solve from scratch.
+ */
+epwm1.epwm.epwm_aPin.$suggestSolution = "GPIO0";
+epwm1.epwm.epwm_bPin.$suggestSolution = "GPIO1";
+epwm2.epwm.epwm_aPin.$suggestSolution = "GPIO2";
+epwm2.epwm.epwm_bPin.$suggestSolution = "GPIO25";

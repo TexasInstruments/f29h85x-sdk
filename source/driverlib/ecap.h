@@ -697,7 +697,6 @@ typedef enum
 //
 //*****************************************************************************
 #ifdef DEBUG
-__attribute__((always_inline))
 static inline bool ECAP_isBaseValid(uint32_t base)
 {
     return(
@@ -726,7 +725,6 @@ static inline bool ECAP_isBaseValid(uint32_t base)
 //
 //*****************************************************************************
 #ifdef DEBUG
-__attribute__((always_inline))
 static inline bool ECAP_isSignalMonitoringBaseValid(uint32_t base)
 {
     return(
@@ -754,7 +752,6 @@ static inline bool ECAP_isSignalMonitoringBaseValid(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void ECAP_setEventPrescaler(uint32_t base,
                                           uint16_t preScalerValue)
 {
@@ -787,7 +784,6 @@ static inline void ECAP_setEventPrescaler(uint32_t base,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void ECAP_setEventPolarity(uint32_t base,
                                          ECAP_Events event,
                                          ECAP_EventPolarity polarity)
@@ -827,7 +823,6 @@ static inline void ECAP_setEventPolarity(uint32_t base,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void ECAP_setCaptureMode(uint32_t base,
                                        ECAP_CaptureMode mode,
                                        ECAP_Events event)
@@ -859,7 +854,6 @@ static inline void ECAP_setCaptureMode(uint32_t base,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void ECAP_reArm(uint32_t base)
 {
     ASSERT(ECAP_isBaseValid(base));
@@ -899,7 +893,6 @@ static inline void ECAP_reArm(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void ECAP_enableInterrupt(uint32_t base,
                                         uint16_t intFlags)
 {
@@ -951,7 +944,6 @@ static inline void ECAP_enableInterrupt(uint32_t base,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void ECAP_disableInterrupt(uint32_t base,
                                          uint16_t intFlags)
 {
@@ -1007,7 +999,6 @@ static inline void ECAP_disableInterrupt(uint32_t base,
 //!         by ORing the above return values.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline uint16_t ECAP_getInterruptSource(uint32_t base)
 {
     ASSERT(ECAP_isBaseValid(base));
@@ -1028,7 +1019,6 @@ static inline uint16_t ECAP_getInterruptSource(uint32_t base)
 //! \return Returns true if there is a global eCAP interrupt, false otherwise.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline bool ECAP_getGlobalInterruptStatus(uint32_t base)
 {
     ASSERT(ECAP_isBaseValid(base));
@@ -1068,7 +1058,6 @@ static inline bool ECAP_getGlobalInterruptStatus(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void ECAP_clearInterrupt(uint32_t base,
                                        uint16_t intFlags)
 {
@@ -1101,7 +1090,6 @@ static inline void ECAP_clearInterrupt(uint32_t base,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void ECAP_clearGlobalInterrupt(uint32_t base)
 {
     ASSERT(ECAP_isBaseValid(base));
@@ -1141,7 +1129,6 @@ static inline void ECAP_clearGlobalInterrupt(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void ECAP_forceInterrupt(uint32_t base,
                                        uint16_t intFlags)
 {
@@ -1174,7 +1161,6 @@ static inline void ECAP_forceInterrupt(uint32_t base,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void ECAP_enableCaptureMode(uint32_t base)
 {
     ASSERT(ECAP_isBaseValid(base));
@@ -1195,7 +1181,6 @@ static inline void ECAP_enableCaptureMode(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void ECAP_enableAPWMMode(uint32_t base)
 {
     ASSERT(ECAP_isBaseValid(base));
@@ -1219,7 +1204,6 @@ static inline void ECAP_enableAPWMMode(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void ECAP_enableCounterResetOnEvent(uint32_t base,
                                                   ECAP_Events event)
 {
@@ -1244,7 +1228,6 @@ static inline void ECAP_enableCounterResetOnEvent(uint32_t base,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void ECAP_disableCounterResetOnEvent(uint32_t base,
                                                    ECAP_Events event)
 {
@@ -1266,7 +1249,6 @@ static inline void ECAP_disableCounterResetOnEvent(uint32_t base,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void ECAP_enableTimeStampCapture(uint32_t base)
 {
     ASSERT(ECAP_isBaseValid(base));
@@ -1287,7 +1269,6 @@ static inline void ECAP_enableTimeStampCapture(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void ECAP_disableTimeStampCapture(uint32_t base)
 {
     ASSERT(ECAP_isBaseValid(base));
@@ -1309,7 +1290,6 @@ static inline void ECAP_disableTimeStampCapture(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void ECAP_setPhaseShiftCount(uint32_t base, uint32_t shiftCount)
 {
     ASSERT(ECAP_isBaseValid(base));
@@ -1349,7 +1329,6 @@ static inline void ECAP_setPhaseShiftCount(uint32_t base, uint32_t shiftCount)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ECAP_setSyncInPulseSource(uint32_t base, ECAP_SyncInPulseSource source)
 {
@@ -1373,7 +1352,6 @@ ECAP_setSyncInPulseSource(uint32_t base, ECAP_SyncInPulseSource source)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void ECAP_enableLoadCounter(uint32_t base)
 {
 
@@ -1395,7 +1373,6 @@ static inline void ECAP_enableLoadCounter(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void ECAP_disableLoadCounter(uint32_t base)
 {
 
@@ -1420,7 +1397,6 @@ static inline void ECAP_disableLoadCounter(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void ECAP_loadCounter(uint32_t base)
 {
     ASSERT(ECAP_isBaseValid(base));
@@ -1445,7 +1421,6 @@ static inline void ECAP_loadCounter(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void ECAP_setSyncOutMode(uint32_t base,
                                        ECAP_SyncOutMode mode)
 {
@@ -1469,7 +1444,6 @@ static inline void ECAP_setSyncOutMode(uint32_t base,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void ECAP_stopCounter(uint32_t base)
 {
     ASSERT(ECAP_isBaseValid(base));
@@ -1490,7 +1464,6 @@ static inline void ECAP_stopCounter(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void ECAP_startCounter(uint32_t base)
 {
     ASSERT(ECAP_isBaseValid(base));
@@ -1515,7 +1488,6 @@ static inline void ECAP_startCounter(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void ECAP_setAPWMPolarity(uint32_t base,
                                         ECAP_APWMPolarity polarity)
 {
@@ -1540,7 +1512,6 @@ static inline void ECAP_setAPWMPolarity(uint32_t base,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void ECAP_setAPWMPeriod(uint32_t base, uint32_t periodCount)
 {
     ASSERT(ECAP_isBaseValid(base));
@@ -1568,7 +1539,6 @@ static inline void ECAP_setAPWMPeriod(uint32_t base, uint32_t periodCount)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void ECAP_setAPWMCompare(uint32_t base, uint32_t compareCount)
 {
     ASSERT(ECAP_isBaseValid(base));
@@ -1593,7 +1563,6 @@ static inline void ECAP_setAPWMCompare(uint32_t base, uint32_t compareCount)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void ECAP_setAPWMShadowPeriod(uint32_t base,
                                             uint32_t periodCount)
 {
@@ -1622,7 +1591,6 @@ static inline void ECAP_setAPWMShadowPeriod(uint32_t base,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void ECAP_setAPWMShadowCompare(uint32_t base,
                                              uint32_t compareCount)
 {
@@ -1644,7 +1612,6 @@ static inline void ECAP_setAPWMShadowCompare(uint32_t base,
 //! \return Returns the time base counter value.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline uint32_t ECAP_getTimeBaseCounter(uint32_t base)
 {
     ASSERT(ECAP_isBaseValid(base));
@@ -1667,7 +1634,6 @@ static inline uint32_t ECAP_getTimeBaseCounter(uint32_t base)
 //! \return Event time stamp value or 0 if \e event is invalid.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline uint32_t ECAP_getEventTimeStamp(uint32_t base, ECAP_Events event)
 {
     uint32_t count;
@@ -1734,7 +1700,6 @@ static inline uint32_t ECAP_getEventTimeStamp(uint32_t base, ECAP_Events event)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void ECAP_selectECAPInput(uint32_t base,
                                         ECAP_InputCaptureSignals input)
 {
@@ -1764,7 +1729,6 @@ static inline void ECAP_selectECAPInput(uint32_t base,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void ECAP_selectQualPeriod(uint32_t base,
                                          ECAP_QualPeriodSelect width)
 {
@@ -1806,7 +1770,6 @@ static inline void ECAP_selectQualPeriod(uint32_t base,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void ECAP_setSOCTriggerSource(uint32_t base, ECAP_Events event)
 {
     ASSERT(ECAP_isBaseValid(base));
@@ -1830,7 +1793,6 @@ static inline void ECAP_setSOCTriggerSource(uint32_t base, ECAP_Events event)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void ECAP_resetCounters(uint32_t base)
 {
     ASSERT(ECAP_isBaseValid(base));
@@ -1866,7 +1828,6 @@ static inline void ECAP_resetCounters(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void ECAP_setDMASource(uint32_t base, ECAP_Events event)
 {
     ASSERT(ECAP_isBaseValid(base));
@@ -1891,7 +1852,6 @@ static inline void ECAP_setDMASource(uint32_t base, ECAP_Events event)
 //! register to be loaded on the next event.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline ECAP_Events ECAP_getModuloCounterStatus(uint32_t base)
 {
     uint16_t counterStatusValue;
@@ -1926,7 +1886,6 @@ static inline ECAP_Events ECAP_getModuloCounterStatus(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ECAP_enableSignalMonitoringUnit(uint32_t base, uint32_t munit)
 {
@@ -1962,7 +1921,6 @@ ECAP_enableSignalMonitoringUnit(uint32_t base, uint32_t munit)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ECAP_disableSignalMonitoringUnit(uint32_t base, uint32_t munit)
 {
@@ -2000,7 +1958,6 @@ ECAP_disableSignalMonitoringUnit(uint32_t base, uint32_t munit)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ECAP_enableDebugRange(uint32_t base, uint32_t munit)
 {
@@ -2037,7 +1994,6 @@ ECAP_enableDebugRange(uint32_t base, uint32_t munit)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ECAP_disableDebugRange(uint32_t base, uint32_t munit)
 {
@@ -2079,7 +2035,6 @@ ECAP_disableDebugRange(uint32_t base, uint32_t munit)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ECAP_setupEarlyMaxErrorCheck(uint32_t base, uint32_t munit,
                              uint32_t errorCheck)
@@ -2125,7 +2080,6 @@ ECAP_setupEarlyMaxErrorCheck(uint32_t base, uint32_t munit,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ECAP_selectMonitoringType(uint32_t base, uint32_t munit,
                           ECAP_MonitoringTypeSelect monSel)
@@ -2165,7 +2119,6 @@ ECAP_selectMonitoringType(uint32_t base, uint32_t munit,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ECAP_selectTripSignal(uint32_t base, ECAP_MunitTripInputSelect tripSel)
 {
@@ -2199,7 +2152,6 @@ ECAP_selectTripSignal(uint32_t base, ECAP_MunitTripInputSelect tripSel)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ECAP_selectGlobalLoadStrobe(uint32_t base, ECAP_MunitTripInputSelect strobe)
 {
@@ -2234,7 +2186,6 @@ ECAP_selectGlobalLoadStrobe(uint32_t base, ECAP_MunitTripInputSelect strobe)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ECAP_enableShadowMinMaxRegisters(uint32_t base, uint32_t munit)
 {
@@ -2271,7 +2222,6 @@ ECAP_enableShadowMinMaxRegisters(uint32_t base, uint32_t munit)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ECAP_disableShadowMinMaxRegisters(uint32_t base, uint32_t munit)
 {
@@ -2309,7 +2259,6 @@ ECAP_disableShadowMinMaxRegisters(uint32_t base, uint32_t munit)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ECAP_enableSoftwareSync(uint32_t base, uint32_t munit)
 {
@@ -2350,7 +2299,6 @@ ECAP_enableSoftwareSync(uint32_t base, uint32_t munit)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ECAP_selectShadowLoadMode(uint32_t base, uint32_t munit,
                           uint32_t loadMode)
@@ -2391,7 +2339,6 @@ ECAP_selectShadowLoadMode(uint32_t base, uint32_t munit,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ECAP_configureMinValue(uint32_t base, uint32_t munit,
                        uint32_t minValue)
@@ -2430,7 +2377,6 @@ ECAP_configureMinValue(uint32_t base, uint32_t munit,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ECAP_configureMaxValue(uint32_t base, uint32_t munit,
                        uint32_t maxValue)
@@ -2468,7 +2414,6 @@ ECAP_configureMaxValue(uint32_t base, uint32_t munit,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ECAP_configureShadowMinValue(uint32_t base, uint32_t munit,
                              uint32_t minValue)
@@ -2507,7 +2452,6 @@ ECAP_configureShadowMinValue(uint32_t base, uint32_t munit,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ECAP_configureShadowMaxValue(uint32_t base, uint32_t munit,
                              uint32_t maxValue)
@@ -2546,7 +2490,6 @@ ECAP_configureShadowMaxValue(uint32_t base, uint32_t munit,
 //! \return returns the observed minimum value.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline uint32_t
 ECAP_observedMinValue(uint32_t base, uint32_t munit)
 {
@@ -2584,7 +2527,6 @@ ECAP_observedMinValue(uint32_t base, uint32_t munit)
 //! \return returns the observed maximum value.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline uint32_t
 ECAP_observedMaxValue(uint32_t base, uint32_t munit)
 {

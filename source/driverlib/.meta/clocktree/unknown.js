@@ -3,14 +3,22 @@ const { getDefaultValue } = system.getScript("./defaultValue.js");
 exports = {
 	displayName: "Unknown",
 	//longDescription: "Here is the long description",
-	config: [],
-	extendConfig: ({ $ipInstance }) => 
+	config: [
+		{
+			name: "$assignedContext",
+			hidden: true,
+			options: [{name: "CPU1"}],
+			default: "CPU1",
+			readOnly: true
+		}
+	],
+	extendConfig: ({ $ipInstance }) =>
 	{
 		const source = _.first($ipInstance.inPins);
 		var names = ''
 		//console.log($ipInstance)
 		//console.log($ipInstance.modulePins)
-		const pinConfig = _.map($ipInstance.outPins, (pin) => 
+		const pinConfig = _.map($ipInstance.outPins, (pin) =>
 		({
 			name: pin.name,
 			displayName: pin.displayName,
@@ -33,10 +41,10 @@ exports = {
 		if (names != "in")
 		{
 			pinConfig.push({
-				name: "modules", 
-				displayName: "Modules", 
+				name: "modules",
+				displayName: "Modules",
 				longDescription: "Connected modules to this signal: " + names,
-				default: names, 
+				default: names,
 				getValue: (inst) => { return names },
 			})
 		}
@@ -51,27 +59,27 @@ exports = {
 		if ($ipInstance.name == "PERx_CPU1CLK_GATE")
 		{
 				pinConfig.push({
-				name: "cpu1clk_gate", 
-				displayName: "CPU1CLK GATE", 
-				default: "Click the hyper link for CPUCLK GATES", 
+				name: "cpu1clk_gate",
+				displayName: "CPU1CLK GATE",
+				default: "Click the hyper link for CPUCLK GATES",
 				getValue: (inst) => { return "Click the hyper link for CPUCLK GATES" },
 			})
 		}
 		if ($ipInstance.name == "PERx_CPU2CLK_GATE")
 		{
 				pinConfig.push({
-				name: "cpu2clk_gate", 
-				displayName: "CPU2CLK GATE", 
-				default: "Click the hyper link for CPUCLK GATES", 
+				name: "cpu2clk_gate",
+				displayName: "CPU2CLK GATE",
+				default: "Click the hyper link for CPUCLK GATES",
 				getValue: (inst) => { return "Click the hyper link for CPUCLK GATES" },
 			})
 		}
 		if ($ipInstance.name == "PERx_CPU3CLK_GATE")
 		{
 				pinConfig.push({
-				name: "cpu3clk_gate", 
-				displayName: "CPU3CLK GATE", 
-				default: "Click the hyper link for CPUCLK GATES", 
+				name: "cpu3clk_gate",
+				displayName: "CPU3CLK GATE",
+				default: "Click the hyper link for CPUCLK GATES",
 				getValue: (inst) => { return "Click the hyper link for CPUCLK GATES" },
 			})
 		}
@@ -95,5 +103,6 @@ exports = {
 				logInfo("For enabling peripherals, use the " + system.getReference(sysctl.$static, "enable_SYSCTL_PERIPH_CLK_TIMER0"), inst, "cpu3clk_gate")
 			}
 		}
-	}
+	},
+	shouldBeAllocatedAsResource : true,
 };

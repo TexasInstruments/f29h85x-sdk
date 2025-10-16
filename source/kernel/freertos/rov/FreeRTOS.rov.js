@@ -79,7 +79,7 @@ class FreeRTOS {
         taskInfo.NumOverflows        = await this.Program.fetchVariable("xNumOfOverflows");
         taskInfo.SchedulerStarted    = Boolean(await this.Program.fetchVariable("xSchedulerRunning"));
         taskInfo.State               = await this.Program.fetchVariable("uxSchedulerSuspended") ? "Suspended" : "Running";
-        
+
         view.push(taskInfo);
         return (view);
     }
@@ -90,12 +90,12 @@ class FreeRTOS {
         for (let i = 0; i < readyList.length; i++) {
             await this.fillInTaskInstance(table, readyList[i], 'Ready');
         }
-        
+
         const delay1List = await this.Program.fetchVariable('xDelayedTaskList1');
         await this.fillInTaskInstance(table, delay1List, 'Blocked');
         const delay2List = await this.Program.fetchVariable('xDelayedTaskList2');
         await this.fillInTaskInstance(table, delay2List, 'Blocked');
-        
+
         try {
             const suspendedList = await this.Program.fetchVariable('xSuspendedTaskList');
             await this.fillInTaskInstance(table, suspendedList, 'Suspended');
@@ -259,7 +259,7 @@ class FreeRTOS {
             const activeList2 = await this.Program.fetchVariable("xActiveTimerList2");
             await this.fillInTimerInstance(table, activeList2);
         }
-        catch(e){   
+        catch(e){
             errVal++;
         }
 
@@ -293,7 +293,7 @@ class FreeRTOS {
                 if( timer.ucStatus & 0x1 )
                     timerInfo.Active = "Yes";
                 if( timer.ucStatus & 0x2 )
-                    timerInfo.StaticallyAloc = "Yes";    
+                    timerInfo.StaticallyAloc = "Yes";
                 if( timer.ucStatus & 0x4 )
                     timerInfo.AutoReload = "Yes";
 
@@ -324,15 +324,15 @@ class FreeRTOS {
     async helperGetListOfAddressesInListObj(listObj){
         let currentItem = await this.Program.fetchFromAddr(listObj.xListEnd.pxNext, "ListItem_t");
         let list = [];
-    
+
         for (let i = 0; i < listObj.uxNumberOfItems; i++) {
             let address = currentItem.pvOwner;
             list.push(address);
-    
+
             /* Traverse the list */
             currentItem = await this.Program.fetchFromAddr(currentItem.pxNext, "ListItem_t");
         }
-    
+
         return list;
     }
 
@@ -379,9 +379,9 @@ class FreeRTOS {
             /* Most likely configQUEUE_REGISTRY_SIZE is set to 0 */
             return null;
         }
-    
+
         let maps = [];
-    
+
         for (let i = 0; i < xQueueRegistry.length; i++) {
             /* The queue registry holds queue registry items*/
             let QRItem = xQueueRegistry[i];
@@ -394,20 +394,20 @@ class FreeRTOS {
                 maps.push(map);
             }
         }
-    
+
         return maps;
     }
 
     async parseUnionInQueueStruct(pointerToUnion, queueType){
         let unionMap = {};
-    
+
         /* Queue has queueType 0 anything else {1, 2, 3, 4} is a Mutex or Semaphore */
         if (queueType != 0) {
             /* This queue is used as a Mutex or Semaphore
              * Now, parse the union */
             let taskAddress = Number(await this.Program.fetchFromAddr(pointerToUnion, "TaskHandle_t", 1));
             if (taskAddress == 0) {
-                // When a mutex is not held by any task the taskAddress will be zero 
+                // When a mutex is not held by any task the taskAddress will be zero
                 unionMap["xMutexHolder"] = null;
             }
             else {
@@ -420,7 +420,7 @@ class FreeRTOS {
                 let addr = '0x' + taskAddress.toString(16);
                 unionMap["xMutexHolder"] = name + " : " + addr;
             }
-            unionMap["uxRecursiveCallCount"] = await this.Program.fetchFromAddr(pointerToUnion + 4, "UBaseType_t", 1); 
+            unionMap["uxRecursiveCallCount"] = await this.Program.fetchFromAddr(pointerToUnion + 4, "UBaseType_t", 1);
         }
         else {
             /* This queue is used as a Queue
@@ -428,85 +428,79 @@ class FreeRTOS {
             unionMap["pcTail"]     = await this.Program.fetchFromAddr(pointerToUnion, "uint32_t", 1);
             unionMap["pcReadFrom"] = await this.Program.fetchFromAddr(pointerToUnion + 4, "uint32_t", 1);
         }
-    
+
         return unionMap;
     }
 
     async parseQueueObjManually(name, xHandle){
 
         let currentPtr = xHandle;
-    
+
         /* Mirror the Queue_t (QueueDefinition) struct */
-    
+
         /* Assumes 32bit machine */
         let pcHead                 = await this.Program.fetchFromAddr(currentPtr, "uint32_t", 1);
         currentPtr                 += 4; //increment in bytes
 
         let pcWriteTo              = await this.Program.fetchFromAddr(currentPtr, "uint32_t", 1);
-        currentPtr                 += 4; 
-    
-        /* let SemaphoreDataSize   = await this.Program.lookupType("SemaphoreData_t")["size"];          //8
-        let QueuePointersSize      = propsAsString(await this.Program.lookupType("QueuePointers_t"));   //8
-        let BaseSize               = await this.Program.lookupType("UBaseType_t").size;                 //2
-        let ListSize               = await this.Program.lookupType("List_t").size;                      //20 
-        */
+        currentPtr                 += 4;
 
-       //!! Redefining offsets for C29
-        let SemaphoreDataSize      = 8
-        let QueuePointersSize      = 8
-        let BaseSize               = 4
-        let ListSize               = 20
-     
+        let SemaphoreDataSize   = (await this.Program.lookupType("SemaphoreData_t")).size;
+        let QueuePointersSize   = (await this.Program.lookupType("QueuePointers_t")).size;
+        let BaseSize            = (await this.Program.lookupType("UBaseType_t")).size;
+        let ListSize            = (await this.Program.lookupType("List_t")).size;
+
+
         /* Ignore union until we know queue type */
         let pointerAtUnion         = currentPtr;
         currentPtr                 += Math.max(SemaphoreDataSize, QueuePointersSize);
-    
+
         let xTasksWaitingToSend    = await this.Program.fetchFromAddr(currentPtr, "List_t", 1);
         currentPtr                 += ListSize;
-    
+
         let xTasksWaitingToReceive = await this.Program.fetchFromAddr(currentPtr, "List_t", 1);
-        currentPtr                 += ListSize; 
-    
+        currentPtr                 += ListSize;
+
         let uxMessagesWaiting      = await this.Program.fetchFromAddr(currentPtr, "UBaseType_t", 1);
         currentPtr                 += BaseSize;
-    
+
         let uxLength               = await this.Program.fetchFromAddr(currentPtr, "UBaseType_t", 1);
         currentPtr                 += BaseSize;
-        
+
         let a = currentPtr;
         let uxItemSize             = await this.Program.fetchFromAddr(currentPtr, "UBaseType_t", 1);
         currentPtr                 += BaseSize;
 
-    
+
         //let CRxLock                = await this.Program.fetchFromAddr(currentPtr, "int8_t", 1);
         currentPtr                 += 1;
-    
+
         //let CTxLock                = await this.Program.fetchFromAddr(currentPtr, "int8_t", 1);
         currentPtr                 += 1;
-        //currentPtr                 += 1; 
+        //currentPtr                 += 1;
 
-        //!! configSUPPORT_DYNAMIC_ALLOCATION needs to be 1, which is standard in TI software 
-    
+        //!! configSUPPORT_DYNAMIC_ALLOCATION needs to be 1, which is standard in TI software
+
         let ucStaticallyAllocated  = await this.Program.fetchFromAddr(currentPtr, "uint8_t", 1);
-        currentPtr                 += 1; 
-        
-        //!! configUSE_QUEUE_SETS     needs to be 0, which is standard in TI software 
+        currentPtr                 += 1;
+
+        //!! configUSE_QUEUE_SETS     needs to be 0, which is standard in TI software
         //!! configUSE_TRACE_FACILITY needs to be 1, which is standard in TI software
 
         /* eslint-disable-next-line no-unused-vars */
         let uxQueueNumber          = await this.Program.fetchFromAddr(currentPtr, "UBaseType_t", 1);
         currentPtr                 += BaseSize;
-    
+
         /* Both TICLANG and GCC puts 1 byte of padding here */
         //currentPtr += 1;
-    
+
         currentPtr                 += 1;
 
-        let ucQueueType  = await this.Program.fetchFromAddr(currentPtr, "uint8_t", 1);        
+        let ucQueueType  = await this.Program.fetchFromAddr(currentPtr, "uint8_t", 1);
         let unionMap     = await this.parseUnionInQueueStruct(pointerAtUnion, ucQueueType);
-    
+
         let map = {};
-    
+
         map["Address"]                  = '0x' + xHandle.toString(16);
         map["Name"]                     = name;
         map["uxLength"]                 = uxLength;
@@ -522,7 +516,7 @@ class FreeRTOS {
         map["blockedAddresses"]         = addressSend.concat(addressRec);
         let blockedTasks                = xTasksWaitingToReceive.uxNumberOfItems + xTasksWaitingToSend.uxNumberOfItems;
         map["blockedTasks"]             = blockedTasks > 0 ? blockedTasks : "-";
-        map["uxItemSize"]               = uxItemSize; 
+        map["uxItemSize"]               = uxItemSize;
         /* map["CRxLock"]                  = CRxLock >= 0 ? CRxLock : "Not Locked";
         map["CTxLock"]                  = CTxLock >= 0 ? CTxLock : "Not Locked";
          */
@@ -531,8 +525,8 @@ class FreeRTOS {
         map["pcTail"]                   = '0x' + Number(unionMap["pcTail"]).toString(16);
         map["pcReadFrom"]               = '0x' + Number(unionMap["pcReadFrom"]).toString(16);
         map["pcHead"]                   = '0x' + pcHead.toString(16);
-        map["pcWriteTo"]                = '0x' + pcWriteTo.toString(16); 
-    
+        map["pcWriteTo"]                = '0x' + pcWriteTo.toString(16);
+
         return map;
     }
 
@@ -540,7 +534,7 @@ class FreeRTOS {
         if (map["Type"] != "Queue") {
             return;
         }
-    
+
         let queue = new QueueInstance();
         queue.Name                  = map["Name"];
         queue.Address               = map["Address"];
@@ -552,7 +546,7 @@ class FreeRTOS {
         queue.BlockedTasks          = map["blockedTasks"];
         queue.StorageStart          = map["pcHead"];
         queue.StorageEnd            = map["pcTail"];
-    
+
         view.push(queue);
     }
 
@@ -582,7 +576,7 @@ class FreeRTOS {
         if (map["Type"] != "Semaphore (Counting)" && map["Type"] != "Semaphore (Binary)") {
             return;
         }
-    
+
         let sem = new SemaphoreInstance();
         sem.Name             = map["Name"];
         sem.Type             = map["Type"];
@@ -595,7 +589,7 @@ class FreeRTOS {
 
         view.push(sem);
     }
-    
+
     async getMutexInstances() {
         const table = [];
 
@@ -630,7 +624,7 @@ class FreeRTOS {
         mutex.Type              = map["Type"];
         mutex.Available         = map["uxMessagesWaiting"];
         mutex.BlockedCount      = map["TasksWaitingToReceive"];
-        mutex.Holder            = map["xMutexHolder"];            
+        mutex.Holder            = map["xMutexHolder"];
         mutex.BlockedTasks      = map["blockedTasks"];
         mutex.StaticallyAlloc   = map["ucStaticallyAllocated"];
 

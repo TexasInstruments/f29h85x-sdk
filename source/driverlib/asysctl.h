@@ -477,7 +477,6 @@ typedef enum
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.ASysCtl_enableTemperatureSensor")))
-__attribute__((always_inline))
 static inline void
 ASysCtl_enableTemperatureSensor(void)
 {
@@ -497,7 +496,6 @@ ASysCtl_enableTemperatureSensor(void)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.ASysCtl_disableTemperatureSensor")))
-__attribute__((always_inline))
 static inline void
 ASysCtl_disableTemperatureSensor(void)
 {
@@ -515,7 +513,6 @@ ASysCtl_disableTemperatureSensor(void)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.ASysCtl_lockTemperatureSensor")))
-__attribute__((always_inline))
 static inline void
 ASysCtl_lockTemperatureSensor(void)
 {
@@ -541,7 +538,6 @@ ASysCtl_lockTemperatureSensor(void)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.ASysCtl_setVREF")))
-__attribute__((always_inline))
 static inline void
 ASysCtl_setVREF(ASysCtl_Vref vref, ASysCtl_VrefMode mode)
 {
@@ -560,7 +556,6 @@ ASysCtl_setVREF(ASysCtl_Vref vref, ASysCtl_VrefMode mode)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.ASysCtl_lockANAREF")))
-__attribute__((always_inline))
 static inline void
 ASysCtl_lockANAREF(void)
 {
@@ -581,7 +576,6 @@ ASysCtl_lockANAREF(void)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.ASysCtl_enableVMONMask")))
-__attribute__((always_inline))
 static inline void
 ASysCtl_enableVMONMask(void)
 {
@@ -599,7 +593,6 @@ ASysCtl_enableVMONMask(void)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.ASysCtl_powerDownVREG")))
-__attribute__((always_inline))
 static inline void
 ASysCtl_powerDownVREG(void)
 {
@@ -614,7 +607,6 @@ ASysCtl_powerDownVREG(void)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.ASysCtl_lockVREG")))
-__attribute__((always_inline))
 static inline void
 ASysCtl_lockVREG(void)
 {
@@ -635,7 +627,6 @@ ASysCtl_lockVREG(void)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.ASysCtl_enableBORL")))
-__attribute__((always_inline))
 static inline void
 ASysCtl_enableBORL(void)
 {
@@ -653,7 +644,6 @@ ASysCtl_enableBORL(void)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.ASysCtl_disableBORL")))
-__attribute__((always_inline))
 static inline void
 ASysCtl_disableBORL(void)
 {
@@ -668,7 +658,6 @@ ASysCtl_disableBORL(void)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.ASysCtl_lockVMON")))
-__attribute__((always_inline))
 static inline void
 ASysCtl_lockVMON(void)
 {
@@ -688,7 +677,6 @@ ASysCtl_lockVMON(void)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.ASysCtl_configCMPMux")))
-__attribute__((always_inline))
 static inline void
 ASysCtl_configCMPMux(AsysCtl_CMPselect selectMux)
 {
@@ -723,7 +711,6 @@ ASysCtl_configCMPMux(AsysCtl_CMPselect selectMux)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.ASysCtl_lockCMPHPMux")))
-__attribute__((always_inline))
 static inline void
 ASysCtl_lockCMPHPMux(void)
 {
@@ -742,7 +729,6 @@ ASysCtl_lockCMPHPMux(void)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.ASysCtl_lockCMPLPMux")))
-__attribute__((always_inline))
 static inline void
 ASysCtl_lockCMPLPMux(void)
 {
@@ -761,7 +747,6 @@ ASysCtl_lockCMPLPMux(void)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.ASysCtl_lockCMPHNMux")))
-__attribute__((always_inline))
 static inline void
 ASysCtl_lockCMPHNMux(void)
 {
@@ -779,7 +764,6 @@ ASysCtl_lockCMPHNMux(void)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.ASysCtl_lockCMPLNMux")))
-__attribute__((always_inline))
 static inline void
 ASysCtl_lockCMPLNMux(void)
 {
@@ -798,7 +782,6 @@ ASysCtl_lockCMPLNMux(void)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.ASysCtl_selectInternalTestNode")))
-__attribute__((always_inline))
 static inline void
 ASysCtl_selectInternalTestNode(ASysCtl_InternalTestNode select)
 {
@@ -821,7 +804,6 @@ ASysCtl_selectInternalTestNode(ASysCtl_InternalTestNode select)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.ASysCtl_setIOBufferDrive")))
-__attribute__((always_inline))
 static inline void
 ASysCtl_setIOBufferDrive(ASysCtl_IOBuffer pin, ASysCtl_IOBufferDrive config)
 {
@@ -842,7 +824,6 @@ ASysCtl_setIOBufferDrive(ASysCtl_IOBuffer pin, ASysCtl_IOBufferDrive config)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.ASysCtl_setIOBufferMode")))
-__attribute__((always_inline))
 static inline void
 ASysCtl_setIOBufferMode(ASysCtl_IOBuffer pin, ASysCtl_IOBufferMode config)
 {
@@ -867,7 +848,6 @@ ASysCtl_setIOBufferMode(ASysCtl_IOBuffer pin, ASysCtl_IOBufferMode config)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.ASysCtl_setAGPIOFilter")))
-__attribute__((always_inline))
 static inline void
 ASysCtl_setAGPIOFilter(uint32_t config)
 {
@@ -889,7 +869,6 @@ ASysCtl_setAGPIOFilter(uint32_t config)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.ASysCtl_lockAGPIOFilter")))
-__attribute__((always_inline))
 static inline void
 ASysCtl_lockAGPIOFilter(void)
 {
@@ -910,7 +889,6 @@ ASysCtl_lockAGPIOFilter(void)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.ASysCtl_lockAGPIOCtrl")))
-__attribute__((always_inline))
 static inline void
 ASysCtl_lockAGPIOCtrl(void)
 {
@@ -933,7 +911,6 @@ ASysCtl_lockAGPIOCtrl(void)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.AsysCtl_configADCGlobalSOC")))
-__attribute__((always_inline))
 static inline void
 AsysCtl_configADCGlobalSOC(uint32_t adcSelect)
 {
@@ -952,7 +929,6 @@ AsysCtl_configADCGlobalSOC(uint32_t adcSelect)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.AsysCtl_forceADCGlobalSOC")))
-__attribute__((always_inline))
 static inline void
 AsysCtl_forceADCGlobalSOC(uint32_t socSelect)
 {

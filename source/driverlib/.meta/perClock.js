@@ -37,7 +37,7 @@ var perClockModule = {
     peripheralName: "PERCLOCK",
     displayName: "Peripheral Clock",
     description: "",
-    config: config,
+    config: Common.filterConfigsIfInSetupMode(config),
     templates: {
         boardc : "/driverlib/perClock/perClock.board.c.xdt",
         boardh : "/driverlib/perClock/perClock.board.h.xdt"

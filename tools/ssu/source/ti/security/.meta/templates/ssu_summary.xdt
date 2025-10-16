@@ -3,7 +3,7 @@
 % let sysSec        = Common.modStatic('/ti/security/System_Security');
 % let memAllocFinal = Common.allocateAllMemoryRegions()
 % let result        = memAllocFinal[currCore]
-% if(result && result.length && sysSec){
+% if(sysSec && result && result.length){
 %%{
     let linksList = ["Data Region\\Link"]
     let separatorList = ["---"]

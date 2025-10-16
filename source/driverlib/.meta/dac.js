@@ -1,8 +1,8 @@
 let Common   = system.getScript("/driverlib/Common.js");
 let Pinmux   = system.getScript("/driverlib/pinmux.js");
 
-let device_driverlib_peripheral = 
-    system.getScript("/driverlib/device_driverlib_peripherals/" + 
+let device_driverlib_peripheral =
+    system.getScript("/driverlib/device_driverlib_peripherals/" +
         Common.getDeviceName().toLowerCase() + "_dac.js");
 
 /* Intro splash on GUI */
@@ -17,7 +17,7 @@ function onChangeDACVref(inst, ui)
 {
     if (inst.referenceVoltage == device_driverlib_peripheral.DAC_ReferenceVoltage[0].name){
         ui.gainMode.hidden = true
-        
+
     }
     else {
         ui.gainMode.hidden = false
@@ -28,11 +28,11 @@ function onChangeLoadMode(inst, ui)
 {
     if (inst.loadMode == device_driverlib_peripheral.DAC_LoadMode[0].name){
         ui.ePWMSyncSignal.hidden = true
-        
+
     }
     else {
         ui.ePWMSyncSignal.hidden = false
-    }   
+    }
 }
 
 var dacStatic = undefined;
@@ -74,7 +74,8 @@ let config = [
         description : 'Instance of the DAC used.',
         hidden      : false,
         default     : DAC_INSTANCE[0].name,
-        options     : DAC_INSTANCE
+        options     : DAC_INSTANCE,
+        shouldBeAllocatedAsResource: true,
     },
     {
         name        : "dacDevicePinName",
@@ -86,7 +87,8 @@ let config = [
             var dacAnalogPins = Pinmux.findAllAnalogPin(dacOutName);
             return Pinmux.getDevicePinInfoDescription(dacAnalogPins);
         },
-        default     : Pinmux.getDevicePinInfoDescription(defaultDacName)
+        default     : Pinmux.getDevicePinInfoDescription(defaultDacName),
+        shouldBeAllocatedAsResource: true,
     },
     {
         name        : "referenceVoltage",
@@ -140,7 +142,7 @@ let config = [
             {name: "DAC_LOCK_SHADOW", displayName: "Shadow Register"},
             {name: "DAC_LOCK_OUTPUT", displayName: "Output Register"},
         ],
-        
+
     },
 ];
 
@@ -155,8 +157,8 @@ config.push(
 
 
 
-// Gain Mode 
-config.splice(2, 0, 
+// Gain Mode
+config.splice(2, 0,
     {
         name        : "gainMode",
         displayName : "Gain Mode",
@@ -191,13 +193,21 @@ function onValidate(inst, validation) {
                 validation.logError(
                     `The ANALOG PinMux module needs to be added on CPU1 when a DAC instance is added on ${cpu}`,inst,"dacBase");
             }
-        } 
+        }
         else {
             validation.logWarning(
                 `The ANALOG PinMux module needs to be added on CPU1 when a DAC instance is added on ${cpu}`,inst,"dacBase");
-        } 
+        }
     }
 
+    var selectedInstance = inst.dacBase.replace("_BASE","");// e.g., "DAC1"
+    if (Common.is_instance_not_in_variant(selectedInstance)) {
+        validation.logError(
+            `${selectedInstance} is not supported for ${Common.getVariant().replace(/^TMS320/, '')}.`,
+            inst,
+            "dacBase"
+        );
+    }
     var usedDACInsts = [];
     for (var instance_index in inst.$module.$instances)
     {
@@ -226,24 +236,24 @@ function onValidate(inst, validation) {
         var allDuplicates = "";
         for (var duplicateNamesIndex in duplicatesResult.duplicates)
         {
-            allDuplicates = allDuplicates + Common.stringOrEmpty(allDuplicates, ", ") 
+            allDuplicates = allDuplicates + Common.stringOrEmpty(allDuplicates, ", ")
                             + duplicatesResult.duplicates[duplicateNamesIndex];
         }
         validation.logError(
-            "The DAC Instance used. Duplicates: " + allDuplicates, 
+            "The DAC Instance used. Duplicates: " + allDuplicates,
             inst, "dacBase");
     }
 
     if (inst.shadowValue < 0 || inst.shadowValue > 4095)
     {
         validation.logError(
-            "Enter an integer for Shadow Value between 0 and 4095!", 
+            "Enter an integer for Shadow Value between 0 and 4095!",
             inst, "shadowValue");
     }
     if (!Number.isInteger(inst.shadowValue))
     {
         validation.logError(
-            "Shadow Value must be an integer", 
+            "Shadow Value must be an integer",
             inst, "shadowValue");
     }
     var asysctlMod = system.modules['/driverlib/asysctl.js'];
@@ -258,30 +268,30 @@ function onValidate(inst, validation) {
                 "Selected reference voltage not supported for configured gain mode.",
                 inst, "referenceVoltage");
         } // the case of VDAC, no gain mode select! the case of [vdac,   x,        x,    gain 2x]
-        if(inst.referenceVoltage == "DAC_REF_ADC_VREFHI" && stat.analogReference == "INTERNAL" 
+        if(inst.referenceVoltage == "DAC_REF_ADC_VREFHI" && stat.analogReference == "INTERNAL"
                 && stat.analogReferenceVoltage == "1P65" && inst.gainMode == "DAC_GAIN_ONE"){
             validation.logError(
-                "Selected gain mode not supported for configured analog reference voltage.", 
+                "Selected gain mode not supported for configured analog reference voltage.",
                 inst, "gainMode");
             validation.logError(
-                "Selected analog reference voltage not supported for configured gain mode.", 
+                "Selected analog reference voltage not supported for configured gain mode.",
                 stat, "analogReferenceVoltage");
         } // the case of [vrefhi, internal, 1.65, gain 1x]
         if(inst.referenceVoltage == "DAC_REF_ADC_VREFHI" && stat.analogReference == "INTERNAL"
                 && stat.analogReferenceVoltage == "2P5" && inst.gainMode == "DAC_GAIN_TWO"){
             validation.logError(
-                "Selected gain mode not supported for configured analog reference voltage.", 
+                "Selected gain mode not supported for configured analog reference voltage.",
                 inst, "gainMode");
             validation.logError(
-                "Selected analog reference voltage not supported for configured gain mode.", 
-                stat, "analogReferenceVoltage");               
+                "Selected analog reference voltage not supported for configured gain mode.",
+                stat, "analogReferenceVoltage");
         } // the case of [vrefhi, internal, 2.5,  gain 2x]
         if(inst.referenceVoltage == "DAC_REF_ADC_VREFHI" && stat.analogReference == "EXTERNAL" && inst.gainMode == "DAC_GAIN_TWO"){
             validation.logError(
-                "Selected gain mode not supported for configured analog reference.", 
+                "Selected gain mode not supported for configured analog reference.",
                 inst, "gainMode");
             validation.logError(
-                "Selected analog reference not supported for configured gain mode.", 
+                "Selected analog reference not supported for configured gain mode.",
                 stat, "analogReference");
         } // the case of [vrefhi, external, x,    gain 2x]
     }
@@ -349,7 +359,7 @@ function onValidate(inst, validation) {
                     {
                         validation.logWarning(
                             "The pin " + pinSelected + " is also selected by the ADC module." +
-                            " The DAC output will be driving the ADC pin input. This is an acceptable " + 
+                            " The DAC output will be driving the ADC pin input. This is an acceptable " +
                             "use-case.",
                             inst, "dacDevicePinName");
                     }
@@ -358,7 +368,7 @@ function onValidate(inst, validation) {
                     {
                         validation.logWarning(
                             "The pin " + pinSelected + " is also selected by the CMPSS module." +
-                            " The DAC output will be driving the CMPSS pin input. This is an acceptable " + 
+                            " The DAC output will be driving the CMPSS pin input. This is an acceptable " +
                             "use-case.",
                             inst, "dacDevicePinName");
                     }
@@ -366,7 +376,7 @@ function onValidate(inst, validation) {
                     // {
                     //     validation.logWavrning(
                     //         "The pin " + pinSelected + " is also selected by the CMPSSLite module." +
-                    //         " The DAC output will be driving the CMPSSLite pin input. This is an acceptable " + 
+                    //         " The DAC output will be driving the CMPSSLite pin input. This is an acceptable " +
                     //         "use-case.",
                     //         inst, "dacDevicePinName");
                     // }
@@ -397,11 +407,12 @@ if (Common.isContextCPU1()) {
 var dacModule = {
     peripheralName: "DAC",
     displayName: "DAC",
-    maxInstances: numberOfDACs,
+    totalMaxInstances: Common.countinstances("DAC",numberOfDACs),
+    maxInstances: Common.countinstances("DAC",numberOfDACs),
     defaultInstanceName: "myDAC",
     description: "Digital Analog Converter",
     //longDescription: (Common.getCollateralFindabilityList("DAC")),
-    config: config,
+    config: Common.filterConfigsIfInSetupMode(config),
     moduleStatic: dacStatic,
     sharedModuleInstances: sharedModuleInstances,
     moduleInstances: (inst) => {
@@ -425,14 +436,17 @@ var dacModule = {
                 moduleName: "/driverlib/perConfig.js",
                 collapsed: false,
                 requiredArgs:{
+                    cpuSel: inst.$assignedContext ?? system.context,
                     pinmuxPeripheralModule : "",
                     peripheralInst: inst.dacBase.replace("_BASE", "")
-                }
+                },
+                shouldBeAllocatedAsResource: true,
             },
         ])
-        
+
         return clkReturn;
     },
+    shouldBeAllocatedAsResource: true,
     templates: {
         boardc : "/driverlib/dac/dac.board.c.xdt",
         boardh : "/driverlib/dac/dac.board.h.xdt"

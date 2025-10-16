@@ -87,7 +87,7 @@ void INT_myI2C0_FIFO_ISR(void);
 //
 // Main
 //
-void main(void)
+int main(void)
 {
     //
     // Initialize device clock, peripheral clocks and interrupts
@@ -199,7 +199,7 @@ void INT_myI2C0_ISR(void)
     Interrupt_enable(INT_I2CB);
 }
 
-void INT_myI2C0_FIFO_ISR(void) 
+void INT_myI2C0_FIFO_ISR(void)
 {
     ESTOP0;
 }

@@ -1,11 +1,12 @@
 /**
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
- * @cliArgs --device "F29H85x" --package "256ZEX" --part "F29H85x_256ZEX" --context "CPU1" --product "MCU_SDK_F29H85x@1.00.00.00"
- * @v2CliArgs --device "F29H850TU" --package "256ZEX" --variant "TMS320F29H850TU9" --context "CPU1" --product "MCU_SDK_F29H85x@1.00.00.00"
- * @versions {"tool":"1.22.0+3877"}
+ * @cliArgs --device "F29H85x" --package "256ZEX" --part "F29H85x_256ZEX" --context "CPU1" --product "MCU_SDK_F29H85x@1.02.02.00"
+ * @v2CliArgs --device "F29H850TU" --package "256ZEX" --variant "TMS320F29H850TU9" --context "CPU1" --product "MCU_SDK_F29H85x@1.02.02.00"
+ * @versions {"tool":"1.25.0+4237"}
  */
 
+    
 const divider15       = system.clockTree["PLL_REFDIV"];
 divider15.divideValue = 1;
 
@@ -46,7 +47,6 @@ APR1.share = ["CPU3"];
 
 System_Security.cpuList                       = ["CPU3"];
 System_Security.EMU_BOOTEN                    = true;
-System_Security.ssumode                       = 2;
 System_Security.addCommonCodeModule           = false;
 System_Security.LINK2.fileNames               = "ssuIpc_ex1_basic_cpu1_cpu3_multi_starter_c29x1";
 System_Security.LINK2.periphs_rw              = ["CPU_SYS_REGS","DCC1_REGS","ERR_AGG_REGS","ESM_CPU1_REGS","ESM_CPU2_REGS","ESM_CPU3_REGS","ESM_SAFETY_AGG_REGS","ESM_SYS_REGS","IPC_CPU1_RECV_REGS_CPU3_CH0_CH1","IPC_CPU1_SEND_REGS_CPU3_CH0_CH1","PER_CFG_REGS_WD_REGS"];
@@ -77,7 +77,7 @@ System_Security.STACK2.stack.secGroupAttr     = scripting.forceWrite("NONE");
 System_Security.STACK2.stack.stackAPR.memType = scripting.forceWrite("RAM");
 
 /**
- * References between modules
+ * References between modules.
  */
 System_Security.ZONE2_UPDATE_LINK         = null;
 System_Security.ZONE3_UPDATE_LINK         = null;

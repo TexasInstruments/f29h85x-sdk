@@ -10,13 +10,13 @@
 //! This example demonstrates how to use SysConfig to enable datalogging
 //! on our C29x devices. To enable this example, make sure to go to
 //! Build -> Variables and set GUI_SUPPORT to value of 1.
-//! This will create the GUI in CCS which can be opened under 
-//! View -> GUI Composer -> Applications -> 
+//! This will create the GUI in CCS which can be opened under
+//! View -> GUI Composer -> Applications ->
 //!                                   transfer_customlog_export_uart_logArrays
 //! In this example, we are using UART to export data out of the device.
 //! If you're using a launchpad, you can enable board components to select
 //! the correct UART base to visualize the data through the COM port.
-//! If there are no plugins after buliding, 
+//! If there are no plugins after buliding,
 //! please reload the window by doing Help -> Reload Window
 //! Please select the correct COM port in the GUI by clicking "Options"
 //! then "Serial Port Settings"
@@ -71,7 +71,7 @@ float     f32Arr [3] = {60233.36, 0.99, -3156.005};
 //
 // Main
 //
-void main(void)
+int main(void)
 {
 
     //
@@ -89,7 +89,7 @@ void main(void)
     //
     ENINT;
     Interrupt_enableGlobal();
-    
+
     //
     // Logging Inits
     //

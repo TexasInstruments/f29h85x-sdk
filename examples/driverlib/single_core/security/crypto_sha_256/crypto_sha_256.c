@@ -1,0 +1,191 @@
+//#############################################################################
+// FILE:    crypto_sha_256.c
+//
+// TITLE:   crypto sha 256 example
+//
+//! \addtogroup driver_example_list
+//! <h1> crypto sha 256 example </h1>
+//!
+//! This example demonstrates the implementation of DTHE SHA
+//
+//#############################################################################
+//
+///
+// //
+//	Copyright: Copyright (C) Texas Instruments Incorporated
+//	All rights reserved not granted herein.
+//
+//  Redistribution and use in source and binary forms, with or without 
+//  modification, are permitted provided that the following conditions 
+//  are met:
+//
+//  Redistributions of source code must retain the above copyright 
+//  notice, this list of conditions and the following disclaimer.
+//
+//  Redistributions in binary form must reproduce the above copyright
+//  notice, this list of conditions and the following disclaimer in the 
+//  documentation and/or other materials provided with the   
+//  distribution.
+//
+//  Neither the name of Texas Instruments Incorporated nor the names of
+//  its contributors may be used to endorse or promote products derived
+//  from this software without specific prior written permission.
+//
+//  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS 
+//  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT 
+//  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+//  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT 
+//  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, 
+//  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT 
+//  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+//  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+//  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT 
+//  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE 
+//  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+//
+
+//#############################################################################
+
+/* ========================================================================== */
+/*                             Include Files                                  */
+/* ========================================================================== */
+
+#include <string.h>
+#include <stdint.h>
+#include <drivers/crypto/dthe/dma.h>
+#include <drivers/crypto/dthe/dthe_sha.h>
+#include "board.h"
+#include "ti_drivers_config.h"
+/* ========================================================================== */
+/*                           Macros & Typedefs                                */
+/* ========================================================================== */
+
+/* SHA256 length */
+#define APP_CRYPTO_SHA256_LENGTH                (32U)
+/* Alignment */
+#define APP_CRYPTO_SHA_BUF_ALIGNMENT            (128U)
+/*Input and output buf length*/
+#define APP_CRYPTO_SHA_INPUT_BUF_LENGTH         (9U)
+/* DTHE Public address */
+#define CSL_DTHE_PUBLIC_U_BASE                  (0x30280000U)
+/* DTHE Aes Public address */
+#define CSL_DTHE_PUBLIC_AES_U_BASE              (0x30286000U)
+/* DTHE Aes Public address */
+#define CSL_DTHE_PUBLIC_SHA_U_BASE              (0x30284000U)
+
+/* ========================================================================== */
+/*                            Global Variables                                */
+/* ========================================================================== */
+
+/*Inout test buffer for sha computation */
+static uint8_t gCryptoShaTestInputBuf[APP_CRYPTO_SHA_INPUT_BUF_LENGTH] = {"abcdefpra"};
+
+/* SHA-256 test vectors,this is expected hash for the test buffer */
+static uint8_t gCryptoSha256TestSum[APP_CRYPTO_SHA256_LENGTH] =
+{
+    0xC2, 0x77, 0xB1, 0x18, 0x8B, 0x34, 0xF5, 0x95,
+    0x3A, 0x50, 0xA5, 0x28, 0xE4, 0xD8, 0x68, 0x01,
+    0x14, 0xFB, 0xED, 0x82, 0x56, 0x85, 0x6D, 0xA2,
+    0xFD, 0x82, 0x35, 0xD5, 0x00, 0x71, 0x96, 0x6F
+};
+
+/* Public context crypto dthe, aes and sha accelerators base address */
+DTHE_Attrs gDTHE_Attrs[1] =
+{
+    {
+        /* crypto accelerator base address */
+        .caBaseAddr         = CSL_DTHE_PUBLIC_U_BASE,
+        /* AES base address */
+        .aesBaseAddr        = CSL_DTHE_PUBLIC_AES_U_BASE,
+        /* SHA base address */
+        .shaBaseAddr        = CSL_DTHE_PUBLIC_SHA_U_BASE,
+        /* For checking dthe driver open or close */
+        .isOpen             = FALSE,
+    },
+};
+
+DTHE_Config gDtheConfig[1]=
+{
+    {
+        &gDTHE_Attrs[0],
+        DMA_DISABLE,
+    },
+};
+
+uint32_t gDtheConfigNum = 1;
+DMA_Config gDmaConfig[1]={0};
+uint32_t gDmaConfigNum = 1;
+
+/* ========================================================================== */
+/*                          Function Definitions                              */
+/* ========================================================================== */
+
+void crypto_sha_256_main(void *args)
+{
+    DTHE_SHA_Return_t   status;
+    DTHE_Handle         shaHandle;
+    DTHE_SHA_Params     shaParams;
+
+    DebugP_log("[CRYPTO] SHA example started ...\r\n");
+
+    /* Opening crypto driver */
+    shaHandle = DTHE_open(0);
+    DebugP_assert(shaHandle != NULL);
+
+    /* Opening sha driver */
+    status = DTHE_SHA_open(shaHandle);
+    DebugP_assert(DTHE_SHA_RETURN_SUCCESS == status);
+
+    /* Initialize the AES Parameters */
+    shaParams.algoType          = DTHE_SHA_ALGO_SHA256;
+    shaParams.ptrDataBuffer     = (uint32_t*)&gCryptoShaTestInputBuf[0];
+    shaParams.dataLenBytes      = APP_CRYPTO_SHA_INPUT_BUF_LENGTH;
+
+    /* Performing DTHE SHA operation */
+    status = DTHE_SHA_compute(shaHandle, &shaParams, TRUE);
+    DebugP_assert(DTHE_SHA_RETURN_SUCCESS == status);
+
+    /* Closing sha driver */
+    status = DTHE_SHA_close(shaHandle);
+    DebugP_assert(DTHE_SHA_RETURN_SUCCESS == status);
+
+    /* Closing DTHE driver */
+    if (DTHE_RETURN_SUCCESS == DTHE_close(shaHandle))
+    {
+        status = DTHE_SHA_RETURN_SUCCESS;
+    }
+    else
+    {
+        status = DTHE_SHA_RETURN_FAILURE;
+    }
+
+    DebugP_assert(DTHE_SHA_RETURN_SUCCESS == status);
+
+    /*comparing result with expected test results*/
+    if(memcmp(shaParams.digest, gCryptoSha256TestSum, APP_CRYPTO_SHA256_LENGTH) != 0U)
+    {
+        DebugP_log("[CRYPTO] SHA-256 example failed!!\r\n");
+    }
+    else
+    {
+        DebugP_log("[CRYPTO] SHA-256 example completed!!\r\n");
+        DebugP_log("All tests have passed!!\r\n");
+    }
+
+    return;
+}
+
+int main(void)
+{
+    Device_init();
+    Board_init();
+    System_init();
+
+    crypto_sha_256_main(NULL);
+
+    for(;;)
+
+    System_deinit();
+
+    return 0;
+}

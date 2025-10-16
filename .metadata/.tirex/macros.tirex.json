@@ -20,6 +20,11 @@
 		"value": ["Devices", "Examples", "Driverlib", "Single_Core", "ADC"]
 	},
 	{
+		"comment": "Device Driver Library Examples for Single Core-CLB",
+		"arraymacro": "device_singlecore_driverlib_examples_category_clb",
+		"value": ["Devices", "Examples", "Driverlib", "Single_Core", "CLB"]
+	},
+	{
 		"comment": "Device Driver Library Examples for Single Core - CMPSS",
 		"arraymacro": "device_singlecore_driverlib_examples_category_cmpss",
 		"value": ["Devices", "Examples", "Driverlib", "Single_Core", "CMPSS"]
@@ -53,6 +58,11 @@
 		"comment": "Device Driver Library Examples for Single Core- Empty Projects",
 		"arraymacro": "device_singlecore_driverlib_examples_category_empty_projects",
 		"value": ["Devices", "Examples", "Driverlib", "Single_Core", "Empty_Projects"]
+	},
+	{
+		"comment": "Device Bitfield Structure Examples for Single Core-Emulate Device",
+		"arraymacro": "device_singlecore_driverlib_examples_category_emulate_device",
+		"value": ["Devices", "Examples", "Driverlib", "Single_Core", "Emulate_Device"]
 	},
 	{
 		"comment": "Device Driver Library Examples for Single Core- EPG",
@@ -140,9 +150,24 @@
 		"value": ["Devices", "Examples", "Driverlib", "Single_Core", "MCAN"]
 	},
 	{
+		"comment": "Device Driver Library Examples for Single Core-PMBus",
+		"arraymacro": "device_singlecore_driverlib_examples_category_pmbus",
+		"value": ["Devices", "Examples", "Driverlib", "Single_Core", "PMBus"]
+	},
+	{
 		"comment": "Device Driver Library Examples for Single Core-RTDMA",
 		"arraymacro": "device_singlecore_driverlib_examples_category_rtdma",
 		"value": ["Devices", "Examples", "Driverlib", "Single_Core", "RTDMA"]
+	},
+	{
+		"comment": "Device Driver Library Examples for Single Core-SDFM",
+		"arraymacro": "device_singlecore_driverlib_examples_category_sdfm",
+		"value": ["Devices", "Examples", "Driverlib", "Single_Core", "SDFM"]
+	},
+	{
+		"comment": "Device Driver Library Examples for Single Core-Security",
+		"arraymacro": "device_singlecore_driverlib_examples_category_security",
+		"value": ["Devices", "Examples", "Driverlib", "Single_Core", "Security"]
 	},
 	{
 		"comment": "Device Driver Library Examples for Single Core-SENT",
@@ -155,14 +180,29 @@
 		"value": ["Devices", "Examples", "Driverlib", "Single_Core", "SPI"]
 	},
 	{
+		"comment": "Device Driver Library Examples for Single Core-SSU",
+		"arraymacro": "device_singlecore_driverlib_examples_category_ssu",
+		"value": ["Devices", "Examples", "Driverlib", "Single_Core", "SSU"]
+	},
+	{
 		"comment": "Device Driver Library Examples for Single Core-SYSCTL",
 		"arraymacro": "device_singlecore_driverlib_examples_category_sysctl",
 		"value": ["Devices", "Examples", "Driverlib", "Single_Core", "SYSCTL"]
 	},
 	{
+		"comment": "Device Driver Library Examples for Single Core-System",
+		"arraymacro": "device_singlecore_driverlib_examples_category_system",
+		"value": ["Devices", "Examples", "Driverlib", "Single_Core", "System"]
+	},
+	{
 		"comment": "Device Driver Library Examples for Single Core-TIMER",
 		"arraymacro": "device_singlecore_driverlib_examples_category_timer",
 		"value": ["Devices", "Examples", "Driverlib", "Single_Core", "TIMER"]
+	},
+	{
+		"comment": "Device Driver Library Examples for Single Core-Transfer",
+		"arraymacro": "device_singlecore_driverlib_examples_category_transfer",
+		"value": ["Devices", "Examples", "Driverlib", "Single_Core", "Transfer"]
 	},
 	{
 		"comment": "Device Driver Library Examples for Single Core-UART",
@@ -183,31 +223,6 @@
 		"comment": "Device Driver Library Examples for Single Core-XBAR",
 		"arraymacro": "device_singlecore_driverlib_examples_category_xbar",
 		"value": ["Devices", "Examples", "Driverlib", "Single_Core", "XBAR"]
-	},
-	{
-		"comment": "Device Driver Library Examples for Single Core-CLB",
-		"arraymacro": "device_singlecore_driverlib_examples_category_clb",
-		"value": ["Devices", "Examples", "Driverlib", "Single_Core", "CLB"]
-	},
-	{
-		"comment": "Device Driver Library Examples for Single Core-SDFM",
-		"arraymacro": "device_singlecore_driverlib_examples_category_sdfm",
-		"value": ["Devices", "Examples", "Driverlib", "Single_Core", "SDFM"]
-	},
-	{
-		"comment": "Device Driver Library Examples for Single Core-SSU",
-		"arraymacro": "device_singlecore_driverlib_examples_category_ssu",
-		"value": ["Devices", "Examples", "Driverlib", "Single_Core", "SSU"]
-	},
-	{
-		"comment": "Device Driver Library Examples for Single Core-System",
-		"arraymacro": "device_singlecore_driverlib_examples_category_system",
-		"value": ["Devices", "Examples", "Driverlib", "Single_Core", "System"]
-	},
-	{
-		"comment": "Device Driver Library Examples for Single Core-Transfer",
-		"arraymacro": "device_singlecore_driverlib_examples_category_transfer",
-		"value": ["Devices", "Examples", "Driverlib", "Single_Core", "Transfer"]
 	},
 	{
 		"comment": "Path to driverlib folder",
@@ -260,29 +275,24 @@
 		"value": ["Devices", "Source", "Security"]
 	},
 	{
+		"comment": "Path to pmic source folder",
+		"arraymacro": "device_pmic_source",
+		"value": ["Devices", "Source", "PMIC"]
+	},
+	{
+		"comment": "Path to SDL source folder",
+		"arraymacro": "device_sdl_source",
+		"value": ["Devices", "Source", "SDL"]
+	},
+	{
 		"comment": "Path to driverlib folder",
 		"textmacro": "driverlib_path",
 		"value": "../../source/driverlib"
 	},
 	{
-		"comment": "Device Bitfield Structure Examples for Single Core-Emulate Device",
-		"arraymacro": "device_singlecore_driverlib_examples_category_emulate_device",
-		"value": ["Devices", "Examples", "Driverlib", "Single_Core", "Emulate_Device"]
-	},
-	{
 		"comment": "Device Bitfield Structure Examples for Multi Core-Empty",
 		"arraymacro": "device_multicore_driverlib_examples_category_empty",
 		"value": ["Devices", "Examples", "Driverlib", "Multi_Core", "Empty_Project"]
-	},
-	{
-		"comment": "Device Bitfield Structure Examples for Multi Core-IPC",
-		"arraymacro": "device_multicore_driverlib_examples_category_ipc",
-		"value": ["Devices", "Examples", "Driverlib", "Multi_Core", "IPC"]
-	},
-	{
-		"comment": "Device Bitfield Structure Examples for Multi Core-LED",
-		"arraymacro": "device_multicore_driverlib_examples_category_led",
-		"value": ["Devices", "Examples", "Driverlib", "Multi_Core", "LED"]
 	},
 	{
 		"comment": "Device Bitfield Structure Examples for Multi Core-ESM",
@@ -295,14 +305,24 @@
 		"value": ["Devices", "Examples", "Driverlib", "Multi_Core", "Flash"]
 	},
 	{
-		"comment": "Device Bitfield Structure Examples for Multi Core-SSU",
-		"arraymacro": "device_multicore_driverlib_examples_category_ssu",
-		"value": ["Devices", "Examples", "Driverlib", "Multi_Core", "SSU"]
+		"comment": "Device Bitfield Structure Examples for Multi Core-IPC",
+		"arraymacro": "device_multicore_driverlib_examples_category_ipc",
+		"value": ["Devices", "Examples", "Driverlib", "Multi_Core", "IPC"]
+	},
+	{
+		"comment": "Device Bitfield Structure Examples for Multi Core-LED",
+		"arraymacro": "device_multicore_driverlib_examples_category_led",
+		"value": ["Devices", "Examples", "Driverlib", "Multi_Core", "LED"]
 	},
 	{
 		"comment": "Device Bitfield Structure Examples for Multi Core-RTDMA",
 		"arraymacro": "device_multicore_driverlib_examples_category_rtdma",
 		"value": ["Devices", "Examples", "Driverlib", "Multi_Core", "RTDMA"]
+	},
+	{
+		"comment": "Device Bitfield Structure Examples for Multi Core-SSU",
+		"arraymacro": "device_multicore_driverlib_examples_category_ssu",
+		"value": ["Devices", "Examples", "Driverlib", "Multi_Core", "SSU"]
 	},
 	{
 		"comment": "Path to FreeRTOS examples",
@@ -475,25 +495,36 @@
 		"value": ["Devices", "Examples", "Benchmarks"]
 	},
 	{
+		"comment": "PMIC Examples",
+		"arraymacro": "pmic_examples_category",
+		"value": ["Devices", "Examples", "PMIC"]
+	},
+	{
+		"comment": "SDL Examples",
+		"arraymacro": "sdl_examples_category",
+		"value": ["Devices", "Examples", "SDL"]
+	},
+	{
 		"setmacro": "f29h85x_sdk_driverlib_examples_set_single_core_adc",
 		"fields": ["name", "description", "location", "boards", "shortDesc", "Tags"],
 		"values": [
+			[ "adc_academy_lab", "", "../../examples/driverlib/single_core/adc/adc_academy_lab/ccs/adc_academy_lab.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], " Converts the voltages on an EPWM trigger anmd demonstrates parallelism across ADCs.",[" ADC"] ],
 			[ "adc_ex10_multiple_soc_epwm", "This example sets up ePWM1 to periodically trigger a set of conversions on ADCA and ADCC. This example demonstrates multiple ADCs working together to process of a batch of conversions using the available parallelism across multiple ADCs.", "../../examples/driverlib/single_core/adc/adc_ex10_multiple_soc_epwm/ccs/adc_ex10_multiple_soc_epwm.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], " Converts the voltages on an EPWM trigger anmd demonstrates parallelism across ADCs.",[" ADC"] ],
 			[ "adc_ex11_burst_mode_epwm", "This example sets up ePWM1 to periodically trigger ADCA using burst mode. This allows for different channels to be sampled with each burst.", "../../examples/driverlib/single_core/adc/adc_ex11_burst_mode_epwm/ccs/adc_ex11_burst_mode_epwm.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], " Converts the voltages on an EPWM trigger using burst mode.",[" ADC"] ],
 			[ "adc_ex12_burst_mode_oversampling", "This example is an ADC oversampling example implemented with software. The ADC SOCs are configured in burst mode, triggered by the ePWM SOCA event trigger.", "../../examples/driverlib/single_core/adc/adc_ex12_burst_mode_oversampling/ccs/adc_ex12_burst_mode_oversampling.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], " Demontrates ADC oversampling using software.",[" ADC"] ],
-			[ "adc_ex13_soc_oversampling", "This example sets up ePWM1 to periodically trigger a set of conversions on ADCA including multiple SOCs that all convert A2 to achieve oversampling on A2.", "../../examples/driverlib/single_core/adc/adc_ex13_soc_oversampling/ccs/adc_ex13_soc_oversampling.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], " Converts the voltages on an EPWM trigger using burst mode.",[" ADC"] ],
+			[ "adc_ex13_soc_oversampling", "This example sets up ePWM1 to periodically trigger a set of conversions on ADCA including multiple SOCs that all convert A2 to achieve oversampling on A2.", "../../examples/driverlib/single_core/adc/adc_ex13_soc_oversampling/ccs/adc_ex13_soc_oversampling.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], " Demontrates ADC oversampling using multiple SOCs.",[" ADC"] ],
 			[ "adc_ex14_ppb_pwm_trip", "", "../../examples/driverlib/single_core/adc/adc_ex14_ppb_pwm_trip/ccs/adc_ex14_ppb_pwm_trip.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], "",[""] ],
 			[ "adc_ex15_trigger_repeater_oversampling", "This example configures ADC for oversampling using trigger repeater block. The ePWM1 is configured to periodically trigger the ADC SOC and the trigger repeater module is configured to generate 4 repeated pulses. Post-processing block will take the repeated pulses, accumulates them and stores the results in ppb sum register.", "../../examples/driverlib/single_core/adc/adc_ex15_trigger_repeater_oversampling/ccs/adc_ex15_trigger_repeater_oversampling.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], " Demonstrates ADC oversampling using trigger repeater block.",[" ADC"] ],
 			[ "adc_ex16_trigger_repeater_undersampling", "This example configures ADC for undersampling using trigger repeater block. The ePWM1 is configured to periodically trigger the ADC SOC and the trigger repeater module is configured to generate 1 pulse out of three pulses. Post-processing block will take the undersampled pulse, accumulates them and stores the results in ppb sum register.", "../../examples/driverlib/single_core/adc/adc_ex16_trigger_repeater_undersampling/ccs/adc_ex16_trigger_repeater_undersampling.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], " Demonstrates ADC undersampling using trigger repeater block.",[" ADC"] ],
 			[ "adc_ex17_safety_checker", "This example compares the absolute value of the two ADC conversion results with the set tolerance value.", "../../examples/driverlib/single_core/adc/adc_ex17_safety_checker/ccs/adc_ex17_safety_checker.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], " Demonstrates ADC Safety checker and compares the results of two different ADC if they are outside the set tolerence value.",[" ADC"] ],
-			[ "adc_ex1_soc_software", "This example converts some voltages on ADCA and ADCC based on a softwaretrigger. The ADCC will not convert until ADCA is complete, so the ADCs will not runasynchronously. However, this is much less efficient than allowing the ADCs to convert synchronously in parallel (for example, by using an ePWM trigger).", "../../examples/driverlib/single_core/adc/adc_ex1_soc_software/ccs/adc_ex1_soc_software.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], " Convert voltages on software trigger",[" ADC1"," ADC2"] ],
+			[ "adc_ex1_soc_software", "This example converts some voltages on ADCA and ADCC based on a software trigger. The ADCC will not convert until ADCA is complete, so the ADCs will not run asynchronously. However, this is much less efficient than allowing the ADCs to convert synchronously in parallel (for example, by using an ePWM trigger) Watch  Variables- myADC0Result0 - Digital representation of the voltage on pin A0- myADC0Result1 - Digital representation of the voltage on pin A1- myADC1Result0 - Digital representation of the voltage on pin C2- myADC1Result1 - Digital representation of the voltage on pin C3", "../../examples/driverlib/single_core/adc/adc_ex1_soc_software/ccs/adc_ex1_soc_software.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], " Convert voltages on software trigger",[" ADC1"," ADC2"] ],
 			[ "adc_ex2_soc_epwm", "This example converts some voltages on ADCA based on a ePWM trigger.", "../../examples/driverlib/single_core/adc/adc_ex2_soc_epwm/ccs/adc_ex2_soc_epwm.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], " Convert voltages on an EPWM trigger",[" ADC"] ],
 			[ "adc_ex3_temp_sensor", "", "../../examples/driverlib/single_core/adc/adc_ex3_temp_sensor/ccs/adc_ex3_temp_sensor.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], "",[""] ],
 			[ "adc_ex4_software_sync", "This example converts some voltages on ADCA and ADCC using input 5 of the input X-BAR as a software force. Input 5 is triggered by toggling GPIO0, but any spare GPIO could be used. This method will ensure that both ADCs start converting at exactly the same time.", "../../examples/driverlib/single_core/adc/adc_ex4_software_sync/ccs/adc_ex4_software_sync.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], " Convert voltages on GPIO trigger through Input Xbar",[" ADC"] ],
-			[ "adc_ex5_soc_continuous", "This example demonstrate ADC continuous self-triggering. This example sets up the ADC to convert continuously, achieving maximum sampling rate. In this example all the 32 SOCs are configured.", "../../examples/driverlib/single_core/adc/adc_ex5_soc_continuous/ccs/adc_ex5_soc_continuous.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], " Demonstrates continuous self-triggering of ADC",[" ADC"] ],
-			[ "adc_ex6_continuous_dma", "This example sets up two ADC channels to convert simultaneoulsy. The conversion results will be transferred by the DMA into buffer.", "../../examples/driverlib/single_core/adc/adc_ex6_continuous_dma/ccs/adc_ex6_continuous_dma.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], " Converts voltage on an EPWM trigger and use DMA to transfer the results in the buffer",[" ADC"] ],
+			[ "adc_ex5_soc_continuous", "This example demonstrate ADC continuous self-triggering. This example sets up the ADC to convert continuously, achieving maximum sampling rate. In this example all the SOCs are configured.", "../../examples/driverlib/single_core/adc/adc_ex5_soc_continuous/ccs/adc_ex5_soc_continuous.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], " Demonstrates continuous self-triggering of ADC",[" ADC"] ],
+			[ "adc_ex6_continuous_dma", "This example sets up two ADC channels to convert simultaneoulsy. The conversion results will be transferred by the DMA into buffer.", "../../examples/driverlib/single_core/adc/adc_ex6_continuous_dma/ccs/adc_ex6_continuous_dma.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], " Converts voltage on an PWM trigger and use DMA to transfer the results in the buffer",[" ADC"] ],
 			[ "adc_ex7_ppb_offset", "This example software triggers the ADC.  Some SOCs have automatic offset adjustment applied by the post-processing block. After the program runs, the memory will contain ADC & post-processing block(PPB) results.", "../../examples/driverlib/single_core/adc/adc_ex7_ppb_offset/ccs/adc_ex7_ppb_offset.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], " Demonstrates the use of PPB block for offset correction on the ADC results.",[" ADC"] ],
-			[ "adc_ex8_ppb_limits", "This example sets up the ePWM to periodically trigger the ADC. If the results are outside of the defined range, the post-processing block will generate an interrupt. ", "../../examples/driverlib/single_core/adc/adc_ex8_ppb_limits/ccs/adc_ex8_ppb_limits.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], " Demonstrates the use of PPB block that will check if the ADC results are in the particular range.",[" ADC"] ],
+			[ "adc_ex8_ppb_limits", "This example sets up the ePWM (MCPWM in case of F28E12x) to periodically trigger the ADC. If the results are outside of the defined range, the post-processing block will generate an interrupt. ", "../../examples/driverlib/single_core/adc/adc_ex8_ppb_limits/ccs/adc_ex8_ppb_limits.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], " Demonstrates the use of PPB block that will check if the ADC results are in the particular range.",[" ADC"] ],
 			[ "adc_ex9_ppb_delay", "This example demonstrates delay capture using the post-processing block.", "../../examples/driverlib/single_core/adc/adc_ex9_ppb_delay/ccs/adc_ex9_ppb_delay.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], " Demonstrates the use of PPB block for delay capture.",[" ADC"] ]
 		]
 	},
@@ -513,8 +544,8 @@
 		"setmacro": "f29h85x_sdk_driverlib_examples_set_single_core_cmpss",
 		"fields": ["name", "description", "location", "boards", "shortDesc", "Tags"],
 		"values": [
-			[ "cmpss_ex1_asynch", "This example enables the CMPSS1 COMPH comparator and feeds the asynchronous CTRIPOUTH signal to the GPIO4/OUTPUTXBAR3 pin and CTRIPH to GPIO1/EPWM1B. CMPSS is configured to generate trip signals to trip the EPWM signals. CMPIN1P is used to give positive input and internal DAC is configured to provide the negative input. Internal DAC is configured to provide asignal at VDD/2. An EPWM signal is generated at GPIO1 and is configured to be tripped by CTRIPOUTH.", "../../examples/driverlib/single_core/cmpss/cmpss_ex1_asynch/ccs/cmpss_ex1_asynch.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], "",[""] ],
-			[ "cmpss_ex2_digital_filter", "This example enables the CMPSS1 COMPH comparator and feeds the outputthrough the digital filter to the GPIO4/OUTPUTXBAR3 pin.CMPIN1P is used to give positive input and internal DAC is configured to provide the negative input. Internal DAC is configured to provide asignal at VDD/2.When a low input(VSS) is provided to CMPIN1P,    - GPIO4 output is low.When a high input(higher than VDD/2) is provided to CMPIN1P,    - GPIO4 output turns high.", "../../examples/driverlib/single_core/cmpss/cmpss_ex2_digital_filter/ccs/cmpss_ex2_digital_filter.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], "",[""] ]
+			[ "cmpss_ex1_asynch", "This example enables the CMPSS1 COMPH comparator and feeds the asynchronous CTRIPOUTH signal to the GPIO4/OUTPUTXBAR3 pin and CTRIPH to GPIO1/EPWM1B. CMPSS is configured to generate trip signals to trip the EPWM signals. CMPIN1P is used to give positive input and internal DAC is configured to provide the negative input. Internal DAC is configured to provide a signal at VDD/2. An EPWM signal is generated at GPIO1 and is configured to be tripped by CTRIPOUTH.", "../../examples/driverlib/single_core/cmpss/cmpss_ex1_asynch/ccs/cmpss_ex1_asynch.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], "",[""] ],
+			[ "cmpss_ex2_digital_filter", "This example enables the CMPSS1 COMPH comparator and feeds the output through the digital filter to the GPIO4/OUTPUTXBAR3 pin. CMPIN1P is used to give positive input and internal DAC is configured to provide the negative input. Internal DAC is configured to provide a signal at VDD/2.When a low input(VSS) is provided to CMPIN1P,    - GPIO4 output is low.When a high input(higher than VDD/2) is provided to CMPIN1P,    - GPIO4 output turns high.", "../../examples/driverlib/single_core/cmpss/cmpss_ex2_digital_filter/ccs/cmpss_ex2_digital_filter.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], "",[""] ]
 		]
 	},
 	{
@@ -529,9 +560,9 @@
 		"setmacro": "f29h85x_sdk_driverlib_examples_set_single_core_dcc",
 		"fields": ["name", "description", "location", "boards", "shortDesc", "Tags"],
 		"values": [
-			[ "dcc_ex1_single_shot_verification", "This program uses the Internal oscillator 2 as a reference clock to verify the frequency of the PLL.", "../../examples/driverlib/single_core/dcc/dcc_ex1_single_shot_verification/ccs/dcc_ex1_single_shot_verification.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], " Verification of PLL Frequency using DCC Single shot mode",[" DCC"," PLL Frequency"," Clock verification"] ],
-			[ "dcc_ex2_single_shot_measurement", "This program demonstrates Single Shot measurement of the INTOSC1 clock post trim using INTOSC2 as the reference clock.", "../../examples/driverlib/single_core/dcc/dcc_ex2_single_shot_measurement/ccs/dcc_ex2_single_shot_measurement.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], " Measurement of INTOSC1 Frequency using INTOSC2 as the Reference clock",[" DCC"," INTOSC1 Frequency"," Clock measurement"] ],
-			[ "dcc_ex3_continuous_monitoring_of_clock", "This program demonstrates continuous monitoring of PLL Clock in the system using INTOSC1 as the reference clock. This would trigger an error signal on any error, causing the decrement/ reload of counters to stop.", "../../examples/driverlib/single_core/dcc/dcc_ex3_continuous_monitoring_of_clock/ccs/dcc_ex3_continuous_monitoring_of_clock.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], " Monitoring of PLL Clock using INTOSC1 as the Reference clock",[" DCC"," Continuous clock monitoring"," PLL"," ESM"] ]
+			[ "dcc_ex1_single_shot_verification", "This example demonstrates the use of the Dual-Clock Comparator (DCC) module to verify the frequency of the PLLRAW clock using the XTAL clock as a reference.", "../../examples/driverlib/single_core/dcc/dcc_ex1_single_shot_verification/ccs/dcc_ex1_single_shot_verification.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], " Verification of PLL Frequency using DCC Single shot mode",[" DCC"," PLL Frequency"," Clock verification"] ],
+			[ "dcc_ex2_single_shot_measurement", "This program demonstrates the use of the Dual-Clock Comparator (DCC) module to perform a single-shot measurement of the SYSOSCDIV4 clock frequency using the XTAL clock as a reference", "../../examples/driverlib/single_core/dcc/dcc_ex2_single_shot_measurement/ccs/dcc_ex2_single_shot_measurement.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], " Measurement of SYSOSCDIV4 Frequency using XTAL as the Reference clock",[" DCC"," SYSOSCDIV4 Frequency"," Clock measurement"] ],
+			[ "dcc_ex3_continuous_monitoring_of_clock", "This program demonstrates continuous monitoring of the PLL Clock in the system using SYSOSCDIV4 as the reference clock. The Dual-Clock Comparator (DCC) Module 0 is utilized for clock monitoring. The program triggers an interrupt on any error, causing the decrement/reload of counters to stop.", "../../examples/driverlib/single_core/dcc/dcc_ex3_continuous_monitoring_of_clock/ccs/dcc_ex3_continuous_monitoring_of_clock.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], " Monitoring of PLL Clock using SYSOSCDIV4 as the Reference clock",[" DCC"," Continuous clock monitoring"," PLL"," ESM"] ]
 		]
 	},
 	{
@@ -548,8 +579,8 @@
 		"fields": ["name", "description", "location", "boards", "shortDesc", "Tags"],
 		"values": [
 			[ "ecap_academy_lab", "", "../../examples/driverlib/single_core/ecap/ecap_academy_lab/ccs/ecap_academy_lab.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], "",[""] ],
-			[ "ecap_ex1_apwm", "This program sets up the eCAP module in APWM mode. The PWM waveform willcome out on GPIO5. The frequency of PWM is configured to vary between 10Hzand 20Hz using the shadow registers to load the next period/compare values.", "../../examples/driverlib/single_core/ecap/ecap_ex1_apwm/ccs/ecap_ex1_apwm.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], "",[""] ],
-			[ "ecap_ex2_capture_pwm", "This examples uses ECAP to capture the EPWM signal. ECAP can be used to calculate time period, frequency of the required signal. Here, ECAP is configured to capture time between rising and falling edge of the EPWM.", "../../examples/driverlib/single_core/ecap/ecap_ex2_capture_pwm/ccs/ecap_ex2_capture_pwm.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], "",[""] ],
+			[ "ecap_ex1_apwm", "This program sets up the eCAP module in APWM mode. The PWM waveform will come out on GPIO5. The frequency of PWM is configured to vary between 10Hz and 20Hz using the shadow registers to load the next period/compare values.", "../../examples/driverlib/single_core/ecap/ecap_ex1_apwm/ccs/ecap_ex1_apwm.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], "",[""] ],
+			[ "ecap_ex2_capture_pwm", "This examples uses ECAP to capture the EPWM (MCPWM in case of F28E12x) signal. ECAP can be used to calculate time period, frequency of the required signal. Here, ECAP is configured to capture time between rising and falling edge of the EPWM. (MCPWM in case of F28E12x)", "../../examples/driverlib/single_core/ecap/ecap_ex2_capture_pwm/ccs/ecap_ex2_capture_pwm.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], "",[""] ],
 			[ "ecap_ex3_apwm_phase_shift", "This program sets up the eCAP1 and eCAP2 modules in APWM mode to generate the two phase-shifted PWM outputs of same duty and frequency value. The frequency, duty and phase values can be programmed of choice by updating the defined macros. By default 10 Khz frequency, 50% duty and 30% phase shift values are used. eCAP2 output leads the eCAP1 output by 30%.", "../../examples/driverlib/single_core/ecap/ecap_ex3_apwm_phase_shift/ccs/ecap_ex3_apwm_phase_shift.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], "",[""] ]
 		]
 	},
@@ -568,7 +599,6 @@
 		"values": [
 			[ "empty_driverlib_project", "This example is an empty project for Driverlib development. It does the necessary initializations and runs on an empty infinite loop. This can be used as a template for creating new projects.", "../../examples/driverlib/single_core/empty_projects/empty_driverlib_project/ccs/empty_driverlib_project.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], " Empty project",[" Empty project"," new project"] ],
 			[ "empty_driverlib_project_cpp", "This example is an empty project for Driverlib development with C++ source files. It does the necessary initializations and runs on an empty infinite loop. This can be used as a template for creating new C++ projects.", "../../examples/driverlib/single_core/empty_projects/empty_driverlib_project_cpp/ccs/empty_driverlib_project_cpp.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], " Empty project for C++",[" Empty project"," new project"," C++"] ],
-			[ "empty_driverlib_project_dummy_cert", "", "../../examples/driverlib/single_core/empty_projects/empty_driverlib_project_dummy_cert/ccs/empty_driverlib_project_dummy_cert.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], "",[""] ],
 			[ "empty_driverlib_project_secure", "", "../../examples/driverlib/single_core/empty_projects/empty_driverlib_project_secure/ccs/empty_driverlib_project_secure.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], "",[""] ],
 			[ "empty_driverlib_project_static_lib", "", "../../examples/driverlib/single_core/empty_projects/empty_driverlib_project_static_lib/ccs/empty_driverlib_project_static_lib.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], "",[""] ]
 		]
@@ -578,7 +608,8 @@
 		"fields": ["name", "description", "location", "boards", "shortDesc", "Tags"],
 		"values": [
 			[ "emulate_device_ex1_f29p58x", "", "../../examples/driverlib/single_core/emulate_device/emulate_device_ex1_f29p58x/ccs/emulate_device_ex1_f29p58x.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], "",[""] ],
-			[ "emulate_device_ex2_f29p32x", "", "../../examples/driverlib/single_core/emulate_device/emulate_device_ex2_f29p32x/ccs/emulate_device_ex2_f29p32x.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], "",[""] ]
+			[ "emulate_device_ex2_f29p32x", "", "../../examples/driverlib/single_core/emulate_device/emulate_device_ex2_f29p32x/ccs/emulate_device_ex2_f29p32x.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], "",[""] ],
+			[ "emulate_device_ex3_f29p32x_access_error", "", "../../examples/driverlib/single_core/emulate_device/emulate_device_ex3_f29p32x_access_error/ccs/emulate_device_ex3_f29p32x_access_error.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], "",[""] ]
 		]
 	},
 	{
@@ -598,8 +629,9 @@
 		"values": [
 			[ "epwm_ex10_chopper", "This example configures ePWM1, ePWM2, ePWM3 and ePWM4 as follows- ePWM1 with Chopper disabled (Reference)- ePWM2 with chopper enabled at 1/8 duty cycle- ePWM3 with chopper enabled at 6/8 duty cycle- ePWM4 with chopper enabled at 1/2 duty cycle with One-Shot Pulse enabled", "../../examples/driverlib/single_core/epwm/epwm_ex10_chopper/ccs/epwm_ex10_chopper.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], " EPWM Chopper",[" EPWM"] ],
 			[ "epwm_ex11_configure_signal", "This example configures ePWM1, ePWM2, ePWM3 to produce signal of desired frequency and duty. It also configures phase between the configured modules.", "../../examples/driverlib/single_core/epwm/epwm_ex11_configure_signal/ccs/epwm_ex11_configure_signal.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], " EPWM Configure Signal",[" EPWM"] ],
-			[ "epwm_ex12_monoshot_mode", "This example showcases how to generate monoshot PWM output based on external trigger i.e. generating just a single pulse output on receipt of an externaltrigger. And the next pulse will be generated only when the next trigger comes. The example utilizes external synchronization and T1 action qualifierevent features to achieve the desired output.", "../../examples/driverlib/single_core/epwm/epwm_ex12_monoshot_mode/ccs/epwm_ex12_monoshot_mode.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], " EPWM Monoshot Mode",[" EPWM"] ],
+			[ "epwm_ex12_monoshot_mode", "This example showcases how to generate monoshot PWM output based on external trigger i.e. generating just a single pulse output on receipt of an external trigger. And the next pulse will be generated only when the next trigger comes. The example utilizes external synchronization and T1 action qualifier event features to achieve the desired output.", "../../examples/driverlib/single_core/epwm/epwm_ex12_monoshot_mode/ccs/epwm_ex12_monoshot_mode.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], " EPWM Monoshot Mode",[" EPWM"] ],
 			[ "epwm_ex13_up_aq", "This example configures ePWM1, ePWM2, ePWM3 to produce an waveform with independent modulation on EPWMxA and EPWMxB.", "../../examples/driverlib/single_core/epwm/epwm_ex13_up_aq/ccs/epwm_ex13_up_aq.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], " EPWM Updown Action Qualifier",[" EPWM"] ],
+			[ "epwm_ex14_global_load", "", "../../examples/driverlib/single_core/epwm/epwm_ex14_global_load/ccs/epwm_ex14_global_load.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], "",[""] ],
 			[ "epwm_ex15_xcmp_multiple_edges", "(Note - base frequency and duty cycle of all ePWM's are 50 KHz and 50% respectively. Value of TBPRD = 1999)", "../../examples/driverlib/single_core/epwm/epwm_ex15_xcmp_multiple_edges/ccs/epwm_ex15_xcmp_multiple_edges.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], " This examples configures 5 EPWMs in the XCMP mode with various configurations",[" EPWM"] ],
 			[ "epwm_ex16_event_detection", "(Note - base frequency and duty cycle of all ePWM's are 50 KHz and 50% respectively. Value of TBPRD = 1999)This example configures ePWM1 and ePWM2 in identical fashion", "../../examples/driverlib/single_core/epwm/epwm_ex16_event_detection/ccs/epwm_ex16_event_detection.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], " EPWM Monitoring for Event detection",[" EPWM"] ],
 			[ "epwm_ex1_trip_zone", "This example configures ePWM1 and ePWM2 as follows- ePWM1 has TZ1 as one shot trip source- ePWM2 has TZ1 as cycle by cycle trip source", "../../examples/driverlib/single_core/epwm/epwm_ex1_trip_zone/ccs/epwm_ex1_trip_zone.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], " This example configures two EPWMs and trips in one-shot and CBC mode.",[" EPWM"] ],
@@ -619,7 +651,7 @@
 		"values": [
 			[ "eqep_academy_lab", "", "../../examples/driverlib/single_core/eqep/eqep_academy_lab/ccs/eqep_academy_lab.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], "",[""] ],
 			[ "eqep_ex2_freq_cal_interrupt", "This example will calculate the frequency of an input signal using the eQEP module.  ePWM1A is configured to generate this input signal with a frequency of 5 kHz. EQEP unit timeout is set which will generate an interrupt every UNIT_PERIOD microseconds and frequency calculation occurs continuously.", "../../examples/driverlib/single_core/eqep/eqep_ex2_freq_cal_interrupt/ccs/eqep_ex2_freq_cal_interrupt.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], "",[""] ],
-			[ "eqep_ex5_speed_dir_motor", "This example can be used to sense the speed and direction of motor using eQEP in quadrature encoder mode. ePWM1A is configured to simulate motor encoder signals with frequency of 5 kHz on both A and B pins with 90 degree phase shift (so as to run this example without motor).EQEP unit timeout is set which will generate an interrupt every UNIT_PERIOD microseconds and speed calculation occurs continuously based on the direction of motor.", "../../examples/driverlib/single_core/eqep/eqep_ex5_speed_dir_motor/ccs/eqep_ex5_speed_dir_motor.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], "",[""] ]
+			[ "eqep_ex5_speed_dir_motor", "This example can be used to sense the speed and direction of motor using eQEP in quadrature encoder mode. ePWM1A (MCPWM1A in case of F28E12x) is configured to simulate motor encoder signals with frequency of 5 kHz on both A and B pins with 90 degree phase shift (so as to run this example without motor).EQEP unit timeout is set which will generate an interrupt every UNIT_PERIOD microseconds and speed calculation occurs continuously based on the direction of motor.", "../../examples/driverlib/single_core/eqep/eqep_ex5_speed_dir_motor/ccs/eqep_ex5_speed_dir_motor.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], "",[""] ]
 		]
 	},
 	{
@@ -633,6 +665,7 @@
 			[ "erad_ex5_stack_overflow_detect_no_syscfg", "This example uses ERAD Bus Comparator module to monitor Stack and detect Stack Overflow.", "../../examples/driverlib/single_core/erad/application_owned_examples/erad_ex5_stack_overflow_detect_no_syscfg/ccs/erad_ex5_stack_overflow_detect_no_syscfg.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], " Detecting Stack overflow using Bus Comparator (EBC) module",[" ERAD"," EBC"," Bus Comparators"," Stack overflow detection"] ],
 			[ "erad_ex6_stack_overflow_detect_syscfg", "This example configures ERAD Bus Comparator module in SysConfig to monitor Stack and detect Stack Overflow.", "../../examples/driverlib/single_core/erad/application_owned_examples/erad_ex6_stack_overflow_detect_syscfg/ccs/erad_ex6_stack_overflow_detect_syscfg.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], " Detecting Stack overflow using Bus Comparator (EBC) module configured in SysConfig",[" ERAD"," EBC"," Bus Comparators"," Stack overflow detection"] ],
 			[ "erad_ex7_free_running_counter_syscfg", "", "../../examples/driverlib/single_core/erad/application_owned_examples/erad_ex7_free_running_counter_syscfg/ccs/erad_ex7_free_running_counter_syscfg.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], "",[""] ],
+			[ "erad_ex8_gpio_trigger_nmi", "", "../../examples/driverlib/single_core/erad/application_owned_examples/erad_ex8_gpio_trigger_nmi/ccs/erad_ex8_gpio_trigger_nmi.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], "",[""] ],
 			[ "erad_ex1_profile_interrupts", "This example configures CPU Timer0, 1, and 2 to be profiled using the ERAD module. Included is a JavaScript file, erad_ex1_profile_interrupts.js, which is used with the scripting console to program ERAD registers and view profiling data.", "../../examples/driverlib/single_core/erad/debugger_owned_examples/erad_ex1_profile_interrupts/ccs/erad_ex1_profile_interrupts.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], " Profiling - Bus Comparator (EBC) and Counter (SEC) modules owned by the Debugger",[" ERAD"," EBC"," SEC"," Bus Comparators"," Counters"," Profiling"," Scripting console"," CCS Scripting"] ],
 			[ "erad_ex2_stack_overflow", "This example uses Bus Comparator to monitor the stack and detect the Stack overflow.", "../../examples/driverlib/single_core/erad/debugger_owned_examples/erad_ex2_stack_overflow/ccs/erad_ex2_stack_overflow.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], " Detecting Stack overflow - Bus Comparator (EBC) module owned by the Debugger",[" ERAD"," EBC"," Bus Comparators"," Stack overflow detection"," DSS Scripting"] ]
 		]
@@ -652,12 +685,13 @@
 			[ "F29H85x_EEPROM", "This example demonstrates a sample implementation of EEPROM emulation on the C29 Data Bank.", "../../examples/driverlib/single_core/flash/F29H85x_EEPROM/ccs/F29H85x_EEPROM.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], "",[""] ],
 			[ "F29H85x_EEPROM_PingPong", "This example demonstrates a sample implementation of EEPROM emulation on the C29 Data Bank.Differing from the F29H85X_EEPROM example, this implementation swaps to a second flash sectorupon filling up the first. Please read the application note SPRADL4 for more details.", "../../examples/driverlib/single_core/flash/F29H85x_EEPROM_PingPong/ccs/F29H85x_EEPROM_PingPong.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], "",[""] ],
 			[ "flash_bankmode_fota", "", "../../examples/driverlib/single_core/flash/flash_bankmode_fota/ccs/flash_bankmode_fota.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], "",[""] ],
-			[ "flash_based_UART_SBL_with_FOTA", "This example demonstrates how FOTA upgrades can be achieved for CPU1 and CPU3.", "../../examples/driverlib/single_core/flash/flash_based_UART_SBL_with_FOTA/ccs/flash_based_UART_SBL_with_FOTA.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], "",[""] ],
+			[ "flash_based_can_sbl", "This example demonstrates a way to program the device whilst running the application, by leveraging the A/B partition (bank swap) functionality of @VAR_SDK_NAME device to achive Firmware Over-The-Air (FOTA), which allows seemless firmware upgrade after a device reset.", "../../examples/driverlib/single_core/flash/flash_based_sbl_with_fota/ccs/flash_based_can_sbl.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], "",[""] ],
+			[ "flash_based_uart_sbl", "This example demonstrates a way to program the device whilst running the application, by leveraging the A/B partition (bank swap) functionality of @VAR_SDK_NAME device to achive Firmware Over-The-Air (FOTA), which allows seemless firmware upgrade after a device reset.", "../../examples/driverlib/single_core/flash/flash_based_sbl_with_fota/ccs/flash_based_uart_sbl.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], "",[""] ],
 			[ "flash_mode0_128_program", "This example demonstrates how to use the various Flash API modes for 128-bit programming in bank mode 0.", "../../examples/driverlib/single_core/flash/flash_mode0_128_program/ccs/flash_mode0_128_program.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], "",[""] ],
 			[ "flash_mode0_512_program", "This example demonstrates how to use the various Flash API modes for 512-bit programming in bank mode 0.", "../../examples/driverlib/single_core/flash/flash_mode0_512_program/ccs/flash_mode0_512_program.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], "",[""] ],
 			[ "flash_mode1_128_program", "This example demonstrates how to use the various Flash API modes for 128-bit programming in bank mode 1.", "../../examples/driverlib/single_core/flash/flash_mode1_128_program/ccs/flash_mode1_128_program.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], "",[""] ],
 			[ "flash_mode1_512_program", "This example demonstrates how to use the various Flash API modes for 512-bit programming in bank mode 1.", "../../examples/driverlib/single_core/flash/flash_mode1_512_program/ccs/flash_mode1_512_program.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], "",[""] ],
-			[ "ex3_uart_flash_kernel", "This example demonstrates how to load an application to flash over UART.", "../../examples/driverlib/single_core/flash/uart_flash_kernel/ccs/ex3_uart_flash_kernel.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], "",[""] ]
+			[ "ram_based_uart_sbl", "This example serves as a bootloader that leverages UART boot to perform programming operations.", "../../examples/driverlib/single_core/flash/ram_based_sbl/ccs/ram_based_uart_sbl.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], "",[""] ]
 		]
 	},
 	{
@@ -674,7 +708,8 @@
 		"fields": ["name", "description", "location", "boards", "shortDesc", "Tags"],
 		"values": [
 			[ "gpio_ex1_toggle", "This example configures the device GPIO through the sysconfig file. The GPIO pin is toggled in the infinite loop.", "../../examples/driverlib/single_core/gpio/gpio_ex1_toggle/ccs/gpio_ex1_toggle.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], " GPIO Toggle example",[" GPIO"] ],
-			[ "gpio_ex2_interrupt", "This example demonstrates the XINT feature in SysConfig by using it in conjunction with the input and output XBARs. The GPIO is toggled andconnected to the input XBAR, while simultaneously triggering an external interrupt. The interrupt increments a counter which can be observed in the watch window. In addition to triggering an interrupt, the input signal is routed from the input XBAR to the output XBAR so that the output can be observed via oscilloscope or logic analyzer on a separate pin.", "../../examples/driverlib/single_core/gpio/gpio_ex2_interrupt/ccs/gpio_ex2_interrupt.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], " GPIO Toggle example",[" GPIO"] ]
+			[ "gpio_ex2_interrupt", "This example demonstrates the XINT feature in SysConfig by using it in conjunction with the input and output XBARs. The GPIO is toggled andconnected to the input XBAR, while simultaneously triggering an external interrupt. The interrupt increments a counter which can be observed in the watch window. In addition to triggering an interrupt, the input signal is routed from the input XBAR to the output XBAR so that the output can be observed via oscilloscope or logic analyzer on a separate pin.", "../../examples/driverlib/single_core/gpio/gpio_ex2_interrupt/ccs/gpio_ex2_interrupt.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], " GPIO Toggle example",[" GPIO"] ],
+			[ "gpio_ex3_aio_external_interrupt", "", "../../examples/driverlib/single_core/gpio/gpio_ex3_aio_external_interrupt/ccs/gpio_ex3_aio_external_interrupt.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], "",[""] ]
 		]
 	},
 	{
@@ -688,8 +723,8 @@
 		"setmacro": "f29h85x_sdk_driverlib_examples_set_single_core_hrpwm",
 		"fields": ["name", "description", "location", "boards", "shortDesc", "Tags"],
 		"values": [
-			[ "hrpwm_ex1_duty_sfo", "", "../../examples/driverlib/single_core/hrpwm/hrpwm_ex1_duty_sfo/ccs/hrpwm_ex1_duty_sfo.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], "",[""] ],
-			[ "hrpwm_ex3_prd_updown_sfo", "", "../../examples/driverlib/single_core/hrpwm/hrpwm_ex3_prd_updown_sfo/ccs/hrpwm_ex3_prd_updown_sfo.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], "",[""] ],
+			[ "hrpwm_ex1_duty_sfo", "HRPWM Duty Control with SFO", "../../examples/driverlib/single_core/hrpwm/hrpwm_ex1_duty_sfo/ccs/hrpwm_ex1_duty_sfo.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], " HRPWM Duty Control with SFO",[" HRPWM"] ],
+			[ "hrpwm_ex3_prd_updown_sfo", "HRPWM Period Control", "../../examples/driverlib/single_core/hrpwm/hrpwm_ex3_prd_updown_sfo/ccs/hrpwm_ex3_prd_updown_sfo.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], " HRPWM Period Control",[" HRPWM"] ],
 			[ "hrpwm_ex8_xcmp_multiple_edges", "", "../../examples/driverlib/single_core/hrpwm/hrpwm_ex8_xcmp_multiple_edges/ccs/hrpwm_ex8_xcmp_multiple_edges.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], "",[""] ]
 		]
 	},
@@ -697,7 +732,7 @@
 		"setmacro": "f29h85x_sdk_driverlib_examples_set_single_core_i2c",
 		"fields": ["name", "description", "location", "boards", "shortDesc", "Tags"],
 		"values": [
-			[ "i2c_ex1_loopback", " > This program uses the internal loopback test mode of the I2C module. Both > the TX and RX I2C FIFOs and their interrupts are used. The pinmux and I2C > initialization is done through the sysconfig file. \n", "../../examples/driverlib/single_core/i2c/i2c_ex1_loopback/ccs/i2c_ex1_loopback.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], " I2C Loopback Example",[" I2C"] ],
+			[ "i2c_ex1_loopback", "This program demonstrates the use of the I2C module's internal loopback test mode with FIFO interrupts. It sends a stream of data and verifies the received data against the expected pattern. The example uses the TX and RX I2C FIFOs and their associated interrupts.", "../../examples/driverlib/single_core/i2c/i2c_ex1_loopback/ccs/i2c_ex1_loopback.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], " I2C Loopback Example",[" I2C"] ],
 			[ "i2c_ex2_eeprom", "", "../../examples/driverlib/single_core/i2c/i2c_ex2_eeprom/ccs/i2c_ex2_eeprom.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], "",[""] ],
 			[ "i2c_ex3_external_loopback", "", "../../examples/driverlib/single_core/i2c/i2c_ex3_external_loopback/ccs/i2c_ex3_external_loopback.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], "",[""] ],
 			[ "i2c_ex7_clock_stretching_controller_tx", "", "../../examples/driverlib/single_core/i2c/i2c_ex7_clock_stretching_controller_tx/ccs/i2c_ex7_clock_stretching_controller_tx.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], "",[""] ],
@@ -760,6 +795,14 @@
 		]
 	},
 	{
+		"setmacro": "f29h85x_sdk_driverlib_examples_set_single_core_pmbus",
+		"fields": ["name", "description", "location", "boards", "shortDesc", "Tags"],
+		"values": [
+			[ "pmbus_ex1_controller_i2c_mode", "", "../../examples/driverlib/single_core/pmbus/pmbus_ex1_controller_i2c_mode/ccs/pmbus_ex1_controller_i2c_mode.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], "",[""] ],
+			[ "pmbus_ex2_target_i2c_mode", "", "../../examples/driverlib/single_core/pmbus/pmbus_ex2_target_i2c_mode/ccs/pmbus_ex2_target_i2c_mode.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], "",[""] ]
+		]
+	},
+	{
 		"setmacro": "f29h85x_sdk_driverlib_examples_set_single_core_rtdma",
 		"fields": ["name", "description", "location", "boards", "shortDesc", "Tags"],
 		"values": [
@@ -774,6 +817,24 @@
 		"values": [
 			[ "sdfm_ex1_filter_sync_cpuread", "", "../../examples/driverlib/single_core/sdfm/sdfm_ex1_filter_sync_cpuread/ccs/sdfm_ex1_filter_sync_cpuread.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], "",[""] ],
 			[ "sdfm_ex4_pwm_sync_cpuread", "", "../../examples/driverlib/single_core/sdfm/sdfm_ex4_pwm_sync_cpuread/ccs/sdfm_ex4_pwm_sync_cpuread.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], "",[""] ]
+		]
+	},
+	{
+		"setmacro": "f29h85x_sdk_driverlib_examples_set_single_core_security",
+		"fields": ["name", "description", "location", "boards", "shortDesc", "Tags"],
+		"values": [
+			[ "crypto_aes_cbc_128", "", "../../examples/driverlib/single_core/security/crypto_aes_cbc_128/ccs/crypto_aes_cbc_128.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], "",[""] ],
+			[ "crypto_aes_cbc_256", "", "../../examples/driverlib/single_core/security/crypto_aes_cbc_256/ccs/crypto_aes_cbc_256.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], "",[""] ],
+			[ "crypto_aes_cfb", "", "../../examples/driverlib/single_core/security/crypto_aes_cfb/ccs/crypto_aes_cfb.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], "",[""] ],
+			[ "crypto_aes_cmac_128", "", "../../examples/driverlib/single_core/security/crypto_aes_cmac_128/ccs/crypto_aes_cmac_128.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], "",[""] ],
+			[ "crypto_aes_cmac_256", "", "../../examples/driverlib/single_core/security/crypto_aes_cmac_256/ccs/crypto_aes_cmac_256.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], "",[""] ],
+			[ "crypto_aes_ctr", "", "../../examples/driverlib/single_core/security/crypto_aes_ctr/ccs/crypto_aes_ctr.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], "",[""] ],
+			[ "crypto_aes_ecb_128", "", "../../examples/driverlib/single_core/security/crypto_aes_ecb_128/ccs/crypto_aes_ecb_128.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], "",[""] ],
+			[ "crypto_aes_ecb_128", "", "../../examples/driverlib/single_core/security/crypto_aes_ecb_256/ccs/crypto_aes_ecb_128.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], "",[""] ],
+			[ "crypto_hmac_sha256", "", "../../examples/driverlib/single_core/security/crypto_hmac_sha256/ccs/crypto_hmac_sha256.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], "",[""] ],
+			[ "crypto_hmac_sha512", "", "../../examples/driverlib/single_core/security/crypto_hmac_sha512/ccs/crypto_hmac_sha512.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], "",[""] ],
+			[ "crypto_sha_256", "", "../../examples/driverlib/single_core/security/crypto_sha_256/ccs/crypto_sha_256.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], "",[""] ],
+			[ "crypto_sha_512", "", "../../examples/driverlib/single_core/security/crypto_sha_512/ccs/crypto_sha_512.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], "",[""] ]
 		]
 	},
 	{
@@ -798,7 +859,7 @@
 		"setmacro": "f29h85x_sdk_driverlib_examples_set_single_core_ssu",
 		"fields": ["name", "description", "location", "boards", "shortDesc", "Tags"],
 		"values": [
-			[ "ssu_ex1_mode2", "This example demonstrates how to create and apply Security settings using SSU module. It creates multiple LINKS and associated APRs and Stacks in SSUMODE 2. The code execution switches between LINKs in a secure manner. The memory regions are created and are protected using APR configurations", "../../examples/driverlib/single_core/ssu/ssu_ex1_mode2/ccs/ssu_ex1_mode2.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], " SSU Mode2",[" SSU"] ]
+			[ "ssu_ex1", "", "../../examples/driverlib/single_core/ssu/ssu_ex1/ccs/ssu_ex1.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], "",[""] ]
 		]
 	},
 	{
@@ -851,7 +912,12 @@
 		"setmacro": "f29h85x_sdk_driverlib_examples_set_single_core_wadi",
 		"fields": ["name", "description", "location", "boards", "shortDesc", "Tags"],
 		"values": [
-			[ "wadi_ex1_duty_freq_capture", "", "../../examples/driverlib/single_core/wadi/wadi_ex1_duty_freq_capture/ccs/wadi_ex1_duty_freq_capture.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], "",[""] ]
+			[ "wadi_ex1_duty_freq_capture", "- This example configures WADI1 Block 1 and Block 2 as follows    - WADI1 Block 1 has an input from the PWM using INPUTXBAR which is connected to GPIO0.    - Pulse width checking is enabled with defined margin of error    - WADI1 Block 2 has an input from the PWM using INPUTXBAR which is connected to GPIO1.    - Software trigger and synchronized triggers are enabled.    - Frequency checking is enabled with defined margin of error- Expected Failures on WADI block 1/2- Under WADI Block 1's BLKERRINFO.ERRCNT should be 0x3D6- Measured pulse width of WADI is ~0x3D6- Under WADI Block 2's BLKERRINFO.ERRCNT should be 0x1- Measured Frequency counter is 1 edge occurence in timewindow of 2000- The WADI block has error status register that can be used to monitor if any erroneous signals occur. (BLKERRSTS)- This example also makes use of the Input X-BAR. GPIO0 (ePWM1Aoutput) is routed to the input X-BAR, from which it is routed to WADI SIG1 input.", "../../examples/driverlib/single_core/wadi/wadi_ex1_duty_freq_capture/ccs/wadi_ex1_duty_freq_capture.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], " Wadi Duty Cycle and Frequency Capture",[" WADI"] ],
+			[ "wadi_ex2_deadband_check", "- This example configures WADI1 Block 1 and Block 2 as follows- WADI1 Block 1 has two inputs from the input crossbar and deadband check is enabled between them.- GPIO0 and GPIO1 are routed to the input X-BAR, from which it is routed to wadi block1 signal1 and signal2 respectively.- Hardware trigger and synchronized trigger are enabled for trigger1 and trigger2.- Signal to signal deadband is configured by using compare parameters,comparetype and signal polarity.- SIGTOSIG_DBCMPAERR and SIGTOSIG_DBCMPBERR flags are raised under BLKERRSTS register.", "../../examples/driverlib/single_core/wadi/wadi_ex2_deadband_check/ccs/wadi_ex2_deadband_check.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], " Wadi Deadband Check",[" WADI"] ],
+			[ "wadi_ex3_moving_window_freq_capture", "- This example configures WADI1 Block 1 and Block 2 as follows- WADI1 Block 1 has two inputs from the input crossbar and frequency check is enabled on one of the signals.- GPIO0 and GPIO1 are routed to the input X-BAR from which it is routed to WADI block 1 signal 1 and signal 2 respectively.- Hardware trigger is enabled as trigger1 for signal1.- Here frequency check is enabled in moving window average mode and error flags are raised based on the compare values along with the margins.", "../../examples/driverlib/single_core/wadi/wadi_ex3_moving_window_freq_capture/ccs/wadi_ex3_moving_window_freq_capture.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], " Wadi Moving Window Frequency Capture",[" WADI"] ],
+			[ "wadi_ex4_sig_to_sig_freq_capture", "- This example configures WADI1 Block 1 as follows- WADI1 Block 1 has two inputs from the input crossbar and freq check is also enabled for both the signals of the block.- Hardware trigger and synchronized trigger signals are configured.- Here, signal to signal frequency check is done through fixed window (movingtime = 0). - Aggregate mode and average mode is activated(checks ERRTYPE in BLKERRINFO register).- Signal 1 is taken through GPIO0 from epwm0 and signal 2 is taken through GPIO2 from epwm1.", "../../examples/driverlib/single_core/wadi/wadi_ex4_sig_to_sig_freq_capture/ccs/wadi_ex4_sig_to_sig_freq_capture.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], " Wadi Signal to Signal Frequency Capture",[" WADI"] ],
+			[ "wadi_ex5_sig_freq_with_sss", "- This example configures WADI1 Block 1 as follows- WADI1 Block 1 has two inputs from the input crossbar and pulse width check and freq check is also enabled for both the signals of the block- The SSS is also configured to override the signal 1 block 1.- 2 Events are configured using SSS. Event1 keep tracks of the errors for signal1 of block1 and Event2 keep tracks of the errors for signal2 of block1.- Trigger sequence is 1->2 and then 2 triggers the SSS that means output event1 is triggered by event2.- Output event 1 overrides both signal1 and signa2 of block 1- Output event 2 is used  to override the value to low- Output is routed to output X-BAR which is connected to GPIO14 and GPIO3.", "../../examples/driverlib/single_core/wadi/wadi_ex5_sig_freq_with_sss/ccs/wadi_ex5_sig_freq_with_sss.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], " Wadi Signal Frequency with SSS",[" WADI"] ],
+			[ "wadi_ex6_pw_with_dma_trigger", "- This example configures WADI1 Block 1 as follows- WADI1 Block 1 has an input from the input Xbar and pulse width check is enabled in that block for signal 1- Signal1 is taken from GPIO2 which is connected to the EPWMA.- RTDMA trigger is enabled for the block.- Filtered Write is enabled for the block.- Errors will occur in compare A and compare B register values so that filtered writes will update SIG1CMPA and SIG1CMPB register according for which register values errors are occured.", "../../examples/driverlib/single_core/wadi/wadi_ex6_pw_with_dma_trigger/ccs/wadi_ex6_pw_with_dma_trigger.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], " Wadi Pulse width with DMA trigger",[" WADI"] ]
 		]
 	},
 	{
@@ -873,8 +939,7 @@
 		"setmacro": "f29h85x_sdk_driverlib_examples_set_multi_core_empty_project",
 		"fields": ["name", "description", "location", "boards", "shortDesc", "Tags"],
 		"values": [
-			[ "empty_project_dummy_cert_multi", "", "../../examples/driverlib/multi_core/empty_project/empty_project_dummy_cert_multi/ccs/empty_project_dummy_cert_multi.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], " Converts the voltages on an EPWM trigger anmd demonstrates parallelism across ADCs.",[" ADC"] ],
-			[ "empty_project_multi", "", "../../examples/driverlib/multi_core/empty_project/empty_project_multi/ccs/empty_project_multi.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], "",[""] ]
+			[ "empty_project_multi", "", "../../examples/driverlib/multi_core/empty_project/empty_project_multi/ccs/empty_project_multi.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], " Converts the voltages on an EPWM trigger anmd demonstrates parallelism across ADCs.",[" ADC"] ]
 		]
 	},
 	{
@@ -899,7 +964,8 @@
 		"fields": ["name", "description", "location", "boards", "shortDesc", "Tags"],
 		"values": [
 			[ "ipc_ex1_basic_cpu1_cpu2_multi", "This example demonstrates how to configure IPC and pass information from C29x1 to C29x2 core without message queues.", "../../examples/driverlib/multi_core/ipc/ipc_ex1_basic_cpu1_cpu2_multi/ccs/ipc_ex1_basic_cpu1_cpu2_multi.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], " IPC message passing between CPU1 and CPU2",[" IPC"," CPU2"] ],
-			[ "ipc_ex2_basic_cpu1_cpu3_multi", "This example demonstrates how to configure IPC and pass information from C29x1 to C29x3 core without message queues.", "../../examples/driverlib/multi_core/ipc/ipc_ex2_basic_cpu1_cpu3_multi/ccs/ipc_ex2_basic_cpu1_cpu3_multi.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], " IPC message passing between CPU1 and CPU3",[" IPC"," CPU3"] ]
+			[ "ipc_ex2_basic_cpu1_cpu3_multi", "This example demonstrates how to configure IPC and pass information from C29x1 to C29x3 core without message queues.", "../../examples/driverlib/multi_core/ipc/ipc_ex2_basic_cpu1_cpu3_multi/ccs/ipc_ex2_basic_cpu1_cpu3_multi.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], " IPC message passing between CPU1 and CPU3",[" IPC"," CPU3"] ],
+			[ "ipc_ex3_basic_cpu1_cpu3_multi", "", "../../examples/driverlib/multi_core/ipc/ipc_ex3_basic_cpu1_cpu3_multi/ccs/ipc_ex3_basic_cpu1_cpu3_multi.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], "",[""] ]
 		]
 	},
 	{
@@ -923,20 +989,8 @@
 		"values": [
 			[ "ssuIpc_ex1_basic_cpu1_cpu3_multi", "This example demonstrates the IPC using shared memory between CPU1 and CPU3. The SSUMODE enabled is 2. CPU1 creates a LINK for IPC message, writes message to shared memory to which it has Read and write access. CPU3 creates a LINK for IPC message, it reads the message from shared memory to which it has only read access", "../../examples/driverlib/multi_core/ssu/ssuIpc_ex1_basic_cpu1_cpu3_multi/ccs/ssuIpc_ex1_basic_cpu1_cpu3_multi.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], " SSU Multicore IPC Mode2",[" SSU"] ],
 			[ "ssuIpc_ex1_basic_cpu1_cpu3_multi_starter", "", "../../examples/driverlib/multi_core/ssu/ssuIpc_ex1_basic_cpu1_cpu3_multi_starter/ccs/ssuIpc_ex1_basic_cpu1_cpu3_multi_starter.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], "",[""] ],
-			[ "ssuIpc_ex2_basic_cpu1_cpu2_multi", "", "../../examples/driverlib/multi_core/ssu/ssuIpc_ex2_basic_cpu1_cpu2_multi/ccs/ssuIpc_ex2_basic_cpu1_cpu2_multi.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], "",[""] ]
-		]
-	},
-	{
-		"setmacro": "f29h85x_sdk_examples_set_kernel_dpl_nortos",
-		"fields": ["name", "description", "location", "boards", "shortDesc", "Tags"],
-		"values": [
-			[ "DebugP_ccs_console", "", "../../examples/kernel/dpl/nortos/DebugP_ccs_console/ccs/DebugP_ccs_console.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], "",[""] ],
-			[ "HwiP_int", "", "../../examples/kernel/dpl/nortos/HwiP_int/ccs/HwiP_int.projectspec",[""], "",[""] ],
-			[ "HwiP_rtint", "", "../../examples/kernel/dpl/nortos/HwiP_rtint/ccs/HwiP_rtint.projectspec",[""], "",[""] ],
-			[ "SemaphoreP_binary", "", "../../examples/kernel/dpl/nortos/SemaphoreP_binary/ccs/SemaphoreP_binary.projectspec",[""], "",[""] ],
-			[ "SemaphoreP_count", "", "../../examples/kernel/dpl/nortos/SemaphoreP_count/ccs/SemaphoreP_count.projectspec",[""], "",[""] ],
-			[ "SemaphoreP_mutex", "", "../../examples/kernel/dpl/nortos/SemaphoreP_mutex/ccs/SemaphoreP_mutex.projectspec",[""], "",[""] ],
-			[ "TimerP", "", "../../examples/kernel/dpl/nortos/TimerP/ccs/TimerP.projectspec",[""], "",[""] ]
+			[ "ssuIpc_ex2_basic_cpu1_cpu2_multi", "", "../../examples/driverlib/multi_core/ssu/ssuIpc_ex2_basic_cpu1_cpu2_multi/ccs/ssuIpc_ex2_basic_cpu1_cpu2_multi.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], "",[""] ],
+			[ "ssuRTDMA_ex3_basic_cpu1_cpu2_multi", "", "../../examples/driverlib/multi_core/ssu/ssuRTDMA_ex3_basic_cpu1_cpu2_multi/ccs/ssuRTDMA_ex3_basic_cpu1_cpu2_multi.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], "",[""] ]
 		]
 	},
 	{
@@ -944,9 +998,22 @@
 		"fields": ["name", "description", "location", "boards", "shortDesc", "Tags"],
 		"values": [
 			[ "ClockP", "", "../../examples/kernel/dpl/freertos/ClockP/ccs/ClockP.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], "",[""] ],
-			[ "EventP", "", "../../examples/kernel/dpl/freertos/EventP/ccs/EventP.projectspec",[""], "",[""] ],
-			[ "SemaphoreP_mutex_binary", "", "../../examples/kernel/dpl/freertos/SemaphoreP_mutex_binary/ccs/SemaphoreP_mutex_binary.projectspec",[""], "",[""] ],
-			[ "TaskP", "", "../../examples/kernel/dpl/freertos/TaskP/ccs/TaskP.projectspec",[""], "",[""] ]
+			[ "EventP", "", "../../examples/kernel/dpl/freertos/EventP/ccs/EventP.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], "",[""] ],
+			[ "SemaphoreP_mutex_binary", "", "../../examples/kernel/dpl/freertos/SemaphoreP_mutex_binary/ccs/SemaphoreP_mutex_binary.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], "",[""] ],
+			[ "TaskP", "", "../../examples/kernel/dpl/freertos/TaskP/ccs/TaskP.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], "",[""] ]
+		]
+	},
+	{
+		"setmacro": "f29h85x_sdk_examples_set_kernel_dpl_nortos",
+		"fields": ["name", "description", "location", "boards", "shortDesc", "Tags"],
+		"values": [
+			[ "DebugP_ccs_console", "", "../../examples/kernel/dpl/nortos/DebugP_ccs_console/ccs/DebugP_ccs_console.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], "",[""] ],
+			[ "HwiP_int", "", "../../examples/kernel/dpl/nortos/HwiP_int/ccs/HwiP_int.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], "",[""] ],
+			[ "HwiP_rtint", "", "../../examples/kernel/dpl/nortos/HwiP_rtint/ccs/HwiP_rtint.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], "",[""] ],
+			[ "SemaphoreP_binary", "", "../../examples/kernel/dpl/nortos/SemaphoreP_binary/ccs/SemaphoreP_binary.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], "",[""] ],
+			[ "SemaphoreP_count", "", "../../examples/kernel/dpl/nortos/SemaphoreP_count/ccs/SemaphoreP_count.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], "",[""] ],
+			[ "SemaphoreP_mutex", "", "../../examples/kernel/dpl/nortos/SemaphoreP_mutex/ccs/SemaphoreP_mutex.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], "",[""] ],
+			[ "TimerP", "", "../../examples/kernel/dpl/nortos/TimerP/ccs/TimerP.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], "",[""] ]
 		]
 	},
 	{
@@ -954,10 +1021,10 @@
 		"fields": ["name", "description", "location", "boards", "shortDesc", "Tags"],
 		"values": [
 			[ "control+rtos_demo", "", "../../examples/kernel/freertos/single_core/control+rtos_demo/ccs/control+rtos_demo.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], "",[""] ],
-			[ "freertos_ex1_two_tasks_syscfg", "", "../../examples/kernel/freertos/single_core/freertos_ex1_two_tasks_syscfg/ccs/freertos_ex1_two_tasks_syscfg.projectspec",[""], "",[""] ],
-			[ "freertos_ex2_interrupt_semaphore_syscfg", "", "../../examples/kernel/freertos/single_core/freertos_ex2_interrupt_semaphore_syscfg/ccs/freertos_ex2_interrupt_semaphore_syscfg.projectspec",[""], "",[""] ],
-			[ "freertos_port_validation_tests", "", "../../examples/kernel/freertos/single_core/freertos_port_validation_tests/ccs/freertos_port_validation_tests.projectspec",[""], "",[""] ],
-			[ "freertos_ssu_demo", "This example demonstrates usage of FreeRTOS with SSU functionality.Sysconfig is used to setup all the peripherals, FreeRTOS, and also the SSUsettings", "../../examples/kernel/freertos/single_core/freertos_ssu_demo/ccs/freertos_ssu_demo.projectspec",[""], " FreeRTOS + SSU operation demo ",[" FreeRTOS"," SSU"] ]
+			[ "freertos_ex1_two_tasks_syscfg", "", "../../examples/kernel/freertos/single_core/freertos_ex1_two_tasks_syscfg/ccs/freertos_ex1_two_tasks_syscfg.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], "",[""] ],
+			[ "freertos_ex2_interrupt_semaphore_syscfg", "", "../../examples/kernel/freertos/single_core/freertos_ex2_interrupt_semaphore_syscfg/ccs/freertos_ex2_interrupt_semaphore_syscfg.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], "",[""] ],
+			[ "freertos_port_validation_tests", "", "../../examples/kernel/freertos/single_core/freertos_port_validation_tests/ccs/freertos_port_validation_tests.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], "",[""] ],
+			[ "freertos_ssu_demo", "This example demonstrates usage of FreeRTOS with SSU functionality.Sysconfig is used to setup all the peripherals, FreeRTOS, and also the SSUsettings", "../../examples/kernel/freertos/single_core/freertos_ssu_demo/ccs/freertos_ssu_demo.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], " FreeRTOS + SSU operation demo ",[" FreeRTOS"," SSU"] ]
 		]
 	},
 	{
@@ -1011,6 +1078,7 @@
 			[ "floorf_example", "floorf() example", "../../examples/rtlibs/fastmath/tmu/ccs/floorf_example.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], " floorf() example",[" FLOORF"] ],
 			[ "fmodf_example", "fmodf() example", "../../examples/rtlibs/fastmath/tmu/ccs/fmodf_example.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], " fmodf() example",[" FMODF"] ],
 			[ "logf_example", "logf() example", "../../examples/rtlibs/fastmath/tmu/ccs/logf_example.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], " logf() example",[" LOGF"] ],
+			[ "powf_example", "powf() example", "../../examples/rtlibs/fastmath/tmu/ccs/powf_example.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], " powf() example",[" POWF"] ],
 			[ "roundf_example", "roundf() example", "../../examples/rtlibs/fastmath/tmu/ccs/roundf_example.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], " roundf() example",[" ROUNDF"] ],
 			[ "sinf_example", "sinf() example", "../../examples/rtlibs/fastmath/tmu/ccs/sinf_example.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], " sinf() example",[" SINF"] ],
 			[ "truncf_example", "truncf() example", "../../examples/rtlibs/fastmath/tmu/ccs/truncf_example.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], " truncf() example",[" TRUNCF"] ]
@@ -1028,9 +1096,9 @@
 		"fields": ["name", "description", "location", "boards", "shortDesc", "Tags"],
 		"values": [
 			[ "f29h85x_cpu1_cia402_solution", "", "../../examples/communication/Ethercat/examples/f29h85x_cpu1_cia402_solution/ccs/f29h85x_cpu1_cia402_solution.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], "",[""] ],
-			[ "f29h85x_cpu1_echoback_solution", "", "../../examples/communication/Ethercat/examples/f29h85x_cpu1_echoback_solution/ccs/f29h85x_cpu1_echoback_solution.projectspec",[""], "",[""] ],
-			[ "f29h85x_cpu1_foe_download_solution", "", "../../examples/communication/Ethercat/examples/f29h85x_cpu1_foe_download_solution/ccs/f29h85x_cpu1_foe_download_solution.projectspec",[""], "",[""] ],
-			[ "f29h85x_cpu1_pdi_hal_test_app", "", "../../examples/communication/Ethercat/examples/f29h85x_cpu1_pdi_hal_test_app/ccs/f29h85x_cpu1_pdi_hal_test_app.projectspec",[""], "",[""] ]
+			[ "f29h85x_cpu1_echoback_solution", "", "../../examples/communication/Ethercat/examples/f29h85x_cpu1_echoback_solution/ccs/f29h85x_cpu1_echoback_solution.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], "",[""] ],
+			[ "f29h85x_cpu1_foe_download_solution", "", "../../examples/communication/Ethercat/examples/f29h85x_cpu1_foe_download_solution/ccs/f29h85x_cpu1_foe_download_solution.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], "",[""] ],
+			[ "f29h85x_cpu1_pdi_hal_test_app", "", "../../examples/communication/Ethercat/examples/f29h85x_cpu1_pdi_hal_test_app/ccs/f29h85x_cpu1_pdi_hal_test_app.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], "",[""] ]
 		]
 	},
 	{
@@ -1038,7 +1106,7 @@
 		"fields": ["name", "description", "location", "boards", "shortDesc", "Tags"],
 		"values": [
 			[ "pmbus_controller_example", "", "../../examples/communication/PMBus/pmbus_controller/pmbus_controller_example.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], "",[""] ],
-			[ "pmbus_target_example", "", "../../examples/communication/PMBus/pmbus_target/pmbus_target_example.projectspec",[""], "",[""] ]
+			[ "pmbus_target_example", "", "../../examples/communication/PMBus/pmbus_target/pmbus_target_example.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], "",[""] ]
 		]
 	},
 	{
@@ -1046,7 +1114,7 @@
 		"fields": ["name", "description", "location", "boards", "shortDesc", "Tags"],
 		"values": [
 			[ "Ipc_Hal_Example_Interrupt_C29x3", "", "../../examples/ipc_hal/Ipc_Hal_Example_Interrupt_C29x3/ccs/Ipc_Hal_Example_Interrupt_C29x3.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], "",[""] ],
-			[ "Ipc_Hal_Example_Polling_C29x3", "", "../../examples/ipc_hal/Ipc_Hal_Example_Polling_C29x3/ccs/Ipc_Hal_Example_Polling_C29x3.projectspec",[""], "",[""] ]
+			[ "Ipc_Hal_Example_Polling_C29x3", "", "../../examples/ipc_hal/Ipc_Hal_Example_Polling_C29x3/ccs/Ipc_Hal_Example_Polling_C29x3.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], "",[""] ]
 		]
 	},
 	{
@@ -1054,6 +1122,30 @@
 		"fields": ["name", "description", "location", "boards", "shortDesc", "Tags"],
 		"values": [
 			[ "aci_signal_chain_benchmark_example", "", "../../examples/benchmarks/aci_signal_chain_benchmark/ccs/aci_signal_chain_benchmark_example.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], "",[""] ]
+		]
+	},
+	{
+		"setmacro": "f29h85x_sdk_examples_set_pmic",
+		"fields": ["name", "description", "location", "boards", "shortDesc", "Tags"],
+		"values": [
+			[ "pmic_qa_watchdog_reset_tps65036xx", "", "../../examples/pmic/pmic_qa_watchdog_reset_tps65036xx/ccs/pmic_qa_watchdog_reset_tps65036xx.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], "",[""] ],
+			[ "pmic_qa_watchdog_reset_tps653860xx", "", "../../examples/pmic/pmic_qa_watchdog_reset_tps653860xx/ccs/pmic_qa_watchdog_reset_tps653860xx.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], "",[""] ],
+			[ "pmic_trigger_watchdog_reset_tps65036xx", "", "../../examples/pmic/pmic_trigger_watchdog_reset_tps65036xx/ccs/pmic_trigger_watchdog_reset_tps65036xx.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], "",[""] ],
+			[ "pmic_user_reg_cfg_tps65036xx", "", "../../examples/pmic/pmic_user_reg_cfg_tps65036xx/ccs/pmic_user_reg_cfg_tps65036xx.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], "",[""] ],
+			[ "pmic_user_reg_cfg_tps653860xx", "", "../../examples/pmic/pmic_user_reg_cfg_tps653860xx/ccs/pmic_user_reg_cfg_tps653860xx.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], "",[""] ]
+		]
+	},
+	{
+		"setmacro": "f29h85x_sdk_examples_set_sdl",
+		"fields": ["name", "description", "location", "boards", "shortDesc", "Tags"],
+		"values": [
+			[ "sdl_dcc_example", "", "../../examples/sdl/dcc/dcc_example/ccs/sdl_dcc_example.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], "",[""] ],
+			[ "sdl_esm_errorsts_example", "", "../../examples/sdl/esm/esm_errorsts_example/ccs/sdl_esm_errorsts_example.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], "",[""] ],
+			[ "sdl_esm_mmrparity_example", "", "../../examples/sdl/esm/esm_mmrparity_example/ccs/sdl_esm_mmrparity_example.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], "",[""] ],
+			[ "sdl_lcm_example", "", "../../examples/sdl/lcm/lcm_example/ccs/sdl_lcm_example.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], "",[""] ],
+			[ "sdl_memss_example", "", "../../examples/sdl/memss/memss_example/ccs/sdl_memss_example.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], "",[""] ],
+			[ "sdl_sic_example", "", "../../examples/sdl/sic/sic_example/ccs/sdl_sic_example.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], "",[""] ],
+			[ "sdl_sysctl_example", "", "../../examples/sdl/sysctl/sysctl_example/ccs/sdl_sysctl_example.projectspec",["F29H85X-SOM-EVM","LAUNCHXL-F29H85X"], "",[""] ]
 		]
 	}
 ]

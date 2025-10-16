@@ -1,14 +1,23 @@
-% var nameOfModule = "dlt";
-% var module = system.modules['/driverlib/' + nameOfModule + '.js'];
 % let Common   = system.getScript("/driverlib/Common.js");
+%
+% if (Common.isAllocationOff()) {
+	% var module = system.modules['/driverlib/dlt.js'];
+	% var inst = module.$static;
+% }
+% else {
+	% var module = system.modules['/driverlib/dlt_inst.js'];
+	% var inst = module.$instances[0];
+% }
 % var nameOfPeripheral = module.peripheralName;
-% var inst = module.$static;
+% if (module.$static != null) {
 //*****************************************************************************
 //
 // DLT Configurations
 //
 //*****************************************************************************
 void `nameOfPeripheral`_init(){
+% }
+% if (inst != null) {
 	DLT_enableModule();
 	DLT_enableLinkPermission(SSU_LINK2);
 %   if(inst.enableERADFilter) {
@@ -55,4 +64,7 @@ void `nameOfPeripheral`_init(){
 	DLT_enableInterrupt(`events`);
 %   }
 	DLT_resetTimer();
+% }
+% if (module.$static != null) {
 }
+% }

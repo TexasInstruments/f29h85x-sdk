@@ -2,13 +2,12 @@
   <project
         name="f29h85x_pmbus_target_example"
         device       = "F29H850TU9"
-        cgtVersion   = "0.1.0"
-        toolChain="TICLANG"
+
+        cgtVersion   = "2.0.0"
+        toolChain    = "TICLANG"
+
         products     = "sysconfig;f29h85x-sdk"
         connection   = "TIXDS110_Connection.xml"
-        launchWizard="False"
-        enableSysConfigTool="true"
-        sysConfigBuildOptions="--product ${C29SDK_ROOT}/.metadata/sdk.json"
         >
 
     <configuration name="RAM" compilerBuildOptions="-O1 -g -DDEBUG -Qunused-arguments -I${PROJECT_ROOT}/device -I${PMBUS_ROOT}/include -I${DLIB_ROOT} -I${BITFIELDS_ROOT} -I${PMBUS_EXAMPLE_COMMON_ROOT}/device_config -I${PMBUS_EXAMPLE_COMMON_ROOT}/target -I${PMBUS_EXAMPLE_COMMON_ROOT}/include -D_PMBUS_TARGET -D_RAM" linkerBuildOptions="-i${PMBUS_ROOT}/ccs/ -i${DLIB_ROOT}/ccs/ -lF29H85x_PMBus_Communication_Stack.lib -ldriverlib.lib --diag_suppress=10325-D --diag_suppress=10063-D --stack_size=0x2000 --heap_size=0x400" />

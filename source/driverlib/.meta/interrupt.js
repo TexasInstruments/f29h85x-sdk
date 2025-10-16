@@ -129,14 +129,14 @@ let globalConfig = [
     {
         name            : "WARNRTISP",
         displayName     : "RTINT Stack Pointer Warning Level",
-        longDescription : "When RTINT stack pointer crosses this level, only interrupts above the a certain priority (configured below) will be serviced.",
+        longDescription : "When the RTINT stack pointer crosses this level, only interrupts above a certain priority level (configured below) will be serviced.",
         default         : 15,
         options         : [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15].map(x=> { return {name:x}})
     },
     {
         name            : "WARNRTISP_PRIO_LEVEL",
         displayName     : "RTINT Stack Pointer Warning Priority level",
-        longDescription : "When stack pointer crosses the warning level, only interrupts with priority than this level will be serviced.",
+        longDescription : "When the RTINT stack pointer crosses this level, only interrupts higher in priority than this level will be serviced.",
         default         : 0
     },
     {

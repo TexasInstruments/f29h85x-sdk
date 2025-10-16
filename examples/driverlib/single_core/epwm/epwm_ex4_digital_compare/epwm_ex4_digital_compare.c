@@ -9,15 +9,15 @@
 //!
 //! This example configures ePWM1 as follows
 //!  - ePWM1 with DCAEVT1 forcing the ePWM output LOW
-//!  - GPIO25 is used as the input to the INPUT XBAR INPUT1
+//!  - GPIO2 is used as the input to the INPUT XBAR INPUT1
 //!  - INPUT1 (from INPUT XBAR) is used as the source for DCAEVT1
-//!  - GPIO25's PULL-UP resistor is enabled, in order to test the trip, PULL
+//!  - GPIO2's PULL-UP resistor is enabled, in order to test the trip, PULL
 //!    this pin to GND
 //!
 //! \b External \b Connections \n
 //! - GPIO0 EPWM1A
 //! - GPIO1 EPWM1B
-//! - GPIO25 TZ1, pull this pin low to trip the ePWM
+//! - GPIO2 TZ1, pull this pin low to trip the ePWM
 //!
 //! \b Watch \b Variables \n
 //! - None.

@@ -199,7 +199,8 @@ let config = [
                 description : 'Instance of the DCC used.',
                 hidden      : false,
                 default     : DCC_INSTANCE[0].name,
-                options     : DCC_INSTANCE
+                options     : DCC_INSTANCE,
+                shouldBeAllocatedAsResource: true,
             },
             {
                  name        : "freqAutofill",
@@ -613,9 +614,11 @@ function moduleInstances(inst)
             moduleName: "/driverlib/perConfig.js",
             collapsed: false,
             requiredArgs:{
+                cpuSel: inst.$assignedContext ?? system.context,
                 pinmuxPeripheralModule : "",
                 peripheralInst: inst.dccBase.replace("_BASE", "")
-            }
+            },
+            shouldBeAllocatedAsResource : true
         }
     )
 
@@ -625,14 +628,15 @@ function moduleInstances(inst)
 var dccModule = {
     peripheralName        : "DCC",
     displayName           : "DCC",
-    maxInstances          : DCC_INSTANCE.length,
+    totalMaxInstances     : DCC_INSTANCE.length,
     defaultInstanceName   : "myDCC",
     description           : "DCC Peripheral",
     longDescription       : longDescription,
     filterHardware        : filterHardware,
-    config                : config,
+    config                : Common.filterConfigsIfInSetupMode(config),
     moduleInstances       : moduleInstances,
     sharedModuleInstances : sharedModuleInstances,
+    shouldBeAllocatedAsResource: true,
     templates: {
      boardc : "/driverlib/dcc/dcc.board.c.xdt",
      boardh : "/driverlib/dcc/dcc.board.h.xdt"

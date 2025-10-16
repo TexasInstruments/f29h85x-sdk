@@ -88,6 +88,6 @@
 #include "sysctl.h"
 #include "uart.h"
 #include "xbar.h"
-
+#include "wadi.h"
 
 #endif  // end of DRIVERLIB_H definition

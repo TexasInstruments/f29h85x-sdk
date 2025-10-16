@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2022-24 Texas Instruments Incorporated
+ *  Copyright (c) 2025-24 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -105,6 +105,8 @@ extern "C"
 #define HSM_MSG_CONFIGURE_OTFA                   (0x9056)
 /** @brief Read OTFA service ID*/
 #define HSM_MSG_READ_OTFA                        (0x9057)
+/** @brief Validate Sec-Cfg service ID*/
+#define HSM_MSG_PROC_AUTH_BOOT_SEC_CFG           (0x9058)
 /* message flags */
 
 /**
@@ -167,6 +169,27 @@ extern "C"
  *
  */
 #define HSM_FIRMWARE_CHUNK_SIZE                      (16384U)
+
+/**
+ * @brief
+ * Certificate type for C29 CPU1 Sec-cfg
+ *
+ */
+#define CERT_TYPE_SECCFG_CPU1   (0x3U)
+
+/**
+ * @brief
+ * Certificate type for C29 CPU2 Sec-cfg
+ *
+ */
+#define CERT_TYPE_SECCFG_CPU2   (0x5U)
+
+/**
+ * @brief
+ * Certificate type for C29 CPU3 Sec-cfg
+ *
+ */
+#define CERT_TYPE_SECCFG_CPU3   (0x6U)
 
 /**
  * @brief

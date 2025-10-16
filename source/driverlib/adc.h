@@ -963,7 +963,6 @@ typedef struct
 //
 //*****************************************************************************
 #ifdef DEBUG
-__attribute__((always_inline))
 static inline bool
 ADC_isBaseValid(uint32_t base)
 {
@@ -996,7 +995,6 @@ ADC_isBaseValid(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ADC_setPrescaler(uint32_t base, ADC_ClkPrescale clkPrescale)
 {
@@ -1052,7 +1050,6 @@ ADC_setPrescaler(uint32_t base, ADC_ClkPrescale clkPrescale)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ADC_setupSOC(uint32_t base, ADC_SOCNumber socNumber, ADC_Trigger trigger,
              ADC_Channel channel, uint32_t sampleWindow)
@@ -1094,7 +1091,6 @@ ADC_setupSOC(uint32_t base, ADC_SOCNumber socNumber, ADC_Trigger trigger,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ADC_disableIntRefloConnection(void)
 {
@@ -1126,7 +1122,6 @@ ADC_disableIntRefloConnection(void)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ADC_selectSOCExtChannel(uint32_t base, ADC_SOCNumber socNumber,
                         uint16_t extChannel)
@@ -1169,7 +1164,6 @@ ADC_selectSOCExtChannel(uint32_t base, ADC_SOCNumber socNumber,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ADC_forceRepeaterTrigger(uint32_t base, uint16_t repInstance)
 {
@@ -1202,7 +1196,6 @@ ADC_forceRepeaterTrigger(uint32_t base, uint16_t repInstance)
 //! \b ADC_REPEATER_TRIGGER_OVERFLOW.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline uint16_t
 ADC_getRepeaterStatus(uint32_t base, uint16_t repInstance)
 {
@@ -1247,7 +1240,6 @@ ADC_getRepeaterStatus(uint32_t base, uint16_t repInstance)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ADC_setInterruptSOCTrigger(uint32_t base, ADC_SOCNumber socNumber,
                            ADC_IntSOCTrigger trigger)
@@ -1300,7 +1292,6 @@ ADC_setInterruptSOCTrigger(uint32_t base, ADC_SOCNumber socNumber,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ADC_setInterruptPulseMode(uint32_t base, ADC_PulseMode pulseMode)
 {
@@ -1337,7 +1328,6 @@ ADC_setInterruptPulseMode(uint32_t base, ADC_PulseMode pulseMode)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ADC_setInterruptCycleOffset(uint32_t base, uint16_t cycleOffset)
 {
@@ -1367,7 +1357,6 @@ ADC_setInterruptCycleOffset(uint32_t base, uint16_t cycleOffset)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ADC_enableAltDMATiming(uint32_t base)
 {
@@ -1397,7 +1386,6 @@ ADC_enableAltDMATiming(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ADC_disableAltDMATiming(uint32_t base)
 {
@@ -1430,7 +1418,6 @@ ADC_disableAltDMATiming(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ADC_enableExtMuxPreselect(uint32_t base)
 {
@@ -1461,7 +1448,6 @@ ADC_enableExtMuxPreselect(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ADC_disableExtMuxPreselect(uint32_t base)
 {
@@ -1498,7 +1484,6 @@ ADC_disableExtMuxPreselect(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ADC_selectOffsetTrimMode(uint32_t base, ADC_OffsetTrim mode)
 {
@@ -1536,7 +1521,6 @@ ADC_selectOffsetTrimMode(uint32_t base, ADC_OffsetTrim mode)
 //! and \b false if it is not.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline bool
 ADC_getIntResultStatus(uint32_t base, ADC_IntNumber adcIntNum)
 {
@@ -1567,7 +1551,6 @@ ADC_getIntResultStatus(uint32_t base, ADC_IntNumber adcIntNum)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ADC_enableConverter(uint32_t base)
 {
@@ -1595,7 +1578,6 @@ ADC_enableConverter(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ADC_disableConverter(uint32_t base)
 {
@@ -1627,7 +1609,6 @@ ADC_disableConverter(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ADC_forceSOC(uint32_t base, ADC_SOCNumber socNumber)
 {
@@ -1663,7 +1644,6 @@ ADC_forceSOC(uint32_t base, ADC_SOCNumber socNumber)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ADC_forceMultipleSOC(uint32_t base, uint32_t socMask)
 {
@@ -1696,7 +1676,6 @@ ADC_forceMultipleSOC(uint32_t base, uint32_t socMask)
 //! set and \b false if it is not.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline bool
 ADC_getInterruptStatus(uint32_t base, ADC_IntNumber adcIntNum)
 {
@@ -1728,7 +1707,6 @@ ADC_getInterruptStatus(uint32_t base, ADC_IntNumber adcIntNum)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ADC_clearInterruptStatus(uint32_t base, ADC_IntNumber adcIntNum)
 {
@@ -1763,7 +1741,6 @@ ADC_clearInterruptStatus(uint32_t base, ADC_IntNumber adcIntNum)
 //! number is set and \b false if it is not.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline bool
 ADC_getInterruptOverflowStatus(uint32_t base, ADC_IntNumber adcIntNum)
 {
@@ -1797,7 +1774,6 @@ ADC_getInterruptOverflowStatus(uint32_t base, ADC_IntNumber adcIntNum)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ADC_clearInterruptOverflowStatus(uint32_t base, ADC_IntNumber adcIntNum)
 {
@@ -1831,7 +1807,6 @@ ADC_clearInterruptOverflowStatus(uint32_t base, ADC_IntNumber adcIntNum)
 //! \return Returns the conversion result.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline uint16_t
 ADC_readResult(uint32_t resultBase, ADC_SOCNumber socNumber)
 {
@@ -1865,7 +1840,6 @@ ADC_readResult(uint32_t resultBase, ADC_SOCNumber socNumber)
 //! samples are complete.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline bool
 ADC_isBusy(uint32_t base)
 {
@@ -1901,7 +1875,6 @@ ADC_isBusy(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ADC_setBurstModeConfig(uint32_t base, ADC_Trigger trigger, uint16_t burstSize)
 {
@@ -1911,7 +1884,7 @@ ADC_setBurstModeConfig(uint32_t base, ADC_Trigger trigger, uint16_t burstSize)
     // Check the arguments.
     //
     ASSERT(ADC_isBaseValid(base));
-    ASSERT(((uint16_t)trigger & ~((uint16_t)0x1FU)) == 0U);
+    ASSERT((trigger >= 0U) && (trigger <= 105U));
     ASSERT((burstSize >= 1U) && (burstSize <= 32U));
 
     //
@@ -1943,7 +1916,6 @@ ADC_setBurstModeConfig(uint32_t base, ADC_Trigger trigger, uint16_t burstSize)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ADC_enableBurstMode(uint32_t base)
 {
@@ -1973,7 +1945,6 @@ ADC_enableBurstMode(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ADC_disableBurstMode(uint32_t base)
 {
@@ -2017,7 +1988,6 @@ ADC_disableBurstMode(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ADC_setSOCPriority(uint32_t base, ADC_PriorityMode priMode)
 {
@@ -2047,7 +2017,6 @@ ADC_setSOCPriority(uint32_t base, ADC_PriorityMode priMode)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ADC_configOSDetectMode(uint32_t base, ADC_OSDetectMode modeVal)
 {
@@ -2087,7 +2056,6 @@ ADC_configOSDetectMode(uint32_t base, ADC_OSDetectMode modeVal)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ADC_setupPPB(uint32_t base, ADC_PPBNumber ppbNumber, ADC_SOCNumber socNumber)
 {
@@ -2129,7 +2097,6 @@ ADC_setupPPB(uint32_t base, ADC_PPBNumber ppbNumber, ADC_SOCNumber socNumber)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ADC_enablePPBEvent(uint32_t base, ADC_PPBNumber ppbNumber, uint16_t evtFlags)
 {
@@ -2163,7 +2130,6 @@ ADC_enablePPBEvent(uint32_t base, ADC_PPBNumber ppbNumber, uint16_t evtFlags)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ADC_disablePPBEvent(uint32_t base, ADC_PPBNumber ppbNumber, uint16_t evtFlags)
 {
@@ -2198,7 +2164,6 @@ ADC_disablePPBEvent(uint32_t base, ADC_PPBNumber ppbNumber, uint16_t evtFlags)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ADC_enablePPBEventInterrupt(uint32_t base, ADC_PPBNumber ppbNumber,
                             uint16_t intFlags)
@@ -2234,7 +2199,6 @@ ADC_enablePPBEventInterrupt(uint32_t base, ADC_PPBNumber ppbNumber,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ADC_disablePPBEventInterrupt(uint32_t base, ADC_PPBNumber ppbNumber,
                              uint16_t intFlags)
@@ -2267,7 +2231,6 @@ ADC_disablePPBEventInterrupt(uint32_t base, ADC_PPBNumber ppbNumber,
 //! \b ADC_EVT_TRIPHI, \b ADC_EVT_TRIPLO, and \b ADC_EVT_ZERO.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline uint16_t
 ADC_getPPBEventStatus(uint32_t base, ADC_PPBNumber ppbNumber)
 {
@@ -2299,7 +2262,6 @@ ADC_getPPBEventStatus(uint32_t base, ADC_PPBNumber ppbNumber)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ADC_clearPPBEventStatus(uint32_t base, ADC_PPBNumber ppbNumber,
                         uint16_t evtFlags)
@@ -2331,7 +2293,6 @@ ADC_clearPPBEventStatus(uint32_t base, ADC_PPBNumber ppbNumber,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ADC_enablePPBEventCBCClear(uint32_t base, ADC_PPBNumber ppbNumber)
 {
@@ -2369,7 +2330,6 @@ ADC_enablePPBEventCBCClear(uint32_t base, ADC_PPBNumber ppbNumber)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ADC_disablePPBEventCBCClear(uint32_t base, ADC_PPBNumber ppbNumber)
 {
@@ -2408,7 +2368,6 @@ ADC_disablePPBEventCBCClear(uint32_t base, ADC_PPBNumber ppbNumber)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ADC_setPPBCountLimit(uint32_t base, ADC_PPBNumber ppbNumber, uint16_t limit)
 {
@@ -2450,7 +2409,6 @@ ADC_setPPBCountLimit(uint32_t base, ADC_PPBNumber ppbNumber, uint16_t limit)
 //! \return Returns the PPB count limit.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline uint16_t
 ADC_getPPBCountLimit(uint32_t base, ADC_PPBNumber ppbNumber)
 {
@@ -2485,7 +2443,6 @@ ADC_getPPBCountLimit(uint32_t base, ADC_PPBNumber ppbNumber)
 //! \return Returns the oversampled partial count value.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline uint16_t
 ADC_readPPBPCount(uint32_t base, ADC_PPBNumber ppbNumber)
 {
@@ -2515,7 +2472,6 @@ ADC_readPPBPCount(uint32_t base, ADC_PPBNumber ppbNumber)
 //! \return Returns the oversampled partial sum value.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline int32_t
 ADC_readPPBPSum(uint32_t base, ADC_PPBNumber ppbNumber)
 {
@@ -2544,7 +2500,6 @@ ADC_readPPBPSum(uint32_t base, ADC_PPBNumber ppbNumber)
 //! \return Returns the oversampled partial maximum value.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline int32_t
 ADC_readPPBPMax(uint32_t base, ADC_PPBNumber ppbNumber)
 {
@@ -2573,7 +2528,6 @@ ADC_readPPBPMax(uint32_t base, ADC_PPBNumber ppbNumber)
 //! \return Returns the oversampled partial minimum value.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline int32_t
 ADC_readPPBPMin(uint32_t base, ADC_PPBNumber ppbNumber)
 {
@@ -2603,7 +2557,6 @@ ADC_readPPBPMin(uint32_t base, ADC_PPBNumber ppbNumber)
 //! \return Returns the index of the oversampled partial maximum value.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline uint16_t
 ADC_readPPBPMaxIndex(uint32_t base, ADC_PPBNumber ppbNumber)
 {
@@ -2633,7 +2586,6 @@ ADC_readPPBPMaxIndex(uint32_t base, ADC_PPBNumber ppbNumber)
 //! \return Returns the index of the oversampled partial minimum value.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline uint16_t
 ADC_readPPBPMinIndex(uint32_t base, ADC_PPBNumber ppbNumber)
 {
@@ -2665,7 +2617,6 @@ ADC_readPPBPMinIndex(uint32_t base, ADC_PPBNumber ppbNumber)
 //! \return None
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ADC_enablePPBAbsoluteValue(uint32_t base, ADC_PPBNumber ppbNumber)
 {
@@ -2705,7 +2656,6 @@ ADC_enablePPBAbsoluteValue(uint32_t base, ADC_PPBNumber ppbNumber)
 //! \return None
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ADC_disablePPBAbsoluteValue(uint32_t base, ADC_PPBNumber ppbNumber)
 {
@@ -2744,7 +2694,6 @@ ADC_disablePPBAbsoluteValue(uint32_t base, ADC_PPBNumber ppbNumber)
 //! \return None
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ADC_setPPBShiftValue(uint32_t base, ADC_PPBNumber ppbNumber, uint16_t shiftVal)
 {
@@ -2786,7 +2735,6 @@ ADC_setPPBShiftValue(uint32_t base, ADC_PPBNumber ppbNumber, uint16_t shiftVal)
 //! \return None
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ADC_selectPPBSyncInput(uint32_t base, ADC_PPBNumber ppbNumber,
                        uint16_t syncInput)
@@ -2825,7 +2773,6 @@ ADC_selectPPBSyncInput(uint32_t base, ADC_PPBNumber ppbNumber,
 //! \return None
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ADC_forcePPBSync(uint32_t base, ADC_PPBNumber ppbNumber)
 {
@@ -2863,7 +2810,6 @@ ADC_forcePPBSync(uint32_t base, ADC_PPBNumber ppbNumber)
 //!
 //! \return None
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ADC_selectPPBOSINTSource(uint32_t base, ADC_PPBNumber ppbNumber,
                          uint16_t osIntSrc)
@@ -2906,7 +2852,6 @@ ADC_selectPPBOSINTSource(uint32_t base, ADC_PPBNumber ppbNumber,
 //! \return None
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ADC_selectPPBCompareSource(uint32_t base, ADC_PPBNumber ppbNumber,
                            uint16_t compSrc)
@@ -2950,7 +2895,6 @@ ADC_selectPPBCompareSource(uint32_t base, ADC_PPBNumber ppbNumber,
 //! \return Returns the oversampled final sum value.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline int32_t
 ADC_readPPBSum(uint32_t resultBase, ADC_PPBNumber ppbNumber)
 {
@@ -2988,7 +2932,6 @@ ADC_readPPBSum(uint32_t resultBase, ADC_PPBNumber ppbNumber)
 //! \return Returns the oversampled final count value.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline uint32_t
 ADC_readPPBCount(uint32_t resultBase, ADC_PPBNumber ppbNumber)
 {
@@ -3026,7 +2969,6 @@ ADC_readPPBCount(uint32_t resultBase, ADC_PPBNumber ppbNumber)
 //! \return Returns the oversampled final maximum value.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline int32_t
 ADC_readPPBMax(uint32_t resultBase, ADC_PPBNumber ppbNumber)
 {
@@ -3064,7 +3006,6 @@ ADC_readPPBMax(uint32_t resultBase, ADC_PPBNumber ppbNumber)
 //! \return Returns the signed 32-bit conversion result.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline int32_t
 ADC_readPPBMin(uint32_t resultBase, ADC_PPBNumber ppbNumber)
 {
@@ -3102,7 +3043,6 @@ ADC_readPPBMin(uint32_t resultBase, ADC_PPBNumber ppbNumber)
 //! \return Returns the index of the result with maximum value.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline uint16_t
 ADC_readPPBMaxIndex(uint32_t resultBase, ADC_PPBNumber ppbNumber)
 {
@@ -3141,7 +3081,6 @@ ADC_readPPBMaxIndex(uint32_t resultBase, ADC_PPBNumber ppbNumber)
 //! \return Returns the index of the result with final minimum value.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline uint16_t
 ADC_readPPBMinIndex(uint32_t resultBase, ADC_PPBNumber ppbNumber)
 {
@@ -3181,7 +3120,6 @@ ADC_readPPBMinIndex(uint32_t resultBase, ADC_PPBNumber ppbNumber)
 //! \return Returns the signed 32-bit conversion result.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline int32_t
 ADC_readPPBResult(uint32_t resultBase, ADC_PPBNumber ppbNumber)
 {
@@ -3216,7 +3154,6 @@ ADC_readPPBResult(uint32_t resultBase, ADC_PPBNumber ppbNumber)
 //! \return Returns the delay time stamp.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline uint16_t
 ADC_getPPBDelayTimeStamp(uint32_t base, ADC_PPBNumber ppbNumber)
 {
@@ -3264,7 +3201,6 @@ ADC_getPPBDelayTimeStamp(uint32_t base, ADC_PPBNumber ppbNumber)
 //! \return None
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ADC_setPPBCalibrationOffset(uint32_t base, ADC_PPBNumber ppbNumber,
                             int16_t offset)
@@ -3314,7 +3250,6 @@ ADC_setPPBCalibrationOffset(uint32_t base, ADC_PPBNumber ppbNumber,
 //! \return None
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ADC_setPPBReferenceOffset(uint32_t base, ADC_PPBNumber ppbNumber,
                           uint16_t offset)
@@ -3354,7 +3289,6 @@ ADC_setPPBReferenceOffset(uint32_t base, ADC_PPBNumber ppbNumber,
 //! \return None
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ADC_enablePPBTwosComplement(uint32_t base, ADC_PPBNumber ppbNumber)
 {
@@ -3395,7 +3329,6 @@ ADC_enablePPBTwosComplement(uint32_t base, ADC_PPBNumber ppbNumber)
 //! \return None
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ADC_disablePPBTwosComplement(uint32_t base, ADC_PPBNumber ppbNumber)
 {
@@ -3432,7 +3365,6 @@ ADC_disablePPBTwosComplement(uint32_t base, ADC_PPBNumber ppbNumber)
 //! \return None
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ADC_enablePPBExtendedLowLimit(uint32_t base, ADC_PPBNumber ppbNumber)
 {
@@ -3470,7 +3402,6 @@ ADC_enablePPBExtendedLowLimit(uint32_t base, ADC_PPBNumber ppbNumber)
 //! \return None
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ADC_disablePPBExtendedLowLimit(uint32_t base, ADC_PPBNumber ppbNumber)
 {
@@ -3512,7 +3443,6 @@ ADC_disablePPBExtendedLowLimit(uint32_t base, ADC_PPBNumber ppbNumber)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ADC_enableInterrupt(uint32_t base, ADC_IntNumber adcIntNum)
 {
@@ -3557,7 +3487,6 @@ ADC_enableInterrupt(uint32_t base, ADC_IntNumber adcIntNum)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ADC_disableInterrupt(uint32_t base, ADC_IntNumber adcIntNum)
 {
@@ -3605,7 +3534,6 @@ ADC_disableInterrupt(uint32_t base, ADC_IntNumber adcIntNum)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ADC_setInterruptSource(uint32_t base, ADC_IntNumber adcIntNum,
                        ADC_IntTrigger intTrigger)
@@ -3654,7 +3582,6 @@ ADC_setInterruptSource(uint32_t base, ADC_IntNumber adcIntNum,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ADC_enableContinuousMode(uint32_t base, ADC_IntNumber adcIntNum)
 {
@@ -3703,7 +3630,6 @@ ADC_enableContinuousMode(uint32_t base, ADC_IntNumber adcIntNum)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ADC_disableContinuousMode(uint32_t base, ADC_IntNumber adcIntNum)
 {
@@ -3750,7 +3676,6 @@ ADC_disableContinuousMode(uint32_t base, ADC_IntNumber adcIntNum)
 //! \return Returns the temperature sensor reading converted to degrees C.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline int16_t
 ADC_getTemperatureC(uint16_t tempResult, ADC_ReferenceMode refMode,
                         float32_t vref)
@@ -3791,7 +3716,6 @@ ADC_getTemperatureC(uint16_t tempResult, ADC_ReferenceMode refMode,
 //! \return Returns the temperature sensor reading converted to degrees K.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline int16_t
 ADC_getTemperatureK(uint16_t tempResult, ADC_ReferenceMode refMode,
                         float32_t vref)
@@ -3833,7 +3757,6 @@ ADC_getTemperatureK(uint16_t tempResult, ADC_ReferenceMode refMode,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ADC_configSOCSafetyCheckerInput(uint32_t base, ADC_SOCNumber socNumber,
                                 ADC_SafetyCheckerInput scInput)
@@ -3884,7 +3807,6 @@ ADC_configSOCSafetyCheckerInput(uint32_t base, ADC_SOCNumber socNumber,
 //
 //*****************************************************************************
 #ifdef DEBUG
-__attribute__((always_inline))
 static inline bool
 ADC_isSafetyCheckerBaseValid(uint32_t base)
 {
@@ -3914,7 +3836,6 @@ ADC_isSafetyCheckerBaseValid(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ADC_enableSafetyChecker(uint32_t scBase)
 {
@@ -3940,7 +3861,6 @@ ADC_enableSafetyChecker(uint32_t scBase)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ADC_disableSafetyChecker(uint32_t scBase)
 {
@@ -3966,7 +3886,6 @@ ADC_disableSafetyChecker(uint32_t scBase)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ADC_forceSafetyCheckerSync(uint32_t scBase)
 {
@@ -3997,7 +3916,6 @@ ADC_forceSafetyCheckerSync(uint32_t scBase)
 //! - \e ADC_SAFECHECK_RESULT1_OOT
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline uint16_t
 ADC_getSafetyCheckerStatus(uint32_t scBase)
 {
@@ -4032,7 +3950,6 @@ ADC_getSafetyCheckerStatus(uint32_t scBase)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ADC_configureSafetyChecker(uint32_t scBase, ADC_SafetyCheckInst checkInst,
                            ADC_Select adcInst, ADC_ResultSelect adcResultInst)
@@ -4065,7 +3982,6 @@ ADC_configureSafetyChecker(uint32_t scBase, ADC_SafetyCheckInst checkInst,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ADC_setSafetyCheckerTolerance(uint32_t scBase, uint32_t tolerance)
 {
@@ -4098,7 +4014,6 @@ ADC_setSafetyCheckerTolerance(uint32_t scBase, uint32_t tolerance)
 //! \return Returns the safety checker result for the desired instance.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline uint32_t
 ADC_getSafetyCheckerResult(uint32_t scBase, ADC_SafetyCheckInst checkInst)
 {
@@ -4131,7 +4046,6 @@ ADC_getSafetyCheckerResult(uint32_t scBase, ADC_SafetyCheckInst checkInst)
 //
 //*****************************************************************************
 #ifdef DEBUG
-__attribute__((always_inline))
 static inline bool
 ADC_isSafeCheckINTEVTBaseValid(uint32_t base)
 {
@@ -4173,7 +4087,6 @@ ADC_isSafeCheckINTEVTBaseValid(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ADC_enableSafetyCheckEvt(uint32_t scIntEvtBase, ADC_Checker checkerNumber,
             ADC_SafetyCheckEvent checkEvent, ADC_SafetyCheckResult checkResult)
@@ -4219,7 +4132,6 @@ ADC_enableSafetyCheckEvt(uint32_t scIntEvtBase, ADC_Checker checkerNumber,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ADC_disableSafetyCheckEvt(uint32_t scIntEvtBase, ADC_Checker checkerNumber,
             ADC_SafetyCheckEvent checkEvent, ADC_SafetyCheckResult checkResult)
@@ -4260,7 +4172,6 @@ ADC_disableSafetyCheckEvt(uint32_t scIntEvtBase, ADC_Checker checkerNumber,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ADC_enableSafetyCheckInt(uint32_t scIntEvtBase, ADC_Checker checkerNumber,
                          ADC_SafetyCheckResult checkResult)
@@ -4301,7 +4212,6 @@ ADC_enableSafetyCheckInt(uint32_t scIntEvtBase, ADC_Checker checkerNumber,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ADC_disableSafetyCheckInt(uint32_t scIntEvtBase, ADC_Checker checkerNumber,
                           ADC_SafetyCheckResult checkResult)
@@ -4343,7 +4253,6 @@ ADC_disableSafetyCheckInt(uint32_t scIntEvtBase, ADC_Checker checkerNumber,
 //! the selected instance.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline bool
 ADC_getSafetyCheckStatus(uint32_t scIntEvtBase, ADC_Checker checkerNumber,
                             ADC_SafetyCheckFlag checkerFlag)
@@ -4383,7 +4292,6 @@ ADC_getSafetyCheckStatus(uint32_t scIntEvtBase, ADC_Checker checkerNumber,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ADC_clearSafetyCheckStatus(uint32_t scIntEvtBase, ADC_Checker checkerNumber,
                             ADC_SafetyCheckFlag checkerFlag)
@@ -4412,7 +4320,6 @@ ADC_clearSafetyCheckStatus(uint32_t scIntEvtBase, ADC_Checker checkerNumber,
 //! the selected instance.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline uint32_t
 ADC_getSafetyCheckIntStatus(uint32_t scIntEvtBase)
 {
@@ -4440,7 +4347,6 @@ ADC_getSafetyCheckIntStatus(uint32_t scIntEvtBase)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ADC_clearSafetyCheckIntStatus(uint32_t scIntEvtBase)
 {
@@ -4471,7 +4377,6 @@ ADC_clearSafetyCheckIntStatus(uint32_t scIntEvtBase)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ADC_triggerRepeaterMode(uint32_t base, uint32_t repInstance, ADC_RepMode mode)
 {
@@ -4508,7 +4413,6 @@ ADC_triggerRepeaterMode(uint32_t base, uint32_t repInstance, ADC_RepMode mode)
 //! \return Returns the status of the trigger repeater active mode.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline bool
 ADC_triggerRepeaterActiveMode(uint32_t base, uint32_t repInstance)
 {
@@ -4543,7 +4447,6 @@ ADC_triggerRepeaterActiveMode(uint32_t base, uint32_t repInstance)
 //! \return Returns the staus of the trigger repeater module busy.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline bool
 ADC_triggerRepeaterModuleBusy(uint32_t base, uint32_t repInstance)
 {
@@ -4579,7 +4482,6 @@ ADC_triggerRepeaterModuleBusy(uint32_t base, uint32_t repInstance)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ADC_triggerRepeaterSelect(uint32_t base, uint16_t repInstance,
                           ADC_Trigger trigger)
@@ -4620,7 +4522,6 @@ ADC_triggerRepeaterSelect(uint32_t base, uint16_t repInstance,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ADC_triggerRepeaterSyncIn(uint32_t base, uint16_t repInstance,
                           ADC_SyncInput syncInput)
@@ -4659,7 +4560,6 @@ ADC_triggerRepeaterSyncIn(uint32_t base, uint16_t repInstance,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ADC_forceRepeaterTriggerSync(uint32_t base, uint16_t repInstance)
 {
@@ -4705,7 +4605,6 @@ ADC_forceRepeaterTriggerSync(uint32_t base, uint16_t repInstance)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ADC_triggerRepeaterCount(uint32_t base, uint16_t repInstance,
                           uint16_t repCount)
@@ -4749,7 +4648,6 @@ ADC_triggerRepeaterCount(uint32_t base, uint16_t repInstance,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ADC_triggerRepeaterPhase(uint32_t base, uint16_t repInstance,
                           uint16_t repPhase)
@@ -4792,7 +4690,6 @@ ADC_triggerRepeaterPhase(uint32_t base, uint16_t repInstance,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ADC_triggerRepeaterSpread(uint32_t base, uint16_t repInstance,
                           uint16_t repSpread)

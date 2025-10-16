@@ -4,9 +4,10 @@
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
  * @cliArgs --device "F29H85x" --package "256ZEX" --part "F29H85x_256ZEX" --context "CPU1" --product "MCU_SDK_F29H85x@1.00.00.00"
  * @v2CliArgs --device "F29H850TU" --package "256ZEX" --variant "TMS320F29H850TU9" --context "CPU1" --product "MCU_SDK_F29H85x@1.00.00.00"
- * @versions {"tool":"1.22.0+3877"}
+ * @versions {"tool":"1.25.0+4237"}
  */
 
+    
 const divider15       = system.clockTree["PLL_REFDIV"];
 divider15.divideValue = 1;
 
@@ -15,6 +16,7 @@ multiplier1.multiplyValue = 40;
 
 const mux7       = system.clockTree["OSCCLKSRCSEL"];
 mux7.inputSelect = "INTOSC2";
+
 
     
 
@@ -27,4 +29,3 @@ clock_c29_sdk.intlinkowner                                = "SSU_LINK1";
 clock_c29_sdk.intsp                                       = "SSU_STACK1";
 clock_c29_sdk.dplTimer.periphClock.$name                  = "driverlib_perClock0";
 clock_c29_sdk.dplTimer.periphClock.pinmuxPeripheralModule = scripting.forceWrite("");
-clock_c29_sdk.nortos_source.$name                         = "kernel_dpl_nortos_source0";

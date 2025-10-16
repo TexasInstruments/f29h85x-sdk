@@ -33,8 +33,8 @@ extern "C" {
  */
 
 //! \brief          Library version number formatted for numerical comparison
-//!                 v4.02.00.00
-#define DCL_VERSION 4020000
+//!                 v4.03.00.00
+#define DCL_VERSION 4030000
 
 //! \brief          Enable voltaile flag for dcl strcutures
 //!                 Disabled by default
@@ -50,6 +50,11 @@ extern "C" {
 //!                 during arthmetic operations
 //!                 Disabled by default
 //#define DCL_TESTPOINTS_ENABLED
+
+//! \brief          Disables compatibility with C28 (v3) DCL API calls
+//!                 Only disable it if legacy calls resulted in a conflict
+//!                 Disabled by default
+//#define DCL_NO_LEGACY_API
 
 /* Includes legacy API */
 #ifndef DCL_NO_LEGACY_API

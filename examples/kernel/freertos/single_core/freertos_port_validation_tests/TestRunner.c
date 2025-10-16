@@ -1,6 +1,6 @@
 /*
- * FreeRTOS V202212.00
- * Copyright (C) 2020 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
+ * FreeRTOS V202411.00
+ * Copyright (C) 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
  * this software and associated documentation files (the "Software"), to deal in
@@ -67,6 +67,7 @@
 #include "RegTests.h"
 
 uint16_t i=0;
+volatile uint32_t loopCount = 0;
 
 __attribute((noinline)) int myprintf(const char *format, ...)
 {
@@ -377,7 +378,7 @@ const TickType_t xCycleFrequency = pdMS_TO_TICKS( 5000UL );
 			if( xAreTaskNotificationTasksStillRunning() != pdTRUE )
 			{
 				pcStatusMessage = "Error:  Notification";
-				myprintf("Error:  Notification \r\n");
+				configPRINTF("Error:  Notification \r\n");
 			}
 		}
 		#endif /* configSTART_TASK_NOTIFY_TESTS */
@@ -387,7 +388,7 @@ const TickType_t xCycleFrequency = pdMS_TO_TICKS( 5000UL );
 			if( xAreTaskNotificationArrayTasksStillRunning() != pdTRUE )
 			{
 				pcStatusMessage = "Error:  Notification Array";
-				myprintf("Error:  Notification Array \r\n");
+				configPRINTF("Error:  Notification Array \r\n");
 			}
 		}
 		#endif /* configSTART_TASK_NOTIFY_ARRAY_TESTS */
@@ -397,7 +398,7 @@ const TickType_t xCycleFrequency = pdMS_TO_TICKS( 5000UL );
 			if( xAreBlockingQueuesStillRunning() != pdTRUE )
 			{
 				pcStatusMessage = "Error: BlockQueue";
-				myprintf("Error: BlockQueue \r\n");
+				configPRINTF("Error: BlockQueue \r\n");
 			}
 		}
 		#endif /* configSTART_BLOCKING_QUEUE_TESTS */
@@ -407,7 +408,7 @@ const TickType_t xCycleFrequency = pdMS_TO_TICKS( 5000UL );
 			if( xAreSemaphoreTasksStillRunning() != pdTRUE )
 			{
 				pcStatusMessage = "Error: SemTest";
-				myprintf("Error: SemTest \r\n");
+				configPRINTF("Error: SemTest \r\n");
 			}
 		}
 		#endif /* configSTART_SEMAPHORE_TESTS */
@@ -417,7 +418,7 @@ const TickType_t xCycleFrequency = pdMS_TO_TICKS( 5000UL );
 			if( xArePollingQueuesStillRunning() != pdTRUE )
 			{
 				pcStatusMessage = "Error: PollQueue";
-				myprintf("Error: PollQueue \r\n");
+				configPRINTF("Error: PollQueue \r\n");
 			}
 		}
 		#endif /* configSTART_POLLED_QUEUE_TESTS */
@@ -427,7 +428,7 @@ const TickType_t xCycleFrequency = pdMS_TO_TICKS( 5000UL );
 			if( xAreIntegerMathsTaskStillRunning() != pdTRUE )
 			{
 				pcStatusMessage = "Error: IntMath";
-				myprintf("Error: IntMath \r\n");
+				configPRINTF("Error: IntMath \r\n");
 			}
 		}
 		#endif /* configSTART_INTEGER_MATH_TESTS */
@@ -437,7 +438,7 @@ const TickType_t xCycleFrequency = pdMS_TO_TICKS( 5000UL );
 			if( xAreGenericQueueTasksStillRunning() != pdTRUE )
 			{
 				pcStatusMessage = "Error: GenQueue";
-				myprintf("Error: GenQueue \r\n");
+				configPRINTF("Error: GenQueue \r\n");
 			}
 		}
 		#endif /* configSTART_GENERIC_QUEUE_TESTS */
@@ -447,7 +448,7 @@ const TickType_t xCycleFrequency = pdMS_TO_TICKS( 5000UL );
 			if( xAreQueuePeekTasksStillRunning() != pdTRUE )
 			{
 				pcStatusMessage = "Error: QueuePeek";
-				myprintf("Error: QueuePeek \r\n");
+				configPRINTF("Error: QueuePeek \r\n");
 			}
 		}
 		#endif /* configSTART_PEEK_QUEUE_TESTS */
@@ -457,7 +458,7 @@ const TickType_t xCycleFrequency = pdMS_TO_TICKS( 5000UL );
 			if( xAreMathsTaskStillRunning() != pdPASS )
 			{
 				pcStatusMessage = "Error: Flop";
-				myprintf("Error: Flop \r\n");
+				configPRINTF("Error: Flop \r\n");
 			}
 		}
 		#endif /* configSTART_MATH_TESTS */
@@ -467,7 +468,7 @@ const TickType_t xCycleFrequency = pdMS_TO_TICKS( 5000UL );
 			if( xAreRecursiveMutexTasksStillRunning() != pdTRUE )
 			{
 				pcStatusMessage = "Error: RecMutex";
-				myprintf("Error: RecMutex \r\n");
+				configPRINTF("Error: RecMutex \r\n");
 			}
 		}
 		#endif /* configSTART_RECURSIVE_MUTEX_TESTS */
@@ -477,7 +478,7 @@ const TickType_t xCycleFrequency = pdMS_TO_TICKS( 5000UL );
 			if( xAreCountingSemaphoreTasksStillRunning() != pdTRUE )
 			{
 				pcStatusMessage = "Error: CountSem";
-				myprintf("Error: CountSem \r\n");
+				configPRINTF("Error: CountSem \r\n");
 			}
 		}
 		#endif /* configSTART_COUNTING_SEMAPHORE_TESTS */
@@ -487,7 +488,7 @@ const TickType_t xCycleFrequency = pdMS_TO_TICKS( 5000UL );
 			if( xAreQueueSetTasksStillRunning() != pdPASS )
 			{
 				pcStatusMessage = "Error: Queue set";
-				myprintf("Error: Queue set \r\n");
+				configPRINTF("Error: Queue set \r\n");
 			}
 		}
 		#endif /* configSTART_QUEUE_SET_TESTS */
@@ -497,7 +498,7 @@ const TickType_t xCycleFrequency = pdMS_TO_TICKS( 5000UL );
 			if( xIsQueueOverwriteTaskStillRunning() != pdPASS )
 			{
 				pcStatusMessage = "Error: Queue overwrite";
-				myprintf("Error: Queue overwrite \r\n");
+				configPRINTF("Error: Queue overwrite \r\n");
 			}
 		}
 		#endif /* configSTART_QUEUE_OVERWRITE_TESTS */
@@ -507,7 +508,7 @@ const TickType_t xCycleFrequency = pdMS_TO_TICKS( 5000UL );
 			if( xAreEventGroupTasksStillRunning() != pdTRUE )
 			{
 				pcStatusMessage = "Error: EventGroup";
-				myprintf("Error: EventGroup \r\n");
+				configPRINTF("Error: EventGroup \r\n");
 			}
 		}
 		#endif /* configSTART_EVENT_GROUP_TESTS */
@@ -517,7 +518,7 @@ const TickType_t xCycleFrequency = pdMS_TO_TICKS( 5000UL );
 			if( xAreInterruptSemaphoreTasksStillRunning() != pdTRUE )
 			{
 				pcStatusMessage = "Error: IntSem";
-				myprintf("Error: IntSem \r\n");
+				configPRINTF("Error: IntSem \r\n");
 			}
 		}
 		#endif /* configSTART_INTERRUPT_SEMAPHORE_TESTS */
@@ -527,7 +528,7 @@ const TickType_t xCycleFrequency = pdMS_TO_TICKS( 5000UL );
 			if( xAreQueueSetPollTasksStillRunning() != pdPASS )
 			{
 				pcStatusMessage = "Error: Queue set polling";
-				myprintf("Error: Queue set polling \r\n");
+				configPRINTF("Error: Queue set polling \r\n");
 			}
 		}
 		#endif /* configSTART_QUEUE_SET_POLLING_TESTS */
@@ -537,7 +538,7 @@ const TickType_t xCycleFrequency = pdMS_TO_TICKS( 5000UL );
 			if( xAreBlockTimeTestTasksStillRunning() != pdPASS )
 			{
 				pcStatusMessage = "Error: Block time";
-				myprintf("Error: Block time \r\n");
+				configPRINTF("Error: Block time \r\n");
 			}
 		}
 		#endif /* configSTART_BLOCK_TIME_TESTS */
@@ -547,7 +548,7 @@ const TickType_t xCycleFrequency = pdMS_TO_TICKS( 5000UL );
 			if( xAreAbortDelayTestTasksStillRunning() != pdPASS )
 			{
 				pcStatusMessage = "Error: Abort delay";
-				myprintf("Error: Abort delay \r\n");
+				configPRINTF("Error: Abort delay \r\n");
 			}
 		}
 		#endif /* configSTART_ABORT_DELAY_TESTS */
@@ -557,7 +558,7 @@ const TickType_t xCycleFrequency = pdMS_TO_TICKS( 5000UL );
 			if( xAreMessageBufferTasksStillRunning() != pdTRUE )
 			{
 				pcStatusMessage = "Error:  MessageBuffer";
-				myprintf("Error:  MessageBuffer \r\n");
+				configPRINTF("Error:  MessageBuffer \r\n");
 			}
 		}
 		#endif /* configSTART_MESSAGE_BUFFER_TESTS */
@@ -567,7 +568,7 @@ const TickType_t xCycleFrequency = pdMS_TO_TICKS( 5000UL );
 			if( xAreStreamBufferTasksStillRunning() != pdTRUE )
 			{
 				pcStatusMessage = "Error:  StreamBuffer";
-				myprintf("Error:  StreamBuffer \r\n");
+				configPRINTF("Error:  StreamBuffer \r\n");
 			}
 		}
 		#endif /* configSTART_STREAM_BUFFER_TESTS */
@@ -577,7 +578,7 @@ const TickType_t xCycleFrequency = pdMS_TO_TICKS( 5000UL );
 			if( xIsInterruptStreamBufferDemoStillRunning() != pdPASS )
 			{
 				pcStatusMessage = "Error: Stream buffer interrupt";
-				myprintf("Error: Stream buffer interrupt \r\n");
+				configPRINTF("Error: Stream buffer interrupt \r\n");
 			}
 		}
 		#endif /* configSTART_STREAM_BUFFER_INTERRUPT_TESTS */
@@ -587,7 +588,7 @@ const TickType_t xCycleFrequency = pdMS_TO_TICKS( 5000UL );
 			if( xAreTimerDemoTasksStillRunning( xCycleFrequency ) != pdTRUE )
 			{
 				pcStatusMessage = "Error: TimerDemo";
-				myprintf("Error: TimerDemo \r\n");
+				configPRINTF("Error: TimerDemo \r\n");
 			}
 		}
 		#endif /* ( configSTART_TIMER_TESTS == 1 ) && ( configUSE_PREEMPTION != 0 ) */
@@ -597,7 +598,7 @@ const TickType_t xCycleFrequency = pdMS_TO_TICKS( 5000UL );
 			if( xAreIntQueueTasksStillRunning() != pdTRUE )
 			{
 				pcStatusMessage = "Error: IntQueue";
-				myprintf("Error: IntQueue \r\n");
+				configPRINTF("Error: IntQueue \r\n");
 			}
 		}
 		#endif /* configSTART_INTERRUPT_QUEUE_TESTS */
@@ -607,7 +608,7 @@ const TickType_t xCycleFrequency = pdMS_TO_TICKS( 5000UL );
 			if( xAreRegisterTasksStillRunning() != pdTRUE )
 			{
 				pcStatusMessage = "Error: RegTests";
-				myprintf("Error: RegTests \r\n");
+				configPRINTF("Error: RegTests \r\n");
 			}
 		}
 		#endif /* configSTART_REGISTER_TESTS */
@@ -617,19 +618,18 @@ const TickType_t xCycleFrequency = pdMS_TO_TICKS( 5000UL );
 			if( xIsCreateTaskStillRunning() != pdTRUE )
 			{
 				pcStatusMessage = "Error: Death";
-				myprintf("Error: Death \r\n");
+				configPRINTF("Error: Death \r\n");
 			}
 		}
 		#endif /* configSTART_DELETE_SELF_TESTS */
 
+		configPRINTF( pcStatusMessage );
+		configPRINTF("\r\n");
+
 		if(strcmp("No errors", pcStatusMessage) == 0)
 		{
-		    myprintf("No errors \r\n");
+		    loopCount++;
 		}
-        else{
-            ESTOP0;
-        }
-		//configPRINTF( ( "%s \r\n", pcStatusMessage ) );
 	}
 }
 /*-----------------------------------------------------------*/

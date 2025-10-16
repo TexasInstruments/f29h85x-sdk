@@ -1,8 +1,8 @@
 let Common   = system.getScript("/driverlib/Common.js");
 let Pinmux   = system.getScript("/driverlib/pinmux.js");
 
-let device_driverlib_peripheral = 
-    system.getScript("/driverlib/device_driverlib_peripherals/" + 
+let device_driverlib_peripheral =
+    system.getScript("/driverlib/device_driverlib_peripherals/" +
         Common.getDeviceName().toLowerCase() + "_fsi.js");
 
 let device_driverlib_memmap =
@@ -19,7 +19,7 @@ for (var dma of device_driverlib_memmap.DMAMemoryMap) {
 
 /* Intro splash on GUI */
 let longDescription = "The Fast Serial Interface (FSI) module is a serial " +
-                    "communication peripheral capable of reliable high-speed " + 
+                    "communication peripheral capable of reliable high-speed " +
                     "communication across isolation devices.";
 
 
@@ -30,7 +30,7 @@ function onChangeUseDMARX(inst, ui)
         ui.DMARXInstData.hidden = false;
         ui.DMARXInstInfo.hidden = false;
     }
-    else 
+    else
     {
         ui.DMARXInstData.hidden = true;
         ui.DMARXInstInfo.hidden = true;
@@ -43,7 +43,7 @@ function onChangeEnableRxFrameWd(inst, ui)
     {
         ui.rxFrameWdCounter.hidden = false;
     }
-    else 
+    else
     {
         ui.rxFrameWdCounter.hidden = true;
     }
@@ -53,7 +53,7 @@ function onChangeEnableInterrupt(inst, ui)
 {
     if (inst.enableInterrupt) {
         ui.useInterrupts.hidden = false;
-        if (inst.useInterrupts.indexOf(device_driverlib_peripheral.FSI_InterruptNum[0].name) != -1) 
+        if (inst.useInterrupts.indexOf(device_driverlib_peripheral.FSI_InterruptNum[0].name) != -1)
         {
             ui.enabledINT1Interrupts.hidden = false;
             ui.registerInterruptLine1.hidden = false;
@@ -63,8 +63,8 @@ function onChangeEnableInterrupt(inst, ui)
             ui.enabledINT1Interrupts.hidden = true;
             ui.registerInterruptLine1.hidden = true;
         }
-    
-        if (inst.useInterrupts.indexOf(device_driverlib_peripheral.FSI_InterruptNum[1].name) != -1) 
+
+        if (inst.useInterrupts.indexOf(device_driverlib_peripheral.FSI_InterruptNum[1].name) != -1)
         {
             ui.enabledINT2Interrupts.hidden = false;
             ui.registerInterruptLine2.hidden = false;
@@ -157,7 +157,7 @@ let config = [
                     default     : device_driverlib_peripheral.FSI_DataWidth[0].name,
                     options     : device_driverlib_peripheral.FSI_DataWidth,
                 },
-        
+
                 {
                     name        : "softwareFrameSize",
                     displayName : "Software Frame Size",
@@ -220,7 +220,7 @@ let config = [
                     onChange    : onChangeEnableTagMatch,
                     default     : false,
                 },
-        
+
                 {
                     name        : "frameType",
                     displayName : "Reference frame type",
@@ -232,7 +232,7 @@ let config = [
                     default     : device_driverlib_peripheral.FSI_FrameType[0].name,
                     options     : device_driverlib_peripheral.FSI_FrameType,
                 },
-        
+
                 {
                     name        : "frameTag",
                     displayName : "Reference frame tag",
@@ -244,7 +244,7 @@ let config = [
                     default     : device_driverlib_peripheral.FSI_FrameTag[0].name,
                     options     : device_driverlib_peripheral.FSI_FrameTag,
                 },
-        
+
                 {
                     name        : "tagMask",
                     displayName : "Tag Mask",
@@ -271,7 +271,7 @@ let config = [
                     onChange    : onChangeEnablePingTimeout,
                     default     : false,
                 },
-        
+
                 {
                     name        : "selectPingMode",
                     displayName : "Select PING Timeout Mode",
@@ -280,7 +280,7 @@ let config = [
                     default     : device_driverlib_peripheral.FSI_PingTimeoutMode[0].name,
                     options     : device_driverlib_peripheral.FSI_PingTimeoutMode
                 },
-        
+
                 {
                     name        : "timeoutDelay",
                     displayName : "Select PING Timeout Delay",
@@ -290,7 +290,7 @@ let config = [
                 },
             ]
             },
-        
+
             {
                 name: "GROUP_DELAY",
                 displayName: "Delay Tap Selection",
@@ -311,7 +311,7 @@ let config = [
                     onChange    : onChangeEnableDelayTap,
                     default     : false,
                 },
-        
+
                 {
                     name        : "tapValue1",
                     displayName : "Enter Delay Tap Value for CLK",
@@ -319,7 +319,7 @@ let config = [
                     hidden      : true,
                     default     : 0
                 },
-        
+
                 {
                     name        : "tapValue2",
                     displayName : "Enter Delay Tap Value for D0",
@@ -327,7 +327,7 @@ let config = [
                     hidden      : true,
                     default     : 0
                 },
-        
+
                 {
                     name        : "tapValue3",
                     displayName : "Enter Delay Tap Value for D1",
@@ -361,7 +361,7 @@ let config = [
                 onChange    : onChangeEnableInterrupt,
                 default     : false,
             },
-    
+
             {
                 name        : "useInterrupts",
                 displayName : "Use Interrupt Lines",
@@ -371,9 +371,9 @@ let config = [
                 default     : [],
                 minSelections: 0,
                 options     : device_driverlib_peripheral.FSI_InterruptNum
-                
+
             },
-    
+
             {
                 name        : "enabledINT1Interrupts",
                 displayName : "Enabled INT1 Line Interrupts",
@@ -382,9 +382,9 @@ let config = [
                 default     : [],
                 minSelections: 0,
                 options     : device_driverlib_peripheral.FSI_RX_EVT,
-                
+
             },
-    
+
             {
                 name        : "enabledINT2Interrupts",
                 displayName : "Enabled INT2 Line Interrupts",
@@ -393,9 +393,9 @@ let config = [
                 default     : [],
                 minSelections: 0,
                 options     : device_driverlib_peripheral.FSI_RX_EVT,
-                
+
             },
-    
+
             {
                 name        : "registerInterruptLine1",
                 displayName : "Register INT1 Line Handler",
@@ -424,6 +424,7 @@ let config = [
                 hidden      : false,
                 default     : false,
                 onChange    : onChangeUseDMARX,
+                shouldBeAllocatedAsResource : true
             },
             {
                 name        : "DMARXInstData",
@@ -432,6 +433,7 @@ let config = [
                 hidden      : true,
                 default     : dma_instances[0].name,
                 options     : dma_instances,
+                shouldBeAllocatedAsResource : true
             },
             {
                 name        : "DMARXInstInfo",
@@ -440,6 +442,7 @@ let config = [
                 hidden      : true,
                 default     : dma_instances[0].name,
                 options     : dma_instances,
+                shouldBeAllocatedAsResource : true
             }
         ]
     },
@@ -450,41 +453,52 @@ let config = [
         config: []
     },
 ]
+function validatePinmux(inst,validation){
+    if (inst.fsirx && inst.fsirx.$solution) {
+        let selectedPeripheral = inst.fsirx.$solution.peripheralName; // e.g., "UARTA"
+        if (Common.is_instance_not_in_variant(selectedPeripheral)) {
+            validation.logError(
+                `${selectedPeripheral} is not supported for ${Common.getVariant().replace(/^TMS320/, '')}.`,
+                inst,
+                "fsirx"
+            );
+        }
+    }
+}
 
-
-function onValidate(inst, validation) 
-{   
+function onValidate(inst, validation)
+{
     if (inst.timeoutDelay < 0 || inst.timeoutDelay > 0xFFFFFFFF)
     {
         validation.logError(
-            "Enter an integer value for Ping Timeout within 32 bits!", 
+            "Enter an integer value for Ping Timeout within 32 bits!",
             inst, "timeoutDelay");
     }
     if (inst.tapValue1 < 0 || inst.tapValue1 > 0x1F)
     {
         validation.logError(
-            "Enter an integer for Delay Tapping between 0 and 31!", 
+            "Enter an integer for Delay Tapping between 0 and 31!",
             inst, "tapValue1");
     }
     if (inst.tapValue2 < 0 || inst.tapValue2 > 0x1F)
     {
         validation.logError(
-            "Enter an integer for Delay Tapping between 0 and 31!", 
+            "Enter an integer for Delay Tapping between 0 and 31!",
             inst, "tapValue2");
     }
     if (inst.tapValue3 < 0 || inst.tapValue3 > 0x1F)
     {
         validation.logError(
-            "Enter an integer for Delay Tapping between 0 and 31!", 
+            "Enter an integer for Delay Tapping between 0 and 31!",
             inst, "tapValue3");
     }
     if (inst.tagMask < 0 || inst.tagMask > 0xF)
     {
         validation.logError(
-            "Enter an integer for Tag Mask within 4 bits!", 
+            "Enter an integer for Tag Mask within 4 bits!",
             inst, "tagMask");
     }
-    
+
 }
 
 /*
@@ -510,12 +524,11 @@ if (Common.onlyPinmux())
 var fsirxModule = {
     peripheralName: "FSIRX",
     displayName: "FSIRX",
-    maxInstances: Common.peripheralCount("FSIRX"),
+    totalMaxInstances: Common.peripheralCount("FSIRX"),
     defaultInstanceName: "myFSIRX",
     description: "Fast Serial Interface Receiver Peripheral",
     filterHardware : filterHardware,
-    config: config,
-    validate: onValidate,
+    config: Common.filterConfigsIfInSetupMode(config),
     moduleInstances: (inst) => {
         var ownedInstances = [];
 
@@ -526,15 +539,15 @@ var fsirxModule = {
                 qualMode : "GPIO_QUAL_ASYNC",
             }
         }
-        
+
         ownedInstances = ownedInstances.concat(pinmuxQualMods)
-        
+
         if (inst.enableInterrupt && inst.registerInterruptLine1)
         {
             ownedInstances.push(
                 {
-                    name: "fsiRxInt1",   
-                    group: "GROUP_ISR",   
+                    name: "fsiRxInt1",
+                    group: "GROUP_ISR",
                     displayName: "INT1 Interrupt",
                     moduleName: "/driverlib/interrupt.js",
                     collapsed: true,
@@ -552,7 +565,7 @@ var fsirxModule = {
         {
             ownedInstances.push(
                 {
-                    name: "fsiRxInt2",      
+                    name: "fsiRxInt2",
                     group: "GROUP_ISR",
                     displayName: "INT2 Interrupt",
                     moduleName: "/driverlib/interrupt.js",
@@ -576,7 +589,7 @@ var fsirxModule = {
             ownedInstances = ownedInstances.concat([
                 {
                     name: "fsiRXDMAData",
-                    group: "GROUP_DMA",    
+                    group: "GROUP_DMA",
                     displayName: "FSIRX DMA - Received Data",
                     moduleName: "/driverlib/" + dmaInstData + ".js",
                     collapsed: true,
@@ -594,11 +607,12 @@ var fsirxModule = {
                         databusWidthConfig: "DMA_CFG_READ_SIZE_16BIT",
                         writeDatasizeConfig: "DMA_CFG_WRT_SIZE_16BIT",
                         triggerSource: "DMA_TRIGGER_LINKED"
-                    }
+                    },
+                    shouldBeAllocatedAsResource : true
                 },
                 {
                     name: "fsiRXDMAInfo",
-                    group: "GROUP_DMA",    
+                    group: "GROUP_DMA",
                     displayName: "FSIRX DMA - Tag and User Data",
                     moduleName: "/driverlib/" + dmaInstInfo + ".js",
                     collapsed: true,
@@ -612,7 +626,8 @@ var fsirxModule = {
                         databusWidthConfig: "DMA_CFG_READ_SIZE_16BIT",
                         writeDatasizeConfig: "DMA_CFG_WRT_SIZE_16BIT",
                         triggerSource: "DMA_TRIGGER_LINKED"
-                    }
+                    },
+                    shouldBeAllocatedAsResource : true
                 },
             ])
         }
@@ -626,7 +641,7 @@ var fsirxModule = {
                 collapsed: false,
                 requiredArgs:{
                     pinmuxPeripheralModule : "fsirx",
-                    peripheralInst: inst.$name,
+                    peripheralInst: "",
                 }
             },
             {
@@ -636,20 +651,24 @@ var fsirxModule = {
                 moduleName: "/driverlib/perConfig.js",
                 collapsed: false,
                 requiredArgs:{
+                    cpuSel: inst.$assignedContext ?? system.context,
                     pinmuxPeripheralModule : "fsirx",
-                    peripheralInst: inst.$name
-                }
+                    peripheralInst: ""
+                },
+                shouldBeAllocatedAsResource: true
             },
         ])
 
         return ownedInstances;
     },
     validate    : onValidate,
+    validatePinmux: validatePinmux,
     templates: {
         boardc : "/driverlib/fsirx/fsirx.board.c.xdt",
         boardh : "/driverlib/fsirx/fsirx.board.h.xdt"
     },
-    pinmuxRequirements    : Pinmux.fsirxPinmuxRequirements
+    pinmuxRequirements    : Pinmux.fsirxPinmuxRequirements,
+    shouldBeAllocatedAsResource: true
 };
 
 if (fsirxModule.maxInstances <= 0)

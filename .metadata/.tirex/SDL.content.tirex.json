@@ -1,0 +1,15 @@
+[
+	{
+		"mainCategories": [["Devices","Examples"]],
+		"subCategories": ["SDL"],
+		"name": "$(f29h85x_sdk_examples_set_sdl.name)",
+		"resourceType": "project.ccs",
+		"resourceClass": ["example"],
+		"resourceSubClass": ["example.general"],
+		"devices": ["F29H85x"],
+		"location": "$(f29h85x_sdk_examples_set_sdl.location)",
+		"description": "$(f29h85x_sdk_examples_set_sdl..description)",
+		"devtools": "$(f29h85x_sdk_examples_set_sdl.boards)"
+
+	}
+]

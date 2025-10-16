@@ -1,6 +1,7 @@
 %%{
 /////////////////////////////////////////////////////////////////////////////////////////
 let clocktree_common   = system.getScript("../clocktree_common.js");
+let peripheralInfo	   = system.getScript("/driverlib/device/peripheral_instances.js");
 let Common   			= system.getScript("/driverlib/Common.js");
 
 const PLL_type1 = clocktree_common.PLL_type1;
@@ -12,7 +13,10 @@ const xtal_x1_macro 		= clocktree_common.xtal_x1_macro;
 var XTAL_OR_X1 				= clocktree_common.XTAL_OR_X1;
 
 const device  = clocktree_common.device
+const deviceGPN = system.deviceData.gpnVariant.replace("TMS320", "")
+let availablePeripherals = peripheralInfo.peripheralCounts[deviceGPN]
 var clockTree_CPU2 		= Common.getClockTree();
+
 //////////////////////////////////////////////////
 // Frequency labels
 //////////////////////////////////////////////////
@@ -166,18 +170,22 @@ if(PLL_type2.includes(device))
 % EPWMCLK_d *= Math.pow(10,6)
 #define DEVICE_EPWM_FREQ     	`EPWMCLK_d`
 %}
+% if(availablePeripherals["EMIF1"]){
 % let   EMIF1_d       = clockTree_CPU2.PLLSYSCLK.in / clockTree_CPU2.EMIF1CLKDIV.divideValue
 % EMIF1_d *= Math.pow(10,6)
 #define DEVICE_EMIF1_FREQ     	`EMIF1_d`
+% }
 % var   LINA_d       = clockTree_CPU2.PLLSYSCLK.in / clockTree_CPU2.LINACLKDIV.divideValue
 % LINA_d *= Math.pow(10,6)
 #define DEVICE_LINA_FREQ     	`LINA_d`
 % var   LINB_d       = clockTree_CPU2.PLLSYSCLK.in / clockTree_CPU2.LINBCLKDIV.divideValue
 % LINB_d *= Math.pow(10,6)
 #define DEVICE_LINB_FREQ     	`LINB_d`
+% if(availablePeripherals["ECAT"]){
 % var   ECAT_d       = clockTree_CPU2.PLLCLK.in / clockTree_CPU2.ECATDIV.divideValue
 % ECAT_d *= Math.pow(10,6)
 #define DEVICE_ECAT_FREQ     	`ECAT_d`
+% }
 % var   HSM_d       = clockTree_CPU2.PLLSYSCLK.in / clockTree_CPU2.HSMCLKDIV.divideValue
 % HSM_d *= Math.pow(10,6)
 #define DEVICE_HSM_FREQ     	`HSM_d`

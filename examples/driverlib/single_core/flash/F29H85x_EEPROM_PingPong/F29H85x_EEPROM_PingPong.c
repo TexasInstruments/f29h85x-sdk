@@ -434,6 +434,7 @@ uint64_t Configure_Protection_Masks(uint32_t* Sector_Numbers, uint32_t Num_EEPRO
     return Protection_Mask_Sectors;
 }
 
+__attribute__((section(".TI.ramfunc")))
 void ClearFSMStatus(void)
 {
     Fapi_FlashStatusType  oFlashStatus;
@@ -615,6 +616,8 @@ void EEPROM_Erase_Inactive_Unit()
     Set_Protection_Masks();
 }
 
+
+__attribute__((section(".TI.ramfunc")))
 void Erase_Bank()
 {
     Fapi_StatusType  oReturnCheck;
@@ -742,6 +745,8 @@ void EEPROM_Write_Page(uint8_t* Write_Buffer)
     EEPROM_UpdatePageData(Write_Buffer);
 }
 
+
+__attribute__((section(".TI.ramfunc")))
 void EEPROM_Write_Buffer(uint8_t* address, uint8_t* write_buffer)
 {
     Fapi_StatusType oReturnCheck;

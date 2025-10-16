@@ -27,7 +27,8 @@ var config = [
                 description : 'Which Aux Signal is configured to be sourced from the inputs.',
                 hidden      : false,
                 default     : device_driverlib_peripheral.XBAR_AuxSigNum[0].name,
-                options     : device_driverlib_peripheral.XBAR_AuxSigNum,      
+                options     : device_driverlib_peripheral.XBAR_AuxSigNum,
+                shouldBeAllocatedAsResource : true,
             },
             {
                 name         : "sourceSignals",
@@ -36,6 +37,7 @@ var config = [
                 minSelections: 0,
                 options      : noPrefixOptions,
                 description  : "This determines the output of the xbar",
+                shouldBeAllocatedAsResource : true,
             }
         ]
     }
@@ -95,7 +97,10 @@ var clbxbarModule = {
         name: "clbXbarGlobal",
         displayName: "CLBXBAR Global",
         config: globalConfig,
+        shouldBeAllocatedAsResource : true,
     },
+    shouldBeAllocatedAsResource : true,
+    alwaysAllocateAsResource : true,
 };
 
 

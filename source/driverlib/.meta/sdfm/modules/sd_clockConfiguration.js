@@ -1,34 +1,34 @@
 let Common   = system.getScript("/driverlib/Common.js");
 let Pinmux   = system.getScript("/driverlib/pinmux.js");
 
-let device_driverlib_peripheral = 
-    system.getScript("/driverlib/device_driverlib_peripherals/" + 
+let device_driverlib_peripheral =
+    system.getScript("/driverlib/device_driverlib_peripherals/" +
         Common.getDeviceName().toLowerCase() + "_sdfm.js");
-		
+
 let sd_device_info = system.getScript("/driverlib/sdfm/sd_device_info.js");
 
 var ClockConfigs = [];
 
-let Ch1_ClockSource = 
+let Ch1_ClockSource =
 	[
 		{ name: "SDFM_CLK_SOURCE_SD1_CLK", displayName: "SD1 channel clock" },
 	]
-	
-let Ch2_ClockSource = 
+
+let Ch2_ClockSource =
 	[
 		{ name: "SDFM_CLK_SOURCE_CHANNEL_CLK", displayName: "SD2 channel clock" },
 		{ name: "SDFM_CLK_SOURCE_SD1_CLK", displayName: "SD1 channel clock" },
 	]
-	
-let Ch3_ClockSource = 
+
+let Ch3_ClockSource =
 	[
 		{ name: "SDFM_CLK_SOURCE_CHANNEL_CLK", displayName: "SD3 channel clock" },
 		{ name: "SDFM_CLK_SOURCE_SD1_CLK", displayName: "SD1 channel clock" },
 	]
-	
-let Ch4_ClockSource = 
+
+let Ch4_ClockSource =
 	[
-		{ name: "SDFM_CLK_SOURCE_CHANNEL_CLK", displayName: "SD3 channel clock" },
+		{ name: "SDFM_CLK_SOURCE_CHANNEL_CLK", displayName: "SD4 channel clock" },
 		{ name: "SDFM_CLK_SOURCE_SD1_CLK", displayName: "SD1 channel clock" },
 	]
 
@@ -45,7 +45,7 @@ ClockConfigs = ClockConfigs.concat
 		description : "Channel 1 SDCLK source",
 		hidden      : hide,
 		default     : Ch1_ClockSource[0].name,
-		options     : Ch1_ClockSource,	
+		options     : Ch1_ClockSource,
 	},
 	{
 		name: "Ch2_SDCLKSEL",
@@ -53,7 +53,7 @@ ClockConfigs = ClockConfigs.concat
 		description : "Channel 2 SDCLK source",
 		hidden      : hide,
 		default     : Ch2_ClockSource[0].name,
-		options     : Ch2_ClockSource,	
+		options     : Ch2_ClockSource,
 	},
 	{
 		name: "Ch3_SDCLKSEL",
@@ -61,7 +61,7 @@ ClockConfigs = ClockConfigs.concat
 		description : "Channel 3 SDCLK source",
 		hidden      : hide,
 		default     : Ch3_ClockSource[0].name,
-		options     : Ch3_ClockSource,	
+		options     : Ch3_ClockSource,
 	},
 	{
 		name: "Ch4_SDCLKSEL",
@@ -69,26 +69,26 @@ ClockConfigs = ClockConfigs.concat
 		description : "Channel 4 SDCLK source",
 		hidden      : hide,
 		default     : Ch4_ClockSource[0].name,
-		options     : Ch4_ClockSource,		
+		options     : Ch4_ClockSource,
 	},
   ]
 );
-}	
-var sdClockConfigSubmodule = 
+}
+var sdClockConfigSubmodule =
 {
     displayName: "SDCLK Source Configuration",
 	maxInstances: Common.peripheralCount("SD"),
     defaultInstanceName: "SDCLK_CLOCK_CONFIG",
     description: "Select SDCLK for respective filter channels",
     config: ClockConfigs,
-    templates: 
+    templates:
 	{
-        boardc : "", 
+        boardc : "",
         boardh : "",
     },
 };
 
-exports = 
+exports =
 {
 	ClockConfigs : ClockConfigs,
 }

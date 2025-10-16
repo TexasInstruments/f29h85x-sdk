@@ -140,14 +140,25 @@ int main(void)
 
 void myNMI_CPU1_ISR(void)
 {
-   cpu1nmigen = true;
+    cpu1nmigen = true;
 
-   //
-   // Clear the raw status and deassert the level interrupt.
-   //
-   Interrupt_clearEsmEaFlags(&nmiStatus);
+    //
+    // Clear the raw status and deassert the level interrupt.
+    //
+    Interrupt_clearEsmEaFlags(&nmiStatus);
 
-   ESM_writeEOIVector(ESMCPU1_BASE, ESM_EOI_HIGH_PRIORITY_ERROR_INTERRUPT);
+    //
+    // Clear the ERAD Counter event which triggers the NMI (used in Device_errataWorkaroundNMIVectorFetch)
+    //
+    ERAD_clearCounterEvent(ERAD_COUNTER3);
+
+    //
+    // Write the end of interrupt vector to the EOI Interrupt Register. In case there
+    // are enabled error events pending then a new pulse is generated and level
+    // interrupt remains asserted, else no new pulse is generated.
+    //
+    ESM_writeEOIVector(ESMSYSTEM_BASE, ESM_EOI_LOW_PRIORITY_ERROR_INTERRUPT);
+    ESM_writeEOIVector(ESMCPU1_BASE, ESM_EOI_HIGH_PRIORITY_ERROR_INTERRUPT);
 }
 //
 // End of File

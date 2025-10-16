@@ -10,9 +10,9 @@
 //! This example demonstrates how to use SysConfig to enable datalogging
 //! on our C29x devices. To enable this example, make sure to go to
 //! Build -> Variables and set GUI_SUPPORT to value of 1.
-//! This will create the GUI in CCS which can be opened under 
+//! This will create the GUI in CCS which can be opened under
 //! View -> Plugins -> transfer_customlog_export_fsi
-//! If there are no plugins after buliding, 
+//! If there are no plugins after buliding,
 //! please reload the window by doing Help -> Reload Window
 //! Please select the correct COM port in the GUI by clicking "Options"
 //! then "Serial Port Settings"
@@ -68,7 +68,7 @@
 //
 // Main
 //
-void main(void)
+int main(void)
 {
 
     //

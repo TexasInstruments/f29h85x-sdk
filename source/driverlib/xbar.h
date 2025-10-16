@@ -1600,7 +1600,6 @@ typedef enum
 //
 //*****************************************************************************
 #ifdef DEBUG
-__attribute__((always_inline))
 static inline bool
 XBAR_isBaseValid(uint32_t base)
 {
@@ -1629,7 +1628,6 @@ XBAR_isBaseValid(uint32_t base)
 //
 //*****************************************************************************
 #ifdef DEBUG
-__attribute__((always_inline))
 static inline bool
 XBAR_FLAGS_isBaseValid(uint32_t base)
 {
@@ -1667,7 +1665,6 @@ XBAR_FLAGS_isBaseValid(uint32_t base)
 //
 //*****************************************************************************
 #ifdef DEBUG
-__attribute__((always_inline))
 static inline bool
 XBAR_isGPIOPinValid(uint32_t pin)
 {
@@ -1708,7 +1705,6 @@ XBAR_isGPIOPinValid(uint32_t pin)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.XBAR_setInputPin")))
-__attribute__((always_inline))
 static inline void
 XBAR_setInputPin(uint32_t base, XBAR_InputNum input, uint16_t pin)
 {
@@ -1740,7 +1736,6 @@ XBAR_setInputPin(uint32_t base, XBAR_InputNum input, uint16_t pin)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.XBAR_lockInput")))
-__attribute__((always_inline))
 static inline void
 XBAR_lockInput(uint32_t base, XBAR_InputNum input)
 {
@@ -1779,7 +1774,6 @@ XBAR_lockInput(uint32_t base, XBAR_InputNum input)
 //! If the output signal is in low state, it will return \b false.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline bool
 XBAR_getOutputSignalStatus(uint32_t base, XBAR_OutputNum output)
 {
@@ -1816,7 +1810,6 @@ XBAR_getOutputSignalStatus(uint32_t base, XBAR_OutputNum output)
 //! If not, it will return \b false.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline bool
 XBAR_getOutputLatchStatus(uint32_t base, XBAR_OutputNum output)
 {
@@ -1854,7 +1847,6 @@ XBAR_getOutputLatchStatus(uint32_t base, XBAR_OutputNum output)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 XBAR_clearOutputLatch(uint32_t base, XBAR_OutputNum output)
 {
@@ -1894,7 +1886,6 @@ XBAR_clearOutputLatch(uint32_t base, XBAR_OutputNum output)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 XBAR_forceOutputLatch(uint32_t base, XBAR_OutputNum output)
 {
@@ -1937,7 +1928,6 @@ XBAR_forceOutputLatch(uint32_t base, XBAR_OutputNum output)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.XBAR_invertOutputSignalBeforeLatch")))
-__attribute__((always_inline))
 static inline void
 XBAR_invertOutputSignalBeforeLatch(uint32_t base, XBAR_OutputNum output,
                                     bool invert)
@@ -1982,7 +1972,6 @@ XBAR_invertOutputSignalBeforeLatch(uint32_t base, XBAR_OutputNum output,
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.XBAR_setOutputLatchMode")))
-__attribute__((always_inline))
 static inline void
 XBAR_setOutputLatchMode(uint32_t base, XBAR_OutputNum output, bool enable)
 {
@@ -2027,7 +2016,6 @@ XBAR_setOutputLatchMode(uint32_t base, XBAR_OutputNum output, bool enable)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.XBAR_selectOutputStretchSource")))
-__attribute__((always_inline))
 static inline void
 XBAR_selectOutputStretchSource(uint32_t base, XBAR_OutputNum output,
                          bool selectStretched)
@@ -2072,7 +2060,6 @@ XBAR_selectOutputStretchSource(uint32_t base, XBAR_OutputNum output,
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.XBAR_selectOutputStretchLength")))
-__attribute__((always_inline))
 static inline void
 XBAR_selectOutputStretchLength(uint32_t base, XBAR_OutputNum output,
                                XBAR_OutputStretchLength length)
@@ -2120,7 +2107,6 @@ XBAR_selectOutputStretchLength(uint32_t base, XBAR_OutputNum output,
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.XBAR_invertOutputSignal")))
-__attribute__((always_inline))
 static inline void
 XBAR_invertOutputSignal(uint32_t base, XBAR_OutputNum output, bool invert)
 {
@@ -2164,7 +2150,6 @@ XBAR_invertOutputSignal(uint32_t base, XBAR_OutputNum output, bool invert)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.XBAR_lockConfiguration")))
-__attribute__((always_inline))
 static inline void
 XBAR_lockConfiguration(uint32_t base)
 {

@@ -27,7 +27,8 @@ var config = [
                 description : 'Which Trip input is configured to be sourced from the muxes.',
                 hidden      : false,
                 default     : device_driverlib_peripheral.XBAR_TripNum[0].name,
-                options     : device_driverlib_peripheral.XBAR_TripNum,    
+                options     : device_driverlib_peripheral.XBAR_TripNum,
+                shouldBeAllocatedAsResource : true, 
             },
             {
                 name         : "sourceSignals",
@@ -36,6 +37,7 @@ var config = [
                 minSelections: 0,
                 options      : noPrefixOptions,
                 description  : "This determines the output of the xbar",
+                shouldBeAllocatedAsResource : true,
             }
         ]
     }
@@ -129,7 +131,7 @@ var epwmxbarModule = {
     defaultInstanceName   : "myEPWMXBAR",
     description           : "EPWM X-BAR",
     filterHardware        : filterHardware,
-    config                : config,
+    config                : Common.filterConfigsIfInSetupMode(config),
     moduleInstances       : moduleInstances,
     templates             : {
         boardc : "/driverlib/epwmxbar/epwmxbar.board.c.xdt",
@@ -140,7 +142,10 @@ var epwmxbarModule = {
         name: "epwmXbarGlobal",
         displayName: "EPWMXBAR Global",
         config: globalConfig,
+        shouldBeAllocatedAsResource : true,
     },
+    shouldBeAllocatedAsResource : true,
+    alwaysAllocateAsResource : true,
 };
 
 

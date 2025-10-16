@@ -22,7 +22,8 @@ let config = [
         name: "xintNum",
         displayName: "XINT Instance",
         options: device_driverlib_peripheral.GPIO_ExternalIntNum,
-        default: device_driverlib_peripheral.GPIO_ExternalIntNum[0].name
+        default: device_driverlib_peripheral.GPIO_ExternalIntNum[0].name,
+        shouldBeAllocatedAsResource: true,
     },
     {
         name: "intType",
@@ -60,15 +61,29 @@ function filterHardware(component)
 function sharedModuleInstances(inst)
 {
     var sharedMods = []
+    let requiredArgs = {}
+    if(Common.isAllocationSetupMode())
+    {
+        requiredArgs = {
+            $assignedContext: "CPU1",
+            inputxbarInput : xint_inputxbar_map[inst.xintNum],
+        }
+    }
+    else
+    {
+        requiredArgs = {
+            inputxbarInput : xint_inputxbar_map[inst.xintNum],
+        }
+    }
+
     //GROUP_XINT
     sharedMods.push({
         name: "inputxbar",      
         displayName: "INPUTXBAR",
         moduleName: "/driverlib/inputxbar_input.js",
         collapsed: true,
-        requiredArgs : {
-            inputxbarInput : xint_inputxbar_map[inst.xintNum]
-        }
+        requiredArgs : requiredArgs,
+        shouldBeAllocatedAsResource: true,
     })
     return sharedMods
 }
@@ -139,11 +154,12 @@ var xintModule = {
     longDescription: longDescription,
     filterHardware : filterHardware,
     validate: onValidate,
-    config: config,
+    config: Common.filterConfigsIfInSetupMode(config),
     templates: {
         boardc : "/driverlib/gpio/xint.board.c.xdt",
         boardh : "/driverlib/gpio/xint.board.h.xdt"
     },
+    shouldBeAllocatedAsResource: true,
 };
 
 

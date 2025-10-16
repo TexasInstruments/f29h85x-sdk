@@ -463,15 +463,16 @@ let config = [
         // TODO: decide if total or partial removal of onChangeADC
         //onChange    : onChangeADC
         onChange    : (inst, ui) => {
-        if(inst.adcBase == "ADCC_BASE" || inst.adcBase == "ADCD_BASE" || inst.adcBase == "ADCE_BASE"){
-            ui.adcResolutionMode.hidden = true
-            ui.adcSignalMode.hidden = true
-        }
-        else{
-            ui.adcResolutionMode.hidden = false
-            ui.adcSignalMode.hidden = false
-        }
-    }
+            if(inst.adcBase == "ADCC_BASE" || inst.adcBase == "ADCD_BASE" || inst.adcBase == "ADCE_BASE"){
+                ui.adcResolutionMode.hidden = true
+                ui.adcSignalMode.hidden = true
+            }
+            else{
+                ui.adcResolutionMode.hidden = false
+                ui.adcSignalMode.hidden = false
+            }
+        },
+        shouldBeAllocatedAsResource: true,
     },
     // {
     //     name: "GROUP_COPY",
@@ -577,7 +578,7 @@ config = config.concat([
         default     : device_driverlib_peripheral.ADC_Resolution[0].name,
         hidden      : false,
         options     : device_driverlib_peripheral.ADC_Resolution,
-        
+
     },
     {
         name: "adcSignalMode",
@@ -1698,7 +1699,14 @@ function onValidateStatic(mod, stat){
 }
 
 function onValidate(inst, validation) {
-
+    var selectedInstance = inst.adcBase.replace("_BASE","");// e.g., "ADC1"
+    if (Common.is_instance_not_in_variant(selectedInstance)) {
+        validation.logError(
+            `${selectedInstance} is not supported for ${Common.getVariant().replace(/^TMS320/, '')}.`,
+            inst,
+            "adcBase"
+        );
+    }
     let cpu = ""
 
     if(Common.isContextCPU2()){
@@ -1761,15 +1769,18 @@ function onValidate(inst, validation) {
             }
         }
         else {
-            if (inst.enableEXTMUX)
+            if (Common.isAllocationOff())
             {
+                if(inst.enableEXTMUX)
+                {
+                    validation.logWarning(
+                        `The OUTPUTXBAR module needs to be added on CPU1 when an external MUX is added on ${cpu}`,inst,"enableEXTMUX");
+                }
                 validation.logWarning(
-                    `The OUTPUTXBAR module needs to be added on CPU1 when an external MUX is added on ${cpu}`,inst,"enableEXTMUX");
+                    `The ASYSCTL module needs to be added on CPU1 when an ADC instance is added on ${cpu}`,inst,"adcBase");
+                validation.logWarning(
+                    `The ANALOG PinMux module needs to be added on CPU1 when an ADC instance is added on ${cpu}`,inst,"adcBase");
             }
-            validation.logWarning(
-                `The ASYSCTL module needs to be added on CPU1 when an ADC instance is added on ${cpu}`,inst,"adcBase");
-            validation.logWarning(
-                `The ANALOG PinMux module needs to be added on CPU1 when an ADC instance is added on ${cpu}`,inst,"adcBase");
         }
     }
 
@@ -2510,6 +2521,32 @@ function onValidate(inst, validation) {
         }
     }
 
+    else if (!Common.isAllocationOff())
+    {
+        let raData = system.resourceAllocation.data
+        if (Common.peripheralCount("ANALOG") > 0)
+        {
+            for(var socIndex in device_driverlib_peripheral.ADC_SOCNumber){
+                var currentSOC = device_driverlib_peripheral.ADC_SOCNumber[socIndex].name
+                var soci = (currentSOC).replace(/[^0-9]/g,'')
+                if((inst.enabledSOCs).includes(currentSOC)){
+                    let devicePinNameInfo = inst["soc" + soci.toString() + "DevicePinName"]
+                    let cpu1Data = raData.contexts.find(x => x.contextName === "CPU1")
+                    let analogModule = cpu1Data.modules.find(x => x.moduleName === '/driverlib/analog.js').instances[0]
+                    var pinsList = analogModule.requiredArgs.analog
+                    pinsList = Object.keys(pinsList).map(key => key.replace(/,/g, '/').replace(/Pin/g, "").toUpperCase());
+                    let pinSelected = devicePinNameInfo.split(": ")[1]
+                    if (pinSelected && !pinsList.includes(pinSelected))
+                    {
+                        validation.logError(
+                        "The pin " + pinSelected + " is not selected in the ANALOG PinMux module." +
+                        " Add this pin to the 'Pins Used' or change the 'Use Case'",
+                        inst,"soc" + soci.toString() + "DevicePinName");
+                    }    
+                }
+            }
+        }
+    }
 }
 config.push(
     {
@@ -2573,12 +2610,12 @@ if (Common.isContextCPU1()) {
 var adcModule = {
     peripheralName: "ADC",
     displayName: "ADC",
-    maxInstances: maxInstances,
+    totalMaxInstances: Common.countinstances("ADC",maxInstances),
     defaultInstanceName: "myADC",
     description: "Analog Digital Converter",
     //longDescription: (Common.getCollateralFindabilityList("ADC")),
     filterHardware : filterHardware,
-    config: config,
+    config: Common.filterConfigsIfInSetupMode(config),
     moduleInstances: (inst) => {
 
         var intReturn =  []
@@ -2711,9 +2748,11 @@ var adcModule = {
                 moduleName: "/driverlib/perConfig.js",
                 collapsed: false,
                 requiredArgs:{
+                    cpuSel: inst.$assignedContext ?? system.context,
                     pinmuxPeripheralModule : "",
                     peripheralInst: inst.adcBase.replace("_BASE", "")
-                }
+                },
+                shouldBeAllocatedAsResource: true,
             },
         ])
         return intReturn;
@@ -2725,11 +2764,12 @@ var adcModule = {
     moduleStatic: {
         name: "adcGlobal",
         displayName: "ADC Global",
-        config: globalConfig,
+        config: Common.filterConfigsIfInSetupMode(globalConfig),
         modules: moduleStaticModules,
         validate : onValidateStatic
     },
     modules: modules,
+    shouldBeAllocatedAsResource: true,
     sharedModuleInstances: sharedModuleInstances,
     validate    : onValidate,
 };

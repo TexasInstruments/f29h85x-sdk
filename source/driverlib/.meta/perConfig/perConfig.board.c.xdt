@@ -9,6 +9,7 @@ let Common   = system.getScript("/driverlib/Common.js");
 //*****************************************************************************
 void PERCONFIG_init()
 {
+% if (Common.isAllocationOff()) {
 % var contextNames = Common.getContextNames()
 % for (var cntx of contextNames)
 % {
@@ -75,5 +76,95 @@ if (module != null)
 	// Inserting some delay for frame updates to take effect
 	//
     SysCtl_delay(100);
+% }
+% }
+% else{
+%%{
+let perConfigData = []
+let raData = system.resourceAllocation.data
+// console.log(raData)
+for (let context of raData.contexts)
+{
+    let module = context.modules.find(x => x.moduleName === '/driverlib/perConfig.js')
+    if (module != null){
+        for (let inst of module.instances)
+        {
+            perConfigData[inst.allocationName] = [inst]
+        }
+    }
+}
+
+for (let context of raData.contexts)
+{
+    for (let module of context.modules)
+    {
+        for (let modinstance of module.instances)
+        {
+            if(modinstance.requiredArgs.periphConfig)
+            {
+                let perConfigInstName = modinstance.requiredArgs.periphConfig.$allocation
+                perConfigData[perConfigInstName].push(modinstance)
+            }
+        }
+    }
+}
+// console.log(perConfigData)
+if(perConfigData){
+    for (let i of Object.keys(perConfigData)) {
+        let Instance = perConfigData[i]
+        var peripheralInst = Instance[0].requiredArgs.peripheralInst;
+        var tempPeripheralInst = peripheralInst;
+        if (Instance[0].requiredArgs.pinmuxPeripheralModule)
+        {
+            let ownerPinmuxPeripheral = Instance[0].requiredArgs.pinmuxPeripheralModule;
+	        let ownerInstance = Instance[1]
+	        var ownerSolution = ownerInstance.requiredArgs[ownerPinmuxPeripheral].$assign;
+	        peripheralInst = ownerSolution;
+            if (peripheralInst.includes("SD"))
+            {
+                tempPeripheralInst = peripheralInst.slice(0, 2) + "FM" + peripheralInst.slice(2);
+            }
+            else if(peripheralInst.includes("ECAT")){
+                tempPeripheralInst = "ETHERCATA";
+            }
+            else
+            {
+                tempPeripheralInst = peripheralInst;
+            }
+        }
+%%}
+%   let instance = Instance[0].requiredArgs
+%   if(!instance.removeCpuSelStandbyDbgHalt)
+%   {
+    SysCtl_selectCPUForPeripheral(SYSCTL_PERIPH_CONFIG_`tempPeripheralInst`, SYSCTL_CPUSEL_`instance.cpuSel`);
+%   }
+%   if(!instance.removeFrameSel)
+%   {
+    SysCtl_selectFrameForPeripheral(SYSCTL_PERIPH_CONFIG_`tempPeripheralInst`, SYSCTL_FRAMESEL_`instance.frameSel.replace("FRAME","")`);
+%   }
+%%{
+    if(!instance.removeCpuSelStandbyDbgHalt)
+    {
+        if(!instance.standbyEn)
+        {
+%%}
+    SysCtl_disableStandbyForPeripheral(SYSCTL_PERIPH_CONFIG_`tempPeripheralInst`);
+%%{
+        }
+        if(!instance.dbgHaltEn)
+        {
+%%}
+    SysCtl_disableDebugHaltForPeripheral(SYSCTL_PERIPH_CONFIG_`tempPeripheralInst`);
+%%{
+        }
+    }
+%%}
+
+% }
+	//
+	// Inserting some delay for frame updates to take effect
+	//
+    SysCtl_delay(100);
+% }
 % }
 }

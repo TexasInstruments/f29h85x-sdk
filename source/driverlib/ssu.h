@@ -487,7 +487,6 @@ SSU_setAccessProtection(SSU_CPUID cpu, SSU_APConfig config[], int length);
 //
 //**************************************************************************************************
 __attribute__((section(".text.link2.SSU_enableAccessProtection")))
-__attribute__((always_inline))
 static inline void
 SSU_enableAccessProtection(SSU_CPUID cpu, uint32_t region)
 {
@@ -504,7 +503,6 @@ SSU_enableAccessProtection(SSU_CPUID cpu, uint32_t region)
 //
 //**************************************************************************************************
 __attribute__((section(".text.link2.SSU_disableAccessProtection")))
-__attribute__((always_inline))
 static inline void
 SSU_disableAccessProtection(SSU_CPUID cpu, uint32_t region)
 {
@@ -518,7 +516,6 @@ SSU_disableAccessProtection(SSU_CPUID cpu, uint32_t region)
 //! \return SSU Mode (SSU_MODE1 / SSU_MODE2 / SSU_MODE3).
 //
 //**************************************************************************************************
-__attribute__((always_inline))
 static inline SSU_Mode
 SSU_getSSUMode(void)
 {
@@ -532,7 +529,6 @@ SSU_getSSUMode(void)
 //! \return CPU ID (SSU_CPU1 / SSU_CPU2 / SSU_CPU3)
 //
 //**************************************************************************************************
-__attribute__((always_inline))
 static inline SSU_CPUID
 SSU_getCPUID(void)
 {
@@ -549,7 +545,6 @@ SSU_getCPUID(void)
 //
 //**************************************************************************************************
 __attribute__((section(".text.link2.SSU_lockAPRegisters")))
-__attribute__((always_inline))
 static inline void
 SSU_lockAPRegisters(SSU_CPUID cpu, uint32_t region)
 {
@@ -566,7 +561,6 @@ SSU_lockAPRegisters(SSU_CPUID cpu, uint32_t region)
 //
 //**************************************************************************************************
 __attribute__((section(".text.link2.SSU_unlockAPRegisters")))
-__attribute__((always_inline))
 static inline void
 SSU_unlockAPRegisters(SSU_CPUID cpu, uint32_t region)
 {
@@ -583,7 +577,6 @@ SSU_unlockAPRegisters(SSU_CPUID cpu, uint32_t region)
 //
 //**************************************************************************************************
 __attribute__((section(".text.link2.SSU_commitAPRegisters")))
-__attribute__((always_inline))
 static inline void
 SSU_commitAPRegisters(SSU_CPUID cpu, uint32_t region)
 {
@@ -599,7 +592,6 @@ SSU_commitAPRegisters(SSU_CPUID cpu, uint32_t region)
 //
 //**************************************************************************************************
 __attribute__((section(".text.link2.SSU_lockAllAPRegisters")))
-__attribute__((always_inline))
 static inline void
 SSU_lockAllAPRegisters(SSU_CPUID cpu)
 {
@@ -619,7 +611,6 @@ SSU_lockAllAPRegisters(SSU_CPUID cpu)
 //
 //**************************************************************************************************
 __attribute__((section(".text.link2.SSU_commitAllAPRegisters")))
-__attribute__((always_inline))
 static inline void
 SSU_commitAllAPRegisters(SSU_CPUID cpu)
 {
@@ -639,7 +630,6 @@ SSU_commitAllAPRegisters(SSU_CPUID cpu)
 //
 //**************************************************************************************************
 __attribute__((section(".text.link2.SSU_enableLink2APOverride")))
-__attribute__((always_inline))
 static inline void
 SSU_enableLink2APOverride(SSU_CPUID cpu)
 {
@@ -655,7 +645,6 @@ SSU_enableLink2APOverride(SSU_CPUID cpu)
 //
 //**************************************************************************************************
 __attribute__((section(".text.link2.SSU_disableLink2APOverride")))
-__attribute__((always_inline))
 static inline void
 SSU_disableLink2APOverride(SSU_CPUID cpu)
 {
@@ -679,7 +668,6 @@ SSU_disableLink2APOverride(SSU_CPUID cpu)
 //
 //**************************************************************************************************
 __attribute__((section(".text.link2.SSU_configBootAddress")))
-__attribute__((always_inline))
 static inline void
 SSU_configBootAddress(SSU_CPUID cpu, uint32_t addr, SSU_Link link)
 {
@@ -718,7 +706,6 @@ SSU_configBootAddress(SSU_CPUID cpu, uint32_t addr, SSU_Link link)
 //
 //**************************************************************************************************
 __attribute__((section(".text.link2.SSU_configNmiAddress")))
-__attribute__((always_inline))
 static inline void
 SSU_configNmiAddress(SSU_CPUID cpu, uint32_t addr, SSU_Link link)
 {
@@ -757,7 +744,6 @@ SSU_configNmiAddress(SSU_CPUID cpu, uint32_t addr, SSU_Link link)
 //
 //**************************************************************************************************
 __attribute__((section(".text.link2.SSU_controlCPUReset")))
-__attribute__((always_inline))
 static inline void
 SSU_controlCPUReset(SSU_CPUID cpu, SSU_CoreReset control)
 {
@@ -786,7 +772,6 @@ SSU_controlCPUReset(SSU_CPUID cpu, SSU_CoreReset control)
 //! to a different CPU or LINK .
 //
 //**************************************************************************************************
-__attribute__((always_inline))
 static inline bool
 SSU_claimFlashSemaphore(void)
 {
@@ -801,14 +786,13 @@ SSU_claimFlashSemaphore(void)
         // Claim the semaphore
         //
         HWREG(SSUGEN_BASE + SSU_O_FLSEMREQ) = 1U;
-
-        //
-        // Check if the semaphore is assigned to the current CPU and LINK
-        //
-        if((HWREG(SSUGEN_BASE + SSU_O_FLSEMSTAT) & SSU_FLSEMSTAT_MATCH) != 0U)
-        {
-            status = true;
-        }
+    }
+    //
+    // Check if the semaphore is assigned to the current CPU and LINK
+    //
+    if((HWREG(SSUGEN_BASE + SSU_O_FLSEMSTAT) & SSU_FLSEMSTAT_MATCH) != 0U)
+    {
+        status = true;
     }
     return(status);
 }
@@ -821,7 +805,6 @@ SSU_claimFlashSemaphore(void)
 //! assigned to the current CPU or LINK
 //
 //**************************************************************************************************
-__attribute__((always_inline))
 static inline bool
 SSU_releaseFlashSemaphore(void)
 {
@@ -838,6 +821,10 @@ SSU_releaseFlashSemaphore(void)
         HWREG(SSUGEN_BASE + SSU_O_FLSEMCLR) = 1U;
         status = true;
     }
+    if((HWREG(SSUGEN_BASE + SSU_O_FLSEMSTAT) & SSU_FLSEMSTAT_ASSIGNED) == 0U)
+    {
+        status = true;
+    }
     return(status);
 }
 
@@ -852,7 +839,6 @@ SSU_releaseFlashSemaphore(void)
 //!
 //**************************************************************************************************
 __attribute__((section(".text.link1")))
-__attribute__((always_inline))
 static inline void
 SSU_forceRAMOPEN(bool wipeOnClear)
 {
@@ -876,7 +862,6 @@ SSU_forceRAMOPEN(bool wipeOnClear)
 //!
 //**************************************************************************************************
 __attribute__((section(".text.link1")))
-__attribute__((always_inline))
 static inline void
 SSU_clearRAMOPEN(void)
 {
@@ -893,7 +878,6 @@ SSU_clearRAMOPEN(void)
 //!
 //**************************************************************************************************
 __attribute__((section(".text.link1")))
-__attribute__((always_inline))
 static inline bool
 SSU_getRAMOPENStatus(void)
 {

@@ -1,15 +1,14 @@
 %%{
-    const Common = system.getScript('/ti/security/Common.js');
-    let sysSec   = Common.modStatic('/ti/security/System_Security');
-    var cpu2 = system.modules['/driverlib/cpu2.js'];
-    let cpu2instance;
-    var cpu3 = system.modules['/driverlib/cpu3.js'];
-    let cpu3instance;
-    let bankmode = Common.getBankModeConfig()
+    const Common        = system.getScript('/ti/security/Common.js');
+    let sysSec          = Common.modStatic('/ti/security/System_Security');
+    let sysSecCPU1      = Common.modStaticByCPU('/ti/security/System_Security', Common.CONTEXT_CPU1);
+    let bankmode        = Common.getBankModeConfig()
+    var contextNames    = Common.getActiveContexts();
+    let ctx             = Common.currentContext()
 
     var Stack2Size = 0;
     Common.modInstances(`/ti/security/Stack`).forEach(stack => {
-        if(stack.$name == "STACK2_STACK") { //!! tag
+        if(stack.$name == `${ctx}_STACK2_STACK`) { //!! tag
             Stack2Size = stack.size
         }
     })
@@ -18,8 +17,8 @@
 // ----------------------------------------------------------------------------
 // This linker command file is auto-generated. Do not edit directly.
 // ----------------------------------------------------------------------------
-% if(sysSec && ((sysSec.ssumode != 1) || (Common.isContextCPU3() == true) || (Common.isContextCPU2() == true))){
-% if (sysSec && sysSec.ssumode == 3 && sysSec.inter_security_context_behavior == 'autofix') {
+% if(sysSec){
+% if (sysSecCPU1 && sysSecCPU1.ssumode == 3 && sysSecCPU1.inter_security_context_behavior == 'autofix') {
 --auto_resolve_protected_calls
 % }
 
@@ -34,8 +33,7 @@
 MEMORY
 {
 `Common.getMemoryList(system.context)`
-%if(cpu3 != null) {
-%   cpu3instance = cpu3.$static;
+%if(Common.isContextCPU1() && contextNames.includes("CPU3")) {
 %   let cpu3FlashRegion = Common.getFlashRegion("CPU3")
     // CPU3 load memory
 
@@ -47,14 +45,11 @@ MEMORY
 SECTIONS
 {
 `Common.getSectionsList(sysSec, system.context)`
-%if(cpu2 != null) {
-%   cpu2instance = cpu2.$static;
+%if(Common.isContextCPU1() && contextNames.includes("CPU2")) {
     // CPU2 App Section
     cpu2app         : {} LOAD=CPU2_FLASH_REGION, RUN=CPU2_RAMCOVERREGION0, table(BINIT), palign(8)
-
 %}
-%if(cpu3 != null) {
-%   cpu3instance = cpu3.$static;
+%if(Common.isContextCPU1() && contextNames.includes("CPU3")) {
 % if(bankmode >= 2){
     // CPU3 App Section
     cpu3app         : {} > CPU3_FLASH_REGION,    palign(8)
@@ -78,11 +73,11 @@ __SECSP6   = 0x3000D018;
 __SECSP7   = 0x3000D01C;
 
 % if (sysSec && sysSec.addLink1) {
-__SECSP1_START = STACK1_STACK_start;
+__SECSP1_START = `ctx`_STACK1_STACK_start;
 % }
 % var i = 3
 % Common.modInstances(`/ti/security/Stack`).forEach(stack => {
-%   if((stack.$name != "STACK2_STACK") && (stack.$name != "STACK1_STACK")) {
+%   if((stack.$name != `${ctx}_STACK2_STACK`) && (stack.$name != `${ctx}_STACK1_STACK`)) {
 __SECSP`i`_START = `stack.$name`_start;
 %   i++
 %   }
@@ -105,3 +100,4 @@ SECTIONS
 `Common.getSectionsList(sysSec, system.context)`
 }
 %}
+

@@ -163,7 +163,6 @@ typedef enum
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.Memss_initMemory")))
-__attribute__((always_inline))
 static inline void
 Memss_initMemory(Memss_RAM ram)
 {
@@ -182,7 +181,6 @@ Memss_initMemory(Memss_RAM ram)
 //! \return true if initialization is complete, false if not
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline bool
 Memss_getInitStatus(Memss_RAM ram)
 {
@@ -202,7 +200,6 @@ Memss_getInitStatus(Memss_RAM ram)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.Memss_setRAMTestMode")))
-__attribute__((always_inline))
 static inline void
 Memss_setRAMTestMode(Memss_RAM ram, Memss_RAMTestMode testMode)
 {
@@ -224,7 +221,6 @@ Memss_setRAMTestMode(Memss_RAM ram, Memss_RAMTestMode testMode)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.Memss_lockConfig")))
-__attribute__((always_inline))
 static inline void
 Memss_lockConfig(uint32_t mem)
 {
@@ -244,7 +240,6 @@ Memss_lockConfig(uint32_t mem)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.Memss_unlockConfig")))
-__attribute__((always_inline))
 static inline void
 Memss_unlockConfig(uint32_t mem)
 {
@@ -264,7 +259,6 @@ Memss_unlockConfig(uint32_t mem)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.Memss_commitConfig")))
-__attribute__((always_inline))
 static inline void
 Memss_commitConfig(uint32_t mem)
 {
@@ -283,7 +277,6 @@ Memss_commitConfig(uint32_t mem)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.Memss_enableDlb")))
-__attribute__((always_inline))
 static inline void
 Memss_enableDlb(Memss_CpuId cpuId)
 {
@@ -303,7 +296,6 @@ Memss_enableDlb(Memss_CpuId cpuId)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.Memss_disableDlb")))
-__attribute__((always_inline))
 static inline void
 Memss_disableDlb(Memss_CpuId cpuId)
 {

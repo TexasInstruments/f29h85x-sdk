@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2022-24 Texas Instruments Incorporated
+ *  Copyright (c) 2025-24 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -265,10 +265,10 @@ extern "C"
     /**
      * @brief
      * This is RNG type which holds the resultPtr for derivation which is returned by TIFS.
-     * This also holds the resultLengthPtr and DRBG Mode along with seedValue and seedSize.
+     * This also holds the resultLength and DRBG Mode along with seedValue and seedSize.
      *
      * @param resultPtr		    Pointer to the random number generated
-     * @param resultLengthPtr	Pointer to store the desired length in bytes
+     * @param resultLength	    Length in bytes
      * @param DRBGMode          Flag that determines whether DRBG mode is required or not
      * @param seedValue			Stores the seed values
      * @param seedSizeInDWords   Stores the seed size in double words
@@ -276,7 +276,7 @@ extern "C"
     typedef struct RNGReq_t_
     {
         uint8_t *resultPtr;        /**< Pointer to the random number.*/
-        uint32_t *resultLengthPtr; /**< Pointer to determine result length.*/
+        uint32_t resultLength;    /**< Length in bytes.*/
         uint8_t DRBGMode;          /**< Flag to enable DRBG Mode.*/
         uint32_t *seedValue;       /**< Seed Value.*/
         uint8_t seedSizeInDWords;  /**< Seed Size in double words.*/
@@ -360,6 +360,23 @@ typedef struct OTFA_Config_t
     uint8_t        macSize   ;      /* options - 4/8/12/16 */
     uint8_t        masterEnable ;   /* specifies whether OTFA IP has to be enabled/disabled ; 0 or 1 */
 }OTFA_Config_t ;
+
+/**
+* @brief
+* This is Sec-Cfg validation request structure passed to HSM core via SIPC as
+* argument, these parameters are required by the service handler.
+* Valid only for F29x family of devices
+*
+* @param pCertAddress               Pointer to the Sec-Cfg certificate, if argument passed is NULL, HSM validates Sec-Cfg from default location
+* @param certType                   Sec-Cfg certificate for C29 CPU1, CPU2 or CPU3
+*/
+typedef struct SecCfgValidate_t_
+{
+    uint8_t *pCertAddress;  /** Address of the Sec-Cfg certificate, if NULL default Sec-cfg is validated */
+    uint32_t certType;      /** Sec-Cfg certificate for CPU1, CPU2 or CPU-3, pass NULL if validating 
+                             * sec-cfg not programmed in device Sec-Cfg memory 
+                             */
+} SecCfgValidate_t;
 
     /**
      * @brief
@@ -917,6 +934,22 @@ int32_t HsmClient_configOTFARegions(HsmClient_t* HsmClient,
 int32_t HsmClient_readOTFARegions(HsmClient_t* HsmClient,
                                         OTFA_readRegion_t* OTFA_readRegion,
                                         uint32_t timeout);
+
+/**
+ *  @brief  Client request to validate sec-cfg
+ *  Valid only for F29x family of devices
+ *
+ *  @param  HsmClient       [IN] HsmClient object
+ *  @param  pSecCfgParams   [IN] Sec-Cfg object
+ *  @param  timeout         [IN] timeout
+ * 
+ * @return
+ * 1. SystemP_SUCCESS if validation done successfully
+ * 2. SystemP_FAILURE if NACK message is received or client id not registered.
+ */
+int32_t HsmClient_secCfgValidate(HsmClient_t *HsmClient,
+                                 SecCfgValidate_t *pSecCfgParams,
+                                 uint32_t timeout);
 
 /** @} */
 

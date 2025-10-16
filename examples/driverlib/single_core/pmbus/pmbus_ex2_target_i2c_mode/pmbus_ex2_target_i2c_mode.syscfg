@@ -1,0 +1,43 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --device "F29H85x" --package "256ZEX" --part "F29H85x_256ZEX" --context "CPU1" --product "MCU_SDK_F29H85x@1.02.02.00"
+ * @v2CliArgs --device "F29H850TU" --package "256ZEX" --variant "TMS320F29H850TU9" --context "CPU1" --product "MCU_SDK_F29H85x@1.02.02.00"
+ * @versions {"tool":"1.25.0+4237"}
+ */
+
+    
+const divider15       = system.clockTree["PLL_REFDIV"];
+divider15.divideValue = 1;
+
+const multiplier1         = system.clockTree["PLL_IMULT"];
+multiplier1.multiplyValue = 40;
+
+const mux7       = system.clockTree["OSCCLKSRCSEL"];
+mux7.inputSelect = "INTOSC2";
+
+/**
+ * Import the modules used in this configuration.
+ */
+const jtag       = scripting.addModule("/driverlib/jtag.js");
+const pmbus  = scripting.addModule("/driverlib/pmbus.js", {}, false);
+const pmbus1 = pmbus.addInstance();
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+pmbus1.$name                      = "myPMBUS0";
+pmbus1.dataCount                  = 4;
+pmbus1.useZeroHoldSupport         = true;
+pmbus1.OwnAddress                 = 0x6A;
+pmbus1.enableI2CMode              = true;
+pmbus1.useInterrupts              = true;
+pmbus1.registerInterrupts         = true;
+pmbus1.mode                       = "Target";
+pmbus1.configTarget               = ["PMBUS_TARGET_DISABLE_ADDRESS_MASK","PMBUS_TARGET_ENABLE_MANUAL_ACK"];
+pmbus1.enabledInterrupts          = ["PMBUS_INT_DATA_READY","PMBUS_INT_DATA_REQUEST","PMBUS_INT_EOM","PMBUS_INT_TARGET_ADDR_READY"];
+pmbus1.pmbus.$assign              = "PMBUSA";
+pmbus1.pmbus.pmbus_sclPin.$assign = "GPIO23";
+pmbus1.pmbus.pmbus_sdaPin.$assign = "GPIO22";
+pmbus1.periphClock.$name          = "driverlib_perClock0";
+pmbus1.periphConfig.$name         = "driverlib_perConfig0";

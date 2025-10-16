@@ -56,7 +56,7 @@ function onChangeEndAddressInputMode(inst,ui)
 function getRTDMAMPUGlobalConfig(rtdma_instance)
 {
     var globalConfig = [];
-    if(!Common.isContextCPU1()) {
+    if((system.resourceAllocation.mode == "OFF") && !Common.isContextCPU1()) {
         return globalConfig
     }
 
@@ -88,6 +88,7 @@ function getRTDMAMPUGlobalConfig(rtdma_instance)
             description : 'Enable MPU',
             hidden      : false,
             default     : true,
+            shouldBeAllocatedAsResource : true,
             // onChange    : onChangeEnableMPU,
         }, 
         {
@@ -96,6 +97,7 @@ function getRTDMAMPUGlobalConfig(rtdma_instance)
             description : "Lock the MPU Configuration register.",
             hidden      : false,
             default     : false,
+            shouldBeAllocatedAsResource : true,
         },
 
         {
@@ -104,6 +106,7 @@ function getRTDMAMPUGlobalConfig(rtdma_instance)
             description : "Commit the lock on the MPU Configuration register.",
             hidden      : false,
             default     : false,
+            shouldBeAllocatedAsResource : true,
         },
     )
     return globalConfig
@@ -122,6 +125,7 @@ function getRTDMAMPUConfig(rtdma_instance){
             hidden      : false,
             default     : device_driverlib_peripheral.DMA_MPURegion[0].name,
             options     : device_driverlib_peripheral.DMA_MPURegion,
+            shouldBeAllocatedAsResource : true,
         },  
         {
             name        : "startAddressInputMode",
@@ -130,7 +134,8 @@ function getRTDMAMPUConfig(rtdma_instance){
             hidden      : false,
             default     : ADDRESS_INPUT_MODE[0].name,
             options     : ADDRESS_INPUT_MODE,
-            onChange    : onChangeStartAddressInputMode
+            onChange    : onChangeStartAddressInputMode,
+            shouldBeAllocatedAsResource : true,
         },
         {
             name        : "startAddressManual",
@@ -138,7 +143,8 @@ function getRTDMAMPUConfig(rtdma_instance){
             description : 'The start address (hexadecimal if using "0x" prefix)',
             hidden      : false,
             displayFormat: "hex",
-            default     : 0x00
+            default     : 0x00,
+            shouldBeAllocatedAsResource : true,
         },
         {
             name        : "startAddressVariable",
@@ -146,6 +152,7 @@ function getRTDMAMPUConfig(rtdma_instance){
             description : "Void pointer to variable of start address.",
             hidden      : true,
             default     : "",
+            shouldBeAllocatedAsResource : true,
         },
         {
             name        : "endAddressInputMode",
@@ -154,7 +161,8 @@ function getRTDMAMPUConfig(rtdma_instance){
             hidden      : false,
             default     : ADDRESS_INPUT_MODE[0].name,
             options     : ADDRESS_INPUT_MODE,
-            onChange    : onChangeEndAddressInputMode
+            onChange    : onChangeEndAddressInputMode,
+            shouldBeAllocatedAsResource : true,
         },
         {
             name        : "endAddressManual",
@@ -162,7 +170,8 @@ function getRTDMAMPUConfig(rtdma_instance){
             description : 'The end address (hexadecimal if using "0x" prefix)',
             hidden      : false,
             displayFormat: "hex",
-            default     : 0xFFF
+            default     : 0xFFF,
+            shouldBeAllocatedAsResource : true,
         },   
         {
             name        : "endAddressVariable",
@@ -170,6 +179,7 @@ function getRTDMAMPUConfig(rtdma_instance){
             description : "Void pointer to variable of end address.",
             hidden      : true,
             default     : "",
+            shouldBeAllocatedAsResource : true,
         },
         {
             name        : "accessPermission",
@@ -177,6 +187,7 @@ function getRTDMAMPUConfig(rtdma_instance){
             hidden      : false,
             default     : device_driverlib_peripheral.DMA_MPUAccessPermission[0].name,
             options     : device_driverlib_peripheral.DMA_MPUAccessPermission,
+            shouldBeAllocatedAsResource : true,
         },
         {
             name        : "channelMask",
@@ -186,6 +197,7 @@ function getRTDMAMPUConfig(rtdma_instance){
             default     : [],
             minSelections: 0,
             options     : device_driverlib_peripheral.DMA_MPU_CH,
+            shouldBeAllocatedAsResource : true,
         },
         {
             name        : "lockMPURegion",
@@ -193,6 +205,7 @@ function getRTDMAMPUConfig(rtdma_instance){
             description : "Lock the current MPU Region Configuration registers.",
             hidden      : false,
             default     : false,
+            shouldBeAllocatedAsResource : true,
         },
         {
             name        : "commitMPURegion",
@@ -200,6 +213,7 @@ function getRTDMAMPUConfig(rtdma_instance){
             description : "Commit the lock on the MPU Region Configuration registers.",
             hidden      : false,
             default     : false,
+            shouldBeAllocatedAsResource : true,
         },
 
         {
@@ -219,12 +233,14 @@ function getRTDMAMPUConfig(rtdma_instance){
                     ui.endAddressInputMode.hidden       = false;
                     ui.endAddressManual.hidden          = false;
                 }
-            }
+            },
+            shouldBeAllocatedAsResource : true,
         },
         {
             name        : "memoryTiedRegionTag",
             hidden      : true,
             default     : "",
+            shouldBeAllocatedAsResource : true,
         },
 
     ]

@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2022 Texas Instruments Incorporated
+ *  Copyright (c) 2025 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -116,6 +116,9 @@ extern SIPC_SwQueue* gSIPC_QueHsmToSecureHost[MAX_SEC_CORES_WITH_HSM - 1];
  * interrupt controllers
  */
 int32_t SIPC_Register_Isr(HwiP_Params *pHwiParams, SIPC_InterruptConfig *pInterruptConfig, SIPC_Params *params, HwiP_FxnCallback callback);
+
+/* Secure IPC Isr */
+void SIPC_isr(void *args);
 
 #ifdef __cplusplus
 }

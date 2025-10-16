@@ -25,11 +25,34 @@ if (("system" === system.context || "CPU1" === system.context) && system.deviceD
 	FreqLabels = FreqLabels.concat(namedConnection)
 
 	function defaultView(ipInstance) {
-		return {
-			displayName: (ipInstance.description ?? ipInstance.name).replace(/domain/ig,''),
-			ipInstances: [ipInstance.name],
-			algorithm: "fanIn",//"fanInAndOut",
-			frequencyLabels: FreqLabels,
+		// MCAN - include all MCAN clock sources inclduing PLLCLK
+		if (ipInstance.name == "MCANA_CLOCK_domain" || ipInstance.name == "MCANB_CLOCK_domain" || ipInstance.name == "MCANC_CLOCK_domain" || ipInstance.name == "MCAND_CLOCK_domain" || ipInstance.name == "MCANE_CLOCK_domain" ||ipInstance.name == "MCANF_CLOCK_domain") {
+			return {
+				displayName: (ipInstance.description ?? ipInstance.name).replace(/domain/ig,''),
+				ipInstances: ["AUXCLK","AUXCLKIN","PLLCLK",ipInstance.name],
+				algorithm: "everythingBetween",
+				frequencyLabels: FreqLabels,
+			}
+		}
+
+		//PLLSYSCLK + WD - include complete domain
+		if (ipInstance.name == "PLLSYSCLK_domain" || ipInstance.name == "Watchdog_domain" ) {
+			return {
+				displayName: (ipInstance.description ?? ipInstance.name).replace(/domain/ig,''),
+				ipInstances: [ipInstance.name],
+				algorithm: "fanIn",
+				frequencyLabels: FreqLabels,
+			}
+		}
+
+		// OTHER - from PLLCLK
+		else {
+			return {
+				displayName: (ipInstance.description ?? ipInstance.name).replace(/domain/ig,''),
+				ipInstances: ["PLLCLK",ipInstance.name],
+				algorithm: "everythingBetween",
+				frequencyLabels: FreqLabels,
+			}
 		}
 	}
 
@@ -150,7 +173,8 @@ if (("system" === system.context || "CPU1" === system.context) && system.deviceD
 			{
 				name: "/driverlib/clocktree/clocktree.h.xdt",
 		     	outputPath: "clocktree.h",
-			 	alwaysRun: true,
+				// alwaysRun: true,
+			 	alwaysRun: !(Common.isAllocationSetupMode()),
 			 	ignoreErrors: false 
 			},
 		],

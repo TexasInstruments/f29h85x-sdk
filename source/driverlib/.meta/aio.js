@@ -21,8 +21,20 @@ let longDescription = "A AIO peripheral is used to translate data between " +
     "blocking, non-blocking, and polling, as well as text/binary " +
     "mode, echo and return characters.";
 
+function onChangeContext(inst)
+{
+    inst.controllerCore = "GPIO_CORE_" + inst.$assignedContext;
+}
+
 /* Array of SCI configurables that are common across device families */
 let config = [
+    {
+        name        : "$assignedContext",
+        hidden      : false,
+        default     : "CPU1",
+        options     : [{name:"CPU1"}, {name:"CPU2"}, {name:"CPU3"}],
+        onChange    : onChangeContext,
+    },
 
     {
         name        : "direction",
@@ -50,7 +62,8 @@ let config = [
             { name: "OD_PULLUP", displayName : "Open-drain output with pull-up enabled output and input" },
             { name: "OD_INVERT", displayName : "Open-drain output/floating inverted input" },
             { name: "OD_PULLUP_INVERT", displayName : "Open-drain output with pull-up enabled output and INVERTED input" }
-        ]
+        ],
+        shouldBeAllocatedAsResource: true,
     },
 
     {
@@ -59,7 +72,8 @@ let config = [
         description : 'The type of qualification done on the pin.',
         hidden      : false,
         default     : device_driverlib_peripheral.GPIO_QualificationMode[0].name,
-        options     : device_driverlib_peripheral.GPIO_QualificationMode
+        options     : device_driverlib_peripheral.GPIO_QualificationMode,
+        shouldBeAllocatedAsResource: true,
     },
 
     {
@@ -72,12 +86,25 @@ let config = [
                 displayName : "Use Interrupts",
                 description : 'Connect to an XINT for interrupts',
                 hidden      : false,
-                default     : false
+                default     : false,
+                shouldBeAllocatedAsResource: true,
             },
         ]
     },
 ];
 
+function coreselec(){
+    let opt = [];
+    for(let i in device_driverlib_peripheral.GPIO_CoreSelect){
+        let temp=(device_driverlib_peripheral.GPIO_CoreSelect[i].name).replace("GPIO_CORE_","")
+        if(Common.is_instance_not_in_variant(temp))continue;
+        else{
+            opt.push({ name: device_driverlib_peripheral.GPIO_CoreSelect[i].name, displayName: device_driverlib_peripheral.GPIO_CoreSelect[i].displayName });
+        }
+
+    }
+    return opt;
+}
 {
     var coreSelectConfig = {
         name        : "controllerCore",
@@ -86,7 +113,8 @@ let config = [
         description : 'Who owns the GPIO.',
         hidden      : false,
         default     : device_driverlib_peripheral.GPIO_CoreSelect[0].name,
-        options     : device_driverlib_peripheral.GPIO_CoreSelect
+        options     : coreselec(),
+        shouldBeAllocatedAsResource: true
     };
     config.push(coreSelectConfig)
 }
@@ -111,6 +139,21 @@ function moduleInstances(inst)
 {
     var ownedMods = []
 
+    let reqArgs = {}
+    if(Common.isAllocationSetupMode())
+    {
+        reqArgs = {
+            $assignedContext: inst.$assignedContext,
+            $name : inst.$name + "_XINT",
+        }
+    }
+    else
+    {
+        reqArgs = {
+            $name : inst.$name + "_XINT",
+        }
+    }
+
     if (inst.useInterrupt)
     {
         //GROUP_XINT
@@ -120,9 +163,8 @@ function moduleInstances(inst)
             moduleName: "/driverlib/xint.js",
             collapsed: true,
             group: "GROUP_XINT",
-            requiredArgs: {
-                $name : inst.$name + "_XINT",
-            }
+            requiredArgs: reqArgs,
+            shouldBeAllocatedAsResource: true,
         })
     }
     return ownedMods
@@ -164,12 +206,13 @@ if (Common.onlyPinmux())
 var aioModule = {
     peripheralName: "AIO",
     displayName: "AIO",
-    maxInstances: Common.peripheralCount("AIO"),
+    totalMaxInstances: Common.peripheralCount("AIO"),
     defaultInstanceName: "myAIO",
     description: "Analog IO Interface Peripheral",
     filterHardware : filterHardware,
     moduleInstances: moduleInstances,
-    config: config,
+    shouldBeAllocatedAsResource: true,
+    config: Common.filterConfigsIfInSetupMode(config),
     templates: {
         boardc : "/driverlib/aio/aio.board.c.xdt",
         boardh : "/driverlib/aio/aio.board.h.xdt"

@@ -27,12 +27,12 @@ if (perClock != null)
             if(instance.pinmuxPeripheralModule == "ecat")
             {
 %%}
-                SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_ETHERCAT);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_ETHERCAT);
 %%{         }
             else
             {
 %%}
-                SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_`peripheralInst`);
+    SysCtl_enablePeripheral(SYSCTL_PERIPH_CLK_`peripheralInst`);
 %%{
             }
         }

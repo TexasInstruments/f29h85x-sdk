@@ -1,35 +1,38 @@
 ifeq ($(OS),Windows_NT)
 	TOOLS_PATH		    ?=	C:/ti
-	CCS_PATH		    ?=	$(TOOLS_PATH)/ccs2011/ccs
-	CGT29X_PATH		    ?=	$(CCS_PATH)/tools/compiler/ti-cgt-c29_1.0.0LTS
+	CCS_PATH		    ?=	$(TOOLS_PATH)/ccs2030/ccs
+	CGT29X_PATH		    ?=	$(CCS_PATH)/tools/compiler/ti-cgt-c29_2.0.0.STS
 	COMPILER 		     = 	$(CGT29X_PATH)/bin/c29clang.exe
 	LINKER 			     = 	$(CGT29X_PATH)/bin/c29clang.exe
 	CG_TOOL_OBJCOPY	     =  $(CGT29X_PATH)/bin/c29objcopy.exe
 	AR 				     = 	$(CGT29X_PATH)/bin/c29ar.exe
-	SYSCFG_ROOT 	    ?= 	$(CCS_PATH)/utils/sysconfig_1.23.0
+	SYSCFG_ROOT 	    ?= 	$(CCS_PATH)/utils/sysconfig_1.25.0
 	SYSCFG_CLI_PATH     ?=  $(SYSCFG_ROOT)
 	SYSCFG_NODE          =  $(CCS_PATH)/tools/node/node
 	SYSCFG_SDKPRODUCT    =  $(C29SDK_ROOT)/.metadata/sdk.json
 	SYSCFG 			    ?= 	$(SYSCFG_ROOT)/sysconfig_cli.bat
 	PYTHON			     =   py
 
-	CYGWIN_PATH		?=	$(CCS_PATH)/utils/cygwin
-	MKDIR			=	$(CYGWIN_PATH)/mkdir -p
-	RMDIR			=	$(CYGWIN_PATH)/rm -rf
-	RM				=	$(CYGWIN_PATH)/rm -f
-	RENAME			=	$(CYGWIN_PATH)/mv
-	DELETE			=	$(CYGWIN_PATH)/rm
+	CYGWIN_PATH		   ?= $(CCS_PATH)/utils/cygwin
+	MKDIR				= $(CYGWIN_PATH)/mkdir -p
+	RMDIR				= $(CYGWIN_PATH)/rm -rf
+	RM					= $(CYGWIN_PATH)/rm -f
+	RENAME				= $(CYGWIN_PATH)/mv
+	DELETE				= $(CYGWIN_PATH)/rm
+	COPY				= $(CYGWIN_PATH)/cp
+	CONCAT          	= $(CYGWIN_PATH)/cat
+	UPDATEDUMMYCERT 	= updateDummyCert.exe
 
-	SHELL			=	cmd.exe
+	SHELL				= cmd.exe
 else
 	TOOLS_PATH		?=	$(HOME)/ti
-	CCS_PATH		?=	$(TOOLS_PATH)/ccs2011/ccs
-	CGT29X_PATH		?=	$(CCS_PATH)/tools/compiler/ti-cgt-c29_1.0.0LTS
+	CCS_PATH		?=	$(TOOLS_PATH)/ccs2030/ccs
+	CGT29X_PATH		?=	$(CCS_PATH)/tools/compiler/ti-cgt-c29_2.0.0.STS
 	COMPILER 		= 	$(CGT29X_PATH)/bin/c29clang
 	LINKER 			= 	$(CGT29X_PATH)/bin/c29clang
 	CG_TOOL_OBJCOPY	=   $(CGT29X_PATH)/bin/c29objcopy
 	AR 				= 	$(CGT29X_PATH)/bin/c29ar
-	SYSCFG_ROOT 	?= 	$(CCS_PATH)/utils/sysconfig_1.23.0
+	SYSCFG_ROOT 	?= 	$(CCS_PATH)/utils/sysconfig_1.25.0
 	SYSCFG 			?= 	$(SYSCFG_ROOT)/sysconfig_cli.sh
 
 	CHECK_PYTHON3 = $(shell command -v python3 2>/dev/null)
@@ -39,20 +42,33 @@ else
 	PYTHON := python3
 endif
 
-	MKDIR			=	mkdir -p
-	RMDIR			=	rm -rf
-	RM				=	rm -f
-	RENAME			=	mv
-	DELETE			=	rm
+	MKDIR				= mkdir -p
+	RMDIR				= rm -rf
+	RM					= rm -f
+	RENAME				= mv
+	DELETE				= rm
+	COPY				= cp
+	CONCAT          	= cat
+
+	OS_NAME = $(shell uname -s)
+    ifeq ($(OS_NAME),Linux)
+        UPDATEDUMMYCERT = updateDummyCert.bin
+    else
+        UPDATEDUMMYCERT = updateDummyCert.mac.bin
+    endif
 endif
 
-CONFIG ?= RAM
-BOARD ?= SOM
-DEVICE_TYPE ?= GP
-DEBUG_OPTION ?= DBG_SOC_DEFAULT
+DUMMY_CERT_RAM  	= $(C29SDK_ROOT)/source/dummycert/dummy_cert_crypto_unlock_ram.cert
+DUMMY_CERT_FLASH	= $(C29SDK_ROOT)/source/dummycert/dummy_cert_crypto_unlock_flash.cert
+
+CONFIG 			?= RAM
+BOARD 			?= SOM
+DEVICE_TYPE 	?= GP
+DEBUG_OPTION 	?= DBG_SOC_DEFAULT
 ENC_SBL_ENABLED ?= no
-DEBUG_TIFS ?= no
-ALGORITHM?=RSA4k
+DEBUG_TIFS 		?= no
+ALGORITHM		?= RSA4k
+DUMMY_CERT 		?= 1
 
 ifeq ($(ALGORITHM),RSA4k)
         SIGNING_KEY=$(C29SDK_ROOT)/tools/boot/signing/mcu_custMpk.pem
@@ -83,6 +99,7 @@ INCLUDES_common := \
 -I "$(C29SDK_ROOT)/source/kernel/freertos/Source/include" \
 -I "$(C29SDK_ROOT)/source/kernel/freertos/Source/portable/CCS/C2000_C29x" \
 -I "$(C29SDK_ROOT)/source/flash_api/include/FlashAPI" \
+-I "$(C29SDK_ROOT)/source/sdl" \
 -I "$(CGT29X_PATH)/include/c" \
 
 
@@ -107,7 +124,7 @@ CFLAGS_debug_O0 := \
 CFLAGS_security := \
 	-DSOC_F29H85X
 
-LFLAGS_common := -Wl,--entry_point="code_start",--stack_size=0x2000,--heap_size=0x400,-i"$(CGT29X_PATH)\lib",--reread_libs,--diag_suppress=10325-D,--diag_suppress=10063-D
+LFLAGS_common := -Wl,--entry_point="code_start",--stack_size=0x2000,--heap_size=0x400,-i"$(CGT29X_PATH)\lib",--rom_model,--reread_libs,--diag_suppress=10325-D,--diag_suppress=10063-D
 
 ifeq ($(CONFIG),FLASH)
 	CFLAGS_common += -D_FLASH
@@ -123,24 +140,24 @@ ARFLAGS := r
 comma=,
 
 LIBS_PATH = \
-	$(C29SDK_ROOT)/source/driverlib/ccs \
+	$(C29SDK_ROOT)/source/driverlib/ccs 		\
 	$(C29SDK_ROOT)/source/calibration/hrpwm/lib \
-	$(C29SDK_ROOT)/source/security/ccs \
-	$(C29SDK_ROOT)/source/kernel/nortos/ccs \
-	$(C29SDK_ROOT)/source/flash_api/lib \
+	$(C29SDK_ROOT)/source/security/ccs 			\
+	$(C29SDK_ROOT)/source/kernel/nortos/ccs 	\
+	$(C29SDK_ROOT)/source/flash_api/lib 		\
+	$(C29SDK_ROOT)/source/flash_api/lib 		\
+	$(C29SDK_ROOT)/source/sdl/ccs				\
 
 LIBS = \
-	driverlib.lib \
-	sfo.lib \
-	security_drivers.lib \
-	dpl_nortos.lib \
-	F29H85x_NWFlashAPI_v21.00.00.00.lib \
+	driverlib.lib 								\
+	sfo.lib 									\
+	security_drivers.lib 						\
+	dpl_nortos.lib 								\
+	F29H85x_NWFlashAPI_v21.00.00.00.lib 		\
+	sdl_debug.lib 								\
 
 ASM_SRCS += \
 	$(C29SDK_ROOT)/examples/device_support/source/codestartbranch.asm
-
-ASM_SRCS_FREERTOS += \
-	$(C29SDK_ROOT)/source/kernel/freertos/Source/portable/CCS/C2000_C29x/portasm.asm
 
 C_SRCS_common += \
 	$(Target).c \
@@ -152,6 +169,9 @@ C_SRCS_PATH_common = \
 	$(C29SDK_ROOT)/source/kernel/freertos/Source\
 	$(C29SDK_ROOT)/source/kernel/freertos/Source/portable/CCS/C2000_C29x\
 	$(C29SDK_ROOT)/source/kernel/freertos/Source/portable/MemMang\
+
+S_SRCS_PATH_common = \
+	$(C29SDK_ROOT)/source/kernel/freertos/Source/portable/CCS/C2000_C29x\
 
 C_SRCS_nosyscfg += \
 	device.c \
@@ -165,6 +185,9 @@ C_SRCS_FREERTOS += \
 	stream_buffer.c\
 	heap_4.c\
 	port.c\
+
+S_SRCS_FREERTOS += \
+	portasm.S\
 
 C_SRCS_PATH_nosyscfg = \
 	$(C29SDK_ROOT)/examples/device_support/source \

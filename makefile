@@ -104,7 +104,6 @@ BUILD_EXAMPLE_ALL += erad_ex1_profile_interrupts
 BUILD_EXAMPLE_ALL += erad_ex2_stack_overflow
 BUILD_EXAMPLE_ALL += esm_ex1_tmuromparity_test
 BUILD_EXAMPLE_ALL += esm_ex2_safetyaggregator
-BUILD_EXAMPLE_ALL += flash_based_UART_SBL_with_FOTA
 BUILD_EXAMPLE_ALL += F29H85x_EEPROM
 BUILD_EXAMPLE_ALL += F29H85x_EEPROM_PingPong
 BUILD_EXAMPLE_ALL += flash_bankmode_fota
@@ -112,7 +111,6 @@ BUILD_EXAMPLE_ALL += flash_mode0_128_program
 BUILD_EXAMPLE_ALL += flash_mode0_512_program
 BUILD_EXAMPLE_ALL += flash_mode1_128_program
 BUILD_EXAMPLE_ALL += flash_mode1_512_program
-BUILD_EXAMPLE_ALL += uart_flash_kernel
 BUILD_EXAMPLE_ALL += fsi_academy_lab
 BUILD_EXAMPLE_ALL += fsi_ex1_loopback_cpucontrol
 BUILD_EXAMPLE_ALL += fsi_ex2_periodic_frame
@@ -185,6 +183,9 @@ BUILD_EXAMPLE_ALL += control+rtos_demo
 BUILD_EXAMPLE_ALL += freertos_ex1_two_tasks_syscfg
 BUILD_EXAMPLE_ALL += freertos_ex2_interrupt_semaphore_syscfg
 BUILD_EXAMPLE_ALL += freertos_port_validation_tests
+BUILD_EXAMPLE_ALL += flash_based_uart_sbl
+BUILD_EXAMPLE_ALL += flash_based_can_sbl
+BUILD_EXAMPLE_ALL += ram_based_uart_sbl
 
 examples: $(BUILD_EXAMPLE_ALL)
 
@@ -410,9 +411,6 @@ esm_ex1_tmuromparity_test:
 esm_ex2_safetyaggregator:
 	$(MAKE) -C examples/driverlib/single_core/esm/esm_ex2_safetyaggregator/ccs -f makefile all
 
-flash_based_UART_SBL_with_FOTA:
-	$(MAKE) -C examples/driverlib/single_core/flash/flash_based_UART_SBL_with_FOTA/ccs -f makefile all
-
 F29H85x_EEPROM:
 	$(MAKE) -C examples/driverlib/single_core/flash/F29H85x_EEPROM/ccs -f makefile all
 
@@ -434,8 +432,6 @@ flash_mode1_128_program:
 flash_mode1_512_program:
 	$(MAKE) -C examples/driverlib/single_core/flash/flash_mode1_512_program/ccs -f makefile all
 
-uart_flash_kernel:
-	$(MAKE) -C examples/driverlib/single_core/flash/uart_flash_kernel/ccs -f makefile all
 
 fsi_academy_lab:
 	$(MAKE) -C examples/driverlib/single_core/fsi/fsi_academy_lab/ccs -f makefile all
@@ -653,6 +649,15 @@ freertos_ex2_interrupt_semaphore_syscfg:
 freertos_port_validation_tests:
 	$(MAKE) -C examples/kernel/freertos/single_core/freertos_port_validation_tests/ccs -f makefile all
 
+flash_based_uart_sbl:
+	$(MAKE) -C examples/driverlib/single_core/flash/flash_based_sbl_with_fota/ccs -f flash_based_uart_sbl.mk all BANKMODE=3 APP=SECURE
+
+flash_based_can_sbl:
+	$(MAKE) -C examples/driverlib/single_core/flash/flash_based_sbl_with_fota/ccs -f flash_based_can_sbl.mk all BANKMODE=3 APP=SECURE
+
+ram_based_uart_sbl:
+	$(MAKE) -C examples/driverlib/single_core/flash/ram_based_sbl/ccs -f ram_based_uart_sbl.mk all APP=SECURE	
+
 BUILD_EXAMPLE_CLEAN_ALL =
 BUILD_EXAMPLE_CLEAN_ALL += adc_ex1_soc_software_clean
 BUILD_EXAMPLE_CLEAN_ALL += adc_ex2_soc_epwm_clean
@@ -728,7 +733,6 @@ BUILD_EXAMPLE_CLEAN_ALL += erad_ex1_profile_interrupts_clean
 BUILD_EXAMPLE_CLEAN_ALL += erad_ex2_stack_overflow_clean
 BUILD_EXAMPLE_CLEAN_ALL += esm_ex1_tmuromparity_test_clean
 BUILD_EXAMPLE_CLEAN_ALL += esm_ex2_safetyaggregator_clean
-BUILD_EXAMPLE_CLEAN_ALL += flash_based_UART_SBL_with_FOTA_clean
 BUILD_EXAMPLE_CLEAN_ALL += F29H85x_EEPROM_clean
 BUILD_EXAMPLE_CLEAN_ALL += F29H85x_EEPROM_PingPong_clean
 BUILD_EXAMPLE_CLEAN_ALL += flash_bankmode_fota_clean
@@ -736,7 +740,6 @@ BUILD_EXAMPLE_CLEAN_ALL += flash_mode0_128_program_clean
 BUILD_EXAMPLE_CLEAN_ALL += flash_mode0_512_program_clean
 BUILD_EXAMPLE_CLEAN_ALL += flash_mode1_128_program_clean
 BUILD_EXAMPLE_CLEAN_ALL += flash_mode1_512_program_clean
-BUILD_EXAMPLE_CLEAN_ALL += uart_flash_kernel_clean
 BUILD_EXAMPLE_CLEAN_ALL += fsi_academy_lab_clean
 BUILD_EXAMPLE_CLEAN_ALL += fsi_ex1_loopback_cpucontrol_clean
 BUILD_EXAMPLE_CLEAN_ALL += fsi_ex2_periodic_frame_clean
@@ -809,6 +812,9 @@ BUILD_EXAMPLE_CLEAN_ALL += control+rtos_demo_clean
 BUILD_EXAMPLE_CLEAN_ALL += freertos_ex1_two_tasks_syscfg_clean
 BUILD_EXAMPLE_CLEAN_ALL += freertos_ex2_interrupt_semaphore_syscfg_clean
 BUILD_EXAMPLE_CLEAN_ALL += freertos_port_validation_tests_clean
+BUILD_EXAMPLE_CLEAN_ALL += flash_based_uart_sbl_clean
+BUILD_EXAMPLE_CLEAN_ALL += flash_based_can_sbl_clean
+BUILD_EXAMPLE_CLEAN_ALL += ram_based_uart_sbl_clean
 
 examples-clean: $(BUILD_EXAMPLE_CLEAN_ALL)
 
@@ -1034,9 +1040,6 @@ esm_ex1_tmuromparity_test_clean:
 esm_ex2_safetyaggregator_clean:
 	$(MAKE) -C examples/driverlib/single_core/esm/esm_ex2_safetyaggregator/ccs -f makefile clean
 
-flash_based_UART_SBL_with_FOTA_clean:
-	$(MAKE) -C examples/driverlib/single_core/flash/flash_based_UART_SBL_with_FOTA/ccs -f makefile clean
-
 F29H85x_EEPROM_clean:
 	$(MAKE) -C examples/driverlib/single_core/flash/F29H85x_EEPROM/ccs -f makefile clean
 
@@ -1057,9 +1060,6 @@ flash_mode1_128_program_clean:
 
 flash_mode1_512_program_clean:
 	$(MAKE) -C examples/driverlib/single_core/flash/flash_mode1_512_program/ccs -f makefile clean
-
-uart_flash_kernel_clean:
-	$(MAKE) -C examples/driverlib/single_core/flash/uart_flash_kernel/ccs -f makefile clean
 
 fsi_academy_lab_clean:
 	$(MAKE) -C examples/driverlib/single_core/fsi/fsi_academy_lab/ccs -f makefile clean
@@ -1276,3 +1276,12 @@ freertos_ex2_interrupt_semaphore_syscfg_clean:
 
 freertos_port_validation_tests_clean:
 	$(MAKE) -C examples/kernel/freertos/single_core/freertos_port_validation_tests/ccs -f makefile clean
+
+flash_based_uart_sbl_clean:
+	$(MAKE) -C examples/driverlib/single_core/flash/flash_based_sbl_with_fota/ccs -f flash_based_uart_sbl.mk clean
+
+flash_based_can_sbl_clean:
+	$(MAKE) -C examples/driverlib/single_core/flash/flash_based_sbl_with_fota/ccs -f flash_based_can_sbl.mk clean
+
+ram_based_uart_sbl_clean:
+	$(MAKE) -C examples/driverlib/single_core/flash/ram_based_sbl/ccs -f ram_based_uart_sbl.mk clean

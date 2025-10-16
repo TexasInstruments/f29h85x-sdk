@@ -56,6 +56,116 @@ function onChangeInputxbarInput(inst, ui)
     }
 }
 
+let inputxbarSelectedSourceConfig = {}
+
+if (system.resourceAllocation.mode == "CONFIGURE")
+{
+    inputxbarSelectedSourceConfig = {
+        name        : "inputxbarSelectedSource",
+        displayName : "Selected Source Of GPIO",
+        description : 'Selected GPIO is connected to this signal in the application',
+        hidden      : false,
+        default     : "",
+        shouldBeAllocatedAsResource : true,
+    }
+}
+else 
+{
+    inputxbarSelectedSourceConfig = {
+        name        : "inputxbarSelectedSource",
+        displayName : "Selected Source Of GPIO",
+        description : 'Selected GPIO is connected to this signal in the application',
+        hidden      : false,
+        default     : "",
+        getValue    : (inst) => {
+            let modNames = Object.keys(system.modules).sort();
+            for (var modName of modNames)
+            {
+                var mod = system.modules[modName]
+                var pinmuxRequirementsFunc = mod.pinmuxRequirements;
+                if (pinmuxRequirementsFunc)
+                {
+                    for (var modInstance of mod.$instances)
+                    {
+                        var pinmuxRequirements = pinmuxRequirementsFunc(modInstance);
+                        //console.log(pinmuxRequirements)
+                        for (var pinmuxReq of pinmuxRequirements)
+                        {
+                            var pinmuxReqName = pinmuxReq.name;
+                            //console.log(pinmuxReqName)
+                            if (pinmuxReq.resources)
+                            {
+                                //
+                                // Normal Peripheral Other than GPIO
+                                //
+                                var peripheralName = modInstance[pinmuxReqName].$solution.peripheralName
+                                //console.log(peripheralName)
+                                for (var pinmuxReqInterface of pinmuxReq.resources)
+                                {
+                                    var pinmuxReqInterfaceName = pinmuxReqInterface.name
+                                    var devicePinName = modInstance[pinmuxReqName][pinmuxReqInterfaceName].$solution.devicePinName
+                                    var peripheralPinName = modInstance[pinmuxReqName][pinmuxReqInterfaceName].$solution.peripheralPinName
+                                    //console.log(peripheralPinName)
+                                    //console.log(devicePinName)
+    
+                                    var gpioNames = Pinmux.getGPIOFromDevicePinName(devicePinName)
+                                    //console.log(gpioNames)
+    
+                                    if (gpioNames.includes(inst.inputxbarGpio))
+                                    {
+                                        //console.log("Found: " + modInstance.$name + " = " + peripheralPinName)
+                                        return (modInstance.$name + " = " + peripheralPinName)
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                //
+                                // GPIO
+                                //
+                                var peripheralName = modInstance[pinmuxReqName].$solution.peripheralName
+                                var devicePinName = modInstance[pinmuxReqName].$solution.devicePinName
+                                var peripheralPinName = modInstance[pinmuxReqName].$solution.peripheralPinName
+                                //console.log(peripheralName)
+                                //console.log(peripheralPinName)
+                                //console.log(devicePinName)
+                                if (devicePinName)
+                                {
+                                    //
+                                    // Normal GPIO, single bonded AGPIO
+                                    //
+                                    var gpioNames = Pinmux.getGPIOFromDevicePinName(devicePinName)
+                                    //console.log(gpioNames)
+                                    if (gpioNames.includes(inst.inputxbarGpio))
+                                    {
+                                        //console.log("Found: " + modInstance.$name + " = " + peripheralPinName)
+                                        return (modInstance.$name + " = " + peripheralPinName)
+                                    }
+                                }
+                                else
+                                {
+                                    //
+                                    // Double bonded AGPIO and AIOs
+                                    //
+                                    if (peripheralName == inst.inputxbarGpio)
+                                    {
+                                        //console.log("Found: " + modInstance.$name + " = " + peripheralName)
+                                        return (modInstance.$name + " = " + peripheralName)
+                                    }
+                                }
+                            }
+                        }
+                        //console.log(pinmuxRequirementsFunc(modInstance))
+                    }
+                }
+            }
+            //console.log(system)
+            return "This source is not used by any module"
+        },
+        shouldBeAllocatedAsResource : true,
+    }
+}
+
 var config = [
     {
         name: "GROUP_PERCFG",
@@ -70,6 +180,7 @@ var config = [
                 default     : inputNumOptions[0].name,
                 options     : inputNumOptions,
                 onChange    : onChangeInputxbarInput,
+                shouldBeAllocatedAsResource : true,
             },
             {
                 name        : "inputxbarGpio",
@@ -77,106 +188,19 @@ var config = [
                 description : 'GPIO for this Input X-Bar',
                 hidden      : false,
                 default     : inputxbarGPIOOptions[0].name,
-                options     : inputxbarGPIOOptions
+                options     : inputxbarGPIOOptions,
+                shouldBeAllocatedAsResource : true,
             },
-            {
-                name        : "inputxbarSelectedSource",
-                displayName : "Selected Source Of GPIO",
-                description : 'Selected GPIO is connected to this signal in the application',
-                hidden      : false,
-                default     : "",
-                getValue    : (inst) => {
-                    let modNames = Object.keys(system.modules).sort();
-                    for (var modName of modNames)
-                    {
-                        var mod = system.modules[modName]
-                        var pinmuxRequirementsFunc = mod.pinmuxRequirements;
-                        if (pinmuxRequirementsFunc)
-                        {
-                            for (var modInstance of mod.$instances)
-                            {
-                                var pinmuxRequirements = pinmuxRequirementsFunc(modInstance);
-                                //console.log(pinmuxRequirements)
-                                for (var pinmuxReq of pinmuxRequirements)
-                                {
-                                    var pinmuxReqName = pinmuxReq.name;
-                                    //console.log(pinmuxReqName)
-                                    if (pinmuxReq.resources)
-                                    {
-                                        //
-                                        // Normal Peripheral Other than GPIO
-                                        //
-                                        var peripheralName = modInstance[pinmuxReqName].$solution.peripheralName
-                                        //console.log(peripheralName)
-                                        for (var pinmuxReqInterface of pinmuxReq.resources)
-                                        {
-                                            var pinmuxReqInterfaceName = pinmuxReqInterface.name
-                                            var devicePinName = modInstance[pinmuxReqName][pinmuxReqInterfaceName].$solution.devicePinName
-                                            var peripheralPinName = modInstance[pinmuxReqName][pinmuxReqInterfaceName].$solution.peripheralPinName
-                                            //console.log(peripheralPinName)
-                                            //console.log(devicePinName)
-
-                                            var gpioNames = Pinmux.getGPIOFromDevicePinName(devicePinName)
-                                            //console.log(gpioNames)
-
-                                            if (gpioNames.includes(inst.inputxbarGpio))
-                                            {
-                                                //console.log("Found: " + modInstance.$name + " = " + peripheralPinName)
-                                                return (modInstance.$name + " = " + peripheralPinName)
-                                            }
-                                        }
-                                    }
-                                    else
-                                    {
-                                        //
-                                        // GPIO
-                                        //
-                                        var peripheralName = modInstance[pinmuxReqName].$solution.peripheralName
-                                        var devicePinName = modInstance[pinmuxReqName].$solution.devicePinName
-                                        var peripheralPinName = modInstance[pinmuxReqName].$solution.peripheralPinName
-                                        //console.log(peripheralName)
-                                        //console.log(peripheralPinName)
-                                        //console.log(devicePinName)
-                                        if (devicePinName)
-                                        {
-                                            //
-                                            // Normal GPIO, single bonded AGPIO
-                                            //
-                                            var gpioNames = Pinmux.getGPIOFromDevicePinName(devicePinName)
-                                            //console.log(gpioNames)
-                                            if (gpioNames.includes(inst.inputxbarGpio))
-                                            {
-                                                //console.log("Found: " + modInstance.$name + " = " + peripheralPinName)
-                                                return (modInstance.$name + " = " + peripheralPinName)
-                                            }
-                                        }
-                                        else
-                                        {
-                                            //
-                                            // Double bonded AGPIO and AIOs
-                                            //
-                                            if (peripheralName == inst.inputxbarGpio)
-                                            {
-                                                //console.log("Found: " + modInstance.$name + " = " + peripheralName)
-                                                return (modInstance.$name + " = " + peripheralName)
-                                            }
-                                        }
-                                    }
-                                }
-                                //console.log(pinmuxRequirementsFunc(modInstance))
-                            }
-                        }
-                    }
-                    //console.log(system)
-                    return "This source is not used by any module"
-                }
-            },
+            
+            inputxbarSelectedSourceConfig,
+            
             {
                 name        : "inputxbarLock",
                 displayName : "Input Lock",
                 description : 'Lock this Input X-Bar',
                 hidden      : false,
-                default     : false
+                default     : false,
+                shouldBeAllocatedAsResource : true,
             }
         ]
     },
@@ -278,6 +302,8 @@ var inputxbarModule = {
         boardc : "/driverlib/inputxbar/inputxbar_input.board.c.xdt",
         boardh : "/driverlib/inputxbar/inputxbar_input.board.h.xdt"
     },
+    shouldBeAllocatedAsResource : true,
+    alwaysAllocateAsResource : true,
     // pinmuxRequirements    : Pinmux.inputxbarPinmuxRequirements
 };
 

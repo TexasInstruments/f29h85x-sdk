@@ -1,0 +1,131 @@
+<projectSpec>
+  <project
+        name="flash_based_can_sbl_with_fota"
+        device       = "F29H850TU9"
+        
+        cgtVersion   = "2.0.0"
+        toolChain    = "TICLANG"
+
+        products     = "sysconfig;f29h85x-sdk"
+        connection   = "TIXDS110_Connection.xml"
+        references   = "fota_can_cpu1_application"
+        >
+
+    <configuration name="BANKMODE1_NONSECURE"   compilerBuildOptions="-O1 -g -D_FLASH -DNONSECURE -DSOC_F29H85X -Qunused-arguments -I${COM_TI_MCU_SDK_INSTALL_DIR}/source -I${FlashTech_INCLUDE_ROOT}" linkerBuildOptions="--stack_size=0x400 --heap_size=0x400 --diag_suppress=10325-D --diag_suppress=10063-D"
+     postBuildStep=
+       "${CG_TOOL_OBJCOPY} --update-section cpu1app=../../cpu1_firmware.bin ${ProjName}.out ${ProjName}_firmware.out;
+          ${CG_TOOL_OBJCOPY} --remove-section=cert -O binary ${ProjName}_firmware.out ${ProjName}.bin;
+          $(PYTHON) ${COM_TI_MCU_SDK_INSTALL_DIR}/tools/boot/signing/mcu_rom_image_gen.py --image-bin ${ProjName}.bin --core C29 --swrv 1 --loadaddr 0x10001000 --sign-key ${COM_TI_MCU_SDK_INSTALL_DIR}/$(SIGNING_KEY) --out-image ${ProjName}.cert.bin --device f29h85x --boot FLASH --img_integ no;
+          ${CG_TOOL_OBJCOPY} --update-section cert=C29-cert-pad.bin ${ProjName}_firmware.out ${ProjName}_cert.out;
+          $(DELETE) ${ProjName}.out C29-cert-pad.bin;
+          $(RENAME) ${ProjName}_cert.out ${ProjName}.out;"
+    />
+
+    <configuration name="BANKMODE3_NONSECURE"   compilerBuildOptions="-O1 -g -D_FLASH -DNONSECURE -DSOC_F29H85X -Qunused-arguments -I${COM_TI_MCU_SDK_INSTALL_DIR}/source -I${FlashTech_INCLUDE_ROOT}" linkerBuildOptions="--stack_size=0x400 --heap_size=0x400 --diag_suppress=10325-D --diag_suppress=10063-D"
+     postBuildStep=
+       "${CG_TOOL_OBJCOPY} --update-section cpu1app=../../cpu1_firmware.bin ${ProjName}.out ${ProjName}_firmware.out;
+          ${CG_TOOL_OBJCOPY} --remove-section=cert -O binary ${ProjName}_firmware.out ${ProjName}.bin;
+          $(PYTHON) ${COM_TI_MCU_SDK_INSTALL_DIR}/tools/boot/signing/mcu_rom_image_gen.py --image-bin ${ProjName}.bin --core C29 --swrv 1 --loadaddr 0x10001000 --sign-key ${COM_TI_MCU_SDK_INSTALL_DIR}/$(SIGNING_KEY) --out-image ${ProjName}.cert.bin --device f29h85x --boot FLASH --img_integ no;
+          ${CG_TOOL_OBJCOPY} --update-section cert=C29-cert-pad.bin ${ProjName}_firmware.out ${ProjName}_cert.out;
+          $(DELETE) ${ProjName}.out C29-cert-pad.bin;
+          $(RENAME) ${ProjName}_cert.out ${ProjName}.out;"
+    />
+        <configuration name="BANKMODE1_SECURE_CP"   compilerBuildOptions="-O1 -g -D_FLASH -DSECURE_CP -DSOC_F29H85X -Qunused-arguments -I${COM_TI_MCU_SDK_INSTALL_DIR}/source -I${FlashTech_INCLUDE_ROOT}" linkerBuildOptions="--stack_size=0x400 --heap_size=0x400 --diag_suppress=10325-D --diag_suppress=10063-D"
+     postBuildStep=
+       "${CG_TOOL_OBJCOPY} --update-section cpu1app=../../cpu1_firmware.bin ${ProjName}.out ${ProjName}_firmware.out;
+          ${CG_TOOL_OBJCOPY} --remove-section=cert -O binary ${ProjName}_firmware.out ${ProjName}.bin;
+          $(PYTHON) ${COM_TI_MCU_SDK_INSTALL_DIR}/tools/boot/signing/mcu_rom_image_gen.py --image-bin ${ProjName}.bin --core C29 --swrv 1 --loadaddr 0x10001000 --sign-key ${COM_TI_MCU_SDK_INSTALL_DIR}/$(SIGNING_KEY) --out-image ${ProjName}.cert.bin --device f29h85x --boot FLASH;
+          ${CG_TOOL_OBJCOPY} --update-section cert=C29-cert-pad.bin ${ProjName}_firmware.out ${ProjName}_cert.out;
+          $(DELETE) ${ProjName}.out C29-cert-pad.bin;
+          $(RENAME) ${ProjName}_cert.out ${ProjName}.out;"
+    />
+
+    <configuration name="BANKMODE3_SECURE_CP"   compilerBuildOptions="-O1 -g -D_FLASH -DSECURE_CP -DSOC_F29H85X -Qunused-arguments -I${COM_TI_MCU_SDK_INSTALL_DIR}/source -I${FlashTech_INCLUDE_ROOT}" linkerBuildOptions="--stack_size=0x400 --heap_size=0x400 --diag_suppress=10325-D --diag_suppress=10063-D"
+     postBuildStep=
+        "${CG_TOOL_OBJCOPY} --update-section cpu1app=../../cpu1_firmware.bin ${ProjName}.out ${ProjName}_firmware.out;
+          ${CG_TOOL_OBJCOPY} --remove-section=cert -O binary ${ProjName}_firmware.out ${ProjName}.bin;
+          $(PYTHON) ${COM_TI_MCU_SDK_INSTALL_DIR}/tools/boot/signing/mcu_rom_image_gen.py --image-bin ${ProjName}.bin --core C29 --swrv 1 --loadaddr 0x10001000 --sign-key ${COM_TI_MCU_SDK_INSTALL_DIR}/$(SIGNING_KEY) --out-image ${ProjName}.cert.bin --device f29h85x --boot FLASH;
+          ${CG_TOOL_OBJCOPY} --update-section cert=C29-cert-pad.bin ${ProjName}_firmware.out ${ProjName}_cert.out;
+          $(DELETE) ${ProjName}.out C29-cert-pad.bin;
+          $(RENAME) ${ProjName}_cert.out ${ProjName}.out;"
+    />
+
+    <pathVariable name="FlashTech_INCLUDE_ROOT" path = "${COM_TI_MCU_SDK_INSTALL_DIR}/tools/flash_api/FlashAPI/Include/FlashTech" scope="project" />
+    <file action="copy" path="../cmd/f29h85x_bankmode1_flash_sbl_cpu1.cmd" targetDirectory="" applicableConfigurations="BANKMODE1_NONSECURE, BANKMODE1_SECURE_CP"/>
+    <file action="copy" path="../cmd/f29h85x_bankmode3_flash_sbl_cpu1.cmd" targetDirectory="" applicableConfigurations="BANKMODE3_NONSECURE, BANKMODE3_SECURE_CP"/>
+    <file action="copy" path="../sbl_codestartbranch.asm" targetDirectory="device" />
+
+    <file action="link" path="${COM_TI_MCU_SDK_INSTALL_DIR}/examples/device_support/include/driverlib.h"        targetDirectory="device" />
+    <file action="link" path="${COM_TI_MCU_SDK_INSTALL_DIR}/source/security/ccs/security_drivers.lib" targetDirectory="" />
+    <file action="link" path="${COM_TI_MCU_SDK_INSTALL_DIR}/source/kernel/nortos/ccs/dpl_nortos.lib" targetDirectory="" />
+    <file action="link" path="${COM_TI_MCU_SDK_INSTALL_DIR}/source/flash_api/lib/F29H85x_NWFlashAPI_v21.00.00.00.lib" targetDirectory="" />
+
+    <file action="link" path="${COM_TI_MCU_SDK_INSTALL_DIR}/source/bitfields/bitfield_structs.c"                targetDirectory="device" />
+    <file action="copy" path="${COM_TI_MCU_SDK_INSTALL_DIR}/examples/device_support/makefile.defs"              targetDirectory="" />
+
+    <file action="copy" path="../cert.c" targetDirectory="" />
+    <file action="copy" path="../cert.h" targetDirectory="" />
+    <file action="copy" path="../bootload_cpu1.c" targetDirectory="" />
+    <file action="copy" path="../bootload_cpu1.h" targetDirectory="" />
+
+    <file action="copy" path="../cpubrom.h" targetDirectory="" />
+    <file action="copy" path="../cpubrom_bootload.h" targetDirectory="" />
+    <file action="copy" path="../cpubrom_utils.c" targetDirectory="" />
+    <file action="copy" path="../cpubrom_utils.h" targetDirectory="" />
+
+    <file action="copy" path="../sbl_device_utils.c" targetDirectory="" />
+    <file action="copy" path="../sbl_device_utils.h" targetDirectory="" />
+
+    <file action="copy" path="../flash_based_sbl_dpl.c" targetDirectory="" />
+    <file action="copy" path="../flash_based_sbl_dpl.h" targetDirectory="" />
+
+    <file action="copy" path="../mcan/flash_based_can_sbl.c" targetDirectory="" />
+    <file action="copy" path="../mcan/flash_based_can_sbl.h" targetDirectory="" />
+    <file action="copy" path="../mcan/sbl_packet_config.h" targetDirectory="" />
+    <file action="copy" path="../mcan/flash_based_can_sbl.syscfg" targetDirectory="" />
+    <file action="copy" path="../mcan/sbl_packet_can_abstraction.c" targetDirectory="" />
+    <file action="copy" path="../mcan/sbl_packet_can_abstraction.h" targetDirectory="" />
+
+
+    <file action="copy" path="../sbl_packet_interface.c" targetDirectory="" />
+    <file action="copy" path="../sbl_packet_interface.h" targetDirectory="" />
+    <file action="copy" path="../f29x_packet_comm_protocol.h" targetDirectory="" />
+
+    <file action="copy" path="../flash_programming_F29H85x_C29.h" targetDirectory="" />
+
+    <file action="copy" path="../sbl_code_provisioning.c" targetDirectory="" />
+    <file action="copy" path="../sbl_code_provisioning.h" targetDirectory="" />
+    <file action="copy" path="../sbl_command_flow.c" targetDirectory="" />
+    <file action="copy" path="../sbl_command_flow.h" targetDirectory="" />
+    <file action="copy" path="../sbl_flash_programming.c" targetDirectory="" />
+    <file action="copy" path="../sbl_flash_programming.h" targetDirectory="" />
+
+	<file path="${COM_TI_MCU_SDK_INSTALL_DIR}/docs/html/EXAMPLES_DRIVERS_FLASH_BASED_CAN_SBL_WITH_FOTA.html"
+         openOnCreation="false" excludeFromBuild="false" targetName="README.html" action="link">
+    </file>
+  </project>
+
+  <project
+        name="fota_can_cpu1_application"
+        device       = "F29H850TU9"
+        
+        cgtVersion   = "2.0.0"
+        toolChain    = "TICLANG"
+
+        products     = "sysconfig;f29h85x-sdk"
+        connection   = "TIXDS110_Connection.xml"
+        >
+    <configuration name="FLASH" compilerBuildOptions="-O1 -g -Qunused-arguments -D_FLASH" linkerBuildOptions="--stack_size=0x400 --heap_size=0x400 --diag_suppress=10325-D --diag_suppress=10063-D"
+    postBuildStep="${CG_TOOL_OBJCOPY} -O binary ${ProjName}.out ../../cpu1_firmware.bin"
+    />
+
+    <file action="copy" path="../led_blinky/led_blinky_codestartbranch.asm" targetDirectory="device" />
+    <file action="link" path="${COM_TI_MCU_SDK_INSTALL_DIR}/examples/device_support/include/driverlib.h"                     targetDirectory="device" />
+    <file action="copy" path="${COM_TI_MCU_SDK_INSTALL_DIR}/examples/device_support/makefile.defs"                           targetDirectory="" />
+
+    <file action="copy" path="../cmd/f29h85x_flash_app_lnk_cpu1.cmd"   targetDirectory="" applicableConfigurations="FLASH" />
+
+    <file action="copy" path="../led_blinky/mcan/can_led_blinky_cpu1.syscfg" targetDirectory="" />
+    <file action="copy" path="../led_blinky/mcan/can_led_blinky_cpu1.c" targetDirectory="" />
+  </project>
+</projectSpec>

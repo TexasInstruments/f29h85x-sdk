@@ -109,6 +109,7 @@ var adcSCModule = {
     displayName: "ADC SAFETY CHECKER",
     defaultInstanceName: "myADCSAFETYCHECK",
     description: "ADC Safety Checker Module",
+    maxInstances: 1,
     // longDescription: (Common.getCollateralFindabilityList("ERAD")),
     filterHardware : filterHardware,
     moduleStatic          : {

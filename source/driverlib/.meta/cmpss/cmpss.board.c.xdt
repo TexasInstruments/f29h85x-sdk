@@ -1,27 +1,38 @@
-% var module = system.modules['/driverlib/cmpss.js'];
 % let Common   = system.getScript("/driverlib/Common.js");
 % var nameOfModule = "cmpss";
-% var nameOfPeripheral = module.peripheralName;
 %
 //*****************************************************************************
 //
 // CMPSS Configurations
 //
 //*****************************************************************************
-void `nameOfPeripheral`_init(){
+% let raData = system.resourceAllocation.data
+void CMPSS_init(){
+%if(Common.isContextCPU1()){
+    CMPSS_MUX_config();
+%}
+% var module = system.modules['/driverlib/cmpss.js'];
+% if (module != null) {
 %   for(var i = 0; i < module.$instances.length; i++) 
 %   {
 %      var instance = module.$instances[i];
-	`instance.$name`_init();
+    `instance.$name`_init();
 %   }
+% }
 }
 
-%if (module != null)
-% {
+% if (Common.isContextCPU1()){
+void CMPSS_MUX_config(){
+% if(Common.isAllocationOff()){
+ % var contextNames = Common.getContextNames()
+    % for (var cntx of contextNames)
+    % {
+        % module = Common.getModuleForCore('/driverlib/' + nameOfModule + '.js', cntx);                  
+        %if (module != null)
+        % {
         % for(var i = 0; i < module.$instances.length; i++) {
             % var instance = module.$instances[i];
             % var instanceNumber = instance.cmpssBase.match(/\d+/)[0]
-void `instance.$name`_init(){
     //
     // Select the value for CMP`instanceNumber`HPMXSEL.
     //
@@ -46,7 +57,59 @@ void `instance.$name`_init(){
             % tempNegativeInstance = "ASYSCTL_CMP"+instanceNumber+"_LN_"+instance.asysCMPLNMXSELValue
     ASysCtl_configCMPMux(`tempNegativeInstance`);
         %}
+        %}
+        % }
+    % }
+% }
+% else {
+% for (let context of raData.contexts)
+% {
+	% let module = context.modules.find(x => x.moduleName === '/driverlib/' + nameOfModule + '.js')              
+    %if (module != null)
+    % {
+        % for(var i = 0; i < module.instances.length; i++) {
+            % var instance = module.instances[i];
+            % var instanceNumber = instance.requiredArgs.cmpssBase.match(/\d+/)[0]
+    
+    //
+    // Select the value for CMP`instanceNumber`HPMXSEL.
+    //
+            % var tempPositiveInstance = "ASYSCTL_CMP"+instanceNumber+"_HP_"+instance.requiredArgs.asysCMPHPMXSELValue
+    ASysCtl_configCMPMux(`tempPositiveInstance`);
+        %if (instance.highCompNegative != "CMPSS_INSRC_DAC"){
+    //
+    // Select the value for CMP`instanceNumber`HNMXSEL.
+    //
+            % var tempNegativeInstance = "ASYSCTL_CMP"+instanceNumber+"_HN_"+instance.requiredArgs.asysCMPHNMXSELValue
+    ASysCtl_configCMPMux(`tempNegativeInstance`);
+        %}
+    //
+    // Select the value for CMP`instanceNumber`LPMXSEL.
+    //
+            % tempPositiveInstance = "ASYSCTL_CMP"+instanceNumber+"_LP_"+instance.requiredArgs.asysCMPLPMXSELValue
+    ASysCtl_configCMPMux(`tempPositiveInstance`);
+        %if (instance.lowCompNegative != "CMPSS_INSRC_DAC"){
+    //
+    // Select the value for CMP`instanceNumber`LNMXSEL.
+    //
+            % tempNegativeInstance = "ASYSCTL_CMP"+instanceNumber+"_LN_"+instance.requiredArgs.asysCMPLNMXSELValue
+    ASysCtl_configCMPMux(`tempNegativeInstance`);
+        %}
+        %}
+        % }
+    % }
+% }
+}
+% }
+%
+% var module = system.modules['/driverlib/cmpss.js'];                 
+%if (module != null)
+% {
+        % for(var i = 0; i < module.$instances.length; i++) {
+            % var instance = module.$instances[i];
+            % var instanceNumber = instance.cmpssBase.match(/\d+/)[0]
 
+void `instance.$name`_init(){
         % var baseName = instance.$name + "_BASE";
 %%{
     var configHighString = "("

@@ -3,11 +3,15 @@
     .section   resetvector, "ax"
     .global    reset_vector
 
-reset_vector:  
+reset_vector:
     ISR1.PROT
 	|| ISR2.PROT
-			
-    LB.PROT @(code_start)
+
+    ; Disable WD
+    MV D0, 0x68
+    ST.W0 @0x30208C52, D0
+
+    LB @(_c_int00)
 
     .section   codestart, "ax"
     .global    code_start

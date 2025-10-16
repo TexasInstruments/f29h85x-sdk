@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2022-24 Texas Instruments Incorporated
+ *  Copyright (c) 2025-24 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -294,7 +294,6 @@ static int32_t HsmClient_SendAndRecv(HsmClient_t *HsmClient, uint32_t timeout)
 
     /* Add message crc. Exclude crcMsg argument of HsmMsg_t from crc calculations*/
     HsmClient->ReqMsg.crcMsg = crc16_ccit((uint8_t *)&HsmClient->ReqMsg, (sizeof(HsmMsg_t) - 2));
-    SemaphoreP_constructBinary(&HsmClient->Semaphore, 0);
 
     status = SIPC_sendMsg(CORE_INDEX_HSM, remoteClientId, localClientId,
                           (uint8_t *)&HsmClient->ReqMsg, WAIT_IF_FIFO_FULL);
@@ -348,7 +347,18 @@ void HsmClient_isr(uint8_t remoteCoreId, uint8_t localClientId,
     /* copy message to client response variable */
     /* As this ISR is blocking, quickly copy the message and exit ISR */
     memcpy(&HsmClient->RespMsg, msgValue, SIPC_MSG_SIZE);
-    SemaphoreP_post(&HsmClient->Semaphore);
+
+    /* Check if HSM response message is not related to proc_auth_boot  
+    * proc_auth_boot APIs use HsmClient_EnqueueAndSendMsg() or HsmClient_EnqueueAndSendMsgBlocking()
+    * Others use HsmClient_SendAndRecv()
+    * If true, post the semaphore to signal completion
+    */
+    if ((HsmClient->RespMsg.serType != HSM_MSG_PROC_AUTH_BOOT_START)  &&  /* Not proc_auth_boot auth start */
+    (HsmClient->RespMsg.serType != HSM_MSG_PROC_AUTH_BOOT_UPDATE) &&  /* Not proc_auth_boot auth update */
+    (HsmClient->RespMsg.serType != HSM_MSG_PROC_AUTH_BOOT_FINISH))    /* Not proc_auth_boot auth finish */
+    {
+        SemaphoreP_post(&HsmClient->Semaphore);
+    }  
 
     /*
         Analyze the received response packet.
@@ -364,7 +374,16 @@ void HsmClient_isr(uint8_t remoteCoreId, uint8_t localClientId,
     {
         if (gSecureBootStatus == SystemP_SUCCESS)
         {
-            gNum_HsmResponseReceived++;
+            /* gNum_HsmResponseReceived must only be incremented if 
+             * the call is non-blocking which is valid only for PROC_AUTH
+             * (START, UPDATE, FINISH).
+             */
+            if ((HsmClient->RespMsg.serType == HSM_MSG_PROC_AUTH_BOOT_START)  ||  
+                (HsmClient->RespMsg.serType == HSM_MSG_PROC_AUTH_BOOT_UPDATE) ||  
+                (HsmClient->RespMsg.serType == HSM_MSG_PROC_AUTH_BOOT_FINISH))    
+            {
+                gNum_HsmResponseReceived++;
+            }
             if (HsmClient->RespMsg.flags == HSM_FLAG_NACK)
             {
                 gSecureBootStatus = SystemP_FAILURE;
@@ -459,6 +478,7 @@ int32_t HsmClient_register(HsmClient_t *HsmClient, uint8_t clientId)
     status = SIPC_registerClient(clientId, HsmClient_isr, (void *)HsmClient);
     if (status == SystemP_SUCCESS)
     {
+        SemaphoreP_constructBinary(&HsmClient->Semaphore, 0);
         DebugP_log("\r\n [HSM_CLIENT] New Client Registered with Client Id = %d\r\n ", clientId);
     }
     else
@@ -1730,7 +1750,6 @@ int32_t HsmClient_getRandomNum(HsmClient_t *HsmClient,
     HsmClient->ReqMsg.args = (void *)(uintptr_t)SOC_virtToPhy(getRandomNum);
 
     getRandomNum->resultPtr = (uint8_t *)(uintptr_t)SOC_virtToPhy(getRandomNum->resultPtr);
-    getRandomNum->resultLengthPtr = (uint32_t *)(uintptr_t)SOC_virtToPhy(getRandomNum->resultLengthPtr);
     getRandomNum->seedValue = (uint32_t *)(uintptr_t)SOC_virtToPhy(getRandomNum->seedValue);
 
     /* Add arg crc */
@@ -1742,7 +1761,6 @@ int32_t HsmClient_getRandomNum(HsmClient_t *HsmClient,
     */
     CacheP_wbInv(getRandomNum, GET_CACHE_ALIGNED_SIZE(sizeof(RNGReq_t)), CacheP_TYPE_ALL);
     CacheP_wbInv(getRandomNum->seedValue, GET_CACHE_ALIGNED_SIZE((getRandomNum->seedSizeInDWords) * 4), CacheP_TYPE_ALL);
-    CacheP_wbInv(getRandomNum->resultLengthPtr, GET_CACHE_ALIGNED_SIZE(sizeof(uint32_t)), CacheP_TYPE_ALL);
 
     status = HsmClient_SendAndRecv(HsmClient, timeout);
     if (status == SystemP_SUCCESS)
@@ -1764,10 +1782,8 @@ int32_t HsmClient_getRandomNum(HsmClient_t *HsmClient,
             crcArgs = crc16_ccit((uint8_t *)HsmClient->RespMsg.args, sizeof(RNGReq_t));
 
             ((RNGReq_t *)HsmClient->RespMsg.args)->resultPtr = (uint8_t *)SOC_phyToVirt((uint64_t)(((RNGReq_t *)HsmClient->RespMsg.args)->resultPtr));
-            ((RNGReq_t *)HsmClient->RespMsg.args)->resultLengthPtr = (uint32_t *)SOC_phyToVirt((uint64_t)(((RNGReq_t *)HsmClient->RespMsg.args)->resultLengthPtr));
             ((RNGReq_t *)HsmClient->RespMsg.args)->seedValue = (uint32_t *)SOC_phyToVirt((uint64_t)(((RNGReq_t *)HsmClient->RespMsg.args)->seedValue));
             CacheP_inv((void *)((RNGReq_t *)HsmClient->RespMsg.args)->resultPtr, GET_CACHE_ALIGNED_SIZE(((uint32_t)*(((RNGReq_t *)HsmClient->RespMsg.args)->resultPtr))), CacheP_TYPE_ALL);
-            CacheP_inv((void *)((RNGReq_t *)HsmClient->RespMsg.args)->resultLengthPtr, GET_CACHE_ALIGNED_SIZE(((uint32_t)*(((RNGReq_t *)HsmClient->RespMsg.args)->resultLengthPtr))), CacheP_TYPE_ALL);
             CacheP_inv((void *)((RNGReq_t *)HsmClient->RespMsg.args)->seedValue, GET_CACHE_ALIGNED_SIZE(((uint32_t)*(((RNGReq_t *)HsmClient->RespMsg.args)->seedValue))), CacheP_TYPE_ALL);
 
             if (crcArgs == HsmClient->RespMsg.crcArgs)
@@ -2264,6 +2280,76 @@ int32_t HsmClient_readOTFARegions(HsmClient_t* HsmClient,OTFA_readRegion_t* OTFA
             {
                 DebugP_log("\r\n [HSM_CLIENT] CRC check for OTFA_read response failed \r\n");
                 status = SystemP_FAILURE ;
+            }
+        }
+    }
+    /* If failure occur due to some reason */
+    else if (status == SystemP_FAILURE)
+    {
+        status = SystemP_FAILURE;
+    }
+    /* Indicate timeout error */
+    else
+    {
+        status = SystemP_TIMEOUT;
+    }
+    return status;
+}
+
+int32_t HsmClient_secCfgValidate(HsmClient_t *HsmClient,
+                                 SecCfgValidate_t *pSecCfgParams,
+                                 uint32_t timeout) {
+    /* make the message */
+    int32_t status = SystemP_FAILURE;
+    uint16_t crcArgs;
+
+    /*populate the send message structure */
+    HsmClient->ReqMsg.destClientId = HSM_CLIENT_ID_1;
+    HsmClient->ReqMsg.srcClientId = HsmClient->ClientId;
+
+    /* Always expect acknowledgement from HSM server */
+    HsmClient->ReqMsg.flags = HSM_FLAG_AOP;
+    HsmClient->ReqMsg.serType = HSM_MSG_PROC_AUTH_BOOT_SEC_CFG;
+    HsmClient->ReqMsg.args = (void *)pSecCfgParams;
+
+    /* Add arg crc */
+    HsmClient->ReqMsg.crcArgs = crc16_ccit((uint8_t *)pSecCfgParams, sizeof(SecCfgValidate_t));
+
+    /* Change the Arguments Address in Physical Address */
+    HsmClient->ReqMsg.args = (void *)(uintptr_t)SOC_virtToPhy(pSecCfgParams);
+
+    /*
+        Write back the cert and
+        invalidate the cache before passing it to HSM
+    */
+    CacheP_wbInv(pSecCfgParams, GET_CACHE_ALIGNED_SIZE(sizeof(SecCfgValidate_t)), CacheP_TYPE_ALL);
+
+    status = HsmClient_SendAndRecv(HsmClient, timeout);
+    if (status == SystemP_SUCCESS)
+    {
+        /* the OpenDbgFirewalls has been populated by HSM server
+         * if this request has been processed correctly */
+        if (HsmClient->RespFlag == HSM_FLAG_NACK)
+        {
+            DebugP_log("\r\n [HSM_CLIENT] Sec-Cfg validation request NACKed by HSM server\r\n");
+            status = SystemP_FAILURE;
+        }
+        else
+        {
+            /* Change the Arguments Address in Physical Address */
+            HsmClient->RespMsg.args = (void *)SOC_phyToVirt((uint64_t)HsmClient->RespMsg.args);
+
+            /* check the integrity of args */
+            crcArgs = crc16_ccit((uint8_t *)HsmClient->RespMsg.args, 0);
+
+            if (crcArgs == HsmClient->RespMsg.crcArgs)
+            {
+                status = SystemP_SUCCESS;
+            }
+            else
+            {
+                DebugP_log("\r\n [HSM_CLIENT] CRC check for Sec-Cfg validation response failed \r\n");
+                status = SystemP_FAILURE;
             }
         }
     }

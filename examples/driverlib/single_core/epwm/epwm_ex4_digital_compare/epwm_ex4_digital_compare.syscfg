@@ -1,11 +1,12 @@
 /**
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
- * @cliArgs --device "F29H85x" --package "256ZEX" --part "F29H85x_256ZEX" --context "CPU1" --product "MCU_SDK_F29H85x@1.00.00.00"
- * @v2CliArgs --device "F29H850TU" --package "256ZEX" --variant "TMS320F29H850TU9" --context "CPU1" --product "MCU_SDK_F29H85x@1.00.00.00"
- * @versions {"tool":"1.22.0+3877"}
+ * @cliArgs --device "F29H85x" --package "256ZEX" --part "F29H85x_256ZEX" --context "CPU1" --product "MCU_SDK_F29H85x@1.02.02.00"
+ * @v2CliArgs --device "F29H850TU" --package "256ZEX" --variant "TMS320F29H850TU9" --context "CPU1" --product "MCU_SDK_F29H85x@1.02.02.00"
+ * @versions {"tool":"1.25.0+4237"}
  */
 
+    
 const divider15       = system.clockTree["PLL_REFDIV"];
 divider15.divideValue = 1;
 
@@ -52,10 +53,10 @@ epwmxbar1.$name         = "myEPWMXBAR0";
 epwmxbar1.sourceSignals = ["INPUTXBAR_INPUT1"];
 epwmxbar1.tripInput     = "XBAR_TRIP2";
 
-gpio1.$name           = "myGPIO25";
 gpio1.qualMode        = "GPIO_QUAL_ASYNC";
 gpio1.padConfig       = "PULLUP";
-gpio1.gpioPin.$assign = "GPIO25";
+gpio1.$name           = "myGPIO2";
+gpio1.gpioPin.$assign = "GPIO2";
 
 inputxbar_input1.$name         = "myINPUTXBARINPUT0";
-inputxbar_input1.inputxbarGpio = "GPIO25";
+inputxbar_input1.inputxbarGpio = "GPIO2";

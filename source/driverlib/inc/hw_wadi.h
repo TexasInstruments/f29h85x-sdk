@@ -166,7 +166,7 @@
 #define WADI_O_SSS_OUTEVT6DUR       0x2A4U   // Output event6 configuration of delays
 #define WADI_O_SSS_OUTEVT7DUR       0x2A8U   // Output event7 configuration of delays
 #define WADI_O_SSS_OUTEVT8DUR       0x2ACU   // Output event8 configuration of delays
-#define WADI_O_PARTEST              0x2C8U   // Enables parity test
+#define WADI_O_SSS_PARTEST          0x2C8U   // Enables parity test
 
 
 //*************************************************************************************************
@@ -1297,8 +1297,8 @@
 // The following are defines for the bit fields in the PARTEST register
 //
 //*************************************************************************************************
-#define WADI_PARTEST_TESTEN_S   0U
-#define WADI_PARTEST_TESTEN_M   0xFU   // Parity test enable configuration
+#define WADI_SSS_PARTEST_TESTEN_S   0U
+#define WADI_SSS_PARTEST_TESTEN_M   0xFU   // Parity test enable configuration
 
 
 

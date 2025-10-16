@@ -90,6 +90,28 @@
 	{
 		"devices": [ "F29H859TU-Q1","F29H850TU" ],
 		"mainCategories":[["Devices"]],
+		"subCategories": ["Source","PMIC"],
+		"name": "Explore Directory",
+		"resourceType": "folder",
+		"resourceClass": ["other"],
+		"location": "$(source_path)/pmic",
+		"description": "",
+		"shortDescription": ""
+	},
+	{
+		"devices": [ "F29H859TU-Q1","F29H850TU" ],
+		"mainCategories":[["Devices"]],
+		"subCategories": ["Source","SDL"],
+		"name": "Explore Directory",
+		"resourceType": "folder",
+		"resourceClass": ["other"],
+		"location": "$(source_path)/sdl",
+		"description": "",
+		"shortDescription": ""
+	},
+	{
+		"devices": [ "F29H859TU-Q1","F29H850TU" ],
+		"mainCategories":[["Devices"]],
 		"subCategories": ["Source","Driverlib"],
 		"name": "f29h85x_driverlib",
 		"resourceType": "project.ccs",
@@ -490,6 +512,20 @@
 	{
 		"devices": [ "F29H859TU-Q1","F29H850TU" ],
 		"mainCategories":[["Devices","Examples"]],
+		"subCategories": ["Driverlib","Single_Core","PMBus"],
+		"name": "$(f29h85x_sdk_driverlib_examples_set_single_core_pmbus.name)",
+		"resourceType": "project.ccs",
+		"resourceClass": ["example"],
+		"resourceSubClass": ["example.general"],
+		"location": "$(f29h85x_sdk_driverlib_examples_set_single_core_pmbus.location)",
+		"description": "$(f29h85x_sdk_driverlib_examples_set_single_core_pmbus.description)",
+		"devtools": "$(f29h85x_sdk_driverlib_examples_set_single_core_pmbus.boards)",
+		"shortDescription": "$(f29h85x_sdk_driverlib_examples_set_single_core_pmbus.shortDesc)",
+		"tags": ["f29h85x_sdk_driverlib_examples_set_single_core_pmbus.tags"]
+	},
+	{
+		"devices": [ "F29H859TU-Q1","F29H850TU" ],
+		"mainCategories":[["Devices","Examples"]],
 		"subCategories": ["Driverlib","Single_Core","RTDMA"],
 		"name": "$(f29h85x_sdk_driverlib_examples_set_single_core_rtdma.name)",
 		"resourceType": "project.ccs",
@@ -514,6 +550,20 @@
 		"devtools": "$(f29h85x_sdk_driverlib_examples_set_single_core_sdfm.boards)",
 		"shortDescription": "$(f29h85x_sdk_driverlib_examples_set_single_core_sdfm.shortDesc)",
 		"tags": ["f29h85x_sdk_driverlib_examples_set_single_core_sdfm.tags"]
+	},
+	{
+		"devices": [ "F29H859TU-Q1","F29H850TU" ],
+		"mainCategories":[["Devices","Examples"]],
+		"subCategories": ["Driverlib","Single_Core","Security"],
+		"name": "$(f29h85x_sdk_driverlib_examples_set_single_core_security.name)",
+		"resourceType": "project.ccs",
+		"resourceClass": ["example"],
+		"resourceSubClass": ["example.general"],
+		"location": "$(f29h85x_sdk_driverlib_examples_set_single_core_security.location)",
+		"description": "$(f29h85x_sdk_driverlib_examples_set_single_core_security.description)",
+		"devtools": "$(f29h85x_sdk_driverlib_examples_set_single_core_security.boards)",
+		"shortDescription": "$(f29h85x_sdk_driverlib_examples_set_single_core_security.shortDesc)",
+		"tags": ["f29h85x_sdk_driverlib_examples_set_single_core_security.tags"]
 	},
 	{
 		"devices": [ "F29H859TU-Q1","F29H850TU" ],
@@ -686,20 +736,6 @@
 	{
 		"devices": [ "F29H859TU-Q1","F29H850TU" ],
 		"mainCategories":[["Devices","Examples"]],
-		"subCategories": ["Driverlib","Multi_Core","IPC"],
-		"name": "$(f29h85x_sdk_driverlib_examples_set_multi_core_ipc.name)",
-		"resourceType": "project.ccs",
-		"resourceClass": ["example"],
-		"resourceSubClass": ["example.general"],
-		"location": "$(f29h85x_sdk_driverlib_examples_set_multi_core_ipc.location)",
-		"description": "$(f29h85x_sdk_driverlib_examples_set_multi_core_ipc.description)",
-		"devtools": "$(f29h85x_sdk_driverlib_examples_set_multi_core_ipc.boards)",
-		"shortDescription": "$(f29h85x_sdk_driverlib_examples_set_multi_core_ipc.shortDesc)",
-		"tags": ["f29h85x_sdk_driverlib_examples_set_multi_core_ipc.tags"]
-	},
-	{
-		"devices": [ "F29H859TU-Q1","F29H850TU" ],
-		"mainCategories":[["Devices","Examples"]],
 		"subCategories": ["Driverlib","Multi_Core","ESM"],
 		"name": "$(f29h85x_sdk_driverlib_examples_set_multi_core_esm.name)",
 		"resourceType": "project.ccs",
@@ -728,16 +764,16 @@
 	{
 		"devices": [ "F29H859TU-Q1","F29H850TU" ],
 		"mainCategories":[["Devices","Examples"]],
-		"subCategories": ["Driverlib","Multi_Core","SSU"],
-		"name": "$(f29h85x_sdk_driverlib_examples_set_multi_core_ssu.name)",
+		"subCategories": ["Driverlib","Multi_Core","IPC"],
+		"name": "$(f29h85x_sdk_driverlib_examples_set_multi_core_ipc.name)",
 		"resourceType": "project.ccs",
 		"resourceClass": ["example"],
 		"resourceSubClass": ["example.general"],
-		"location": "$(f29h85x_sdk_driverlib_examples_set_multi_core_ssu.location)",
-		"description": "$(f29h85x_sdk_driverlib_examples_set_multi_core_ssu.description)",
-		"devtools": "$(f29h85x_sdk_driverlib_examples_set_multi_core_ssu.boards)",
-		"shortDescription": "$(f29h85x_sdk_driverlib_examples_set_multi_core_ssu.shortDesc)",
-		"tags": ["f29h85x_sdk_driverlib_examples_set_multi_core_ssu.tags"]
+		"location": "$(f29h85x_sdk_driverlib_examples_set_multi_core_ipc.location)",
+		"description": "$(f29h85x_sdk_driverlib_examples_set_multi_core_ipc.description)",
+		"devtools": "$(f29h85x_sdk_driverlib_examples_set_multi_core_ipc.boards)",
+		"shortDescription": "$(f29h85x_sdk_driverlib_examples_set_multi_core_ipc.shortDesc)",
+		"tags": ["f29h85x_sdk_driverlib_examples_set_multi_core_ipc.tags"]
 	},
 	{
 		"devices": [ "F29H859TU-Q1","F29H850TU" ],
@@ -766,6 +802,20 @@
 		"devtools": "$(f29h85x_sdk_driverlib_examples_set_multi_core_rtdma.boards)",
 		"shortDescription": "$(f29h85x_sdk_driverlib_examples_set_multi_core_rtdma.shortDesc)",
 		"tags": ["f29h85x_sdk_driverlib_examples_set_multi_core_rtdma.tags"]
+	},
+	{
+		"devices": [ "F29H859TU-Q1","F29H850TU" ],
+		"mainCategories":[["Devices","Examples"]],
+		"subCategories": ["Driverlib","Multi_Core","SSU"],
+		"name": "$(f29h85x_sdk_driverlib_examples_set_multi_core_ssu.name)",
+		"resourceType": "project.ccs",
+		"resourceClass": ["example"],
+		"resourceSubClass": ["example.general"],
+		"location": "$(f29h85x_sdk_driverlib_examples_set_multi_core_ssu.location)",
+		"description": "$(f29h85x_sdk_driverlib_examples_set_multi_core_ssu.description)",
+		"devtools": "$(f29h85x_sdk_driverlib_examples_set_multi_core_ssu.boards)",
+		"shortDescription": "$(f29h85x_sdk_driverlib_examples_set_multi_core_ssu.shortDesc)",
+		"tags": ["f29h85x_sdk_driverlib_examples_set_multi_core_ssu.tags"]
 	},
 	{
 		"devices": [ "F29H859TU-Q1","F29H850TU" ],
@@ -850,5 +900,19 @@
 		"devtools": "$(f29h85x_sdk_examples_set_benchmarks.boards)",
 		"shortDescription": "$(f29h85x_sdk_examples_set_benchmarks.shortDesc)",
 		"tags": ["f29h85x_sdk_examples_set_benchmarks.tags"]
+	},
+	{
+		"devices": [ "F29H859TU-Q1","F29H850TU" ],
+		"mainCategories":[["Devices","Examples"]],
+		"subCategories": ["PMIC"],
+		"name": "$(f29h85x_sdk_examples_set_pmic.name)",
+		"resourceType": "project.ccs",
+		"resourceClass": ["example"],
+		"resourceSubClass": ["example.general"],
+		"location": "$(f29h85x_sdk_examples_set_pmic.location)",
+		"description": "$(f29h85x_sdk_examples_set_pmic.description)",
+		"devtools": "$(f29h85x_sdk_examples_set_pmic.boards)",
+		"shortDescription": "$(f29h85x_sdk_examples_set_pmic.shortDesc)",
+		"tags": ["f29h85x_sdk_examples_set_pmic.tags"]
 	}
 ]

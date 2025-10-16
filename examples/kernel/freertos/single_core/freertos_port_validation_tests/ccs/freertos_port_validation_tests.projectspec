@@ -2,18 +2,20 @@
   <project
         name="freertos_port_validation_tests"
         device       = "F29H850TU9"
-        cgtVersion   = "1.0.0"
+        
+        cgtVersion   = "2.0.0"
         toolChain    = "TICLANG"
+
         products     = "sysconfig;f29h85x-sdk"
         connection   = "TIXDS110_Connection.xml"
         >
-    <configuration name="RAM"   compilerBuildOptions="-I${DLIB_ROOT} -I${PROJECT_ROOT}/device -I${PROJECT_ROOT}/FullDemo/include -I${PROJECT_ROOT}/FullDemo -I${BITFIELDS_ROOT} -I${FreeRTOS_ROOT}/include -I${FreeRTOS_ROOT}/portable/CCS/C2000_C29x -I -O1 -g -DDEBUG"           linkerBuildOptions="--stack_size=0x400 --diag_suppress=10325-D --diag_suppress=10063-D"
+    <configuration name="RAM"   compilerBuildOptions="-I${DLIB_ROOT} -I${PROJECT_ROOT}/device -I${PROJECT_ROOT}/FullDemo/include -I${PROJECT_ROOT}/FullDemo -I${BITFIELDS_ROOT} -I${FreeRTOS_ROOT}/include -I${FreeRTOS_ROOT}/portable/CCS/C2000_C29x -I -O1 -g -DDEBUG -Qunused-arguments"           linkerBuildOptions="--stack_size=0x400 --diag_suppress=10325-D --diag_suppress=10063-D"
      postBuildStep=
        "${CG_TOOL_OBJCOPY} -O binary ${ProjName}.out ${ProjName}.bin;
         $(PYTHON) ${COM_TI_MCU_SDK_INSTALL_DIR}/tools/boot/signing/mcu_rom_image_gen.py --image-bin ${ProjName}.bin --core C29 --swrv 1 --loadaddr 0x200E1000 --sign-key ${COM_TI_MCU_SDK_INSTALL_DIR}/tools/boot/signing/mcu_gpkey.pem --out-image ${ProjName}_cert.bin --device f29h85x --boot RAM --img_integ no;
         $(DELETE) C29-cert-pad.bin"
     />
-    <configuration name="FLASH" compilerBuildOptions="-I${DLIB_ROOT} -I${PROJECT_ROOT}/device -I${PROJECT_ROOT}/FullDemo/include -I${PROJECT_ROOT}/FullDemo -I${BITFIELDS_ROOT} -I${FreeRTOS_ROOT}/include -I${FreeRTOS_ROOT}/portable/CCS/C2000_C29x -I -O1 -g -DDEBUG -D_FLASH"  linkerBuildOptions="--stack_size=0x400 --diag_suppress=10325-D --diag_suppress=10063-D"
+    <configuration name="FLASH" compilerBuildOptions="-I${DLIB_ROOT} -I${PROJECT_ROOT}/device -I${PROJECT_ROOT}/FullDemo/include -I${PROJECT_ROOT}/FullDemo -I${BITFIELDS_ROOT} -I${FreeRTOS_ROOT}/include -I${FreeRTOS_ROOT}/portable/CCS/C2000_C29x -I -O1 -g -DDEBUG -D_FLASH -Qunused-arguments"  linkerBuildOptions="--stack_size=0x400 --diag_suppress=10325-D --diag_suppress=10063-D"
      postBuildStep=
        "${CG_TOOL_OBJCOPY} --remove-section=cert -O binary ${ProjName}.out ${ProjName}.bin;
         $(PYTHON) ${COM_TI_MCU_SDK_INSTALL_DIR}/tools/boot/signing/mcu_rom_image_gen.py --image-bin ${ProjName}.bin --core C29 --swrv 1 --loadaddr 0x10001000 --sign-key ${COM_TI_MCU_SDK_INSTALL_DIR}/tools/boot/signing/mcu_gpkey.pem --out-image ${ProjName}_cert.bin --device f29h85x --boot FLASH --img_integ no;

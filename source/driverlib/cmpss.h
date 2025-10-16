@@ -324,7 +324,6 @@ typedef enum
 //
 //*****************************************************************************
 #ifdef DEBUG
-__attribute__((always_inline))
 static inline bool
 CMPSS_isBaseValid(uint32_t base)
 {
@@ -356,7 +355,6 @@ return (
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 CMPSS_enableModule(uint32_t base)
 {
@@ -386,7 +384,6 @@ CMPSS_enableModule(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 CMPSS_disableModule(uint32_t base)
 {
@@ -432,7 +429,6 @@ CMPSS_disableModule(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 CMPSS_configHighComparator(uint32_t base, uint16_t config)
 {
@@ -479,7 +475,6 @@ CMPSS_configHighComparator(uint32_t base, uint16_t config)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 CMPSS_configLowComparator(uint32_t base, uint16_t config)
 {
@@ -527,7 +522,6 @@ CMPSS_configLowComparator(uint32_t base, uint16_t config)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 CMPSS_configOutputsHigh(uint32_t base, uint16_t config)
 {
@@ -577,7 +571,6 @@ CMPSS_configOutputsHigh(uint32_t base, uint16_t config)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 CMPSS_configOutputsLow(uint32_t base, uint16_t config)
 {
@@ -617,7 +610,6 @@ CMPSS_configOutputsLow(uint32_t base, uint16_t config)
 //! - \b CMPSS_STS_LO_LATCHFILTOUT - Latched value of low digital filter output
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline uint16_t
 CMPSS_getStatus(uint32_t base)
 {
@@ -666,7 +658,6 @@ CMPSS_getStatus(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 CMPSS_configDAC(uint32_t base, uint16_t config)
 {
@@ -717,7 +708,6 @@ CMPSS_configDAC(uint32_t base, uint16_t config)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 CMPSS_configDACHigh(uint32_t base, uint16_t config)
 {
@@ -756,7 +746,6 @@ CMPSS_configDACHigh(uint32_t base, uint16_t config)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 CMPSS_configDACLow(uint32_t base, uint16_t config)
 {
@@ -792,7 +781,6 @@ CMPSS_configDACLow(uint32_t base, uint16_t config)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 CMPSS_setDACValueHigh(uint32_t base, uint16_t value)
 {
@@ -823,7 +811,6 @@ CMPSS_setDACValueHigh(uint32_t base, uint16_t value)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 CMPSS_setDACValueLow(uint32_t base, uint16_t value)
 {
@@ -854,7 +841,6 @@ CMPSS_setDACValueLow(uint32_t base, uint16_t value)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 CMPSS_initFilterHigh(uint32_t base)
 {
@@ -888,7 +874,6 @@ CMPSS_initFilterHigh(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 CMPSS_initFilterLow(uint32_t base)
 {
@@ -921,7 +906,6 @@ CMPSS_initFilterLow(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 CMPSS_configureFilterInputHigh(uint32_t base, CMPSS_FilterInput filtInput)
 {
@@ -957,7 +941,6 @@ CMPSS_configureFilterInputHigh(uint32_t base, CMPSS_FilterInput filtInput)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 CMPSS_configureFilterInputLow(uint32_t base, CMPSS_FilterInput filtInput)
 {
@@ -992,7 +975,6 @@ CMPSS_configureFilterInputLow(uint32_t base, CMPSS_FilterInput filtInput)
 //! \return Returns the value driven by the internal DAC of the high comparator.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline uint16_t
 CMPSS_getDACValueHigh(uint32_t base)
 {
@@ -1020,7 +1002,6 @@ CMPSS_getDACValueHigh(uint32_t base)
 //! \return Returns the value driven by the internal DAC of the low comparator.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline uint16_t
 CMPSS_getDACValueLow(uint32_t base)
 {
@@ -1047,7 +1028,6 @@ CMPSS_getDACValueLow(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 CMPSS_clearFilterLatchHigh(uint32_t base)
 {
@@ -1078,7 +1058,6 @@ CMPSS_clearFilterLatchHigh(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 CMPSS_clearFilterLatchLow(uint32_t base)
 {
@@ -1115,7 +1094,6 @@ CMPSS_clearFilterLatchLow(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 CMPSS_setMaxRampValue(uint32_t base,  uint16_t value)
 {
@@ -1145,7 +1123,6 @@ CMPSS_setMaxRampValue(uint32_t base,  uint16_t value)
 //! loaded into the ramp generator.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline uint16_t
 CMPSS_getMaxRampValue(uint32_t base)
 {
@@ -1179,7 +1156,6 @@ CMPSS_getMaxRampValue(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 CMPSS_setRampDecValue(uint32_t base, uint16_t value)
 {
@@ -1209,7 +1185,6 @@ CMPSS_setRampDecValue(uint32_t base, uint16_t value)
 //! the ramp value on every system clock cycle.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline uint16_t
 CMPSS_getRampDecValue(uint32_t base)
 {
@@ -1244,7 +1219,6 @@ CMPSS_getRampDecValue(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 CMPSS_setRampDelayValue(uint32_t base, uint16_t value)
 {
@@ -1275,7 +1249,6 @@ CMPSS_setRampDelayValue(uint32_t base, uint16_t value)
 //! the ramp value on every system clock cycle.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline uint16_t
 CMPSS_getRampDelayValue(uint32_t base)
 {
@@ -1304,7 +1277,6 @@ CMPSS_getRampDelayValue(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 CMPSS_setRampDirectionHigh(uint32_t base, CMPSS_RampDirection dir)
 {
@@ -1338,7 +1310,6 @@ CMPSS_setRampDirectionHigh(uint32_t base, CMPSS_RampDirection dir)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 CMPSS_setRampReferenceHigh(uint32_t base, uint16_t value)
 {
@@ -1365,7 +1336,6 @@ CMPSS_setRampReferenceHigh(uint32_t base, uint16_t value)
 //! the high ramp generator.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline uint16_t
 CMPSS_getRampReferenceHigh(uint32_t base)
 {
@@ -1395,7 +1365,6 @@ CMPSS_getRampReferenceHigh(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 CMPSS_setRampStepHigh(uint32_t base, uint16_t value)
 {
@@ -1422,7 +1391,6 @@ CMPSS_setRampStepHigh(uint32_t base, uint16_t value)
 //! the ramp reference value on every system clock cycle.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline uint16_t
 CMPSS_getRampStepHigh(uint32_t base)
 {
@@ -1453,7 +1421,6 @@ CMPSS_getRampStepHigh(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 CMPSS_setRampDelayHigh(uint32_t base, uint16_t value)
 {
@@ -1482,7 +1449,6 @@ CMPSS_setRampDelayHigh(uint32_t base, uint16_t value)
 //! decrementor after a PWMSYNC event is received.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline uint16_t
 CMPSS_getRampDelayHigh(uint32_t base)
 {
@@ -1511,7 +1477,6 @@ CMPSS_getRampDelayHigh(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 CMPSS_setRampDirectionLow(uint32_t base, CMPSS_RampDirection dir)
 {
@@ -1545,7 +1510,6 @@ CMPSS_setRampDirectionLow(uint32_t base, CMPSS_RampDirection dir)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 CMPSS_setRampReferenceLow(uint32_t base, uint16_t value)
 {
@@ -1572,7 +1536,6 @@ CMPSS_setRampReferenceLow(uint32_t base, uint16_t value)
 //! the low ramp generator.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline uint16_t
 CMPSS_getRampReferenceLow(uint32_t base)
 {
@@ -1602,7 +1565,6 @@ CMPSS_getRampReferenceLow(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 CMPSS_setRampStepLow(uint32_t base, uint16_t value)
 {
@@ -1629,7 +1591,6 @@ CMPSS_setRampStepLow(uint32_t base, uint16_t value)
 //! the ramp reference value on every system clock cycle.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline uint16_t
 CMPSS_getRampStepLow(uint32_t base)
 {
@@ -1660,7 +1621,6 @@ CMPSS_getRampStepLow(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 CMPSS_setRampDelayLow(uint32_t base, uint16_t value)
 {
@@ -1689,7 +1649,6 @@ CMPSS_setRampDelayLow(uint32_t base, uint16_t value)
 //! decrementor after a PWMSYNC event is received.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline uint16_t
 CMPSS_getRampDelayLow(uint32_t base)
 {
@@ -1726,7 +1685,6 @@ CMPSS_getRampDelayLow(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 CMPSS_configureRampXTriggerHigh(uint32_t base, CMPSS_RampXTrigger trigger)
 {
@@ -1767,7 +1725,6 @@ CMPSS_configureRampXTriggerHigh(uint32_t base, CMPSS_RampXTrigger trigger)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 CMPSS_configureSyncSourceHigh(uint32_t base, uint16_t syncSource)
 {
@@ -1807,7 +1764,6 @@ CMPSS_configureSyncSourceHigh(uint32_t base, uint16_t syncSource)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 CMPSS_configureSyncSourceLow(uint32_t base, uint16_t syncSource)
 {
@@ -1841,7 +1797,6 @@ CMPSS_configureSyncSourceLow(uint32_t base, uint16_t syncSource)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 CMPSS_setRampClockDividerHigh(uint32_t base, CMPSS_RampClockDiv divider)
 {
@@ -1867,7 +1822,6 @@ CMPSS_setRampClockDividerHigh(uint32_t base, CMPSS_RampClockDiv divider)
 //! the SYSCLK to configure the ramp generator clock.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline uint16_t
 CMPSS_getRampClockDividerHigh(uint32_t base)
 {
@@ -1896,7 +1850,6 @@ CMPSS_getRampClockDividerHigh(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 CMPSS_setRampClockDividerLow(uint32_t base, CMPSS_RampClockDiv divider)
 {
@@ -1922,7 +1875,6 @@ CMPSS_setRampClockDividerLow(uint32_t base, CMPSS_RampClockDiv divider)
 //! the SYSCLK to configure the low ramp generator clock.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline uint16_t
 CMPSS_getRampClockDividerLow(uint32_t base)
 {
@@ -1952,7 +1904,6 @@ CMPSS_getRampClockDividerLow(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 CMPSS_setHysteresis(uint32_t base, uint16_t value)
 {
@@ -1984,7 +1935,6 @@ CMPSS_setHysteresis(uint32_t base, uint16_t value)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 CMPSS_enableLatchResetOnPWMSYNCHigh(uint32_t base)
 {
@@ -2012,7 +1962,6 @@ CMPSS_enableLatchResetOnPWMSYNCHigh(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 CMPSS_disableLatchResetOnPWMSYNCHigh(uint32_t base)
 {
@@ -2040,7 +1989,6 @@ CMPSS_disableLatchResetOnPWMSYNCHigh(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 CMPSS_enableLatchResetOnPWMSYNCLow(uint32_t base)
 {
@@ -2068,7 +2016,6 @@ CMPSS_enableLatchResetOnPWMSYNCLow(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 CMPSS_disableLatchResetOnPWMSYNCLow(uint32_t base)
 {
@@ -2106,7 +2053,6 @@ CMPSS_disableLatchResetOnPWMSYNCLow(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 CMPSS_configBlanking(uint32_t base, uint16_t pwmBlankSrc)
 {
@@ -2145,7 +2091,6 @@ CMPSS_configBlanking(uint32_t base, uint16_t pwmBlankSrc)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 CMPSS_enableBlanking(uint32_t base)
 {
@@ -2179,7 +2124,6 @@ CMPSS_enableBlanking(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 CMPSS_disableBlanking(uint32_t base)
 {
@@ -2215,7 +2159,6 @@ CMPSS_disableBlanking(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 CMPSS_configBlankingSourceHigh(uint32_t base, uint16_t pwmBlankSrc)
 {
@@ -2249,7 +2192,6 @@ CMPSS_configBlankingSourceHigh(uint32_t base, uint16_t pwmBlankSrc)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 CMPSS_enableBlankingHigh(uint32_t base)
 {
@@ -2278,7 +2220,6 @@ CMPSS_enableBlankingHigh(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 CMPSS_disableBlankingHigh(uint32_t base)
 {
@@ -2313,7 +2254,6 @@ CMPSS_disableBlankingHigh(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 CMPSS_configBlankingSourceLow(uint32_t base, uint16_t pwmBlankSrc)
 {
@@ -2347,7 +2287,6 @@ CMPSS_configBlankingSourceLow(uint32_t base, uint16_t pwmBlankSrc)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 CMPSS_enableBlankingLow(uint32_t base)
 {
@@ -2376,7 +2315,6 @@ CMPSS_enableBlankingLow(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 CMPSS_disableBlankingLow(uint32_t base)
 {
@@ -2404,7 +2342,6 @@ CMPSS_disableBlankingLow(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 CMPSS_enableDEmode(uint32_t base)
 {
@@ -2432,7 +2369,6 @@ CMPSS_enableDEmode(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 CMPSS_disableDEmode(uint32_t base)
 {
@@ -2463,7 +2399,6 @@ CMPSS_disableDEmode(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 CMPSS_selectDEACTIVESource(uint32_t base, uint16_t deactivesel)
 {
@@ -2499,7 +2434,6 @@ CMPSS_selectDEACTIVESource(uint32_t base, uint16_t deactivesel)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 CMPSS_configHighDACShadowValueDE(uint32_t base, uint16_t dacval)
 {
@@ -2530,7 +2464,6 @@ CMPSS_configHighDACShadowValueDE(uint32_t base, uint16_t dacval)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 CMPSS_configLowDACShadowValueDE(uint32_t base, uint16_t dacval)
 {
@@ -2560,7 +2493,6 @@ CMPSS_configLowDACShadowValueDE(uint32_t base, uint16_t dacval)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 CMPSS_selectBlankSourceGroupHigh(uint32_t base, CMPSS_EPWMGroup group)
 {
@@ -2595,7 +2527,6 @@ CMPSS_selectBlankSourceGroupHigh(uint32_t base, CMPSS_EPWMGroup group)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 CMPSS_selectBlankSourceGroupLow(uint32_t base, CMPSS_EPWMGroup group)
 {
@@ -2630,7 +2561,6 @@ CMPSS_selectBlankSourceGroupLow(uint32_t base, CMPSS_EPWMGroup group)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 CMPSS_selectRampSourceGroupHigh(uint32_t base, CMPSS_EPWMGroup group)
 {
@@ -2665,7 +2595,6 @@ CMPSS_selectRampSourceGroupHigh(uint32_t base, CMPSS_EPWMGroup group)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 CMPSS_selectRampSourceGroupLow(uint32_t base, CMPSS_EPWMGroup group)
 {

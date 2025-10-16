@@ -31,7 +31,8 @@ let config = [
                 options : [
                     {name:"LockStep"},
                     {name:"SplitLock"}
-                ]
+                ],
+                shouldBeAllocatedAsResource : true,
             },
         ]
     },
@@ -45,43 +46,50 @@ let config = [
                 displayName : "Enable XRSn on CPU1 ESM Critical Priority Event",
                 hidden      : !Common.isContextCPU1(),
                 default     : true,
+                shouldBeAllocatedAsResource : true,
             },
             {
                 name        : "ESM_CPU1HIPRIWD",
                 displayName : "Enable XRSn on CPU1 ESM NMI Watchdog Event",
                 hidden      : !Common.isContextCPU1(),
                 default     : true,
-                readOnly    : true
+                readOnly    : true,
+                shouldBeAllocatedAsResource : true,
             },
             {
                 name        : "ESM_CPU2CRITICAL",
                 displayName : "Enable XRSn on CPU2 ESM Critical Priority Event",
                 hidden      : !Common.isContextCPU1(),
                 default     : false,
+                shouldBeAllocatedAsResource : true,
             },
             {
                 name        : "ESM_CPU2HIPRIWD",
                 displayName : "Enable XRSn on CPU2 ESM NMI Watchdog Event",
                 hidden      : !Common.isContextCPU1(),
                 default     : false,
+                shouldBeAllocatedAsResource : true,
             },
             {
                 name        : "ESM_CPU3CRITICAL",
                 displayName : "Enable XRSn on CPU3 ESM Critical Priority Event",
                 hidden      : !Common.isContextCPU1(),
                 default     : false,
+                shouldBeAllocatedAsResource : true,
             },
             {
                 name        : "ESM_CPU3HIPRIWD",
                 displayName : "Enable XRSn on CPU3 ESM NMI Watchdog Event",
                 hidden      : !Common.isContextCPU1(),
                 default     : false,
+                shouldBeAllocatedAsResource : true,
             },
             {
                 name        : "ESM_RESET",
                 displayName : "Enable XRSn on ESM.SYS Critical Priority Event",
                 hidden      : !Common.isContextCPU1(),
                 default     : false,
+                shouldBeAllocatedAsResource : true,
             },
         ]
     },
@@ -228,9 +236,11 @@ var clockModule = {
         boardh : "/driverlib/sysctl/sysctl.board.h.xdt"
     },
     moduleStatic : {
-        config: config,
+        config: Common.filterConfigsIfInSetupMode(config),
         validate    : onValidate,
         moduleInstances : moduleInstances,
+        shouldBeAllocatedAsResource : true,
+        alwaysAllocateAsResource : true,
     },
 
 };

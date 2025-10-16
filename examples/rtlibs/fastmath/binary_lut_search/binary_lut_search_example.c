@@ -31,7 +31,7 @@
 //  globals
 //*****************************************************************************
 // The global pass, fail values
-uint16_t pass = 0U, fail = 0U;
+uint16_t pass[2],fail[2];
 
 // profiling variables
 uint32_t differenceCounter=0;
@@ -92,19 +92,18 @@ int32_t main(void)
     differenceCounter = startCounter - endCounter - overheadCounter;
     CPUTimer_stopTimer(CPUTIMER0_BASE);
 
+    pass[0]=0;
+    fail[0]=0;
     if((Left==left_closest_golden)&&(Right==right_closest_golden))
     {
-        pass++;
+        pass[0]++;
     }
     else
     {
-        fail++;
+        fail[0]++;
     }
-    printf("binary_lut_search closest match Pass_count = %d, Fail_count = %d \n", pass, fail);
+    printf("binary_lut_search closest match Pass_count = %d, Fail_count = %d \n", pass[0], fail[0]);
     printf("binary_lut_search closest match Cycles = %d, Timer overhead = %d \n", differenceCounter, overheadCounter);
-
-    pass=0;
-    fail=0;
 
     CPUTimer_startTimer(CPUTIMER0_BASE);
     __builtin_instrumentation_label("bin_lut_search_exact_start");
@@ -118,16 +117,18 @@ int32_t main(void)
     differenceCounter = startCounter - endCounter - overheadCounter;
     CPUTimer_stopTimer(CPUTIMER0_BASE);
 
+    pass[1]=0;
+    fail[1]=0;
     if(index_exact==index_exact_golden)
     {
-        pass++;
+        pass[1]++;
     }
     else
     {
-        fail++;
+        fail[1]++;
     }
 
-    printf("binary_lut_search exact match Pass_count = %d, Fail_count = %d \n", pass, fail);
+    printf("binary_lut_search exact match Pass_count = %d, Fail_count = %d \n", pass[1], fail[1]);
     printf("binary_lut_search exact match Cycles = %d, Timer overhead = %d \n", differenceCounter, overheadCounter);
     while(1)
     {}

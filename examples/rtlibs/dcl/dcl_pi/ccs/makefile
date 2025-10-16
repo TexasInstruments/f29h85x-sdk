@@ -49,7 +49,7 @@ $(BINDIR):
 
 $(OBJDIR):
 	$(MKDIR) $@
- 
+
 $(OBJDIR)/%.o %.o: %.c
 	@echo  Compiling: $<
 	$(COMPILER) -c $(CFLAGS) $(INCLUDES) -MMD -o $(OBJDIR)/$@ $<

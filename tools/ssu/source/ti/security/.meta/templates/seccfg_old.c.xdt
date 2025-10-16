@@ -16,6 +16,7 @@
     const memAllocFinal = Common.allocateAllMemoryRegions()
     const flashSpace    = memAllocFinal["flashSpace"]
     const weprotValues = Common.calcWeprotValues(flashSpace);
+    let generatingInCPU1 = Common.isContextCPU1() 
 
     function getWEProtRegValue(reg)
     {
@@ -56,17 +57,12 @@
 %%{
     let existingContexts = Common.getCoreList().map(o => {return o.name});
     existingContexts.forEach(currCore => {
+        let ctx = (currCore == Common.CONTEXT_SYSTEM) ? "CPU1" : currCore
         //console.log(currCore)
         let seccfgLocation = Common.getSeccfgLocation(currCore) //!! error case
-        let seccfgLocationDummy = Common.getSeccfgLocationDummy(currCore) //!! error case
         let sysSecCur = Common.modStaticByCPU('/ti/security/System_Security', currCore);
 %%}
-
-#ifdef HSSE
-    __attribute__((retain, location(0x`Common.toHex(seccfgLocationDummy, 8)`)))
-#else
-    __attribute__((retain, location(0x`Common.toHex(seccfgLocation, 8)`)))
-#endif
+__attribute__((retain, location(0x`Common.toHex(seccfgLocation, 8)`)))
 const SSU_SECCFG `currCore`_Cfg =
 {
     // APR Configuration
@@ -192,35 +188,35 @@ const SSU_SECCFG `currCore`_Cfg =
 %                                                                                                   crcList.push(0)
 
     // Zone 1 Configuration
-    .ZONE1_CFG.LINK      = `sysSec.ZONE1_UPDATE_LINK ? sysSec.ZONE1_UPDATE_LINK.$name : '0x1'`,
+    .ZONE1_CFG.LINK      = `(sysSec.ZONE1_UPDATE_LINK && generatingInCPU1) ? sysSec.ZONE1_UPDATE_LINK.$name : '0x1'`,
     .ZONE1_CFG.CPU       = `sysSec.ZONE1_UPDATE_CPU`,
     .ZONE1_CFG.UPDATE_EN = `sysSec.ZONE1_UPDATE_EN?'0xC':'0x3'`,
 
     // Zone 2 Configuration
-    .ZONE2_CFG.LINK      = `sysSec.ZONE2_UPDATE_LINK ? sysSec.ZONE2_UPDATE_LINK.$name : '0x1'`,
+    .ZONE2_CFG.LINK      = `(sysSec.ZONE2_UPDATE_LINK && generatingInCPU1) ? sysSec.ZONE2_UPDATE_LINK.$name : '0x1'`,
     .ZONE2_CFG.CPU       = `sysSec.ZONE2_UPDATE_CPU`,
     .ZONE2_CFG.UPDATE_EN = `sysSec.ZONE2_UPDATE_EN?'0xC':'0x3'`,
 
     // Zone 3 Configuration
-    .ZONE3_CFG.LINK      = `sysSec.ZONE3_UPDATE_LINK ? sysSec.ZONE3_UPDATE_LINK.$name : '0x1'`,
+    .ZONE3_CFG.LINK      = `(sysSec.ZONE3_UPDATE_LINK && generatingInCPU1) ? sysSec.ZONE3_UPDATE_LINK.$name : '0x1'`,
     .ZONE3_CFG.CPU       = `sysSec.ZONE3_UPDATE_CPU`,
     .ZONE3_CFG.UPDATE_EN = `sysSec.ZONE3_UPDATE_EN?'0xC':'0x3'`,
 
     // SECCFG Update Configuration
-    .SECCFG_UPDATE_CFG.LINK      = `sysSec.SECCFG_UPDATE_LINK?sysSec.SECCFG_UPDATE_LINK.$name:'0x1'`,
+    .SECCFG_UPDATE_CFG.LINK      = `(sysSec.SECCFG_UPDATE_LINK && generatingInCPU1) ? sysSec.SECCFG_UPDATE_LINK.$name :'0x1'`,
     .SECCFG_UPDATE_CFG.CPU       = `sysSec.SECCFG_UPDATE_CPU`,
     .SECCFG_UPDATE_CFG.UPDATE_EN = `sysSec.SECCFG_UPDATE_EN?'0xC':'0x3'`,
 %                                                                                                   var zone1Cfg, zone2Cfg, zone3Cfg, secCfg = 0
-%                                                                                                   zone1Cfg |= sysSec.ZONE1_UPDATE_LINK ? linkID[sysSec.ZONE1_UPDATE_LINK.$name] : 1
+%                                                                                                   zone1Cfg |= (sysSec.ZONE1_UPDATE_LINK && generatingInCPU1) ? linkID[sysSec.ZONE1_UPDATE_LINK.$name] : 1
 %                                                                                                   zone1Cfg |= sysSec.ZONE1_UPDATE_CPU << 8
 %                                                                                                   zone1Cfg |= (sysSec.ZONE1_UPDATE_EN ? 0xC : 0x3) << 12
-%                                                                                                   zone2Cfg |= sysSec.ZONE2_UPDATE_LINK ? linkID[sysSec.ZONE2_UPDATE_LINK.$name] : 1
+%                                                                                                   zone2Cfg |= (sysSec.ZONE2_UPDATE_LINK && generatingInCPU1) ? linkID[sysSec.ZONE2_UPDATE_LINK.$name] : 1
 %                                                                                                   zone2Cfg |= sysSec.ZONE2_UPDATE_CPU << 8
 %                                                                                                   zone2Cfg |= (sysSec.ZONE2_UPDATE_EN ? 0xC : 0x3) << 12
-%                                                                                                   zone3Cfg |= sysSec.ZONE3_UPDATE_LINK ? linkID[sysSec.ZONE3_UPDATE_LINK.$name] : 1
+%                                                                                                   zone3Cfg |= (sysSec.ZONE3_UPDATE_LINK && generatingInCPU1) ? linkID[sysSec.ZONE3_UPDATE_LINK.$name] : 1
 %                                                                                                   zone3Cfg |= sysSec.ZONE3_UPDATE_CPU << 8
 %                                                                                                   zone3Cfg |= (sysSec.ZONE3_UPDATE_EN ? 0xC : 0x3) << 12
-%                                                                                                   secCfg |= sysSec.SECCFG_UPDATE_LINK ? linkID[sysSec.SECCFG_UPDATE_LINK.$name] : 1
+%                                                                                                   secCfg |= (sysSec.SECCFG_UPDATE_LINK && generatingInCPU1) ? linkID[sysSec.SECCFG_UPDATE_LINK.$name] : 1
 %                                                                                                   secCfg |= sysSec.SECCFG_UPDATE_CPU << 8
 %                                                                                                   secCfg |= (sysSec.SECCFG_UPDATE_EN ? 0xC : 0x3) << 12
 %
@@ -290,8 +286,6 @@ const SSU_SECCFG `currCore`_Cfg =
     .RAMOPEN_COMMIT   = `sysSec.RAMOPEN_COMMIT?1:0`,
     .SECT_STATUS      = 0x5555555555555555,
 %                                                                                                   let updCtrVal = "FFFFFFFFFFFFFFFF"
-%                                                                                                   //if(sysSecCur && sysSecCur.updateCtr && currCore!="CPU1") updCtrVal = sysSecCur.updateCtr
-%                                                                                                   //if(sysSecCur && sysSecCur.updateCtr && currCore=="CPU1") updCtrVal = sysSec.updateCtr
     .SECT_UPDATE_CTR  = 0x`updCtrVal`,
 %                                                                                                   crcList.push(sysSec.ENABLE_XTAL << 8)
 %                                                                                                   crcList.push(sysSec.defaultBootmode ? 0 : ((0x5A << 24) | (parseInt(BMSP2,16) << 16) | (parseInt(BMSP1,16) << 8) | parseInt(BMSP0,16)))
@@ -313,7 +307,7 @@ const SSU_SECCFG `currCore`_Cfg =
     // Stack Configuration
 %                                                                                                   var stkCfg = [0,0,0]
 %                                                                                                   var idx = 3;
-%                                                                                                   stacks.filter(x => (x.$name!="STACK2_STACK") && (x.$name!="STACK1_STACK")).forEach(x => {
+%                                                                                                   stacks.filter(x => (x.$name!=`${ctx}_STACK2_STACK`) && (x.$name!=`${ctx}_STACK1_STACK`)).forEach(x => {
     .STACK`idx`_CFG = SSU_`Common.getZone(x)`,
 %                                                                                                       stkCfg.push(parseInt(Common.getZone(x).replace("ZONE", "")))
 %                                                                                                       idx++;
@@ -363,11 +357,6 @@ const SSU_SECCFG `currCore`_Cfg =
 %%}
 
 % let cpu4SeccfgLocation = Common.getSeccfgLocation("CPU4")
-% let cpu4SeccfgLocationDummy = Common.getSeccfgLocationDummy("CPU4")
 %   let cpu4FilledSeccfg = system.getTemplate("/ti/security/templates/cpu4_seccfg.c.xdt");
-#ifdef HSSE
-    __attribute__((retain, location(0x`Common.toHex(cpu4SeccfgLocationDummy, 8)`)))
-#else
-    __attribute__((retain, location(0x`Common.toHex(cpu4SeccfgLocation, 8)`)))
-#endif
+__attribute__((retain, location(0x`Common.toHex(cpu4SeccfgLocation, 8)`)))
 `cpu4FilledSeccfg("")`

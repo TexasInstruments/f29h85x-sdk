@@ -1,0 +1,137 @@
+%%{
+    const Common        = system.getScript('/ti/security/Common.js');
+    let ctx             = Common.currentContext()
+    const raDataCtx     = system.resourceAllocation.data.contexts
+                            .find(a => a["contextName"] == ctx);
+    const raDataCPU1    = system.resourceAllocation.data.contexts
+                        .find(a => a["contextName"] == Common.CONTEXT_CPU1);
+
+    let contextNames        = Common.getActiveContexts_configure(raDataCtx);
+    let withSystemSecurity  = false
+
+    let aprsCPU1        =   raDataCPU1
+                        ["modules"]
+                        .find(a => (a["moduleName"] == `/ti/security/${Common.CONTEXT_CPU1}_APR`))
+
+    let sysSecCPU1      = raDataCPU1
+                        ["modules"]
+                        .find(a => (a["moduleName"] == `/ti/security/${Common.CONTEXT_CPU1}_System_Security`))
+
+    let aprsCurrCtx =   raDataCtx
+                        ["modules"]
+                        .find(a => (a["moduleName"] == `/ti/security/${ctx}_APR`))
+
+    let sysSecCurrCtx = raDataCtx
+                        ["modules"]
+                        .find(a => (a["moduleName"] == `/ti/security/${ctx}_System_Security`))
+
+    if(sysSecCPU1 && sysSecCurrCtx)
+        withSystemSecurity = true
+
+    let aprResources        = aprsCurrCtx.moduleStatic.requiredArgs
+    let aprFullMap          = aprResources ? JSON.parse(aprResources?.r_aprFullMap) : []
+    let sysSecCurrResources = withSystemSecurity ? sysSecCurrCtx.moduleStatic.requiredArgs : {}
+    let sysSec              = withSystemSecurity ? sysSecCPU1.instances[0].requiredArgs : {}
+    let sysSecCurr          = withSystemSecurity ? sysSecCurrCtx.instances[0].requiredArgs : {}
+
+    let memoryList          = (aprResources.r_MemoryList)
+    let cpu3FlashRegion     = JSON.parse(aprResources.r_cpu3FlashRegion)
+    let sectionList         = (aprResources.r_SectionList)
+    let sectionListFinal    = Common.appendManualSections_configure(sectionList, aprFullMap , ctx)
+
+    let stackMap        = withSystemSecurity ? JSON.parse(sysSecCurrResources.r_stackMap) : {}
+    let stackIdMap      = withSystemSecurity ? JSON.parse(sysSecCurrResources.r_stackIds) : {}
+
+    let bankmode        = aprsCPU1 ? aprsCPU1.moduleStatic.requiredArgs["bankMode"] : 0
+   
+
+    let Stack2Size = 0;
+    if(stackMap[`${ctx}_STACK2_STACK`])
+        Stack2Size = stackMap[`${ctx}_STACK2_STACK`]["size"]
+
+%%}
+// ----------------------------------------------------------------------------
+// This linker command file is auto-generated. Do not edit directly.
+// ----------------------------------------------------------------------------
+% if(withSystemSecurity){ 
+% if (sysSec && sysSec.ssumode == 3 && sysSec.inter_security_context_behavior == 'autofix') {
+--auto_resolve_protected_calls
+% }
+
+--entry_point="code_start"
+--stack_size=`Stack2Size`
+% if((Common.isContextCPU2() == true) || (Common.isContextCPU3() == true))
+% {
+--retain="reset_vector"
+--retain="nmi_vector"
+% }
+
+MEMORY
+{
+`memoryList`
+%if(Common.isContextCPU1() && contextNames.includes("CPU3")) {
+    // CPU3 load memory
+
+    CPU3_FLASH_REGION               : origin = 0x`Common.toHex(cpu3FlashRegion.origin, 8)`, length = 0x`Common.toHex(cpu3FlashRegion.length, 8)`
+
+%}
+}
+
+SECTIONS
+{
+`sectionListFinal`
+%if(Common.isContextCPU1() && contextNames.includes("CPU2")) {
+    // CPU2 App Section
+    cpu2app         : {} LOAD=CPU2_FLASH_REGION, RUN=CPU2_RAMCOVERREGION0, table(BINIT), palign(8)
+%}
+%if(Common.isContextCPU1() && contextNames.includes("CPU3")) {
+% if(bankmode >= 2){
+    // CPU3 App Section
+    cpu3app         : {} > CPU3_FLASH_REGION,    palign(8)
+% } else {
+    // CPU3 App Section
+    cpu3app         : {} LOAD=CPU3_FLASH_REGION, RUN=CPU3_RAMCOVERREGION0, table(BINIT), palign(8)
+%}
+%}
+}
+
+
+__LINK2_AP_OVERRIDE = 0x3008000C;
+
+__SECSP0   = 0x3000D000;
+__SECSP1   = 0x3000D004;
+__SECSP2   = 0x3000D008;
+__SECSP3   = 0x3000D00C;
+__SECSP4   = 0x3000D010;
+__SECSP5   = 0x3000D014;
+__SECSP6   = 0x3000D018;
+__SECSP7   = 0x3000D01C;
+
+% if (sysSecCurr && sysSecCurr.addLink1) {
+__SECSP1_START = `ctx`_STACK1_STACK_start;
+% }
+% var i = 3
+% for(const x in stackIdMap){
+%   if((x !=`${ctx}_STACK2_STACK`) && (x !=`${ctx}_STACK1_STACK`)) {
+__SECSP`i`_START = `x`_start;
+%   i++
+%   }
+% }
+%} else {
+--entry_point="code_start"
+% if((Common.isContextCPU2() == true) || (Common.isContextCPU3() == true))
+% {
+--retain="reset_vector"
+--retain="nmi_vector"
+% }
+
+MEMORY
+{
+`memoryList`
+}
+
+SECTIONS
+{
+`sectionListFinal`
+}
+%}

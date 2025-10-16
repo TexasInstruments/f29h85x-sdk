@@ -11,16 +11,26 @@ let longDescription = "";
 /* Array of Clock configurables */
 let config = [
     {
+        name        : "$assignedContext",
+        description : 'Override the assigned context to have only in CPU1',
+        hidden      : true,
+        default     : "CPU1",
+        options     : [{name:"CPU1"}],
+		readOnly    : true
+    },
+    {
         name: "xclkOutSource",
         displayName : "External Clock Output (XCLKOUT) Source",
         default     : device_driverlib_peripheral.SysCtl_XClkSource[0].name,
-        options     : device_driverlib_peripheral.SysCtl_XClkSource
+        options     : device_driverlib_peripheral.SysCtl_XClkSource,
+        shouldBeAllocatedAsResource: true,
     },
     {
         name: "xclkOutDiv",
         displayName : "External Clock Output (XCLKOUT) Divider",
         default     : "SYSCTL_XCLKOUT_DIV_8",
-        options     : device_driverlib_peripheral.SysCtl_XClkDivider
+        options     : device_driverlib_peripheral.SysCtl_XClkDivider,
+        shouldBeAllocatedAsResource: true,
     },
 ];
 
@@ -46,6 +56,7 @@ var clockModule = {
     config: config,
     validate    : onValidate,
     pinmuxRequirements    : Pinmux.xclkoutPinmuxRequirements,
+    shouldBeAllocatedAsResource: true,
 
     templates: {
         boardc : "/driverlib/sysctl/xclkout.board.c.xdt",

@@ -16,7 +16,7 @@
 //! function are reset only on a PORESETn. Issuing an XRSn on the emulated
 //! device without clearing the MCUCNF registers for ADC and DAC might cause
 //! an NMI during bootrom execution. The workaround is implemented only in the
-//! CCS gel file. 
+//! CCS gel file.
 //!
 //! The device GPIOs are configured through the SysConfig file. The initial
 //! values of GPIOs connected to LED0 and LED1 are set HIGH and LOW
@@ -73,7 +73,7 @@ int main(void)
     //
     // Emulate F29P329SM2
     //
-    SysCtl_emulateDevice(SYSCTL_EMULATE_F29P329SM2);
+    SysCtl_emulateDevice(SYSCTL_EMULATE_F29P329SM2Q);
 
     //
     // Initialize device clock, peripheral clocks and interrupts

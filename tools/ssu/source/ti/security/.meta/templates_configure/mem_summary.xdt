@@ -1,0 +1,82 @@
+%%{
+    const Common        = system.getScript('/ti/security/Common.js');
+    let ctx             = Common.currentContext()
+    const raDataCtx     = system.resourceAllocation.data.contexts
+                            .find(a => a["contextName"] == ctx);
+
+    let aprsCurrCtx     = raDataCtx ? raDataCtx["modules"]
+                                        .find(a => (a["moduleName"] == `/ti/security/${ctx}_APR`))
+                                    : undefined
+
+    let aprResources        = aprsCurrCtx ? aprsCurrCtx.moduleStatic.requiredArgs : undefined
+    let result              = aprResources ? JSON.parse(aprResources?.r_aprFullMap) : []
+    let flashSpace          = aprResources ? JSON.parse(aprResources?.r_flashSpace) : []
+
+%%}
+% if(result && result.length){
+**Total Memory Region Count: `result.length`**
+
+%%{
+    result = result.sort((a,b) => a.startAddr - b.startAddr)
+    let periphRegions = result.filter(x => x.type == "Peripheral")
+    if(periphRegions.length){
+%%}
+**Peripheral Allocation**
+Memory Region | Start Address | Size (kB) | Peripherals Included
+--- | --- | --- | ---
+%%{
+        periphRegions.forEach((a) => { 
+%%}
+`a.name` | 0x`a.startAddr.toString(16)` | `(a.endAddr - a.startAddr)/1024` | `a.peripheralList.join(", ")`
+%%{
+        })
+    }
+    let ramRegions = result.filter(x => x.memType == "RAM")
+    let compiledListRam = Common.getSummaryListv2(ramRegions, "RAM")
+    if(compiledListRam.length){
+%%}
+
+**RAM Allocation**
+Memory Region | Start Address | Size (kB) | Type
+--- | --- | --- | ---
+%%{
+        compiledListRam.forEach((a) => {
+            if(a.name == null){
+%%}
+_Unused_ | 0x`a.startAddr.toString(16)` | `(a.endAddr - a.startAddr)/1024` | -
+%%{
+            } else {
+%%}
+`a.name` | 0x`a.startAddr.toString(16)` | `(a.endAddr - a.startAddr)/1024` | `a.type`
+%%{
+            }
+        })
+    }
+
+    let flashRegions = result.filter(x => x.memType == "Flash")
+    let compiledListFlash = Common.getSummaryList(flashRegions, "Flash", flashSpace)
+    if(compiledListFlash.length){
+%%}
+
+**Flash Allocation**
+Memory Region | Start Address | Size (kB) | Type
+--- | --- | --- | --- 
+%%{
+        compiledListFlash.forEach((a) => {
+            if(a.name == null){
+%%}
+_Unused_ | 0x`a.startAddr.toString(16)` | `(a.endAddr - a.startAddr)/1024` | - 
+%%{
+            } else {
+%%}
+`a.name` | 0x`a.startAddr.toString(16)` | `(a.endAddr - a.startAddr)/1024` | `a.type`
+%%{
+            }
+        })
+    }
+%%}
+
+% } else {
+
+**No memory regions on this core**
+% }

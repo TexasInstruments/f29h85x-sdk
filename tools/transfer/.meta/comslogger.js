@@ -18,12 +18,9 @@ let config = [
         hidden: false,
         options: [
             { name: "fsi", displayName: "FSI" },
-            { name: "spi", displayName: "SPI" },
-            { name: "can", displayName: "CAN" },
         ],
         getDisabledOptions: (inst) => {
             return [
-                { name: "can", reason: "Not yet implemented" },
             ]
         },
         default: "fsi"
@@ -41,6 +38,11 @@ let config = [
     },
 ];
 
+
+/* Intro splash on GUI */
+let longDescription = "The Communication Logger module provides a software layer to receive and (optionally) buffer high-speed FSI messages, extract and package all elements of the message contents, and transmit via the UART or USB peripheral. " +
+"Optionally, add the MCU Control Center module for easy visualization of the custom log messages in a graphical interface powered by GUI Composer.";
+
 function moduleInstances(inst)
 {
     let ownedInstances = []
@@ -49,25 +51,50 @@ function moduleInstances(inst)
     {
         let fsiLinkModInst;
         if (transferCommon.isC2000()) {
-            fsiLinkModInst = {
-                name: "comsLinkModule",      
-                displayName: "FSI RX Communication Link",
-                moduleName: "/driverlib/fsirx.js",
-                collapsed: true,
-                args: {
-                    $name : inst.$name + "_FSIRX",
-                },
-                requiredArgs: {
-                    softwareFrameSize: inst.packetLength.toString(),
-                    // enableLoopback: false,
-                    enableTagMatching: false,
-                    enableInterrupt: true,
-                    useInterrupts: ["FSI_INT1"],
-                    enabledINT1Interrupts: ["FSI_RX_EVT_FRAME_DONE"],
-                    registerInterruptLine1: true,
-                    pingTimeout: false,
-                    fsiRxInt1 : {
-                        enableInterrupt: true
+            if(transferCommon.getDeviceName() != "F28004x"){
+                fsiLinkModInst = {
+                    name: "comsLinkModule",      
+                    displayName: "FSI RX Communication Link",
+                    moduleName: "/driverlib/fsirx.js",
+                    collapsed: true,
+                    args: {
+                        $name : inst.$name + "_FSIRX",
+                    },
+                    requiredArgs: {
+                        softwareFrameSize: inst.packetLength.toString(),
+                        // enableLoopback: false,
+                        enableTagMatching: false,
+                        enableInterrupt: true,
+                        useInterrupts: ["FSI_INT1"],
+                        enabledINT1Interrupts: ["FSI_RX_EVT_FRAME_DONE"],
+                        registerInterruptLine1: true,
+                        pingTimeout: false,
+                        fsiRxInt1 : {
+                            enableInterrupt: true
+                        }
+                    }
+                }
+            }
+            else{
+                fsiLinkModInst = {
+                    name: "comsLinkModule",      
+                    displayName: "FSI RX Communication Link",
+                    moduleName: "/driverlib/fsirx.js",
+                    collapsed: true,
+                    args: {
+                        $name : inst.$name + "_FSIRX",
+                    },
+                    requiredArgs: {
+                        softwareFrameSize: inst.packetLength.toString(),
+                        // enableLoopback: false,
+                        enableInterrupt: true,
+                        useInterrupts: ["FSI_INT1"],
+                        enabledINT1Interrupts: ["FSI_RX_EVT_FRAME_DONE"],
+                        registerInterruptLine1: true,
+                        pingTimeout: false,
+                        fsiRxInt1 : {
+                            enableInterrupt: true
+                        }
                     }
                 }
             }
@@ -170,10 +197,11 @@ var comsloggerModule = {
     displayName: "Communication Logger (BETA)",
     maxInstances: 1,
     defaultInstanceName: "myCOMSLogger",
-    description: "Communication Logger",
+    description: "Communication Logger Module",
     config          : config,
     moduleInstances : moduleInstances,	
     modules: modules,
+    longDescription: longDescription,
     templates: {
 		[transferCommon.getTransferPath() + "logger/coms_logger.c.xdt"] : "",
 		[transferCommon.getTransferPath() + "logger/coms_logger.h.xdt"] : "",

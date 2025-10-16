@@ -1,11 +1,12 @@
 /**
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
- * @cliArgs --device "F29H85x" --package "256ZEX" --part "F29H85x_256ZEX" --context "CPU1" --product "MCU_SDK_F29H85x@1.00.00.00"
- * @v2CliArgs --device "F29H850TU" --package "256ZEX" --variant "TMS320F29H850TU9" --context "CPU1" --product "MCU_SDK_F29H85x@1.00.00.00"
- * @versions {"tool":"1.22.0+3877"}
+ * @cliArgs --device "F29H85x" --package "256ZEX" --part "F29H85x_256ZEX" --context "CPU1" --product "MCU_SDK_F29H85x@1.02.02.00"
+ * @v2CliArgs --device "F29H850TU" --package "256ZEX" --variant "TMS320F29H850TU9" --context "CPU1" --product "MCU_SDK_F29H85x@1.02.02.00"
+ * @versions {"tool":"1.25.0+4237"}
  */
 
+    
 const divider15       = system.clockTree["PLL_REFDIV"];
 divider15.divideValue = 1;
 
@@ -18,12 +19,12 @@ mux7.inputSelect = "INTOSC2";
 /**
  * Import the modules used in this configuration.
  */
-const jtag      = scripting.addModule("/driverlib/jtag.js");
-const clock     = scripting.addModule("/kernel/dpl/clock_c29_sdk");
-const FREERTOS  = scripting.addModule("/kernel/freertos_tool/FREERTOS", {}, false);
-const FREERTOS1 = FREERTOS.addInstance();
-clock.rtos                  = "FREERTOS";
-clock.freertos_source.$name = "kernel_dpl_freertos_source0";
+const jtag          = scripting.addModule("/driverlib/jtag.js");
+const clock_c29_sdk = scripting.addModule("/kernel/dpl/clock_c29_sdk");
+const FREERTOS      = scripting.addModule("/kernel/freertos_tool/FREERTOS", {}, false);
+const FREERTOS1     = FREERTOS.addInstance();
+clock_c29_sdk.rtos                  = "FREERTOS";
+clock_c29_sdk.freertos_source.$name = "kernel_dpl_freertos_source0";
 
 FREERTOS1.$name                                        = "myFREERTOS0";
 FREERTOS1.USE_MUTEXES                                  = true;
@@ -34,6 +35,8 @@ FREERTOS1.vTaskDelete                                  = true;
 FREERTOS1.xTimerPendFunctionCall                       = true;
 FREERTOS1.USE_TIMERS                                   = true;
 FREERTOS1.TIMER_TASK_STACK_DEPTH                       = 512;
+FREERTOS1.USE_COUNTING_SEMAPHORES                      = true;
+FREERTOS1.xTaskGetIdleTaskHandle                       = true;
 FREERTOS1.tickTimer.periphClock.pinmuxPeripheralModule = scripting.forceWrite("");
 FREERTOS1.tickTimer.periphClock.$name                  = "driverlib_perClock0";
 

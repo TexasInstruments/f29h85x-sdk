@@ -130,6 +130,8 @@ for (var inst of module.$instances)
         allInts = allInts.concat("UART_INT_EOT");
     }
     idat.enabledInterruptsStr = orSeparatedVars(allInts);
+    if(idat.enabledInterruptsStr == '')
+            idat.enabledInterruptsStr = '0x0U'
 
     //******************************************************************
     // DMA RELATED ITEMS
@@ -194,14 +196,11 @@ void `inst.$name`_init(){
         // FIFO enable
         //
         UART_enableFIFO(`idat['BASE']`);
-            % if (inst.enInterrupt)
-            % {
-        
+
         //
-        // FIFO interrupt levels
+        // FIFO trigger levels
         //
         UART_setFIFOLevel(`idat['BASE']`, `idat.txiflsel`, `idat.rxiflsel`);
-            % }
         % }
         % else
         % {
@@ -240,6 +239,11 @@ void `inst.$name`_init(){
         // Enable loopback mode
         //
         UART_enableLoopback(`idat['BASE']`);
+        % }
+        % else
+        % {
+            
+        UART_disableLoopback(`idat['BASE']`);
         % }
         
         % // NOTE: replace this code with UART_enableModuleNonFIFO when this

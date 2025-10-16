@@ -52,8 +52,7 @@ let config = [
         longDescription : longDescriptionsafetychecker,
         hidden      : false,
         default     : ADCSC_INSTANCE[0].name,
-        options     : ADCSC_INSTANCE,
-        
+        options     : ADCSC_INSTANCE,        
     },
     {
         name            : "safetyCheckTolerance",
@@ -114,7 +113,7 @@ for (var rptrIndex in device_driverlib_peripheral.ADC_SafetyCheckInst) {
                     displayName :  "ADC Instance",
                     description : 'Select the ADC for this safety checker module',
                     default     : device_driverlib_peripheral.ADC_Select[0].name,
-                    options     : device_driverlib_peripheral.ADC_Select,      
+                    options     : device_driverlib_peripheral.ADC_Select,
                 },
                 {
                     name: "safetycheck"+ rptri.toString()+"inputSource",
@@ -738,17 +737,16 @@ function onValidate(inst, validation) {
 var adcscModule = {
     //peripheralName: "ADCSafetyCheckerTile",
     displayName: "ADC SAFETY CHECKER",
-    maxInstances: maxInstances,
+    totalMaxInstances: maxInstances,
     defaultInstanceName: "myADCSAFETYCHECKER",
     description: "ADC Safety Checker Module",
     //longDescription: (Common.getCollateralFindabilityList("ADC")),
     filterHardware : filterHardware,
-    config: config,
+    config: Common.filterConfigsIfInSetupMode(config),
     templates: {
         //boardc : "/driverlib/adc/adcsc.board.c.xdt",
         //boardh : "/driverlib/adc/adcsc.board.h.xdt"
     },
-    
     modules     : modules,
     validate    : onValidate,
 };

@@ -1,0 +1,56 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --device "F29H85x" --package "256ZEX" --part "F29H85x_256ZEX" --context "CPU3" --product "MCU_SDK_F29H85x@1.02.02.00"
+ * @v2CliArgs --device "F29H850TU" --package "256ZEX" --variant "TMS320F29H850TU9" --context "CPU3" --product "MCU_SDK_F29H85x@1.02.02.00"
+ * @versions {"tool":"1.25.0+4237"}
+ */
+
+/**
+ * Import the modules used in this configuration.
+ */
+const cputimer  = scripting.addModule("/driverlib/cputimer.js", {}, false);
+const cputimer1 = cputimer.addInstance();
+const rtdma1    = scripting.addModule("/driverlib/rtdma1.js", {}, false);
+const rtdma11   = rtdma1.addInstance();
+const spi       = scripting.addModule("/driverlib/spi.js", {}, false);
+const spi1      = spi.addInstance();
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+cputimer1.$name                              = "myCPUTIMER0";
+cputimer1.cputimerBase                       = "CPUTIMER1_BASE";
+cputimer1.enableInterrupt                    = true;
+cputimer1.registerInterrupts                 = true;
+cputimer1.timerPeriod                        = 2000000;
+cputimer1.periphClock.$name                  = "driverlib_perClock1";
+cputimer1.periphClock.pinmuxPeripheralModule = scripting.forceWrite("");
+
+rtdma11.$name                = "myRTDMA1Ch0";
+rtdma11.databusWidthConfig   = "DMA_CFG_READ_SIZE_16BIT";
+rtdma11.writeDatasizeConfig  = "DMA_CFG_WRT_SIZE_16BIT";
+rtdma11.burstSize            = 2;
+rtdma11.enableTriggers       = true;
+rtdma11.triggerSource        = "DMA_TRIGGER_SPIATX";
+rtdma11.oneShotConfig        = "DMA_CFG_ONESHOT_ENABLE";
+rtdma11.continuousModeConfig = "DMA_CFG_CONTINUOUS_ENABLE";
+rtdma11.interruptMode        = "DMA_INT_AT_END";
+rtdma11.startChannel         = true;
+rtdma11.srcAddressInputMode  = "VARIABLE";
+rtdma11.srcAddressVariable   = "srcAddr";
+rtdma11.srcBurstStep         = 2;
+rtdma11.srcTransferStep      = 2;
+rtdma11.destAddressInputMode = "VARIABLE";
+rtdma11.destAddressVariable  = "destAddr";
+rtdma11.destBurstStep        = 2;
+rtdma11.destTransferStep     = 2;
+rtdma11.useInterrupts        = true;
+rtdma11.enableInterrupts     = true;
+rtdma11.registerInterrupts   = true;
+
+spi1.$name              = "mySPI0";
+spi1.mode               = "SPI_MODE_CONTROLLER";
+spi1.loopback           = true;
+spi1.txFifo             = "SPI_FIFO_TX2";
+spi1.rxFifo             = "SPI_FIFO_RX2";

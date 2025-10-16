@@ -61,7 +61,7 @@
 //
 // Main
 //
-void main(void)
+int main(void)
 {
     //
     // Initialize device clock and peripherals

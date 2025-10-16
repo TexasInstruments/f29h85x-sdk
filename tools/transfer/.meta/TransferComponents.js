@@ -1,10 +1,8 @@
 let transferCommon;
-if (system.getProducts()[0].name.includes("C2000"))
-{
+if (system.getProducts()[0].name.includes("C2000")) {
     transferCommon = system.getScript("/utilities/transfer/transferCommon.js");
 }
-else
-{
+else {
     transferCommon = system.getScript("/transfer/transferCommon.js");
 }
 
@@ -174,6 +172,56 @@ let templatesDLTLog = [
     },
 ]
 
+let templatesSignalSight = [
+    //
+    // Signal Sight Support
+    //
+    {
+        name: transferCommon.getTransferPath() + "signalsight/signalsight.c.xdt",
+        outputPath: "signalsight/signalsight.c",
+    },
+    {
+        name: transferCommon.getTransferPath() + "signalsight/signalsight.h.xdt",
+        outputPath: "signalsight/signalsight.h",
+    },
+    //
+    // Target side hash table
+    //
+    {
+        name: transferCommon.getTransferPath() + "signalsight/hash/target/signalsight_hash.c.xdt",
+        outputPath: "signalsight/signalsight_hash.c",
+    },
+    {
+        name: transferCommon.getTransferPath() + "signalsight/hash/target/signalsight_hash.h.xdt",
+        outputPath: "signalsight/signalsight_hash.h",
+    },
+    //
+    // GUI side hash table
+    //
+    {
+        name: transferCommon.getTransferPath() + "signalsight/hash/host/signalsight_hash.json.xdt",
+        outputPath: "signalsight/gui/signalsight_hash.json",
+    },
+    //
+    // GUI app
+    //
+    {
+        name: transferCommon.getTransferPath() + "signalsight/index.html.xdt",
+        outputPath: "signalsight/gui/index.html",
+    },
+    {
+        name: transferCommon.getTransferPath() + "signalsight/project.json.xdt",
+        outputPath: "signalsight/gui/project.json",
+    },
+    {
+        name: transferCommon.getTransferPath() + "signalsight/package.json.xdt",
+        outputPath: "signalsight/gui/package.json",
+    },
+        
+]
+
+
+
 let templates = [
     //
     // Transfer OPTs
@@ -214,18 +262,19 @@ if (transferCommon.isC2000())
 	{
 		templates = templates.concat(templatesDLTLog);
 	}
+    templates = templates.concat(templatesSignalSight);
+
 }
 
 let modules = [
     transferCommon.getTransferPath() + "exporter.js",
-    transferCommon.getTransferPath() + "gui.js",
+    transferCommon.getTransferPath() + "gui.js",      
 ]
-
 
 
 if (transferCommon.isC2000())
 {
-    if (!transferCommon.isC29x())
+     if (!transferCommon.isC29x())
     {
         //
         // Hide C29x bridge + comslogger
@@ -234,7 +283,7 @@ if (transferCommon.isC2000())
             modules.push(transferCommon.getTransferPath() + "comslogger.js")
         }
         modules.push(transferCommon.getTransferPath() + "transferbridge.js");
-
+        modules.push(transferCommon.getTransferPath() + "signalsight.js");
     }
 
     if (transferCommon.hasFSISupport()) {
@@ -244,20 +293,23 @@ if (transferCommon.isC2000())
 	{
 		modules.push(transferCommon.getTransferPath() + "dltlog.js");
 	}
+    
 }
 
-var transfer_export = {
+const checkIfInResourceAllocationSetupMode =  transferCommon.isC29x() && transferCommon.isAllocationSetupMode()
+
+var transfer_export = checkIfInResourceAllocationSetupMode ? {} : {
     displayName: "Transfer",
     templates: templates,
     views: views,
     references: references.componentReferences,
     topModules:
-    [
-        {
-            displayName: "MCU Mission Control and Transfer (BETA)",
-            description: "Tranfer data in and out of the device with ease",
-            modules: modules
-        }
-    ]
+        [
+            {
+                displayName: "MCU Control Center and Transfer (BETA)",
+                description: "Tranfer data in and out of the device with ease",
+                modules: modules
+            }
+        ]
 }
 exports = transfer_export

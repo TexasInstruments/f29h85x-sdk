@@ -178,7 +178,6 @@ typedef struct
 //
 //*****************************************************************************
 #ifdef DEBUG
-__attribute__((always_inline))
 static inline bool
 ErrorAggregator_isBaseValid(uint32_t base)
 {

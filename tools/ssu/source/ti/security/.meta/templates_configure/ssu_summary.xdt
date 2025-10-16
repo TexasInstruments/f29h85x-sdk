@@ -1,0 +1,78 @@
+%%{
+    const Common        = system.getScript('/ti/security/Common.js');
+    let ctx             = Common.currentContext()
+    const raDataCtx     = system.resourceAllocation.data.contexts
+                            .find(a => a["contextName"] == ctx);
+
+    let withSystemSecurity  = false
+
+    let aprsCurrCtx     = raDataCtx ? raDataCtx["modules"]
+                                        .find(a => (a["moduleName"] == `/ti/security/${ctx}_APR`))
+                                    : undefined
+
+    let sysSecCurrCtx   = raDataCtx ? raDataCtx["modules"]
+                                        .find(a => (a["moduleName"] == `/ti/security/${ctx}_System_Security`))
+                                    : undefined
+
+    if(sysSecCurrCtx){
+        let sysSecResources = sysSecCurrCtx.moduleStatic.requiredArgs
+        let aprResources    = aprsCurrCtx.moduleStatic.requiredArgs
+
+        let result      = JSON.parse(aprResources.r_aprFullMap)
+        let linkMap     = JSON.parse(sysSecResources.r_linkMap)
+        let aprMap      = JSON.parse(sysSecResources.r_aprMap)
+        let stackMap    = JSON.parse(sysSecResources.r_stackMap)        
+%%}
+%%{
+    result = result.sort((a,b) => b.startAddr - a.startAddr)
+    let codeRegions = result.filter(x => x.type == "Code" && !x.name.endsWith("dataAPR_RO"))
+    if(codeRegions.length){
+%%}
+
+**Code APR - Execution LINK mapping**
+Memory Region | Memory Type | Execution LINK
+--- | --- | --- 
+%%{
+        codeRegions.forEach((a) => { 
+%%}
+`a.name` | `a.memType` | `aprMap[a.name]["exeLink"]`
+%%{
+        })
+    }
+    let dataRegions = result.filter(x => x.type != "Code")
+    if(dataRegions.length){
+%%}
+
+**Data APR - LINK Access mapping**
+Memory Region | RW Access | RO Access | API Access
+--- | --- | --- | ---
+%%{
+        dataRegions.forEach((a) => {
+            let accessList = aprMap[a.name].linkAccess
+            let apiLink = aprMap[a.name].apiLink ?? "-"
+%%}
+`a.name` | `Common.extractAccess(accessList, "RW")` | `Common.extractAccess(accessList, "RD")` | `apiLink`
+%%{
+        })
+    }
+
+    if(Object.keys(linkMap).length){
+%%}
+
+**LINK - STACK - ZONE mapping**
+LINK | STACK | ZONE
+--- | --- | ---
+%%{
+        for(const link in linkMap){
+            let stackName = linkMap[link].stackName ?? "None (Defaults to STACK2)"
+            let zoneName = linkMap[link].stackName ? stackMap[stackName].zoneName : "None (Defaults to ZONE2)"
+%%}
+`link` | `stackName` | `zoneName`
+%%{
+        }
+    }
+%%}
+%   } else {
+
+**System Security is not configured on this core**
+%   }

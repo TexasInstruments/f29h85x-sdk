@@ -1,0 +1,91 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --device "F29H85x" --package "256ZEX" --part "F29H85x_256ZEX" --context "CPU1" --product "MCU_SDK_F29H85x@1.02.02.00"
+ * @v2CliArgs --device "F29H850TU" --package "256ZEX" --variant "TMS320F29H850TU9" --context "CPU1" --product "MCU_SDK_F29H85x@1.02.02.00"
+ * @versions {"tool":"1.25.0+4237"}
+ */
+
+    
+const divider15       = system.clockTree["PLL_REFDIV"];
+divider15.divideValue = 1;
+
+const multiplier1         = system.clockTree["PLL_IMULT"];
+multiplier1.multiplyValue = 40;
+
+const mux7       = system.clockTree["OSCCLKSRCSEL"];
+mux7.inputSelect = "INTOSC2";
+
+/**
+ * Import the modules used in this configuration.
+ */
+const cputimer      = scripting.addModule("/driverlib/cputimer.js", {}, false);
+const cputimer2     = cputimer.addInstance();
+const gpio          = scripting.addModule("/driverlib/gpio.js", {}, false);
+const gpio1         = gpio.addInstance();
+const gpio2         = gpio.addInstance();
+const gpio3         = gpio.addInstance();
+const gpio4         = gpio.addInstance();
+const interrupt     = scripting.addModule("/driverlib/interrupt.js");
+const jtag          = scripting.addModule("/driverlib/jtag.js");
+const uart          = scripting.addModule("/driverlib/uart.js", {}, false);
+const uart1         = uart.addInstance();
+const clock_c29_sdk = scripting.addModule("/kernel/dpl/clock_c29_sdk");
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+
+cputimer2.$name              = "myCPUTIMER0";
+cputimer2.timerPeriod        = 200000000;
+cputimer2.startTimer         = true;
+cputimer2.enableInterrupt    = true;
+cputimer2.registerInterrupts = true;
+cputimer2.periphClock.$name  = "driverlib_perClock1";
+
+gpio1.direction       = "GPIO_DIR_MODE_OUT";
+gpio1.$name           = "CPU1_SOM_LED4";
+gpio1.gpioPin.$assign = "GPIO9";
+
+gpio2.direction       = "GPIO_DIR_MODE_OUT";
+gpio2.$name           = "CPU1_SOM_LED3";
+gpio2.gpioPin.$assign = "GPIO23";
+
+gpio3.$name           = "CPU1_LP_LED4";
+gpio3.direction       = "GPIO_DIR_MODE_OUT";
+gpio3.gpioPin.$assign = "GPIO19";
+
+gpio4.$name           = "CPU1_LP_LED5";
+gpio4.direction       = "GPIO_DIR_MODE_OUT";
+gpio4.gpioPin.$assign = "GPIO62";
+
+interrupt.RTINT_Threshold = 5;
+
+
+uart1.baudSelect               = "115200";
+uart1.fen                      = true;
+uart1.registerInterrupts       = true;
+uart1.$name                    = "SBL_COMA";
+uart1.enabledInterrupts        = ["UART_INT_RX"];
+uart1.rxiflsel                 = "UART_FIFO_RX1_8";
+uart1.uart.uart_txPin.$assign  = "GPIO42";
+uart1.uart.uart_rxPin.$assign  = "GPIO43";
+uart1.txQual.$name             = "myGPIOQUAL0";
+uart1.rxQual.$name             = "myGPIOQUAL1";
+uart1.periphClock.$name        = "driverlib_perClock0";
+uart1.periphConfig.$name       = "driverlib_perConfig0";
+uart1.uartInt.interruptHandler = "SBL_uartNotifyISR";
+uart1.uartInt.$name            = "SBL_COMA_INT";
+
+clock_c29_sdk.dplTimer.periphClock.pinmuxPeripheralModule = scripting.forceWrite("");
+clock_c29_sdk.dplTimer.periphClock.$name                  = "driverlib_perClock2";
+
+/**
+ * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
+ * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
+ * re-solve from scratch.
+ */
+jtag.JTAG.$suggestSolution        = "JTAG";
+jtag.JTAG.tdoPin.$suggestSolution = "GPIO223/TDO";
+jtag.JTAG.tdiPin.$suggestSolution = "GPIO222/TDI";
+uart1.uart.$suggestSolution       = "UARTA";

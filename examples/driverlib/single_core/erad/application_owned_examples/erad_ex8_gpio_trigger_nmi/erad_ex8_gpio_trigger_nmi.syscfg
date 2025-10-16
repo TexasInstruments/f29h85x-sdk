@@ -1,0 +1,57 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --device "F29H85x" --package "256ZEX" --part "F29H85x_256ZEX" --context "CPU1" --product "MCU_SDK_F29H85x@1.02.02.00"
+ * @v2CliArgs --device "F29H850TU" --package "256ZEX" --variant "TMS320F29H850TU9" --context "CPU1" --product "MCU_SDK_F29H85x@1.02.02.00"
+ * @versions {"tool":"1.25.0+4237"}
+ */
+
+    
+const divider15       = system.clockTree["PLL_REFDIV"];
+divider15.divideValue = 1;
+
+const multiplier1         = system.clockTree["PLL_IMULT"];
+multiplier1.multiplyValue = 40;
+
+const mux7       = system.clockTree["OSCCLKSRCSEL"];
+mux7.inputSelect = "INTOSC2";
+
+/**
+ * Import the modules used in this configuration.
+ */
+const erad             = scripting.addModule("/driverlib/erad.js");
+const esm_cpu          = scripting.addModule("/driverlib/esm_cpu.js");
+const esm_cpu1         = esm_cpu.addInstance();
+const gpio             = scripting.addModule("/driverlib/gpio.js", {}, false);
+const gpio1            = gpio.addInstance();
+const inputxbar_input  = scripting.addModule("/driverlib/inputxbar_input.js", {}, false);
+const inputxbar_input1 = inputxbar_input.addInstance();
+const jtag             = scripting.addModule("/driverlib/jtag.js");
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+erad.periphClock.$name                   = "driverlib_perClock0";
+erad.erad_counter.create(1);
+erad.erad_counter[0].$name               = "myERAD_COUNTER0";
+erad.erad_counter[0].externalClockSource = "ERAD_EVENT_INPUTXBAR1";
+erad.erad_counter[0].counterMode         = true;
+erad.erad_counter[0].clockSource         = "1";
+erad.erad_counter[0].NMI                 = true;
+erad.erad_counter[0].counterPeriod       = 0x1;
+
+esm_cpu.registerNMI = true;
+
+esm_cpu1.$name       = "myErrorSignaling0";
+esm_cpu1.enableNMI   = true;
+esm_cpu1.eventSource = "ESM_EVENT_CPU1_ERAD_NMI";
+
+gpio1.$name           = "myGPIO0";
+gpio1.padConfig       = "PULLUP_INVERT";
+gpio1.gpioPin.$assign = "GPIO0";
+
+inputxbar_input1.$name         = "myINPUTXBARINPUT0";
+inputxbar_input1.inputxbarGpio = "GPIO0";
+inputxbar_input1.inputxbarLock = true;
+
+

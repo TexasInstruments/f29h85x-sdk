@@ -7,8 +7,8 @@ let sd_clk_config = system.getScript("/driverlib/sdfm/modules/sd_clockConfigurat
 let sd_validate = system.getScript("/driverlib/sdfm/modules/sd_validation.js");
 
 
-let device_driverlib_peripheral = 
-    system.getScript("/driverlib/device_driverlib_peripherals/" + 
+let device_driverlib_peripheral =
+    system.getScript("/driverlib/device_driverlib_peripherals/" +
         Common.getDeviceName().toLowerCase() + "_sdfm.js");
 
 /* Intro splash on GUI */
@@ -22,7 +22,7 @@ for(var channel = 1; channel <= 4; channel++)
 {
 config = config.concat
 		(
-		   [ 
+		   [
 		     {
 				name: "Use_FilterChannel_" + channel.toString(),
 				displayName : "Use Filter Channel " + channel.toString(),
@@ -47,13 +47,13 @@ if (sd_device_info.peripheralType == "Type2")
 			collapsed	: false,
 			longDescription: "",
 			config: sd_clk_config.ClockConfigs,
-		},	
+		},
 	  ]
 	)
 }
 
-let submodulesComponents = 
-[  
+let submodulesComponents =
+[
 	{
         moduleName: "/driverlib/sdfm/modules/sd_FilterConfiguration.js",
 		name: "FILTER_CONFIG",
@@ -82,7 +82,7 @@ for (var submoduleComponent of submodulesComponents)
 			collapsed : false,
             config: submodule.config,
         },
-      ] 
+      ]
 	)
 }
 
@@ -146,21 +146,21 @@ function onChangeUseFilterChannel(inst, ui)
 	for (var channel = 1; channel <= 4; channel++)
 	{
 		var status = inst["Use_FilterChannel_" + channel.toString()];
-		
+
 		if(sd_device_info.peripheralType == "Type2")
 		{
 		ui["Ch" + channel.toString() + "_SDCLKSEL"].hidden = !status;
 		}
-		
+
 		ui["Ch" + channel.toString() + "_Mode"].hidden = !status;
-		
+
 		if (sd_device_info.peripheralType == "Type1" || sd_device_info.peripheralType == "Type2")
 		{
 			ui["Ch" + channel.toString() + "_ComparatorEnable"].hidden = !status;
 		}
-		
+
 		ui["Ch" + channel.toString() + "_DataFilterEnable"].hidden = !status;
-			
+
 		ui["Ch" + channel.toString() + "_SD_modulatorFrequency"].hidden = !status;
 		ui["Ch" + channel.toString() + "_Vclipping"].hidden = !status;
 		ui["Ch" + channel.toString() + "_DC_Input"].hidden = !status;
@@ -203,12 +203,12 @@ config.push(
 var sdModule = {
     peripheralName: "SD",
     displayName: "SDFM",
-    maxInstances: Common.peripheralCount("SD"),
+    totalMaxInstances: Common.peripheralCount("SD"),
     defaultInstanceName: "mySDFM",
     description: "Sigma Delta Peripheral",
     //longDescription: (Common.getCollateralFindabilityList("SDFM")),
     filterHardware : filterHardware,
-    config: config,
+    config: Common.filterConfigsIfInSetupMode(config),
     moduleInstances: (inst) => {
 		var regInterrupts = []
 
@@ -226,7 +226,7 @@ var sdModule = {
 				if (selInt == "INT_SD")
 				{
 					regInterrupts.push({
-			            name: "sdInt",      
+			            name: "sdInt",
 			            displayName: "SD Interrupt",
 			            moduleName: "/driverlib/interrupt.js",
 			            collapsed: true,
@@ -242,7 +242,7 @@ var sdModule = {
 				if (selInt == "INT_SDFM")
 				{
 					regInterrupts.push({
-			            name: "sdfmInt",      
+			            name: "sdfmInt",
 			            displayName: "SDFM Interrupt",
 			            moduleName: "/driverlib/interrupt.js",
 			            collapsed: true,
@@ -259,7 +259,7 @@ var sdModule = {
 				{
 					var drNumber = selInt.replace("INT_SDFM_DR", "")
 					regInterrupts.push({
-			            name: "sdfmIntDr" + drNumber,      
+			            name: "sdfmIntDr" + drNumber,
 			            displayName: "SDFM Interrupt Data Ready " + drNumber,
 			            moduleName: "/driverlib/interrupt.js",
 			            collapsed: true,
@@ -273,7 +273,7 @@ var sdModule = {
 			        })
 				}
 			}
-		
+
 		}
 		regInterrupts = regInterrupts.concat([
             {
@@ -284,7 +284,7 @@ var sdModule = {
                 collapsed: false,
                 requiredArgs:{
                     pinmuxPeripheralModule : "sd",
-                    peripheralInst: inst.$name
+                    peripheralInst: ""
                 }
             },
             {
@@ -294,9 +294,11 @@ var sdModule = {
                 moduleName: "/driverlib/perConfig.js",
                 collapsed: false,
                 requiredArgs:{
+                    cpuSel: inst.$assignedContext ?? system.context,
                     pinmuxPeripheralModule : "sd",
-                    peripheralInst: inst.$name
-                }
+                    peripheralInst: ""
+                },
+				shouldBeAllocatedAsResource: true,
             },
         ])
 		return regInterrupts;
@@ -305,6 +307,7 @@ var sdModule = {
         boardc : "/driverlib/sdfm/sdfm.board.c.xdt",
         boardh : "/driverlib/sdfm/sdfm.board.h.xdt"
     },
+	shouldBeAllocatedAsResource: true,
     pinmuxRequirements    : Pinmux.sdPinmuxRequirements,
 	validate  : sd_validate.onValidate
 };

@@ -11,7 +11,7 @@
  * HSM Client
  */
 
-/* memory assigned for each R5x <-> HSM channel */
+/* memory assigned for each C29 <-> HSM channel */
 uint8_t gQueue_HsmToSecureHost[SIPC_NUM_SEC_HOST_CORES][SIPC_QUEUE_LENGTH*SIPC_MSG_SIZE] __attribute__((aligned(8),section(".bss.sipc_hsm_queue_mem")));
 uint8_t gQueue_SecureHostToHsm[SIPC_NUM_SEC_HOST_CORES][SIPC_QUEUE_LENGTH*SIPC_MSG_SIZE] __attribute__((aligned(8),section(".bss.sipc_secure_host_queue_mem")));
 HsmClient_t gHSMClient ;
@@ -46,7 +46,7 @@ void HsmClient_config(void)
     /* This is HSM -> C29 queue */
     sipcParams.tx_SipcQueues[CORE_INDEX_HSM] = (uintptr_t)gQueue_SecureHostToHsm[1] ;
 
-    /* This will be R5 -> HSM queue */
+    /* This will be C29 -> HSM queue */
     sipcParams.rx_SipcQueues[CORE_INDEX_HSM] = (uintptr_t)gQueue_HsmToSecureHost[1] ;
     sipcParams.secHostCoreId[CORE_INDEX_SEC_MASTER_1] = CORE_ID_`hsm_soc.getSelfCoreId().toUpperCase()`;
     %}

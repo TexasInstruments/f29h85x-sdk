@@ -34,6 +34,7 @@
 % let Common   = system.getScript("/driverlib/Common.js");
 % let Common_Sec = system.getScript('/ti/security/Common.js');
 % let sysSec = Common_Sec.modStatic('/ti/security/System_Security');
+% var pmicconfig = system.modules['/driverlib/pmicconfig.js'];
 #include "board.h"
 % if(sysSec){
 #include "ssu_config.h"
@@ -72,7 +73,6 @@ void Board_init()
 	PinMux_init();
 	PERCONFIG_init();
 % }
-	GPIO_init();
 %
 % if (!Common.onlyPinmux())
 % {
@@ -82,7 +82,7 @@ void Board_init()
 	// Ordered list of peripherals to initialize first, any peripherals outside will be added after in alphabetical order
 	var prioritizedPeripherals = [
         { name: "sysctl",  peripheralName: "SYSCTL" },
-        { name: "inputxbar_input", peripheralName: "INPUTXBAR" },
+        // { name: "inputxbar_input", peripheralName: "INPUTXBAR" },
         { name: "sync", peripheralName: "SYNC" },
         { name: "asysctl", peripheralName: "ASYSCTL" },
         { name: "memcfg", peripheralName: "MEMCFG" },
@@ -92,7 +92,7 @@ void Board_init()
 	// Ordered list for prioritize last
 	var lastPrioritized = ["INTERRUPT"]
 	// Skip in list
-	var skipPeripherals = ["ANALOG", "JTAG", "XBARFLAGS", "ESM", "PERCONFIG", "PERCLOCK", "RTDMA1_MPU", "RTDMA2_MPU", "GPIO", "FSI"]
+	var skipPeripherals = ["ANALOG", "JTAG", "XBARFLAGS", "ESM", "PERCONFIG", "PERCLOCK", "INPUTXBAR", "RTDMA1_MPU", "RTDMA2_MPU", "RTDMA1", "RTDMA2", "CMPSS", "GPIO", "AIO", "FSI"]
 	var skipPeripheralsInit = ["ESMCPU", "ESMSYSTEM"]
 %%}
 % for(var currentPer in prioritizedPeripherals){
@@ -101,6 +101,14 @@ void Board_init()
 	`mod.peripheralName.replace("-","_")`_init();
 	% }
 % }
+% if (Common.isContextCPU1()) {
+	INPUTXBAR_init();
+% }
+	AIO_init();
+	GPIO_init();
+	CMPSS_init();
+	RTDMA1_init();
+	RTDMA2_init();
 %
 %	var peripheralsCodeGenerated = []
 %	for (let i = 0; i < keys.length; i++) {
@@ -158,6 +166,9 @@ void Board_init()
 % if(system.modules['/ti/security/System_Security']) {
 	SSU_init();
 % }
+% if(pmicconfig) {
+    PMIC_init();
+% }
 }
 
 % if (Common.isContextCPU1()) {
@@ -175,6 +186,9 @@ void PinMux_init()
 %   let perconfigContent = system.getTemplate("/driverlib/perConfig/perConfig.board.c.xdt");
 `perconfigContent("")`
 
+%   let inputxbarContent = system.getTemplate("/driverlib/inputxbar/inputxbar_input.board.c.xdt");
+`inputxbarContent("")`
+
 %   let rtdma1MpuContent = system.getTemplate("/driverlib/rtdma1_mpu/rtdma1_mpu.board.c.xdt");
 `rtdma1MpuContent("")`
 
@@ -182,10 +196,21 @@ void PinMux_init()
 `rtdma2MpuContent("")`
 
 % }
+%   let cmpssContent = system.getTemplate("/driverlib/cmpss/cmpss.board.c.xdt");
+`cmpssContent("")`
 
+%   let rtdma1Content = system.getTemplate("/driverlib/rtdma1/rtdma1.board.c.xdt");
+`rtdma1Content("")`
+
+%   let rtdma2Content = system.getTemplate("/driverlib/rtdma2/rtdma2.board.c.xdt");
+`rtdma2Content("")`
+%
 %   let gpioContent = system.getTemplate("/driverlib/gpio/gpio.board.c.xdt");
 `gpioContent("")`
-
+%
+%   let aioContent = system.getTemplate("/driverlib/aio/aio.board.c.xdt");
+`aioContent("")`
+%
 % if (!Common.onlyPinmux())
 % {
 %	let keys = Object.keys(system.modules).sort();

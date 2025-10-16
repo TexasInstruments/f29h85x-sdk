@@ -1,3 +1,63 @@
+/*
+ * FreeRTOS Kernel <DEVELOPMENT BRANCH>
+ * Copyright (C) 2021 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
+ *
+ * SPDX-License-Identifier: MIT
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of
+ * this software and associated documentation files (the "Software"), to deal in
+ * the Software without restriction, including without limitation the rights to
+ * use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+ * the Software, and to permit persons to whom the Software is furnished to do so,
+ * subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+ * FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+ * COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+ * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+ * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ *
+ * https://www.FreeRTOS.org
+ * https://github.com/FreeRTOS
+ *
+ */
+
+//	Copyright: Copyright (C) Texas Instruments Incorporated
+//	All rights reserved not granted herein.
+//
+//  Redistribution and use in source and binary forms, with or without 
+//  modification, are permitted provided that the following conditions 
+//  are met:
+//
+//  Redistributions of source code must retain the above copyright 
+//  notice, this list of conditions and the following disclaimer.
+//
+//  Redistributions in binary form must reproduce the above copyright
+//  notice, this list of conditions and the following disclaimer in the 
+//  documentation and/or other materials provided with the   
+//  distribution.
+//
+//  Neither the name of Texas Instruments Incorporated nor the names of
+//  its contributors may be used to endorse or promote products derived
+//  from this software without specific prior written permission.
+//
+//  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS 
+//  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT 
+//  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+//  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT 
+//  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, 
+//  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT 
+//  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+//  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+//  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT 
+//  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE 
+//  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+//
+
 //-------------------------------------------------------------------------------------------------
 // Scheduler includes.
 //-------------------------------------------------------------------------------------------------
@@ -16,14 +76,20 @@
 //-------------------------------------------------------------------------------------------------
 
 // Constants required for hardware setup.
-#define portINITIAL_CRITICAL_NESTING  ( ( uint16_t ) 10 )
-#define portFLAGS_INT_ENABLED         ( ( StackType_t ) 0x010000 )  //DSTS LP INT ENABLE 
+#define portINITIAL_CRITICAL_NESTING    ( ( uint16_t ) 10 )
+#define portFLAGS_INT_ENABLED           ( ( StackType_t ) 0x010000 )  // DSTS LP INT ENABLE 
 
 // Register descriptions of C29 Architecture
-#define A_REGISTERS 16 //Address pointers
-#define D_REGISTERS 16 //Fixed point registers
-#define M_REGISTERS 32 //Floating point registers
+#define A_REGISTERS             16  // Addressing registers
+#define D_REGISTERS             16  // Fixed point registers
+#define M_REGISTERS             32  // Floating point registers
 #define A4_REGISTER_POSITION    4U
+
+//
+// DO NOT MAKE as pdFALSE, the C29 compiler currently uses some FPU registers even when FPU
+// operations are not done, hence we should save/restore FPU always
+//
+#define TASK_HAS_FPU_CONTEXT_ON_TASK_START  pdTRUE
 
 void vPortSetupTimerInterrupt( void );
 void vPortSetupSWInterrupt( void );
@@ -36,13 +102,15 @@ void vPortSetupSWInterrupt( void );
 // ulCriticalNesting will get set to zero when the scheduler starts, but must
 // not be initialised to zero as this will cause problems during the startup
 // sequence.
+//
 // ulCriticalNesting should be 32 bit value to keep stack alignment unchanged.
 volatile uint32_t ulCriticalNesting = portINITIAL_CRITICAL_NESTING;
-volatile uint16_t bYield = 0;
-volatile uint16_t bPreemptive = 0;
 
-// Saved as part of the task context, always ON.
-uint32_t ulTaskHasFPUContext = pdTRUE;
+// 
+// Saved as part of the task context. Value set here has no effect.
+// Value set in pxPortInitialiseStack is the initial value when a task starts
+// 
+uint32_t ulTaskHasFPUContext = TASK_HAS_FPU_CONTEXT_ON_TASK_START;
 
 //-------------------------------------------------------------------------------------------------
 // Initialise the stack of a task to look exactly as if
@@ -52,20 +120,26 @@ StackType_t *pxPortInitialiseStack( StackType_t *pxTopOfStack, TaskFunction_t px
 {
     uint16_t i;
     uint16_t base = 0;
-    pxTopOfStack[base] = (uint32_t)vPortEndScheduler; base+=1;  // Alignment
-    pxTopOfStack[base] = 0x07F90001; base+=1;  // Alignment , DSTS if RETI
-    pxTopOfStack[base]  = 0xABABABAB; base+=1; // A14
+
+    pxTopOfStack[base] = (uint32_t)vPortEndScheduler; 
+    base+=1;    // Alignment
+    pxTopOfStack[base] = 0x07F90001; 
+    base+=1;    // Alignment , DSTS if RETI
+    pxTopOfStack[base]  = 0xABABABAB; 
+    base+=1 ;   // A14
     pxTopOfStack[base] = ((uint32_t)pxCode) & 0xFFFFFFFEU;
-    base+=1;      //RPC or PC (first task) after return
-    pxTopOfStack[base]  = 0x07F90001; base+=1; // DSTS
-    pxTopOfStack[base]  = 0x00020101; base+=1; // ESTS
+    base+=1;    //RPC or PC (first task) after return
+    pxTopOfStack[base]  = 0x07F90001; 
+    base+=1;    // DSTS
+    pxTopOfStack[base]  = 0x00020101; 
+    base+=1;    // ESTS
 
     // Fill the rest of the registers with dummy values.
     for(i = 0; i <= (A_REGISTERS + D_REGISTERS + M_REGISTERS -2 -1); i++)
     {
         uint32_t value  = 0xDEADDEAD;
 
-        /* Function parameters are passed in A4. */
+        // Function parameters are passed in A4.
         if(i == A4_REGISTER_POSITION)
         {
             value = (uint32_t)pvParameters;
@@ -74,9 +148,10 @@ StackType_t *pxPortInitialiseStack( StackType_t *pxTopOfStack, TaskFunction_t px
     }
     base += i ;
 
-    // Always saving FPU registers
-    pxTopOfStack[base] = pdTRUE; base+=1;  //FPU context
-    base+=1; // Alignment
+    // Save (or) Don't save FPU registers when a task starts
+    pxTopOfStack[base] = TASK_HAS_FPU_CONTEXT_ON_TASK_START; 
+    base+=1;    // FPU context
+    base+=1;    // Alignment
 
     // Return a pointer to the top of the stack we have generated so this can
     // be stored in the task control block for the task.
@@ -84,95 +159,61 @@ StackType_t *pxPortInitialiseStack( StackType_t *pxTopOfStack, TaskFunction_t px
 }
 
 //-------------------------------------------------------------------------------------------------
-void vPortEndScheduler( void )
-{
-    // It is unlikely that the TMS320 port will get stopped.
-    // If required simply disable the tick interrupt here.
-}
-
-//-------------------------------------------------------------------------------------------------
 // See header file for description.
 //-------------------------------------------------------------------------------------------------
 BaseType_t xPortStartScheduler(void)
 {
-    vPortSetupTimerInterrupt();
+    // Yield interrupt
     vPortSetupSWInterrupt();
+    // Tick timer interrupt
+    vPortSetupTimerInterrupt();
 
     ulCriticalNesting = 0;
-
-#if(configUSE_PREEMPTION == 1)
-    bPreemptive = 1;
-#else
-    bPreemptive = 0;
-#endif
 
     portENABLE_INTERRUPTS();
     portRESTORE_FIRST_CONTEXT();
 
-    // Should not get here!
+    // This line should not be reached
     return pdFAIL;
 }
 
 //-------------------------------------------------------------------------------------------------
-// configCPUTimer - This function initializes the selected timer to the
-// period specified by the "freq" and "period" variables. The "freq" is
-// CPU frequency in Hz and the period in uSeconds. The timer is held in
-// the stopped state after configuration.
-//
-
-void
-configCPUTimer(uint32_t cpuTimer, float freq, float period)
+void vPortEndScheduler( void )
 {
-    uint32_t temp;
-
-    //
-    // Initialize timer period:
-    //
-    temp = (uint32_t)((freq / 1000000) * period);
-    CPUTimer_setPeriod(cpuTimer, temp);
-
-    //
-    // Set pre-scale counter to divide by 1 (SYSCLKOUT):
-    //
-    CPUTimer_setPreScaler(cpuTimer, 0);
-
-    //
-    // Initializes timer control register. The timer is stopped, reloaded,
-    // free run disabled, and interrupt enabled.
-    // Additionally, the free and soft bits are set
-    //
-    CPUTimer_stopTimer(cpuTimer);
-    CPUTimer_reloadTimerCounter(cpuTimer);
-    CPUTimer_setEmulationMode(cpuTimer,
-                              CPUTIMER_EMULATIONMODE_STOPAFTERNEXTDECREMENT);
-    CPUTimer_enableInterrupt(cpuTimer);
+    // It is unlikely that the C29x port will get stopped.
+    // If required simply disable the tick interrupt here.
 }
-
 
 //-------------------------------------------------------------------------------------------------
 void vPortSetupTimerInterrupt( void )
 {
-    // Start the timer than activate timer interrupt to switch into first task.
-    Interrupt_register(INT_TIMER2, &portTICK_ISR);
+    CPUTimer_stopTimer(PORT_TICK_TIMER_BASE);
+    CPUTimer_setPeriod(PORT_TICK_TIMER_BASE, ((uint32_t)((configCPU_CLOCK_HZ / configTICK_RATE_HZ))));
+    CPUTimer_setPreScaler(PORT_TICK_TIMER_BASE, 0U);
+    CPUTimer_reloadTimerCounter(PORT_TICK_TIMER_BASE);
+    CPUTimer_setEmulationMode(PORT_TICK_TIMER_BASE, CPUTIMER_EMULATIONMODE_STOPAFTERNEXTDECREMENT);
+    CPUTimer_clearOverflowFlag(PORT_TICK_TIMER_BASE);
+    CPUTimer_enableInterrupt(PORT_TICK_TIMER_BASE);
 
-    CPUTimer_setPeriod(CPUTIMER2_BASE, 0xFFFFFFFF);
-    CPUTimer_setPreScaler(CPUTIMER2_BASE, 0);
-    CPUTimer_stopTimer(CPUTIMER2_BASE);
-    CPUTimer_reloadTimerCounter(CPUTIMER2_BASE);
+    Interrupt_disable(PORT_TICK_TIMER_INT);
+    Interrupt_clearFlag(PORT_TICK_TIMER_INT);
+    Interrupt_clearOverflowFlag(PORT_TICK_TIMER_INT);
+    Interrupt_register(PORT_TICK_TIMER_INT, &portTICK_ISR);
+    Interrupt_setPriority(PORT_TICK_TIMER_INT, PORT_TICK_TIMER_INT_PRI);
+    Interrupt_enable(PORT_TICK_TIMER_INT);
 
-    configCPUTimer(CPUTIMER2_BASE, configCPU_CLOCK_HZ, 1000000 / configTICK_RATE_HZ);
-
-    CPUTimer_enableInterrupt(CPUTIMER2_BASE);
-
-    Interrupt_enable(INT_TIMER2);
-    CPUTimer_startTimer(CPUTIMER2_BASE);
+    CPUTimer_startTimer(PORT_TICK_TIMER_BASE);
 }
 
 //-------------------------------------------------------------------------------------------------
 void vPortSetupSWInterrupt( void )
 {
-    Interrupt_enable(INT_SW1);
-    Interrupt_register(INT_SW1, &vPortYield);
+    Interrupt_disable(PORT_TASK_SWITCH_INT);
+    Interrupt_clearFlag(PORT_TASK_SWITCH_INT);
+    Interrupt_clearOverflowFlag(PORT_TASK_SWITCH_INT);
+    Interrupt_register(PORT_TASK_SWITCH_INT, &vPortYield);
+    Interrupt_setPriority(PORT_TASK_SWITCH_INT, PORT_TASK_SWITCH_INT_PRI);
+    Interrupt_enable(PORT_TASK_SWITCH_INT);
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -191,4 +232,3 @@ void vPortExitCritical( void )
         portENABLE_INTERRUPTS();
     }
 }
-

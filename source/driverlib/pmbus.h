@@ -295,7 +295,6 @@ extern const uint16_t PMBus_crc8Table[256U];
 //
 //*****************************************************************************
 #ifdef DEBUG
-__attribute__((always_inline))
 static inline bool
 PMBus_isBaseValid(uint32_t base)
 {
@@ -317,7 +316,6 @@ PMBus_isBaseValid(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void PMBus_disableModule(uint32_t base)
 {
     //
@@ -339,7 +337,6 @@ static inline void PMBus_disableModule(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void PMBus_enableModule(uint32_t base)
 {
     //
@@ -378,7 +375,6 @@ static inline void PMBus_enableModule(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void PMBus_enableInterrupt(uint32_t base, uint32_t intFlags)
 {
     //
@@ -410,7 +406,6 @@ static inline void PMBus_enableInterrupt(uint32_t base, uint32_t intFlags)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void PMBus_disableInterrupt(uint32_t base, uint32_t intFlags)
 {
     //
@@ -441,7 +436,6 @@ static inline void PMBus_disableInterrupt(uint32_t base, uint32_t intFlags)
 //! \b false.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline bool PMBus_isBusBusy(uint32_t status)
 {
     return(((status & PMBUS_PMBSTS_BUS_FREE) == 0U) ? true : false);
@@ -465,7 +459,6 @@ static inline bool PMBus_isBusBusy(uint32_t status)
 //! \b false.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline bool PMBus_isPECValid(uint32_t status)
 {
     return(((status & PMBUS_PMBSTS_PEC_VALID) != 0U) ? true : false);
@@ -482,7 +475,6 @@ static inline bool PMBus_isPECValid(uint32_t status)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void PMBus_enableI2CMode(uint32_t base)
 {
     //
@@ -524,7 +516,6 @@ static inline void PMBus_enableI2CMode(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void PMBus_disableI2CMode(uint32_t base)
 {
     //
@@ -563,7 +554,6 @@ static inline void PMBus_disableI2CMode(uint32_t base)
 //! \return Contents of the status register.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline uint32_t PMBus_getStatus(uint32_t base)
 {
     //
@@ -583,7 +573,6 @@ static inline uint32_t PMBus_getStatus(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void PMBus_ackTransaction(uint32_t base)
 {
     //
@@ -606,7 +595,6 @@ static inline void PMBus_ackTransaction(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void PMBus_nackTransaction(uint32_t base)
 {
     //
@@ -636,7 +624,6 @@ static inline void PMBus_nackTransaction(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void PMBus_assertAlertLine(uint32_t base)
 {
     //
@@ -659,7 +646,6 @@ static inline void PMBus_assertAlertLine(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void PMBus_deassertAlertLine(uint32_t base)
 {
     //
@@ -719,7 +705,6 @@ static inline void PMBus_deassertAlertLine(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void PMBus_configController(uint32_t base, uint16_t targetAddress,
                                uint16_t byteCount, uint32_t configWord)
 {
@@ -762,7 +747,6 @@ static inline void PMBus_configController(uint32_t base, uint16_t targetAddress,
 //! \return Address of the PMBus device (in slave mode).
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline uint16_t PMBus_getOwnAddress(uint32_t base)
 {
     //
@@ -785,7 +769,6 @@ static inline uint16_t PMBus_getOwnAddress(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void PMBus_setOwnAddress(uint32_t base, uint16_t Ownaddress)
 {
     //
@@ -813,7 +796,6 @@ static inline void PMBus_setOwnAddress(uint32_t base, uint16_t Ownaddress)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void PMBus_setTargetAddress(uint32_t base, uint16_t targetAddress)
 {
     //
@@ -843,7 +825,6 @@ static inline void PMBus_setTargetAddress(uint32_t base, uint16_t targetAddress)
 //! in target mode, was addressed for a read or write operation
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline PMBus_accessType PMBus_getCurrentAccessType(uint32_t base)
 {
     //
@@ -864,7 +845,6 @@ static inline PMBus_accessType PMBus_getCurrentAccessType(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void PMBus_setCtrlIntEdge(uint32_t base, PMBus_intEdge intEdge)
 {
     //
@@ -899,7 +879,6 @@ static inline void PMBus_setCtrlIntEdge(uint32_t base, PMBus_intEdge intEdge)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline
 void PMBus_setClkLowTimeoutIntEdge(uint32_t base, PMBus_intEdge intEdge)
 {
@@ -935,7 +914,6 @@ void PMBus_setClkLowTimeoutIntEdge(uint32_t base, PMBus_intEdge intEdge)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline
 void PMBus_enableZeroHoldTime(uint32_t base)
 {
@@ -953,7 +931,6 @@ void PMBus_enableZeroHoldTime(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline
 void PMBus_disableZeroHoldTime(uint32_t base)
 {

@@ -40,8 +40,11 @@ extern "C"
 {
 #endif
 
-
+#if defined (SOC_F29H85X)
 #include <drivers/soc/f29h85x/soc.h>
+#elif defined (SOC_F29P32X)
+#include <drivers/soc/f29p32x/soc.h>
+#endif
 
 #ifdef __cplusplus
 }

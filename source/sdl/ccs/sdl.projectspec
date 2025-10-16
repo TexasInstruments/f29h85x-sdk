@@ -1,0 +1,36 @@
+<projectSpec>
+  <project
+        name="f29h85x_sdl_lib"
+        device="F29H850TU9"
+        cgtVersion="2.0.0"
+        toolChain="TICLANG"
+        launchWizard="False"
+        outputType="staticLibrary"
+  >
+    <configuration
+        name="Debug"
+        compilerBuildOptions="-O1 -g -DDEBUG -I${DIAG_LIBRARY_ROOT}"
+        archiverBuildOptions="${DIAG_LIBRARY_ROOT}/ccs/sdl_debug.lib"
+    />
+    <configuration
+        name="Release"
+        compilerBuildOptions="-O2 -g -I${DIAG_LIBRARY_ROOT}"
+        archiverBuildOptions="${DIAG_LIBRARY_ROOT}/ccs/sdl_release.lib"
+    />
+
+    <pathVariable name="DIAG_LIBRARY_ROOT" path="./../" scope="project" />
+
+    <file action="link"  path="${DIAG_LIBRARY_ROOT}/include" targetDirectory="." />
+
+    <file action="link"  path="${DIAG_LIBRARY_ROOT}/dcc" targetDirectory="." />
+    <file action="link"  path="${DIAG_LIBRARY_ROOT}/err_aggr" targetDirectory="." />
+    <file action="link"  path="${DIAG_LIBRARY_ROOT}/esm" targetDirectory="." />
+    <file action="link"  path="${DIAG_LIBRARY_ROOT}/lcm" targetDirectory="." />
+    <file action="link"  path="${DIAG_LIBRARY_ROOT}/sic" targetDirectory="." />
+    <file action="link"  path="${DIAG_LIBRARY_ROOT}/sysctl" targetDirectory="." />
+    <file action="link"  path="${DIAG_LIBRARY_ROOT}/memss" targetDirectory="." />
+    <file action="link"  path="${DIAG_LIBRARY_ROOT}/stack" targetDirectory="." />
+    <file action="link"  path="${DIAG_LIBRARY_ROOT}/pipe" targetDirectory="." />
+    
+  </project>
+</projectSpec>

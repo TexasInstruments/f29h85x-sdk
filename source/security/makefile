@@ -16,7 +16,13 @@ FILES := \
 	hsmclient.c 			\
 	sipc_notify_cfg.c		\
 	sipc_notify_src.c 		\
-	soc.c
+	soc.c					\
+	dthe_aes.c 				\
+	dma.c 					\
+	dthe.c 					\
+	dthe_sha.c				\
+	dthe_sm3.c
+
 
 LIBDIR 	:= ccs
 LIBNAME := security_drivers.lib
@@ -29,7 +35,9 @@ vpath %.c drivers/hsmclient/soc/f29h85x								\
 		  drivers/hsmclient/utils 									\
 		  drivers/hsmclient drivers/secure_ipc_notify/soc/f29h85x 	\
 		  drivers/secure_ipc_notify 								\
-		  drivers/soc/f29h85x
+		  drivers/soc/f29h85x  										\
+		  drivers/crypto/dthe										\
+
 vpath %.lib $(LIBDIR)
 
 $(OBJDIR)%.o %.o: %.c

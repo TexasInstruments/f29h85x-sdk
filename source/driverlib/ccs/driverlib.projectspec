@@ -2,51 +2,17 @@
   <project
         name="f29h85x_driverlib"
         device="F29H850TU9"
-        cgtVersion="0.1.0"
+        cgtVersion="2.0.0"
         toolChain="TICLANG"
         launchWizard="False"
         outputType="staticLibrary"
-        location="."
         >
-    <configuration name="Debug"   compilerBuildOptions="-O1 -g -DDEBUG" archiverBuildOptions="driverlib.lib" />
-    <configuration name="Release" compilerBuildOptions="-O2 -g"         archiverBuildOptions="driverlib.lib" />
+    <configuration name="Debug"   compilerBuildOptions="-O1 -g -DDEBUG" archiverBuildOptions="${DRIVERLIB_ROOT}/ccs/driverlib.lib" />
+    <configuration name="Release" compilerBuildOptions="-O2 -g"         archiverBuildOptions="${DRIVERLIB_ROOT}/ccs/driverlib.lib" />
 
+    <pathVariable name="DRIVERLIB_ROOT" path="./../" scope="project" />
 
-    <file action="link"  path="../adc.c"           targetDirectory="." />
-    <file action="link"  path="../asysctl.c"       targetDirectory="." />
-    <file action="link"  path="../bootrom.c"       targetDirectory="." />
-    <file action="link"  path="../cmpss.c"         targetDirectory="." />
-    <file action="link"  path="../cputimer.c"      targetDirectory="." />
-    <file action="link"  path="../dac.c"           targetDirectory="." />
-    <file action="link"  path="../dcc.c"           targetDirectory="." />
-    <file action="link"  path="../dlt.c"           targetDirectory="." />
-    <file action="link"  path="../ecap.c"          targetDirectory="." />
-    <file action="link"  path="../epg.c"           targetDirectory="." />
-    <file action="link"  path="../epwm.c"          targetDirectory="." />
-    <file action="link"  path="../eqep.c"          targetDirectory="." />
-    <file action="link"  path="../erad.c"          targetDirectory="." />
-    <file action="link"  path="../escss.c"         targetDirectory="." />
-    <file action="link"  path="../esm.c"           targetDirectory="." />
-    <file action="link"  path="../flash.c"         targetDirectory="." />
-    <file action="link"  path="../fsi.c"           targetDirectory="." />
-    <file action="link"  path="../gpio.c"          targetDirectory="." />
-    <file action="link"  path="../hrcap.c"         targetDirectory="." />
-    <file action="link"  path="../hrpwm.c"         targetDirectory="." />
-    <file action="link"  path="../i2c.c"           targetDirectory="." />
-    <file action="link"  path="../interrupt.c"     targetDirectory="." />
-    <file action="link"  path="../ipc.c"           targetDirectory="." />
-    <file action="link"  path="../lin.c"           targetDirectory="." />
-    <file action="link"  path="../mcan.c"          targetDirectory="." />
-    <file action="link"  path="../memss.c"         targetDirectory="." />
-    <file action="link"  path="../pmbus.c"         targetDirectory="." />
-    <file action="link"  path="../rtdma.c"         targetDirectory="." />
-    <file action="link"  path="../sent.c"          targetDirectory="." />
-    <file action="link"  path="../spi.c"           targetDirectory="." />
-    <file action="link"  path="../ssu.c"           targetDirectory="." />
-    <file action="link"  path="../sysctl.c"        targetDirectory="." />
-    <file action="link"  path="../uart.c"          targetDirectory="." />
-    <file action="link"  path="../xbar.c"          targetDirectory="." />
-
+    <file action="link"  path="${DRIVERLIB_ROOT}"    targetDirectory="." />
 
   </project>
 </projectSpec>

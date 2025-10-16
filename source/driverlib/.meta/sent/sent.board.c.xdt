@@ -1,7 +1,7 @@
 % var module = system.modules['/driverlib/sent.js'];
 % let Common   = system.getScript("/driverlib/Common.js");
-%let device_driverlib_peripheral = 
-%    system.getScript("/driverlib/device_driverlib_peripherals/" + 
+%let device_driverlib_peripheral =
+%    system.getScript("/driverlib/device_driverlib_peripherals/" +
 %        Common.getDeviceName().toLowerCase() + "_sent.js");
 //*****************************************************************************
 //
@@ -9,7 +9,7 @@
 //
 //*****************************************************************************
 void `module.peripheralName`_init(){
-%   for(var i = 0; i < module.$instances.length; i++) 
+%   for(var i = 0; i < module.$instances.length; i++)
 %   {
 %      var instance = module.$instances[i];
 	`instance.$name`_init();
@@ -110,9 +110,9 @@ void `instance.$name`_init(){
     //
     SENT_enableMTPChannel(`baseName`, `instance.$name`_BROADCAST_CHANNEL);
     SENT_setMTPPeriod(`baseName`, `instance.$name`_BROADCAST_CHANNEL, `instance.broadcastChPeriod`);
-    SENT_setMTPTriggerSelect(`baseName`, `instance.$name`_BROADCAST_CHANNEL, `instance.broadcastChTrigger`);
+    SENT_setMTPTriggerSelect(`baseName`, `instance.$name`_BROADCAST_CHANNEL, (SENT_Trigger)`instance.broadcastChTrigger`);
 
-                % for(var cmpIndex in device_driverlib_peripheral.SENT_CompareNumber){ 
+                % for(var cmpIndex in device_driverlib_peripheral.SENT_CompareNumber){
                     % var currentCMP = device_driverlib_peripheral.SENT_CompareNumber[cmpIndex].name
                     % let cmpNumber = (currentCMP).replace(/[^0-9]/g,'')
                     % if (instance["broadcastcmp"+cmpNumber+"TT"] != 0) {
@@ -124,7 +124,7 @@ void `instance.$name`_init(){
                 %}
             % }
 
-            % for(var channelIndex in device_driverlib_peripheral.SENT_SensorNumber){ 
+            % for(var channelIndex in device_driverlib_peripheral.SENT_SensorNumber){
                 % var currentCh = device_driverlib_peripheral.SENT_SensorNumber[channelIndex].name
                 % let chlNumber = (currentCh).replace(/[^0-9]/g,'')
                 % if(instance["enableSensor"+chlNumber]) {
@@ -133,11 +133,11 @@ void `instance.$name`_init(){
     //
     SENT_enableMTPChannel(`baseName`, `instance.$name`_SENSOR`chlNumber`);
     SENT_setMTPPeriod(`baseName`, `instance.$name`_SENSOR`chlNumber`, `instance["sensor"+chlNumber+"Period"]`);
-    SENT_setMTPTriggerSelect(`baseName`, `instance.$name`_SENSOR`chlNumber`, `instance["sensor"+chlNumber+"Trigger"]`);
+    SENT_setMTPTriggerSelect(`baseName`, `instance.$name`_SENSOR`chlNumber`, (SENT_Trigger)`instance["sensor"+chlNumber+"Trigger"]`);
 
                 % }
             % }
-            % for(var cmpIndex in device_driverlib_peripheral.SENT_CompareNumber){ 
+            % for(var cmpIndex in device_driverlib_peripheral.SENT_CompareNumber){
                 % var currentCMP = device_driverlib_peripheral.SENT_CompareNumber[cmpIndex].name
                 % let cmpNumber = (currentCMP).replace(/[^0-9]/g,'')
                 % if (instance["sensor1cmp"+cmpNumber+"TT"] != 0) {
@@ -148,7 +148,7 @@ void `instance.$name`_init(){
                 % }
             %}
 
-            % for(var cmpIndex in device_driverlib_peripheral.SENT_CompareNumber){ 
+            % for(var cmpIndex in device_driverlib_peripheral.SENT_CompareNumber){
                 % var currentCMP = device_driverlib_peripheral.SENT_CompareNumber[cmpIndex].name
                 % let cmpNumber = (currentCMP).replace(/[^0-9]/g,'')
                 % if (instance["sensor2cmp"+cmpNumber+"TT"] != 0) {
@@ -159,7 +159,7 @@ void `instance.$name`_init(){
                 % }
             %}
 
-            % for(var cmpIndex in device_driverlib_peripheral.SENT_CompareNumber){ 
+            % for(var cmpIndex in device_driverlib_peripheral.SENT_CompareNumber){
                 % var currentCMP = device_driverlib_peripheral.SENT_CompareNumber[cmpIndex].name
                 % let cmpNumber = (currentCMP).replace(/[^0-9]/g,'')
                 % if (instance["sensor3cmp"+cmpNumber+"TT"] != 0) {
@@ -169,8 +169,8 @@ void `instance.$name`_init(){
     SENT_setSensor3MTPToggleTime(`baseName`, SENT_MTP_CMP_`cmpNumber`, `instance["sensor3cmp"+cmpNumber+"TT"]`);
                 % }
             %}
-    
-            % for(var cmpIndex in device_driverlib_peripheral.SENT_CompareNumber){ 
+
+            % for(var cmpIndex in device_driverlib_peripheral.SENT_CompareNumber){
                 % var currentCMP = device_driverlib_peripheral.SENT_CompareNumber[cmpIndex].name
                 % let cmpNumber = (currentCMP).replace(/[^0-9]/g,'')
                 % if (instance["sensor4cmp"+cmpNumber+"TT"] != 0) {

@@ -1,11 +1,12 @@
 /**
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
- * @cliArgs --device "F29H85x" --package "256ZEX" --part "F29H85x_256ZEX" --context "CPU1" --product "MCU_SDK_F29H85x@1.00.00.00"
- * @v2CliArgs --device "F29H850TU" --package "256ZEX" --variant "TMS320F29H850TU9" --context "CPU1" --product "MCU_SDK_F29H85x@1.00.00.00"
- * @versions {"tool":"1.22.0+3877"}
+ * @cliArgs --device "F29H85x" --package "256ZEX" --part "F29H85x_256ZEX" --context "CPU1" --product "MCU_SDK_F29H85x@1.02.02.00"
+ * @v2CliArgs --device "F29H850TU" --package "256ZEX" --variant "TMS320F29H850TU9" --context "CPU1" --product "MCU_SDK_F29H85x@1.02.02.00"
+ * @versions {"tool":"1.25.0+4237"}
  */
 
+    
 const divider15       = system.clockTree["PLL_REFDIV"];
 divider15.divideValue = 1;
 
@@ -33,7 +34,7 @@ erad.erad_buscomp[0].stackQual = true;
 erad.erad_buscomp[0].ebcBusSel = "ERAD_BUSCOMP_BUS_DWAB";
 erad.erad_buscomp[0].interrupt = true;
 erad.erad_buscomp[0].ebcMode   = "ERAD_BUSCOMP_COMPMODE_GT";
-erad.erad_buscomp[0].ebcRef    = 537789440;
+erad.erad_buscomp[0].ebcRef    = 537796608;
 erad.eradInt.interruptPriority = 40;
 
 /**

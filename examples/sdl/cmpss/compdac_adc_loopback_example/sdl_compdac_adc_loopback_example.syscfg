@@ -1,0 +1,32 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --device "F29H85x" --part "F29H859TU8QPZS" --package "100PZS" --context "CPU1" --product "MCU_SDK_F29H85x@1.02.01.00"
+ * @v2CliArgs --device "F29H859TU-Q1" --package "100PZS" --variant "TMS320F29H859TU8-Q" --context "CPU1" --product "MCU_SDK_F29H85x@1.02.01.00"
+ * @versions {"tool":"1.25.0+4268"}
+ */
+
+/**
+ * Import the modules used in this configuration.
+ */
+const asysctl = scripting.addModule("/driverlib/asysctl.js");
+const jtag    = scripting.addModule("/driverlib/jtag.js");
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+asysctl.analogReferenceAB  = "INTERNAL_3_3_V";
+asysctl.analogReferenceCDE = "INTERNAL_3_3_V";
+
+const divider15       = system.clockTree["PLL_REFDIV"];
+divider15.divideValue = 1;
+
+const multiplier1         = system.clockTree["PLL_IMULT"];
+multiplier1.multiplyValue = 40;
+
+const mux7       = system.clockTree["OSCCLKSRCSEL"];
+mux7.inputSelect = "INTOSC2";
+
+jtag.JTAG.$assign        = "JTAG";
+jtag.JTAG.tdoPin.$assign = "GPIO223/TDO";
+jtag.JTAG.tdiPin.$assign = "GPIO222/TDI";

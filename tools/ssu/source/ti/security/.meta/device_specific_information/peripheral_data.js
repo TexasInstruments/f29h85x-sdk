@@ -177,9 +177,9 @@ const peripheralList = [
     { name:'EPWM17_REGS',                 start : 0x70010000, end : 0x70011000},
     { name:'EPWM18_REGS',                 start : 0x70011000, end : 0x70012000},
     { name:'EPWM_XLINK',                  start : 0x70040000, end : 0x70080000}, // TODO : What is this?
-    { name:'OTTO1_REGS',                  start : 0x70080000, end : 0x70081000},
-    { name:'OTTO2_REGS',                  start : 0x70081000, end : 0x70082000},
-    { name:'OTTO3_REGS',                  start : 0x70082000, end : 0x70083000},
+    { name:'HRPWMCAL1_REGS',              start : 0x70080000, end : 0x70081000},
+    { name:'HRPWMCAL2_REGS',              start : 0x70081000, end : 0x70082000},
+    { name:'HRPWMCAL3_REGS',              start : 0x70082000, end : 0x70083000},
     { name:'EQEP1_REGS',                  start : 0x70088000, end : 0x70089000},
     { name:'EQEP2_REGS',                  start : 0x70089000, end : 0x7008A000},
     { name:'EQEP3_REGS',                  start : 0x7008A000, end : 0x7008B000},
@@ -295,6 +295,9 @@ const bootmodes = [
     {name: "41", displayName:"UART Boot 3"},
     {name: "61", displayName:"UART Boot 4"},
     {name: "81", displayName:"UART Boot 5"},
+
+    // Wait boot
+    {name: "04", displayName:"Wait Boot"},
 ]
 
 
@@ -343,7 +346,7 @@ function getPeriphsSortedbyFrame()
             periph.actualStart = periph.start
             periph.actualEnd = periph.end
         }
-            
+
         else{
             periph.actualStart = periph.start +  getFrame(periph) * 0x400000
             periph.actualEnd = periph.end +  getFrame(periph) * 0x400000

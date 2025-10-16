@@ -1,4 +1,12 @@
-var config = [];
+var config = [
+    {
+        name        : "$assignedContext",
+        hidden      : true,
+        default     : "CPU1",
+        options     : [{name:"CPU1"}],
+        readOnly    : true
+    }
+];
 
 function moduleInstances(inst)
 {
@@ -10,10 +18,12 @@ function moduleInstances(inst)
             moduleName: "/driverlib/perConfig.js",
             collapsed: false,
             requiredArgs:{
+                cpuSel: inst.$assignedContext ?? system.context,
                 pinmuxPeripheralModule : "",
                 peripheralInst: "INPUTXBARFLAGS",
                 removeCpuSelStandbyDbgHalt: true,
-            }
+            },
+            shouldBeAllocatedAsResource : true,
         }
     )
 
@@ -24,10 +34,12 @@ function moduleInstances(inst)
             moduleName: "/driverlib/perConfig.js",
             collapsed: false,
             requiredArgs:{
+                cpuSel: inst.$assignedContext ?? system.context,
                 pinmuxPeripheralModule : "",
                 peripheralInst: "OUTPUTXBARFLAGS",
                 removeCpuSelStandbyDbgHalt: true,
-            }
+            },
+            shouldBeAllocatedAsResource : true,
         }
     )
 
@@ -43,6 +55,8 @@ var xbarFlagsModule = {
     moduleStatic          : {
         config          : config,
         moduleInstances : moduleInstances,
+        shouldBeAllocatedAsResource : true,
+        alwaysAllocateAsResource : true,
     },
 };
 

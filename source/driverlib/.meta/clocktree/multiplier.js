@@ -1,6 +1,14 @@
 exports = {
 	displayName: "Multiplier",
-	config: [],
+	config: [
+		{
+			name: "$assignedContext",
+			hidden: true,
+			options: [{name: "CPU1"}],
+			default: "CPU1",
+			readOnly: true
+		}
+	],
 	extendConfig: ({ $ipInstance }) => [
 	{
 		name: "Description",
@@ -22,7 +30,8 @@ exports = {
 		displayName: "Multiply Value",
 		default: $ipInstance.resetValue,
 		options: _.map($ipInstance.multiplyValues, (v) => ({ name: v, displayName: `X ${v}` })),
-	}, 
+		shouldBeAllocatedAsResource : true
+	},
 	{
 		name: $ipInstance.outPins[0].name,
 		displayName: "Output Clock",
@@ -32,4 +41,5 @@ exports = {
 			return value * inst.multiplyValue;
 		},
 	}],
+	shouldBeAllocatedAsResource : true
 };

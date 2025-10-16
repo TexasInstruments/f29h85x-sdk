@@ -1,29 +1,33 @@
 % var nameOfModule = "rtdma1";
 % var module = system.modules['/driverlib/' + nameOfModule + '.js'];
 % let Common = system.getScript("/driverlib/Common.js");
-% var stat = module.$static
 % var dmaBase = "RTDMA1"
 //*****************************************************************************
 //
 // RTDMA1 Configurations
 //
 //*****************************************************************************
-void `module.peripheralName`_init(){
+void RTDMA1_init(){
     %   if (Common.isContextCPU1())
     %   {
-    `module.peripheralName`_global_init();
-    `module.peripheralName`_MPU_init();
+    RTDMA1_global_init();
+    RTDMA1_MPU_init();
     %   }
-    %   for(var i = 0; i < module.$instances.length; i++) 
-    %   {
-    %      var instance = module.$instances[i];
+    % if(module != null){
+        %   for(var i = 0; i < module.$instances.length; i++) 
+        %   {
+        %      var instance = module.$instances[i];
     `instance.$name`_init();
+        %   }
     %   }
 }
-
+%
 % if (Common.isContextCPU1())
 % {
-void `module.peripheralName`_global_init(){
+
+void RTDMA1_global_init(){
+    % if(module != null){
+    % var stat = module.$static
     DMA_initController(`stat.dmaBase`_BASE);
         % if (stat.lockDMAConfig == 0) {
     DMA_unlockDMAConfig(`stat.dmaBase`_BASE);
@@ -34,39 +38,62 @@ void `module.peripheralName`_global_init(){
         % } else {
     DMA_setPriorityMode(`stat.dmaBase`_BASE, DMA_PRIORITY_ROUND_ROBIN);
         % }
+        % if (Common.isAllocationOff()) {
+            % if (stat.enableSoftwarePriority) {
+                % var contextNames = Common.getContextNames()
+                % for (var cntx of contextNames)
+                % {
+                    % module = Common.getModuleForCore('/driverlib/' + nameOfModule + '.js', cntx);
+                    % if (module != null) {
+                        % for(var i = 0; i < module.$instances.length; i++) {
+                            % var instance = module.$instances[i];
+    DMA_setChannelPriority(`dmaBase`_BASE, DMA_`instance.chBase.split('_')[0].slice(6,)`, `instance.channelPriority`);
+                        % }
+                    % }
+                % }
+            % }
+        % }
+    % }
+    % if (!Common.isAllocationOff()) {
+        % let raData = system.resourceAllocation.data
+        % let staticModule = raData.contexts[0].modules.find(x => x.moduleName === '/driverlib/' + nameOfModule + '.js')
+        % if (staticModule && staticModule.moduleStatic.requiredArgs.enableSoftwarePriority) {
+            % for (let cntx of raData.contexts)
+            % {
+                % module = cntx.modules.find(x => x.moduleName === '/driverlib/' + nameOfModule + '.js')
+                % if ((module != null) && (module.instances.length != 0)) {
+                    % for(let i = 0; i < module.instances.length; i++) {
+                        % let instance = module.instances[i].requiredArgs
+    DMA_setChannelPriority(`dmaBase`_BASE, DMA_`instance.chBase.split('_')[0].slice(6,)`, `instance.channelPriority`);
+                    % }
+                % }
+            % }
+        % }
+    %}
+    % var module = system.modules['/driverlib/' + nameOfModule + '.js'];
+    % if (module != null){
         % if (stat.enableMPU) {
     DMA_enableMPU(`stat.dmaBase`_MPU_BASE);
         % } else {
     DMA_disableMPU(`stat.dmaBase`_MPU_BASE);
         % }
-        % if (stat.enableSoftwarePriority) {
-        % var contextNames = Common.getContextNames()
-            % for (var cntx of contextNames)
-            % {
-            % module = Common.getModuleForCore('/driverlib/' + nameOfModule + '.js', cntx);
-            % if (module != null) {
-                % for(var i = 0; i < module.$instances.length; i++) {
-                    % var instance = module.$instances[i];
-    DMA_setChannelPriority(`dmaBase`_BASE, DMA_`instance.chBase.split('_')[0].slice(6,)`, `instance.channelPriority`);
-                % }
-            % }
-        % }
-        %}
         % if (stat.lockDMAConfig) {
     DMA_lockDMAConfig(`stat.dmaBase`_BASE);
         % }
         % if (stat.commitDMAConfig) {
     DMA_commitDMAConfig(`stat.dmaBase`_BASE); 
         % }
+    % }
 }
 % }
-
+%
 % var module = system.modules['/driverlib/' + nameOfModule + '.js'];
 %if (module != null)
 %{
     %
     % for(var i = 0; i < module.$instances.length; i++) {
         % var instance = module.$instances[i];
+
 void `instance.$name`_init(){
             %
             % var srcAddress = 0;
@@ -136,4 +163,3 @@ void `instance.$name`_init(){
 }
     %}
 %}
-

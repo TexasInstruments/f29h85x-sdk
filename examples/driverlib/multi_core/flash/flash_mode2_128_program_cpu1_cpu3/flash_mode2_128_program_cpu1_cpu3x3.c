@@ -257,6 +257,7 @@ void Example_CallFlashAPI(void)
 //  Flash API functions used in this function are executed from RAM in this
 //  example.
 //*****************************************************************************
+__attribute__((section(".TI.ramfunc")))
 void Example_ProgramUsingC29AutoECC(void)
 {
     Fapi_StatusType  oReturnCheck;
@@ -346,6 +347,7 @@ void Example_ProgramUsingC29AutoECC(void)
 //  Flash API functions used in this function are executed from RAM in this
 //  example.
 //*****************************************************************************
+__attribute__((section(".TI.ramfunc")))
 void Example_ProgramUsingDataAndECC(void)
 {
     Fapi_StatusType  oReturnCheck;
@@ -446,6 +448,7 @@ void Example_ProgramUsingDataAndECC(void)
 //  Flash API functions used in this function are executed from RAM in this
 //  example.
 //*****************************************************************************
+__attribute__((section(".TI.ramfunc")))
 void Example_ProgramUsingDataOnlyECCOnly(void)
 {
     Fapi_StatusType  oReturnCheck;
@@ -584,6 +587,7 @@ void Example_ProgramUsingDataOnlyECCOnly(void)
 //  Flash API functions used in this function are executed from RAM in this
 //  example.
 //*****************************************************************************
+__attribute__((section(".TI.ramfunc")))
 void Example_ProgramDataFlashUsingC29AutoECC(void)
 {
     Fapi_StatusType  oReturnCheck;
@@ -672,7 +676,7 @@ void Example_ProgramDataFlashUsingC29AutoECC(void)
 //  Flash API functions used in this function are executed from RAM in this
 //  example.
 //*****************************************************************************
-
+__attribute__((section(".TI.ramfunc")))
 void Example_EraseBanks(void)
 {
     Fapi_StatusType  oReturnCheck;
@@ -825,8 +829,8 @@ void Example_EraseBanks(void)
 //  devices) of the previous flash operation.
 //  This function and the flash API functions used in this function are
 //  executed from RAM in this example.
-//  Note: this function is applicable for only F280013X, F280015X and F28P65X devices
 //**************************************************************************************
+__attribute__((section(".TI.ramfunc")))
 void ClearFSMStatus(uint32_t u32StartAddress, uint32_t u32UserFlashConfig) {
     Fapi_FlashStatusType  oFlashStatus;
     Fapi_StatusType  oReturnCheck;
@@ -870,6 +874,7 @@ void ClearFSMStatus(uint32_t u32StartAddress, uint32_t u32UserFlashConfig) {
 //  Flash API functions used in this function are executed from RAM in this
 //  example.
 //*****************************************************************************
+__attribute__((section(".TI.ramfunc")))
 void Example_EraseSector(void)
 {
     Fapi_StatusType  oReturnCheck;

@@ -193,12 +193,14 @@ const CPU3_CPUCLK_d	= system.clockTree.CPU3_CPUCLK.in
 //*****************************************************************************
 % }
 //
+% if(availablePeripherals["EMIF1"]){
 // EMIF Domain (`EMIFCLK_d` MHz) 
 //
 //*****************************************************************************
 // `system.clockTree.EMIF1_Clock_domain.$ipInstance.modulePins[0].name`
 //
 //*****************************************************************************
+% }
 //
 // Watchdog Domain (`WDCLK_d` MHz) 
 //

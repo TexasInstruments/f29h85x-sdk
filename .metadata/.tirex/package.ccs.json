@@ -23,19 +23,26 @@
             "source/rtlibs/iqmath",
             "source/kernel/freertos/Source/include",
             "source/kernel/freertos/Source/portable/CCS/C2000_C29x",
-            "source/flash_api/include/FlashAPI"
+            "source/flash_api/include/FlashAPI",
+            "source/kernel/dpl",
+            "source/pmic",
+            "source/sdl"
         ],
         "linkerSearchPath": [
             "source/driverlib/ccs",
             "source/flash_api/lib",
             "source/calibration/hrpwm/lib",
-            "source/security/ccs"
+            "source/security/ccs",
+            "source/kernel/nortos/ccs",
+            "source/sdl/ccs"
         ],
         "linkerLibraries": [
             "driverlib.lib",
             "sfo.lib",
             "F29H85x_NWFlashAPI_v21.00.00.00.lib",
-            "security_drivers.lib"
+            "security_drivers.lib",
+            "dpl_nortos.lib",
+            "sdl_debug.lib"
         ],
         "sysConfigManifest": ".metadata/sdk.json",
         "exports": [
@@ -58,6 +65,10 @@
             {
                 "macroName": "COM_TI_MCU_SDK_GENERIC_LNK_HSM_CMD_FLASH",
                 "location": "examples/device_support/cmd/f29h85x_flash_lnk_hsm.cmd"
+            },
+            {
+                "macroName": "COM_TI_MCU_SDK_GENERIC_LNK_HSM_CMD_FLASH_CPU3",
+                "location": "examples/device_support/cmd/f29h85x_cpu3_flash_lnk_hsm.cmd"
             },
             {
                 "macroName": "COM_TI_MCU_SDK_GENERIC_LNK_HSM_DTHE_CMD_FLASH",

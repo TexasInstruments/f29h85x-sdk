@@ -42,29 +42,23 @@ var CMPSS_TRIP = [
 ];
 
 function calculateDevicePinNameHigh(inst,ui){
-        if(((inst.cmpssBase == "CMPSS9_BASE") || (inst.cmpssBase == "CMPSS10_BASE") || (inst.cmpssBase == "CMPSS11_BASE")) && (inst.asysCMPHPMXSELValue == 3))
+
+    var tempPinName = ComparatorInputs.CMPSS_comparatorInputSignals[Common.getDeviceName()][inst.cmpssBase][inst.asysCMPHPMXSELValue].displayName
+    var tempPinInfo = Pinmux.findAllAnalogPin(Pinmux.getDeviceADCName(tempPinName.split("/")[0]))
+    var tempPinInfoDesc = Pinmux.getDevicePinInfoDescription(tempPinInfo)
+    if(tempPinInfo.length == 0)     //SysConfig was unable to find any pins with this name, even though it exists as an input; remove error detection
+    {
+        if(tempPinName.includes("TempSensor"))
         {
-            var tempPinInfoDesc = "No Device Pin Found"
-            return tempPinInfoDesc
+            return "Temperature Sensor";
         }
-        else
+        else if(tempPinName.includes("VREF"))
         {
-            var tempPinName = ComparatorInputs.CMPSS_comparatorInputSignals[Common.getDeviceName()][inst.cmpssBase][inst.asysCMPHPMXSELValue].displayName
-            var tempPinInfo = Pinmux.findAllAnalogPin(Pinmux.getDeviceADCName(tempPinName.split("/")[0]))
-            var tempPinInfoDesc = Pinmux.getDevicePinInfoDescription(tempPinInfo)
-            if(tempPinInfo.length == 0)     //SysConfig was unable to find any pins with this name, even though it exists as an input; remove error detection
-            {
-                if(tempPinName.includes("TempSensor"))
-                {
-                    return "Temperature Sensor";
-                }
-                else if(tempPinName.includes("VREF"))
-                {
-                    return tempPinName
-                }
-            }
-                return tempPinInfoDesc
+            return tempPinName
         }
+    }
+
+    return tempPinInfoDesc
 }
 
 function calculateDevicePinNameHighNeg(inst,ui){
@@ -78,22 +72,15 @@ function calculateDevicePinNameHighNeg(inst,ui){
 
 function calculateDevicePinNameLow(inst,ui){
 
-        if(((inst.cmpssBase == "CMPSS9_BASE") || (inst.cmpssBase == "CMPSS10_BASE") || (inst.cmpssBase == "CMPSS11_BASE")) && (inst.asysCMPLPMXSELValue == 3))
-        {
-            var tempPinInfoDesc = "No Device Pin Found"
-            return tempPinInfoDesc
-        }
-        else
-        {
-            var tempPinName = ComparatorInputs.CMPSS_comparatorLowPositiveInputSignals[Common.getDeviceName()][inst.cmpssBase][inst.asysCMPLPMXSELValue].displayName
-            var tempPinInfo = Pinmux.findAllAnalogPin(Pinmux.getDeviceADCName(tempPinName.split("/")[0]))
-            var tempPinInfoDesc = Pinmux.getDevicePinInfoDescription(tempPinInfo)
-            if((tempPinInfo.length == 0) && tempPinName.includes("VREF"))     //SysConfig was unable to find any pins with this name, even though it exists as an input; remove error detection
-            {
-                return tempPinName
-            }
-                return tempPinInfoDesc
-        }
+    var tempPinName = ComparatorInputs.CMPSS_comparatorLowPositiveInputSignals[Common.getDeviceName()][inst.cmpssBase][inst.asysCMPLPMXSELValue].displayName
+    var tempPinInfo = Pinmux.findAllAnalogPin(Pinmux.getDeviceADCName(tempPinName.split("/")[0]))
+    var tempPinInfoDesc = Pinmux.getDevicePinInfoDescription(tempPinInfo)
+    if((tempPinInfo.length == 0) && tempPinName.includes("VREF"))     //SysConfig was unable to find any pins with this name, even though it exists as an input; remove error detection
+    {
+        return tempPinName
+    }
+
+    return tempPinInfoDesc
 }
 
 function calculateDevicePinNameLowNeg(inst,ui){
@@ -371,7 +358,8 @@ highConfig = highConfig.concat([
                 description : 'Select the value for CMPHPMXSEL.',
                 hidden      : false,
                 default     : asysPosSignalOptions[0].name,
-                options     : asysPosSignalOptions
+                options     : asysPosSignalOptions,
+                shouldBeAllocatedAsResource: true,
             },
             {
                 name        : "asysCMPHPMXSELPinInfo",
@@ -379,7 +367,8 @@ highConfig = highConfig.concat([
                 description : 'Pin Number and Name for selected HP signal.',
                 hidden      : false,
                 default     : Pinmux.getDevicePinInfoDescription(defaultCMPSSPinInfos),
-                getValue    : calculateDevicePinNameHigh
+                getValue    : calculateDevicePinNameHigh,
+                shouldBeAllocatedAsResource: true,
             },
 
             // ASysCtl_selectCMPHNMux : options vary per device
@@ -389,7 +378,8 @@ highConfig = highConfig.concat([
                 description : 'Select the value for CMPHNMXSEL.',
                 hidden      : true,
                 default     : asysNegSignalOptions[1].name,
-                options     : asysNegSignalOptions
+                options     : asysNegSignalOptions,
+                shouldBeAllocatedAsResource: true,
             },
             {
                 name        : "asysCMPHNMXSELPinInfo",
@@ -397,7 +387,8 @@ highConfig = highConfig.concat([
                 description : 'Pin Number and Name for selected HN signal.',
                 hidden      : true,
                 default     : Pinmux.getDevicePinInfoDescription(defaultCMPSSNegPinInfos),
-                getValue    : calculateDevicePinNameHighNeg
+                getValue    : calculateDevicePinNameHighNeg,
+                shouldBeAllocatedAsResource: true,
             },
         ]
     },
@@ -625,7 +616,8 @@ lowConfig = lowConfig.concat([
                 description : 'Select the value for CMPLPMXSEL.',
                 hidden      : false,
                 default     : asysPosSignalOptions[0].name,
-                options     : asysPosSignalOptions
+                options     : asysPosSignalOptions,
+                shouldBeAllocatedAsResource: true,
             },
             {
                 name        : "asysCMPLPMXSELPinInfo",
@@ -633,7 +625,8 @@ lowConfig = lowConfig.concat([
                 description : 'Pin Number and Name for selected LP signal.',
                 hidden      : false,
                 default     : Pinmux.getDevicePinInfoDescription(defaultCMPSSPinInfos),
-                getValue    : calculateDevicePinNameLow
+                getValue    : calculateDevicePinNameLow,
+                shouldBeAllocatedAsResource: true,
             },
 
             // ASysCtl_selectCMPLNMux  : options vary per device
@@ -643,7 +636,8 @@ lowConfig = lowConfig.concat([
                 description : 'Select the value for CMPLNMXSEL.',
                 hidden      : true,
                 default     : asysNegSignalOptions[1].name,
-                options     : asysNegSignalOptions
+                options     : asysNegSignalOptions,
+                shouldBeAllocatedAsResource: true,
             },
             {
                 name        : "asysCMPLNMXSELPinInfo",
@@ -651,7 +645,8 @@ lowConfig = lowConfig.concat([
                 description : 'Pin Number and Name for selected LN signal.',
                 hidden      : true,
                 default     : Pinmux.getDevicePinInfoDescription(defaultCMPSSNegPinInfos),
-                getValue    : calculateDevicePinNameLowNeg
+                getValue    : calculateDevicePinNameLowNeg,
+                shouldBeAllocatedAsResource: true,
             },
         ]
     },
@@ -666,6 +661,7 @@ let config = [
         hidden      : false,
         default     : CMPSS_INSTANCE[0].name,
         options     : CMPSS_INSTANCE,
+        shouldBeAllocatedAsResource: true,
     },
     // enableModule / disableModule
     {
@@ -775,7 +771,7 @@ var cmpss_dac_highconfig = [
         ],
         onChange    : (inst , ui) =>{
             if(inst.dacValSource === "CMPSS_DACSRC_RAMP")
-            {   
+            {
                 ui.dacValHigh.hidden = true;
                 for (let cfg of highConfigDevice)
                 {
@@ -826,7 +822,7 @@ var cmpss_dac_lowConfig = [
         ],
         onChange    : (inst , ui) =>{
             if(inst.lowDacValSource === "CMPSS_DACSRC_RAMP")
-            {   
+            {
                 ui.dacValLow.hidden = true;
                 for (let cfg of lowConfigDevice)
                 {
@@ -862,14 +858,14 @@ var cmpss_dac_lowConfig = [
 ]
 
 config = config.concat([
-    
+
     {
         name: "GROUP_DAC_COMMON_CONFIG",
         displayName : "DAC Configurations",
         description : "",
         longDescription : "",
         collapsed : false,
-        config : 
+        config :
         cmpss_dac_config.concat   ([
             // DAC Group
 
@@ -891,8 +887,8 @@ config = config.concat([
             },
         ])
     }
-    
-    
+
+
 ]);
 
 
@@ -950,10 +946,10 @@ config.push(
 )
 
 /**
- * 
- * @param {*} inst 
- * @param {*} ui 
- * @param {*} highLow   takes "HIGH" or "LOW" 
+ *
+ * @param {*} inst
+ * @param {*} ui
+ * @param {*} highLow   takes "HIGH" or "LOW"
  * @param {*} hide      takes true or false
  */
 function hideDacConfig (inst, ui, highLow, hide)
@@ -1070,11 +1066,19 @@ function onValidate(inst, validation) {
                 validation.logError(
                     `The ANALOG PinMux module needs to be added on CPU1 when a CMPSS instance is added on ${cpu}`,inst,"cmpssBase");
             }
-        } 
+        }
         else {
             validation.logWarning(
                 `The ANALOG PinMux module needs to be added on CPU1 when a CMPSS instance is added on ${cpu}`,inst,"cmpssBase");
-        } 
+        }
+    }
+    var selectedInstance = inst.cmpssBase.replace("_BASE","");// e.g., "EQEP1"
+    if (Common.is_instance_not_in_variant(selectedInstance)) {
+        validation.logError(
+            `${selectedInstance} is not supported for ${Common.getVariant().replace(/^TMS320/, '')}.`,
+            inst,
+            "cmpssBase"
+        );
     }
     var usedCMPSSInsts = [];
     for (var instance_index in inst.$module.$instances)
@@ -1253,36 +1257,36 @@ function onValidate(inst, validation) {
             inst, "rampDelayValLow");
     }
 
-    
+
     if (inst.configBlanking < 1 || inst.configBlanking > 16)
     {
         validation.logError(
             "Enter an integer for VALUE_NAME between 1 and 16!",
             inst, "configBlanking");
     }
-    
-    
+
+
     if (inst.samplePrescaleHigh < 0 || inst.samplePrescaleHigh > 16777215)
     {
         validation.logError(
             "Enter an integer for Digital Filter Sample Prescale between 0 and 16,777,215!",
             inst, "samplePrescaleHigh");
     }
-    
+
     if (!Number.isInteger(inst.samplePrescaleHigh))
     {
         validation.logError(
             "Digital Filter Sample Prescale must be an integer",
             inst, "samplePrescaleHigh");
     }
-    
+
     if (inst.sampleWindowHigh < 1 || inst.sampleWindowHigh > 64)
     {
         validation.logError(
             "Enter an integer for Digital Filter Sample Window between 1 and 64!",
             inst, "sampleWindowHigh");
     }
-    
+
     if (!Number.isInteger(inst.sampleWindowHigh))
     {
         validation.logError(
@@ -1309,7 +1313,7 @@ function onValidate(inst, validation) {
             "Enter an integer for Digital Filter Sample Prescale between 0 and 16,777,215!",
             inst, "samplePrescaleLow");
     }
-    
+
     if (!Number.isInteger(inst.samplePrescaleLow))
     {
         validation.logError(
@@ -1449,13 +1453,13 @@ function onValidate(inst, validation) {
             if (Common.isContextCPU1()) {
                 if (Common.peripheralCount("ANALOG") > 0)
                 {
-    
+
                     var configurationStatus = [];
                     var finalFail = true;
-    
+
                     for (var apinfo of tempPinInfoNH){
                         var pinSelected = apinfo.PinDesignSignalName;
-    
+
                         configurationStatus.push(
                             {
                                 fail: (!selectedInterfaces.includes(pinSelected) && allInterfaces.includes(pinSelected)),
@@ -1464,7 +1468,7 @@ function onValidate(inst, validation) {
                         )
                     }
                     for (var cstat of configurationStatus){finalFail &= cstat.fail}
-    
+
                     if (allPinsMustBeConfigured)
                     {
                         for (var cstat of configurationStatus)
@@ -1485,7 +1489,7 @@ function onValidate(inst, validation) {
                             validation.logError(
                                 "At least one of the following ANALOG PinMux pins must be selected.",
                                 inst,"asysCMPHNMXSELValue");
-    
+
                             for (var cstat of configurationStatus)
                             {
                                 if (cstat.fail)
@@ -1505,7 +1509,7 @@ function onValidate(inst, validation) {
 
     if (inst.asysCMPLPMXSELPinInfo == Pinmux.NO_DEVICE_PIN_FOUND)
     {
-        
+
         if(ComparatorInputs.CMPSS_comparatorLowPositiveInputSignals[Common.getDeviceName()][inst.cmpssBase][inst.asysCMPLPMXSELValue])
         {
             var tempPinNameLowPos = ComparatorInputs.CMPSS_comparatorLowPositiveInputSignals[Common.getDeviceName()][inst.cmpssBase][inst.asysCMPLPMXSELValue].displayName
@@ -1520,7 +1524,7 @@ function onValidate(inst, validation) {
                 "Signal not available for this device, select a valid signal!",
                 inst, "asysCMPLPMXSELValue");
         }
-        
+
     }
     else
     {
@@ -1611,13 +1615,13 @@ function onValidate(inst, validation) {
             if (Common.isContextCPU1()) {
                 if (Common.peripheralCount("ANALOG") > 0)
                 {
-    
+
                     var configurationStatus = [];
                     var finalFail = true;
-    
+
                     for (var apinfo of tempPinInfoLN){
                         var pinSelected = apinfo.PinDesignSignalName;
-    
+
                         configurationStatus.push(
                             {
                                 fail: (!selectedInterfaces.includes(pinSelected) && allInterfaces.includes(pinSelected)),
@@ -1626,8 +1630,8 @@ function onValidate(inst, validation) {
                         )
                     }
                     for (var cstat of configurationStatus){finalFail &= cstat.fail}
-    
-    
+
+
                     if (allPinsMustBeConfigured)
                     {
                         for (var cstat of configurationStatus)
@@ -1648,7 +1652,7 @@ function onValidate(inst, validation) {
                             validation.logError(
                                 "At least one of the following ANALOG PinMux pins must be selected.",
                                 inst,"asysCMPLNMXSELValue");
-    
+
                             for (var cstat of configurationStatus)
                             {
                                 if (cstat.fail)
@@ -1665,7 +1669,7 @@ function onValidate(inst, validation) {
             }
         }
     }
-    
+
     //Add validation for DE support with ePWM
 }
 
@@ -1706,12 +1710,13 @@ if (Common.isContextCPU1()) {
 var cmpssModule = {
     peripheralName      : "CMPSS",
     displayName         : "CMPSS",
-    maxInstances        : deviceNumberOfInstances,
+    totalMaxInstances   : Common.countinstances("CMPSS", deviceNumberOfInstances),
+    maxInstances        : Common.countinstances("CMPSS", deviceNumberOfInstances),
     defaultInstanceName : "myCMPSS",
     description         : "Comparator Subsystem",
     //longDescription: (Common.getCollateralFindabilityList("CMPSS")),
     filterHardware      : filterHardware,
-    config              : config,
+    config              : Common.filterConfigsIfInSetupMode(config),
     moduleInstances: (inst) => {
         var clkReturn = [];
         clkReturn = clkReturn.concat([
@@ -1733,15 +1738,18 @@ var cmpssModule = {
                 moduleName: "/driverlib/perConfig.js",
                 collapsed: false,
                 requiredArgs:{
+                    cpuSel: inst.$assignedContext ?? system.context,
                     pinmuxPeripheralModule : "",
                     peripheralInst: inst.cmpssBase.replace("_BASE", "")
-                }
+                },
+                shouldBeAllocatedAsResource: true,
             },
         ])
-        
+
         return clkReturn;
     },
     sharedModuleInstances : sharedModuleInstances,
+    shouldBeAllocatedAsResource : true,
     templates: {
         boardc : "/driverlib/cmpss/cmpss.board.c.xdt",
         boardh : "/driverlib/cmpss/cmpss.board.h.xdt"

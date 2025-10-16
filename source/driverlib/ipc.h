@@ -262,7 +262,6 @@ typedef enum
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 IPC_setFlagLtoR(IPC_Channel_t ipcChannel, uint32_t flags)
 {
@@ -283,7 +282,6 @@ IPC_setFlagLtoR(IPC_Channel_t ipcChannel, uint32_t flags)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 IPC_clearFlagLtoR(IPC_Channel_t ipcChannel, uint32_t flags)
 {
@@ -305,7 +303,6 @@ IPC_clearFlagLtoR(IPC_Channel_t ipcChannel, uint32_t flags)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 IPC_triggerInterrupt(IPC_Channel_t ipcChannel)
 {
@@ -326,7 +323,6 @@ IPC_triggerInterrupt(IPC_Channel_t ipcChannel)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 IPC_ackFlagRtoL(IPC_Channel_t ipcChannel, uint32_t flags)
 {
@@ -348,7 +344,6 @@ IPC_ackFlagRtoL(IPC_Channel_t ipcChannel, uint32_t flags)
 //! or \b false if all the designated IPC flags are free.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline bool
 IPC_isFlagBusyLtoR(IPC_Channel_t ipcChannel, uint32_t flags)
 {
@@ -370,7 +365,6 @@ IPC_isFlagBusyLtoR(IPC_Channel_t ipcChannel, uint32_t flags)
 //! or \b false if all the designated IPC flags are free.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline bool
 IPC_isFlagBusyRtoL(IPC_Channel_t ipcChannel, uint32_t flags)
 {
@@ -391,7 +385,6 @@ IPC_isFlagBusyRtoL(IPC_Channel_t ipcChannel, uint32_t flags)
 //! \return None
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 IPC_waitForFlag(IPC_Channel_t ipcChannel, uint32_t flag)
 {
@@ -414,7 +407,6 @@ IPC_waitForFlag(IPC_Channel_t ipcChannel, uint32_t flag)
 //! \return None
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 IPC_waitForAck(IPC_Channel_t ipcChannel, uint32_t flag)
 {
@@ -438,7 +430,6 @@ IPC_waitForAck(IPC_Channel_t ipcChannel, uint32_t flag)
 //! \return None
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 IPC_sync(IPC_Channel_t ipcChannel, uint32_t flag)
 {
@@ -459,7 +450,6 @@ IPC_sync(IPC_Channel_t ipcChannel, uint32_t flag)
 //! \return None
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 IPC_init(IPC_Channel_t ipcChannel)
 {
@@ -537,7 +527,6 @@ IPC_readCommand(IPC_Channel_t ipcChannel, uint32_t flags,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 IPC_sendResponse(IPC_Channel_t ipcChannel, uint32_t data)
 {
@@ -556,7 +545,6 @@ IPC_sendResponse(IPC_Channel_t ipcChannel, uint32_t data)
 //! \return the 32-bit value of the response.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline uint32_t
 IPC_getResponse(IPC_Channel_t ipcChannel)
 {
@@ -574,7 +562,6 @@ IPC_getResponse(IPC_Channel_t ipcChannel)
 //! \return 64-bit counter value.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline uint64_t
 IPC_getCounter(void)
 {

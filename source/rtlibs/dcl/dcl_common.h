@@ -38,10 +38,7 @@ typedef double        float64_t;
 
 //! \brief  Defines the scope of critical dcl functions
 //!
-//! \note   For users wanting to map critial functions in a specific memory region, 
-//!         uncomment "__attribute__((section("dclfuncs")))" and map 
-//!         the memory directive "dclfuncs" in the .cmd linker script
-#define _DCL_CRIT_ACCESS   static inline __attribute__((always_inline)) //__attribute__((section("dclfuncs")))
+#define _DCL_CRIT_ACCESS   static inline __attribute__((always_inline))
 
 //! \brief  Defines volatile for DCL strctures
 //!         Flags can be defined in dcl.h or 
@@ -58,7 +55,7 @@ typedef double        float64_t;
     #define DCL_setBreakPoint() asm(" ESTOP")
 #elif defined (__ARM_ARCH)      //ARM ISA
     #define DCL_setBreakPoint()  __asm(" bkpt #0")
-#elif defined (__C29__)
+#elif defined (__C29__)		    //C29 ISA
     #define DCL_setBreakPoint() __asm(" EMUSTOP0")
 #else
     #define DCL_setBreakPoint()
@@ -71,7 +68,7 @@ typedef double        float64_t;
     #define DCL_disableInts()   __disable_interrupts()
     #define DCL_restoreInts(v)  if (0U == (v & 0x1)) __enable_interrupts()   
     typedef uint16_t            dcl_interrupt_t;
-#elif defined (SOC_AM64X) || defined (SOC_AM243X) || defined (SOC_AM263X)
+#elif defined (SOC_AM64X) || defined (SOC_AM243X) || defined (SOC_AM263X) || defined (SOC_AM263PX) || defined (SOC_AM261X)
     #include <kernel/dpl/HwiP.h>
     #define DCL_disableInts()   HwiP_disable()
     #define DCL_restoreInts(v)  HwiP_restore(v)

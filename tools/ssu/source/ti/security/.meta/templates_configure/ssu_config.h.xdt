@@ -1,0 +1,59 @@
+#include "ssu.h"
+%%{
+    const Common    = system.getScript('/ti/security/Common.js');
+    const raData    = system.resourceAllocation.data;
+    let ctx         = Common.currentContext()
+
+    let sysSecCurrCtx = raData.contexts
+                        .find(a => a["contextName"] == ctx)
+                        ["modules"]
+                        .find(a => (a["moduleName"] == `/ti/security/${ctx}_System_Security`))
+
+    let aprsCurrCtx =   raData.contexts
+                        .find(a => a["contextName"] == ctx)
+                        ["modules"]
+                        .find(a => (a["moduleName"] == `/ti/security/${ctx}_APR`))
+
+    let sysSecResources = sysSecCurrCtx.moduleStatic.requiredArgs
+    let aprResources    = aprsCurrCtx.moduleStatic.requiredArgs
+
+    let linkIdMap   = JSON.parse(sysSecResources.r_linkIds)
+    let stackIdMap  = JSON.parse(sysSecResources.r_stackIds)
+    let aprMap      = JSON.parse(aprResources.r_aprFullMap)
+
+    let idx = 0;
+%%}
+
+// C29x SSU LINKs
+% for (const key in linkIdMap){
+#define `key` SSU_LINK`linkIdMap[key]`
+% };
+
+// C29x SSU STACKs
+% for (const key in stackIdMap){
+#define `key` SSU_STACK`stackIdMap[key]`
+% };
+
+// C29x SSU APRs
+% if(aprMap && aprMap.length){
+% aprMap.sort((a,b) => {return a.name.localeCompare(b.name)})
+%        .forEach(x => {
+#define `x.name` `idx`
+#define `x.name`_START_ADDR 0x`x.startAddr.toString(16)`
+#define `x.name`_END_ADDR 0x`(x.endAddr - 1).toString(16)`
+
+% idx++
+% });
+% }
+
+// C29x SSU initialization function prototypes
+
+void DLT_SSU_EnableLinkPermissions();
+
+//
+// When configuring using predefined resource allocations, interrupt
+// related configurations must be done manually by application.
+// Refer to the below commented APIs and configure appropriately
+//
+
+// void Interrupt_SSU_Init();

@@ -98,12 +98,14 @@ function onEnablingI2C(inst, ui) {
     if (inst.enableI2CMode == true) {
         ui.ALERT_EN.hidden = true;
         ui.TargetAddressMask.hidden = true;
-        ui.configTarget.hidden = true;
+        // ui.configTarget.hidden = true;
+        // ui.configController.hidden = true;
     }
     else {
         ui.ALERT_EN.hidden = false;
         ui.TargetAddressMask.hidden = false;
-        ui.configTarget.hidden = true;
+        // ui.configTarget.hidden = true;
+        // ui.configController.hidden = true;
     }
 
 }
@@ -111,11 +113,15 @@ function onEnablingI2C(inst, ui) {
 function onChangeMode(inst, ui) {
     if (inst.mode == "Controller") {
         ui.configTarget.hidden = true;
+        ui.configController.hidden = false;
         ui.ALERT_EN.hidden = true;
+        ui.TargetAddress.hidden = false;
     }
     else {
         ui.configTarget.hidden = false;
+        ui.configController.hidden = true;
         ui.ALERT_EN.hidden = false;
+        ui.TargetAddress.hidden = true;
     }
 }
 
@@ -194,6 +200,12 @@ function onValidate(inst, validation) {
             "The address specified is a reserved address",
             inst, "OwnAddress");
     }
+    if(inst.dataCount > 4 | inst.dataCount < 0)
+        {
+            validation.logError(
+                "Enter an integer for data count between 0 and 4!",
+                inst, "dataCount");
+        }
     var pinmuxQualMods = Pinmux.getGpioQualificationModInstDefinitions("PMBUS", inst)
     for (var pinmuxQualMod of pinmuxQualMods) {
         if ((!inst[pinmuxQualMod.name].padConfig.includes("OD")) || (inst[pinmuxQualMod.name].padConfig.includes("INVERT"))) {
@@ -228,6 +240,13 @@ let config = [
                     { name: "Controller", displayName: "Controller Mode" },
                     { name: "Target", displayName: "Target Mode" },
                 ]
+            },
+            {
+                name        : "dataCount",
+                displayName : "Data Count",
+                description : 'Set number of bytes to be to transfer or receive',
+                hidden      : false,
+                default     : 1
             },
             {
                 name: "OwnAddress",
@@ -437,12 +456,12 @@ if (Common.onlyPinmux()) {
 var pmbusModule = {
     peripheralName: "PMBUS",
     displayName: "PMBUS",
-    maxInstances: Common.peripheralCount("PMBUS"),
+    totalMaxInstances: Common.peripheralCount("PMBUS"),
     defaultInstanceName: "myPMBUS",
     description: "PMBUS Peripheral",
     // longDescription: (Common.getCollateralFindabilityList("PMBUS")),
     filterHardware: filterHardware,
-    config: config,
+    config: Common.filterConfigsIfInSetupMode(config),
     moduleInstances: (inst) => {
         var ownedInstances = []
         var pinmuxQualMods = Pinmux.getGpioQualificationModInstDefinitions("PMBUS", inst)
@@ -480,7 +499,7 @@ var pmbusModule = {
                 collapsed: false,
                 requiredArgs: {
                     pinmuxPeripheralModule: "pmbus",
-                    peripheralInst: inst.$name,
+                    peripheralInst: "",
                 }
             },
             {
@@ -490,9 +509,11 @@ var pmbusModule = {
                 moduleName: "/driverlib/perConfig.js",
                 collapsed: false,
                 requiredArgs: {
+                    cpuSel: inst.$assignedContext ?? system.context,
                     pinmuxPeripheralModule: "pmbus",
-                    peripheralInst: inst.$name
-                }
+                    peripheralInst: ""
+                },
+                shouldBeAllocatedAsResource: true
             },
         ]);
         return ownedInstances;
@@ -504,10 +525,11 @@ var pmbusModule = {
     moduleStatic: {
         name: "PMBusGlobal",
         displayName: "PMBus Global",
-        config: globalConfig,
+        config: Common.filterConfigsIfInSetupMode(globalConfig),
     },
     pinmuxRequirements: Pinmux.pmbusPinmuxRequirements,
-    validate: onValidate
+    validate: onValidate,
+    shouldBeAllocatedAsResource: true
 };
 
 

@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2022-2023 Texas Instruments Incorporated
+ *  Copyright (c) 2025 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -48,6 +48,7 @@ static const char soc_type_arr[NUM_SOC_TYPE][8] = {
     "AWR294x",
     "F29H85x",
     "AM261X",
+    "F29P32x",
 };
 
 /* ========================================================================== */

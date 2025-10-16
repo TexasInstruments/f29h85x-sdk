@@ -1,0 +1,109 @@
+/*
+ * Copyright (c) 2020 Texas Instruments Incorporated - http://www.ti.com
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ *
+ * *  Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ *
+ * *  Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ *
+ * *  Neither the name of Texas Instruments Incorporated nor the names of
+ *    its contributors may be used to endorse or promote products derived
+ *    from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+ * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+ * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+ * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+ * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+ * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+ * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+ * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+ * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+ * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *
+ */
+
+% var pmicconfig = system.modules['/driverlib/pmicconfig.js'];
+% let pmicconfiginstance;
+
+#include "board.h"
+% if(pmicconfig) {
+%   pmicconfiginstance = pmicconfig.$static;
+#include "pmic_`pmicconfiginstance.Type.toLowerCase()`.h"
+
+/* PMIC Object - initalized during PMIC_open() */
+PMIC_Object gPmicObject[1U];
+
+/* PMIC Driver handles - opened during Board_pmicOpen() */
+PMIC_Handle gPmicHandle[1U];
+
+/* PMIC Config */
+PMIC_Config gPmicConfig[1U] =
+{
+    {
+        .fxns   = &gPmicFxns_`pmicconfiginstance.Type.toLowerCase()`,
+        .object = (void *)&gPmicObject[0U],
+    },
+};
+
+uint32_t gPmicConfigNum = 1U;
+
+% if(pmicconfiginstance.Type == "TPS653860XX") {
+Spi_handle gSpiHandle =
+{
+    .csPin          = (uint8_t)TPS653860XX_PMIC_CS_GPIO,    // csPin
+    .spiBaseAddr    = TPS653860XX_PMIC_SPI_BASE             // spiBaseAddr
+};
+
+/* PMIC params */
+PMIC_Params gPmicParams[1U] =
+{
+    {
+        .deviceType  = PMIC_DEV_BB_TPS65386X,
+        .commMode    = PMIC_INTF_SPI,
+        .instType    = PMIC_MAIN_INST,
+        .instance    = 0U,
+        .commHandle  = (void*)&gSpiHandle
+    },
+};
+% }
+% if(pmicconfiginstance.Type == "TPS65036XX") {
+/* I2C handle */
+I2c_handle gI2cHandle =
+{
+    .i2cBaseAddr = TPS65036XX_PMIC_I2C_BASE
+};
+
+/* PMIC params */
+PMIC_Params gPmicParams[1U] =
+{
+    {
+        .i2cAddr    = TPS65036XX_PMIC_I2C_TARGET_ADDRESS,
+        .instance   = 0U,
+        .commHandle = (void*)&gI2cHandle
+    },
+};
+% }
+% }
+
+void PMIC_init(void)
+{
+% if(pmicconfig) {
+    //
+    //  PMIC open
+    //
+    gPmicHandle[0U] = PMIC_open(0U, &gPmicParams[0U]);
+    //
+    //  PMIC configure
+    //
+    (void)PMIC_configure(gPmicHandle[0U]);
+% }
+}

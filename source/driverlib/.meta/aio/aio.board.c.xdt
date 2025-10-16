@@ -1,25 +1,46 @@
-% var module = system.modules['/driverlib/aio.js'];
 % let Common   = system.getScript("/driverlib/Common.js");
 //*****************************************************************************
 //
 // AIO Configurations
 //
 //*****************************************************************************
-void `module.peripheralName`_init(){
-%   for(var i = 0; i < module.$instances.length; i++) 
-%   {
-%      var instance = module.$instances[i];
+void AIO_init(){
+% if(Common.isAllocationOff()){
+	% var module = Common.getModuleForCore("/driverlib/aio.js", "CPU1");
+	% if (module != null) {
+	%   for(var i = 0; i < module.$instances.length; i++)
+	%   {
+	%      var instance = module.$instances[i];
 	`instance.$name`_init();
-%   }
+	%   }
+	% }
+% }
+% else {
+	% let raData = system.resourceAllocation.data
+	% for (let context of raData.contexts)
+	% {
+	    % let module = context.modules.find(x => x.moduleName === '/driverlib/aio.js')
+		% if ((module != null) && ((system.context == context.contextName) || (system.context == "CPU1")))
+		% {
+		%   for(var i = 0; i < module.instances.length; i++) 
+		%   {
+		%      var instance = module.instances[i];
+	`instance.allocationName`_init();
+		%   }
+		% }
+	% }
+% }
 }
-
+% if(Common.isAllocationOff()){
+% var module = Common.getModuleForCore("/driverlib/aio.js", "CPU1");
 %if (module != null)
 %{
 	% for(var i = 0; i < module.$instances.length; i++) {
 	    % var instance = module.$instances[i];
+
 void `instance.$name`_init(){
+	% if (Common.isContextCPU1()){
 	GPIO_setAnalogMode(`instance.$name`, GPIO_ANALOG_DISABLED);
-	GPIO_setDirectionMode(`instance.$name`, GPIO_DIR_MODE_IN);
 %if(instance.padConfig == "STD")
 %{
 	GPIO_setPadConfig(`instance.$name`, GPIO_PIN_TYPE_`instance.padConfig`);
@@ -54,6 +75,82 @@ void `instance.$name`_init(){
 %}
 	GPIO_setControllerCore(`instance.$name`, `instance.controllerCore`);
 	GPIO_setQualificationMode(`instance.$name`, `instance.qualMode`);
+% }
+%if(system.context == instance.controllerCore.split("_")[2]){
+	GPIO_setDirectionMode(`instance.$name`, GPIO_DIR_MODE_IN);
+% }
 }
  	%}
 %}
+%}
+% else{
+	% let raData = system.resourceAllocation.data
+	% for (let context of raData.contexts)
+	% {
+	%    let module = context.modules.find(x => x.moduleName === '/driverlib/aio.js')
+%if (module != null)
+%{
+	% for(var i = 0; i < module.instances.length; i++) {
+	    % var instance = module.instances[i];
+		% var instanceArgs = instance.requiredArgs
+		% if (Common.isContextCPU1()){
+
+void `instance.allocationName`_init(){
+	GPIO_setAnalogMode(`instance.allocationName`, GPIO_ANALOG_DISABLED);
+			%if(instanceArgs.padConfig == "STD")
+			%{
+	GPIO_setPadConfig(`instance.allocationName`, GPIO_PIN_TYPE_`instanceArgs.padConfig`);
+			%}
+			%else if(instanceArgs.padConfig == "PULLUP")
+			%{
+	GPIO_setPadConfig(`instance.allocationName`, GPIO_PIN_TYPE_STD | GPIO_PIN_TYPE_PULLUP);
+			%}
+			%else if(instanceArgs.padConfig == "INVERT")
+			%{
+	GPIO_setPadConfig(`instance.allocationName`, GPIO_PIN_TYPE_STD | GPIO_PIN_TYPE_INVERT);
+			%}
+			%else if(instanceArgs.padConfig == "PULLUP_INVERT")
+			%{
+	GPIO_setPadConfig(`instance.allocationName`, GPIO_PIN_TYPE_STD | GPIO_PIN_TYPE_PULLUP | GPIO_PIN_TYPE_INVERT);
+			%}
+			%else if(instanceArgs.padConfig == "OD")
+			%{
+	GPIO_setPadConfig(`instance.allocationName`, GPIO_PIN_TYPE_`instanceArgs.padConfig`);
+			%}
+			%else if(instanceArgs.padConfig == "OD_PULLUP")
+			%{
+	GPIO_setPadConfig(`instance.allocationName`, GPIO_PIN_TYPE_OD | GPIO_PIN_TYPE_PULLUP);
+			%}
+			%else if(instanceArgs.padConfig == "OD_INVERT")
+			%{
+	GPIO_setPadConfig(`instance.allocationName`, GPIO_PIN_TYPE_OD | GPIO_PIN_TYPE_INVERT);
+			%}
+			%else if(instanceArgs.padConfig == "OD_PULLUP_INVERT")
+			%{
+	GPIO_setPadConfig(`instance.allocationName`, GPIO_PIN_TYPE_OD | GPIO_PIN_TYPE_PULLUP | GPIO_PIN_TYPE_INVERT);
+			%}
+	GPIO_setControllerCore(`instance.allocationName`, `instanceArgs.controllerCore`);
+	GPIO_setQualificationMode(`instance.allocationName`, `instanceArgs.qualMode`);
+		%}
+	%if(system.context == context.contextName){
+		%if(!Common.isContextCPU1()){
+
+void `instance.allocationName`_init(){
+		%}
+		% let cpuModule = system.modules["/driverlib/aio.js"]
+			% if(cpuModule){
+				%let cpuInstances = cpuModule.$instances
+				%let cpuConfig = cpuInstances.find(x => x.$allocation === instance.allocationName)
+				%if (cpuConfig){
+	GPIO_setDirectionMode(`instance.allocationName`, GPIO_DIR_MODE_IN);
+				% }
+			%}
+}
+	%}
+	% else if(Common.isContextCPU1()){
+}
+	%}
+ 	%}
+%}
+	% }
+% }

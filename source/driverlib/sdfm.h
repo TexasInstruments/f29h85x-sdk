@@ -502,7 +502,6 @@ typedef struct
 //
 //*****************************************************************************
 #ifdef DEBUG
-__attribute__((always_inline))
 static inline bool
 SDFM_isBaseValid(uint32_t base)
 {
@@ -528,7 +527,6 @@ SDFM_isBaseValid(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SDFM_enableExternalReset(uint32_t base, SDFM_FilterNumber filterNumber)
 {
@@ -553,7 +551,6 @@ SDFM_enableExternalReset(uint32_t base, SDFM_FilterNumber filterNumber)
 //!
 //! \return None.
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SDFM_disableExternalReset(uint32_t base, SDFM_FilterNumber filterNumber)
 {
@@ -578,7 +575,6 @@ SDFM_disableExternalReset(uint32_t base, SDFM_FilterNumber filterNumber)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SDFM_enableFilter(uint32_t base, SDFM_FilterNumber filterNumber)
 {
@@ -603,7 +599,6 @@ SDFM_enableFilter(uint32_t base, SDFM_FilterNumber filterNumber)
 //!
 //! \return None.
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SDFM_disableFilter(uint32_t base, SDFM_FilterNumber filterNumber)
 {
@@ -629,7 +624,6 @@ SDFM_disableFilter(uint32_t base, SDFM_FilterNumber filterNumber)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SDFM_enableFIFOBuffer(uint32_t base, SDFM_FilterNumber filterNumber)
 {
@@ -655,7 +649,6 @@ SDFM_enableFIFOBuffer(uint32_t base, SDFM_FilterNumber filterNumber)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SDFM_disableFIFOBuffer(uint32_t base, SDFM_FilterNumber filterNumber)
 {
@@ -682,7 +675,6 @@ SDFM_disableFIFOBuffer(uint32_t base, SDFM_FilterNumber filterNumber)
 //!         \b false if Comparator filter output < High-level threshold (Z)
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline bool
 SDFM_getZeroCrossTripStatus(uint32_t base, SDFM_FilterNumber filterNumber)
 {
@@ -705,7 +697,6 @@ SDFM_getZeroCrossTripStatus(uint32_t base, SDFM_FilterNumber filterNumber)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SDFM_clearZeroCrossTripStatus(uint32_t base, SDFM_FilterNumber filterNumber)
 {
@@ -729,7 +720,6 @@ SDFM_clearZeroCrossTripStatus(uint32_t base, SDFM_FilterNumber filterNumber)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SDFM_enableComparator(uint32_t base, SDFM_FilterNumber filterNumber)
 {
@@ -754,7 +744,6 @@ SDFM_enableComparator(uint32_t base, SDFM_FilterNumber filterNumber)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SDFM_disableComparator(uint32_t base, SDFM_FilterNumber filterNumber)
 {
@@ -799,7 +788,6 @@ SDFM_disableComparator(uint32_t base, SDFM_FilterNumber filterNumber)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SDFM_selectCompEventSource(uint32_t base, SDFM_FilterNumber filterNumber,
                            SDFM_CompEventNumber compEventNum,
@@ -831,7 +819,6 @@ SDFM_selectCompEventSource(uint32_t base, SDFM_FilterNumber filterNumber,
 //!
 //! \return None.
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SDFM_setFilterType(uint32_t base, SDFM_FilterNumber filterNumber,
                    SDFM_FilterType filterType)
@@ -864,7 +851,6 @@ SDFM_setFilterType(uint32_t base, SDFM_FilterNumber filterNumber,
 //!
 //! \return None.
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SDFM_setFilterOverSamplingRatio(uint32_t base, SDFM_FilterNumber filterNumber,
                                 uint16_t overSamplingRatio)
@@ -899,7 +885,6 @@ SDFM_setFilterOverSamplingRatio(uint32_t base, SDFM_FilterNumber filterNumber,
 //!
 //! \return None.
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SDFM_setupModulatorClock(uint32_t base, SDFM_FilterNumber filterNumber,
                          SDFM_ModulatorClockMode clockMode)
@@ -938,7 +923,6 @@ SDFM_setupModulatorClock(uint32_t base, SDFM_FilterNumber filterNumber,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SDFM_setOutputDataFormat(uint32_t base, SDFM_FilterNumber filterNumber,
                          SDFM_OutputDataFormat dataFormat)
@@ -974,7 +958,6 @@ SDFM_setOutputDataFormat(uint32_t base, SDFM_FilterNumber filterNumber,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SDFM_setDataShiftValue(uint32_t base, SDFM_FilterNumber filterNumber,
                        uint16_t shiftValue)
@@ -1012,7 +995,6 @@ SDFM_setDataShiftValue(uint32_t base, SDFM_FilterNumber filterNumber,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SDFM_setCompFilterHighThreshold(uint32_t base, SDFM_FilterNumber filterNumber,
                                 uint32_t highThreshold)
@@ -1055,7 +1037,6 @@ SDFM_setCompFilterHighThreshold(uint32_t base, SDFM_FilterNumber filterNumber,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SDFM_setCompFilterLowThreshold(uint32_t base, SDFM_FilterNumber filterNumber,
                                uint32_t lowThreshold)
@@ -1093,7 +1074,6 @@ SDFM_setCompFilterLowThreshold(uint32_t base, SDFM_FilterNumber filterNumber,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SDFM_setCompFilterZeroCrossThreshold(uint32_t base,
                                      SDFM_FilterNumber filterNumber,
@@ -1126,7 +1106,6 @@ SDFM_setCompFilterZeroCrossThreshold(uint32_t base,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SDFM_enableZeroCrossEdgeDetect(uint32_t base, SDFM_FilterNumber filterNumber)
 {
@@ -1151,7 +1130,6 @@ SDFM_enableZeroCrossEdgeDetect(uint32_t base, SDFM_FilterNumber filterNumber)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SDFM_disableZeroCrossEdgeDetect(uint32_t base, SDFM_FilterNumber filterNumber)
 {
@@ -1183,7 +1161,6 @@ SDFM_disableZeroCrossEdgeDetect(uint32_t base, SDFM_FilterNumber filterNumber)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SDFM_enableInterrupt(uint32_t base, SDFM_FilterNumber filterNumber,
                      uint16_t intFlags)
@@ -1251,7 +1228,6 @@ SDFM_enableInterrupt(uint32_t base, SDFM_FilterNumber filterNumber,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SDFM_disableInterrupt(uint32_t base, SDFM_FilterNumber filterNumber,
                       uint16_t intFlags)
@@ -1313,7 +1289,6 @@ SDFM_disableInterrupt(uint32_t base, SDFM_FilterNumber filterNumber,
 //!
 //! \return None.
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SDFM_setComparatorFilterType(uint32_t base, SDFM_FilterNumber filterNumber,
                              SDFM_FilterType filterType)
@@ -1346,7 +1321,6 @@ SDFM_setComparatorFilterType(uint32_t base, SDFM_FilterNumber filterNumber,
 //!
 //! \return None.
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SDFM_setCompFilterOverSamplingRatio(uint32_t base,
                                     SDFM_FilterNumber filterNumber,
@@ -1379,7 +1353,6 @@ SDFM_setCompFilterOverSamplingRatio(uint32_t base,
 //!
 //! \return Returns the latest data filter output.
 //*****************************************************************************
-__attribute__((always_inline))
 static inline uint32_t
 SDFM_getFilterData(uint32_t base, SDFM_FilterNumber filterNumber)
 {
@@ -1410,7 +1383,6 @@ SDFM_getFilterData(uint32_t base, SDFM_FilterNumber filterNumber)
 //!                                   threshold.
 //!
 //*****************************************************************************
-__attribute__((always_inline))
 static inline SDFM_OutputThresholdStatus
 SDFM_getThresholdStatus(uint32_t base, SDFM_FilterNumber filterNumber)
 {
@@ -1436,7 +1408,6 @@ SDFM_getThresholdStatus(uint32_t base, SDFM_FilterNumber filterNumber)
 //!         Returns false if the Modulator has failed
 //!
 //*****************************************************************************
-__attribute__((always_inline))
 static inline bool
 SDFM_getModulatorStatus(uint32_t base, SDFM_FilterNumber filterNumber)
 {
@@ -1462,7 +1433,6 @@ SDFM_getModulatorStatus(uint32_t base, SDFM_FilterNumber filterNumber)
 //!         Returns \b false if no new filter data is available
 //!
 //*****************************************************************************
-__attribute__((always_inline))
 static inline bool
 SDFM_getNewFilterDataStatus(uint32_t base, SDFM_FilterNumber filterNumber)
 {
@@ -1489,7 +1459,6 @@ SDFM_getNewFilterDataStatus(uint32_t base, SDFM_FilterNumber filterNumber)
 //!         Returns \b false if FIFO buffer is not overflowed
 //!
 //*****************************************************************************
-__attribute__((always_inline))
 static inline bool
 SDFM_getFIFOOverflowStatus(uint32_t base, SDFM_FilterNumber filterNumber)
 {
@@ -1516,7 +1485,6 @@ SDFM_getFIFOOverflowStatus(uint32_t base, SDFM_FilterNumber filterNumber)
 //!         Returns \b false if FIFO buffer interrupt has not occurred.
 //!
 //*****************************************************************************
-__attribute__((always_inline))
 static inline bool
 SDFM_getFIFOISRStatus(uint32_t base, SDFM_FilterNumber filterNumber)
 {
@@ -1541,7 +1509,6 @@ SDFM_getFIFOISRStatus(uint32_t base, SDFM_FilterNumber filterNumber)
 //!         Returns \b false if no interrupt is pending.
 //!
 //*****************************************************************************
-__attribute__((always_inline))
 static inline bool
 SDFM_getIsrStatus(uint32_t base)
 {
@@ -1579,7 +1546,6 @@ SDFM_getIsrStatus(uint32_t base)
 //! \return None
 //!
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SDFM_clearInterruptFlag(uint32_t base, uint32_t flag)
 {
@@ -1603,7 +1569,6 @@ SDFM_clearInterruptFlag(uint32_t base, uint32_t flag)
 //! \return None
 //!
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SDFM_enableMainInterrupt(uint32_t base)
 {
@@ -1626,7 +1591,6 @@ SDFM_enableMainInterrupt(uint32_t base)
 //! \return None
 //!
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SDFM_disableMainInterrupt(uint32_t base)
 {
@@ -1649,7 +1613,6 @@ SDFM_disableMainInterrupt(uint32_t base)
 //! \return None
 //!
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SDFM_enableMainFilter(uint32_t base)
 {
@@ -1672,7 +1635,6 @@ SDFM_enableMainFilter(uint32_t base)
 //! \return None
 //!
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SDFM_disableMainFilter(uint32_t base)
 {
@@ -1696,7 +1658,6 @@ SDFM_disableMainFilter(uint32_t base)
 //! \return Returns the number of data words available in FIFO buffer.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline uint16_t
 SDFM_getFIFODataCount(uint32_t base, SDFM_FilterNumber filterNumber)
 {
@@ -1723,7 +1684,6 @@ SDFM_getFIFODataCount(uint32_t base, SDFM_FilterNumber filterNumber)
 //!
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline uint16_t
 SDFM_getComparatorSincData(uint32_t base, SDFM_FilterNumber filterNumber)
 {
@@ -1749,7 +1709,6 @@ SDFM_getComparatorSincData(uint32_t base, SDFM_FilterNumber filterNumber)
 //! \note Discard the upper 16 bits if the output data format is 16bits.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline uint32_t
 SDFM_getFIFOData(uint32_t base, SDFM_FilterNumber filterNumber)
 {
@@ -1776,7 +1735,6 @@ SDFM_getFIFOData(uint32_t base, SDFM_FilterNumber filterNumber)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SDFM_setFIFOInterruptLevel(uint32_t base, SDFM_FilterNumber filterNumber,
                            uint16_t fifoLevel)
@@ -1811,7 +1769,6 @@ SDFM_setFIFOInterruptLevel(uint32_t base, SDFM_FilterNumber filterNumber,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SDFM_setDataReadyInterruptSource(uint32_t base, SDFM_FilterNumber filterNumber,
                                  SDFM_DataReadyInterruptSource dataReadySource)
@@ -1842,7 +1799,6 @@ SDFM_setDataReadyInterruptSource(uint32_t base, SDFM_FilterNumber filterNumber,
 //!         Returns false if sync event has not occurred.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline bool
 SDFM_getWaitForSyncStatus(uint32_t base, SDFM_FilterNumber filterNumber)
 {
@@ -1867,7 +1823,6 @@ SDFM_getWaitForSyncStatus(uint32_t base, SDFM_FilterNumber filterNumber)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SDFM_clearWaitForSyncFlag(uint32_t base, SDFM_FilterNumber filterNumber)
 {
@@ -1893,7 +1848,6 @@ SDFM_clearWaitForSyncFlag(uint32_t base, SDFM_FilterNumber filterNumber)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SDFM_enableWaitForSync(uint32_t base, SDFM_FilterNumber filterNumber)
 {
@@ -1919,7 +1873,6 @@ SDFM_enableWaitForSync(uint32_t base, SDFM_FilterNumber filterNumber)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SDFM_disableWaitForSync(uint32_t base, SDFM_FilterNumber filterNumber)
 {
@@ -1948,7 +1901,6 @@ SDFM_disableWaitForSync(uint32_t base, SDFM_FilterNumber filterNumber)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SDFM_setPWMSyncSource(uint32_t base, SDFM_FilterNumber filterNumber,
                       SDFM_PWMSyncSource syncSource)
@@ -1988,7 +1940,6 @@ SDFM_setPWMSyncSource(uint32_t base, SDFM_FilterNumber filterNumber,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SDFM_setFIFOClearOnSyncMode(uint32_t base, SDFM_FilterNumber filterNumber,
                             SDFM_FIFOClearSyncMode fifoClearSyncMode)
@@ -2025,7 +1976,6 @@ SDFM_setFIFOClearOnSyncMode(uint32_t base, SDFM_FilterNumber filterNumber,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SDFM_setWaitForSyncClearMode(uint32_t base, SDFM_FilterNumber filterNumber,
                              SDFM_WaitForSyncClearMode syncClearMode)
@@ -2059,7 +2009,6 @@ SDFM_setWaitForSyncClearMode(uint32_t base, SDFM_FilterNumber filterNumber,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SDFM_selectClockSource(uint32_t base, SDFM_FilterNumber filterNumber,
                        SDFM_ClockSource clkSource)
@@ -2093,7 +2042,6 @@ SDFM_selectClockSource(uint32_t base, SDFM_FilterNumber filterNumber,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SDFM_enableSynchronizer(uint32_t base, SDFM_FilterNumber filterNumber,
                         uint16_t syncConfig)
@@ -2123,7 +2071,6 @@ SDFM_enableSynchronizer(uint32_t base, SDFM_FilterNumber filterNumber,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SDFM_disableSynchronizer(uint32_t base, SDFM_FilterNumber filterNumber,
                          uint16_t syncConfig)
@@ -2153,7 +2100,6 @@ SDFM_disableSynchronizer(uint32_t base, SDFM_FilterNumber filterNumber,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SDFM_selectCompEventHighSource(uint32_t base, SDFM_FilterNumber filterNumber,
                                SDFM_CompEventHighSource source)
@@ -2186,7 +2132,6 @@ SDFM_selectCompEventHighSource(uint32_t base, SDFM_FilterNumber filterNumber,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SDFM_selectCompEventLowSource(uint32_t base, SDFM_FilterNumber filterNumber,
                               SDFM_CompEventLowSource source)
@@ -2215,7 +2160,6 @@ SDFM_selectCompEventLowSource(uint32_t base, SDFM_FilterNumber filterNumber,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SDFM_initCompEventLowFilter(uint32_t base, SDFM_FilterNumber filterNumber)
 {
@@ -2241,7 +2185,6 @@ SDFM_initCompEventLowFilter(uint32_t base, SDFM_FilterNumber filterNumber)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SDFM_initCompEventHighFilter(uint32_t base, SDFM_FilterNumber filterNumber)
 {
@@ -2272,7 +2215,6 @@ SDFM_initCompEventHighFilter(uint32_t base, SDFM_FilterNumber filterNumber)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SDFM_lockCompEventFilterConfig(uint32_t base, SDFM_FilterNumber filterNumber,
                                uint16_t lockConfig)

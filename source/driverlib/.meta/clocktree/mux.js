@@ -1,6 +1,14 @@
 exports = {
 	displayName: "Mux",
-	config: [],
+	config: [
+		{
+			name: "$assignedContext",
+			hidden: true,
+			options: [{name: "CPU1"}],
+			default: "CPU1",
+			readOnly: true
+		}
+	],
 	extendConfig: ({ $ipInstance }) => {
 		var pinConfig = [];
 		pinConfig.push({
@@ -14,6 +22,7 @@ exports = {
 			displayName: "Input Select",
 			default: $ipInstance.resetValue,
 			options: _.map($ipInstance.inPins, ({ name }) => ({ name })),
+			shouldBeAllocatedAsResource : true
 		})
 		pinConfig.push({
 			name: $ipInstance.outPins[0].name,
@@ -23,9 +32,9 @@ exports = {
 		if ($ipInstance.name == "CPUSELx")
 		{
 				pinConfig.push({
-				name: "cpu_sel_mux", 
-				displayName: "CPU Select Mux", 
-				default: "Click the hyper link for CPUCLK GATES", 
+				name: "cpu_sel_mux",
+				displayName: "CPU Select Mux",
+				default: "Click the hyper link for CPUCLK GATES",
 				getValue: (inst) => { return "Click the hyper link for CPUCLK GATES" },
 			})
 		}
@@ -41,5 +50,6 @@ exports = {
 				logInfo("For enabling peripherals, use the " + system.getReference(sysctl.$static, "enable_SYSCTL_PERIPH_CLK_TIMER0"), inst, "cpu_sel_mux")
 			}
 		}
-	}
+	},
+	shouldBeAllocatedAsResource : true
 };

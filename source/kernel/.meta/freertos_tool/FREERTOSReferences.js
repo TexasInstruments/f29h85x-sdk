@@ -36,7 +36,7 @@ var references = [
         },
         {
             name: "PORTASM",
-            path: "../source/kernel/freertos/Source/portable/CCS/C2000_C29x/portasm.asm",
+            path: "../source/kernel/freertos/Source/portable/CCS/C2000_C29x/portasm.S",
             alwaysInclude: false,
         },
         {

@@ -72,7 +72,8 @@ function getGpioQualificationModInstDefinitions(peripheralName, inst){
                 },
                 requiredArgs : {
 
-                }
+                },
+                shouldBeAllocatedAsResource: true,
             })
         }
         else
@@ -99,7 +100,8 @@ function getGpioQualificationModInstDefinitions(peripheralName, inst){
                 },
                 requiredArgs : {
 
-                }
+                },
+                shouldBeAllocatedAsResource: true,
             })
         }
         //console.log(ownedInstances);
@@ -438,6 +440,7 @@ function addCustomPinmuxEnumToConfig(module)
             default     : [],
             minSelections: 0,
             options     : options,
+            shouldBeAllocatedAsResource: true
         }
         /*,
         {
@@ -1483,7 +1486,7 @@ function sentPinmuxRequirements(inst)
 
 function esmPinmuxRequirements(inst)
 {
-    if(!Common.isContextCPU1() | !inst.useErrorPin) {
+    if( !inst.useErrorPin) {
         return []
     }
     var peripheralName = "OTHER";
@@ -2087,7 +2090,6 @@ function xclkoutPinmuxRequirements(inst)
     var peripheralName = "OTHER";
     let resources = [];
     var signalTypes = {};
-    console.log(system.deviceData.interfaces[peripheralName]);
     var InterfaceNames = Object.keys(system.deviceData.interfaces[peripheralName].interfacePins);
     var i = 1;
     for (var interfaceNumber in InterfaceNames)

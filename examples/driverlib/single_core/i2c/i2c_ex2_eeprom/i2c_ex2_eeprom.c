@@ -122,7 +122,7 @@ void INT_myI2C0_FIFO_ISR(void);
 //
 // Main
 //
-void main(void)
+int main(void)
 {
     uint16_t error;
     uint16_t i;

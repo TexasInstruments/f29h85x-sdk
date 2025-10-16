@@ -1,0 +1,662 @@
+{
+  "metadata": {
+    "toolVersion": "1.25.0+4259",
+    "products": [
+      "MCU_SDK_F29H85x@1.02.02.00"
+    ],
+    "device": "F29H850TU",
+    "package": "256ZEX",
+    "variant": "TMS320F29H850TU9"
+  },
+  "contexts": [
+    {
+      "contextName": "CPU1",
+      "modules": [
+        {
+          "moduleName": "/driverlib/clocktree/divider.js",
+          "instances": [
+            {
+              "allocationName": "DIV_BY_4",
+              "requiredArgs": {
+                "divideValue": 4
+              }
+            },
+            {
+              "allocationName": "ECATDIV",
+              "requiredArgs": {
+                "divideValue": 8
+              }
+            },
+            {
+              "allocationName": "EMIF1CLKDIV",
+              "requiredArgs": {
+                "divideValue": 2
+              }
+            },
+            {
+              "allocationName": "EPWMCLKDIV",
+              "requiredArgs": {
+                "divideValue": 2
+              }
+            },
+            {
+              "allocationName": "HSMCLKDIV",
+              "requiredArgs": {
+                "divideValue": 2
+              }
+            },
+            {
+              "allocationName": "LINACLKDIV",
+              "requiredArgs": {
+                "divideValue": 2
+              }
+            },
+            {
+              "allocationName": "LINBCLKDIV",
+              "requiredArgs": {
+                "divideValue": 2
+              }
+            },
+            {
+              "allocationName": "MCANACLKDIV",
+              "requiredArgs": {
+                "divideValue": 20
+              }
+            },
+            {
+              "allocationName": "MCANBCLKDIV",
+              "requiredArgs": {
+                "divideValue": 20
+              }
+            },
+            {
+              "allocationName": "MCANCCLKDIV",
+              "requiredArgs": {
+                "divideValue": 20
+              }
+            },
+            {
+              "allocationName": "MCANDCLKDIV",
+              "requiredArgs": {
+                "divideValue": 20
+              }
+            },
+            {
+              "allocationName": "MCANECLKDIV",
+              "requiredArgs": {
+                "divideValue": 20
+              }
+            },
+            {
+              "allocationName": "MCANFCLKDIV",
+              "requiredArgs": {
+                "divideValue": 20
+              }
+            },
+            {
+              "allocationName": "PLL_ODIV",
+              "requiredArgs": {
+                "divideValue": 2
+              }
+            },
+            {
+              "allocationName": "PLL_REFDIV",
+              "requiredArgs": {
+                "divideValue": 1
+              }
+            },
+            {
+              "allocationName": "SYSCLKDIVSEL",
+              "requiredArgs": {
+                "divideValue": 1
+              }
+            }
+          ]
+        },
+        {
+          "moduleName": "/driverlib/clocktree/multiplier.js",
+          "instances": [
+            {
+              "allocationName": "PLL_IMULT",
+              "requiredArgs": {
+                "multiplyValue": 40
+              }
+            }
+          ]
+        },
+        {
+          "moduleName": "/driverlib/clocktree/mux.js",
+          "instances": [
+            {
+              "allocationName": "MCANABCLKSEL",
+              "requiredArgs": {
+                "inputSelect": "PERx.SYSCLK"
+              }
+            },
+            {
+              "allocationName": "MCANBBCLKSEL",
+              "requiredArgs": {
+                "inputSelect": "PERx.SYSCLK"
+              }
+            },
+            {
+              "allocationName": "MCANCBCLKSEL",
+              "requiredArgs": {
+                "inputSelect": "PERx.SYSCLK"
+              }
+            },
+            {
+              "allocationName": "MCANDBCLKSEL",
+              "requiredArgs": {
+                "inputSelect": "PERx.SYSCLK"
+              }
+            },
+            {
+              "allocationName": "MCANEBCLKSEL",
+              "requiredArgs": {
+                "inputSelect": "PERx.SYSCLK"
+              }
+            },
+            {
+              "allocationName": "MCANFBCLKSEL",
+              "requiredArgs": {
+                "inputSelect": "PERx.SYSCLK"
+              }
+            },
+            {
+              "allocationName": "OSCCLKSRCSEL",
+              "requiredArgs": {
+                "inputSelect": "INTOSC2"
+              }
+            },
+            {
+              "allocationName": "SYSPLLCTL1",
+              "requiredArgs": {
+                "inputSelect": "PLLRAWCLK"
+              }
+            },
+            {
+              "allocationName": "XTAL_OR_X1",
+              "requiredArgs": {
+                "inputSelect": "X1"
+              }
+            }
+          ]
+        },
+        {
+          "moduleName": "/driverlib/clocktree/oscillators.js",
+          "instances": [
+            {
+              "allocationName": "INTOSC1",
+              "requiredArgs": {}
+            },
+            {
+              "allocationName": "INTOSC2",
+              "requiredArgs": {}
+            }
+          ]
+        },
+        {
+          "moduleName": "/driverlib/clocktree/pinFunction.js",
+          "instances": [
+            {
+              "allocationName": "AUXCLK",
+              "requiredArgs": {
+                "XTAL_Freq": 20,
+                "minXTAL": 10,
+                "maxXTAL": 60
+              }
+            },
+            {
+              "allocationName": "X1",
+              "requiredArgs": {
+                "XTAL_Freq": 25,
+                "minXTAL": 10,
+                "maxXTAL": 25
+              }
+            },
+            {
+              "allocationName": "XTAL",
+              "requiredArgs": {
+                "XTAL_Freq": 10,
+                "minXTAL": 10,
+                "maxXTAL": 20
+              }
+            }
+          ]
+        },
+        {
+          "moduleName": "/driverlib/clocktree/unknown.js",
+          "instances": [
+            {
+              "allocationName": "CPU1",
+              "requiredArgs": {}
+            },
+            {
+              "allocationName": "CPU1_CPUCLK_domain",
+              "requiredArgs": {}
+            },
+            {
+              "allocationName": "CPU2",
+              "requiredArgs": {}
+            },
+            {
+              "allocationName": "CPU2_CPUCLK_domain",
+              "requiredArgs": {}
+            },
+            {
+              "allocationName": "CPU3",
+              "requiredArgs": {}
+            },
+            {
+              "allocationName": "CPU3_CPUCLK_domain",
+              "requiredArgs": {}
+            },
+            {
+              "allocationName": "ECATPHYCLK",
+              "requiredArgs": {}
+            },
+            {
+              "allocationName": "EMIF1_Clock_domain",
+              "requiredArgs": {}
+            },
+            {
+              "allocationName": "EPWM_Clock_domain",
+              "requiredArgs": {}
+            },
+            {
+              "allocationName": "EtherCAT_domain",
+              "requiredArgs": {}
+            },
+            {
+              "allocationName": "HSM_CLOCK_domain",
+              "requiredArgs": {}
+            },
+            {
+              "allocationName": "LINCLKA_domain",
+              "requiredArgs": {}
+            },
+            {
+              "allocationName": "LINCLKB_domain",
+              "requiredArgs": {}
+            },
+            {
+              "allocationName": "MCANA_CLOCK_domain",
+              "requiredArgs": {}
+            },
+            {
+              "allocationName": "MCANB_CLOCK_domain",
+              "requiredArgs": {}
+            },
+            {
+              "allocationName": "MCANC_CLOCK_domain",
+              "requiredArgs": {}
+            },
+            {
+              "allocationName": "MCAND_CLOCK_domain",
+              "requiredArgs": {}
+            },
+            {
+              "allocationName": "MCANE_CLOCK_domain",
+              "requiredArgs": {}
+            },
+            {
+              "allocationName": "MCANF_CLOCK_domain",
+              "requiredArgs": {}
+            },
+            {
+              "allocationName": "PERx_CPU_PLLSYSCLK_GATE",
+              "requiredArgs": {}
+            },
+            {
+              "allocationName": "PERx_SYSCLK_domain",
+              "requiredArgs": {}
+            },
+            {
+              "allocationName": "PHYCLKEN",
+              "requiredArgs": {}
+            },
+            {
+              "allocationName": "PLLSYSCLK_domain",
+              "requiredArgs": {}
+            },
+            {
+              "allocationName": "Watchdog_domain",
+              "requiredArgs": {}
+            }
+          ]
+        },
+        {
+          "moduleName": "/driverlib/epwm.js",
+          "instances": [
+            {
+              "allocationName": "myEPWM0",
+              "requiredArgs": {
+                "useInterfacePins": [],
+                "epwm": {
+                  "$assign": "EPWM1",
+                  "epwm_aPin": {
+                    "$assign": "A8"
+                  },
+                  "epwm_bPin": {
+                    "$assign": "A7"
+                  }
+                },
+                "aQual": {
+                  "$allocation": "myEPWM0_aQual"
+                },
+                "bQual": {
+                  "$allocation": "myEPWM0_bQual"
+                },
+                "periphConfig": {
+                  "$allocation": "driverlib_perConfig1"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "moduleName": "/driverlib/gpio/gpioQual.js",
+          "instances": [
+            {
+              "allocationName": "myEPWM0_aQual",
+              "requiredArgs": {
+                "padConfig": "STD",
+                "qualMode": "GPIO_QUAL_SYNC"
+              }
+            },
+            {
+              "allocationName": "myEPWM0_bQual",
+              "requiredArgs": {
+                "padConfig": "STD",
+                "qualMode": "GPIO_QUAL_SYNC"
+              }
+            }
+          ]
+        },
+        {
+          "moduleName": "/driverlib/jtag.js",
+          "moduleStatic": {
+            "allocationName": "/driverlib/jtag.js",
+            "requiredArgs": {
+              "JTAG": {
+                "$assign": "JTAG",
+                "tdoPin": {
+                  "$assign": "R14"
+                },
+                "tdiPin": {
+                  "$assign": "T14"
+                }
+              }
+            }
+          },
+          "instances": []
+        },
+        {
+          "moduleName": "/driverlib/perConfig.js",
+          "instances": [
+            {
+              "allocationName": "driverlib_perConfig1",
+              "requiredArgs": {
+                "cpuSel": "CPU1",
+                "frameSel": "FRAME0",
+                "removeCpuSelStandbyDbgHalt": false,
+                "removeFrameSel": false,
+                "standbyEn": true,
+                "dbgHaltEn": true,
+                "pinmuxPeripheralModule": "epwm",
+                "peripheralInst": ""
+              }
+            },
+            {
+              "allocationName": "driverlib_perConfig0",
+              "requiredArgs": {
+                "cpuSel": "CPU1",
+                "frameSel": "FRAME0",
+                "removeCpuSelStandbyDbgHalt": true,
+                "removeFrameSel": false,
+                "standbyEn": false,
+                "dbgHaltEn": false,
+                "pinmuxPeripheralModule": "",
+                "peripheralInst": "RTDMA1CH"
+              }
+            }
+          ]
+        },
+        {
+          "moduleName": "/driverlib/rtdma1.js",
+          "moduleStatic": {
+            "allocationName": "/driverlib/rtdma1.js",
+            "alwaysAllocateAsResource": true,
+            "requiredArgs": {
+              "dmaBase": "RTDMA1",
+              "emulationMode": "DMA_EMULATION_STOP",
+              "enableSoftwarePriority": true,
+              "lockDMAConfig": false,
+              "commitDMAConfig": false,
+              "enableMPU": false,
+              "periphConfig": {
+                "$allocation": "driverlib_perConfig0"
+              }
+            }
+          },
+          "instances": []
+        }
+      ]
+    },
+    {
+      "contextName": "CPU3",
+      "modules": [
+        {
+          "moduleName": "/driverlib/gpio/gpioQual.js",
+          "instances": [
+            {
+              "allocationName": "myGPIOQUAL0",
+              "requiredArgs": {
+                "padConfig": "STD",
+                "qualMode": "GPIO_QUAL_ASYNC"
+              }
+            },
+            {
+              "allocationName": "myGPIOQUAL1",
+              "requiredArgs": {
+                "padConfig": "STD",
+                "qualMode": "GPIO_QUAL_ASYNC"
+              }
+            },
+            {
+              "allocationName": "myGPIOQUAL2",
+              "requiredArgs": {
+                "padConfig": "STD",
+                "qualMode": "GPIO_QUAL_ASYNC"
+              }
+            },
+            {
+              "allocationName": "myGPIOQUAL3",
+              "requiredArgs": {
+                "padConfig": "STD",
+                "qualMode": "GPIO_QUAL_ASYNC"
+              }
+            }
+          ]
+        },
+        {
+          "moduleName": "/driverlib/perConfig.js",
+          "instances": [
+            {
+              "allocationName": "driverlib_perConfig0",
+              "requiredArgs": {
+                "cpuSel": "CPU1",
+                "frameSel": "FRAME0",
+                "removeCpuSelStandbyDbgHalt": true,
+                "removeFrameSel": false,
+                "standbyEn": false,
+                "dbgHaltEn": false,
+                "pinmuxPeripheralModule": "",
+                "peripheralInst": "RTDMA1CH"
+              }
+            },
+            {
+              "allocationName": "driverlib_perConfig2",
+              "requiredArgs": {
+                "cpuSel": "CPU3",
+                "frameSel": "FRAME0",
+                "removeCpuSelStandbyDbgHalt": false,
+                "removeFrameSel": false,
+                "standbyEn": true,
+                "dbgHaltEn": true,
+                "pinmuxPeripheralModule": "spi",
+                "peripheralInst": ""
+              }
+            }
+          ]
+        },
+        {
+          "moduleName": "/driverlib/rtdma1.js",
+          "moduleStatic": {
+            "allocationName": "/driverlib/rtdma1.js",
+            "alwaysAllocateAsResource": true,
+            "requiredArgs": {
+              "dmaBase": "RTDMA1",
+              "emulationMode": "DMA_EMULATION_STOP",
+              "enableSoftwarePriority": true,
+              "lockDMAConfig": false,
+              "commitDMAConfig": false,
+              "enableMPU": false,
+              "periphConfig": {
+                "$allocation": "driverlib_perConfig0"
+              }
+            }
+          },
+          "instances": [
+            {
+              "allocationName": "myRTDMA1Ch0",
+              "requiredArgs": {
+                "chBase": "RTDMA1CH1_BASE",
+                "channelPriority": "DMA_CHPRIORITY1"
+              }
+            }
+          ]
+        },
+        {
+          "moduleName": "/driverlib/spi.js",
+          "instances": [
+            {
+              "allocationName": "mySPI0",
+              "requiredArgs": {
+                "useHSMode": false,
+                "useDMARX": false,
+                "DMARXInst": "RTDMA1_BASE",
+                "useDMATX": false,
+                "DMATXInst": "RTDMA1_BASE",
+                "useInterfacePins": [],
+                "spi": {
+                  "$assign": "SPIA",
+                  "spi_picoPin": {
+                    "$assign": "H5"
+                  },
+                  "spi_pociPin": {
+                    "$assign": "H2"
+                  },
+                  "spi_clkPin": {
+                    "$assign": "H3"
+                  },
+                  "spi_ptePin": {
+                    "$assign": "H4"
+                  }
+                },
+                "picoQual": {
+                  "$allocation": "myGPIOQUAL0"
+                },
+                "pociQual": {
+                  "$allocation": "myGPIOQUAL1"
+                },
+                "clkQual": {
+                  "$allocation": "myGPIOQUAL2"
+                },
+                "pteQual": {
+                  "$allocation": "myGPIOQUAL3"
+                },
+                "periphConfig": {
+                  "$allocation": "driverlib_perConfig2"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "contextName": "CPU2",
+      "modules": [
+        {
+          "moduleName": "/driverlib/perConfig.js",
+          "instances": [
+            {
+              "allocationName": "driverlib_perConfig0",
+              "requiredArgs": {
+                "cpuSel": "CPU1",
+                "frameSel": "FRAME0",
+                "removeCpuSelStandbyDbgHalt": true,
+                "removeFrameSel": false,
+                "standbyEn": false,
+                "dbgHaltEn": false,
+                "pinmuxPeripheralModule": "",
+                "peripheralInst": "RTDMA1CH"
+              }
+            }
+          ]
+        },
+        {
+          "moduleName": "/driverlib/rtdma1.js",
+          "moduleStatic": {
+            "allocationName": "/driverlib/rtdma1.js",
+            "alwaysAllocateAsResource": true,
+            "requiredArgs": {
+              "dmaBase": "RTDMA1",
+              "emulationMode": "DMA_EMULATION_STOP",
+              "enableSoftwarePriority": true,
+              "lockDMAConfig": false,
+              "commitDMAConfig": false,
+              "enableMPU": false,
+              "periphConfig": {
+                "$allocation": "driverlib_perConfig0"
+              }
+            }
+          },
+          "instances": []
+        }
+      ]
+    }
+  ],
+  "pinmux": {
+    "CPU1": [
+      {
+        "peripheralName": "EPWM1",
+        "pins": [
+          "A8",
+          "A7"
+        ]
+      },
+      {
+        "peripheralName": "JTAG",
+        "pins": [
+          "R14",
+          "T14"
+        ]
+      }
+    ],
+    "CPU3": [
+      {
+        "peripheralName": "SPIA",
+        "pins": [
+          "H5",
+          "H2",
+          "H3",
+          "H4"
+        ]
+      }
+    ],
+    "CPU2": []
+  }
+}

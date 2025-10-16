@@ -1,8 +1,9 @@
 let Common   = system.getScript("/driverlib/Common.js");
 let Pinmux   = system.getScript("/driverlib/pinmux.js");
+let check    = Common.isAllocationSetupMode()
 
-let device_driverlib_peripheral = 
-    system.getScript("/driverlib/device_driverlib_peripherals/" + 
+let device_driverlib_peripheral =
+    system.getScript("/driverlib/device_driverlib_peripherals/" +
         Common.getDeviceName().toLowerCase() + "_spi.js");
 
 let device_driverlib_memmap =
@@ -55,6 +56,9 @@ function onChangeRegisterInterrupts(inst, ui){
 }
 
 function burstSizeMapping(fifoLevel, inst){
+    if(!fifoLevel){
+        return 2;
+    }
     switch(fifoLevel) {
         case "SPI_FIFO_TXEMPTY":
         case "SPI_FIFO_TX0":
@@ -69,12 +73,12 @@ function burstSizeMapping(fifoLevel, inst){
             let retString = fifoLevel.split('_')[2];
             return 2*Number(retString.slice(2));
         }
-            
+
     }
 }
 
-function onValidate(inst, validation) 
-{   
+function onValidate(inst, validation)
+{
     var bitRateError = false;
     var bitRateInt;
     try{
@@ -90,38 +94,38 @@ function onValidate(inst, validation)
     if(bitRateError)
     {
         validation.logError(
-            "Enter an integer for bit rates between SYSCLK/128 and SYSCLK/4!", 
+            "Enter an integer for bit rates between SYSCLK/128 and SYSCLK/4!",
             inst, "bitRate");
     }
 
-    if(bitRateInt >= 12500000 && !inst.useHSMode && !bitRateError){
+    if(bitRateInt >= 12500000 && !inst.useHSMode && !bitRateError && !check){
         validation.logInfo(
-            "Use High Speed mode for maximum performance", 
+            "Use High Speed mode for maximum performance",
             inst, "bitRate");
     }
 
-    if(bitRateInt < 12500000 && inst.useHSMode && !bitRateError){
+    if(bitRateInt < 12500000 && inst.useHSMode && !bitRateError && !check){
         validation.logInfo(
-            "Consider disabling High Speed mode", 
+            "Consider disabling High Speed mode",
             inst, "bitRate");
     }
 
     if(inst.useHSMode){
         validation.logInfo(
-            "Pinmux options are limited to GPIOs supporting high speed mode", 
+            "Pinmux options are limited to GPIOs supporting high speed mode",
             inst, "useHSMode");
     }
 
     if (inst.useDMARX && inst.spiRXDMA.databusWidthConfig == "DMA_CFG_SIZE_32BIT") {
-        validation.logError("32 bit databus width is not valid while linked to SPI!", inst.spiRXDMA, "databusWidthConfig");   
+        validation.logError("32 bit databus width is not valid while linked to SPI!", inst.spiRXDMA, "databusWidthConfig");
     }
 
     if (inst.useDMATX && inst.spiTXDMA.databusWidthConfig == "DMA_CFG_SIZE_32BIT") {
-        validation.logError("32 bit databus width is not valid while linked to SPI!", inst.spiTXDMA, "databusWidthConfig");   
+        validation.logError("32 bit databus width is not valid while linked to SPI!", inst.spiTXDMA, "databusWidthConfig");
     }
 
     if ((inst.useDMATX || inst.useDMARX) && !inst.useFifo) {
-        validation.logError("FIFO must be enabled for DMA linking!", inst, "useFifo");   
+        validation.logError("FIFO must be enabled for DMA linking!", inst, "useFifo");
     }
 
     if(inst.useDMARX && (inst.spiRXDMA.burstSize != burstSizeMapping(inst.rxFifo, inst)))
@@ -142,6 +146,14 @@ function onValidate(inst, validation)
         if (inst[pinmuxQualMod.name].padConfig.includes("OD"))
         {
             validation.logError("The open-drain pad configuration should not be used for the SPI module.", inst);
+        }
+    }
+
+    if(inst.$name == "TPS653860XX_PMIC_SPI")
+    {
+        if(inst.bitRate > 10200000)
+        {
+            validation.logError("TPS653860XX_PMIC_SPI PMIC SPI bitrate must be less than 10.2 MHz.", inst);
         }
     }
 }
@@ -168,7 +180,7 @@ function onChangeUseInterrupts(inst, ui)
             ui.txFifo.hidden = true;
             ui.rxFifo.hidden = true;
         }
-        
+
     }
     else
     {
@@ -176,7 +188,7 @@ function onChangeUseInterrupts(inst, ui)
 
         ui.enabledFIFOInterrupts.hidden = true;
         ui.enabledInterrupts.hidden = true;
-        
+
         ui.txFifo.hidden = true;
         ui.rxFifo.hidden = true;
     }
@@ -188,7 +200,7 @@ function onChangeUseDMARX(inst, ui)
     {
         ui.DMARXInst.hidden = false;
     }
-    else 
+    else
     {
         ui.DMARXInst.hidden = true;
     }
@@ -200,7 +212,7 @@ function onChangeUseDMATX(inst, ui)
     {
         ui.DMATXInst.hidden = false;
     }
-    else 
+    else
     {
         ui.DMATXInst.hidden = true;
     }
@@ -221,7 +233,7 @@ let config = [
                 default     : device_driverlib_peripheral.SPI_TransferProtocol[0].name,
                 options     : device_driverlib_peripheral.SPI_TransferProtocol
             },
-        
+
             {
                 name        : "mode",
                 displayName : "Mode",
@@ -230,7 +242,7 @@ let config = [
                 default     : device_driverlib_peripheral.SPI_Mode[0].name,
                 options     : device_driverlib_peripheral.SPI_Mode
             },
-        
+
             {
                 name        : "ptePolarity",
                 legacyNames : ["stePolarity"],
@@ -240,7 +252,7 @@ let config = [
                 default     : pteOption[0].name,
                 options     : pteOption
             },
-        
+
             {
                 name        : "emulationMode",
                 displayName : "Emulation Mode",
@@ -249,7 +261,7 @@ let config = [
                 default     : device_driverlib_peripheral.SPI_EmulationMode[0].name,
                 options     : device_driverlib_peripheral.SPI_EmulationMode
             },
-        
+
             {
                 name        : "bitRate",
                 displayName : "Bit Rate (Hz)",
@@ -263,10 +275,10 @@ let config = [
                 displayName : "Enable High Speed Mode",
                 description : 'Whether or not to use SPI in High Speed mode.',
                 hidden      : false,
-                default     : false
-                
+                default     : false,
+                shouldBeAllocatedAsResource : true
             },
-        
+
             {
                 name        : "dataWidth",
                 displayName : "Data Width",
@@ -292,7 +304,7 @@ let config = [
                     {name: "16"}
                 ]
             },
-            
+
             {
                 name        : "useFifo",
                 displayName : "Use FIFO",
@@ -300,7 +312,7 @@ let config = [
                 hidden      : false,
                 onChange    : onChangeUseFIFO,
                 default     : true
-                
+
             },
             {
                 name        : "loopback",
@@ -308,9 +320,9 @@ let config = [
                 description : 'Whether or not to use loopback mode.',
                 hidden      : false,
                 default     : false
-                
+
             },
-            
+
             {
                 name: "useCase",
                 displayName : "Use Case",
@@ -334,7 +346,7 @@ let config = [
                 hidden      : false,
                 onChange    : onChangeUseInterrupts,
                 default     : true
-                
+
             },
             {
                 name        : "registerInterrupts",
@@ -343,10 +355,10 @@ let config = [
                 hidden      : false,
                 default     : false,
                 onChange    : onChangeRegisterInterrupts
-                
+
             },
             {
-                name: "registerSpiRxInt",      
+                name: "registerSpiRxInt",
                 displayName: "Register RX Interrupt",
                 hidden: true,
                 default: false,
@@ -365,7 +377,7 @@ let config = [
                 default     : [],
                 minSelections: 0,
                 options     : device_driverlib_peripheral.SPI_INT.slice(0,2)
-                
+
             },
             {
                 name        : "enabledFIFOInterrupts",
@@ -375,9 +387,9 @@ let config = [
                 default     : [],
                 minSelections: 0,
                 options     : device_driverlib_peripheral.SPI_INT.slice(2)
-                
+
             },
-        
+
             {
                 name        : "txFifo",
                 displayName : "Transmit FIFO Interrupt Level",
@@ -386,7 +398,7 @@ let config = [
                 default     : device_driverlib_peripheral.SPI_TxFIFOLevel[0].name,
                 options     : device_driverlib_peripheral.SPI_TxFIFOLevel
             },
-        
+
             {
                 name        : "rxFifo",
                 displayName : "Receive FIFO Interrupt Level",
@@ -409,6 +421,7 @@ let config = [
                 hidden      : false,
                 default     : false,
                 onChange    : onChangeUseDMARX,
+                shouldBeAllocatedAsResource : true
             },
             {
                 name        : "DMARXInst",
@@ -417,8 +430,9 @@ let config = [
                 hidden      : true,
                 default     : dma_instances[0].name,
                 options     : dma_instances,
+                shouldBeAllocatedAsResource : true
             },
-            
+
             {
                 name        : "useDMATX",
                 displayName : "Use RTDMA for Transmit",
@@ -426,6 +440,7 @@ let config = [
                 hidden      : false,
                 default     : false,
                 onChange    : onChangeUseDMATX,
+                shouldBeAllocatedAsResource : true
             },
             {
                 name        : "DMATXInst",
@@ -434,6 +449,7 @@ let config = [
                 hidden      : true,
                 default     : dma_instances[0].name,
                 options     : dma_instances,
+                shouldBeAllocatedAsResource : true
             },
         ]
     },
@@ -468,11 +484,11 @@ if (Common.onlyPinmux())
 var spiModule = {
     peripheralName: "SPI",
     displayName: "SPI",
-    maxInstances: Common.peripheralCount("SPI"),
+    totalMaxInstances: Common.peripheralCount("SPI"),
     defaultInstanceName: "mySPI",
     description: "Serial Peripheral Interface Peripheral",
     filterHardware : filterHardware,
-    config: config,
+    config: Common.filterConfigsIfInSetupMode(config),
     moduleInstances: (inst) => {
         var submodules = []
 
@@ -485,12 +501,12 @@ var spiModule = {
             pinmuxQualMod.args.padConfig = "STD";
         }
         submodules = submodules.concat(pinmuxQualMods)
-        
+
         if (inst.useInterrupts && inst.registerInterrupts)
         {
             if(inst.registerSpiRxInt){
                 submodules = submodules.concat([{
-                    name: "spiRXInt",      
+                    name: "spiRXInt",
                     group: "GROUP_ISR",
                     displayName: "RX Interrupt",
                     moduleName: "/driverlib/interrupt.js",
@@ -506,8 +522,8 @@ var spiModule = {
             }
             if(inst.registerSpiTxInt){
                 submodules = submodules.concat([{
-                    name: "spiTXInt",    
-                    group: "GROUP_ISR",  
+                    name: "spiTXInt",
+                    group: "GROUP_ISR",
                     displayName: "TX Interrupt",
                     moduleName: "/driverlib/interrupt.js",
                     collapsed: true,
@@ -528,7 +544,7 @@ var spiModule = {
             submodules = submodules.concat([
                 {
                     name: "spiRXDMA",
-                    group: "GROUP_DMA",    
+                    group: "GROUP_DMA",
                     displayName: "RX DMA",
                     moduleName: "/driverlib/" + dmaInst + ".js",
                     collapsed: true,
@@ -542,12 +558,13 @@ var spiModule = {
                         databusWidthConfig: "DMA_CFG_READ_SIZE_16BIT",
                         writeDatasizeConfig: "DMA_CFG_WRT_SIZE_16BIT",
                         triggerSource: "DMA_TRIGGER_LINKED"
-                    }
+                    },
+                    shouldBeAllocatedAsResource : true
                 },
             ])
         }
 
-        if (inst.useDMATX) 
+        if (inst.useDMATX)
         {
             let dmaInst = inst.DMATXInst.split('_')[0].toLowerCase()
             submodules = submodules.concat([
@@ -567,7 +584,8 @@ var spiModule = {
                         databusWidthConfig: "DMA_CFG_READ_SIZE_16BIT",
                         writeDatasizeConfig: "DMA_CFG_WRT_SIZE_16BIT",
                         triggerSource: "DMA_TRIGGER_LINKED"
-                    }
+                    },
+                    shouldBeAllocatedAsResource : true
                 },
             ])
         }
@@ -581,7 +599,7 @@ var spiModule = {
                 collapsed: false,
                 requiredArgs:{
                     pinmuxPeripheralModule : "spi",
-                    peripheralInst: inst.$name
+                    peripheralInst: ""
                 }
             },
             {
@@ -591,9 +609,11 @@ var spiModule = {
                 moduleName: "/driverlib/perConfig.js",
                 collapsed: false,
                 requiredArgs:{
+                    cpuSel: inst.$assignedContext ?? system.context,
                     pinmuxPeripheralModule : "spi",
-                    peripheralInst: inst.$name
-                }
+                    peripheralInst: ""
+                },
+                shouldBeAllocatedAsResource : true
             },
         ])
 
@@ -609,7 +629,7 @@ var spiModule = {
     moduleStatic: {
         name: "SpiGlobal",
         displayName: "SPI Global",
-        config: [
+        config: Common.filterConfigsIfInSetupMode([
             {
                 name: "baudSYSCLK",
                 displayName: "SYSCLK [Hz]",
@@ -619,9 +639,10 @@ var spiModule = {
                 readOnly : true,
                 getValue : () => {return Common.getSYSCLK()*(1e6)}
             },
-        ],
+        ]),
         modules: undefined,
     },
+    shouldBeAllocatedAsResource: true
 };
 
 

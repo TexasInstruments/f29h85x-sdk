@@ -1,8 +1,8 @@
 let Common   = system.getScript("/driverlib/Common.js");
 let Pinmux   = system.getScript("/driverlib/pinmux.js");
 
-let device_driverlib_peripheral = 
-    system.getScript("/driverlib/device_driverlib_peripherals/" + 
+let device_driverlib_peripheral =
+    system.getScript("/driverlib/device_driverlib_peripherals/" +
         Common.getDeviceName().toLowerCase() + "_sent.js");
 
 let device_driverlib_memmap =
@@ -25,7 +25,7 @@ function burstSizeMapping(fifoLevel, inst){
             let retString = fifoLevel.split('_')[1];
             return 2*Number(retString.slice(7));
         }
-            
+
     }
 }
 
@@ -89,7 +89,7 @@ function onChangeUseInterrupts(inst, ui)
     if (inst.useInterrupts){
         ui.enableInterrupt.hidden = false
         ui.registerInterrupts.hidden = false
-        ui.interruptSource.hidden = false     
+        ui.interruptSource.hidden = false
     }
     else{
         ui.enableInterrupt.hidden = true
@@ -104,7 +104,7 @@ function onChangeUseDMARX(inst, ui)
     {
         ui.DMARXInst.hidden = false;
     }
-    else 
+    else
     {
         ui.DMARXInst.hidden = true;
     }
@@ -116,12 +116,12 @@ function onChangeEnableBroadcastCh(inst, ui)
         ui.broadcastChPeriod.hidden = false
         ui.broadcastChTrigger.hidden = false
         ui.broadcastcmp1TT.hidden = false
-        ui.broadcastcmp2TT.hidden = false     
-        ui.broadcastcmp3TT.hidden = false     
-        ui.broadcastcmp4TT.hidden = false     
-        ui.broadcastcmp5TT.hidden = false     
-        ui.broadcastcmp6TT.hidden = false     
-        ui.broadcastcmp7TT.hidden = false     
+        ui.broadcastcmp2TT.hidden = false
+        ui.broadcastcmp3TT.hidden = false
+        ui.broadcastcmp4TT.hidden = false
+        ui.broadcastcmp5TT.hidden = false
+        ui.broadcastcmp6TT.hidden = false
+        ui.broadcastcmp7TT.hidden = false
         ui.broadcastcmp8TT.hidden = false
         ui.broadcastcmp9TT.hidden = false
     }
@@ -130,20 +130,20 @@ function onChangeEnableBroadcastCh(inst, ui)
         ui.broadcastChPeriod.hidden = true
         ui.broadcastChTrigger.hidden = true
         ui.broadcastcmp1TT.hidden = true
-        ui.broadcastcmp2TT.hidden = true     
-        ui.broadcastcmp3TT.hidden = true     
-        ui.broadcastcmp4TT.hidden = true     
-        ui.broadcastcmp5TT.hidden = true     
-        ui.broadcastcmp6TT.hidden = true     
-        ui.broadcastcmp7TT.hidden = true     
-        ui.broadcastcmp8TT.hidden = true     
-        ui.broadcastcmp9TT.hidden = true  
+        ui.broadcastcmp2TT.hidden = true
+        ui.broadcastcmp3TT.hidden = true
+        ui.broadcastcmp4TT.hidden = true
+        ui.broadcastcmp5TT.hidden = true
+        ui.broadcastcmp6TT.hidden = true
+        ui.broadcastcmp7TT.hidden = true
+        ui.broadcastcmp8TT.hidden = true
+        ui.broadcastcmp9TT.hidden = true
     }
 }
 
 function onChangeEnableSensor(inst, ui)
 {
-    for(var channelIndex in device_driverlib_peripheral.SENT_SensorNumber){ 
+    for(var channelIndex in device_driverlib_peripheral.SENT_SensorNumber){
         var currentCh = device_driverlib_peripheral.SENT_SensorNumber[channelIndex].name
         var chli = (currentCh).replace(/[^0-9]/g,'')
         var chlConfigs = [
@@ -226,14 +226,14 @@ let config = [
                 displayName : "Disable Time Stamp",
                 description : 'Disable write of timestamp to memory',
                 hidden      : false,
-                default     : false,        
+                default     : false,
             },
             {
                 name        : "disableERRData",
                 displayName : "Disable Error Data Write",
                 description : 'Disable write of error data to memory',
                 hidden      : false,
-                default     : false,   
+                default     : false,
             },
             {
                 name        : "gFilt",
@@ -248,7 +248,7 @@ let config = [
                 description : 'Timeout for triggering interrupt if no sync pulse is received during this time',
                 hidden      : false,
                 default     : 0,
-            },        
+            },
         ]
     },
 ];
@@ -478,7 +478,7 @@ mtp_configs = mtp_configs.concat([
     },
 ])
 
-for(var channelIndex in device_driverlib_peripheral.SENT_SensorNumber){ 
+for(var channelIndex in device_driverlib_peripheral.SENT_SensorNumber){
         var currentCh = device_driverlib_peripheral.SENT_SensorNumber[channelIndex].name
         var chli = (currentCh).replace(/[^0-9]/g,'')
         mtp_configs = mtp_configs.concat([
@@ -508,7 +508,7 @@ for(var channelIndex in device_driverlib_peripheral.SENT_SensorNumber){
                         hidden      : true,
                         default     : device_driverlib_peripheral.SENT_Trigger[0].name,
                         options     : device_driverlib_peripheral.SENT_Trigger,
-                    },     
+                    },
                     {
                         name: "sensor" + chli.toString() + "cmp1TT",
                         displayName : "Sensor " + chli.toString() + " CMP1 Toggle Time",
@@ -652,6 +652,7 @@ config: [
         hidden      : false,
         default     : false,
         onChange    : onChangeUseDMARX,
+        shouldBeAllocatedAsResource : true
     },
     {
         name        : "DMARXInst",
@@ -660,6 +661,7 @@ config: [
         hidden      : true,
         default     : dma_instances[0].name,
         options     : dma_instances,
+        shouldBeAllocatedAsResource : true
     },
 ]
 }]);
@@ -692,7 +694,7 @@ function onValidate(inst, validation) {
             "Maximum value supported for timeout is in 32 bit number", inst, "gFilt");
     }
 
-    for(var channelIndex in device_driverlib_peripheral.SENT_CompareNumber){ 
+    for(var channelIndex in device_driverlib_peripheral.SENT_CompareNumber){
         var currentCh = device_driverlib_peripheral.SENT_CompareNumber[channelIndex].name
         let chli = (currentCh).replace(/[^0-9]/g,'')
         if (inst["broadcastcmp" + chli.toString()+ "TT"] > 2047)
@@ -702,7 +704,7 @@ function onValidate(inst, validation) {
                 inst, "broadcastcmp" + chli.toString()+ "TT");
         }
     }
-    for(var channelIndex in device_driverlib_peripheral.SENT_CompareNumber){ 
+    for(var channelIndex in device_driverlib_peripheral.SENT_CompareNumber){
         var currentCh = device_driverlib_peripheral.SENT_CompareNumber[channelIndex].name
         let chli = (currentCh).replace(/[^0-9]/g,'')
         if (inst["sensor1cmp" + chli.toString()+ "TT"] > 2047)
@@ -712,7 +714,7 @@ function onValidate(inst, validation) {
                 inst, "sensor1cmp" + chli.toString()+ "TT");
         }
     }
-    for(var channelIndex in device_driverlib_peripheral.SENT_CompareNumber){ 
+    for(var channelIndex in device_driverlib_peripheral.SENT_CompareNumber){
         var currentCh = device_driverlib_peripheral.SENT_CompareNumber[channelIndex].name
         let chli = (currentCh).replace(/[^0-9]/g,'')
         if (inst["sensor2cmp" + chli.toString()+ "TT"] > 2047)
@@ -722,7 +724,7 @@ function onValidate(inst, validation) {
                 inst, "sensor2cmp" + chli.toString()+ "TT");
         }
     }
-    for(var channelIndex in device_driverlib_peripheral.SENT_CompareNumber){ 
+    for(var channelIndex in device_driverlib_peripheral.SENT_CompareNumber){
         var currentCh = device_driverlib_peripheral.SENT_CompareNumber[channelIndex].name
         let chli = (currentCh).replace(/[^0-9]/g,'')
         if (inst["sensor3cmp" + chli.toString()+ "TT"] > 2047)
@@ -732,7 +734,7 @@ function onValidate(inst, validation) {
                 inst, "sensor3cmp" + chli.toString()+ "TT");
         }
     }
-    for(var channelIndex in device_driverlib_peripheral.SENT_CompareNumber){ 
+    for(var channelIndex in device_driverlib_peripheral.SENT_CompareNumber){
         var currentCh = device_driverlib_peripheral.SENT_CompareNumber[channelIndex].name
         let chli = (currentCh).replace(/[^0-9]/g,'')
         if (inst["sensor4cmp" + chli.toString()+ "TT"] > 2047)
@@ -742,8 +744,8 @@ function onValidate(inst, validation) {
                 inst, "sensor4cmp" + chli.toString()+ "TT");
         }
     }
-    
-    for(var channelIndex in device_driverlib_peripheral.SENT_CompareNumber){ 
+
+    for(var channelIndex in device_driverlib_peripheral.SENT_CompareNumber){
         var currentCh = device_driverlib_peripheral.SENT_CompareNumber[channelIndex].name
         let chli = (currentCh).replace(/[^0-9]/g,'')
         let chlj = chli-1;
@@ -758,7 +760,7 @@ function onValidate(inst, validation) {
         }
 
     }
-    for(var channelIndex in device_driverlib_peripheral.SENT_CompareNumber){ 
+    for(var channelIndex in device_driverlib_peripheral.SENT_CompareNumber){
         var currentCh = device_driverlib_peripheral.SENT_CompareNumber[channelIndex].name
         let chli = (currentCh).replace(/[^0-9]/g,'')
         let chlj = chli-1;
@@ -773,7 +775,7 @@ function onValidate(inst, validation) {
         }
 
     }
-    for(var channelIndex in device_driverlib_peripheral.SENT_CompareNumber){ 
+    for(var channelIndex in device_driverlib_peripheral.SENT_CompareNumber){
         var currentCh = device_driverlib_peripheral.SENT_CompareNumber[channelIndex].name
         let chli = (currentCh).replace(/[^0-9]/g,'')
         let chlj = chli-1;
@@ -788,7 +790,7 @@ function onValidate(inst, validation) {
         }
 
     }
-    for(var channelIndex in device_driverlib_peripheral.SENT_CompareNumber){ 
+    for(var channelIndex in device_driverlib_peripheral.SENT_CompareNumber){
         var currentCh = device_driverlib_peripheral.SENT_CompareNumber[channelIndex].name
         let chli = (currentCh).replace(/[^0-9]/g,'')
         let chlj = chli-1;
@@ -803,7 +805,7 @@ function onValidate(inst, validation) {
         }
 
     }
-    for(var channelIndex in device_driverlib_peripheral.SENT_CompareNumber){ 
+    for(var channelIndex in device_driverlib_peripheral.SENT_CompareNumber){
         var currentCh = device_driverlib_peripheral.SENT_CompareNumber[channelIndex].name
         let chli = (currentCh).replace(/[^0-9]/g,'')
         let chlj = chli-1;
@@ -831,7 +833,7 @@ function onValidate(inst, validation) {
             "Maximum value supported for period is 2047", inst, "broadcastChPeriod");
     }
 
-    for(var channelIndex in device_driverlib_peripheral.SENT_SensorNumber){ 
+    for(var channelIndex in device_driverlib_peripheral.SENT_SensorNumber){
         var currentCh = device_driverlib_peripheral.SENT_SensorNumber[channelIndex].name
         let chli = (currentCh).replace(/[^0-9]/g,'')
         if (inst["sensor" + chli.toString()+ "Period"] > 2047)
@@ -841,7 +843,7 @@ function onValidate(inst, validation) {
         }
     }
 
-    for(var channelIndex in device_driverlib_peripheral.SENT_SensorNumber){ 
+    for(var channelIndex in device_driverlib_peripheral.SENT_SensorNumber){
         var currentCh = device_driverlib_peripheral.SENT_SensorNumber[channelIndex].name
         let chli = (currentCh).replace(/[^0-9]/g,'')
         if (inst["sensor" + chli.toString()+ "Timeout"] > 4294967295)
@@ -853,20 +855,19 @@ function onValidate(inst, validation) {
 
 }
 
-
 if (Common.onlyPinmux())
 {
     config = [config[config.length - 1]];
-}    
+}
 
 var sentModule = {
     peripheralName: "SENT",
     displayName: "SENT",
-    maxInstances: Common.peripheralCount("SENT"),
+    totalMaxInstances: Common.peripheralCount("SENT"),
     defaultInstanceName: "mySENT",
     description: "SENT Peripheral",
     pinmuxRequirements    : Pinmux.sentPinmuxRequirements,
-    config: config,
+    config: Common.filterConfigsIfInSetupMode(config),
     moduleInstances: (inst) => {
         var ownedInstances = [];
 
@@ -880,8 +881,8 @@ var sentModule = {
         if (inst.useInterrupts && inst.registerInterrupts)
         {
             ownedInstances.push({
-                name: "sentInt", 
-                group : "GROUP_Interrupts",  
+                name: "sentInt",
+                group : "GROUP_Interrupts",
                 displayName: "SENT Interrupt",
                 moduleName: "/driverlib/interrupt.js",
                 collapsed: true,
@@ -901,7 +902,7 @@ var sentModule = {
             ownedInstances = ownedInstances.concat([
                 {
                     name: "sentRXDMA",
-                    group: "GROUP_DMA",    
+                    group: "GROUP_DMA",
                     displayName: "RX DMA",
                     moduleName: "/driverlib/" + dmaInst + ".js",
                     collapsed: true,
@@ -915,7 +916,8 @@ var sentModule = {
                         databusWidthConfig: "DMA_CFG_READ_SIZE_32BIT",
                         writeDatasizeConfig: "DMA_CFG_WRT_SIZE_32BIT",
                         triggerSource: "DMA_TRIGGER_LINKED"
-                    }
+                    },
+                    shouldBeAllocatedAsResource : true
                 },
             ])
         }
@@ -928,7 +930,7 @@ var sentModule = {
                 collapsed: false,
                 requiredArgs:{
                     pinmuxPeripheralModule : "sent",
-                    peripheralInst: inst.$name
+                    peripheralInst: ""
                 }
             },
             {
@@ -938,12 +940,14 @@ var sentModule = {
                 moduleName: "/driverlib/perConfig.js",
                 collapsed: false,
                 requiredArgs:{
+                    cpuSel: inst.$assignedContext ?? system.context,
                     pinmuxPeripheralModule : "sent",
-                    peripheralInst: inst.$name
-                }
+                    peripheralInst: ""
+                },
+                shouldBeAllocatedAsResource: true
             },
         ])
-        
+
         return ownedInstances;
     },
     templates: {
@@ -951,6 +955,7 @@ var sentModule = {
         boardh : "/driverlib/sent/sent.board.h.xdt"
     },
     validate : onValidate,
+    shouldBeAllocatedAsResource: true
 };
 
 

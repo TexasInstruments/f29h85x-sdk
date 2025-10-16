@@ -38,7 +38,7 @@ let hsmclient_module = {
 			name: "en_hsmclient",
             displayName:"Description",
             description:"Adding and instance of HSMCLIENT enables hsmclient for current core.",
-            default: "HSMCLIENT added for current R5 core",
+            default: "HSMCLIENT added for current C29 core",
             readOnly:true
         },
 		{
@@ -138,7 +138,7 @@ function validate(inst,report)
                 {
                     if(remote_core_instance.$instances[0].sec_core_option == inst.sec_core_option )
                     {
-                        report.logError(`Please give different secure host id to hsmclient instanciated for different R5F cores.`,inst);
+                        report.logError(`Please give different secure host id to hsmclient instanciated for different C29 cores.`,inst);
                     }
                     if(remote_core_instance.$instances[0].sipc_que_depth != inst.sipc_que_depth)
                     {

@@ -3,427 +3,314 @@ const memoryData        = system.getScript('/ti/security/device_specific_informa
 const ssuData           = system.getScript('/ti/security/device_specific_information/ssu_data.js');
 const peripheralData    = system.getScript('/ti/security/device_specific_information/peripheral_data.js');
 
-let     flash_code_sets         = memoryData.flashMemories.flash_code_sets
-let     flash_data_sets         = memoryData.flashMemories.flash_data_sets
-const   crc32Table              = ssuData.crc32Table
-const   seccfgAddressMapping    = ssuData.seccfgAddressMapping
+let flash_code_sets         = memoryData.flashMemories.flash_code_sets
+let flash_data_sets         = memoryData.flashMemories.flash_data_sets
+const crc32Table            = ssuData.crc32Table
+const seccfgAddressMapping  = ssuData.seccfgAddressMapping
 
 let CONTEXT_CPU1    = "CPU1";
 let CONTEXT_CPU2    = "CPU2";
 let CONTEXT_CPU3    = "CPU3";
 let CONTEXT_SYSTEM  = "system";
 
-exports = {
-    autoForceModules,
-    productPath,
-    getNodePath,
-    findInstance,
-    capitalizeFirst,
-    esc,
-    quoted,
-    modStatic,
-    modStaticByCPU,
-    modInstances,
-    modInstancesByCPU,
-    modInstNames,
-    findDefault,
-    validateNames,
-    nameResolve,
-    CONTEXT_CPU1,
-    CONTEXT_CPU2,
-    CONTEXT_CPU3,
-    isContextCPU1,
-    isContextCPU2,
-    isContextCPU3,
-    getExeLink,
-    getAPILink,
-    getLinkAccess,
-    getStack,
-    getZone,
-    getAPRListSorted,
-    toHex,
-    isContiguous,
-    findAPRbyName,
-    getSectionsList,
-    getMemoryList,
-    assignLinkID,
-    assignStackID,
-    getAprWeprotVal,
-    calcWeprotValues,
-    getSeccfgCrc,
-    getSeccfgLocation,
-    getSeccfgLocationDummy,
-    getSpecialAprList,
-    allocateAllMemoryRegions,
-    allocateRamMemories,
-    allocateFlashMemories,
-    allocatePeripheralMemories,
-    updatePeripheralAllocation,
-    getPeripheralPermissions,
-    getConfigFromStaticModule,
-    getCoreList,
-    getAutoPeriphAPRsByLink,
-    getSummaryList,
-    getBankModeConfig,
-    getFlashRegion,
-    getBootPeripherals,
-    getLink2RequiredAprs
-};
+const STRING_TAB    = "    ";
 
-/*
- *  ======== esc ========
- *  Windows file names in the format of c:\home\user\work are represented in
- *  javascript as c:\\home\\user\\work. When they are written to a file the
- *  double back slahes become a single back slash.  If the written file is
- *  itself a javascript file, then it needs to be written as c:\\home\user\\work.
- *  Therefore this function will expand '\\' to '\\\\' so when written it
- *  again becomes '\\'.  This only needs to be run if generating a javascript file.
- *  If generating a bash or bat file, this does not need to occur.
- *
- *  @param s      - input String
- */
-function esc(s)
+const coreSpecificModulesInSetupMode =
+[
+    "/ti/security/System_Security",
+    "/ti/security/Link",
+    "/ti/security/Stack",
+    "/ti/security/APR",
+    "/ti/security/EasyMode_link",
+    "/ti/security/EasyMode_stack",
+    "/ti/security/EasyMode_sharedMem",
+]
+
+//
+// Generic functions
+//
+
+function isContextCPU1(inst)
 {
-    if (system.getOS() == 'win') return s.replace(/\\/g,'\\\\');
-    else return s;
+    let csm = coreSpecificModuleCheck(inst)
+    if(isAllocationSetupMode() && csm.check)
+    {
+        return (csm.core == CONTEXT_CPU1)
+    }
+    else
+    {
+        return (system.context == CONTEXT_CPU1 || system.context == CONTEXT_SYSTEM)
+    }
 }
 
-/*
- *  ======== quoted ========
- *  Surround a string with double quotes
- *
- *  @param s      - input String
- */
-function quoted(s)
+function isContextCPU2(inst)
 {
-    return '"'+s+'"';
-}
-
-/*
- *  ======== capitalizeFirst ========
- *  Capitalize the first letter of a string
- *
- *  @param s      - input String
- */
-function capitalizeFirst (s)
-{
-    return s.charAt(0).toUpperCase() + s.slice(1);
-}
-
-/*
- *  ======== autoForceModules ========
- *  Returns an implementation of a module's modules method that just
- *  forces the addition of the specified modules
- *
- *  @param kwargs An array of module name strings.
- *
- *  @return An array with module instance objects
- *
- *  Example:
- *     modules: Common.autoForceModules(["modA", "modB"])
- */
-function autoForceModules(kwargs)
-{
-    return (function(){
-
-        let modArray = [];
-
-        if (kwargs == undefined || kwargs == null || !Array.isArray(kwargs)) {
-            console.log("autoForceModules('kwargs'): 'kwargs' invalid!");
-            return (modArray);
-        }
-
-        for (let args = kwargs.length - 1; args >= 0; args--) {
-            let modPath = kwargs[args];
-            if (modPath.indexOf('/') == -1) {
-                modPath = "/ti/security/" + modPath;
-            }
-            modArray.push({
-                name      : modPath.substring(modPath.lastIndexOf('/') + 1),
-                moduleName: modPath,
-                hidden    : true
-            });
-        }
-
-        return modArray;
-    });
-}
-
-/*
- *  ======== productPath ========
- *  Returns the path to the installation of this product.
- *  @return A string
- */
-function productPath(subdir)
-{
-    const path  = system.utils.path;
-    const prods = system.getProducts();
-    const prod  = (prods.length == 1) ? prods[0] :
-                   prods.find(prod => prod.name == 'SecuritySDK');
-
-    if (prod === undefined) return 'Not Found';
-
-    let result = path.dirname(prod.path); // remove the product.json file
-    if (path.basename(result).startsWith('.meta')) result = path.dirname(result);
-    return path.normalize(subdir ? result + path.sep + subdir : result);
-}
-
-function getNodePath()
-{
-    return system.getNodePath();
-}
-
-function findInstance(modName, instName)
-{
-    const module    = system.modules[modName];
-    const instances = (module && module.$instances) || [];
-    return instances.find((inst) => inst.$name == instName);
-}
-
-function getConfigFromStaticModule(modName, configName, cpuName){
-    let ret = {
-        available: false,
-        value: "",
-        module: ""
+    let csm = coreSpecificModuleCheck(inst)
+    if(isAllocationSetupMode() && csm.check)
+    {
+        return (csm.core == CONTEXT_CPU2)
+    }
+    else
+    {
+        return (system.context == CONTEXT_CPU2)
     }
 
-    const context = system.contexts[cpuName];
-    if (!context)   return ret;
-    const mod = context.system.modules[modName];
-    if(mod){
-        ret.module = mod
-        ret.value = mod.$static[configName]
-        ret.available = true
-    }
-    return ret;
 }
 
-function modStatic(modName) {
-    const mod = system.modules[modName];
-    return mod ? mod.$static : mod;
+function isContextCPU3(inst)
+{
+    let csm = coreSpecificModuleCheck(inst)
+    if(isAllocationSetupMode() && csm.check)
+    {
+        return (csm.core == CONTEXT_CPU3)
+    }
+    else
+    {
+        return (system.context == CONTEXT_CPU3)
+    }
+}
+
+function getAllCoreContexts()
+{
+    return [CONTEXT_CPU1, CONTEXT_CPU2, CONTEXT_CPU3]
+}
+
+function getActiveContexts()
+{
+    let contextNames = Object.keys(system.contexts)
+    return contextNames;
+}
+
+function getActiveContexts_configure(raData)
+{
+    let allCtxs = getAllCoreContexts()
+    let ret = []
+    allCtxs.forEach(ctx => {
+        if(raData["modules"].find(a => (a["moduleName"] == `/ti/security/${ctx}_APR`)))
+            ret.push(ctx)
+    })
+
+    return ret
+}
+
+function currentContext() 
+{
+    let ctx = CONTEXT_CPU1
+    if(isContextCPU2()) ctx = CONTEXT_CPU2
+    if(isContextCPU3()) ctx = CONTEXT_CPU3
+    return ctx
+}
+
+function toHex(val, digits)
+{
+    return val.toString(16).padStart(digits, '0').toUpperCase()
+}
+
+//
+//  Cross-module and cross-context data access in SysConfig
+//
+
+function modStatic(modName, inst = null)
+{
+    let csm = coreSpecificModuleCheck(inst)
+    if (isAllocationSetupMode() && csm.check && coreSpecificModulesInSetupMode.includes(modName)) // core specific SSU related module
+    {
+        let coreSpecificModName = getCoreSpecificModuleName(modName, csm.core)
+
+        if(csm.isSS)    // system security is now instanced module here
+        {
+            const mod = system.modules[coreSpecificModName];
+            if (!mod)
+                return undefined;
+            if (!mod.$instances || !mod.$instances.length)
+                return undefined;
+            return mod.$instances[0];
+        }
+        else
+        {
+            const mod = system.modules[coreSpecificModName];
+            return mod ? mod.$static : mod;
+        }
+    }
+    else // normal static module
+    {
+        const mod = system.modules[modName];
+        return mod ? mod.$static : mod;
+    }
 }
 
 function modStaticByCPU(modName, cpuName)
 {
-    const context = system.contexts[cpuName];
-    if (!context)   return [];
-    const mod = context.system.modules[modName];
-    return mod ? mod.$static : mod;
+    if (isAllocationSetupMode() && coreSpecificModulesInSetupMode.includes(modName)) // core specific SSU related module
+    {
+        let coreSpecificModName = getCoreSpecificModuleName(modName, cpuName)
+        if(coreSpecificModName.endsWith("_System_Security"))
+        {
+            const mod = system.modules[coreSpecificModName];
+            if (!mod)
+                return undefined;
+            if (!mod.$instances || !mod.$instances.length)
+                return undefined;
+            return mod.$instances[0];
+        }
+        else
+        {
+            const mod = system.modules[coreSpecificModName];
+            return mod ? mod.$static : mod;
+        }
+    }
+    else
+    {
+        let reqdContext = isAllocationSetupMode() ? CONTEXT_SYSTEM : cpuName
+
+        const context = system.contexts[reqdContext];
+        if (!context)
+            return undefined;
+        const mod = context.system.modules[modName];
+        return mod ? mod.$static : mod;
+    }
 }
 
-function modInstances(modName) {
-    const mod = system.modules[modName];
-    if (!mod)            return [];
-    if (!mod.$instances) return [];
+function modInstances(modName, inst = null)
+{
+    let coreSpecificModName = modName
+    let csm = coreSpecificModuleCheck(inst)
+    if (isAllocationSetupMode() && csm.check && coreSpecificModulesInSetupMode.includes(modName)) // core specific SSU related module
+    {
+        coreSpecificModName = getCoreSpecificModuleName(modName, csm.core)
+    }
+
+    const mod = system.modules[coreSpecificModName];
+    if (!mod)
+        return [];
+    if (!mod.$instances)
+        return [];
     return mod.$instances;
 }
 
 function modInstancesByCPU(modName, cpuName)
 {
-    const context = system.contexts[cpuName];
-    if (!context)   return [];
-    const modules = context.system.modules;
-    if (!modules)   return [];
-    let mod = modules[modName];
-    if (!mod || !mod.$instances)    return [];
-
-    return mod.$instances;
-}
-
-function modInstNames(x) {
-    return (system.modules[x] && system.modules[x].$instances || []).map(x=>{return {name:x.$name};});
-}
-
-function findDefault(modName, opts = {isArray : false, createNew : false})
-{
-    if (!modName.includes('/ti/security/')) modName = '/ti/security/' + modName;
-
-    // If some exist, return the first one
-    if (system.modules[modName]?.$instances)
-        return system.modules[modName].$instances[0];
-
-    // If none exist and null is not an option, then create a new one and return it
-    if (opts.createNew)
-        return scripting.addModule(modName).addInstance();
-
-    // Otherwise return no default
-    else return opts.isArray ? [] : null;
-}
-
-/*
- *  ======== isCName ========
- *  Determine if specified id is either empty or a valid C identifier
- *
- *  @param id  - String that may/may not be a valid C identifier
- *
- *  @returns true if id is a valid C identifier OR is the empty
- *           string; otherwise false.
- */
-function isCName(id)
-{
-    if ((id != null && id.match(/^[a-zA-Z_][0-9a-zA-Z_]*$/) != null)
-            || id == '') { /* '' is a special value that means "default" */
-        return true;
-    }
-    return false;
-}
-
-/*
- *  ======== validateNames ========
- *  Validate that all names defined by inst are globally unique and
- *  valid C identifiers.
- */
-function validateNames(inst, vo)
-{
-    let myNames = {}; /* all C identifiers defined by inst) */
-
-    /* check that $name is a C identifier */
-    if (inst.$name != "") {
-        let token = inst.$name;
-        if (!isCName(token)) {
-            vo.logError("'" + token + "' is not a valid a C identifier", inst, "$name");
-        }
-        myNames[token] = 1;
-    }
-
-    /* check that cAliases are all C identifiers and there are no dups */
-    let tokens = [];
-    if ("cAliases" in inst && inst.cAliases != "") {
-        tokens = inst.cAliases.split(/[,;\s]+/);
-    }
-
-    for (let i = 0; i < tokens.length; i++) {
-        let token = tokens[i];
-        if (!isCName(token)) {
-            vo.logError("'" + token + "' is not a valid a C identifier", inst, "cAliases");
-        }
-        if (myNames[token] != null) {
-            vo.logError("'" + token + "' is defined twice", inst, "cAliases");
-        }
-        myNames[token] = 1;
-    }
-
-    /* ensure all inst C identifiers are globally unique */
-    let mods = system.modules;
-    for (let i in mods) {
-        /* for all instances in all modules in /ti/drivers ... */
-        let instances = mods[i].$instances;
-        for (let j = 0; j < instances.length; j++) {
-            let other = instances[j];
-
-            /* skip self */
-            if (inst.$name == other.$name) {
-                continue;
-            }
-
-            /* compute all other names */
-            let name = other.$name;
-            if (name != "" && name in myNames) {
-                vo.logError("multiple instances with the same name: '"
-                         + name + "': " + inst.$name + " and " + other.$name,
-                    inst, "cAliases");
-                break;
-            }
-            if (other.cAliases != null && other.cAliases != "") {
-                let tokens = other.cAliases.split(/[,;\s]+/);
-                for (let k = 0; k < tokens.length; k++) {
-                    name = tokens[k];
-                    if (name != "" && name in myNames) {
-                        vo.logError(
-                            "multiple instances with the same name: '" + name
-                                 + "': " + inst.$name + " and " + other.$name,
-                            inst, "cAliases");
-                        break;
-                    }
-                }
-            }
-        }
-    }
-}
-
-// .bss .sysmem .stack .text .rodata .data .comm .const
-
-
-function nameResolve(inst, fields)
-{
-    const nameFind = name => _.chain      (system.modules)
-                              .map        (mod => [mod.$instances])
-                              .flattenDeep()
-                              .find       (inst => inst.$name == name)
-                              .value      ();
-
-    if (typeof(fields) === 'string') {
-        return nameFind(inst[fields]);
-    }
-    else {
-        fields.every(field => inst = nameFind(inst[field]));
-        return inst;
-    }
-}
-
-function isContextCPU1()
-{
-    if (system.context == CONTEXT_CPU1 || system.context == CONTEXT_SYSTEM)
+    if (isAllocationSetupMode() && coreSpecificModulesInSetupMode.includes(modName)) // core specific SSU related module
     {
-        return true;
-    }
-    return false
-}
+        let coreSpecificModName = getCoreSpecificModuleName(modName, cpuName)
 
-function isContextCPU2()
-{
-    if (system.context == CONTEXT_CPU2)
+        const mod = system.modules[coreSpecificModName];
+        if (!mod)
+            return [];
+        if (!mod.$instances)
+            return [];
+        return mod.$instances;
+    }
+    else
     {
-        return true;
+        let reqdContext = isAllocationSetupMode() ? CONTEXT_SYSTEM : cpuName
+        const context = system.contexts[reqdContext];
+        if (!context)
+            return [];
+
+        const modules = context.system.modules;
+        if (!modules)
+            return [];
+
+        const mod = modules[modName];
+        if (!mod || !mod.$instances)
+            return [];
+
+        return mod.$instances;
     }
-    return false
 }
 
-function isContextCPU3()
+function modInstanceNames(moduleName, inst)
 {
-    if (system.context == CONTEXT_CPU3)
-    {
-        return true;
-    }
-    return false
+    const instances = modInstances(moduleName, inst);
+    if(instances.length)
+        return instances.map(instance =>({name: instance.$name}));
+
+    return [];
 }
 
-function getExeLink(apr)
+function getConfigFromStaticModule(modName, configName, cpuName)
+{
+    let ret =
+    {
+        available   : false,
+        value       : "",
+        module      : ""
+    }
+
+    let staticMod = modStaticByCPU(modName, cpuName)
+    if(staticMod)
+    {
+        ret.available   = true
+        ret.value       = staticMod[configName]
+        ret.module      = staticMod
+    }
+    return ret;
+}
+
+function getCoreList(lockstepFilter = 0)
+{
+    let coreList = _.map(cpuData.cpuList, (cpuItem) => {return {name: cpuItem.name}})
+
+    if(lockstepFilter != 0) // Reject CPU2 if in LockStep
+    {
+        let lsConfig = getConfigFromStaticModule("/driverlib/sysctl.js", "LSConfig", CONTEXT_CPU1)
+        if(!lsConfig.available || (lsConfig.available && lsConfig.value == "LockStep")){
+            coreList = _.reject(coreList, i => (i.name == CONTEXT_CPU2))
+        }
+    }
+
+    return coreList
+}
+
+//
+//  SSU and Memory Allocation functionality
+//
+
+function getExeLink(apr) 
 {
     return (modInstances('/ti/security/Link').
                 filter(x => x.codeAPRs.includes(apr.name) || x.codeAPRsEasy.includes(apr.name))
                 [0])
 }
 
-function getAPILink(apr)
+function getAPILink(apr) 
 {
     return (modInstances('/ti/security/Link').
                 filter(x => x.APIAPRs.includes(apr.name) || x.APIAPRsEasy.includes(apr.name))
                 [0])
 }
 
-function getLinkAccess(apr, sysSec)
+function getLinkAccess(apr, sysSec) 
 {
-    var access = ""
-    access +=  modInstances('/ti/security/Link').
-                    filter(x => getStack(x) && getStack(x).stackAPR == apr.memRegion).
-                    map(x=>{return "SSU_LINK_RW_ACCESS(" + x.$name + ") | "}).
-                    join("");
-    access +=  modInstances('/ti/security/Link').
-                    filter(x => x.readwriteAPRs.includes(apr.name) ||  x.readwriteAPRsEasy.includes(apr.name)).
-                    map(x=>{return "SSU_LINK_RW_ACCESS(" + x.$name + ") | "}).
-                    join("");
-    access +=  modInstances('/ti/security/Link').
-                    filter(x => x.readAPRs.includes(apr.name) || x.readAPRsEasy.includes(apr.name)).
-                    map(x=>{return "SSU_LINK_RD_ACCESS(" + x.$name + ") | "}).
-                    join("");
+    const linkInstances = modInstances('/ti/security/Link')
+    let access = ""
+    access  +=  linkInstances.
+                filter(x => getStack(x) && getStack(x).stackAPR == apr.memRegion).
+                map(x=>{return "SSU_LINK_RW_ACCESS(" + x.$name + ") | "}).
+                join("");
+    access  +=  linkInstances.
+                filter(x => x.readwriteAPRs.includes(apr.name) ||  x.readwriteAPRsEasy.includes(apr.name)).
+                map(x=>{return "SSU_LINK_RW_ACCESS(" + x.$name + ") | "}).
+                join("");
+    access  +=  linkInstances.
+                filter(x => x.readAPRs.includes(apr.name) || x.readAPRsEasy.includes(apr.name)).
+                map(x=>{return "SSU_LINK_RD_ACCESS(" + x.$name + ") | "}).
+                join("");
 
     return access + '0U'
 }
 
-function getStack(link)
+function getStack(link) 
 {
     return (modInstances('/ti/security/Stack').
+                    filter(x => x.links.includes(link) || x.linksEasy.includes(link.$name))
+                    [0])
+}
+
+function getStackv2(link, inst) // used in SETUP mode
+{
+    return (modInstances('/ti/security/Stack', inst).
                     filter(x => x.links.includes(link) || x.linksEasy.includes(link.$name))
                     [0])
 }
@@ -433,15 +320,50 @@ function getZone(stack)
     return stack.zone
 }
 
-function getAPRListSorted()
+function getExeLink_configure(apr, core) 
 {
-    let aprs = modInstances('/ti/security/APR')
-    return aprs.filter(a => a.useExtAP).concat(aprs.filter(a => !a.useExtAP))   //!! Limited ExtAP Count
+    return (modInstances(`/ti/security/${core}_Link`).
+                filter(x => x.codeAPRs.includes(apr.name) || x.codeAPRsEasy.includes(apr.name))
+                [0])
 }
 
-function toHex(val, digits)
+function getAPILink_configure(apr, core) 
 {
-    return val.toString(16).padStart(digits, '0').toUpperCase()
+    return (modInstances(`/ti/security/${core}_Link`).
+                filter(x => x.APIAPRs.includes(apr.name) || x.APIAPRsEasy.includes(apr.name))
+                [0])
+}
+
+function getLinkAccess_configure(apr, core) 
+{
+    const linkInstances = modInstances(`/ti/security/${core}_Link`)
+    let access = ""
+    access  +=  linkInstances.
+                filter(x => getStack_configure(x, core) && getStack_configure(x, core).stackAPR == apr.memRegion).
+                map(x=>{return "SSU_LINK_RW_ACCESS(" + x.$name + ") | "}).
+                join("");
+    access  +=  linkInstances.
+                filter(x => x.readwriteAPRs.includes(apr.name) ||  x.readwriteAPRsEasy.includes(apr.name)).
+                map(x=>{return "SSU_LINK_RW_ACCESS(" + x.$name + ") | "}).
+                join("");
+    access  +=  linkInstances.
+                filter(x => x.readAPRs.includes(apr.name) || x.readAPRsEasy.includes(apr.name)).
+                map(x=>{return "SSU_LINK_RD_ACCESS(" + x.$name + ") | "}).
+                join("");
+
+    return access + '0U'
+}
+
+function getStack_configure(link, core) 
+{
+    return (modInstancesByCPU(`/ti/security/${core}_Stack`, core).
+                    filter(x => x.links.includes(link) || x.linksEasy.includes(link.$name))
+                    [0])
+}
+
+function getZone_configure(stack)
+{
+    return stack.zone
 }
 
 function isContiguous(list, sublist)
@@ -458,17 +380,6 @@ function isContiguous(list, sublist)
             return false
     }
     return true
-}
-
-function findAPRbyName(aprName) // Assuming APRs have unique names across contexts
-{
-    let ret = [];
-    let aprs = allocateAllMemoryRegions()
-    Object.keys(aprs).forEach(core => {
-        let match = aprs[core].filter(a => {return a.name == aprName})
-        .forEach(apr => {ret.push(apr)})
-    })
-    return ret;
 }
 
 function getAPRsInRAMAll()
@@ -502,7 +413,8 @@ function getAPRsInFlashAllNew()
     return ret
 }
 
-function getPeripheralAPRsAll(){
+function getPeripheralAPRsAll()
+{
     let ret = {}
     let existingContexts = getCoreList().map(o => {return o.name});
     existingContexts.forEach(cpu => {
@@ -526,7 +438,8 @@ function getPeripheralAPRsAll(){
     return ret
 }
 
-function updateFlashUsageProtection(flMem, weprotVal, flx){
+function updateFlashUsageProtection(flMem, weprotVal, flx)
+{
     let weprotUpdateList = new Set()
     flMem.forEach(flUnit => {
         getWeprotRange(flUnit).forEach(item => weprotUpdateList.add(item))
@@ -541,7 +454,8 @@ function updateFlashUsageProtection(flMem, weprotVal, flx){
     })
 }
 
-function getWeprotRange(flUnit){
+function getWeprotRange(flUnit)
+{
     let ret = []
     let arr = flUnit.split("_");
     let idx = Number(arr[2])
@@ -563,6 +477,11 @@ function memName(mem)
     return mem.name.toUpperCase();
 }
 
+function caps(a)
+{
+    return a.toUpperCase();
+}
+
 function sectName(mem)
 {
     return '.'+ mem.$name.replace(/_/g,'.');
@@ -576,31 +495,79 @@ function getList(x)
             filter(a=>a !="")
 }
 
-function getSECGROUP(apr)
+
+function getSECGROUPNew(apr, indent)
 {
-    var secGroup = " : "
+    let ctx = currentContext()
+    let secGroup = " "
+    if(apr.type != "Code")
+        return secGroup
 
-    var exeLink = getExeLink(apr)
-    if(exeLink) {
-        var stack        = getStack(exeLink)
-        var secGroupName = stack ? stack.$name : "STACK2_STACK"
-        var secGroupAttr = stack ? stack.secGroupAttr : "NONE"
+    let exeLink = getExeLink(apr)
+    if(exeLink)
+    {
+        let stack           = getStack(exeLink)
+        let secGroupName    = stack ? stack.$name : `${ctx}_STACK2_STACK`
+        let secGroupAttr    = stack ? stack.secGroupAttr : "NONE"
 
-        if(exeLink.easyModeGenerated && exeLink.$ownedBy.isCommonCode) {
-            secGroupName += "_COMMONCODE"
-            secGroupAttr = exeLink.$ownedBy.secGroupAttr
+        if(exeLink.easyModeGenerated && exeLink.$ownedBy.isCommonCode)
+        {
+            secGroupName    += "_COMMONCODE"
+            secGroupAttr    = exeLink.$ownedBy.secGroupAttr
         }
+
+        let readsList   = _.union(exeLink.readAPRsEasy, exeLink.readAPRs).map(a => caps(a))
+        let writesList  = _.union(exeLink.readwriteAPRsEasy, exeLink.readwriteAPRs).map(a => caps(a))
+
         if(secGroupAttr == "NONE")
-            secGroup = " : SECURE_GROUP(" + secGroupName + ")"
+            secGroup = "\n" + ' '.repeat(indent + 4) + "   SECURE_GROUP(" + secGroupName + ",\n"
         else
-            secGroup = " : SECURE_GROUP(" + secGroupName + ", " + secGroupAttr + ")"
+            secGroup = "\n" + ' '.repeat(indent + 4) + "   SECURE_GROUP(" + secGroupName + ", " + secGroupAttr + ",\n"
+
+        secGroup += ' '.repeat(indent + 7) + "READS=(" + readsList.join((",\n"+' '.repeat(indent + 7)))
+        secGroup += "),\n" + ' '.repeat(indent + 7) + "WRITES=(" + writesList.join((",\n"+' '.repeat(indent + 7))) + "))"
     }
+
+    return secGroup
+}
+
+
+function getSECGROUPNew_configure(apr, indent, core)
+{
+    let secGroup = " "
+    if(apr.type != "Code")
+        return secGroup
+
+    let exeLink = getExeLink_configure(apr, core)
+    if(exeLink)
+    {
+        let stack           = getStack_configure(exeLink, core)
+        let secGroupName    = stack ? stack.$name : `${core}_STACK2_STACK`
+        let secGroupAttr    = stack ? stack.secGroupAttr : "NONE"
+
+        if(exeLink.easyModeGenerated && exeLink.$ownedBy.isCommonCode)
+        {
+            secGroupName    += "_COMMONCODE"
+            secGroupAttr    = exeLink.$ownedBy.secGroupAttr
+        }
+
+        let readsList   = _.union(exeLink.readAPRsEasy, exeLink.readAPRs).map(a => caps(a))
+        let writesList  = _.union(exeLink.readwriteAPRsEasy, exeLink.readwriteAPRs).map(a => caps(a))
+
+        if(secGroupAttr == "NONE")
+            secGroup = "\n" + ' '.repeat(indent + 4) + "   SECURE_GROUP(" + secGroupName + ",\n"
+        else
+            secGroup = "\n" + ' '.repeat(indent + 4) + "   SECURE_GROUP(" + secGroupName + ", " + secGroupAttr + ",\n"
+
+        secGroup += ' '.repeat(indent + 7) + "READS=(" + readsList.join((",\n"+' '.repeat(indent + 7)))
+        secGroup += "),\n" + ' '.repeat(indent + 7) + "WRITES=(" + writesList.join((",\n"+' '.repeat(indent + 7))) + "))"
+    }
+
     return secGroup
 }
 
 function inputSectionFormat(userSection)
 {
-    //console.log(userSection)
     var sectName = userSection["sectionName"]
     var libName  = userSection["libraryName"]
     var objName  = userSection["objectName"]
@@ -644,21 +611,49 @@ function symbolsFormat(section){
 
 function where(apr)
 {
+    let ctx = currentContext()
     if(apr.memType == "LoadRun")                                                    //!! do tag check instead or add extra attribute for this
         return "LOAD=APR_FLASHLOAD, RUN="  + memName(apr) + ", TABLE(copyTable)"
-    else if (apr.name == "LINK2_codeAPR_RAM"){
-        let loadAPR = "APR_FLASHLOAD_" + system.context.toUpperCase()
+    else if (apr.name == `${ctx}_LINK2_codeAPR_RAM`)
+    {
+        let loadAPR = "APR_FLASHLOAD_" + ctx
         let bankmode = getBankModeConfig();
         if(isContextCPU1() || (isContextCPU3() && bankmode > 1))
-            loadAPR = "LINK2_CODEAPR_FLASH"
-        return `LOAD = ${loadAPR}, RUN=LINK2_CODEAPR_RAM, table(BINIT)`
+            loadAPR = `${ctx}_LINK2_CODEAPR_FLASH`
+        return `LOAD = ${loadAPR}, RUN=${ctx}_LINK2_CODEAPR_RAM, table(BINIT)`
     }
-    else if (apr.name == "CommonCodeModule_codeAPR_RAM"){
-        let loadAPR = "APR_FLASHLOAD_" + system.context.toUpperCase()
+    else if (apr.name == `${ctx}_CommonCodeModule_codeAPR_RAM`)
+    {
+        let loadAPR = "APR_FLASHLOAD_" + ctx
         let bankmode = getBankModeConfig();
         if(isContextCPU1() || (isContextCPU3() && bankmode > 1))
-            loadAPR = "COMMONCODEMODULE_CODEAPR_FLASH"
-        return `LOAD = ${loadAPR}, RUN=COMMONCODEMODULE_CODEAPR_RAM, table(BINIT)`
+            loadAPR = `${ctx}_COMMONCODEMODULE_CODEAPR_FLASH`
+        return `LOAD = ${loadAPR}, RUN=${ctx}_COMMONCODEMODULE_CODEAPR_RAM, table(BINIT)`
+    }
+    else
+        return "> " + memName(apr)
+}
+
+function wherev2(apr, knownContext)
+{
+    let ctx = knownContext
+    if(apr.memType == "LoadRun")                                                    //!! do tag check instead or add extra attribute for this
+        return "LOAD=APR_FLASHLOAD, RUN="  + memName(apr) + ", TABLE(copyTable)"
+    else if (apr.name == `${ctx}_LINK2_codeAPR_RAM`)
+    {
+        let loadAPR = "APR_FLASHLOAD_" + ctx
+        let bankmode = getBankModeConfig();
+        if(isContextCPU1() || (isContextCPU3() && bankmode > 1))
+            loadAPR = `${ctx}_LINK2_CODEAPR_FLASH`
+        return `LOAD = ${loadAPR}, RUN=${ctx}_LINK2_CODEAPR_RAM, table(BINIT)`
+    }
+    else if (apr.name == `${ctx}_CommonCodeModule_codeAPR_RAM`)
+    {
+        let loadAPR = "APR_FLASHLOAD_" + ctx
+        let bankmode = getBankModeConfig();
+        if(isContextCPU1() || (isContextCPU3() && bankmode > 1))
+            loadAPR = `${ctx}_COMMONCODEMODULE_CODEAPR_FLASH`
+        return `LOAD = ${loadAPR}, RUN=${ctx}_COMMONCODEMODULE_CODEAPR_RAM, table(BINIT)`
     }
     else
         return "> " + memName(apr)
@@ -677,10 +672,6 @@ function sectionListManual(section, aprList, sysSecPresent = true)
     if(!apr)
         return ret
 
-    if(sysSecPresent && apr.type == "Code") {
-        secGroup = getSECGROUP(apr)
-    }
-
     ret = "    " + section.$name + secGroup + " {\n"
 
     if(section.addInputSections){
@@ -694,6 +685,43 @@ function sectionListManual(section, aprList, sysSecPresent = true)
 
     if(!section.sectionRunFromDifferentAddr)
         ret += "    }     " + where(apr) + "\n"
+    else
+        ret += "    }"
+
+    ret += symbolsFormat(section)
+
+    ret += "\n"
+
+    return ret
+}
+
+
+function sectionListManual_configure(section, aprList, sysSecPresent = true, cpu)
+{
+    var secGroup = " : "
+    var inputSections = ""
+    var ret = ""
+
+    var apr = aprList.filter(a => a.name == section.sectionMemory)[0]
+    if(section.sectionRunFromDifferentAddr && section.sectionRun != "None")
+        apr = aprList.filter(a => a.name == section.sectionRun)[0]
+
+    if(!apr)
+        return ret
+
+    ret = "    " + section.$name + secGroup + " {\n"
+
+    if(section.addInputSections){
+        inputSections = ""
+        for(let i=0; i<section.inputSection.length; i++){
+            let x = section.inputSection[i]
+            inputSections += "        " + inputSectionFormat(x) + "\n"
+        }
+        ret += inputSections
+    }
+
+    if(!section.sectionRunFromDifferentAddr)
+        ret += "    }     " + wherev2(apr, cpu) + "\n"
     else
         ret += "    }"
 
@@ -762,7 +790,7 @@ function ramFunctionSectionList(x, fileList, libList, customListCodeRAM)
     return inputSections
 }
 
-function sectionListModule(easyModeModule, APRList, cpu, sysSec)
+function sectionListModule(easyModeModule, APRList, cpu, sysSec, configure = false)
 {
     var sections = ""
     var x = easyModeModule
@@ -810,7 +838,7 @@ function sectionListModule(easyModeModule, APRList, cpu, sysSec)
                 if(inputSections != "")
                 {
                     let reqdApr = APRList.find(o => {return o.name == x.codeAPR_Flash.$name})
-                    sections += "    ." + x.codeAPR_Flash.$name + getSECGROUP(reqdApr) + " {\n"
+                    sections += "    ." + x.codeAPR_Flash.$name + " : {\n"
                     sections += inputSections
                     sections += "    }   > " + memName(reqdApr) + ", palign(8)  \n\n"
                 }
@@ -818,7 +846,7 @@ function sectionListModule(easyModeModule, APRList, cpu, sysSec)
                 var inputSections = ramFunctionSectionList(x, fileList, libList, customListCodeRAM)
                 if(inputSections != "") {
                     let reqdApr = APRList.find(o => {return o.name == x.codeAPR_RAM.$name})
-                    sections += "    ." + x.codeAPR_RAM.$name + getSECGROUP(reqdApr) + " {\n"
+                    sections += "    ." + x.codeAPR_RAM.$name + " : {\n"
                     sections += inputSections
                     sections += "    }   LOAD = APR_FLASHLOAD_" + cpu.toUpperCase() + ", RUN = " + memName(reqdApr) + ", table(BINIT)\n\n"
                 }
@@ -833,7 +861,7 @@ function sectionListModule(easyModeModule, APRList, cpu, sysSec)
                 if(inputSections != "")
                 {
                     let reqdApr = APRList.find(o => {return o.name == x.codeAPR_Flash.$name})
-                    sections += "    ." + x.codeAPR_Flash.$name + getSECGROUP(reqdApr) + " {\n"
+                    sections += "    ." + x.codeAPR_Flash.$name + " : {\n"
                     sections += inputSections
                     sections += "    }   > " + memName(reqdApr) + ", palign(8)  \n\n"
                 }
@@ -842,7 +870,7 @@ function sectionListModule(easyModeModule, APRList, cpu, sysSec)
                 if(inputSections != "") {
                     let reqdApr = APRList.find(o => {return o.name == x.codeAPR_RAM.$name})
                     let reqdAprf = APRList.find(o => {return o.name == x.codeAPR_Flash.$name})
-                    sections += "    ." + x.codeAPR_RAM.$name + getSECGROUP(reqdApr) + " {\n"
+                    sections += "    ." + x.codeAPR_RAM.$name + " : {\n"
                     sections += inputSections
                     sections += "    }   LOAD = " + memName(reqdAprf) + ", RUN = " + memName(reqdApr) + ", table(BINIT)\n\n"
                 }
@@ -857,7 +885,7 @@ function sectionListModule(easyModeModule, APRList, cpu, sysSec)
             if(inputSections != "")
             {
                 let reqdApr = APRList.find(o => {return o.name == x.codeAPR_Flash.$name})
-                sections += "    ." + x.codeAPR_Flash.$name + getSECGROUP(reqdApr) + " {\n"
+                sections += "    ." + x.codeAPR_Flash.$name + " : {\n"
                 sections += inputSections
                 sections += "    }   > " + memName(reqdApr) + ", palign(8)  \n\n"
             }
@@ -877,7 +905,7 @@ function sectionListModule(easyModeModule, APRList, cpu, sysSec)
                 if(inputSections != "")
                 {
                     let reqdApr = APRList.find(o => {return o.name == x.codeAPR_RAM.$name})
-                    sections += "    ." + x.codeAPR_RAM.$name + getSECGROUP(reqdApr) + " {\n"
+                    sections += "    ." + x.codeAPR_RAM.$name + " : {\n"
                     sections += inputSections
                     sections += "    }   > " + memName(reqdApr) + ", palign(8)  \n\n"
                 }
@@ -887,7 +915,7 @@ function sectionListModule(easyModeModule, APRList, cpu, sysSec)
                 var inputSections = ramFunctionSectionList(x, fileList, libList, customListCodeRAM)
                 if(inputSections != "") {
                     let reqdApr = APRList.find(o => {return o.name == x.codeAPR_RAM.$name})
-                    sections += "    ." + x.codeAPR_RAM.$name + getSECGROUP(reqdApr) + " {\n"
+                    sections += "    ." + x.codeAPR_RAM.$name + " : {\n"
                     sections += inputSections
                     sections += "    }   LOAD = APR_FLASHLOAD_" + cpu.toUpperCase() + ", RUN = " + memName(reqdApr) + ", table(BINIT)\n\n"
                 }
@@ -924,7 +952,7 @@ function sectionListModule(easyModeModule, APRList, cpu, sysSec)
                 if(inputSections != "")
                 {
                     let reqdApr = APRList.find(o => {return o.name == x.codeAPR_RAM.$name})
-                    sections += "    ." + x.codeAPR_RAM.$name + getSECGROUP(reqdApr) + " {\n"
+                    sections += "    ." + x.codeAPR_RAM.$name + " : {\n"
                     sections += inputSections
                     sections += "    }   > " + memName(reqdApr) + "\n\n"
                 }
@@ -957,7 +985,7 @@ function sectionListModule(easyModeModule, APRList, cpu, sysSec)
             let reqdApr = APRList.find(o => {return o.name == x.dataAPR_RW.$name})
             sections += "    ." + x.dataAPR_RW.$name + " : {\n"
             sections += inputSections
-            sections += "    }     " + where(reqdApr) + "\n\n"
+            sections += "    }     " + (configure ? where(reqdApr) : wherev2(reqdApr, cpu)) + "\n\n"
         }
     }
 
@@ -986,7 +1014,7 @@ function sectionListModule(easyModeModule, APRList, cpu, sysSec)
             let reqdApr = APRList.find(o => {return o.name == x.dataAPR_RO.$name})
             sections += "    ." + x.dataAPR_RO.$name + " : {\n"
             sections += inputSections
-            sections += "    }     " + where(reqdApr) + ", palign(8) \n\n"
+            sections += "    }     " + (configure ? where(reqdApr) : wherev2(reqdApr, cpu)) + ", palign(8) \n\n"
         }
     }
 
@@ -1009,7 +1037,7 @@ function sectionListModule(easyModeModule, APRList, cpu, sysSec)
             let reqdApr = APRList.find(o => {return o.name == x.dataAPR.$name})
             sections += "    ." + x.dataAPR.$name + "_S1 : {\n"
             sections += inputSections
-            sections += "    }     " + where(reqdApr) + "\n\n"
+            sections += "    }     " + (configure ? where(reqdApr) : wherev2(reqdApr, cpu)) + "\n\n"
         }
 
 
@@ -1036,7 +1064,7 @@ function sectionListModule(easyModeModule, APRList, cpu, sysSec)
     return sections
 }
 
-function sectionListSharedMem(sharedMem, APRList, cpu)
+function sectionListSharedMem(sharedMem, APRList, cpu, configure = false)
 {
     var sections = ""
     var x = sharedMem
@@ -1063,7 +1091,7 @@ function sectionListSharedMem(sharedMem, APRList, cpu)
     if(inputSections != "") {
         sections += "    ." + apr.name + " : {\n"
         sections += inputSections
-        sections += "    }     " + where(apr) + "\n\n"
+        sections += "    }     " + (configure ? where(apr) : wherev2(apr, cpu)) + "\n\n"
     }
 
     // ro sections
@@ -1078,7 +1106,7 @@ function sectionListSharedMem(sharedMem, APRList, cpu)
         sections += "    ." + apr.name + "_1 : {\n"
         sections += inputSections
         if(x.type == "Flash")
-            sections += "    }     " + where(apr) + ", palign(8) \n\n"
+            sections += "    }     " + (configure ? where(apr) : wherev2(apr, cpu)) + ", palign(8) \n\n"
         else
             sections += "    }     LOAD=APR_FLASHLOAD_" + cpu.toUpperCase() + ", RUN=" +  memName(apr) + ", palign(8), TABLE(copyTable)\n\n" //!! update
     }
@@ -1097,7 +1125,7 @@ function getSectionsList(sysSec, cpu)
     let APRList = APRsAll[cpu].filter(apr=> apr.type != "Peripheral")
 
     if(isContextCPU1()){
-        let reqdAPR = APRList.find(o => {return o.name == "LINK2_codeAPR_Flash"}) //!! tag
+        let reqdAPR = APRList.find(o => {return o.name == `${cpu}_LINK2_codeAPR_Flash`}) //!! tag
         if(reqdAPR)
             sections += `    codestart : > 0x${reqdAPR.startAddr.toString(16)}, palign(8)  \n`
 
@@ -1114,14 +1142,14 @@ function getSectionsList(sysSec, cpu)
             sections += certSection
         }
 
-        let reqdAPR = APRList.find(o => {return o.name == "LINK2_codeAPR_Flash"}) //!! tag
+        let reqdAPR = APRList.find(o => {return o.name == `${cpu}_LINK2_codeAPR_Flash`}) //!! tag
         if(reqdAPR){
             section_resetvector = `    resetvector  : > 0x${reqdAPR.startAddr.toString(16)}, palign(8)  \n`
             section_nmivector   = `    nmivector    : > 0x${(reqdAPR.startAddr + 0x40).toString(16)}, palign(8)  \n`
             section_codestart   = `    codestart    : > ${reqdAPR.name.toUpperCase()}, palign(8)  \n`
         }
         else{
-            reqdAPR = APRList.find(o => {return o.name == "LINK2_codeAPR_RAM"}) //!! tag
+            reqdAPR = APRList.find(o => {return o.name == `${cpu}_LINK2_codeAPR_RAM`}) //!! tag
             if(reqdAPR){
                 section_resetvector = `    resetvector  : > 0x${reqdAPR.startAddr.toString(16)}, palign(8)  \n`
                 section_nmivector   = `    nmivector    : > 0x${(reqdAPR.startAddr + 0x40).toString(16)}, palign(8)  \n`
@@ -1163,30 +1191,30 @@ function getSectionsList(sysSec, cpu)
             sections += `    .binit       : > APR_FLASHLOAD_${system.context}, palign(8)  // Boot time copy tables\n`
             sections += `    .ovly        : > APR_FLASHLOAD_${system.context}, palign(8)  // Copy tables other than boot time (.binit) copy tables.\n`
         }
-        reqdAPR = APRList.find(o => {return o.name == "LINK2_dataAPR_RW"}) //!! tag
+        reqdAPR = APRList.find(o => {return o.name == `${cpu}_LINK2_dataAPR_RW`}) //!! tag
         if(reqdAPR){
-            sections += `    .sysmem      : > LINK2_DATAAPR_RW,   palign(8)  // Sysmem\n\n`
+            sections += `    .sysmem      : > ${cpu}_LINK2_DATAAPR_RW,   palign(8)  // Sysmem\n\n`
         }
     }
     else {
-        let reqdAPR = APRList.find(o => {return o.name == "LINK2_codeAPR_RAM"}) //!! tag
+        let reqdAPR = APRList.find(o => {return o.name == `${cpu}_LINK2_codeAPR_RAM`}) //!! tag
         if(reqdAPR){
-            sections += `    .cinit       : > LINK2_CODEAPR_RAM, palign(8)  // Tables for explicitly initialized global and static variables.\n`
-            sections += `    .binit       : > LINK2_CODEAPR_RAM, palign(8)  // Boot time copy tables\n`
-            sections += `    .ovly        : > LINK2_CODEAPR_RAM, palign(8)  // Copy tables other than boot time (.binit) copy tables.\n`
+            sections += `    .cinit       : > ${cpu}_LINK2_CODEAPR_RAM, palign(8)  // Tables for explicitly initialized global and static variables.\n`
+            sections += `    .binit       : > ${cpu}_LINK2_CODEAPR_RAM, palign(8)  // Boot time copy tables\n`
+            sections += `    .ovly        : > ${cpu}_LINK2_CODEAPR_RAM, palign(8)  // Copy tables other than boot time (.binit) copy tables.\n`
         }
-        reqdAPR = APRList.find(o => {return o.name == "LINK2_dataAPR_RW"}) //!! tag
+        reqdAPR = APRList.find(o => {return o.name == `${cpu}_LINK2_dataAPR_RW`}) //!! tag
         if(reqdAPR){
-            sections += `    .sysmem      : > LINK2_DATAAPR_RW,  palign(8)  // Sysmem\n\n`
+            sections += `    .sysmem      : > ${cpu}_LINK2_DATAAPR_RW,  palign(8)  // Sysmem\n\n`
         }
     }
 
     // Get the stack sections
-    modInstances('/ti/security/Stack').forEach(stack => {
+    modInstances('/ti/security/Stack').forEach(stack => { 
         var sectName = ".stack_" + stack.$name + ' '.repeat(Math.max(0,15 - stack.$name.length))
         var stackSize = stack.size
-        if(stack.$name == "STACK2_STACK") {
-            let stack2Apr = APRList.find(o => {return o.name == "STACK2_stackmem_apr"}) //!! tag
+        if(stack.$name == `${cpu}_STACK2_STACK`) {
+            let stack2Apr = APRList.find(o => {return o.name == `${cpu}_STACK2_stackmem_apr`}) //!! tag
             sections += "    .stack    : " + where(stack2Apr) + "\n"
         }
         else {
@@ -1202,7 +1230,7 @@ function getSectionsList(sysSec, cpu)
 
     // Get sections corresponding to Easy Mode Link
     let commonCodeSections = ""
-    modInstances('/ti/security/EasyMode_link').forEach(x => {
+    modInstances('/ti/security/EasyMode_link').forEach(x => { 
         if(x.isCommonCode)
             commonCodeSections += sectionListModule(x, APRList, cpu, sysSec)
         else
@@ -1211,16 +1239,150 @@ function getSectionsList(sysSec, cpu)
     sections += commonCodeSections                                  //!! Always placing common code sections at the end
 
     // Get sections corresponding to Easy Mode SharedMem
-    modInstances('/ti/security/EasyMode_sharedMem').forEach(x => {
+    modInstances('/ti/security/EasyMode_sharedMem').forEach(x => { 
         sections += sectionListSharedMem(x, APRList, cpu)
     })
 
     // Get sections for manually created Sections
-    modInstances('/ti/security/OutputSection').forEach(section => {
+    modInstances('/ti/security/OutputSection').forEach(section => { 
         sections += sectionListManual(section, APRList)
     })
 
     return sections
+}
+
+function getSectionsList_configure(sysSec, cpu, inst)
+{
+    if(!sysSec || sysSec == undefined) return getSectionsMinimal_configure(cpu)
+    //else if(sysSec.ssumode == 1) return getSectionsMinimal(cpu)
+
+    var sections = ""
+    let APRsAll = allocateAllMemoryRegions()
+    let APRList = APRsAll[cpu].filter(apr=> apr.type != "Peripheral")
+
+    if(isContextCPU1(inst)){
+        let reqdAPR = APRList.find(o => {return o.name == `${cpu}_LINK2_codeAPR_Flash`}) //!! tag
+        if(reqdAPR)
+            sections += `    codestart : > 0x${reqdAPR.startAddr.toString(16)}, palign(8)  \n`
+
+        let certSection = `    cert      : {} > CERT, palign(8) \n`
+        sections += certSection
+    }
+    else{
+        let section_resetvector = ""
+        let section_nmivector = ""
+        let section_codestart = ""
+
+        if(isContextCPU3(inst)){
+            let certSection = `    cert      : {} > CERT, palign(8) \n`
+            sections += certSection
+        }
+
+        let reqdAPR = APRList.find(o => {return o.name == `${cpu}_LINK2_codeAPR_Flash`}) //!! tag
+        if(reqdAPR){
+            section_resetvector = `    resetvector  : > 0x${reqdAPR.startAddr.toString(16)}, palign(8)  \n`
+            section_nmivector   = `    nmivector    : > 0x${(reqdAPR.startAddr + 0x40).toString(16)}, palign(8)  \n`
+            section_codestart   = `    codestart    : > ${reqdAPR.name.toUpperCase()}, palign(8)  \n`
+        }
+        else{
+            reqdAPR = APRList.find(o => {return o.name == `${cpu}_LINK2_codeAPR_RAM`}) //!! tag
+            if(reqdAPR){
+                section_resetvector = `    resetvector  : > 0x${reqdAPR.startAddr.toString(16)}, palign(8)  \n`
+                section_nmivector   = `    nmivector    : > 0x${(reqdAPR.startAddr + 0x40).toString(16)}, palign(8)  \n`
+                section_codestart   = `    codestart    : > ${reqdAPR.name.toUpperCase()}, palign(8)  \n`
+            }
+        }
+
+        let resetVectorAddr = getConfigFromStaticModule("/ti/security/APR", "resetVectorAddress", cpu)
+        let nmiVectorAddr = getConfigFromStaticModule("/ti/security/APR", "nmiVectorAddress", cpu)
+
+        if(resetVectorAddr.available && resetVectorAddr.value > 0x0){
+            section_resetvector = `    resetvector   : > 0x${resetVectorAddr.value.toString(16)}, palign(8)  \n`
+        }
+        if(nmiVectorAddr.available && nmiVectorAddr.value > 0x0){
+            section_nmivector   = `    nmivector    : > 0x${nmiVectorAddr.value.toString(16)}, palign(8)  \n`
+        }
+
+        sections += section_resetvector
+        sections += section_nmivector
+        sections += section_codestart
+    }
+
+    if(sysSec.APR_FlashLoad) {
+        let reqdAPR = APRsAll[CONTEXT_CPU1].find(o => {return o.name == ("APR_FlashLoad_"+cpu)}) //!! tag
+
+        reqdAPR = APRList.find(o => {return o.name == "APR_FlashLoad_"+cpu}) //!! tag
+        if(reqdAPR){
+            sections += `    .cinit       : > APR_FLASHLOAD_${cpu}, palign(8)  // Tables for explicitly initialized global and static variables.\n`
+            sections += `    .binit       : > APR_FLASHLOAD_${cpu}, palign(8)  // Boot time copy tables\n`
+            sections += `    .ovly        : > APR_FLASHLOAD_${cpu}, palign(8)  // Copy tables other than boot time (.binit) copy tables.\n`
+        }
+        reqdAPR = APRList.find(o => {return o.name == `${cpu}_LINK2_dataAPR_RW`}) //!! tag
+        if(reqdAPR){
+            sections += `    .sysmem      : > ${cpu}_LINK2_DATAAPR_RW,   palign(8)  // Sysmem\n\n`
+        }
+    }
+    else {
+        let reqdAPR = APRList.find(o => {return o.name == `${cpu}_LINK2_codeAPR_RAM`}) //!! tag
+        if(reqdAPR){
+            sections += `    .cinit       : > ${cpu}_LINK2_CODEAPR_RAM, palign(8)  // Tables for explicitly initialized global and static variables.\n`
+            sections += `    .binit       : > ${cpu}_LINK2_CODEAPR_RAM, palign(8)  // Boot time copy tables\n`
+            sections += `    .ovly        : > ${cpu}_LINK2_CODEAPR_RAM, palign(8)  // Copy tables other than boot time (.binit) copy tables.\n`
+        }
+        reqdAPR = APRList.find(o => {return o.name == `${cpu}_LINK2_dataAPR_RW`}) //!! tag
+        if(reqdAPR){
+            sections += `    .sysmem      : > ${cpu}_LINK2_DATAAPR_RW,  palign(8)  // Sysmem\n\n`
+        }
+    }
+
+    // Get the stack sections
+    modInstances('/ti/security/Stack', inst).forEach(stack => { 
+        var sectName = ".stack_" + stack.$name + ' '.repeat(Math.max(0,15 - stack.$name.length))
+        var stackSize = stack.size
+        if(stack.$name == `${cpu}_STACK2_STACK`) {
+            let stack2Apr = APRList.find(o => {return o.name == `${cpu}_STACK2_stackmem_apr`}) //!! tag
+            sections += "    .stack    : " + wherev2(stack2Apr, cpu) + "\n"
+        }
+        else {
+            let stackNApr = APRList.find(o => {return o.name == stack.stackAPR.$name})
+            sections += "    " + sectName + " : { .+= " + stackSize + "; }  " + wherev2(stackNApr, cpu) + ",\n"
+            sections += ' '.repeat(45) + "TYPE(NOINIT),\n"
+            sections += ' '.repeat(45) + "START(" + stack.$name + "_start),\n"
+            sections += ' '.repeat(45) + "END(" + stack.$name + "_end)\n"
+        }
+    })
+
+    sections += "\n\n"
+
+    // Get sections corresponding to Easy Mode Link
+    let commonCodeSections = ""
+    modInstances('/ti/security/EasyMode_link', inst).forEach(x => { 
+        if(x.isCommonCode)
+            commonCodeSections += sectionListModule(x, APRList, cpu, sysSec)
+        else
+            sections += sectionListModule(x, APRList, cpu, sysSec, true)
+    })
+    sections += commonCodeSections                                  //!! Always placing common code sections at the end
+
+    // Get sections corresponding to Easy Mode SharedMem
+    modInstances('/ti/security/EasyMode_sharedMem', inst).forEach(x => { 
+        sections += sectionListSharedMem(x, APRList, cpu, true)
+    })
+
+    // Get sections for manually created Sections                           -----> This is CPU specific, thus done separately inside CPUx CONFIGURE context
+    /* modInstances('/ti/security/OutputSection', inst).forEach(section => { 
+        sections += sectionListManual_configure(section, APRList, true, cpu)
+    }) */
+
+    return sections
+}
+
+function appendManualSections_configure(sections, APRList, cpu){
+    let ret = sections
+    modInstancesByCPU('/ti/security/OutputSectionConfigure', cpu).forEach(section => { 
+        ret += sectionListManual_configure(section, APRList, true, cpu)
+    })
+    return ret
 }
 
 function getSectionsMinimal(cpu){
@@ -1263,7 +1425,56 @@ function getSectionsMinimal(cpu){
     }
 
     // Get sections for manually created Sections
-    modInstances('/ti/security/OutputSection')
+    modInstances('/ti/security/OutputSection') 
+    .filter(sec => sec.$name != "codestart" && sec.sectionMemory != "None" )
+    .forEach(section => {
+        sections += sectionListManual(section, APRList, false)
+    })
+
+    return sections
+}
+
+function getSectionsMinimal_configure(cpu, inst){
+    let sections = ""
+    let APRList = allocateAllMemoryRegions()[cpu].filter(apr=> apr.type != "Peripheral")
+    let sectionsList = modInstancesByCPU('/ti/security/OutputSection', cpu)
+
+    if(!isContextCPU1()){
+        let resetVectorAddr = getConfigFromStaticModule("/ti/security/APR", "resetVectorAddress", cpu)
+        let nmiVectorAddr = getConfigFromStaticModule("/ti/security/APR", "nmiVectorAddress", cpu)
+
+        if(resetVectorAddr.available && resetVectorAddr.value > 0x0){
+            sections += `    resetvector : > 0x${resetVectorAddr.value.toString(16)}, palign(8)  \n`
+        }
+
+        if(nmiVectorAddr.available && nmiVectorAddr.value > 0x0){
+            sections += `    nmivector   : > 0x${nmiVectorAddr.value.toString(16)}, palign(8)  \n`
+        }
+    }
+
+    let firstCode = APRList.filter(apr => {return apr.type == "Code"})
+                            .sort((a,b) => {return a.startAddr - b.startAddr})[0]   //!! check what to put
+    let codeStartSection = ""
+    if(firstCode){
+        codeStartSection = `    codestart : > 0x${firstCode.startAddr.toString(16)}, palign(8)  \n`
+    }
+    let a = sectionsList.filter(sec => sec.$name == "codestart")[0]
+    if(a){
+        let codestartApr = APRList.filter(apr => apr.name == a.sectionMemory)[0]
+        if(codestartApr)
+            codeStartSection = `    codestart : > 0x${codestartApr.startAddr.toString(16)}, palign(8)  \n`
+    }
+
+    sections += codeStartSection
+
+    let flashAprList = allocateAllMemoryRegions()[cpu].filter(apr=> apr.memType == "Flash")
+    if((cpu == "CPU1" || cpu == "CPU3") && flashAprList.length){
+        let certSection = `    cert : {} > CERT, palign(8) \n`
+        sections += certSection
+    }
+
+    // Get sections for manually created Sections
+    modInstances('/ti/security/OutputSection', inst)
     .filter(sec => sec.$name != "codestart" && sec.sectionMemory != "None" )
     .forEach(section => {
         sections += sectionListManual(section, APRList, false)
@@ -1274,36 +1485,39 @@ function getSectionsMinimal(cpu){
 
 function getMemoryList(cpu)
 {
-    let aprsAll = allocateAllMemoryRegions()
-    let APRList = aprsAll[cpu].filter(apr=> apr.type != "Peripheral" && !apr.name.startsWith("FLASHCOVER_"))
-                                                    .sort((a,b) => {return a.startAddr - b.startAddr})
-
-    //if(!APRList)
-    let APRnameList = APRList.map(apr=>{return apr.name})
-    let maxLen = APRnameList.sort((a,b)=>{return b.length-a.length})[0].length
+    let APRList     = allocateAllMemoryRegions()[cpu]
+                        .filter(apr=> /* apr.type != "Peripheral" && */
+                                      !apr.name.startsWith("FLASHCOVER_"))
+                        .sort((a,b) => {return a.startAddr - b.startAddr})
+    let maxLen      = _.maxBy(APRList, apr => apr.name.length).name.length
 
     var list = ""
 
+    // RAM memories
     list += "    // RAM MEMORY\n\n"
-    //console.log(APRList)
-    APRList.filter(apr => {return apr.memType == "RAM"})
-    .forEach(item => {
-        let size = item.endAddr - item.startAddr
-        if(item.name.startsWith("APR_Boot_")) //!! tag
-            return;
-        var spaces = ' '.repeat(maxLen - item.name.length)
-        list += "    " + memName(item) + spaces + " : origin = 0x" + toHex(item.startAddr, 8) + ", length = 0x" + toHex(size, 8) + "\n"
+
+    APRList
+    .filter(apr => {return apr.memType == "RAM"})
+    .forEach(item =>
+    {
+        let size    = item.endAddr - item.startAddr
+        let spaces  = ' '.repeat(maxLen - item.name.length)
+
+        list += "    " + memName(item) + spaces + " : origin = 0x" + toHex(item.startAddr, 8) + ", length = 0x" + toHex(size, 8)
+        list += getSECGROUPNew(item, maxLen) + "\n"
     })
 
+    // FLASH memories
     list += "\n    // FLASH MEMORY\n\n"
 
     let flashMemoryList = APRList.filter(apr => {return apr.memType == "Flash"})
 
     // Create CERT memory for non-SSU allocation
     let checkSysSec = modStaticByCPU("/ti/security/System_Security", CONTEXT_CPU1)
-    if(cpu == CONTEXT_CPU1 && !checkSysSec && flashMemoryList.length){
-        flashMemoryList.unshift(
-            {
+    if(cpu == CONTEXT_CPU1 && !checkSysSec && flashMemoryList.length)
+    {
+        flashMemoryList.unshift
+        ({
                 "name": "CERT",
                 "ramMem": ["flc1set1_SECT_1"],
                 "startAddr": 0x10000000,
@@ -1312,14 +1526,17 @@ function getMemoryList(cpu)
                 "memRegion": null,
                 "type": "Data",
                 "memType": "Flash",
-                "implicitRegion": true
+                "implicitRegion": true,
+                "specialAprStatus": "signature_CPU1"
             }
         )
     }
-    checkSysSec = modStaticByCPU("/ti/security/System_Security", CONTEXT_CPU3)
-    if(cpu == CONTEXT_CPU3 && !checkSysSec && flashMemoryList.length){
-        flashMemoryList.unshift(
-            {
+
+    let checkSysSecCpu3 = modStaticByCPU("/ti/security/System_Security", CONTEXT_CPU3)
+    if(cpu == CONTEXT_CPU3 && !checkSysSecCpu3 && flashMemoryList.length)
+    {
+        flashMemoryList.unshift
+        ({
                 "name": "CERT",
                 "ramMem": ["flc2set1_SECT_1"],
                 "startAddr": 0x10400000,
@@ -1328,44 +1545,160 @@ function getMemoryList(cpu)
                 "memRegion": null,
                 "type": "Data",
                 "memType": "Flash",
-                "implicitRegion": true
+                "implicitRegion": true,
+                "specialAprStatus": "signature_CPU3"
             }
         )
     }
 
     flashMemoryList
-    .forEach(item => {
-        //if(item.name.includes("APR_FlashLoad_") && item.name != "APR_FlashLoad_CPU1") return;
-        let size = item.endAddr - item.startAddr
-        let spaces = ' '.repeat(maxLen - item.name.length)
-        if((item.name == "APR_RESERVED_sign_CPU1") || ((item.name == "APR_RESERVED_sign_CPU3"))){              //!! tag
+    .forEach(item =>
+    {
+        let size    = item.endAddr - item.startAddr
+        let spaces  = ' '.repeat(maxLen - item.name.length)
+
+        if((item.name == "APR_RESERVED_sign_CPU1") || ((item.name == "APR_RESERVED_sign_CPU3"))) //!! tag
+        {
             spaces = ' '.repeat(maxLen - 4)
-            list += "    " + "CERT" + spaces + " : origin = 0x" + toHex(item.startAddr, 8) + ", length = 0x" + toHex(size, 8) + "\n"
+            list += "    " + "CERT" + spaces + " : origin = 0x" + toHex(item.startAddr, 8) + ", length = 0x" + toHex(size, 8)
         }
         else
-            list += "    " + memName(item) + spaces + " : origin = 0x" + toHex(item.startAddr, 8) + ", length = 0x" + toHex(size, 8) + "\n"
+            list += "    " + memName(item) + spaces + " : origin = 0x" + toHex(item.startAddr, 8) + ", length = 0x" + toHex(size, 8)
+        list += getSECGROUPNew(item, maxLen) + "\n"
     })
 
+    // PERIPHERAL memories
+
+    if(checkSysSec && checkSysSec["togglePeripheralRegionsInLinker"]){
+        list += "\n    // PERIPHERAL MEMORY REGIONS\n\n"
+
+        APRList
+        .filter(apr => {return apr.type == "Peripheral"})
+        .forEach(item =>
+        {
+            let size    = item.endAddr - item.startAddr
+            let spaces  = ' '.repeat(maxLen - item.name.length)
+
+            list += "    " + memName(item) + spaces + " : origin = 0x" + toHex(item.startAddr, 8) + ", length = 0x" + toHex(size, 8) + " \n"
+        })
+    }
+    
     return list
 }
 
-/* function getFlashGaps(flashAprList){
-    let ret = [];
-    for(let i=1; i<flashAprList.length; i++){
-        if(flashAprList[i].aprEntry.start != flashAprList[i-1].aprEntry.end)
-            ret.push({
-                start: flashAprList[i-1].aprEntry.end,
-                size: (flashAprList[i].aprEntry.start - flashAprList[i-1].aprEntry.end)
-            })
-    }
-    return ret;
-} */
 
-function assignLinkID()
+function getMemoryList_configure(cpu)
+{
+    var list = ""
+
+    let APRList     = allocateAllMemoryRegions()[cpu]
+                        .filter(apr=> /* apr.type != "Peripheral" && */
+                                      !apr.name.startsWith("FLASHCOVER_"))
+                        .sort((a,b) => {return a.startAddr - b.startAddr})
+
+    if(!APRList || !APRList.length) return list
+    let maxLen      = _.maxBy(APRList, apr => apr.name.length).name.length
+
+
+    // RAM memories
+    list += "    // RAM MEMORY\n\n"
+
+    APRList
+    .filter(apr => {return apr.memType == "RAM"})
+    .forEach(item =>
+    {
+        let size    = item.endAddr - item.startAddr
+        let spaces  = ' '.repeat(maxLen - item.name.length)
+
+        list += "    " + memName(item) + spaces + " : origin = 0x" + toHex(item.startAddr, 8) + ", length = 0x" + toHex(size, 8)
+        list += getSECGROUPNew_configure(item, maxLen, cpu) + "\n"
+    })
+
+    // FLASH memories
+    list += "\n    // FLASH MEMORY\n\n"
+
+    let flashMemoryList = APRList.filter(apr => {return apr.memType == "Flash"})
+
+    // Create CERT memory for non-SSU allocation
+    let checkSysSec = modStaticByCPU("/ti/security/System_Security", CONTEXT_CPU1)
+    if(cpu == CONTEXT_CPU1 && !checkSysSec && flashMemoryList.length)
+    {
+        flashMemoryList.unshift
+        ({
+                "name": "CERT",
+                "ramMem": ["flc1set1_SECT_1"],
+                "startAddr": 0x10000000,
+                "endAddr": 0x10001000,
+                "size": 4096,
+                "memRegion": null,
+                "type": "Data",
+                "memType": "Flash",
+                "implicitRegion": true,
+                "specialAprStatus": "signature_CPU1"
+            }
+        )
+    }
+
+    let checkSysSecCpu3 = modStaticByCPU("/ti/security/System_Security", CONTEXT_CPU3)
+    if(cpu == CONTEXT_CPU3 && !checkSysSecCpu3 && flashMemoryList.length)
+    {
+        flashMemoryList.unshift
+        ({
+                "name": "CERT",
+                "ramMem": ["flc2set1_SECT_1"],
+                "startAddr": 0x10400000,
+                "endAddr": 0x10401000,
+                "size": 4096,
+                "memRegion": null,
+                "type": "Data",
+                "memType": "Flash",
+                "implicitRegion": true,
+                "specialAprStatus": "signature_CPU3"
+            }
+        )
+    }
+
+    flashMemoryList
+    .forEach(item =>
+    {
+        let size    = item.endAddr - item.startAddr
+        let spaces  = ' '.repeat(maxLen - item.name.length)
+
+        if((item.name == "APR_RESERVED_sign_CPU1") || ((item.name == "APR_RESERVED_sign_CPU3"))) //!! tag
+        {
+            spaces = ' '.repeat(maxLen - 4)
+            list += "    " + "CERT" + spaces + " : origin = 0x" + toHex(item.startAddr, 8) + ", length = 0x" + toHex(size, 8)
+        }
+        else
+            list += "    " + memName(item) + spaces + " : origin = 0x" + toHex(item.startAddr, 8) + ", length = 0x" + toHex(size, 8)
+        list += getSECGROUPNew_configure(item, maxLen, cpu) + "\n"
+    })
+
+    // PERIPHERAL memories
+
+    if(checkSysSec && checkSysSec["togglePeripheralRegionsInLinker"]){
+        list += "\n    // PERIPHERAL MEMORY REGIONS\n\n"
+
+        APRList
+        .filter(apr => {return apr.type == "Peripheral"})
+        .forEach(item =>
+        {
+            let size    = item.endAddr - item.startAddr
+            let spaces  = ' '.repeat(maxLen - item.name.length)
+
+            list += "    " + memName(item) + spaces + " : origin = 0x" + toHex(item.startAddr, 8) + ", length = 0x" + toHex(size, 8) + " \n"
+        })
+    }
+    
+    return list
+}
+
+function assignLinkID() 
 {
     var linkID = []
     var id = 3
-    modInstances('/ti/security/Link').forEach(x => {
+    modInstances('/ti/security/Link').forEach(x =>
+    {
         if(x.isLink2)
             linkID[x.$name] = 2
         else if(x.isLink1)
@@ -1376,14 +1709,33 @@ function assignLinkID()
     return linkID
 }
 
-function assignStackID()
+function assignLinkID_configure(core) 
 {
+    var linkID = {}
+    var id = 3
+    modInstances(`/ti/security/${core}_Link`).forEach(x =>
+    {
+        if(x.isLink2)
+            linkID[x.$name] = 2
+        else if(x.isLink1)
+            linkID[x.$name] = 1
+        else
+           linkID[x.$name] = id++
+    })
+    return linkID
+}
+
+
+function assignStackID() 
+{
+    let ctx = currentContext()
     var stackID = []
     var id = 3
-    modInstances('/ti/security/Stack').forEach(x => {
-        if(x.$name == "STACK2_STACK") //!! tags
+    modInstances('/ti/security/Stack').forEach(x =>
+    {
+        if(x.$name == `${ctx}_STACK2_STACK`) //!! tags
             stackID[x.$name] = 2
-        else if(x.$name == "STACK1_STACK")
+        else if(x.$name == `${ctx}_STACK1_STACK`)
             stackID[x.$name] = 1
         else
             stackID[x.$name] = id++
@@ -1391,15 +1743,37 @@ function assignStackID()
     return stackID
 }
 
-function getAprWeprotVal(aprName, aprType, cpuId){
+function assignStackID_configure(core)
+{
+    var stackID = {}
+    var id = 3
+    modInstances(`/ti/security/${core}_Stack`).forEach(x =>
+    {
+        if(x.$name == `${core}_STACK2_STACK`) //!! tags
+            stackID[x.$name] = 2
+        else if(x.$name == `${core}_STACK1_STACK`)
+            stackID[x.$name] = 1
+        else
+            stackID[x.$name] = id++
+    })
+    return stackID
+}
+
+function getAprWeprotVal(aprName, aprType, cpuId)
+{
     let aprNameList = [];
     let ssMain = modStaticByCPU("/ti/security/System_Security", "CPU1")
     let ssCur = modStaticByCPU("/ti/security/System_Security", ("CPU"+String(cpuId)))
-    if(ssMain && ssCur){
+    if(ssMain && ssCur)
+    {
         ssCur.WEPROT_APRs.forEach(x => {aprNameList.push(x)})
-        if(aprNameList.includes(aprName)) return 1
-        if(aprType == "Code" && ssMain.WEPROT_CODE_BANKS) return 1
-        if(aprType == "Data" && ssMain.WEPROT_DATA_BANKS) return 1
+
+        if(aprNameList.includes(aprName))   
+            return 1
+        if(aprType == "Code" && ssMain.WEPROT_CODE_BANKS) 
+            return 1
+        if(aprType == "Data" && ssMain.WEPROT_DATA_BANKS) 
+            return 1
     }
     return 0;
 }
@@ -1477,8 +1851,6 @@ function constructFlashRegions(){
 
 function calcWeprotValues(flashSpace){
     let ret = {}
-    const cpu1check    = isContextCPU1()
-    const retDefault = {a: 0x0, b: 0x0}
 
     let flashList = flashSpace;
     let flc1 = flashList.filter(x=>{return x.name.startsWith("flc1")}), flc2 = flashList.filter(x=>{return x.name.startsWith("flc2")})
@@ -1552,39 +1924,8 @@ function getSeccfgLocation(cpuName){
     return 0x0;
 }
 
-function getSeccfgLocationDummy(cpuName){
-    if(isContextCPU1() == true)
-    {
-        if(cpuName == "CPU1") return 0x200FC000;
-        if(cpuName == "CPU2") return 0x200FC800;
-        if(cpuName == "CPU3") return 0x200FD000;
-        if(cpuName == "CPU4") return 0x200FD800;
-    }
-    else
-    {
-        if(cpuName == "CPU1") return 0x00000000;
-        if(cpuName == "CPU2") return 0x00000800;
-        if(cpuName == "CPU3") return 0x00001000;
-        if(cpuName == "CPU4") return 0x00001800;
-    }
-}
-
-function getCoreList(lockstepFilter = 0){
-    let coreList = _.map(cpuData.cpuList, (cpuItem) => {
-        return {name: cpuItem.name}
-    })
-
-    // Check for LockStep
-    if(lockstepFilter != 0){
-        let lsConfig = getConfigFromStaticModule("/driverlib/sysctl.js", "LSConfig", CONTEXT_CPU1)
-        if(!lsConfig.available || (lsConfig.available && lsConfig.value == "LockStep")){
-            coreList = coreList.filter((cpuItem) => {
-                return cpuItem.name != "CPU2"
-            })
-        }
-    }
-
-    return coreList
+function getSeccfgLocation_configure(cpuName, bankmode){
+    return seccfgAddressMapping[cpuName][bankmode];
 }
 
 function getSpecialAprList(){
@@ -1744,7 +2085,8 @@ function placeRamMemory(availableMemoryAll, memRegion, cpu, finalAllocations, is
                 endAddr: result.allottedRamUnits[result.num_reqd - 1].end,
                 type: memRegion.type,
                 memType: "RAM",
-                implicitRegion: false
+                implicitRegion: false,
+                specialAprStatus: memRegion.specialAprStatus
             })
 
             if(isShared){
@@ -1766,6 +2108,7 @@ function placeRamMemory(availableMemoryAll, memRegion, cpu, finalAllocations, is
                             type: memRegion.type,
                             memType: "RAM",
                             implicitRegion: true,
+                            specialAprStatus: memRegion.specialAprStatus,
                             sharedAutoRegion : true
                         })
                     }
@@ -1780,6 +2123,7 @@ function placeRamMemory(availableMemoryAll, memRegion, cpu, finalAllocations, is
                             type: memRegion.type,
                             memType: "RAM",
                             implicitRegion: true,
+                            specialAprStatus: memRegion.specialAprStatus,
                             sharedAutoRegion : true
                         })
                     }
@@ -1796,6 +2140,7 @@ function placeRamMemory(availableMemoryAll, memRegion, cpu, finalAllocations, is
                 endAddr: -1,
                 type: memRegion.type,
                 memType: "RAM",
+                specialAprStatus: memRegion.specialAprStatus,
                 implicitRegion: false //!!
             })
         }
@@ -1828,7 +2173,7 @@ function placeRamCoverRegion(srcCore, destCore, finalAllocations){
     let idx = 0;
     for(let i=0; i<ramRegions.length; i++){
         if(i==0){
-            ret[idx] = {startAddr: 0, endAddr: 0, ramCoverRegion: true, name: srcCore+"_RamCoverRegion"+String(idx), type: null, memType: "RAM", implicitRegion: true};
+            ret[idx] = {startAddr: 0, endAddr: 0, ramCoverRegion: true, name: srcCore+"_RamCoverRegion"+String(idx), type: null, memType: "RAM", implicitRegion: true, specialAprStatus: "ram_cover_" + srcCore};
             ret[idx].startAddr = ramRegions[i].startAddr
             ret[idx].endAddr = ramRegions[i].endAddr
             ret[idx].type = "Data"
@@ -1840,7 +2185,7 @@ function placeRamCoverRegion(srcCore, destCore, finalAllocations){
         }
         else{
             idx++;
-            ret[idx] = {startAddr: 0, endAddr: 0, ramCoverRegion: true, name: srcCore+"_RamCoverRegion"+String(idx), type: null, memType: "RAM", implicitRegion: true};
+            ret[idx] = {startAddr: 0, endAddr: 0, ramCoverRegion: true, name: srcCore+"_RamCoverRegion"+String(idx), type: null, memType: "RAM", implicitRegion: true, specialAprStatus: "ram_cover_" + srcCore};
             ret[idx].startAddr = ramRegions[i].startAddr
             ret[idx].endAddr = ramRegions[i].endAddr
             ret[idx].type = "Data"
@@ -1865,6 +2210,7 @@ function placeFlashCoverRegion(srcCore, destCore, finalAllocations){
         memType         : "Flash",
         implicitRegion  : true,
         type            : "Data",
+        specialAprStatus: "flash_cover_" + srcCore
     })
 }
 
@@ -1984,12 +2330,6 @@ function allocateFlashMemoriesUtil()
     let priorityFlashAprTags = [
         {tag: "signature_CPU1", core: "CPU1", finalCore: "CPU1"},
         {tag: "signature_CPU3", core: "CPU3", finalCore: "CPU3"},
-      /* {tag: "link2_flash_code", core: "CPU1", finalCore: "CPU1"},
-        {tag: "link2_flash_code", core: "CPU2", finalCore: "CPU2"},
-        {tag: "link2_flash_code", core: "CPU3", finalCore: "CPU3"},
-        {tag: "flash_load_CPU1", core: "CPU1", finalCore: "CPU1"},
-        {tag: "flash_load_CPU2", core: "CPU2", finalCore: "CPU2"},
-        {tag: "flash_load_CPU3", core: "CPU3", finalCore: "CPU3"}, */
     ]
 
     priorityFlashAprTags.forEach(priApr => {
@@ -2008,7 +2348,8 @@ function allocateFlashMemoriesUtil()
                     memRegion    : currApr,
                     type: currApr.type,
                     memType: "Flash",
-                    implicitRegion: false
+                    implicitRegion: false,
+                    specialAprStatus: priApr.tag
                 })
                 weprot_last = currApr.weprot
             }
@@ -2055,7 +2396,8 @@ function allocateFlashMemoriesUtil()
                     memRegion    : currApr,
                     type: currApr.type,
                     memType: "Flash",
-                    implicitRegion: false
+                    implicitRegion: false,
+                    specialAprStatus: "none"
                 })
                 weprot_last = currApr.weprot
             }
@@ -2136,7 +2478,8 @@ function aprListEntryFlash2(flMem, apr, num_reqd, flx, isShared = false, sharing
         memRegion       : apr,
         type            : apr.type,
         memType         : "Flash",
-        implicitRegion  : isShared
+        implicitRegion  : isShared,
+        specialAprStatus: apr.specialAprStatus
     }
     if(!isShared) // Not already created on another core
         updateFlashUsageProtection(ret.ramMem, apr.weprot, flx)
@@ -2270,7 +2613,7 @@ function allocatePeripheralAprsAuto(permByPeripheral){
     let idx = 0;
     for(let i=0; i<permByPeripheral.length; i++){
         if(i==0){
-            ret[idx] = {peripheralList: [], startAddr: 0, endAddr: 0, autoPeriphRegion: true, name: "PeriphAutoRegion"+String(idx), type: "Peripheral", memType: null, implicitRegion: true};
+            ret[idx] = {peripheralList: [], startAddr: 0, endAddr: 0, autoPeriphRegion: true, name: "PeriphAutoRegion"+String(idx), type: "Peripheral", memType: null, implicitRegion: true, specialAprStatus: "none"};
             ret[idx].peripheralList.push(permByPeripheral[i].name);
             ret[idx].startAddr = permByPeripheral[i].start
             ret[idx].endAddr = permByPeripheral[i].end
@@ -2284,7 +2627,7 @@ function allocatePeripheralAprsAuto(permByPeripheral){
         }
         else{
             idx++;
-            ret[idx] = {peripheralList: [], startAddr: 0, endAddr: 0, autoPeriphRegion: true, name: "PeriphAutoRegion"+String(idx), type: "Peripheral", memType: null, implicitRegion: true};
+            ret[idx] = {peripheralList: [], startAddr: 0, endAddr: 0, autoPeriphRegion: true, name: "PeriphAutoRegion"+String(idx), type: "Peripheral", memType: null, implicitRegion: true, specialAprStatus: "none"};
             ret[idx].peripheralList.push(permByPeripheral[i].name);
             ret[idx].startAddr = permByPeripheral[i].start
             ret[idx].endAddr = permByPeripheral[i].end
@@ -2391,11 +2734,43 @@ function getSummaryList(regions, type, flashSpace=null){
     return ret;
 }
 
+function getSummaryListv2(regions, type, flashSpace=null){
+    let ret = [], memList
+    if(type == "RAM")
+        memList = memoryData.ram_mem    //!! replace like flx
+    else if (type = "Flash")
+        memList = flashSpace
+
+    let idx=0, itemTemplate = JSON.parse(JSON.stringify(itemTemplateCommon));
+
+    for(let i=0; i<regions.length; i++){
+        ret[idx] = JSON.parse(JSON.stringify(itemTemplate))
+
+        ret[idx].name       = regions[i].name
+        ret[idx].startAddr  = regions[i].startAddr
+        ret[idx].endAddr    = regions[i].endAddr
+        ret[idx].type       = regions[i].type
+
+        if(type == "RAM")
+            ret[idx].implicitRegion = regions[i].implicitRegion
+
+        idx++;
+    }
+
+    let unusedList = []
+    unusedList = removedOccupiedRegions(memList, ret.sort((a,b) => a.startAddr - b.startAddr))
+    ret = ret.concat(unusedList).sort((a,b) => a.startAddr - b.startAddr)
+
+    return ret;
+}
+
 function getFlashRegion(core){
     let regions = allocateAllMemoryRegions()[core]
-    if(!regions) return {origin: 0, length: 0}
+    if(!regions)
+        return {origin: 0, length: 0}
     let sortedFlashRegions = regions.filter(a => a.memType == "Flash").sort((a,b) => a.startAddr - b.startAddr)
-    if(!sortedFlashRegions || !sortedFlashRegions[0]) return {origin: 0, length: 0}
+    if(!sortedFlashRegions || !sortedFlashRegions[0])
+        return {origin: 0, length: 0}
     let length = 0;
     sortedFlashRegions.forEach(a => length += a.size)
     return {
@@ -2404,24 +2779,212 @@ function getFlashRegion(core){
     }
 }
 
-function getBootPeripherals(inst){
-    if(system.context != CONTEXT_CPU1) return [];
-    if(!inst) return [];
-
-    let bootModes = new Set(), periphsNeeded = new Set()
-    let bootPinCount = inst.bootPinCount
-    for(let i=0; i<Math.pow(2,bootPinCount); i++){
-        bootModes.add(inst["BOOTDEF" + String(i)])
+function getBootPeripherals(inst)
+{
+    if(isAllocationSetupMode())
+    {
+        if(!inst || (getCurrentCorePrefix(inst).slice(0,-1) != CONTEXT_CPU1))
+            return []
+    }
+    else
+    {
+        if(!inst || (system.context != CONTEXT_CPU1))
+            return [];
     }
 
-    bootModes.forEach(bootMode => {
-        ssuData["link1BootPeripherals"][bootMode].forEach(p => periphsNeeded.add(p))
-    })
+    let periphsNeeded = new Set()
+    for(let i=0; i < Math.pow( 2 , inst.bootPinCount ); i++)
+    {
+        ssuData["link1BootPeripherals"][inst["BOOTDEF" + String(i)]].forEach(p => periphsNeeded.add(p))
+    }
 
-    let retArray = Array.from(periphsNeeded)
-    return retArray
+    return Array.from(periphsNeeded)
 }
 
-function getLink2RequiredAprs(){
+function getLink2RequiredAprs()
+{
     return ssuData["link2RequiredAprs"]
 }
+
+function extractAccess(accessList, accessType){
+    let arr = accessList.split("|").slice(0,-1)
+    if(!arr || !arr.length)
+        return "-"
+    let elem = arr.filter(str => str.includes(`SSU_LINK_${accessType}_ACCESS`))
+    if(!elem || !elem.length)
+        return "-"
+    let ret = []
+    elem.forEach(e => {
+        let found = e.match(/\((.*?)\)/) 
+        if(found) ret.push(found[1])
+    })
+
+    return ret.join(", ")    
+}
+
+//*********************************************************************
+// Resource Allocation functionality
+//*********************************************************************
+
+//
+// Check if tool is loaded in SETUP mode in system context
+//
+function isAllocationSetupMode()
+{
+    return (system.context == "system" && system.resourceAllocation.mode == "SETUP" );
+}
+
+//
+// Check if tool is loaded in CONFIGURE mode
+//
+function isAllocationConfigureMode() {
+    return (system.resourceAllocation.mode == "CONFIGURE");
+}
+
+//
+// Check if tool is loaded without Resource Allocation mode
+//
+function isAllocationOff()
+{
+    return (system.resourceAllocation.mode == "OFF");
+}
+
+//
+// Return prefix for the core that curr inst belongs to
+// Will return "" for non RA module since it has no prefix
+//
+function getCurrentCorePrefix(inst)
+{
+    let instPrefix = inst?.$module.$name.split("/").at(-1).split("_")[0]
+    if(!instPrefix)
+        return ""
+    return (instPrefix.includes("CPU")) ? (instPrefix + "_") : ""
+}
+
+
+function hideNonMainCoreConfigs(configList, hidelist) {
+    let filteredList = [];
+    hideNonMainCoreConfigsUtil(configList, filteredList, hidelist);
+    return filteredList;
+}
+
+function hideNonMainCoreConfigsUtil(configList, finalList, hidelist) {
+    for (let i = 0; i < configList.length; i++) {
+        let config = configList[i];
+        if(!config)
+            continue;
+        if(config.name && config.name.startsWith("$")){
+            finalList.push(config);
+            continue;
+        }
+        hidelist.forEach(key => {
+            if (config.name == (key)) {
+                config.hidden = true;
+            }
+        })
+        if (config.hasOwnProperty('config')) {
+            config.config = hideNonMainCoreConfigs(config.config, hidelist);
+        }
+
+        finalList.push(config);
+    }
+}
+
+function coreSpecificModuleCheck(inst){
+    let ret =
+    {
+        check   : false,
+        core    : "",
+        isSSU   : false
+    }
+    if(!inst) return ret
+    let modName = inst?.$module.$name
+    if(!modName) return ret
+    if(modName.startsWith("/ti/security/CPU"))
+    {
+        ret.check   = true
+        ret.core    = modName.split("/").at(-1).split("_")[0]
+        ret.isSS    = modName.endsWith("_System_Security")
+    }
+    return ret
+}
+
+function getCoreSpecificModuleName(originalModName, coreNameString)
+{
+    let temp = originalModName.split("/")
+    if(!(temp[temp.length - 1].startsWith(coreNameString)))                     // in case the core specific name has been passed already
+        temp[temp.length - 1] = coreNameString + "_" + temp[temp.length - 1]
+    return temp.join("/")
+}
+
+//console.log(getCoreSpecificModuleName("/ti/security/System_Security", "CPU0"))
+
+
+exports =
+{
+    modStatic: modStatic,
+    modStaticByCPU: modStaticByCPU,
+    modInstances: modInstances,
+    modInstancesByCPU: modInstancesByCPU,
+    modInstanceNames: modInstanceNames,
+    getConfigFromStaticModule: getConfigFromStaticModule,
+    getCoreList: getCoreList,
+    CONTEXT_CPU1: CONTEXT_CPU1,
+    CONTEXT_CPU2: CONTEXT_CPU2,
+    CONTEXT_CPU3: CONTEXT_CPU3,
+    isContextCPU1: isContextCPU1,
+    isContextCPU2: isContextCPU2,
+    isContextCPU3: isContextCPU3,
+    getActiveContexts: getActiveContexts,
+    currentContext: currentContext,
+    getExeLink: getExeLink,
+    getAPILink: getAPILink,
+    getLinkAccess: getLinkAccess,
+    getStack: getStack,
+    getZone: getZone,
+    toHex: toHex,
+    isContiguous: isContiguous,
+    getSectionsList: getSectionsList,
+    getSectionsList_configure: getSectionsList_configure,
+    getMemoryList: getMemoryList,
+    assignLinkID: assignLinkID,
+    assignStackID: assignStackID,
+    getAprWeprotVal: getAprWeprotVal,
+    calcWeprotValues: calcWeprotValues,
+    getSeccfgCrc: getSeccfgCrc,
+    getSeccfgLocation: getSeccfgLocation,
+    getSpecialAprList: getSpecialAprList,
+    allocateAllMemoryRegions: allocateAllMemoryRegions,
+    allocateRamMemories: allocateRamMemories,
+    allocateFlashMemories: allocateFlashMemories,
+    allocatePeripheralMemories: allocatePeripheralMemories,
+    updatePeripheralAllocation: updatePeripheralAllocation,
+    getPeripheralPermissions: getPeripheralPermissions,
+    getAutoPeriphAPRsByLink: getAutoPeriphAPRsByLink,
+    getSummaryList: getSummaryList,
+    getSummaryListv2: getSummaryListv2,
+    getBankModeConfig: getBankModeConfig,
+    getFlashRegion: getFlashRegion,
+    getBootPeripherals: getBootPeripherals,
+    getLink2RequiredAprs: getLink2RequiredAprs,
+    isAllocationSetupMode: isAllocationSetupMode,
+    isAllocationConfigureMode: isAllocationConfigureMode,
+    isAllocationOff: isAllocationOff,
+    getCurrentCorePrefix: getCurrentCorePrefix,
+    hideNonMainCoreConfigs: hideNonMainCoreConfigs,
+    coreSpecificModuleCheck: coreSpecificModuleCheck,
+    assignStackID_configure: assignStackID_configure,
+    assignLinkID_configure: assignLinkID_configure,
+    getExeLink_configure: getExeLink_configure,
+    getAPILink_configure: getAPILink_configure,
+    getLinkAccess_configure: getLinkAccess_configure,
+    getStack_configure: getStack_configure,
+    getZone_configure: getZone_configure,
+    getMemoryList_configure: getMemoryList_configure,
+    getSECGROUPNew_configure: getSECGROUPNew_configure,
+    getActiveContexts_configure: getActiveContexts_configure,
+    getAllCoreContexts: getAllCoreContexts,
+    getSeccfgLocation_configure: getSeccfgLocation_configure,
+    appendManualSections_configure: appendManualSections_configure,
+    extractAccess: extractAccess
+};

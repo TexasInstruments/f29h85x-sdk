@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2024 Texas Instruments Incorporated
+ *  Copyright (c) 2025 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -38,7 +38,11 @@ extern "C"
 #endif
 
 #include <security/drivers/hw_include/cslr_soc.h>
+#if defined (SOC_F29H85X)
 #include <drivers/soc/f29h85x/soc.h>
+# elif defined (SOC_F29P32X)
+#include <drivers/soc/f29p32x/soc.h>
+#endif
 #include <kernel/dpl/CpuIdP.h>
 
 /* Dedicated hsm mailbox memories address */

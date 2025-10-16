@@ -95,7 +95,6 @@ typedef enum
 //
 //*****************************************************************************
 #ifdef DEBUG
-__attribute__((always_inline))
 static inline bool
 HRCAP_isBaseValid(uint32_t base)
 {
@@ -120,7 +119,6 @@ HRCAP_isBaseValid(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 HRCAP_enableHighResolution(uint32_t base)
 {
@@ -144,7 +142,6 @@ HRCAP_enableHighResolution(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 HRCAP_disableHighResolution(uint32_t base)
 {
@@ -167,7 +164,6 @@ HRCAP_disableHighResolution(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 HRCAP_enableHighResolutionClock(uint32_t base)
 {
@@ -190,7 +186,6 @@ HRCAP_enableHighResolutionClock(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 HRCAP_disbleHighResolutionClock(uint32_t base)
 {
@@ -214,7 +209,6 @@ HRCAP_disbleHighResolutionClock(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 HRCAP_startCalibration(uint32_t base)
 {
@@ -238,7 +232,6 @@ HRCAP_startCalibration(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 HRCAP_setCalibrationMode(uint32_t base)
 {
@@ -266,7 +259,6 @@ HRCAP_setCalibrationMode(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 HRCAP_enableCalibrationInterrupt(uint32_t base, uint16_t intFlags)
 {
@@ -296,7 +288,6 @@ HRCAP_enableCalibrationInterrupt(uint32_t base, uint16_t intFlags)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 HRCAP_disableCalibrationInterrupt(uint32_t base, uint16_t intFlags)
 {
@@ -331,7 +322,6 @@ HRCAP_disableCalibrationInterrupt(uint32_t base, uint16_t intFlags)
 //!         by ORing the above return values.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline uint16_t
 HRCAP_getCalibrationFlags(uint32_t base)
 {
@@ -359,7 +349,6 @@ HRCAP_getCalibrationFlags(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 HRCAP_clearCalibrationFlags(uint32_t base, uint16_t flags)
 {
@@ -390,7 +379,6 @@ HRCAP_clearCalibrationFlags(uint32_t base, uint16_t flags)
 //!         if there is no active calibration.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline bool
 HRCAP_isCalibrationBusy(uint32_t base)
 {
@@ -418,7 +406,6 @@ HRCAP_isCalibrationBusy(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 HRCAP_forceCalibrationFlags(uint32_t base, uint16_t flag)
 {
@@ -447,7 +434,6 @@ HRCAP_forceCalibrationFlags(uint32_t base, uint16_t flag)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 HRCAP_setCalibrationPeriod(uint32_t base, uint32_t sysclkHz)
 {
@@ -471,7 +457,6 @@ HRCAP_setCalibrationPeriod(uint32_t base, uint32_t sysclkHz)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 HRCAP_configCalibrationPeriod(uint32_t base, uint32_t sysclkHz,
                                                      float periodInMs)
@@ -497,7 +482,6 @@ HRCAP_configCalibrationPeriod(uint32_t base, uint32_t sysclkHz,
 //!         specified by clockSource.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline uint32_t
 HRCAP_getCalibrationClockPeriod(uint32_t base,
                                 HRCAP_CalibrationClockSource clockSource)
@@ -522,7 +506,6 @@ HRCAP_getCalibrationClockPeriod(uint32_t base,
 //! \return This function returns the calculated scale factor.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline float32_t
 HRCAP_getScaleFactor(uint32_t base)
 {
@@ -552,7 +535,6 @@ HRCAP_getScaleFactor(uint32_t base)
 //! \return Returns the converted time stamp in nanoseconds.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline float32_t
 HRCAP_convertEventTimeStampNanoseconds(uint32_t timeStamp,
                                        float32_t scaleFactor)

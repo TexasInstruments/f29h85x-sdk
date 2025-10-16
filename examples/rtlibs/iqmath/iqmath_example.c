@@ -34,6 +34,8 @@ long GlobalQ = GLOBAL_Q;      // Used for legacy GEL & Graph Debug.
 #define STEP_X_SIZE     0.314159265f
 #define STEP_Y_SIZE     -0.314159265f
 
+volatile int32_t fail = 0;
+
 // Allocate data log buffers:
 struct  DATA_LOG_C {
     _iq   Xwaveform[DATA_LOG_SIZE];
@@ -63,9 +65,7 @@ struct  STEP {
 //----------------------------------------------------------------------------
 int main(void)
 {
-    unsigned int  i;
-
-    int32_t fail;
+    int32_t  i;
 
     _iq tempX, tempY, tempZ, tempP, tempM, tempMmax;
 
@@ -83,7 +83,7 @@ int main(void)
     tempP = _IQ(PI);
     TI_profile_stop();
     asm("BM1_END:");
-    fail = 0;
+    
     if(tempP != 52707180)
     {
         fail = 1;
@@ -102,7 +102,7 @@ int main(void)
     tempP = _IQsin(tempX);
     TI_profile_stop();
     asm("BM2_END:");
-    fail = 0;
+    
     if(tempP != 5184445)
     {
         fail = 1;
@@ -121,7 +121,7 @@ int main(void)
     tempP = _IQmpy(tempX,tempY);
     TI_profile_stop();
     asm("BM3_END:");
-    fail = 0;
+    
     if(tempP != -1655845)
     {
         fail = 1;
@@ -140,7 +140,7 @@ int main(void)
     tempP = _IQabs(tempY);
     TI_profile_stop();
     asm("BM4_END:");
-    fail = 0;
+    
     if(tempP != 5270718)
     {
         fail = 1;
@@ -159,7 +159,7 @@ int main(void)
     tempP = _IQmag(tempX,tempZ);
     TI_profile_stop();
     asm("BM5_END:");
-    fail = 0;
+    
     if(tempP != 26875494)
     {
         fail = 1;
@@ -341,7 +341,7 @@ int main(void)
     }
     TI_profile_stop();
     asm("BM12_END:");
-    fail=0;
+    
     #ifdef __TMS320C28XX__
         printf("%ld\n",Dlog.Xwaveform[DATA_LOG_SIZE-1]);
         printf("%ld\n",Dlog.Ywaveform[DATA_LOG_SIZE-1]);

@@ -1294,6 +1294,7 @@ function getEMIFConfig(emif_instance){
             default     : 'ALL',
             options     : Pinmux.getPeripheralUseCaseNames("EMIF1"),
             onChange    : Pinmux.useCaseChanged,
+            shouldBeAllocatedAsResource: true,
         });
     }
     else if(emif_instance == "EMIF2"){
@@ -1305,6 +1306,7 @@ function getEMIFConfig(emif_instance){
             default     : 'ALL',
             options     : Pinmux.getPeripheralUseCaseNames("EMIF2"),
             onChange    : Pinmux.useCaseChanged,
+            shouldBeAllocatedAsResource: true,
         });
     }
     offset = 0;

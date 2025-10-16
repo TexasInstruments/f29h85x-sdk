@@ -25,7 +25,7 @@ extern "C" {
 //! \brief          Defines DCL_PIDF64 shadow PID64 controller structure
 //!                 used for updating controller parameter
 //!
-typedef struct dcl_pid64_sps {
+typedef struct dcl_pidf64_sps {
     float64_t Kp;       //!< Proportional gain
     float64_t Ki;       //!< Integral gain
     float64_t Kd;       //!< Derivative gain

@@ -19,12 +19,14 @@ let staticConfig = [
                 name: "enableTemperatureSensor",
                 displayName : "Enable Temperature Sensor",
                 default: false,
+                shouldBeAllocatedAsResource: true,
             },
             // lockTemperatureSensor
             {
                 name: "lockTemperatureSensor",
                 displayName : "Lock Temperature Sensor Control Register",
                 default: false,
+                shouldBeAllocatedAsResource: true,
             },
         ]
     },
@@ -90,13 +92,15 @@ staticConfig.push(
                 name        : "analogReferenceAB",
                 displayName : "Analog Reference for ADCA and ADCB (VREFHIAB)",
                 default     : "EXTERNAL",
-                options     : analogReference_opts
+                options     : analogReference_opts,
+                shouldBeAllocatedAsResource: true,
             },
             {
                 name        : "analogReferenceCDE",
                 displayName : "Analog Reference for ADCC, ADCD and ADCE (VREFHICDE)",
                 default     : "EXTERNAL",
-                options     : analogReference_opts
+                options     : analogReference_opts,
+                shouldBeAllocatedAsResource: true,
             },
         ]
     },
@@ -116,7 +120,7 @@ staticConfig.push(
         displayName: "Select Test Node",
         default: "NO_CONN",
         options: selectTestNode_opts,
-
+        shouldBeAllocatedAsResource: true,
         },
     ]
 
@@ -169,7 +173,9 @@ var asysctlModule = {
     filterHardware : filterHardware,
     moduleStatic : {
         config          : staticConfig,
-        validate        : onValidate,   
+        validate        : onValidate,
+        shouldBeAllocatedAsResource : true,
+        alwaysAllocateAsResource    : true,
     },
     //config: config,
     templates: {

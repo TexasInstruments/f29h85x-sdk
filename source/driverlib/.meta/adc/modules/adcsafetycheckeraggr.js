@@ -79,7 +79,14 @@ function onChangeSafetyCheckerINTs(inst, ui) {
 }
     
 var config = [
-{
+    // {
+    //     name        : "$assignedContext",
+    //     description : 'Override the assigned context to have only in CPU1',
+    //     hidden      : false,
+    //     default     : "CPU1",
+    //     options     : [{name:"CPU1"}, {name:"CPU2"}, {name:"CPU3"}],
+    // },
+    {
         name        : "adcIntEvtBase",
         displayName : "ADC INTEVT Instance",
         description : 'Instance of the ADC used.',
@@ -203,8 +210,8 @@ var adcSCSubmodule = {
     displayName: "ADC SAFETY CHECKER INTEVT",
     defaultInstanceName: "myADCSAFETYCHECKERAGGR",
     description: "ADC Safety Checker Interrupt Event Aggregator",
-    maxInstances: maxInstances,
-    config: config,
+    totalMaxInstances: maxInstances,
+    config: Common.filterConfigsIfInSetupMode(config),
     validate: onValidate,
     templates: {
         // boardc : "",

@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2022 Texas Instruments Incorporated
+ *  Copyright (c) 2025 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -68,6 +68,18 @@ typedef struct SIPC_SwQueue_
     uint8_t *Qfifo; /**Pointer to the FIFO queue in HSM MBOX memory */
 } SIPC_SwQueue;
 
+#if defined(__aarch64__) || defined(__arm__)
+static inline void asm_dsb_memory(void)
+{
+    __asm__ __volatile__( "dsb sy" "\n\t": : : "memory");
+}
+
+static inline void asm_isb_memory(void)
+{
+    __asm__ __volatile__( "isb" "\n\t": : : "memory");
+}
+#endif
+
 /* Read from SW fifo within a mailbox  */
 static inline int32_t SIPC_mailboxRead(SIPC_SwQueue *swQ, uint8_t *Buff)
 {
@@ -76,7 +88,7 @@ static inline int32_t SIPC_mailboxRead(SIPC_SwQueue *swQ, uint8_t *Buff)
     volatile uint32_t rdIdx = swQ->rdIdx;
     volatile uint32_t wrIdx = swQ->wrIdx;
 
-    if(rdIdx < swQ->Qlength && wrIdx < swQ->Qlength)
+    if((rdIdx < swQ->Qlength) && (wrIdx < swQ->Qlength))
     {
         /* If this condition meets then it means there is something in the fifo*/
         if( rdIdx != wrIdx)
@@ -91,8 +103,8 @@ static inline int32_t SIPC_mailboxRead(SIPC_SwQueue *swQ, uint8_t *Buff)
             rdIdx = swQ->rdIdx; /* read back to ensure the update has reached the memory */
 
             #if defined(__aarch64__) || defined(__arm__)
-            __asm__ __volatile__( "dsb sy" "\n\t": : : "memory");
-            __asm__ __volatile__( "isb" "\n\t": : : "memory");
+            asm_dsb_memory();
+            asm_isb_memory();
             #endif
 
             status = SystemP_SUCCESS;
@@ -110,7 +122,7 @@ static inline int32_t SIPC_mailboxWrite(uint32_t mailboxBaseAddr, uint32_t wrInt
     volatile uint32_t rdIdx = swQ->rdIdx;
     volatile uint32_t wrIdx = swQ->wrIdx;
 
-    if(rdIdx < swQ->Qlength && wrIdx < swQ->Qlength)
+    if((rdIdx < swQ->Qlength) && (wrIdx < swQ->Qlength))
     {
         if( ( (wrIdx+1)%swQ->Qlength ) != rdIdx )
         {
@@ -127,8 +139,8 @@ static inline int32_t SIPC_mailboxWrite(uint32_t mailboxBaseAddr, uint32_t wrInt
             wrIdx = swQ->wrIdx; /* read back to ensure the update has reached the memory */
 
             #if defined(__aarch64__) || defined(__arm__)
-            __asm__( "dsb sy" "\n\t": : : "memory");
-            __asm__( "isb"    "\n\t": : : "memory");
+            asm_dsb_memory();
+            asm_isb_memory();
             #endif
 
             /* Trigger interrupt to other core */

@@ -328,7 +328,7 @@ ERAD_configCounterInCumulativeMode(ERAD_CounterInstance instance,
           ((uint16_t)config_params->event << ERAD_SEC_INPUT_SEL1_CNT_INP_SEL_S);
 
         HWREG(ERAD_BASE + ERAD_O_SEC_INPUT_SEL2((uint32_t)instance)) =
-           ((uint16_t)start_event << ERAD_SEC_INPUT_SEL2_STA_INP_SEL_S) |
+           ((uint32_t)start_event << ERAD_SEC_INPUT_SEL2_STA_INP_SEL_S) |
             ((uint32_t)stop_event << ERAD_SEC_INPUT_SEL2_STO_INP_SEL_S);
 
     }
@@ -368,35 +368,55 @@ ERAD_configMask(ERAD_Mask mask, uint32_t instances, bool enable_int,
 
     if((uint32_t)mask < ERAD_MAX_AND_MASK_INSTANCES)
     {
-        HWREG(ERAD_BASE + ERAD_O_EVENT_AND_MASK((uint32_t)mask)) = instances;
+        HWREG(ERAD_BASE + ERAD_O_EVENT_AND_MASK((uint32_t)mask)) = ~instances;
 
-        if((enable_int == true) || (enable_nmi == true))
+        if(enable_int == true)
         {
             HWREGH(ERAD_BASE + ERAD_O_AND_MASK_CTL((uint32_t)mask)) |=
                                                 ERAD_AND_MASK_CTL_INTERRUPT;
-            if(enable_nmi == true)
-            {
-               HWREGH(ERAD_BASE + ERAD_O_AND_MASK_CTL((uint32_t)mask)) |=
-                                                    ERAD_AND_MASK_CTL_NMI_EN;
-            }
+        }
+        else
+        {
+            HWREGH(ERAD_BASE + ERAD_O_AND_MASK_CTL((uint32_t)mask)) &=
+                                      ~(uint16_t)ERAD_AND_MASK_CTL_INTERRUPT;
+        }
+        if(enable_nmi == true)
+        {
+           HWREGH(ERAD_BASE + ERAD_O_AND_MASK_CTL((uint32_t)mask)) |=
+                    (ERAD_AND_MASK_CTL_INTERRUPT | ERAD_AND_MASK_CTL_NMI_EN);
+        }
+        else
+        {
+            HWREGH(ERAD_BASE + ERAD_O_AND_MASK_CTL((uint32_t)mask)) &=
+                                     ~(uint16_t)ERAD_AND_MASK_CTL_NMI_EN;
         }
     }
     else
     {
         or_mask = (uint32_t)mask - ERAD_MAX_AND_MASK_INSTANCES;
 
-        HWREG(ERAD_BASE + ERAD_O_EVENT_OR_MASK((uint32_t)or_mask)) = instances;
+        HWREG(ERAD_BASE + ERAD_O_EVENT_OR_MASK((uint32_t)or_mask))= ~instances;
 
-        if((enable_int == true) || (enable_nmi == true))
+        if(enable_int == true)
         {
             HWREGH(ERAD_BASE + ERAD_O_OR_MASK_CTL((uint32_t)or_mask)) |=
                                                     ERAD_OR_MASK_CTL_INTERRUPT;
-            if(enable_nmi == true)
-            {
-               HWREGH(ERAD_BASE + ERAD_O_OR_MASK_CTL((uint32_t)or_mask)) |=
-                                                    ERAD_OR_MASK_CTL_NMI_EN;
-            }
         }
+        else
+        {
+            HWREGH(ERAD_BASE + ERAD_O_OR_MASK_CTL((uint32_t)or_mask)) &=
+                                         ~(uint16_t)ERAD_OR_MASK_CTL_INTERRUPT;
+        }
+        if(enable_nmi == true)
+        {
+            HWREGH(ERAD_BASE + ERAD_O_OR_MASK_CTL((uint32_t)or_mask)) |=
+                        (ERAD_OR_MASK_CTL_INTERRUPT | ERAD_OR_MASK_CTL_NMI_EN);
+        }
+        else
+        {
+            HWREGH(ERAD_BASE + ERAD_O_OR_MASK_CTL((uint32_t)or_mask)) &=
+                                            ~(uint16_t)ERAD_OR_MASK_CTL_NMI_EN;
+        }       
     }
 }
 

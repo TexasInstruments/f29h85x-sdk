@@ -1,7 +1,7 @@
 <div align="center">
 
 <img src="https://upload.wikimedia.org/wikipedia/commons/b/ba/TexasInstruments-Logo.svg" width="150"><br/>
-# F29H85X-SDK 1.01.00.00
+# F29H85X-SDK 1.02.02.00
 
 [Introduction](#introduction) | [Layout](#repositorylayout) | [Installers](#installers) | [Release Notes](#release-notes) | [Technical Support](#technical-support)| [Contribute](#contributing-to-the-project)
 

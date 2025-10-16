@@ -2,7 +2,15 @@ const { getDefaultValue } = system.getScript("./defaultValue.js");
 
 exports = {
 	displayName: "Pin Function",
-	config: [],
+	config: [
+		{
+			name: "$assignedContext",
+			hidden: true,
+			options: [{name: "CPU1"}],
+			default: "CPU1",
+			readOnly: true
+		}
+	],
 	validate: (inst, { $ipInstance,logError, logWarning }) => { // added back for fcs
 		let min = inst.$ipInstance.Min;
 		let max = inst.$ipInstance.Max;
@@ -10,25 +18,25 @@ exports = {
 
 		let minMsg = "Configured " + inst.$ipInstance.name + " = " + derivedClock + " MHz. Minimum " + inst.$ipInstance.name + " frequency supported = " + inst.$ipInstance.Min + " MHz";
 		let maxMsg = "Configured " + inst.$ipInstance.name + " = " + derivedClock + " MHz. Maximum " + inst.$ipInstance.name + " frequency supported = " + inst.$ipInstance.Max + " MHz";
-		
-		if (derivedClock < min) 
+
+		if (derivedClock < min)
 		{
-			if (inst.warning) 
+			if (inst.warning)
 			{
 				logWarning(minMsg, inst, inst.$ipInstance.outPins[0].name)
-			} 
-			else 
+			}
+			else
 			{
 				logError(minMsg, inst, inst.$ipInstance.outPins[0].name)
 			}
 		}
-		if (derivedClock > max) 
+		if (derivedClock > max)
 		{
-			if (inst.warning) 
+			if (inst.warning)
 			{
 				logWarning(maxMsg + inst.$ipInstance.Max + " MHz", inst, inst.$ipInstance.outPins[0].name)
-			} 
-			else 
+			}
+			else
 			{
 				logError(maxMsg , inst, inst.$ipInstance.outPins[0].name)
 			}
@@ -47,26 +55,29 @@ exports = {
 					name: "XTAL_Freq",
 					displayName: "XTAL Frequency (in MHz)",
 					default: $ipInstance.outputValue, // 1 for pre-fcs
-					readOnly: false
+					readOnly: false,
+					shouldBeAllocatedAsResource : true
 				},
 				{
 					name: $ipInstance.outPins[0].name,
 					default: 0,
 					getValue: (inst) => inst.XTAL_Freq,
 					readOnly: false,
-					hidden: true
+					hidden: true,
 				},
 				{
 					name: "minXTAL",
 					displayName: "Min XTAL Frequency supported (in MHz)",
 					default: $ipInstance.Min, // 1 for pre-fcs
-					readOnly: true
+					readOnly: true,
+					shouldBeAllocatedAsResource : true
 				},
 				{
 					name: "maxXTAL",
 					displayName: "Max XTAL Frequency supported (in MHz)",
 					default: $ipInstance.Max,
-					readOnly: true
+					readOnly: true,
+					shouldBeAllocatedAsResource : true
 				}
 			];
 		} else {
@@ -80,4 +91,5 @@ exports = {
 			}]
 		}
 	},
+	shouldBeAllocatedAsResource : true
 };

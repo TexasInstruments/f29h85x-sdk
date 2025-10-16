@@ -23,7 +23,6 @@ var FLASH_INSTANCE = [];
 FLASH_INSTANCE.push({ name: device_driverlib_memmap.FLASH0MemoryMap[0].name, displayName: device_driverlib_memmap.FLASH0MemoryMap[0].displayName });
 
 var Flash_SysClk_MHz = 200;
-Flash_SysClk_MHz = Common.getSYSCLK();
 
 var Flash_FClk_MHz = 50;
 
@@ -52,12 +51,21 @@ function calcWaitState(inst, ui)
 
 let config = [
     {
+        name        : "$assignedContext",
+        description : 'Override the assigned context to have only in CPU1',
+        hidden      : true,
+        default     : "CPU1",
+        options     : [{name:"CPU1"}],
+		readOnly    : true
+    },
+    {
         name        : "flashBase",
         displayName : "FLASH Instance",
         description : 'Instance of the FLASH used.',
         hidden      : false,
         default     : FLASH_INSTANCE[0].name,
-        options     : FLASH_INSTANCE
+        options     : FLASH_INSTANCE,
+        shouldBeAllocatedAsResource: true,
     },
     {
         name        : "calcWaitStates",
@@ -68,7 +76,8 @@ let config = [
         onChange    : (inst, ui) => {
             ui.waitStates.hidden = inst.calcWaitStates;
             ui.calculatedWaitStates.hidden = !inst.calcWaitStates
-        }
+        },
+        shouldBeAllocatedAsResource: true,
     },    
     {
         name        : "calculatedWaitStates",
@@ -82,7 +91,8 @@ let config = [
         },
         getValue : (inst, ui) => {
             return calcWaitState(inst, ui)
-        }
+        },
+        shouldBeAllocatedAsResource: true,
     },
     //Flash_setWaitstates(uint32_t ctrlBase, uint16_t waitstates), set to max 0xF by default
     {
@@ -94,7 +104,8 @@ let config = [
         displayFormat: {
             radix: 'hex',
             bitSize: 4
-        }
+        },
+        shouldBeAllocatedAsResource: true,
     },
     //Flash_enableAllFRIsPrefetch(uint32_t ctrlBase), disabled by default
     {
@@ -102,7 +113,8 @@ let config = [
         displayName : "Enable All FRIs Prefetch",
         description : '',
         hidden      : false,
-        default     : true
+        default     : true,
+        shouldBeAllocatedAsResource: true,
     },
     //Flash_enableAllFRIsDataPreread(uint32_t ctrlBase), disabled by default
     {
@@ -110,7 +122,8 @@ let config = [
         displayName : "Enable All FRIs Data Preread",
         description : '',
         hidden      : false,
-        default     : true
+        default     : true,
+        shouldBeAllocatedAsResource: true,
     },
     //Flash_enableAllFRIsDataCache(uint32_t ctrlBase), disabled by default
     {
@@ -118,7 +131,8 @@ let config = [
         displayName : "Enable All FRIs Data Cache",
         description : '',
         hidden      : false,
-        default     : true
+        default     : true,
+        shouldBeAllocatedAsResource: true,
     },
     //Flash_enableAllFRIsCodeCache(uint32_t ctrlBase), disabled by default
     {
@@ -126,7 +140,8 @@ let config = [
         displayName : "Enable All FRIs Code Cache",
         description : '',
         hidden      : false,
-        default     : true
+        default     : true,
+        shouldBeAllocatedAsResource: true,
     },
     {
         name : "FRI1_CONFIG",
@@ -139,7 +154,8 @@ let config = [
                         displayName : "Enable FRI1 Prefetch",
                         description : '',
                         hidden      : false,
-                        default     : true
+                        default     : true,
+                        shouldBeAllocatedAsResource: true,
                     },
                     //Flash_enableFRI1DataPreread(uint32_t ctrlBase), disabled by default
                     {
@@ -147,7 +163,8 @@ let config = [
                         displayName : "Enable FRI1 Data Preread",
                         description : '',
                         hidden      : false,
-                        default     : true
+                        default     : true,
+                        shouldBeAllocatedAsResource: true,
                     },
                     //Flash_enableFRI1DataCache(uint32_t ctrlBase), disabled by default
                     {
@@ -155,7 +172,8 @@ let config = [
                         displayName : "Enable FRI1 Data Cache",
                         description : '',
                         hidden      : false,
-                        default     : true
+                        default     : true,
+                        shouldBeAllocatedAsResource: true,
                     },
                     //Flash_enableFRI1CodeCache(uint32_t ctrlBase), disabled by default
                     {
@@ -163,7 +181,8 @@ let config = [
                         displayName : "Enable FRI1 Code Cache",
                         description : '',
                         hidden      : false,
-                        default     : true
+                        default     : true,
+                        shouldBeAllocatedAsResource: true,
                     }
         ]
     },
@@ -178,7 +197,8 @@ let config = [
                         displayName : "Enable FRI2 Prefetch",
                         description : '',
                         hidden      : false,
-                        default     : true
+                        default     : true,
+                        shouldBeAllocatedAsResource: true,
                     },
                     //Flash_enableFRI2DataPreread(uint32_t ctrlBase), disabled by default
                     {
@@ -186,7 +206,8 @@ let config = [
                         displayName : "Enable FRI2 Data Preread",
                         description : '',
                         hidden      : false,
-                        default     : true
+                        default     : true,
+                        shouldBeAllocatedAsResource: true,
                     },
                     //Flash_enableFRI2DataCache(uint32_t ctrlBase), disabled by default
                     {
@@ -194,7 +215,8 @@ let config = [
                         displayName : "Enable FRI2 Data Cache",
                         description : '',
                         hidden      : false,
-                        default     : true
+                        default     : true,
+                        shouldBeAllocatedAsResource: true,
                     },
                     //Flash_enableFRI2CodeCache(uint32_t ctrlBase), disabled by default
                     {
@@ -202,7 +224,8 @@ let config = [
                         displayName : "Enable FRI2 Code Cache",
                         description : '',
                         hidden      : false,
-                        default     : true
+                        default     : true,
+                        shouldBeAllocatedAsResource: true,
                     }
         ]
     },
@@ -217,7 +240,8 @@ let config = [
                         displayName : "Enable FRI3 Prefetch",
                         description : '',
                         hidden      : false,
-                        default     : true
+                        default     : true,
+                        shouldBeAllocatedAsResource: true,
                     },
                     //Flash_enableFRI3DataPreread(uint32_t ctrlBase), disabled by default
                     {
@@ -225,7 +249,8 @@ let config = [
                         displayName : "Enable FRI3 Data Preread",
                         description : '',
                         hidden      : false,
-                        default     : true
+                        default     : true,
+                        shouldBeAllocatedAsResource: true,
                     },
                     //Flash_enableFRI3DataCache(uint32_t ctrlBase), disabled by default
                     {
@@ -233,7 +258,8 @@ let config = [
                         displayName : "Enable FRI3 Data Cache",
                         description : '',
                         hidden      : false,
-                        default     : true
+                        default     : true,
+                        shouldBeAllocatedAsResource: true,
                     },
                     //Flash_enableFRI3CodeCache(uint32_t ctrlBase), disabled by default
                     {
@@ -241,7 +267,8 @@ let config = [
                         displayName : "Enable FRI3 Code Cache",
                         description : '',
                         hidden      : false,
-                        default     : true
+                        default     : true,
+                        shouldBeAllocatedAsResource: true,
                     }
         ]
     },
@@ -256,7 +283,8 @@ let config = [
                         displayName : "Enable FRI4 Prefetch",
                         description : '',
                         hidden      : false,
-                        default     : true
+                        default     : true,
+                        shouldBeAllocatedAsResource: true,
                     },
                     //Flash_enableFRI4DataPreread(uint32_t ctrlBase), disabled by default
                     {
@@ -264,7 +292,8 @@ let config = [
                         displayName : "Enable FRI4 Data Preread",
                         description : '',
                         hidden      : false,
-                        default     : true
+                        default     : true,
+                        shouldBeAllocatedAsResource: true,
                     },
                     //Flash_enableFRI4DataCache(uint32_t ctrlBase), disabled by default
                     {
@@ -272,7 +301,8 @@ let config = [
                         displayName : "Enable FRI4 Data Cache",
                         description : '',
                         hidden      : false,
-                        default     : true
+                        default     : true,
+                        shouldBeAllocatedAsResource: true,
                     },
                     //Flash_enableFRI4CodeCache(uint32_t ctrlBase), disabled by default
                     {
@@ -280,7 +310,8 @@ let config = [
                         displayName : "Enable FRI4 Code Cache",
                         description : '',
                         hidden      : false,
-                        default     : true
+                        default     : true,
+                        shouldBeAllocatedAsResource: true,
                     }
         ]
     },
@@ -410,6 +441,7 @@ var flashModule = {
 
     peripheralName: "FLASH",
     displayName: "FLASH",
+    totalMaxInstances: deviceNumberOfInstances,
     maxInstances: deviceNumberOfInstances,
     defaultInstanceName: "myFMC",
     description: "FLASH",
@@ -418,6 +450,8 @@ var flashModule = {
     config: config,
     moduleInstances: moduleInstances,
     sharedModuleInstances : sharedModuleInstances,
+    shouldBeAllocatedAsResource: true,
+    alwaysAllocateAsResource: true,
     templates: {
         boardc : "/driverlib/flash/flash.board.c.xdt",
         boardh : "/driverlib/flash/flash.board.h.xdt"

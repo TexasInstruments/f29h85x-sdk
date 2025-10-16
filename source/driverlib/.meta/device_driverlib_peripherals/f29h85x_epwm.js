@@ -359,6 +359,7 @@ let EPWM_XCMP_ALLOC_CMPA = [
 	{ name: "EPWM_XCMP_8_CMPA", displayName: "Allocate XCMP1 - XCMP8 registers to CMPA" },
 ]
 let EPWM_XCMP_ALLOC_CMPB = [
+    { name: "EPWM_XCMP_NONE_CMPB", displayName: "Allocate 0 XCMP registers to CMPB" },
 	{ name: "EPWM_XCMP_5_CMPB", displayName: "Allocate XCMP5 register to CMPB" },
 	{ name: "EPWM_XCMP_6_CMPB", displayName: "Allocate XCMP5 - XCMP6 registers to CMPB" },
 	{ name: "EPWM_XCMP_7_CMPB", displayName: "Allocate XCMP5 - XCMP7 registers to CMPB" },

@@ -365,6 +365,7 @@ void Example_CallFlashAPI(void)
 //  Flash API functions used in this function are executed from RAM in this
 //  example.
 //*****************************************************************************
+__attribute__((section(".TI.ramfunc")))
 void Example_ProgramUsingC29AutoECC512bit(void)
 {
     Fapi_StatusType  oReturnCheck;
@@ -454,7 +455,7 @@ void Example_ProgramUsingC29AutoECC512bit(void)
 //  Flash API functions used in this function are executed from RAM in this
 //  example.
 //*****************************************************************************
-
+__attribute__((section(".TI.ramfunc")))
 void Example_ProgramUsingC29DataAndECC512bit(void)
 {
     Fapi_StatusType  oReturnCheck;
@@ -564,7 +565,7 @@ void Example_ProgramUsingC29DataAndECC512bit(void)
 //  Flash API functions used in this function are executed from RAM in this
 //  example.
 //*****************************************************************************
-
+__attribute__((section(".TI.ramfunc")))
 void Example_ProgramUsingC29DataOnlyECCOnly512bit(void)
 {
     Fapi_StatusType  oReturnCheck;
@@ -715,7 +716,7 @@ void Example_ProgramUsingC29DataOnlyECCOnly512bit(void)
 //  Flash API functions used in this function are executed from RAM in this
 //  example.
 //*****************************************************************************
-
+__attribute__((section(".TI.ramfunc")))
 void Example_ProgramDataFlashUsingC29AutoECC512Bit(void)
 {
     Fapi_StatusType  oReturnCheck;
@@ -802,7 +803,7 @@ void Example_ProgramDataFlashUsingC29AutoECC512Bit(void)
 //  Flash API functions used in this function are executed from RAM in this
 //  example.
 //*****************************************************************************
-
+__attribute__((section(".TI.ramfunc")))
 void Example_EraseBanks(void)
 {
     Fapi_StatusType  oReturnCheck;
@@ -964,6 +965,7 @@ void Example_EraseBanks(void)
 //  Flash API functions used in this function are executed from RAM in this
 //  example.
 //*****************************************************************************
+__attribute__((section(".TI.ramfunc")))
 void Example_EraseSector(void)
 {
     Fapi_StatusType  oReturnCheck;
@@ -1094,6 +1096,7 @@ void ConstructInterleavedData1024Bits(uint8_t* sequential1024BitsArrPtr)
 //  This function and the flash API functions used in this function are
 //  executed from RAM in this example.
 //**************************************************************************************
+__attribute__((section(".TI.ramfunc")))
 void ClearFSMStatus(uint32_t u32StartAddress, uint32_t u32UserFlashConfig) {
     Fapi_FlashStatusType  oFlashStatus;
     Fapi_StatusType  oReturnCheck;

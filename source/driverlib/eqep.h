@@ -380,7 +380,6 @@ typedef enum
 //
 //*****************************************************************************
 #ifdef DEBUG
-__attribute__((always_inline))
 static inline bool
 EQEP_isBaseValid(uint32_t base)
 {
@@ -410,7 +409,6 @@ EQEP_isBaseValid(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EQEP_enableModule(uint32_t base)
 {
@@ -437,7 +435,6 @@ EQEP_enableModule(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EQEP_disableModule(uint32_t base)
 {
@@ -479,7 +476,6 @@ EQEP_disableModule(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EQEP_setDecoderConfig(uint32_t base, uint16_t config)
 {
@@ -519,7 +515,6 @@ EQEP_setDecoderConfig(uint32_t base, uint16_t config)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EQEP_setPositionCounterConfig(uint32_t base, EQEP_PositionResetMode mode,
                               uint32_t maxPosition)
@@ -556,7 +551,6 @@ EQEP_setPositionCounterConfig(uint32_t base, EQEP_PositionResetMode mode,
 //! \return The current position of the encoder.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline uint32_t
 EQEP_getPosition(uint32_t base)
 {
@@ -584,7 +578,6 @@ EQEP_getPosition(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EQEP_setPosition(uint32_t base, uint32_t position)
 {
@@ -614,7 +607,6 @@ EQEP_setPosition(uint32_t base, uint32_t position)
 //! reverse direction.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline int16_t
 EQEP_getDirection(uint32_t base)
 {
@@ -664,7 +656,6 @@ EQEP_getDirection(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EQEP_enableInterrupt(uint32_t base, uint16_t intFlags)
 {
@@ -703,7 +694,6 @@ EQEP_enableInterrupt(uint32_t base, uint16_t intFlags)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EQEP_disableInterrupt(uint32_t base, uint16_t intFlags)
 {
@@ -743,7 +733,6 @@ EQEP_disableInterrupt(uint32_t base, uint16_t intFlags)
 //! - \b EQEP_INT_UNIT_TIME_OUT - Unit time-out
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline uint16_t
 EQEP_getInterruptStatus(uint32_t base)
 {
@@ -783,7 +772,6 @@ EQEP_getInterruptStatus(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EQEP_clearInterruptStatus(uint32_t base, uint16_t intFlags)
 {
@@ -822,7 +810,6 @@ EQEP_clearInterruptStatus(uint32_t base, uint16_t intFlags)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EQEP_forceInterrupt(uint32_t base, uint16_t intFlags)
 {
@@ -850,7 +837,6 @@ EQEP_forceInterrupt(uint32_t base, uint16_t intFlags)
 //! \return Returns \b true if an error has occurred and \b false otherwise.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline bool
 EQEP_getError(uint32_t base)
 {
@@ -890,7 +876,6 @@ EQEP_getError(uint32_t base)
 //! \return Returns the value of the QEP status register.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline uint16_t
 EQEP_getStatus(uint32_t base)
 {
@@ -929,7 +914,6 @@ EQEP_getStatus(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EQEP_clearStatus(uint32_t base, uint16_t statusFlags)
 {
@@ -971,7 +955,6 @@ EQEP_clearStatus(uint32_t base, uint16_t statusFlags)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EQEP_setCaptureConfig(uint32_t base, EQEP_CAPCLKPrescale capPrescale,
                       EQEP_UPEVNTPrescale evntPrescale)
@@ -1001,7 +984,6 @@ EQEP_setCaptureConfig(uint32_t base, EQEP_CAPCLKPrescale capPrescale,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EQEP_enableCapture(uint32_t base)
 {
@@ -1027,7 +1009,6 @@ EQEP_enableCapture(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EQEP_disableCapture(uint32_t base)
 {
@@ -1054,7 +1035,6 @@ EQEP_disableCapture(uint32_t base)
 //! \return The period count value between the last successive position events.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline uint16_t
 EQEP_getCapturePeriod(uint32_t base)
 {
@@ -1080,7 +1060,6 @@ EQEP_getCapturePeriod(uint32_t base)
 //! \return The capture timer value.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline uint16_t
 EQEP_getCaptureTimer(uint32_t base)
 {
@@ -1106,7 +1085,6 @@ EQEP_getCaptureTimer(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EQEP_enableCompare(uint32_t base)
 {
@@ -1133,7 +1111,6 @@ EQEP_enableCompare(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EQEP_disableCompare(uint32_t base)
 {
@@ -1163,7 +1140,6 @@ EQEP_disableCompare(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EQEP_setComparePulseWidth(uint32_t base, uint16_t cycles)
 {
@@ -1195,7 +1171,6 @@ EQEP_setComparePulseWidth(uint32_t base, uint16_t cycles)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EQEP_loadUnitTimer(uint32_t base, uint32_t period)
 {
@@ -1224,7 +1199,6 @@ EQEP_loadUnitTimer(uint32_t base, uint32_t period)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EQEP_enableUnitTimer(uint32_t base, uint32_t period)
 {
@@ -1256,7 +1230,6 @@ EQEP_enableUnitTimer(uint32_t base, uint32_t period)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EQEP_disableUnitTimer(uint32_t base)
 {
@@ -1288,7 +1261,6 @@ EQEP_disableUnitTimer(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EQEP_enableWatchdog(uint32_t base, uint16_t period)
 {
@@ -1320,7 +1292,6 @@ EQEP_enableWatchdog(uint32_t base, uint16_t period)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EQEP_disableWatchdog(uint32_t base)
 {
@@ -1347,7 +1318,6 @@ EQEP_disableWatchdog(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EQEP_setWatchdogTimerValue(uint32_t base, uint16_t value)
 {
@@ -1371,7 +1341,6 @@ EQEP_setWatchdogTimerValue(uint32_t base, uint16_t value)
 //! \return Returns the current watchdog timer value.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline uint16_t
 EQEP_getWatchdogTimerValue(uint32_t base)
 {
@@ -1412,7 +1381,6 @@ EQEP_getWatchdogTimerValue(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EQEP_setPositionInitMode(uint32_t base, uint16_t initMode)
 {
@@ -1448,7 +1416,6 @@ EQEP_setPositionInitMode(uint32_t base, uint16_t initMode)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EQEP_setSWPositionInit(uint32_t base, bool initialize)
 {
@@ -1485,7 +1452,6 @@ EQEP_setSWPositionInit(uint32_t base, bool initialize)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EQEP_setInitialPosition(uint32_t base, uint32_t position)
 {
@@ -1530,7 +1496,6 @@ EQEP_setInitialPosition(uint32_t base, uint32_t position)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EQEP_setLatchMode(uint32_t base, uint32_t latchMode)
 {
@@ -1561,7 +1526,6 @@ EQEP_setLatchMode(uint32_t base, uint32_t latchMode)
 //! \return The position count latched on an index event.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline uint32_t
 EQEP_getIndexPositionLatch(uint32_t base)
 {
@@ -1591,7 +1555,6 @@ EQEP_getIndexPositionLatch(uint32_t base)
 //! \return The position count latched on a strobe event.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline uint32_t
 EQEP_getStrobePositionLatch(uint32_t base)
 {
@@ -1619,7 +1582,6 @@ EQEP_getStrobePositionLatch(uint32_t base)
 //! \return The position count latch register value.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline uint32_t
 EQEP_getPositionLatch(uint32_t base)
 {
@@ -1648,7 +1610,6 @@ EQEP_getPositionLatch(uint32_t base)
 //! \return The edge-capture timer latch value.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline uint16_t
 EQEP_getCaptureTimerLatch(uint32_t base)
 {
@@ -1677,7 +1638,6 @@ EQEP_getCaptureTimerLatch(uint32_t base)
 //! \return The edge-capture period latch value.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline uint16_t
 EQEP_getCapturePeriodLatch(uint32_t base)
 {
@@ -1710,7 +1670,6 @@ EQEP_getCapturePeriodLatch(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EQEP_setQMAModuleMode(uint32_t base, EQEP_QMAMode qmaMode)
 {
@@ -1746,7 +1705,6 @@ EQEP_setQMAModuleMode(uint32_t base, EQEP_QMAMode qmaMode)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EQEP_setStrobeSource(uint32_t base, EQEP_StrobeSource strobeSrc)
 {
@@ -1775,7 +1733,6 @@ EQEP_setStrobeSource(uint32_t base, EQEP_StrobeSource strobeSrc)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EQEP_enableDirectionChangeDuringIndex(uint32_t base)
 {
@@ -1802,7 +1759,6 @@ EQEP_enableDirectionChangeDuringIndex(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EQEP_disableDirectionChangeDuringIndex(uint32_t base)
 {
@@ -1830,7 +1786,6 @@ EQEP_disableDirectionChangeDuringIndex(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EQEP_selectSource(uint32_t base, EQEP_SourceSelect sourceConfig )
 {
@@ -1875,7 +1830,6 @@ EQEP_selectSource(uint32_t base, EQEP_SourceSelect sourceConfig )
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EQEP_setEmulationMode(uint32_t base, EQEP_EmulationMode emuMode)
 {

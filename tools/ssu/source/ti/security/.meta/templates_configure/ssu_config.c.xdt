@@ -1,0 +1,47 @@
+%%{
+    const Common        = system.getScript('/ti/security/Common.js');
+    let ctx             = Common.currentContext()
+    const raDataCtx     = system.resourceAllocation.data.contexts
+                            .find(a => a["contextName"] == ctx);
+    const raDataCPU1    = system.resourceAllocation.data.contexts
+                        .find(a => a["contextName"] == Common.CONTEXT_CPU1);
+
+    let sysSecCPU1      = raDataCPU1
+                        ["modules"]
+                        .find(a => (a["moduleName"] == `/ti/security/${Common.CONTEXT_CPU1}_System_Security`))
+
+    let sysSecCurrCtx = raDataCtx
+                        ["modules"]
+                        .find(a => (a["moduleName"] == `/ti/security/${ctx}_System_Security`))
+
+
+    let sysSec              = sysSecCPU1 ? sysSecCPU1.instances[0].requiredArgs : {}
+    let sysSecCurr          = sysSecCurrCtx ? sysSecCurrCtx.instances[0].requiredArgs : {}
+    let sysSecResources     = sysSecCurrCtx ? sysSecCurrCtx.moduleStatic.requiredArgs : {}
+
+    let dltLinks            = JSON.parse(sysSecResources.r_dltLinks)
+
+%%}
+#include "ssu_config.h"
+#include "board.h"
+
+//
+// When configuring using predefined resource allocations, interrupt
+// related configurations must be done manually by application.
+// Refer to the below commented APIs and configure appropriately
+//
+
+// void Interrupt_SSU_Init()
+// {
+//     Interrupt_setLinkOwner(interruptName, linkName);
+//     Interrupt_setAPILink(interruptName, linkName);
+// }
+
+void DLT_SSU_EnableLinkPermissions()
+{
+% if(sysSecCurr && sysSec.ssumode > 1){
+%   dltLinks.forEach(link => {
+    DLT_enableLinkPermission(`link`)
+%   })
+% }
+}

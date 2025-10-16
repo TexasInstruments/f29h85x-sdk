@@ -91,10 +91,6 @@ let clock_module = {
                                 timerPeriod        : 100000,
                                 timerPrescaler     : 0,
                             },
-                        },
-                        {
-                            name:       "nortos_source",
-                            moduleName: "/kernel/dpl/nortos_source.js",
                         }
                     ]
                 )

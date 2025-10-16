@@ -79,7 +79,7 @@ void INT_myI2C0_FIFO_ISR(void);
 //
 // Main
 //
-void main(void)
+int main(void)
 {
     //
     // Initialize device clock, peripheral clocks and interrupts

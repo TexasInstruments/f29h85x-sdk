@@ -134,7 +134,6 @@ typedef enum
 	ESM_EVENT_DCC1_ERR                             = 33,
 	ESM_EVENT_DCC2_ERR                             = 34,
 	ESM_EVENT_DCC3_ERR                             = 35,
-	ESM_EVENT_SYS_PLL_SLIP                         = 36,
 	ESM_EVENT_CPU1RSn                              = 37,
 	ESM_EVENT_CPU1WD                               = 38,
 	ESM_EVENT_CPU1_ERAD_INT                        = 39,
@@ -275,18 +274,18 @@ typedef enum
 	ESM_EVENT_WADI2_BLOCK4_SIG2ERROR_BUS_O_1       = 202,
 	ESM_EVENT_WADI2_BLOCK4_SIG_TO_SIGERROR_BUS_O_2 = 203,
 	ESM_EVENT_EQEPERR                              = 233,
-	ESM_EVENT_CPU1_OVFINT                          = 235,
-	ESM_EVENT_CPU1_UVFINT                          = 236,
-	ESM_EVENT_CPU1_DOVINT                          = 237,
-	ESM_EVENT_CPU2_OVFINT                          = 238,
-	ESM_EVENT_CPU2_UVFINT                          = 239,
-	ESM_EVENT_CPU2_DOVINT                          = 240,
-	ESM_EVENT_CPU3_OVFINT                          = 241,
-	ESM_EVENT_CPU3_UVFINT                          = 242,
-	ESM_EVENT_CPU3_DOVINT                          = 243,
+	ESM_EVENT_C29CPU1_FLOATINGPOINT_OVERFLOW_INT   = 235,
+	ESM_EVENT_C29CPU1_FLOATINGPOINT_UNDERFLOW_INT  = 236,
+	ESM_EVENT_C29CPU1_FIXEDPOINT_OVERFLOW_INT      = 237,
+	ESM_EVENT_C29CPU2_FLOATINGPOINT_OVERFLOW_INT   = 238,
+	ESM_EVENT_C29CPU2_FLOATINGPOINT_UNDERFLOW_INT  = 239,
+	ESM_EVENT_C29CPU2_FIXEDPOINT_OVERFLOW_INT      = 240,
+	ESM_EVENT_C29CPU3_FLOATINGPOINT_OVERFLOW_INT   = 241,
+	ESM_EVENT_C29CPU3_FLOATINGPOINT_UNDERFLOW_INT  = 242,
+	ESM_EVENT_C29CPU3_FIXEDPOINT_OVERFLOW_INT      = 243,
 	ESM_EVENT_MEMSS_REG_PAR_ERR                    = 244,
 	ESM_EVENT_FRI_REG_PAR_ERR                      = 245,
-	ESM_EVENT_SYSCTL_REG_PAR_ERR                   = 246,
+	ESM_EVENT_SYSCTL_OR_ANALOGSYSCTL_REG_PAR_ERR   = 246,
 	ESM_EVENT_LCM_CPU1SS_REG_PAR_ERR               = 247,
 	ESM_EVENT_LCM_RTDMA_REG_PAR_ERR                = 248,
 	ESM_EVENT_WADI_REG_PAR_ERR                     = 249,
@@ -513,7 +512,6 @@ typedef struct
 //
 //*****************************************************************************
 #ifdef DEBUG
-__attribute__((always_inline))
 static inline bool
 ESM_isBaseValid(uint32_t base)
 {
@@ -539,7 +537,6 @@ ESM_isBaseValid(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ESM_triggerSoftReset(uint32_t base)
 {
@@ -565,7 +562,6 @@ ESM_triggerSoftReset(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline ESM_ResetSource
 ESM_getLastResetSource(uint32_t base)
 {
@@ -592,7 +588,6 @@ ESM_getLastResetSource(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ESM_enableGlobal(uint32_t base)
 {
@@ -618,7 +613,6 @@ ESM_enableGlobal(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ESM_disableGlobal(uint32_t base)
 {
@@ -649,7 +643,6 @@ ESM_disableGlobal(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ESM_writeEOIVector(uint32_t base, ESM_EOIVector vector)
 {
@@ -681,7 +674,6 @@ ESM_writeEOIVector(uint32_t base, ESM_EOIVector vector)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ESM_ackInterrupt(uint32_t base, ESM_InterruptType interruptType)
 {
@@ -708,7 +700,6 @@ ESM_ackInterrupt(uint32_t base, ESM_InterruptType interruptType)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ESM_setErrorMode(ESM_OperationMode mode)
 {
@@ -737,7 +728,6 @@ ESM_setErrorMode(ESM_OperationMode mode)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ESM_clearErrorPin(void)
 {
@@ -763,7 +753,6 @@ ESM_clearErrorPin(void)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ESM_setOutputPinMode(ESM_OutputPinMode mode)
 {
@@ -793,7 +782,6 @@ ESM_setOutputPinMode(ESM_OutputPinMode mode)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ESM_setLevelModePolarity(ESM_LevelModePolarity polarity)
 {
@@ -817,7 +805,6 @@ ESM_setLevelModePolarity(ESM_LevelModePolarity polarity)
 //!         Returns \b false if Asserted (pin is active, low).
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline bool
 ESM_getErrorPinStatus(void)
 {
@@ -839,7 +826,6 @@ ESM_getErrorPinStatus(void)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ESM_enableHighPriorityWatchdog(uint32_t base)
 {
@@ -866,7 +852,6 @@ ESM_enableHighPriorityWatchdog(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ESM_disableHighPriorityWatchdog(uint32_t base)
 {
@@ -893,7 +878,6 @@ ESM_disableHighPriorityWatchdog(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ESM_enableHighPriorityWatchdogFreerun(uint32_t base)
 {
@@ -925,7 +909,6 @@ ESM_enableHighPriorityWatchdogFreerun(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ESM_disableHighPriorityWatchdogFreerun(uint32_t base)
 {
@@ -953,7 +936,6 @@ ESM_disableHighPriorityWatchdogFreerun(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ESM_enableErrorPinMonitor(void)
 {
@@ -973,7 +955,6 @@ ESM_enableErrorPinMonitor(void)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ESM_disableErrorPinMonitor(void)
 {
@@ -994,7 +975,6 @@ ESM_disableErrorPinMonitor(void)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ESM_setErrorPinMonitorInterrupt(void)
 {
@@ -1015,7 +995,6 @@ ESM_setErrorPinMonitorInterrupt(void)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ESM_clearErrorPinMonitorInterrupt(void)
 {
@@ -1036,7 +1015,6 @@ ESM_clearErrorPinMonitorInterrupt(void)
 //!         Returns \b false if Active/Pending and Enabled
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline bool
 ESM_getErrorPinMonitorInterruptStatus(void)
 {
@@ -1063,7 +1041,6 @@ ESM_getErrorPinMonitorInterruptStatus(void)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ESM_enableInterrupt(uint32_t base, ESM_EventMap event)
 {
@@ -1098,7 +1075,6 @@ ESM_enableInterrupt(uint32_t base, ESM_EventMap event)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ESM_disableInterrupt(uint32_t base, ESM_EventMap event)
 {
@@ -1135,7 +1111,6 @@ ESM_disableInterrupt(uint32_t base, ESM_EventMap event)
 //! \return None
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ESM_setInterruptPriorityLevel(uint32_t base, ESM_EventMap event,
                             ESM_InterruptPriorityLevel priority)
@@ -1177,7 +1152,6 @@ ESM_setInterruptPriorityLevel(uint32_t base, ESM_EventMap event,
 //!
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ESM_setRawInterruptStatus(uint32_t base, ESM_EventMap event)
 {
@@ -1213,7 +1187,6 @@ ESM_setRawInterruptStatus(uint32_t base, ESM_EventMap event)
 //!         Returns \b true if Active/Pending
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline bool
 ESM_getRawInterruptStatus(uint32_t base, ESM_EventMap event)
 {
@@ -1249,7 +1222,6 @@ ESM_getRawInterruptStatus(uint32_t base, ESM_EventMap event)
 //!         Returns \b true if Active/Pending and Enabled
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline bool
 ESM_getInterruptStatus(uint32_t base, ESM_EventMap event)
 {
@@ -1283,7 +1255,6 @@ ESM_getInterruptStatus(uint32_t base, ESM_EventMap event)
 //!
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ESM_clearRawInterruptStatus(uint32_t base, ESM_EventMap event)
 {
@@ -1324,7 +1295,6 @@ ESM_clearRawInterruptStatus(uint32_t base, ESM_EventMap event)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ESM_setCriticalPriorityInterruptInfluence(uint32_t base,
                                         ESM_EventMap event, bool influence)
@@ -1366,7 +1336,6 @@ ESM_setCriticalPriorityInterruptInfluence(uint32_t base,
 //! triggered, returns \b false otherwise.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline bool
 ESM_getCriticalPriorityInterruptStatus(uint32_t base)
 {
@@ -1395,7 +1364,6 @@ ESM_getCriticalPriorityInterruptStatus(uint32_t base)
 //! \return None
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ESM_setInfluenceOnErrorPin(ESM_EventMap event, bool influence)
 {
@@ -1432,7 +1400,6 @@ ESM_setInfluenceOnErrorPin(ESM_EventMap event, bool influence)
 //! interrupts pending, returns \b false otherwise.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline bool
 ESM_getLowPriorityInterruptStatus(uint32_t base, ESM_EventGroup group)
 {
@@ -1460,7 +1427,6 @@ ESM_getLowPriorityInterruptStatus(uint32_t base, ESM_EventGroup group)
 //! interrupts pending, returns \b false otherwise.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline bool
 ESM_getHighPriorityInterruptStatus(uint32_t base, ESM_EventGroup group)
 {
@@ -1487,7 +1453,6 @@ ESM_getHighPriorityInterruptStatus(uint32_t base, ESM_EventGroup group)
 //! low priority interrupt.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline uint32_t
 ESM_getHighestLowPriorityInterrupt(uint32_t base)
 {
@@ -1515,7 +1480,6 @@ ESM_getHighestLowPriorityInterrupt(uint32_t base)
 //! high priority interrupt.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline uint32_t
 ESM_getHighestHighPriorityInterrupt(uint32_t base)
 {
@@ -1540,7 +1504,6 @@ ESM_getHighestHighPriorityInterrupt(uint32_t base)
 //! \return Returns the current Error pin counter value.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline uint32_t
 ESM_getErrorPinCounterValue(void)
 {
@@ -1563,7 +1526,6 @@ ESM_getErrorPinCounterValue(void)
 //! \return None
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ESM_lockErrorGroupInterruptConfig(uint32_t base, uint32_t groups)
 {
@@ -1593,7 +1555,6 @@ ESM_lockErrorGroupInterruptConfig(uint32_t base, uint32_t groups)
 //! \return None
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ESM_unlockErrorGroupInterruptConfig(uint32_t base, uint32_t groups)
 {
@@ -1623,7 +1584,6 @@ ESM_unlockErrorGroupInterruptConfig(uint32_t base, uint32_t groups)
 //! \return None
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ESM_commitErrorGroupInterruptConfig(uint32_t base, uint32_t groups)
 {
@@ -1651,7 +1611,6 @@ ESM_commitErrorGroupInterruptConfig(uint32_t base, uint32_t groups)
 //! \return None
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ESM_lockErrorPinInfluenceConfig(uint32_t groups)
 {
@@ -1671,7 +1630,6 @@ ESM_lockErrorPinInfluenceConfig(uint32_t groups)
 //! \return None
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ESM_unlockErrorPinInfluenceConfig(uint32_t groups)
 {
@@ -1691,7 +1649,6 @@ ESM_unlockErrorPinInfluenceConfig(uint32_t groups)
 //! \return None
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ESM_commitErrorPinInfluenceConfig(uint32_t groups)
 {
@@ -1712,7 +1669,6 @@ ESM_commitErrorPinInfluenceConfig(uint32_t groups)
 //! \return None
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ESM_lockCriticalPriorityInterruptInfluenceConfig(uint32_t base,
                                                  uint32_t groups)
@@ -1739,7 +1695,6 @@ ESM_lockCriticalPriorityInterruptInfluenceConfig(uint32_t base,
 //! \return None
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ESM_unlockCriticalPriorityInterruptInfluenceConfig(uint32_t base,
                                                    uint32_t groups)
@@ -1767,7 +1722,6 @@ ESM_unlockCriticalPriorityInterruptInfluenceConfig(uint32_t base,
 //! \return None
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ESM_commitCriticalPriorityInterruptInfluenceConfig(uint32_t base,
                                                    uint32_t groups)
@@ -1794,7 +1748,6 @@ ESM_commitCriticalPriorityInterruptInfluenceConfig(uint32_t base,
 //! \return None
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ESM_lockMMRConfig(uint32_t base, uint32_t registers)
 {
@@ -1820,7 +1773,6 @@ ESM_lockMMRConfig(uint32_t base, uint32_t registers)
 //! \return None
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ESM_unlockMMRConfig(uint32_t base, uint32_t registers)
 {
@@ -1846,7 +1798,6 @@ ESM_unlockMMRConfig(uint32_t base, uint32_t registers)
 //! \return None
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ESM_commitMMRConfig(uint32_t base, uint32_t registers)
 {
@@ -1867,7 +1818,6 @@ ESM_commitMMRConfig(uint32_t base, uint32_t registers)
 //! \return Group interrupt status
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline uint32_t
 ESM_getGroupRawIntStatus(uint32_t base, uint32_t group)
 {
@@ -1888,7 +1838,6 @@ ESM_getGroupRawIntStatus(uint32_t base, uint32_t group)
 //! \return None
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ESM_clearGroupIntStatus(uint32_t base, uint32_t group)
 {

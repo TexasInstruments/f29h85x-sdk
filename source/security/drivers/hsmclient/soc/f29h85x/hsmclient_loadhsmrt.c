@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2024 Texas Instruments Incorporated
+ *  Copyright (c) 2025 Texas Instruments Incorporated
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -312,6 +312,9 @@ int32_t Hsmclient_loadHSMRtFirmware(HsmClient_t *NotifyClient, const uint8_t *pH
         {
             
         }
+
+        /* Reset the variable status to 0 */
+        gHsmRtDownloadComplete = 0;
 
         orgChecksum = loadHSMResult.header.checksum;
         loadHSMResult.header.checksum = 0U;

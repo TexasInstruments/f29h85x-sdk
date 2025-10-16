@@ -1325,6 +1325,36 @@
 		]
 	  },
 	  {
+		"name" :  "epwmTripZone_oneShotSourceAdditional",
+		"driverlibFunction" : "EPWM_enableTripZone2Signals",
+		"driverlibFunctionAlt": "EPWM_disableTripZone2Signals",
+		"driverlibFunctionArg" : {
+			"base" : "",
+			"tzSignal" : "this"
+		},
+		"register": [
+			"TZSEL2.CAPEVTOST"
+		],
+		"devices" : [
+"F29H85x"
+		]
+	  },
+	  {
+		"name" :  "epwmTripZone_cbcSourceAdditional",
+		"driverlibFunction" : "EPWM_enableTripZone2Signals",
+		"driverlibFunctionAlt": "EPWM_disableTripZone2Signals",
+		"driverlibFunctionArg" : {
+			"base" : "",
+			"tzSignal" : "this"
+		},
+		"register": [
+			"TZSEL2.CAPEVTCBC"
+		],
+		"devices" : [
+"F29H85x"
+		]
+	  },
+	  {
 		"name": "epwmTripZone_cbcPulse",
 		"driverlibFunction": "EPWM_selectCycleByCycleTripZoneClearEvent",
 		"driverlibFunctionHR": "HRPWM_selectCycleByCycleTripZoneClearEvent",
@@ -2373,7 +2403,7 @@
 	  {
 		"name": "epwmDeadband_fedShadowLoadEvent",
 		"driverlibFunction": "EPWM_setFallingEdgeDelayCountShadowLoadMode",
-		"driverlibFunctionHR": "HRPWM_setFallingEdgeDeadBandDelayInput",
+		"driverlibFunctionHR": "HRPWM_setFallingEdgeDelayCountShadowLoadMode",
 		"driverlibFunctionArg": {
 		  "base": "",
 		  "loadMode": "this"

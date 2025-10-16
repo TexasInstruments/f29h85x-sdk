@@ -37,13 +37,15 @@ let config = [
     {
         name        : "cpuSel",
         displayName : "Select CPU",
-        default     : system.context,
+        default     : Common.isAllocationSetupMode() ? "CPU1" : system.context,
         options     : [
             {name: "CPU1"},
             {name: "CPU2"},
             {name: "CPU3"},
         ],
-        readOnly    : true
+        readOnly    : !Common.isAllocationSetupMode(),
+        hidden: Common.isAllocationSetupMode(),
+        shouldBeAllocatedAsResource : true
     },
     {
         name        : "frameSel",
@@ -54,7 +56,8 @@ let config = [
             {name: "FRAME1"},
             {name: "FRAME2"},
             {name: "FRAME3"},
-        ]
+        ],
+        shouldBeAllocatedAsResource : true
     },
     {
         name        : "removeCpuSelStandbyDbgHalt",
@@ -62,6 +65,7 @@ let config = [
         hidden      : true,
         default     : false,
         onChange    : onChangeRemoveCpuSelStandbyDbgHalt,
+        shouldBeAllocatedAsResource : true
     },
     {
         name        : "removeFrameSel",
@@ -69,27 +73,32 @@ let config = [
         hidden      : true,
         default     : false,
         onChange    : onChangeRemoveFrameSel,
+        shouldBeAllocatedAsResource : true
     },
     {
         name        : "standbyEn",
         displayName : "Gate peripheral clock when CPU enters Standby mode",
         default     : true,
+        shouldBeAllocatedAsResource : true
     },
     {
         name        : "dbgHaltEn",
         displayName : "Activate Peripheral DBGHALT signal when CPU enters HALT mode",
         description : 'The interrupt handler function name',
         default     : true,
+        shouldBeAllocatedAsResource : true
     },
     {
         name        : "pinmuxPeripheralModule",
         hidden      : true,
-        default     : ''
+        default     : '',
+        shouldBeAllocatedAsResource : true
     },
     {
         name        : "peripheralInst",
         hidden      : true,
-        default     : ''
+        default     : '',
+        shouldBeAllocatedAsResource : true
     },
 ];
 
@@ -111,6 +120,7 @@ var perConfigModule = {
         boardh : "/driverlib/perConfig/perConfig.board.h.xdt"
     },
     validate    : onValidate,
+    shouldBeAllocatedAsResource : true,
     uiAdd: "summary"
 };
 

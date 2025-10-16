@@ -7,28 +7,28 @@
 //! \addtogroup driver_example_list
 //! <h1> RTDMA Transfer with MPU </h1>
 //!
-//!  This example uses one RTDMA channel to transfer data from a buffer to 
+//!  This example uses one RTDMA channel to transfer data from a buffer to
 //!  another buffer in RAM. The example triggers the DMA channel repeatedly
 //!  until the transfer of 16 bursts (where each burst is 4 8-bit words)
 //!  has been completed. When the whole transfer is complete it will trigger
-//!  the DMA interrupt. 
+//!  the DMA interrupt.
 //!
 //!  The RTDMA1 MPU is enabled in this example to configure a predefined region
 //!  that dictates read and write access to the transmit buffer and
-//!  receive buffer. When a DMA channel attempts to access data at an illegal 
+//!  receive buffer. When a DMA channel attempts to access data at an illegal
 //!  address, MPU outputs a security violation. Any faults in the interface are
-//!  communicated to the Error Aggregator module which are sent to the Error 
+//!  communicated to the Error Aggregator module which are sent to the Error
 //!  Signaling Module (ESM) where the errors are latched and RTDMA access is blocked.
 //!
 //!  Configured Address Ranges:
 //!  MPU Region Start Address - 0x200E0000
 //!  MPU Region End Address   - 0x200E0FFF
 //!  TxData Start Address     - 0x200E0100
-//!  TxData End Address       - 0x200E013F	
+//!  TxData End Address       - 0x200E013F
 //!  RxData Start Address     - 0x200E0FDC
-//!  RxData End Address       - 0x200E101B	
+//!  RxData End Address       - 0x200E101B
 //!
-//!  
+//!
 //!  \b Watch \b Variables \n
 //!  - \b TxData            - Data to send
 //!  - \b RxData            - Received data
@@ -38,6 +38,40 @@
 //!
 //
 //#############################################################################
+// //
+//	Copyright: Copyright (C) Texas Instruments Incorporated
+//	All rights reserved not granted herein.
+//
+//  Redistribution and use in source and binary forms, with or without 
+//  modification, are permitted provided that the following conditions 
+//  are met:
+//
+//  Redistributions of source code must retain the above copyright 
+//  notice, this list of conditions and the following disclaimer.
+//
+//  Redistributions in binary form must reproduce the above copyright
+//  notice, this list of conditions and the following disclaimer in the 
+//  documentation and/or other materials provided with the   
+//  distribution.
+//
+//  Neither the name of Texas Instruments Incorporated nor the names of
+//  its contributors may be used to endorse or promote products derived
+//  from this software without specific prior written permission.
+//
+//  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS 
+//  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT 
+//  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+//  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT 
+//  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, 
+//  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT 
+//  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+//  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+//  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT 
+//  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE 
+//  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+//
+
+//###########################################################################
 
 //
 // Included Files
@@ -107,7 +141,7 @@ int main(void)
         SysCtl_delay(10);
         if (status == 2) // Check for data integrity at the end of the transfer. When data is not received correctly, the error function is called.
         {
-            error(); 
+            error();
         }
     }
 
@@ -142,8 +176,8 @@ void INT_myRTDMA1Ch0_ISR(void)
         //
         if (RxData[i] != i)
         {
-            status = 2; // Test resulted in an error. Refer to the Error Aggregator for specific RTDMA error source. 
-            return; // Exit DMA ISR 
+            status = 2; // Test resulted in an error. Refer to the Error Aggregator for specific RTDMA error source.
+            return; // Exit DMA ISR
         }
     }
 
@@ -152,21 +186,21 @@ void INT_myRTDMA1Ch0_ISR(void)
 }
 
 // NMI ISR
-void myNMI_ISR(void) 
+void myNMI_ISR(void)
 {
     //
-    // Service the highest priority active RTDMA error event that caused the interrupt. 
+    // Service the highest priority active RTDMA error event that caused the interrupt.
     //
     if(ESM_getInterruptStatus(ESMCPU1_BASE,ESM_EVENT_ErrorAggregator_RTDMA1_HPERR))
     {
 
         //
-        // Determine and store the specific address where the high priority error occurs and on which RTDMA interface port. It is also 
+        // Determine and store the specific address where the high priority error occurs and on which RTDMA interface port. It is also
         // possible to get the low priority address and error type, if needed, using the ErrorAggregator_getRtdmaErrorInfo() function.
         //
         error_location_WR = ErrorAggregatorRegs.RTDMA1_DW_HIGHPRIO_ERROR_ADDRESS;
         error_location_RD = ErrorAggregatorRegs.RTDMA1_DR_HIGHPRIO_ERROR_ADDRESS;
-        
+
         //
         // Clear the peripheral error flag
         //
@@ -181,11 +215,11 @@ void myNMI_ISR(void)
         // Clear the raw status and deassert the level interrupt.
         //
         ESM_clearRawInterruptStatus(ESMCPU1_BASE,ESM_EVENT_ErrorAggregator_RTDMA1_HPERR);
-        
+
         //
         // Acknowledge the High priority interrupt (NMI).
-        // In case there are enabled error events pending then a new pulse is 
-        // generated and level interrupt remains asserted, else no new pulse is 
+        // In case there are enabled error events pending then a new pulse is
+        // generated and level interrupt remains asserted, else no new pulse is
         // generated.
         //
         ESM_ackInterrupt(ESMCPU1_BASE, ESM_HIGH_PRIORITY_ERROR_INTERRUPT);

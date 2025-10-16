@@ -1,8 +1,8 @@
 let Common   = system.getScript("/driverlib/Common.js");
 let Pinmux   = system.getScript("/driverlib/pinmux.js");
 
-let device_driverlib_peripheral = 
-    system.getScript("/driverlib/device_driverlib_peripherals/" + 
+let device_driverlib_peripheral =
+    system.getScript("/driverlib/device_driverlib_peripherals/" +
         Common.getDeviceName().toLowerCase() + "_lin.js");
 
 let device_driverlib_memmap =
@@ -38,8 +38,8 @@ function is_hexadecimal(str)
 /* Intro splash on GUI */
 let longDescription = "LIN is a low cost communication peripheral which" +
     "can be used in place of CAN where performance can be traded off for cost. " +
-    "This application provides a simplified interface to configure the different " + 
-    "parameters of the peripheral such as LIN/SCI mode, Commander/Responder Mode " + 
+    "This application provides a simplified interface to configure the different " +
+    "parameters of the peripheral such as LIN/SCI mode, Commander/Responder Mode " +
     "and test mode etc. ";
 
 function onChangeUseLoopback(inst, ui)
@@ -79,7 +79,7 @@ function onChangeLinMode(inst, ui)
     if (inst.linMode == "LIN_MODE_LIN_RESPONDER") {
         ui.setResponderID.hidden = false;
         ui.autoBaudRate.hidden = false
-        
+
     }
     else {
         ui.autoBaudRate.hidden = true
@@ -149,7 +149,7 @@ function toggleInterrupt(inst, ui){
             ui.sciInterruptPriorityLine0.hidden = true;
             ui.sciInterruptPriorityLine1.hidden = true;
 
-            if (inst.interruptLine.indexOf(device_driverlib_peripheral.LIN_InterruptLine[0].name) != -1) 
+            if (inst.interruptLine.indexOf(device_driverlib_peripheral.LIN_InterruptLine[0].name) != -1)
             {
                 ui.interruptPriorityLine0.hidden = false;
                 ui.registerL0Int.hidden = false;
@@ -159,7 +159,7 @@ function toggleInterrupt(inst, ui){
                 ui.interruptPriorityLine0.hidden = true;
                 ui.registerL0Int.hidden = true;
             }
-            if (inst.interruptLine.indexOf(device_driverlib_peripheral.LIN_InterruptLine[1].name) != -1) 
+            if (inst.interruptLine.indexOf(device_driverlib_peripheral.LIN_InterruptLine[1].name) != -1)
             {
                 ui.interruptPriorityLine1.hidden = false;
                 ui.registerL1Int.hidden = false;
@@ -179,7 +179,7 @@ function toggleInterrupt(inst, ui){
             ui.interruptPriorityLine0.hidden = true;
             ui.interruptPriorityLine1.hidden = true;
 
-            if (inst.sciInterruptLine.indexOf(device_driverlib_peripheral.LIN_InterruptLine[0].name) != -1) 
+            if (inst.sciInterruptLine.indexOf(device_driverlib_peripheral.LIN_InterruptLine[0].name) != -1)
             {
                 ui.sciInterruptPriorityLine0.hidden = false;
                 ui.registerL0Int.hidden = false;
@@ -189,7 +189,7 @@ function toggleInterrupt(inst, ui){
                 ui.sciInterruptPriorityLine0.hidden = true;
                 ui.registerL0Int.hidden = true;
             }
-            if (inst.sciInterruptLine.indexOf(device_driverlib_peripheral.LIN_InterruptLine[1].name) != -1) 
+            if (inst.sciInterruptLine.indexOf(device_driverlib_peripheral.LIN_InterruptLine[1].name) != -1)
             {
                 ui.sciInterruptPriorityLine1.hidden = false;
                 ui.registerL1Int.hidden = false;
@@ -318,7 +318,7 @@ function onChangeUseDMARX(inst, ui)
     {
         ui.DMARXInst.hidden = false;
     }
-    else 
+    else
     {
         ui.DMARXInst.hidden = true;
     }
@@ -330,7 +330,7 @@ function onChangeUseDMATX(inst, ui)
     {
         ui.DMATXInst.hidden = false;
     }
-    else 
+    else
     {
         ui.DMATXInst.hidden = true;
     }
@@ -363,7 +363,7 @@ let config = [
                     {name: "SCI", displayName : "UART (SCI Mode)"},
                 ],
                 onChange    : onChangeOpMode,
-                
+
             },
             {
                 name        : "enableLoopback",
@@ -516,7 +516,7 @@ let config = [
                     {name:"LIN_SCI_PAR_EVEN", displayName: "Even Parity"},
                 ]
             },
-            {    
+            {
                 name        : "GROUP_BR_SETTINGS",
                 displayName : "Baud Rate Settings",
                 collapsed   : false,
@@ -687,7 +687,7 @@ let config = [
                     },
                 ]
             },
-            {    
+            {
                 name        : "GROUP_SYNC_SETTINGS",
                 displayName : "Sync Field Settings",
                 collapsed   : false,
@@ -724,7 +724,7 @@ let config = [
                     },
                 ]
             },
-            {    
+            {
                 name        : "GROUP_MASK_SETTINGS",
                 displayName : "ID and Mask Settings",
                 collapsed   : false,
@@ -768,7 +768,7 @@ let config = [
                 default     : 'ALL',
                 options     : Pinmux.getPeripheralUseCaseNames("LIN"),
                 onChange    : Pinmux.useCaseChanged,
-                
+
             },
         ]
     },
@@ -793,7 +793,7 @@ let config = [
                 minSelections : 0,
                 default     : [],
                 options     : device_driverlib_peripheral.LIN_INT,
-                
+
             },
             {
                 name        : "sciInterruptFlags",
@@ -803,7 +803,7 @@ let config = [
                 minSelections : 0,
                 default     : [],
                 options     : device_driverlib_peripheral.LIN_SCI_INT,
-                
+
             },
             {
                 name        : "interruptLine",
@@ -814,7 +814,7 @@ let config = [
                 onChange    : toggleInterrupt,
                 default     : [],
                 options     : device_driverlib_peripheral.LIN_InterruptLine,
-                
+
             },
             {
                 name        : "sciInterruptLine",
@@ -825,10 +825,10 @@ let config = [
                 onChange    : toggleInterrupt,
                 default     : [],
                 options     : device_driverlib_peripheral.LIN_InterruptLine,
-                
+
             },
             {
-                name: "registerL0Int",      
+                name: "registerL0Int",
                 displayName: "Register Line 0 Interrupt",
                 hidden: true,
                 default: false,
@@ -847,7 +847,7 @@ let config = [
                 minSelections : 0,
                 default     : [],
                 options     : device_driverlib_peripheral.LIN_INT,
-                
+
             },
             {
                 name        : "sciInterruptPriorityLine0",
@@ -857,7 +857,7 @@ let config = [
                 minSelections : 0,
                 default     : [],
                 options     : device_driverlib_peripheral.LIN_SCI_INT,
-                
+
             },
             {
                 name        : "interruptPriorityLine1",
@@ -867,7 +867,7 @@ let config = [
                 minSelections : 0,
                 default     : [],
                 options     : device_driverlib_peripheral.LIN_INT,
-                
+
             },
             {
                 name        : "sciInterruptPriorityLine1",
@@ -877,7 +877,7 @@ let config = [
                 minSelections : 0,
                 default     : [],
                 options     : device_driverlib_peripheral.LIN_SCI_INT,
-                
+
             },
         ]
     },
@@ -893,6 +893,7 @@ let config = [
                 hidden      : false,
                 default     : false,
                 onChange    : onChangeUseDMARX,
+                shouldBeAllocatedAsResource : true
             },
             {
                 name        : "DMARXInst",
@@ -901,8 +902,9 @@ let config = [
                 hidden      : true,
                 default     : dma_instances[0].name,
                 options     : dma_instances,
+                shouldBeAllocatedAsResource : true
             },
-            
+
             {
                 name        : "useDMATX",
                 displayName : "Use RTDMA for Transmit",
@@ -910,6 +912,7 @@ let config = [
                 hidden      : false,
                 default     : false,
                 onChange    : onChangeUseDMATX,
+                shouldBeAllocatedAsResource : true
             },
             {
                 name        : "DMATXInst",
@@ -918,6 +921,7 @@ let config = [
                 hidden      : true,
                 default     : dma_instances[0].name,
                 options     : dma_instances,
+                shouldBeAllocatedAsResource : true
             },
         ]
     },
@@ -929,69 +933,20 @@ let config = [
     },
 ];
 
+function validatePinmux(inst,validation){
+    if (inst.lin && inst.lin.$solution) {
+        let selectedPeripheral = inst.lin.$solution.peripheralName; // e.g., "UARTA"
+        if (Common.is_instance_not_in_variant(selectedPeripheral)) {
+            validation.logError(
+                `${selectedPeripheral} is not supported for ${Common.getVariant().replace(/^TMS320/, '')}.`,
+                inst,
+                "lin"
+            );
+        }
+    }
 
-function onValidate(inst, validation) 
-{   
-    if (inst.useDMARX)
+    if(inst.lin.$solution != null && inst.opMode == "SCI")
     {
-        validation.logWarning(
-            "Must be defined in application code", 
-            inst.linRXDMA, "srcAddressLinked");
-    }
-    if (inst.useDMATX)
-    {
-        validation.logWarning(
-            "Must be defined in application code", 
-            inst.linTXDMA, "destAddressLinked");
-    }
-    if(!is_hexadecimal(inst.txMask)){
-        validation.logError(
-            "Please enter valid hexadecimal number", 
-            inst, "txMask");
-    }
-    let txMaskInt = parseInt(inst.txMask, 16);
-    if(txMaskInt < 0 || txMaskInt > 255){
-        validation.logError(
-            "Mask value must be in range 0x00 to 0xFF", 
-            inst, "txMask");
-    }
-
-    if(!is_hexadecimal(inst.rxMask)){
-        validation.logError(
-            "Please enter valid hexadecimal number", 
-            inst, "rxMask");
-    }
-    let rxMaskInt = parseInt(inst.rxMask, 16);
-    if(rxMaskInt < 0 || rxMaskInt > 255){
-        validation.logError(
-            "Mask value must be in range 0x00 to 0xFF", 
-            inst, "rxMask");
-    }
-    if(!is_hexadecimal(inst.responderIdByte)){
-        validation.logError(
-            "Please enter valid hexadecimal number", 
-            inst, "responderIdByte");
-    }
-
-    if(inst.opMode == "LIN" && ((inst.linMode == "LIN_MODE_LIN_RESPONDER" && !inst.autoBaudRate) || (inst.linMode == "LIN_MODE_LIN_COMMANDER")) && (inst.brVal > 20000 || inst.brVal < 0)){
-        validation.logError(
-            "Baud rate must be in range 0-20KHz in LIN mode", 
-            inst, "brVal");
-    }
-
-    if(inst.opMode == "LIN" && inst.linMode == "LIN_MODE_LIN_RESPONDER" && inst.autoBaudRate && (inst.mbrVal > 20000 || inst.mbrVal < 0)){
-        validation.logError(
-            "Expected baud rate must be in range 0-20KHz in LIN mode", 
-            inst, "mbrVal");
-    }
-
-    if(inst.opMode == "LIN" && inst.linMode == "LIN_MODE_LIN_RESPONDER" && inst.autoBaudRate && inst.mbrPrescaler > 8192){
-        validation.logError(
-            "Adaptive Baud Rate prescaler is greater than 13-bits. Decrease VCLK frequency or increase expected baud rate.", 
-            inst, "mbrPrescaler");        
-    }
-
-    if(inst.lin.$solution != null && inst.opMode == "SCI"){
         let linCLK = Common.getSYSCLK();
         let clocktree = Common.getClockTree()
         if(clocktree){
@@ -999,12 +954,75 @@ function onValidate(inst, validation)
         }
         if(inst.brVal > linCLK/32 || inst.brVal < 0)
         {validation.logError(
-            "Baud rate must be under " + String(linCLK/32) + " in SCI mode", 
+            "Baud rate must be under " + String(linCLK/32) + " in SCI mode",
             inst, "brVal");
         }
     }
-    
 }
+
+function onValidate(inst, validation)
+{
+    if (inst.useDMARX)
+    {
+        validation.logWarning(
+            "Must be defined in application code",
+            inst.linRXDMA, "srcAddressLinked");
+    }
+    if (inst.useDMATX)
+    {
+        validation.logWarning(
+            "Must be defined in application code",
+            inst.linTXDMA, "destAddressLinked");
+    }
+    if(!is_hexadecimal(inst.txMask)){
+        validation.logError(
+            "Please enter valid hexadecimal number",
+            inst, "txMask");
+    }
+    let txMaskInt = parseInt(inst.txMask, 16);
+    if(txMaskInt < 0 || txMaskInt > 255){
+        validation.logError(
+            "Mask value must be in range 0x00 to 0xFF",
+            inst, "txMask");
+    }
+
+    if(!is_hexadecimal(inst.rxMask)){
+        validation.logError(
+            "Please enter valid hexadecimal number",
+            inst, "rxMask");
+    }
+    let rxMaskInt = parseInt(inst.rxMask, 16);
+    if(rxMaskInt < 0 || rxMaskInt > 255){
+        validation.logError(
+            "Mask value must be in range 0x00 to 0xFF",
+            inst, "rxMask");
+    }
+    if(!is_hexadecimal(inst.responderIdByte)){
+        validation.logError(
+            "Please enter valid hexadecimal number",
+            inst, "responderIdByte");
+    }
+
+    if(inst.opMode == "LIN" && ((inst.linMode == "LIN_MODE_LIN_RESPONDER" && !inst.autoBaudRate) || (inst.linMode == "LIN_MODE_LIN_COMMANDER")) && (inst.brVal > 20000 || inst.brVal < 0)){
+        validation.logError(
+            "Baud rate must be in range 0-20KHz in LIN mode",
+            inst, "brVal");
+    }
+
+    if(inst.opMode == "LIN" && inst.linMode == "LIN_MODE_LIN_RESPONDER" && inst.autoBaudRate && (inst.mbrVal > 20000 || inst.mbrVal < 0)){
+        validation.logError(
+            "Expected baud rate must be in range 0-20KHz in LIN mode",
+            inst, "mbrVal");
+    }
+
+    if(inst.opMode == "LIN" && inst.linMode == "LIN_MODE_LIN_RESPONDER" && inst.autoBaudRate && inst.mbrPrescaler > 8192){
+        validation.logError(
+            "Adaptive Baud Rate prescaler is greater than 13-bits. Decrease VCLK frequency or increase expected baud rate.",
+            inst, "mbrPrescaler");
+    }
+
+}
+
 
 /*
  *  ======== filterHardware ========
@@ -1029,7 +1047,7 @@ if (Common.onlyPinmux())
 var linModule = {
     peripheralName: "LIN",
     displayName: "LIN",
-    maxInstances: Common.peripheralCount("LIN"),
+    totalMaxInstances: Common.peripheralCount("LIN"),
     defaultInstanceName: "myLIN",
     description: "LIN Peripheral",
     filterHardware : filterHardware,
@@ -1049,7 +1067,7 @@ var linModule = {
         {
             if(inst.registerL0Int){
                 ownedInstances = ownedInstances.concat([{
-                    name: "level0Int",      
+                    name: "level0Int",
                     group: "GROUP_ISR",
                     displayName: "Line 0 Interrupt",
                     moduleName: "/driverlib/interrupt.js",
@@ -1066,7 +1084,7 @@ var linModule = {
             if(inst.registerL1Int){
                 ownedInstances = ownedInstances.concat([{
                     name: "level1Int",
-                    group: "GROUP_ISR",    
+                    group: "GROUP_ISR",
                     displayName: "Line 1 Interrupt",
                     moduleName: "/driverlib/interrupt.js",
                     collapsed: true,
@@ -1087,7 +1105,7 @@ var linModule = {
             let dmaInst = inst.DMARXInst.split('_')[0].toLowerCase()
             ownedInstances = ownedInstances.concat([
                 {
-                    name: "linRXDMA",      
+                    name: "linRXDMA",
                     group: "GROUP_DMA",
                     displayName: "RX DMA",
                     moduleName: "/driverlib/" + dmaInst + ".js",
@@ -1101,12 +1119,13 @@ var linModule = {
                         databusWidthConfig: "DMA_CFG_READ_SIZE_8BIT",
                         writeDatasizeConfig: "DMA_CFG_WRT_SIZE_8BIT",
                         triggerSource: "DMA_TRIGGER_LINKED"
-                    }
+                    },
+                    shouldBeAllocatedAsResource : true
                 },
             ])
         }
 
-        if (inst.useDMATX) 
+        if (inst.useDMATX)
         {
             let dmaInst = inst.DMATXInst.split('_')[0].toLowerCase()
             ownedInstances = ownedInstances.concat([
@@ -1125,7 +1144,8 @@ var linModule = {
                         databusWidthConfig: "DMA_CFG_READ_SIZE_8BIT",
                         writeDatasizeConfig: "DMA_CFG_WRT_SIZE_8BIT",
                         triggerSource: "DMA_TRIGGER_LINKED"
-                    }
+                    },
+                    shouldBeAllocatedAsResource : true
                 },
             ])
         }
@@ -1139,7 +1159,7 @@ var linModule = {
                 collapsed: false,
                 requiredArgs:{
                     pinmuxPeripheralModule : "lin",
-                    peripheralInst: inst.$name,
+                    peripheralInst: "",
                 }
             },
             {
@@ -1149,21 +1169,24 @@ var linModule = {
                 moduleName: "/driverlib/perConfig.js",
                 collapsed: false,
                 requiredArgs:{
+                    cpuSel: inst.$assignedContext ?? system.context,
                     pinmuxPeripheralModule : "lin",
-                    peripheralInst: inst.$name
-                }
+                    peripheralInst: ""
+                },
+                shouldBeAllocatedAsResource: true
             },
         ])
 
         return ownedInstances;
     },
-    config: config,
+    config: Common.filterConfigsIfInSetupMode(config),
     validate: onValidate,
+    validatePinmux: validatePinmux,
     // Static module for all instances to hold clock values
     moduleStatic: {
         name: "LinGlobal",
         displayName: "LIN Global",
-        config: [
+        config: Common.filterConfigsIfInSetupMode([
             {
                 name: "linAClkPrescaler",
                 displayName: "LIN A Clock Prescaler",
@@ -1226,13 +1249,14 @@ var linModule = {
                 },
                 readOnly    : true,
             },
-        ],
+        ]),
     },
     templates: {
         boardc : "/driverlib/lin/lin.board.c.xdt",
         boardh : "/driverlib/lin/lin.board.h.xdt"
     },
     pinmuxRequirements    : Pinmux.linPinmuxRequirements,
+    shouldBeAllocatedAsResource: true
 };
 
 

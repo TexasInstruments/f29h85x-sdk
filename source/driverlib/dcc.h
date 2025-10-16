@@ -187,7 +187,6 @@ typedef enum
 //
 //*****************************************************************************
 #ifdef DEBUG
-__attribute__((always_inline))
 static inline bool
 DCC_isBaseValid(uint32_t base)
 {
@@ -210,7 +209,6 @@ DCC_isBaseValid(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 DCC_enableModule(uint32_t base)
 {
@@ -238,7 +236,6 @@ DCC_enableModule(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 DCC_disableModule(uint32_t base)
 {
@@ -266,7 +263,6 @@ DCC_disableModule(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 DCC_enableErrorSignal(uint32_t base)
 {
@@ -294,7 +290,6 @@ DCC_enableErrorSignal(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 DCC_enableDoneSignal(uint32_t base)
 {
@@ -322,7 +317,6 @@ DCC_enableDoneSignal(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 DCC_disableErrorSignal(uint32_t base)
 {
@@ -350,7 +344,6 @@ DCC_disableErrorSignal(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 DCC_disableDoneSignal(uint32_t base)
 {
@@ -378,7 +371,6 @@ DCC_disableDoneSignal(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 DCC_enableSingleShotMode(uint32_t base)
 {
@@ -406,7 +398,6 @@ DCC_enableSingleShotMode(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 DCC_disableSingleShotMode(uint32_t base)
 {
@@ -435,7 +426,6 @@ DCC_disableSingleShotMode(uint32_t base)
 //! have occurred.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline bool
 DCC_getErrorStatus(uint32_t base)
 {
@@ -462,7 +452,6 @@ DCC_getErrorStatus(uint32_t base)
 //! single-shot mode has not completed.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline bool
 DCC_getSingleShotStatus(uint32_t base)
 {
@@ -488,7 +477,6 @@ DCC_getSingleShotStatus(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 DCC_clearErrorFlag(uint32_t base)
 {
@@ -514,7 +502,6 @@ DCC_clearErrorFlag(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 DCC_clearDoneFlag(uint32_t base)
 {
@@ -543,7 +530,6 @@ DCC_clearDoneFlag(uint32_t base)
 //! \return Returns the current value of counter 0.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline uint32_t
 DCC_getCounter0Value(uint32_t base)
 {
@@ -573,7 +559,6 @@ DCC_getCounter0Value(uint32_t base)
 //! \return Returns the current value of the valid duration counter.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline uint16_t
 DCC_getValidCounter0Value(uint32_t base)
 {
@@ -602,7 +587,6 @@ DCC_getValidCounter0Value(uint32_t base)
 //! \return Returns the current value of counter 1.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline uint32_t
 DCC_getCounter1Value(uint32_t base)
 {
@@ -629,7 +613,6 @@ DCC_getCounter1Value(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 DCC_setCounter1ClkSource(uint32_t base, DCC_Count1ClockSource source)
 {
@@ -660,7 +643,6 @@ DCC_setCounter1ClkSource(uint32_t base, DCC_Count1ClockSource source)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 DCC_setCounter0ClkSource(uint32_t base, DCC_Count0ClockSource source)
 {
@@ -690,7 +672,6 @@ DCC_setCounter0ClkSource(uint32_t base, DCC_Count0ClockSource source)
 //! \return Returns Counter 1 clock source from the enum DCC_Count1ClockSource
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline uint16_t
 DCC_getCounter1ClkSource(uint32_t base)
 {
@@ -716,7 +697,6 @@ DCC_getCounter1ClkSource(uint32_t base)
 //! \return Returns Counter 0 clock source from the enum DCC_Count0ClockSource
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline uint16_t
 DCC_getCounter0ClkSource(uint32_t base)
 {
@@ -753,7 +733,6 @@ DCC_getCounter0ClkSource(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 DCC_setCounterSeeds(uint32_t base, uint32_t counter0, uint32_t validCounter0,
                     uint32_t counter1)

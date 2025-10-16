@@ -254,13 +254,77 @@ typedef enum
 //*****************************************************************************
 typedef enum
 {
-    SENT_TRIGGER_DISABLE   = 0U,      //!< Trigger is disable
-    SENT_TRIGGER_BROADCAST = 1U,      //!< Broadcast Channel Trigger Source
-    SENT_TRIGGER_SENSOR1   = 2U,      //!< Sensor 1 Trigger Source
-    SENT_TRIGGER_SENSOR2   = 3U,      //!< Sensor 2 Trigger Source
-    SENT_TRIGGER_SENSOR3   = 4U,      //!< Sensor 3 Trigger Source
-    SENT_TRIGGER_SENSOR4   = 5U       //!< Sensor 4 Trigger Source
+    SENT_TRIGGER_DISABLE   = 0U,        //!< Trigger is disable
+    SENT_TRIGGER_BROADCAST = 1U,        //!< Broadcast Channel Trigger Source
+    SENT_TRIGGER_SENSOR1   = 2U,        //!< Sensor 1 Trigger Source
+    SENT_TRIGGER_SENSOR2   = 3U,        //!< Sensor 2 Trigger Source
+    SENT_TRIGGER_SENSOR3   = 4U,        //!< Sensor 3 Trigger Source
+    SENT_TRIGGER_SENSOR4   = 5U         //!< Sensor 4 Trigger Source
 } SENT_Trigger;
+
+//*****************************************************************************
+//
+//! Values that can be passed to SENT_setMTPTriggerSelect() as the \e triggerSel
+//! parameter.
+//
+//*****************************************************************************
+
+typedef enum
+{
+	SENT_EXT_TRIG_DISABLE		 = 0,
+	SENT_EXT_TRIG_CPU1_TINT0		 = 6,
+	SENT_EXT_TRIG_CPU1_TINT1		 = 7,
+	SENT_EXT_TRIG_CPU1_TINT2		 = 8,
+	SENT_EXT_TRIG_CPU2_TINT0		 = 9,
+	SENT_EXT_TRIG_CPU2_TINT1		 = 10,
+	SENT_EXT_TRIG_CPU2_TINT2		 = 11,
+	SENT_EXT_TRIG_CPU3_TINT0		 = 12,
+	SENT_EXT_TRIG_CPU3_TINT1		 = 13,
+	SENT_EXT_TRIG_CPU3_TINT2		 = 14,
+	SENT_EXT_TRIG_EPWM1_ADCSOCA		 = 31,
+	SENT_EXT_TRIG_EPWM1_ADCSOCB		 = 32,
+	SENT_EXT_TRIG_EPWM2_ADCSOCA		 = 33,
+	SENT_EXT_TRIG_EPWM2_ADCSOCB		 = 34,
+	SENT_EXT_TRIG_EPWM3_ADCSOCA		 = 35,
+	SENT_EXT_TRIG_EPWM3_ADCSOCB		 = 36,
+	SENT_EXT_TRIG_EPWM4_ADCSOCA		 = 37,
+	SENT_EXT_TRIG_EPWM4_ADCSOCB		 = 38,
+	SENT_EXT_TRIG_EPWM5_ADCSOCA		 = 39,
+	SENT_EXT_TRIG_EPWM5_ADCSOCB		 = 40,
+	SENT_EXT_TRIG_EPWM6_ADCSOCA		 = 41,
+	SENT_EXT_TRIG_EPWM6_ADCSOCB		 = 42,
+	SENT_EXT_TRIG_EPWM7_ADCSOCA		 = 43,
+	SENT_EXT_TRIG_EPWM7_ADCSOCB		 = 44,
+	SENT_EXT_TRIG_EPWM8_ADCSOCA		 = 45,
+	SENT_EXT_TRIG_EPWM8_ADCSOCB		 = 46,
+	SENT_EXT_TRIG_EPWM9_ADCSOCA		 = 47,
+	SENT_EXT_TRIG_EPWM9_ADCSOCB		 = 48,
+	SENT_EXT_TRIG_EPWM10_ADCSOCA		 = 49,
+	SENT_EXT_TRIG_EPWM10_ADCSOCB		 = 50,
+	SENT_EXT_TRIG_EPWM11_ADCSOCA		 = 51,
+	SENT_EXT_TRIG_EPWM11_ADCSOCB		 = 52,
+	SENT_EXT_TRIG_EPWM12_ADCSOCA		 = 53,
+	SENT_EXT_TRIG_EPWM12_ADCSOCB		 = 54,
+	SENT_EXT_TRIG_EPWM13_ADCSOCA		 = 55,
+	SENT_EXT_TRIG_EPWM13_ADCSOCB		 = 56,
+	SENT_EXT_TRIG_EPWM14_ADCSOCA		 = 57,
+	SENT_EXT_TRIG_EPWM14_ADCSOCB		 = 58,
+	SENT_EXT_TRIG_EPWM15_ADCSOCA		 = 59,
+	SENT_EXT_TRIG_EPWM15_ADCSOCB		 = 60,
+	SENT_EXT_TRIG_EPWM16_ADCSOCA		 = 61,
+	SENT_EXT_TRIG_EPWM16_ADCSOCB		 = 62,
+	SENT_EXT_TRIG_EPWM17_ADCSOCA		 = 63,
+	SENT_EXT_TRIG_EPWM17_ADCSOCB		 = 64,
+	SENT_EXT_TRIG_EPWM18_ADCSOCA		 = 65,
+	SENT_EXT_TRIG_EPWM18_ADCSOCB		 = 66,
+	SENT_EXT_TRIG_ECAP1_SOC		 = 95,
+	SENT_EXT_TRIG_ECAP2_SOC		 = 96,
+	SENT_EXT_TRIG_ECAP3_SOC		 = 97,
+	SENT_EXT_TRIG_ECAP4_SOC		 = 98,
+	SENT_EXT_TRIG_ECAP5_SOC		 = 99,
+	SENT_EXT_TRIG_ECAP6_SOC		 = 100
+} SENT_ExtTriggerSrc;
+
 
 //*****************************************************************************
 //
@@ -361,7 +425,8 @@ typedef enum
     SENT_MTP_CMP_6           = 0x5U,   //!< MTP Compare 6
     SENT_MTP_CMP_7           = 0x6U,   //!< MTP Compare 7
     SENT_MTP_CMP_8           = 0x7U,   //!< MTP Compare 8
-    SENT_MTP_CMP_9           = 0x8U    //!< MTP Compare 9
+    SENT_MTP_CMP_9           = 0x8U,   //!< MTP Compare 9
+    SENT_MTP_CMP_10          = 0x9U    //!< MTP Compare 10
 
 } SENT_CompareNumber;
 
@@ -385,7 +450,6 @@ typedef enum
 //
 //*****************************************************************************
 #ifdef DEBUG
-__attribute__((always_inline))
 static inline bool
 SENT_isBaseValid(uint32_t base)
 {
@@ -414,7 +478,6 @@ return (
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SENT_enableSENTReceiver(uint32_t base)
 {
@@ -442,7 +505,6 @@ SENT_enableSENTReceiver(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SENT_disableSENTReceiver(uint32_t base)
 {
@@ -471,7 +533,6 @@ SENT_disableSENTReceiver(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SENT_enableSENTCRC(uint32_t base)
 {
@@ -499,7 +560,6 @@ SENT_enableSENTCRC(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SENT_disableSENTCRC(uint32_t base)
 {
@@ -529,7 +589,6 @@ SENT_disableSENTCRC(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SENT_enableSENTPausePulse(uint32_t base)
 {
@@ -558,7 +617,6 @@ SENT_enableSENTPausePulse(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SENT_disableSENTPausePulse(uint32_t base)
 {
@@ -589,7 +647,6 @@ SENT_disableSENTPausePulse(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SENT_setCRCType(uint32_t base, SENT_CRCType crcType)
 {
@@ -623,7 +680,6 @@ SENT_setCRCType(uint32_t base, SENT_CRCType crcType)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SENT_setCRCWidth(uint32_t base, SENT_CRCWidth crcWidth)
 {
@@ -657,7 +713,6 @@ SENT_setCRCWidth(uint32_t base, SENT_CRCWidth crcWidth)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SENT_setDataNibble(uint32_t base, SENT_DataNibble dataNibble)
 {
@@ -694,7 +749,6 @@ SENT_setDataNibble(uint32_t base, SENT_DataNibble dataNibble)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SENT_setTTClock(uint32_t base, uint32_t ttClock)
 {
@@ -731,7 +785,6 @@ SENT_setTTClock(uint32_t base, uint32_t ttClock)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SENT_setRxCRC(uint32_t base, SENT_RxCRC rxCRC)
 {
@@ -761,7 +814,6 @@ SENT_setRxCRC(uint32_t base, SENT_RxCRC rxCRC)
 //! \return the received SENT fast channel data.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline uint32_t
 SENT_getFIFO(uint32_t base)
 {
@@ -791,7 +843,6 @@ SENT_getFIFO(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SENT_enableDMAtrigger(uint32_t base)
 {
@@ -819,7 +870,6 @@ SENT_enableDMAtrigger(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SENT_disableDMAtrigger(uint32_t base)
 {
@@ -852,7 +902,6 @@ SENT_disableDMAtrigger(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SENT_configureFIFOMode(uint32_t base, SENT_FIFOMode fifoMode)
 {
@@ -886,7 +935,6 @@ SENT_configureFIFOMode(uint32_t base, SENT_FIFOMode fifoMode)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SENT_setGFILTClockCycle(uint32_t base, uint32_t gFiltClock)
 {
@@ -917,7 +965,6 @@ SENT_setGFILTClockCycle(uint32_t base, uint32_t gFiltClock)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SENT_enableTimeStamp(uint32_t base)
 {
@@ -945,7 +992,6 @@ SENT_enableTimeStamp(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SENT_disableTimeStamp(uint32_t base)
 {
@@ -974,7 +1020,6 @@ SENT_disableTimeStamp(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SENT_enableERRDATAwrite(uint32_t base)
 {
@@ -1003,7 +1048,6 @@ SENT_enableERRDATAwrite(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SENT_disableERRDATAwrite(uint32_t base)
 {
@@ -1033,7 +1077,6 @@ SENT_disableERRDATAwrite(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SENT_enableMTPMode(uint32_t base)
 {
@@ -1062,7 +1105,6 @@ SENT_enableMTPMode(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SENT_disableMTPMode(uint32_t base)
 {
@@ -1095,7 +1137,6 @@ SENT_disableMTPMode(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SENT_setRFIFOTriggerLevel(uint32_t base, SENT_TriggerLevel triggerLevel)
 {
@@ -1126,7 +1167,6 @@ SENT_setRFIFOTriggerLevel(uint32_t base, SENT_TriggerLevel triggerLevel)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SENT_enableSoftwareReset(uint32_t base)
 {
@@ -1154,7 +1194,6 @@ SENT_enableSoftwareReset(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SENT_disableSoftwareReset(uint32_t base)
 {
@@ -1195,7 +1234,6 @@ SENT_disableSoftwareReset(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SENT_setDataSortingFormat(uint32_t base, SENT_DataNumber dataNumber,
                         SENT_NibbleNumber nibbleNum, SENT_Nibble nibble)
@@ -1240,7 +1278,6 @@ SENT_setDataSortingFormat(uint32_t base, SENT_DataNumber dataNumber,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SENT_configureTimeout(uint32_t base, uint32_t timeOut)
 {
@@ -1270,7 +1307,6 @@ SENT_configureTimeout(uint32_t base, uint32_t timeOut)
 //! \return Returns the synchronized serial data input value.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline uint32_t
 SENT_readSerialDataIn(uint32_t base)
 {
@@ -1330,7 +1366,6 @@ SENT_readSerialDataIn(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SENT_enableInterrupt(uint32_t base, uint32_t intFlags)
 {
@@ -1393,7 +1428,6 @@ SENT_enableInterrupt(uint32_t base, uint32_t intFlags)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SENT_disableInterrupt(uint32_t base, uint32_t intFlags)
 {
@@ -1458,7 +1492,6 @@ SENT_disableInterrupt(uint32_t base, uint32_t intFlags)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline uint32_t
 SENT_readInterruptStatus(uint32_t base, uint32_t intFlags)
 {
@@ -1520,7 +1553,6 @@ SENT_readInterruptStatus(uint32_t base, uint32_t intFlags)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SENT_setSWInterrupt(uint32_t base, uint32_t intFlags)
 {
@@ -1583,7 +1615,6 @@ SENT_setSWInterrupt(uint32_t base, uint32_t intFlags)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SENT_clearInterruptFlag(uint32_t base, uint32_t intFlags)
 {
@@ -1615,7 +1646,6 @@ SENT_clearInterruptFlag(uint32_t base, uint32_t intFlags)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline uint32_t
 SENT_getFrameData(uint32_t base, uint16_t SENTWord)
 {
@@ -1646,7 +1676,6 @@ SENT_getFrameData(uint32_t base, uint16_t SENTWord)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SENT_enableMTPChannel(uint32_t base, SENT_Channel channel)
 {
@@ -1680,7 +1709,6 @@ SENT_enableMTPChannel(uint32_t base, SENT_Channel channel)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SENT_disableMTPChannel(uint32_t base, SENT_Channel channel)
 {
@@ -1718,7 +1746,6 @@ SENT_disableMTPChannel(uint32_t base, SENT_Channel channel)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SENT_setMTPPeriod(uint32_t base, SENT_Channel channel, uint32_t period)
 {
@@ -1757,7 +1784,6 @@ SENT_setMTPPeriod(uint32_t base, SENT_Channel channel, uint32_t period)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SENT_setMTPTriggerSelect(uint32_t base, SENT_Channel channel,
                         SENT_Trigger triggerSel)
@@ -1797,7 +1823,6 @@ SENT_setMTPTriggerSelect(uint32_t base, SENT_Channel channel,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SENT_enableMTPSoftwareTrigger(uint32_t base, SENT_Channel channel)
 {
@@ -1831,7 +1856,6 @@ SENT_enableMTPSoftwareTrigger(uint32_t base, SENT_Channel channel)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SENT_disableMTPSoftwareTrigger(uint32_t base, SENT_Channel channel)
 {
@@ -1871,7 +1895,6 @@ SENT_disableMTPSoftwareTrigger(uint32_t base, SENT_Channel channel)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SENT_configureMTPTimeout(uint32_t base, SENT_SensorNumber sensorNum,
                             uint32_t sensorTimeout)
@@ -1913,7 +1936,6 @@ SENT_configureMTPTimeout(uint32_t base, SENT_SensorNumber sensorNum,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SENT_setBroadcastChMTPToggleTime(uint32_t base,
                             SENT_CompareNumber compareNum, uint32_t toggleTime)
@@ -1924,6 +1946,7 @@ SENT_setBroadcastChMTPToggleTime(uint32_t base,
     // Check the arguments
     //
     ASSERT(SENT_isBaseValid(base));
+    ASSERT(compareNum < SENT_MTP_CMP_10);
 
     toggleOffset = (SENT_MTP_TOGGLETIME_STEP * (uint32_t)compareNum) +
                     SENT_O_BC_MTP_CMP1;
@@ -1960,7 +1983,6 @@ SENT_setBroadcastChMTPToggleTime(uint32_t base,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SENT_setSensor1MTPToggleTime(uint32_t base, SENT_CompareNumber compareNum,
                             uint32_t toggleTime)
@@ -2007,7 +2029,6 @@ SENT_setSensor1MTPToggleTime(uint32_t base, SENT_CompareNumber compareNum,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SENT_setSensor2MTPToggleTime(uint32_t base, SENT_CompareNumber compareNum,
                             uint32_t toggleTime)
@@ -2054,7 +2075,6 @@ SENT_setSensor2MTPToggleTime(uint32_t base, SENT_CompareNumber compareNum,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SENT_setSensor3MTPToggleTime(uint32_t base, SENT_CompareNumber compareNum,
                             uint32_t toggleTime)
@@ -2101,7 +2121,6 @@ SENT_setSensor3MTPToggleTime(uint32_t base, SENT_CompareNumber compareNum,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SENT_setSensor4MTPToggleTime(uint32_t base, SENT_CompareNumber compareNum,
                             uint32_t toggleTime)
@@ -2140,7 +2159,6 @@ SENT_setSensor4MTPToggleTime(uint32_t base, SENT_CompareNumber compareNum,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SENT_setMTPWaitTime(uint32_t base, uint32_t waitTime)
 {
@@ -2170,7 +2188,6 @@ SENT_setMTPWaitTime(uint32_t base, uint32_t waitTime)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SENT_setMTPSoftwareReset(uint32_t base)
 {

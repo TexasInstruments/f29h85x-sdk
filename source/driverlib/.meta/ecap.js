@@ -180,7 +180,7 @@ if (ECAP_INSTANCES_WITH_HRCAP.length > 0){
     ecapStatic = {
         name: "ecapGlobal",
         displayName: "ECAP Global",
-        config: globalConfig, // chosenSYSCLK needed for all devices with HRCAP
+        config: Common.filterConfigsIfInSetupMode(globalConfig), // chosenSYSCLK needed for all devices with HRCAP
         modules: undefined // no sync modules needed for these 4 devices
     }
 }
@@ -295,7 +295,8 @@ config.push(
         description : 'Instance of the ECAP used.',
         hidden      : false,
         default     : ECAP_INSTANCE[0].name,
-        options     : ECAP_INSTANCE
+        options     : ECAP_INSTANCE,
+        shouldBeAllocatedAsResource : true,
     },
 )
 
@@ -892,12 +893,12 @@ important. Uses for eCAP include:
 var ecapModule = {
     peripheralName: "ECAP",
     displayName: "ECAP",
-    maxInstances: numberOfECAPs,
+    totalMaxInstances: numberOfECAPs,
     defaultInstanceName: "myECAP",
     description: "Enhanced Capture",
     //longDescription: longDescription + "\n" + (Common.getCollateralFindabilityList("ECAP")),
     filterHardware : filterHardware,
-    config: config,
+    config: Common.filterConfigsIfInSetupMode(config),
     moduleInstances: (inst) => {
         var intReturn = [];
         if (inst.useInterrupts && inst.registerInterrupts)
@@ -953,9 +954,11 @@ var ecapModule = {
                 moduleName: "/driverlib/perConfig.js",
                 collapsed: false,
                 requiredArgs:{
+                    cpuSel: inst.$assignedContext ?? system.context,
                     pinmuxPeripheralModule : "",
                     peripheralInst: inst.ecapBase.replace("_BASE", "")
-                }
+                },
+                shouldBeAllocatedAsResource: true,
             },
         ])
         
@@ -965,6 +968,7 @@ var ecapModule = {
         boardc : "/driverlib/ecap/ecap.board.c.xdt",
         boardh : "/driverlib/ecap/ecap.board.h.xdt"
     },
+    shouldBeAllocatedAsResource: true,
     moduleStatic: ecapStatic,
     validate    : onValidate,
 };

@@ -1,14 +1,15 @@
 % var nameOfModule = "rtdma2_mpu";
 % var mpuBaseAddress = 'RTDMA2_MPU_BASE'
 % let Common   = system.getScript("/driverlib/Common.js");
-% var module = Common.getModuleForCore("/driverlib/rtdma2_mpu.js", "CPU1");
-% var contextNames = Common.getContextNames()
 //*****************************************************************************
 //
 // RTDMA2 MPU Configurations
 //
 //*****************************************************************************
 void RTDMA2_MPU_init(){
+% if(Common.isAllocationOff()){
+% var module = Common.getModuleForCore("/driverlib/rtdma2_mpu.js", "CPU1");
+% var contextNames = Common.getContextNames()
 % if (module != null)
 % {
     % var stat = module.$static;
@@ -27,8 +28,8 @@ void RTDMA2_MPU_init(){
     % if (stat.commitMPUConfig) {
     DMA_commitMPUConfig(`mpuBaseAddress`);
     % }
-% }
     DMA_MPUConfigParams configParams;
+% }
 % for (var cntx of contextNames)
 % {
     % module = Common.getModuleForCore("/driverlib/rtdma2_mpu.js", cntx);
@@ -78,5 +79,83 @@ void RTDMA2_MPU_init(){
             % }
         % }
     % }
+% }
+% }
+% else {
+% let raData = system.resourceAllocation.data
+% let context = raData.contexts.find(x => x.contextName == "CPU1")
+% let module = context.modules.find(x => x.moduleName == "/driverlib/rtdma2_mpu.js")
+% 
+% if (module != null)
+% {
+    % var stat = module.moduleStatic.requiredArgs;
+    % if (!stat.lockMPUConfig) {
+    DMA_unlockMPUConfig(`mpuBaseAddress`);
+    % }
+    % if (stat.enableMPU) {
+    DMA_enableMPU(`mpuBaseAddress`);
+    % } else {
+    DMA_disableMPU(`mpuBaseAddress`);
+    % }
+    %
+    % if (stat.lockMPUConfig) {
+    DMA_lockMPUConfig(`mpuBaseAddress`);
+    % } 
+    % if (stat.commitMPUConfig) {
+    DMA_commitMPUConfig(`mpuBaseAddress`);
+    % }
+    DMA_MPUConfigParams configParams;
+% }
+%
+% for (let cntx of raData.contexts)
+% {
+    % module = cntx.modules.find(x => x.moduleName === '/driverlib/rtdma2_mpu.js')
+    % if ((module != null) && (module.instances.length != 0)) {
+	//
+	// Configuration for MPU Regions added in `Common.getContextDisplayName(cntx.contextName)` context
+    //
+      % for(var i = 0; i < module.instances.length; i++) {
+        % var instance = module.instances[i];
+    //
+    // `instance.allocationName` Initialization
+    // 
+        %
+        % var startAddress = 0;
+        % var endAddress = 0;
+        % if (instance.requiredArgs.startAddressInputMode == "MANUAL") {
+        %   startAddress = instance.allocationName + "_STARTADDRESS"
+        % } if (instance.requiredArgs.startAddressInputMode == "VARIABLE") {
+        %   startAddress = instance.requiredArgs.startAddressVariable;           
+        % } if (instance.requiredArgs.endAddressInputMode == "MANUAL") {
+        %   endAddress = instance.allocationName + "_ENDADDRESS"
+        % } if (instance.requiredArgs.endAddressInputMode == "VARIABLE") {
+        %   endAddress = instance.requiredArgs.endAddressVariable;      
+        % } 
+    configParams.startAddr = `startAddress`;
+    configParams.endAddr = `endAddress`;
+        % if (instance.requiredArgs.channelMask.length != 0) {
+            % var chMask =  instance.requiredArgs.channelMask[0];
+            % for (var j = 0; j < instance.requiredArgs.channelMask.length - 1; j++)
+            % {
+                % chMask = chMask + " | " + instance.requiredArgs.channelMask[j+1];
+            % }
+    configParams.channelMask = `chMask`;
+            % }
+            % else {
+    configParams.channelMask = 0;
+            % }
+    configParams.accessPermission = `instance.requiredArgs.accessPermission`;
+    DMA_configMPURegion(`mpuBaseAddress`, `instance.allocationName`, &configParams);
+            % if (instance.requiredArgs.lockMPURegion) {
+    DMA_lockMPURegion(`mpuBaseAddress`, `instance.allocationName`);
+            % } else {
+    DMA_unlockMPURegion(`mpuBaseAddress`, `instance.allocationName`);
+            % }
+            % if (instance.requiredArgs.commitMPURegion) {
+    DMA_commitMPURegion(`mpuBaseAddress`, `instance.allocationName`);
+            % }
+        % }
+    % }
+% }
 % }
 }

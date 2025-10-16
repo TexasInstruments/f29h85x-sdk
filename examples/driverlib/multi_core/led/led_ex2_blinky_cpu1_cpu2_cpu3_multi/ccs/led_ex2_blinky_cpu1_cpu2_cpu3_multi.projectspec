@@ -3,8 +3,8 @@
         name="led_ex2_blinky_cpu1_cpu2_cpu3_multi"
         device="F29H850TU9"
         outputType="system"
-        cgtVersion="1.0.0"
-        toolChain="TICLANG"
+        cgtVersion   = "2.0.0"
+        toolChain    = "TICLANG"
         >
     <file path="../system.xml" action="copy" openOnCreation="true"/>
     <configuration name="RAM"/>
@@ -14,98 +14,158 @@
   <project
         name="led_ex2_blinky_cpu1_cpu2_cpu3_multi_c29x1"
         device="F29H850TU9"
-        cgtVersion="1.0.0"
-        toolChain="TICLANG"
+        cgtVersion   = "2.0.0"
+        toolChain    = "TICLANG"
         products="sysconfig;f29h85x-sdk"
         launchWizard="False"
         enableSysConfigTool="true"
         connection   = "TIXDS110_Connection.xml"
         >
-    <configuration name="RAM"   compilerBuildOptions="-O1 -g -DDEBUG -Qunused-arguments" linkerBuildOptions="--stack_size=0x400 --heap_size=0x400 --diag_suppress=10325-D --diag_suppress=10063-D"
-    preBuildStep=
-       "$(PYTHON) ${COM_TI_MCU_SDK_INSTALL_DIR}/tools/misc/updateSysCfg.py ../${ProjName}.syscfg ../../cpu2App.bin 2;
-        $(PYTHON) ${COM_TI_MCU_SDK_INSTALL_DIR}/tools/misc/updateSysCfg.py ../${ProjName}.syscfg ../../cpu3App.bin 3"
-    postBuildStep=
-       "${CG_TOOL_OBJCOPY} --update-section cpu2app=../../cpu2App.bin ${ProjName}.out ${ProjName}_updated.out;
-        ${CG_TOOL_OBJCOPY} --update-section cpu3app=../../cpu3App.bin ${ProjName}_updated.out ${ProjName}.out;
-        $(DELETE) ${ProjName}_updated.out;
-        $(DELETE) $(CPU2APP_REL_PATH) $(CPU3APP_PATH)"
-    />
-    <configuration name="FLASH" compilerBuildOptions="-O1 -g -DDEBUG -Qunused-arguments -D_FLASH" linkerBuildOptions="--stack_size=0x400 --heap_size=0x400 --diag_suppress=10325-D --diag_suppress=10063-D"
-    preBuildStep=
-       "$(PYTHON) ${COM_TI_MCU_SDK_INSTALL_DIR}/tools/misc/updateSysCfg.py ../${ProjName}.syscfg ../../cpu2App.bin 2;
-        $(PYTHON) ${COM_TI_MCU_SDK_INSTALL_DIR}/tools/misc/updateSysCfg.py ../${ProjName}.syscfg ../../cpu3App.cert.bin 3"
-    postBuildStep=
-       "${CG_TOOL_OBJCOPY} --remove-section=cert --remove-section=cpu2app --remove-section=cpu3app -O binary ${ProjName}.out ${ProjName}.bin;
-        $(PYTHON) ${COM_TI_MCU_SDK_INSTALL_DIR}/tools/boot/signing/mcu_rom_image_gen.py --image-bin ${ProjName}.bin --core C29 --swrv 1 --loadaddr 0x10001000 --sign-key ${COM_TI_MCU_SDK_INSTALL_DIR}/tools/boot/signing/mcu_gpkey.pem --out-image ${ProjName}_cert.bin --device f29h85x --boot FLASH --img_integ no;
-        ${CG_TOOL_OBJCOPY} --update-section cert=C29-cert-pad.bin ${ProjName}.out ${ProjName}_cert.out;
-        ${CG_TOOL_OBJCOPY} --update-section cpu2app=../../cpu2App.bin --update-section cpu3app=../../cpu3App.cert.bin ${ProjName}_cert.out ${ProjName}.out;
-        $(DELETE) ${ProjName}_cert.out $(CPU2APP_REL_PATH) $(CPU3APP_REL_PATH) C29-cert-pad.bin"
-    />
 
-    <file action="link" path="${COM_TI_MCU_SDK_INSTALL_DIR}/examples/device_support/source/codestartbranch.asm"              targetDirectory="device" />
-    <file action="link" path="${COM_TI_MCU_SDK_INSTALL_DIR}/examples/device_support/include/driverlib.h"                     targetDirectory="device" />
-    <file action="copy" path="${COM_TI_MCU_SDK_INSTALL_DIR}/examples/device_support/makefile.defs"                           targetDirectory="" />
-    <file action="copy" path="../f29h85x_ram_lnk_cpu1.cmd"                         targetDirectory=""    applicableConfigurations="RAM" />
-    <file action="copy" path="../f29h85x_flash_lnk_cpu1.cmd"                       targetDirectory=""    applicableConfigurations="FLASH" />
-    <file action="copy" path="../led_ex2_blinky_cpu1_cpu2_cpu3_multi_c29x1.c"      targetDirectory="" />
-    <file action="copy" path="../led_ex2_blinky_cpu1_cpu2_cpu3_multi_c29x1.syscfg" targetDirectory="" />
+    <configuration name="RAM"   compilerBuildOptions="-O1 -g -DDEBUG -Werror=excess-initializers -Qunused-arguments" linkerBuildOptions="--stack_size=0x400 --heap_size=0x400 --diag_suppress=10325-D --diag_suppress=10063-D"
+    preBuildStep=
+     "
+        
+        ${COM_TI_MCU_SDK_INSTALL_DIR}/tools/misc/$(UPDATECPUBINSIZE) ../cpuAppSec2.c $(CPU2APP_REL_PATH) 2;
+
+        
+        ${COM_TI_MCU_SDK_INSTALL_DIR}/tools/misc/$(UPDATECPUBINSIZE) ../cpuAppSec3.c $(CPU3APP_REL_PATH) 3;
+
+     "
+    postBuildStep=
+     "
+        ${CG_TOOL_OBJCOPY} --update-section cpu2app=$(CPU2APP_REL_PATH) --update-section cpu3app=$(CPU3APP_REL_PATH) ${ProjName}.out ${ProjName}.out;
+     "
+    />
+    <configuration name="FLASH" compilerBuildOptions="-O1 -g -DDEBUG -Werror=excess-initializers -Qunused-arguments -D_FLASH" linkerBuildOptions="--stack_size=0x400 --heap_size=0x400 --diag_suppress=10325-D --diag_suppress=10063-D"
+    preBuildStep=
+     "
+        
+        ${COM_TI_MCU_SDK_INSTALL_DIR}/tools/misc/$(UPDATECPUBINSIZE) ../cpuAppSec2.c $(CPU2APP_REL_PATH) 2;
+
+        
+        ${COM_TI_MCU_SDK_INSTALL_DIR}/tools/misc/$(UPDATECPUBINSIZE) ../cpuAppSec3.c $(CPU3APP_CERT_REL_PATH) 3;
+
+     "
+    postBuildStep=
+     "
+        ${CG_TOOL_OBJCOPY} --remove-section=cert --remove-section=cpu2app --remove-section=cpu3app -O binary ${ProjName}.out ${ProjName}.bin;
+
+        
+        ;$(call IF_EQUAL_OPEN, ${DUMMY_CERT}, 0) $(PYTHON) ${COM_TI_MCU_SDK_INSTALL_DIR}/tools/boot/signing/mcu_rom_image_gen.py --image-bin ${ProjName}.bin --core C29 --swrv 1 --loadaddr 0x10001000 --sign-key ${COM_TI_MCU_SDK_INSTALL_DIR}/tools/boot/signing/mcu_gpkey.pem --out-image ${ProjName}_cert.bin --device f29h85x --boot FLASH --img_integ no $(IF_EQUAL_CLOSE);
+
+        ;$(call IF_EQUAL_OPEN, ${DUMMY_CERT}, 0) ${CG_TOOL_OBJCOPY} --update-section cert=C29-cert-pad.bin --update-section cpu2app=$(CPU2APP_REL_PATH) --update-section cpu3app=$(CPU3APP_CERT_REL_PATH) ${ProjName}.out ${ProjName}.out $(IF_EQUAL_CLOSE);
+
+        
+        ;$(call IF_EQUAL_OPEN, ${DUMMY_CERT}, 1) ${COM_TI_MCU_SDK_INSTALL_DIR}/tools/misc/$(UPDATEDUMMYCERT) $(DUMMY_CERT_FLASH) ${ProjName}.bin $(IF_EQUAL_CLOSE);
+        ;$(call IF_EQUAL_OPEN, ${DUMMY_CERT}, 1) $(CONCAT) $(DUMMY_CERT_FLASH) ${ProjName}.bin > ${ProjName}_cert.bin $(IF_EQUAL_CLOSE);
+
+        ;$(call IF_EQUAL_OPEN, ${DUMMY_CERT}, 1) ${CG_TOOL_OBJCOPY} --update-section cert=$(DUMMY_CERT_FLASH) --update-section cpu2app=$(CPU2APP_REL_PATH) --update-section cpu3app=$(CPU3APP_CERT_REL_PATH) ${ProjName}.out ${ProjName}.out $(IF_EQUAL_CLOSE);
+     "
+    />
+    <buildVariable name="DUMMY_CERT" value="1" scope="project" />
+
+    <file action="link" path="${COM_TI_MCU_SDK_INSTALL_DIR}/examples/device_support/source/codestartbranch.asm"         targetDirectory="device" />
+    <file action="link" path="${COM_TI_MCU_SDK_INSTALL_DIR}/examples/device_support/include/driverlib.h"                targetDirectory="device" />
+    <file action="copy" path="${COM_TI_MCU_SDK_INSTALL_DIR}/examples/device_support/source/cpuAppSec2.c"                targetDirectory="" />
+    <file action="copy" path="${COM_TI_MCU_SDK_INSTALL_DIR}/examples/device_support/source/cpuAppSec3.c"                targetDirectory="" />
+    <file action="link" path="${COM_TI_MCU_SDK_INSTALL_DIR}/source/bitfields/bitfield_structs.c"                        targetDirectory="device" />
+    <file action="copy" path="${COM_TI_MCU_SDK_INSTALL_DIR}/examples/device_support/makefile.defs"                      targetDirectory="" />
+    <file action="copy" path="${COM_TI_MCU_SDK_INSTALL_DIR}/source/dummycert/dummy_cert_crypto_unlock_flash.cert"       targetDirectory="" />
+
+    <file action="copy" path="../f29h85x_ram_lnk_cpu1.cmd"                          targetDirectory=""    applicableConfigurations="RAM" />
+    <file action="copy" path="../f29h85x_flash_lnk_cpu1.cmd"                        targetDirectory=""    applicableConfigurations="FLASH" />
+
+    <file action="copy" path="../led_ex2_blinky_cpu1_cpu2_cpu3_multi_c29x1.c"       targetDirectory="" />
+    <file action="copy" path="../led_ex2_blinky_cpu1_cpu2_cpu3_multi_c29x1.syscfg"  targetDirectory="" />
   </project>
 
 <project
         name="led_ex2_blinky_cpu1_cpu2_cpu3_multi_c29x2"
         device="F29H850TU9"
-        cgtVersion="1.0.0"
-        toolChain="TICLANG"
+        cgtVersion   = "2.0.0"
+        toolChain    = "TICLANG"
         products="sysconfig;f29h85x-sdk"
         launchWizard="False"
         enableSysConfigTool="true"
         connection   = "TIXDS110_Connection.xml"
         >
+
     <configuration name="RAM"   compilerBuildOptions="-O1 -g -DDEBUG -Qunused-arguments -D__CPU2__" linkerBuildOptions="--stack_size=0x400 --heap_size=0x400 --diag_suppress=10325-D --diag_suppress=10063-D"
-    postBuildStep="${CG_TOOL_OBJCOPY} -O binary ${ProjName}.out ../../cpu2App.bin"
+    postBuildStep=
+     "
+        
+        ${CG_TOOL_OBJCOPY} -O binary ${ProjName}.out $(CPU2APP_REL_PATH);
+
+     "
     />
-    <configuration name="FLASH" compilerBuildOptions="-O1 -g -DDEBUG -Qunused-arguments -D__CPU2__ -D_FLASH" linkerBuildOptions="--stack_size=0x400 --heap_size=0x400 --diag_suppress=10325-D --diag_suppress=10063-D --ram_model"
-    postBuildStep="${CG_TOOL_OBJCOPY} -O binary ${ProjName}.out ../../cpu2App.bin"
+    <configuration name="FLASH" compilerBuildOptions="-O1 -g -DDEBUG -Qunused-arguments -D__CPU2__ -D_FLASH" linkerBuildOptions="--stack_size=0x400 --heap_size=0x400 --diag_suppress=10325-D --diag_suppress=10063-D"
+    postBuildStep=
+     "
+        
+        ${CG_TOOL_OBJCOPY} -O binary ${ProjName}.out $(CPU2APP_REL_PATH);
+
+     "
     />
 
-    <file action="link" path="${COM_TI_MCU_SDK_INSTALL_DIR}/examples/device_support/source/codestartbranch.asm"              targetDirectory="device" />
-    <file action="link" path="${COM_TI_MCU_SDK_INSTALL_DIR}/examples/device_support/include/driverlib.h"                     targetDirectory="device" />
-    <file action="copy" path="${COM_TI_MCU_SDK_INSTALL_DIR}/examples/device_support/makefile.defs"                           targetDirectory="" />
-    <file action="copy" path="../f29h85x_ram_lnk_cpu2.cmd"                         targetDirectory=""     applicableConfigurations="RAM" />
-    <file action="copy" path="../f29h85x_flash_lnk_cpu2.cmd"                       targetDirectory=""     applicableConfigurations="FLASH" />
-    <file action="copy" path="../led_ex2_blinky_cpu1_cpu2_cpu3_multi_c29x2.c"      targetDirectory="" />
-    <file action="copy" path="../led_ex2_blinky_cpu1_cpu2_cpu3_multi_c29x2.syscfg" targetDirectory="" />
+    <file action="link" path="${COM_TI_MCU_SDK_INSTALL_DIR}/examples/device_support/source/codestartbranch.asm"         targetDirectory="device" />
+    <file action="link" path="${COM_TI_MCU_SDK_INSTALL_DIR}/examples/device_support/include/driverlib.h"                targetDirectory="device" />
+    <file action="link" path="${COM_TI_MCU_SDK_INSTALL_DIR}/source/bitfields/bitfield_structs.c"                        targetDirectory="device" />
+    <file action="copy" path="${COM_TI_MCU_SDK_INSTALL_DIR}/examples/device_support/makefile.defs"                      targetDirectory="" />
+
+    <file action="copy" path="../f29h85x_ram_lnk_cpu2.cmd"                          targetDirectory=""     applicableConfigurations="RAM" />
+    <file action="copy" path="../f29h85x_flash_lnk_cpu2.cmd"                        targetDirectory=""     applicableConfigurations="FLASH" />
+
+    <file action="copy" path="../led_ex2_blinky_cpu1_cpu2_cpu3_multi_c29x2.c"       targetDirectory="" />
+    <file action="copy" path="../led_ex2_blinky_cpu1_cpu2_cpu3_multi_c29x2.syscfg"  targetDirectory="" />
   </project>
 
   <project
         name="led_ex2_blinky_cpu1_cpu2_cpu3_multi_c29x3"
         device="F29H850TU9"
-        cgtVersion="1.0.0"
-        toolChain="TICLANG"
+        cgtVersion   = "2.0.0"
+        toolChain    = "TICLANG"
         products="sysconfig;f29h85x-sdk"
         launchWizard="False"
         enableSysConfigTool="true"
         connection   = "TIXDS110_Connection.xml"
         >
+
     <configuration name="RAM"   compilerBuildOptions="-O1 -g -DDEBUG -Qunused-arguments -D__CPU3__" linkerBuildOptions="--stack_size=0x400 --heap_size=0x400 --diag_suppress=10325-D --diag_suppress=10063-D"
-    postBuildStep="${CG_TOOL_OBJCOPY} -O binary ${ProjName}.out ../../cpu3App.bin"
+    postBuildStep=
+     "
+        ${CG_TOOL_OBJCOPY} -O binary ${ProjName}.out $(CPU3APP_REL_PATH);
+     "
     />
     <configuration name="FLASH" compilerBuildOptions="-O1 -g -DDEBUG -Qunused-arguments -D__CPU3__ -D_FLASH" linkerBuildOptions="--stack_size=0x400 --heap_size=0x400 --diag_suppress=10325-D --diag_suppress=10063-D"
     postBuildStep=
-       "${CG_TOOL_OBJCOPY} --remove-section=cert -O binary ${ProjName}.out ../../cpu3App.bin;
-        $(PYTHON) ${COM_TI_MCU_SDK_INSTALL_DIR}/tools/boot/signing/mcu_rom_image_gen.py --image-bin ../../cpu3App.bin --core C29 --swrv 1 --loadaddr 0x10401000 --sign-key ${COM_TI_MCU_SDK_INSTALL_DIR}/tools/boot/signing/mcu_gpkey.pem --out-image ../../cpu3App.cert.bin --device f29h85x --boot FLASH --img_integ no --fw_type CPU3;
-        ${CG_TOOL_OBJCOPY} --update-section cert=C29-cert-pad.bin ${ProjName}.out ${ProjName}_cert.out;
-        $(DELETE) ${ProjName}.out C29-cert-pad.bin;
-        $(RENAME) ${ProjName}_cert.out ${ProjName}.out"
-    />
+     "
+        ${CG_TOOL_OBJCOPY} --remove-section=cert -O binary ${ProjName}.out $(CPU3APP_REL_PATH);
 
-    <file action="link" path="${COM_TI_MCU_SDK_INSTALL_DIR}/examples/device_support/source/codestartbranch.asm"              targetDirectory="device" />
-    <file action="link" path="${COM_TI_MCU_SDK_INSTALL_DIR}/examples/device_support/include/driverlib.h"                     targetDirectory="device" />
-    <file action="copy" path="${COM_TI_MCU_SDK_INSTALL_DIR}/examples/device_support/makefile.defs"                           targetDirectory="" />
-    <file action="copy" path="../f29h85x_ram_lnk_cpu3.cmd"                         targetDirectory=""  applicableConfigurations="RAM" />
-    <file action="copy" path="../f29h85x_flash_lnk_cpu3.cmd"                       targetDirectory=""  applicableConfigurations="FLASH" />
-    <file action="copy" path="../led_ex2_blinky_cpu1_cpu2_cpu3_multi_c29x3.c"      targetDirectory="" />
-    <file action="copy" path="../led_ex2_blinky_cpu1_cpu2_cpu3_multi_c29x3.syscfg" targetDirectory="" />
+        
+        ;$(call IF_EQUAL_OPEN, ${DUMMY_CERT}, 0) $(PYTHON) ${COM_TI_MCU_SDK_INSTALL_DIR}/tools/boot/signing/mcu_rom_image_gen.py --image-bin $(CPU3APP_REL_PATH) --core C29 --swrv 1 --loadaddr 0x10401000 --sign-key ${COM_TI_MCU_SDK_INSTALL_DIR}/tools/boot/signing/mcu_gpkey.pem --out-image $(CPU3APP_CERT_REL_PATH) --device f29h85x --boot FLASH --img_integ no --fw_type CPU3 $(IF_EQUAL_CLOSE);
+
+        ;$(call IF_EQUAL_OPEN, ${DUMMY_CERT}, 0) ${CG_TOOL_OBJCOPY} --update-section cert=C29-cert-pad.bin ${ProjName}.out ${ProjName}.out $(IF_EQUAL_CLOSE);
+
+        
+        ;$(call IF_EQUAL_OPEN, ${DUMMY_CERT}, 1) ${COM_TI_MCU_SDK_INSTALL_DIR}/tools/misc/$(UPDATEDUMMYCERT) $(DUMMY_CERT_FLASH_CPU3) $(CPU3APP_REL_PATH) $(IF_EQUAL_CLOSE);
+        ;$(call IF_EQUAL_OPEN, ${DUMMY_CERT}, 1) $(CONCAT) $(DUMMY_CERT_FLASH_CPU3) $(CPU3APP_REL_PATH) > $(CPU3APP_CERT_REL_PATH) $(IF_EQUAL_CLOSE);
+
+        ;$(call IF_EQUAL_OPEN, ${DUMMY_CERT}, 1) ${CG_TOOL_OBJCOPY} --update-section cert=$(DUMMY_CERT_FLASH_CPU3) ${ProjName}.out ${ProjName}.out $(IF_EQUAL_CLOSE);
+     "
+    />
+    <buildVariable name="DUMMY_CERT" value="1" scope="project" />
+
+    <file action="link" path="${COM_TI_MCU_SDK_INSTALL_DIR}/examples/device_support/source/codestartbranch.asm"         targetDirectory="device" />
+    <file action="link" path="${COM_TI_MCU_SDK_INSTALL_DIR}/examples/device_support/include/driverlib.h"                targetDirectory="device" />
+    <file action="link" path="${COM_TI_MCU_SDK_INSTALL_DIR}/source/bitfields/bitfield_structs.c"                        targetDirectory="device" />
+    <file action="copy" path="${COM_TI_MCU_SDK_INSTALL_DIR}/examples/device_support/makefile.defs"                      targetDirectory="" />
+    <file action="copy" path="${COM_TI_MCU_SDK_INSTALL_DIR}/source/dummycert/dummy_cert_flash_cpu3.cert"                targetDirectory="" />
+
+    <file action="copy" path="../f29h85x_ram_lnk_cpu3.cmd"                          targetDirectory=""  applicableConfigurations="RAM" />
+    <file action="copy" path="../f29h85x_flash_lnk_cpu3.cmd"                        targetDirectory=""  applicableConfigurations="FLASH" />
+
+    <file action="copy" path="../led_ex2_blinky_cpu1_cpu2_cpu3_multi_c29x3.c"       targetDirectory="" />
+    <file action="copy" path="../led_ex2_blinky_cpu1_cpu2_cpu3_multi_c29x3.syscfg"  targetDirectory="" />
   </project>
 </projectSpec>

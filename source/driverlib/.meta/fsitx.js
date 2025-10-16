@@ -1,8 +1,8 @@
 let Common   = system.getScript("/driverlib/Common.js");
 let Pinmux   = system.getScript("/driverlib/pinmux.js");
 
-let device_driverlib_peripheral = 
-    system.getScript("/driverlib/device_driverlib_peripherals/" + 
+let device_driverlib_peripheral =
+    system.getScript("/driverlib/device_driverlib_peripherals/" +
         Common.getDeviceName().toLowerCase() + "_fsi.js");
 
 let device_driverlib_memmap =
@@ -19,14 +19,14 @@ for (var dma of device_driverlib_memmap.DMAMemoryMap) {
 
 /* Intro splash on GUI */
 let longDescription = "The Fast Serial Interface (FSI) module is a serial " +
-                    "communication peripheral capable of reliable high-speed " + 
+                    "communication peripheral capable of reliable high-speed " +
                     "communication across isolation devices.";
 
 function onChangeEnableInterrupt(inst, ui)
 {
     if (inst.enableInterrupt) {
         ui.useInterrupts.hidden = false;
-        if (inst.useInterrupts.indexOf(device_driverlib_peripheral.FSI_InterruptNum[0].name) != -1) 
+        if (inst.useInterrupts.indexOf(device_driverlib_peripheral.FSI_InterruptNum[0].name) != -1)
         {
             ui.enabledINT1Interrupts.hidden = false;
             ui.registerInterruptLine1.hidden = false;
@@ -36,8 +36,8 @@ function onChangeEnableInterrupt(inst, ui)
             ui.enabledINT1Interrupts.hidden = true;
             ui.registerInterruptLine1.hidden = true;
         }
-    
-        if (inst.useInterrupts.indexOf(device_driverlib_peripheral.FSI_InterruptNum[1].name) != -1) 
+
+        if (inst.useInterrupts.indexOf(device_driverlib_peripheral.FSI_InterruptNum[1].name) != -1)
         {
             ui.enabledINT2Interrupts.hidden = false;
             ui.registerInterruptLine2.hidden = false;
@@ -103,8 +103,8 @@ function onChangeUserCRC(inst, ui)
 }
 
 /* Array of FSI configurables that are common across device families */
-let config = [  
-    
+let config = [
+
     {
         name: "GROUP_PERCFG",
         displayName: "Peripheral Configuration",
@@ -123,7 +123,7 @@ let config = [
                               return useCaseOpt.name
                             }
                         );
-        
+
                         if (useCaseNames.includes("FSI TX Dual Dataline"))
                         {
                             inst.useCase = "FSI TX Dual Dataline"
@@ -131,7 +131,7 @@ let config = [
                     }
                 }
             },
-        
+
             {
                 name        : "clkPres",
                 displayName : "Clock Prescalar",
@@ -158,7 +158,7 @@ let config = [
                     }
                 }
             },
-        
+
             {
                 name: "GROUP_FRAMECFG",
                 displayName: "Frame Configuration",
@@ -175,7 +175,7 @@ let config = [
                     default     : device_driverlib_peripheral.FSI_DataWidth[0].name,
                     options     : device_driverlib_peripheral.FSI_DataWidth,
                 },
-        
+
                 {
                     name        : "startOfTransmissionMode",
                     displayName : "Start of Transmission Mode",
@@ -185,7 +185,7 @@ let config = [
                     default     : device_driverlib_peripheral.FSI_TxStartMode[0].name,
                     options     : device_driverlib_peripheral.FSI_TxStartMode,
                 },
-        
+
                 {
                     name        : "extTriggerSource",
                     displayName : "External Start of Transmission Trigger Source",
@@ -194,7 +194,7 @@ let config = [
                     default     : device_driverlib_peripheral.FSI_ExtFrameTriggerSrc[0].name,
                     options     : device_driverlib_peripheral.FSI_ExtFrameTriggerSrc,
                 },
-        
+
                 {
                     name        : "frameType",
                     displayName : "Initial frame type",
@@ -206,7 +206,7 @@ let config = [
                     default     : device_driverlib_peripheral.FSI_FrameType[0].name,
                     options     : device_driverlib_peripheral.FSI_FrameType,
                 },
-        
+
                 {
                     name        : "frameTag",
                     displayName : "Initial frame tag",
@@ -218,7 +218,7 @@ let config = [
                     default     : device_driverlib_peripheral.FSI_FrameTag[0].name,
                     options     : device_driverlib_peripheral.FSI_FrameTag,
                 },
-        
+
                 {
                     name        : "softwareFrameSize",
                     displayName : "Software Frame Size",
@@ -262,7 +262,7 @@ let config = [
                     onChange    : onChangeEnablePingTimeout,
                     default     : false,
                 },
-        
+
                 {
                     name        : "selectPingMode",
                     displayName : "Select PING Timeout Mode",
@@ -271,7 +271,7 @@ let config = [
                     default     : device_driverlib_peripheral.FSI_PingTimeoutMode[0].name,
                     options     : device_driverlib_peripheral.FSI_PingTimeoutMode
                 },
-        
+
                 {
                     name        : "timeoutDelay",
                     displayName : "Select PING Timeout Delay",
@@ -281,7 +281,7 @@ let config = [
                 },
             ]
             },
-        
+
             {
                 name: "GROUP_CRCECC",
                 displayName: "User CRC and ECC",
@@ -299,7 +299,7 @@ let config = [
                     onChange    : onChangeUserCRC,
                     default     : false
                 },
-        
+
                 {
                     name        : "valueCRC",
                     displayName : "Enter CRC Value",
@@ -307,7 +307,7 @@ let config = [
                     hidden      : true,
                     default     : '10'
                 },
-                
+
                 {
                     name        : "eccComputeWidth",
                     displayName : "ECC Compute Width Mode",
@@ -351,9 +351,9 @@ let config = [
                 default     : [],
                 minSelections: 0,
                 options     : device_driverlib_peripheral.FSI_InterruptNum
-                
+
             },
-    
+
             {
                 name        : "enabledINT1Interrupts",
                 displayName : "Enabled INT1 Line Interrupts",
@@ -362,9 +362,9 @@ let config = [
                 default     : [],
                 minSelections: 0,
                 options     : device_driverlib_peripheral.FSI_TX_EVT,
-                
+
             },
-    
+
             {
                 name        : "enabledINT2Interrupts",
                 displayName : "Enabled INT2 Line Interrupts",
@@ -373,9 +373,9 @@ let config = [
                 default     : [],
                 minSelections: 0,
                 options     : device_driverlib_peripheral.FSI_TX_EVT,
-                
+
             },
-    
+
             {
                 name        : "registerInterruptLine1",
                 displayName : "Register INT1 Line Handler",
@@ -404,6 +404,7 @@ let config = [
                 hidden      : false,
                 default     : false,
                 onChange    : onChangeUseDMATX,
+                shouldBeAllocatedAsResource : true
             },
             {
                 name        : "DMATXInstData",
@@ -412,6 +413,7 @@ let config = [
                 hidden      : true,
                 default     : dma_instances[0].name,
                 options     : dma_instances,
+                shouldBeAllocatedAsResource : true
             },
             {
                 name        : "DMATXInstInfo",
@@ -420,6 +422,7 @@ let config = [
                 hidden      : true,
                 default     : dma_instances[0].name,
                 options     : dma_instances,
+                shouldBeAllocatedAsResource : true
             }
         ]
     },
@@ -431,34 +434,47 @@ let config = [
     },
 ];
 
-function onValidate(inst, validation) 
-{   
+function validatePinmux(inst,validation){
+    if (inst.fsitx && inst.fsitx.$solution) {
+        let selectedPeripheral = inst.fsitx.$solution.peripheralName; // e.g., "UARTA"
+        if (Common.is_instance_not_in_variant(selectedPeripheral)) {
+            validation.logError(
+                `${selectedPeripheral} is not supported for ${Common.getVariant().replace(/^TMS320/, '')}.`,
+                inst,
+                "fsitx"
+            );
+        }
+    }
+}
+
+function onValidate(inst, validation)
+{
     if (inst.clkPres < 1 || inst.clkPres > 0xFF)
     {
         validation.logError(
-            "Enter an integer for Clock Prescalar between 1 and 255!", 
+            "Enter an integer for Clock Prescalar between 1 and 255!",
             inst, "clkPres");
     }
     if (inst.timeoutDelay < 0 || inst.timeoutDelay > 0xFFFFFFFF)
     {
         validation.logError(
-            "Enter integer value for Ping Timeout within 32 bits!", 
+            "Enter integer value for Ping Timeout within 32 bits!",
             inst, "timeoutDelay");
     }
     if (inst.valueCRC < 0 || inst.valueCRC > 0xFF)
     {
         validation.logError(
-            "Enter an integer for User CRC between 0 and 255!", 
+            "Enter an integer for User CRC between 0 and 255!",
             inst, "valueCRC");
     }
 
     if (inst.useDMATX)
     {
         validation.logInfo(
-            "Configure RTDMA channels such that Transmitted Data channel is serviced before Tag and User Data channel", 
+            "Configure RTDMA channels such that Transmitted Data channel is serviced before Tag and User Data channel",
             inst, "useDMATX");
     }
-    
+
 }
 
 /*
@@ -484,11 +500,10 @@ if (Common.onlyPinmux())
 var fsitxModule = {
     peripheralName: "FSITX",
     displayName: "FSITX",
-    maxInstances: Common.peripheralCount("FSITX"),
+    totalMaxInstances: Common.peripheralCount("FSITX"),
     defaultInstanceName: "myFSITX",
     description: "Fast Serial Interface Transmitter Peripheral",
     filterHardware : filterHardware,
-    validate: onValidate,
     moduleInstances: (inst) => {
         var ownedInstances = [];
 
@@ -507,8 +522,8 @@ var fsitxModule = {
         {
             ownedInstances.push(
                 {
-                    name: "fsiTxInt1",      
-                    group: "GROUP_ISR",   
+                    name: "fsiTxInt1",
+                    group: "GROUP_ISR",
                     displayName: "INT1 Interrupt",
                     moduleName: "/driverlib/interrupt.js",
                     collapsed: true,
@@ -526,8 +541,8 @@ var fsitxModule = {
         {
             ownedInstances.push(
                 {
-                    name: "fsiTxInt2",      
-                    group: "GROUP_ISR",   
+                    name: "fsiTxInt2",
+                    group: "GROUP_ISR",
                     displayName: "INT2 Interrupt",
                     moduleName: "/driverlib/interrupt.js",
                     collapsed: true,
@@ -550,7 +565,7 @@ var fsitxModule = {
             ownedInstances = ownedInstances.concat([
                 {
                     name: "fsiTXDMAData",
-                    group: "GROUP_DMA",    
+                    group: "GROUP_DMA",
                     displayName: "FSITX DMA - Transmitted Data",
                     moduleName: "/driverlib/" + dmaInstData + ".js",
                     collapsed: true,
@@ -569,11 +584,12 @@ var fsitxModule = {
                         databusWidthConfig: "DMA_CFG_READ_SIZE_16BIT",
                         writeDatasizeConfig: "DMA_CFG_WRT_SIZE_16BIT",
                         triggerSource: "DMA_TRIGGER_LINKED",
-                    }
+                    },
+                    shouldBeAllocatedAsResource : true
                 },
                 {
                     name: "fsiTXDMAInfo",
-                    group: "GROUP_DMA",    
+                    group: "GROUP_DMA",
                     displayName: "FSITX DMA - Tag and User Data",
                     moduleName: "/driverlib/" + dmaInstInfo + ".js",
                     collapsed: true,
@@ -588,7 +604,8 @@ var fsitxModule = {
                         databusWidthConfig: "DMA_CFG_READ_SIZE_16BIT",
                         writeDatasizeConfig: "DMA_CFG_WRT_SIZE_16BIT",
                         triggerSource: "DMA_TRIGGER_LINKED",
-                    }
+                    },
+                    shouldBeAllocatedAsResource : true
                 },
             ])
         }
@@ -602,7 +619,7 @@ var fsitxModule = {
                 collapsed: false,
                 requiredArgs:{
                     pinmuxPeripheralModule : "fsitx",
-                    peripheralInst: inst.$name,
+                    peripheralInst: "",
                 }
             },
             {
@@ -612,19 +629,22 @@ var fsitxModule = {
                 moduleName: "/driverlib/perConfig.js",
                 collapsed: false,
                 requiredArgs:{
+                    cpuSel: inst.$assignedContext ?? system.context,
                     pinmuxPeripheralModule : "fsitx",
-                    peripheralInst: inst.$name
-                }
+                    peripheralInst: ""
+                },
+                shouldBeAllocatedAsResource: true
             },
         ])
 
         return ownedInstances;
     },
     validate: onValidate,
+    validatePinmux: validatePinmux,
     moduleStatic: {
         name: "FSITXGlobal",
         displayName: "FSITX Global",
-        config: [
+        config: Common.filterConfigsIfInSetupMode([
             {
                 name: "fsitxClkGlobal",
                 displayName: "FSITX Source [MHz]",
@@ -641,15 +661,16 @@ var fsitxModule = {
                     }
                 },
             },
-        ],
+        ]),
         modules: undefined,
     },
-    config: config,
+    config: Common.filterConfigsIfInSetupMode(config),
     templates: {
         boardc : "/driverlib/fsitx/fsitx.board.c.xdt",
         boardh : "/driverlib/fsitx/fsitx.board.h.xdt"
     },
-    pinmuxRequirements    : Pinmux.fsitxPinmuxRequirements
+    pinmuxRequirements    : Pinmux.fsitxPinmuxRequirements,
+    shouldBeAllocatedAsResource: true
 };
 
 

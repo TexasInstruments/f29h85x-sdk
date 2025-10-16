@@ -3,10 +3,10 @@ exports = {
 	config: [],
 	extendConfig: ({ $ipInstance }) => [
 	{
-            name: "in",
-            displayName: "Frequency",
-            default: 0,
-            getValue: () => 0,
+		name: "in",
+		displayName: "Frequency",
+		default: 0,
+		getValue: () => 0,
     },
 	{
 		name: "Min",

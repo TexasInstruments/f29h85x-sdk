@@ -1,7 +1,7 @@
 let interrupts = [
-	{ int_define_name: "INT_CPU_OVF", int_channel_number: "0", int_description: "C29 CPU Overflow Interrupt" },
-	{ int_define_name: "INT_CPU_UVF", int_channel_number: "1", int_description: "C29 CPU Underflow Interrupt" },
-	{ int_define_name: "INT_CPU_DOV", int_channel_number: "2", int_description: "C29 CPU ? Interrupt" },
+	{ int_define_name: "INT_C29CPU_FLOATINGPOINT_OVERFLOW_INT", int_channel_number: "0", int_description: "C29 CPU Floating Point Overflow Interrupt" },
+	{ int_define_name: "INT_C29CPU_FLOATINGPOINT_UNDERFLOW_INT", int_channel_number: "1", int_description: "C29 CPU Floating Point Underflow Interrupt" },
+	{ int_define_name: "INT_C29CPU_FIXEDPOINT_OVERFLOW_INT", int_channel_number: "2", int_description: "C29 CPU Fixed Point Overflow Interrupt" },
 	{ int_define_name: "INT_WD", int_channel_number: "3", int_description: "Watchdog interrupt" },
 	{ int_define_name: "INT_ERAD", int_channel_number: "4", int_description: "ERAD Interrupt" },
 	{ int_define_name: "INT_DLT", int_channel_number: "5", int_description: "DLT Interrupt" },

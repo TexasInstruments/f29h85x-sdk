@@ -63,7 +63,8 @@ function moduleInstances(inst)
         },
         requiredArgs: {
             direction : "GPIO_DIR_MODE_IN"
-        }
+        },
+        shouldBeAllocatedAsResource : true,
     };
 
     devInstance.hardware = inst.$hardware;
@@ -108,7 +109,8 @@ let base = {
         boardc: "/driverlib/board_components/switch/switch.board.c.xdt",
         boardh: "/driverlib/board_components/switch/switch.board.h.xdt"
     },
-
+    
+    shouldBeAllocatedAsResource : true,
     _getPinResources: _getPinResources
 };
 

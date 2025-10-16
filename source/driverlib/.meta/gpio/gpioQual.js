@@ -25,7 +25,8 @@ let config = [
             { name: "OD_PULLUP", displayName : "Open-drain output with pull-up enabled output and input" },
             { name: "OD_INVERT", displayName : "Open-drain output/floating inverted input" },
             { name: "OD_PULLUP_INVERT", displayName : "Open-drain output with pull-up enabled output and INVERTED input" }
-        ]
+        ],
+        shouldBeAllocatedAsResource : true,
     },
     {
         name        : "qualMode",
@@ -33,7 +34,8 @@ let config = [
         description : 'The type of qualification done on the pin.',
         hidden      : false,
         default     : device_driverlib_peripheral.GPIO_QualificationMode[0].name,
-        options     : device_driverlib_peripheral.GPIO_QualificationMode
+        options     : device_driverlib_peripheral.GPIO_QualificationMode,
+        shouldBeAllocatedAsResource : true,
     },
 ];
 
@@ -72,6 +74,7 @@ var gpioQualModule = {
         boardc : "",
         boardh : ""
     },
+    shouldBeAllocatedAsResource: true,
     validatePinmux: onValidatePinmux
 };
 

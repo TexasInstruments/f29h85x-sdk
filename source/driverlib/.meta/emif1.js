@@ -75,12 +75,12 @@ if(Common.getDeviceName().toLowerCase() == 'f2838x' || Common.getDeviceName().to
 var emif1Module = {
     peripheralName: "EMIF1",
     displayName: "EMIF1",
-    maxInstances: Common.peripheralCount("EMIF1"),
+    totalMaxInstances: Common.peripheralCount("EMIF1"),
     defaultInstanceName: "myEMIF1",
     description: "External Memory Interface Peripheral 1 Peripheral",
     //longDescription: (Common.getCollateralFindabilityList("EMIF")),
     filterHardware : filterHardware,
-    config: emif_shared.getEMIFConfig("EMIF1"),
+    config: Common.filterConfigsIfInSetupMode(emif_shared.getEMIFConfig("EMIF1")),
     moduleInstances: (inst) => {
         var ownedInstances = []
         var pinmuxQualMods = Pinmux.getGpioQualificationModInstDefinitions("EMIF1", inst)
@@ -124,6 +124,7 @@ var emif1Module = {
         //modules: moduleStaticModules,
         validate : emif_shared.onValidateStatic
     },
+    shouldBeAllocatedAsResource: true,
     validate: emif_shared.onValidate,
     pinmuxRequirements    : Pinmux.emif1PinmuxRequirements
 };

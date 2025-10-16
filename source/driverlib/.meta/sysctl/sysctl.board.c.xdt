@@ -19,21 +19,23 @@
 //
 //*****************************************************************************
 void SYSCTL_init(){
-% if(Common.isContextCPU1() && inst.LSConfig == "SplitLock") {
+% if(Common.isContextCPU1()) {
+    % if(inst.LSConfig == "SplitLock") {
     //
     // Disable LockStep
     //
     SysCtl_disableLockStep();
-% }
+    % }
 
     //
     // Enable/Disable the ESM events to cause XRSn
     //
-% if(esmResetCausesEnable.length > 0) {
+    % if(esmResetCausesEnable.length > 0) {
     SysCtl_enableESMResetCauses(`esmResetCausesEnable.join(" | ")`);
-% }
-% if(esmResetCausesDisable.length > 0) {
+    % }
+    % if(esmResetCausesDisable.length > 0) {
     SysCtl_disableESMResetCauses(`esmResetCausesDisable.join(" | ")`);
+    % }
 % }
 
     //

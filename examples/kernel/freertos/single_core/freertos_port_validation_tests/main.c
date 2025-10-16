@@ -139,10 +139,10 @@ void vApplicationIdleHook( void );
 void vApplicationTickHook(void);
 void vApplicationGetTimerTaskMemory( StaticTask_t **ppxTimerTaskTCBBuffer,
                                      StackType_t **ppxTimerTaskStackBuffer,
-                                     uint32_t *pulTimerTaskStackSize );
+                                     configSTACK_DEPTH_TYPE *pulTimerTaskStackSize );
 void vApplicationGetIdleTaskMemory( StaticTask_t **ppxIdleTaskTCBBuffer,
                                     StackType_t **ppxIdleTaskStackBuffer,
-                                    uint32_t *pulIdleTaskStackSize );
+                                    configSTACK_DEPTH_TYPE *pulIdleTaskStackSize );
 
 void vMainAssertCalled( const char *pcFileName, uint32_t ulLineNumber );
 void vMainToggleLED( void );
@@ -209,7 +209,7 @@ int main(void)
 //
 void vApplicationGetIdleTaskMemory( StaticTask_t **ppxIdleTaskTCBBuffer,
                                     StackType_t **ppxIdleTaskStackBuffer,
-                                    uint32_t *pulIdleTaskStackSize )
+                                    configSTACK_DEPTH_TYPE *pulIdleTaskStackSize )
 {
     /* If the buffers to be provided to the Idle task are declared inside this
     function then they must be declared static - otherwise they will be allocated on
@@ -235,7 +235,7 @@ void vApplicationGetIdleTaskMemory( StaticTask_t **ppxIdleTaskTCBBuffer,
 //
 void vApplicationGetTimerTaskMemory( StaticTask_t **ppxTimerTaskTCBBuffer,
                                      StackType_t **ppxTimerTaskStackBuffer,
-                                     uint32_t *pulTimerTaskStackSize )
+                                     configSTACK_DEPTH_TYPE *pulTimerTaskStackSize )
 {
     /* If the buffers to be provided to the Timer task are declared inside this
     function then they must be declared static - otherwise they will be allocated on

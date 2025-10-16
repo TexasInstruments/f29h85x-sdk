@@ -77,7 +77,7 @@ function filterHardware(component)
 var ecatModule = {
     peripheralName: "ECAT",
     displayName: "ECAT",
-    maxInstances: Common.peripheralCount("ECAT"),
+    totalMaxInstances: Common.peripheralCount("ECAT"),
     defaultInstanceName: "myECAT",
     description: "ECAT Peripheral",
   //  longDescription: (Common.getCollateralFindabilityList("ECAT")), need to add this
@@ -110,19 +110,22 @@ var ecatModule = {
                 moduleName: "/driverlib/perConfig.js",
                 collapsed: false,
                 requiredArgs:{
+                    cpuSel: inst.$assignedContext ?? system.context,
                     pinmuxPeripheralModule : "ecat",
                     removeFrameSel: true,
                 },
+                shouldBeAllocatedAsResource: true
             },
         ])
         return ownedInstances;
     },
-    config: config,
+    config: Common.filterConfigsIfInSetupMode(config),
     templates: {
         boardc : "/driverlib/ecat/ecat.board.c.xdt",
         boardh : "/driverlib/ecat/ecat.board.h.xdt"
     },
-    pinmuxRequirements    : Pinmux.ecatPinmuxRequirements
+    pinmuxRequirements    : Pinmux.ecatPinmuxRequirements,
+    shouldBeAllocatedAsResource: true
 };
 
 

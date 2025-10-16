@@ -14,11 +14,19 @@ let rtdma_mpu_shared =
 
 var sharedModuleInstances = undefined;
 
+let str = Common.isAllocationSetupMode() ? ""  : system.context
+
+var uiAddOption = "instanceOnly"
+if (Common.isContextCPU1())
+{
+    uiAddOption = "staticAndInstance"
+}
+
 var rtdma2mpuModule = {
     peripheralName        : "RTDMA2_MPU",
     displayName           : "RTDMA2 MPU",
-    maxInstances          : 16,
-    defaultInstanceName   : "my" + system.context + "RTDMA2MPU",
+    totalMaxInstances     : 16,
+    defaultInstanceName   : "my" + str + "RTDMA2MPU",
     config                : rtdma_mpu_shared.getRTDMAMPUConfig("RTDMA2"),
     sharedModuleInstances : sharedModuleInstances,
     templates: {
@@ -30,10 +38,14 @@ var rtdma2mpuModule = {
         name        : "rtdma2mpuGlobal",
         displayName : "RTDMA2 MPU Global",
         config      : rtdma_mpu_shared.getRTDMAMPUGlobalConfig("RTDMA2"),
-        validate    : rtdma_mpu_shared.onValidateStatic
+        validate    : rtdma_mpu_shared.onValidateStatic,
+        shouldBeAllocatedAsResource: true,
+        alwaysAllocateAsResource: true,
     },
+    shouldBeAllocatedAsResource : true,
+    alwaysAllocateAsResource    : true,
     validate        : rtdma_mpu_shared.onValidate,
-    uiAdd           : "staticAndInstance"
+    uiAdd           : uiAddOption
 };
 
 

@@ -10,7 +10,13 @@ let longDescription = "";
 
 /* Array of Clock configurables */
 let config = [
-
+    {
+        name        : "$assignedContext",
+        hidden      : true,
+        default     : "CPU1",
+        options     : [{name:"CPU1"}],
+        readOnly    : true
+    }
 ];
 
 
@@ -35,8 +41,9 @@ var clockModule = {
         config: config,
         validate    : onValidate,
         pinmuxRequirements    : Pinmux.jtagPinmuxRequirements,
+        shouldBeAllocatedAsResource: true,
+        alwaysAllocateAsResource : true,
     },
-
 };
 
 

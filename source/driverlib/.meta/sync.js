@@ -7,7 +7,14 @@ let device_driverlib_peripheral =
 
 /* Array of CAN configurables that are common across device families */
 let staticConfig = [
-
+    {
+        name        : "$assignedContext",
+        description : 'Override the assigned context to have only in CPU1',
+        hidden      : true,
+        default     : "CPU1",
+        options     : [{name:"CPU1"}],
+		readOnly    : true
+    },
     {
         name        : "syncOutSource",
         displayName : "SYNCOUT (EXTSYNCOUT) Source",
@@ -16,6 +23,7 @@ let staticConfig = [
         options     : device_driverlib_peripheral.SysCtl_SyncOutputSource,
         minSelections : 0,
         default     : [],
+        shouldBeAllocatedAsResource: true,
     },
     {
         name        : "ADCSOCAOutputSelect",
@@ -36,6 +44,7 @@ let staticConfig = [
         },
         minSelections : 0,
         default     : [],
+        shouldBeAllocatedAsResource: true,
     },
     {
         name        : "ADCSOCBOutputSelect",
@@ -56,6 +65,7 @@ let staticConfig = [
         },
         minSelections : 0,
         default     : [],
+        shouldBeAllocatedAsResource: true,
     },
 ];
 
@@ -68,6 +78,7 @@ staticConfig = staticConfig.concat([
         description : 'Prevent changes to the ADCSOCAO and ADCSOCBO source',
         hidden      : false,
         default     : false,
+        shouldBeAllocatedAsResource: true,
     },
     {
         name: "syncOutLock",
@@ -75,6 +86,7 @@ staticConfig = staticConfig.concat([
         description : 'Prevent changes to the SYNCOUT source',
         hidden      : false,
         default     : false,
+        shouldBeAllocatedAsResource: true,
     },
 ])
 
@@ -88,6 +100,7 @@ staticConfig.push(
         default     : 'CUSTOM',
         options     : Pinmux.getPeripheralUseCaseNames("SYNC"),
         onChange    : Pinmux.useCaseChanged,
+        shouldBeAllocatedAsResource: true,
 
     }
 )
@@ -112,7 +125,7 @@ function filterHardware(component)
 var syncModule = {
     peripheralName: "SYNC",
     displayName: "SYNC",
-    maxInstances: 1,
+    totalMaxInstances: 1,
     open : true,
     defaultInstanceName: "mySYNC",
     description: "Synchronization",
@@ -128,6 +141,7 @@ var syncModule = {
         ownedInstances = ownedInstances.concat(pinmuxQualMods)
         return ownedInstances
     },
+    shouldBeAllocatedAsResource: true,
     templates: {
         boardc : "/driverlib/sync/sync.board.c.xdt",
         boardh : "/driverlib/sync/sync.board.h.xdt"

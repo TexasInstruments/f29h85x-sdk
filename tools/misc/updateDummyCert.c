@@ -52,12 +52,185 @@
 //
 //  Defines
 //
-//
-//  Offset into the cert where image size is stored
-//  ->  This offset is fixed for the dummy certificate used in SDK
-//      and will not work for any other certificate
-//
-#define CERT_IMAGE_SIZE_OFFSET      (0x3E0U)
+#define CERT_BOOTINFO_ID_SIZE           (11U)
+/**
+ * @brief   This is the DER SEQUENCE Tag as defined by the standard.
+ */
+#define CERT_DER_SEQUENCE_TAG           (0x30U)
+
+/**
+ * @brief   This is the DER Boolean Tag as defined by the standard.
+ */
+#define CERT_DER_BOOLEAN_TAG            (0x1U)
+
+/**
+ * @brief   This is the DER Integer Tag as defined by the standard.
+ */
+#define CERT_DER_INTEGER_TAG            (0x2U)
+
+/**
+ * @brief   This is the DER Octet String Tag as defined by the standard.
+ */
+#define CERT_DER_OCTET_STRING_TAG       (0x4U)
+
+/**
+ * @brief   This is the DER Object Id Tag as defined by the standard.
+ */
+#define CERT_DER_OBJECT_ID_TAG          (0x6U)
+
+/**
+*  @b Description
+*  @n
+*      Get Image Size Index into the certificate
+*
+*  @param[in] cert
+*      Certificate file pointer
+*
+*  @retval
+*      Image size index
+*/
+int32_t parseTag(FILE *cert, uint32_t tag, uint32_t *certIndex, uint32_t *tagSize)
+{
+    uint8_t data    = 0U;
+    int32_t retVal  = 0;
+    //
+    //  Read tag
+    //
+    fseek(cert, *certIndex, SEEK_SET);
+    if(1U == fread(&data, 1U, 1U, cert))
+    {
+        if(data == tag)
+        {
+            //
+            //  Read the tag size
+            //
+            if(1U == fread(&data, 1U, 1U, cert))
+            {
+                *tagSize    = data;
+                //
+                //  Move to next tag
+                //
+                *certIndex += 2U;
+            }
+            else
+            {
+                retVal = -1;
+            }
+        }
+    }
+    else
+    {
+        retVal = -1;
+    }
+
+    return retVal;
+}
+
+/**
+*  @b Description
+*  @n
+*      Get Image Size Index into the certificate
+*
+*  @param[in] cert
+*      Certificate file pointer
+*
+*  @retval
+*      Image size index
+*/
+uint32_t getImageSizeIndex(FILE *cert, uint32_t *imageSizeSize)
+{
+    int32_t  retVal                         = 0;
+    uint32_t imageSizeIndex                 = 0U;
+    uint32_t readIdx                        = 0U;
+    uint32_t tagSize                        = 0U;
+    uint8_t  readBuf[CERT_BOOTINFO_ID_SIZE] = {0U};
+    static const uint8_t certBootInfoId[CERT_BOOTINFO_ID_SIZE] =
+    {
+        0x06U,
+        0x09U,
+        0x2BU,
+        0x06U,
+        0x01U,
+        0x04U,
+        0x01U,
+        0x82U,
+        0x26U,
+        0x01U,
+        0x01U
+    };
+    //
+    //  Find bootinfo id
+    //
+    readIdx = 0U;
+    fseek(cert, readIdx, SEEK_SET);
+    while(CERT_BOOTINFO_ID_SIZE == fread(readBuf, 1U, CERT_BOOTINFO_ID_SIZE, cert))
+    {
+        if(0U == memcmp(readBuf, certBootInfoId, CERT_BOOTINFO_ID_SIZE))
+        {
+            //
+            //  The bootinfo id pattern is found
+            //
+            imageSizeIndex = ftell(cert) & 0xFFFFFFU;
+            break;
+        }
+        else
+        {
+            //
+            //  Move by one byte
+            //
+            readIdx++;
+            fseek(cert, readIdx, SEEK_SET);
+        }
+    }
+
+    if(0U != imageSizeIndex)
+    {
+        retVal = parseTag(cert, CERT_DER_BOOLEAN_TAG, &imageSizeIndex, &tagSize);
+        if(0 == retVal)
+        {
+            retVal = parseTag(cert, CERT_DER_OCTET_STRING_TAG, &imageSizeIndex, &tagSize);
+        }
+        if(0 == retVal)
+        {
+            retVal = parseTag(cert, CERT_DER_SEQUENCE_TAG, &imageSizeIndex, &tagSize);
+        }
+        if(0 == retVal)
+        {
+            retVal = parseTag(cert, CERT_DER_INTEGER_TAG, &imageSizeIndex, &tagSize);
+            imageSizeIndex += tagSize;
+        }
+        if(0 == retVal)
+        {
+            retVal = parseTag(cert, CERT_DER_INTEGER_TAG, &imageSizeIndex, &tagSize);
+            imageSizeIndex += tagSize;
+        }
+        if(0 == retVal)
+        {
+            retVal = parseTag(cert, CERT_DER_INTEGER_TAG, &imageSizeIndex, &tagSize);
+            imageSizeIndex += tagSize;
+        }
+        if(0 == retVal)
+        {
+            retVal = parseTag(cert, CERT_DER_OCTET_STRING_TAG, &imageSizeIndex, &tagSize);
+            imageSizeIndex += tagSize;
+        }
+        if(0 == retVal)
+        {
+            retVal = parseTag(cert, CERT_DER_INTEGER_TAG, &imageSizeIndex, &tagSize);
+            if(0 == retVal)
+            {
+                *imageSizeSize = tagSize;
+            }
+        }
+
+        if(0 != retVal)
+        {
+            imageSizeIndex = 0U;
+        }
+    }
+
+    return imageSizeIndex;
+}
 
 /**
 *  @b Description
@@ -76,10 +249,12 @@
 */
 int32_t main(int32_t argc, char* argv[])
 {
-    FILE        *cert       = NULL;
-    FILE        *image      = NULL;
-    uint32_t    imageSize   = 0U;
-    uint8_t     writeData   = 0U;
+    FILE        *cert           = NULL;
+    FILE        *image          = NULL;
+    uint32_t    imageSize       = 0U;
+    uint8_t     writeData       = 0U;
+    uint32_t    imgSizeIndex    = 0U;
+    uint32_t    imageSizeSize   = 0U;
     //
     //  Check the number of arguments
     //
@@ -112,25 +287,43 @@ int32_t main(int32_t argc, char* argv[])
     fseek(image, 0U, SEEK_END);
     imageSize = ftell(image) & 0xFFFFFFU;
     //
-    //  Update the Image size in the cert
-    //  ->  The image size shall be 3 bytes and is written in big endian format
+    //  Get the index of the image size in the certificate
     //
-    fseek(cert, CERT_IMAGE_SIZE_OFFSET, SEEK_SET);
-    //
-    //  Write 3rd byte
-    //
-    writeData = (uint8_t)((imageSize >> 16U) & 0xFFU);
-    fwrite(&writeData, 1U, 1U, cert);
-    //
-    //  Write 2nd byte
-    //
-    writeData = (uint8_t)((imageSize >> 8U) & 0xFFU);
-    fwrite(&writeData, 1U, 1U, cert);
-    //
-    //  Write 1st byte
-    //
-    writeData = (uint8_t)(imageSize & 0xFFU);
-    fwrite(&writeData, 1U, 1U, cert);
+    imgSizeIndex = getImageSizeIndex(cert, &imageSizeSize);
+    if(0U != imgSizeIndex)
+    {
+        //
+        //  Update the Image size in the cert
+        //  ->  The image size shall be 3 bytes and is written in big endian format
+        //
+        fseek(cert, imgSizeIndex, SEEK_SET);
+        if(3U == imageSizeSize)
+        {
+            //
+            //  Write 3rd byte
+            //
+            writeData = (uint8_t)((imageSize >> 16U) & 0xFFU);
+            fwrite(&writeData, 1U, 1U, cert);
+        }
+        if(2U <= imageSizeSize)
+        {
+            //
+            //  Write 2nd byte
+            //
+            writeData = (uint8_t)((imageSize >> 8U) & 0xFFU);
+            fwrite(&writeData, 1U, 1U, cert);
+        }
+        //
+        //  Write 1st byte
+        //
+        writeData = (uint8_t)(imageSize & 0xFFU);
+        fwrite(&writeData, 1U, 1U, cert);
+    }
+    else
+    {
+        printf("Error: Image size index\n");
+        return -1;
+    }
     //
     //  Close the files
     //

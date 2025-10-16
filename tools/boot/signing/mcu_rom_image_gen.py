@@ -69,6 +69,7 @@ basicConstraints = CA:true
 {EXT_ENC_SEQ}
 {DBG_EXT}
 {KD_EXT}
+{CRYPTO_UNLOCK_EXT}
 
 [ boot_seq ]
 certType     =  INTEGER:{CERT_TYPE}
@@ -106,6 +107,11 @@ coreDbgSecEn =  INTEGER:0
 g_kd_seq = '''
 [ key_derivation ]
 kd_salt = FORMAT:HEX,OCT:{KDSALT_VAL}
+'''
+
+g_ext_crypto_unlock = '''
+[ crypto_unlock ]
+CryptoUnlockValue = INTEGER:{CRYPTO_UNLOCK_VALUE}
 '''
 
 g_openssl3_x509_template = '''
@@ -134,6 +140,7 @@ subjectKeyIdentifier = none
 {EXT_ENC_SEQ}
 {DBG_EXT}
 {KD_EXT}
+{CRYPTO_UNLOCK_EXT}
 
 [ boot_seq ]
 certType     =  INTEGER:{CERT_TYPE}
@@ -172,6 +179,11 @@ g_kd_seq = '''
 kd_salt = FORMAT:HEX,OCT:{KDSALT_VAL}
 '''
 
+g_ext_crypto_unlock = '''
+[ crypto_unlock ]
+CryptoUnlockValue = INTEGER:{CRYPTO_UNLOCK_VALUE}
+'''
+
 
 def get_sha_val(f_name, sha_type):
     sha_val = subprocess.check_output(
@@ -193,15 +205,26 @@ def get_cert(args):
             bootCore_id = 16
             certType = 1
             bootCoreOptions = 0
-        elif((args.device == 'f29h85x') and (args.core == 'C29') and (args.fw_type != 'SEC_CFG') and (args.fw_type != 'CPU3')):
+        elif(((args.device == 'f29h85x') or (args.device == 'f29p32x')) and (args.core == 'C29') and (args.fw_type != 'SEC_CFG_CPU1') 
+             and (args.fw_type != 'SEC_CFG_CPU2') and (args.fw_type != 'SEC_CFG_CPU3') and (args.fw_type != 'CPU3')):
             bootAddress = 0
             bootCore_id = 16
             certType = 1
             bootCoreOptions = 0
-        elif((args.device == 'f29h85x') and (args.core == 'C29') and (args.fw_type == 'SEC_CFG')):
+        elif(((args.device == 'f29h85x') or (args.device == 'f29p32x')) and (args.core == 'C29') and (args.fw_type == 'SEC_CFG_CPU1')):
             bootAddress = 0
             bootCore_id = 16
             certType = 3
+            bootCoreOptions = 0
+        elif(((args.device == 'f29h85x') or (args.device == 'f29p32x')) and (args.core == 'C29') and (args.fw_type == 'SEC_CFG_CPU2')):
+            bootAddress = 0
+            bootCore_id = 16
+            certType = 5
+            bootCoreOptions = 0
+        elif(((args.device == 'f29h85x') or (args.device == 'f29p32x')) and (args.core == 'C29') and (args.fw_type == 'SEC_CFG_CPU3')):
+            bootAddress = 0
+            bootCore_id = 16
+            certType = 6
             bootCoreOptions = 0
         elif((args.device == 'f29h85x') and (args.core == 'C29') and (args.fw_type == 'CPU3')):
             bootAddress = 0
@@ -219,6 +242,8 @@ def get_cert(args):
     sbl_enc_seq = ''
     ext_kd_seq = ''
     kd_seq = ''
+    ext_crypto_unlock_seq = ''
+    crypto_unlock_seq = ''
 
     if(args.debug is not None):
         if(args.debug in g_dbg_types):
@@ -231,6 +256,16 @@ def get_cert(args):
             exit(2)
 
     image_bin_name = args.image_bin
+
+    if((args.crypto_unlock.lower()) == 'yes'):
+        ext_crypto_unlock_seq = "1.3.6.1.4.1.294.1.12=ASN1:SEQUENCE:crypto_unlock"
+        crypto_unlock_seq = g_ext_crypto_unlock.format(
+            CRYPTO_UNLOCK_VALUE=195,
+        )
+    else:
+        crypto_unlock_seq = g_ext_crypto_unlock.format(
+            CRYPTO_UNLOCK_VALUE=60,
+        )
 
     if (args.sbl_enc or args.tifs_enc):
         enc_iter_count = ''
@@ -298,6 +333,7 @@ def get_cert(args):
             BOOT_CORE_ID=bootCore_id,
             CERT_TYPE=certType,
             BOOT_CORE_OPTS=bootCoreOptions,
+            CRYPTO_UNLOCK_EXT=ext_crypto_unlock_seq,
             BOOT_ADDR='{:08X}'.format(int(args.loadaddr, 16)),
             IMAGE_LENGTH=os.path.getsize(image_bin_name),
         )
@@ -313,6 +349,7 @@ def get_cert(args):
             BOOT_CORE_ID=bootCore_id,
             CERT_TYPE=certType,
             BOOT_CORE_OPTS=bootCoreOptions,
+            CRYPTO_UNLOCK_EXT=ext_crypto_unlock_seq,
             BOOT_ADDR='{:08X}'.format(int(args.loadaddr, 16)),
             IMAGE_LENGTH=os.path.getsize(image_bin_name),
         )
@@ -331,6 +368,9 @@ def get_cert(args):
 
     if(args.kd_salt and args.sbl_enc):
         ret_cert += kd_seq
+    
+    if((args.crypto_unlock.lower()) == 'yes'):
+        ret_cert += crypto_unlock_seq
 
     if(dbg_seq != ''):
         ret_cert += g_dbg_seq.format(
@@ -448,6 +488,9 @@ my_parser.add_argument('--fw_type',       type=str,
                        help='firmware type')
 my_parser.add_argument('--img_integ',       type=str,
                        help='Image integrity extension', default='yes')
+my_parser.add_argument('--crypto_unlock',       type=str,
+                       help='Crypto engine unlock extension', default='no', 
+                       required=False)
 
 args = my_parser.parse_args()
 
@@ -458,7 +501,7 @@ cert_file_name = "temp_cert"+str(randint(111, 999))
 with open(cert_file_name, "w+") as f:
     f.write(cert_str)
 
-if(args.device == 'f29h85x'):
+if((args.device == 'f29h85x') or (args.device == 'f29p32x')):
     cert_name = "C29-cert-pad_in.bin"
     cert_name_final = "C29-cert-pad.bin"
 else:
@@ -484,11 +527,21 @@ if args.sbl_enc or args.tifs_enc:
 else:
     bin_fh = open(args.image_bin, 'rb')
 
-# BOOTROM expects certificate size to be 4 KB for HSM RAM/FLASH boot and C29 FLASH boot  
-if(((args.device == 'f29h85x') and (args.core == 'HSM')) or ((args.device == 'f29h85x') and (args.core == 'C29') and (args.boot == 'FLASH'))):
+# BOOTROM expects certificate size to be 4 KB for HSM RAM/FLASH boot and C29 FLASH boot
+if((((args.device == 'f29h85x') or (args.device == 'f29p32x')) and (args.core == 'HSM')) or 
+   (((args.device == 'f29h85x') or (args.device == 'f29p32x')) and (args.core == 'C29') and (args.boot == 'FLASH') and 
+    ((args.fw_type != 'SEC_CFG_CPU1') and (args.fw_type != 'SEC_CFG_CPU2') and (args.fw_type != 'SEC_CFG_CPU3')))):
     cert_size = os.path.getsize(cert_name)
     cert_data = cert_fh.read()
     temp_cert = cert_data + (b'\x00' * (4096 - cert_size))  # Pad certificate with 0 if size less than 4 KB
+    load_data = bin_fh.read()
+    final_fh.write(temp_cert + load_data)
+    cert_fh_out.write(temp_cert)
+elif(((args.device == 'f29h85x') or (args.device == 'f29p32x')) and (args.core == 'C29') and (args.boot == 'FLASH') and
+     (args.fw_type == 'SEC_CFG_CPU1') or (args.fw_type == 'SEC_CFG_CPU2') or (args.fw_type == 'SEC_CFG_CPU3')):
+    cert_size = os.path.getsize(cert_name)
+    cert_data = cert_fh.read()
+    temp_cert = cert_data + (b'\x00' * (2048 - cert_size))  # Pad certificate with 0 if size less than 2 KB
     load_data = bin_fh.read()
     final_fh.write(temp_cert + load_data)
     cert_fh_out.write(temp_cert)
@@ -504,7 +557,7 @@ cert_fh_out.close()
 # Delete the temporary files
 os.remove(cert_file_name)
 os.remove(cert_name)
-if(args.device != 'f29h85x'):
+if((args.device != 'f29h85x') and (args.device != 'f29p32x')):
     os.remove(cert_name_final)
 
 if args.sbl_enc or args.tifs_enc:

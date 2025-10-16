@@ -1,16 +1,16 @@
 let Common   = system.getScript("/driverlib/Common.js");
 let Pinmux   = system.getScript("/driverlib/pinmux.js");
 
-let device_driverlib_peripheral = 
-    system.getScript("/driverlib/device_driverlib_peripherals/" + 
+let device_driverlib_peripheral =
+    system.getScript("/driverlib/device_driverlib_peripherals/" +
         Common.getDeviceName().toLowerCase() + "_epwm.js");
 
-let device_driverlib_peripheral_funcs = 
-    system.getScript("/driverlib/device_driverlib_peripherals/functions/" + 
+let device_driverlib_peripheral_funcs =
+    system.getScript("/driverlib/device_driverlib_peripherals/functions/" +
         Common.getDeviceName().toLowerCase() + "/epwm.js");
 let driverlib_funcs = device_driverlib_peripheral_funcs["epwm" + "_driverlib"];
 
-let sysctl_options = 
+let sysctl_options =
     system.getScript("/driverlib/device_driverlib_peripherals/" +
         Common.getDeviceName().toLowerCase() + "_sysctl.js");
 
@@ -18,8 +18,8 @@ let sysctl_options =
 
 // console.log(driverlib_funcs)
 
-let epwm_validation = 
-    system.getScript("/driverlib/epwm/" + 
+let epwm_validation =
+    system.getScript("/driverlib/epwm/" +
         "epwm_validation.js");
 
 let sync_module = system.getScript("/driverlib/sync.js")
@@ -28,7 +28,7 @@ var pinmuxOnlyRelease = false;
 
 var DO_NOT_COPY_configNames = [
     "epwmMemoryFileBrowse",
-    "epwmLoadConfig", 
+    "epwmLoadConfig",
     "copyUse",
     "copyFrom",
     "copyPerform",
@@ -105,7 +105,7 @@ function CommentOutCode (inst, ui)
     {
         ui.commentOutDefaultCode.hidden = false;
     }
-    else 
+    else
     {
         inst.commentOutDefaultCode = false;
         ui.commentOutDefaultCode.hidden = true;
@@ -131,7 +131,7 @@ function getConfigNameRecursive(arrayConfigs)
 {
     var configNames = [];
     for (var modConfig of arrayConfigs)
-    {        
+    {
         if (modConfig.config)
         {
             configNames = configNames.concat(getConfigNameRecursive(modConfig.config))
@@ -280,7 +280,7 @@ let config = [
                 },
             },
         ]
-    },    
+    },
     {
         name: "GROUP_TEMPLATECODE",
         displayName: "Template Code Generation",
@@ -320,7 +320,7 @@ function modules(inst)
                 name: "epwmPullInTemplateDot",
                 moduleName: "/driverlib/epwm/templates/epwm.dot.dynamic.js",
             }
-        ];  
+        ];
     }
     return [];
 }
@@ -397,21 +397,21 @@ newItem,
 ...arr.slice(index)
 ]
 
-submodulesComponents = insert(submodulesComponents, 3, 
+submodulesComponents = insert(submodulesComponents, 3,
     {
         moduleName: "/driverlib/epwm/modules/epwm_xcmpmode.js",
         name: "epwmXCMP",
         displayName:"EPWM XCMP Mode",
         description:"XCMP Submodule",
     });
-submodulesComponents = insert(submodulesComponents, 8 , 
+submodulesComponents = insert(submodulesComponents, 8 ,
     {
         moduleName: "/driverlib/epwm/modules/epwm_diodeEmulation.js",
         name: "epwmDiodeEmulation",
         displayName:"EPWM Diode Emulation",
         description:"Diode Emulation Submodule",
     });
-submodulesComponents = insert(submodulesComponents, 10 , 
+submodulesComponents = insert(submodulesComponents, 10 ,
     {
         moduleName: "/driverlib/epwm/modules/epwm_minDBILC.js",
         name: "epwmMinDBILC",
@@ -463,7 +463,7 @@ var moduleStatic = {
         //         });
         //     },
         //     onComplete: (inst, ui, result) => {
-        //         Common.printConfigsInfo(system.modules['/driverlib/epwm.js'].$configByName) 
+        //         Common.printConfigsInfo(system.modules['/driverlib/epwm.js'].$configByName)
         //     },
         // },
         {
@@ -504,7 +504,7 @@ var moduleStatic = {
             default     : [],
         },
     ],
-    
+
     // sharedModuleInstances : (inst)=>{
     //     return([
     //         {
@@ -516,7 +516,20 @@ var moduleStatic = {
     //     ])
     // },
     // modules: Common.autoForce("sync", "/driverlib/sync.js")
-}   
+}
+
+function validatePinmux(inst,validation){
+    if (inst.epwm && inst.epwm.$solution) {
+        let selectedPeripheral = inst.epwm.$solution.peripheralName; // e.g., "EPWM10"
+        if (Common.is_instance_not_in_variant(selectedPeripheral)) {
+            validation.logError(
+                `${selectedPeripheral} is not supported for ${Common.getVariant().replace(/^TMS320/, '')}.`,
+                inst,
+                "epwm"
+            );
+        }
+    }
+}
 
 function onValidate(inst, validation)
 {
@@ -527,15 +540,15 @@ function onValidate(inst, validation)
     //     {
     //         if (Common.isModuleOnOtherContext("/driverlib/sync.js") == false)
     //         {
-    //             validation.logError("The SYNC module needs to be added on CPU1 when an EPWM instance is added on CPU2", 
+    //             validation.logError("The SYNC module needs to be added on CPU1 when an EPWM instance is added on CPU2",
     //             inst, "epwmTimebase_forceSyncPulse");
     //         }
-    //     } 
+    //     }
     // }else
 	// {
 	// 	if (Common.isContextCPU2())
     //     {
-	// 			validation.logWarning("The SYNC module needs to be added on CPU1 when an EPWM instance is added on CPU2", 
+	// 			validation.logWarning("The SYNC module needs to be added on CPU1 when an EPWM instance is added on CPU2",
     //             inst, "epwmTimebase_forceSyncPulse");
 	// 	}
 	// }
@@ -572,7 +585,7 @@ function onValidate(inst, validation)
         if (!validCopyName)
         {
             validation.logError(
-                "The copy from name is not a valid EPWM name", 
+                "The copy from name is not a valid EPWM name",
                 inst, "copyFrom");
         }
     }
@@ -598,11 +611,11 @@ function onValidate(inst, validation)
         var allDuplicates = "";
         for (var duplicateNamesIndex in duplicatesResult.duplicates)
         {
-            allDuplicates = allDuplicates + Common.stringOrEmpty(allDuplicates, ", ") 
+            allDuplicates = allDuplicates + Common.stringOrEmpty(allDuplicates, ", ")
                             + duplicatesResult.duplicates[duplicateNamesIndex];
         }
         validation.logError(
-            "The EPWM template name is already used. Duplicates: " + allDuplicates, 
+            "The EPWM template name is already used. Duplicates: " + allDuplicates,
             inst, "codeTemplateName");
     }
 
@@ -655,7 +668,7 @@ sharedModuleInstances = function (inst) {
         mindb_icl_xbar = mindb_icl_xbar.concat(
             [
                 {
-                    name: "MINDB_XBAR_A",      
+                    name: "MINDB_XBAR_A",
                     displayName: "MINDB X-BAR Configuration",
                     moduleName: "/driverlib/mindbxbar.js",
                     collapsed: true,
@@ -672,7 +685,7 @@ sharedModuleInstances = function (inst) {
         mindb_icl_xbar = mindb_icl_xbar.concat(
             [
                 {
-                    name: "MINDB_XBAR_B",      
+                    name: "MINDB_XBAR_B",
                     displayName: "MINDB X-BAR Configuration",
                     moduleName: "/driverlib/mindbxbar.js",
                     collapsed: true,
@@ -689,7 +702,7 @@ sharedModuleInstances = function (inst) {
 		mindb_icl_xbar = mindb_icl_xbar.concat(
             [
                 {
-                    name: "ICL_XBAR_A",      
+                    name: "ICL_XBAR_A",
                     displayName: "ICL X-BAR Configuration",
                     moduleName: "/driverlib/iclxbar.js",
                     collapsed: true,
@@ -706,7 +719,7 @@ sharedModuleInstances = function (inst) {
 		mindb_icl_xbar = mindb_icl_xbar.concat(
             [
                 {
-                    name: "ICL_XBAR_B",      
+                    name: "ICL_XBAR_B",
                     displayName: "ICL X-BAR Configuration",
                     moduleName: "/driverlib/iclxbar.js",
                     collapsed: true,
@@ -734,12 +747,12 @@ config.push(
 var epwmModule = {
     peripheralName: "EPWM",
     displayName: "EPWM",
-    maxInstances: Common.peripheralCount("EPWM"),
+    totalMaxInstances: Common.peripheralCount("EPWM"),
     defaultInstanceName: "myEPWM",
     description: "Enhanced Pulse Width Modulator Peripheral",
     //longDescription: (Common.getCollateralFindabilityList("EPWM")),
     filterHardware : filterHardware,
-    config: config,
+    config: Common.filterConfigsIfInSetupMode(config),
     templates: {
         boardc : boardCTemplate,
         boardh : boardHTemplate
@@ -747,14 +760,14 @@ var epwmModule = {
     modules: modules,
     moduleInstances : (inst) => {
         var regInterrupts = []
-        
+
         var pinmuxQualMods = Pinmux.getGpioQualificationModInstDefinitions("EPWM", inst)
         regInterrupts = regInterrupts.concat(pinmuxQualMods)
 
         if (inst.epwmEventTrigger_registerInterrupts)
         {
             regInterrupts.push({
-                name: "epwmInt",      
+                name: "epwmInt",
                 displayName: "EPWM Interrupt ",
                 moduleName: "/driverlib/interrupt.js",
                 collapsed: true,
@@ -770,7 +783,7 @@ var epwmModule = {
         if (inst.epwmTripZone_registerInterrupts)
         {
             regInterrupts.push({
-                name: "epwmTZInt",      
+                name: "epwmTZInt",
                 displayName: "EPWM TZ Interrupt ",
                 moduleName: "/driverlib/interrupt.js",
                 collapsed: true,
@@ -793,7 +806,7 @@ var epwmModule = {
                 collapsed: false,
                 requiredArgs:{
                     pinmuxPeripheralModule : "epwm",
-                    peripheralInst: inst.$name
+                    peripheralInst: ""
                 }
             },
             {
@@ -803,12 +816,14 @@ var epwmModule = {
                 moduleName: "/driverlib/perConfig.js",
                 collapsed: false,
                 requiredArgs:{
+                    cpuSel: inst.$assignedContext ?? system.context,
                     pinmuxPeripheralModule : "epwm",
-                    peripheralInst: inst.$name
-                }
+                    peripheralInst: ""
+                },
+                shouldBeAllocatedAsResource: true,
             },
         ])
-        //regInterrupts = regInterrupts.concat(submodules) 
+        //regInterrupts = regInterrupts.concat(submodules)
         // regInterrupts = regInterrupts.concat([
         //     {
         //         name : "SYNC",
@@ -823,6 +838,7 @@ var epwmModule = {
     moduleStatic: moduleStatic,
     pinmuxRequirements    : Pinmux.epwmPinmuxRequirements,
     validate : onValidate,
+    validatePinmux: validatePinmux,
     migrateLegacyConfiguration : (inst) =>
     {
         //
@@ -833,7 +849,7 @@ var epwmModule = {
         {
             if (inst.$module.config[i].name == "GROUP_EPWM_AQ")
             {
-                AQLocation = i; 
+                AQLocation = i;
             }
         }
 
@@ -910,7 +926,7 @@ var epwmModule = {
         else
         {
             inst.epwmActionQualifier_t2Source = B_t2Value
-        }  
+        }
 
         //
         // Update Digital Compare Combo Logic
@@ -928,8 +944,8 @@ var epwmModule = {
         }
         */
     },
-    
-    
+    shouldBeAllocatedAsResource: true,
+
 };
 
 

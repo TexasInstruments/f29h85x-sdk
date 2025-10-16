@@ -1,24 +1,49 @@
 % let Common   = system.getScript("/driverlib/Common.js");
-% var contextNames = Common.getContextNames();
-% for (var cntx of contextNames) {
-% 	var module = Common.getModuleForCore('/driverlib/gpio.js', cntx);
-	%if (module != null)
-	%{
+% let allPinsInfo = system.deviceData.devicePins
+% if (Common.isAllocationOff())
+% {
+	% var contextNames = Common.getContextNames();
+	% for (var cntx of contextNames) {
+	% 	var module = Common.getModuleForCore('/driverlib/gpio.js', cntx);
+		%if (module != null)
+		%{
 //*****************************************************************************
 //
 // GPIO Configurations
 //
 //*****************************************************************************
-	% for(var i = 0; i < module.$instances.length; i++) {
-		% var instance = module.$instances[i];
-		% var gpioName = instance.gpioPin.$solution.devicePinName;
-		% if (gpioName == null) { gpioName = instance.gpioPin.$solution.peripheralName;}
-		% else { gpioName = gpioName.substring(gpioName.indexOf("GPIO"))}
-		% var gpioNumber = gpioName.substring(4);
-		% gpioNumber = Common.gpioNameToNumber(gpioNumber);
+		% for(var i = 0; i < module.$instances.length; i++) {
+			% var instance = module.$instances[i];
+			% var gpioName = instance.gpioPin.$solution.devicePinName;
+			% if (gpioName == null) { gpioName = instance.gpioPin.$solution.peripheralName;}
+			% else { gpioName = gpioName.substring(gpioName.indexOf("GPIO"))}
+			% var gpioNumber = gpioName.substring(4);
+			% gpioNumber = Common.gpioNameToNumber(gpioNumber);
 #define `instance.$name` `gpioNumber`
 void `instance.$name`_init();
-	% }
+		% }
+		%}
 	%}
-%}
-%
+% }
+% else {
+//*****************************************************************************
+//
+// GPIO Configurations
+//
+//*****************************************************************************
+	% let raData = system.resourceAllocation.data
+	% for (let context of raData.contexts)
+	% {
+	    % let module = context.modules.find(x => x.moduleName === '/driverlib/gpio.js')
+		% if ((module != null) && ((system.context == context.contextName) || (system.context == "CPU1")))
+		% {
+			% for(let instance of module.instances) {
+				% let assignedPin = instance.requiredArgs.gpioPin.$assign
+				% let gpioName = _.values(allPinsInfo).find(i => i.name == assignedPin)
+				% let gpioNumber = Common.gpioNameToNumber(gpioName.designSignalName)
+#define `instance.allocationName` `gpioNumber`
+void `instance.allocationName`_init();
+			% }
+		%}
+	%}
+% }

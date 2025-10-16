@@ -2,32 +2,59 @@
   <project
         name="emif_ex1_16bit_sdram_syscfg"
         device       = "F29H850TU9"
-        cgtVersion   = "1.0.0"
+        
+        cgtVersion   = "2.0.0"
         toolChain    = "TICLANG"
+
         products     = "sysconfig;f29h85x-sdk"
         connection   = "TIXDS110_Connection.xml"
         >
     <configuration name="RAM"   compilerBuildOptions="-O1 -g -DDEBUG -Qunused-arguments" linkerBuildOptions="--stack_size=0x2000 --heap_size=0x400 --diag_suppress=10325-D --diag_suppress=10063-D"
      postBuildStep=
-       "${CG_TOOL_OBJCOPY} -O binary ${ProjName}.out ${ProjName}.bin;
-        $(PYTHON) ${COM_TI_MCU_SDK_INSTALL_DIR}/tools/boot/signing/mcu_rom_image_gen.py --image-bin ${ProjName}.bin --core C29 --swrv 1 --loadaddr 0x200E1000 --sign-key ${COM_TI_MCU_SDK_INSTALL_DIR}/tools/boot/signing/mcu_gpkey.pem --out-image ${ProjName}_cert.bin --device f29h85x --boot RAM --img_integ no;
-        $(DELETE) C29-cert-pad.bin"
+     "
+        
+        ${CG_TOOL_OBJCOPY} -O binary ${ProjName}.out ${ProjName}.bin;
+
+        
+        ;$(call IF_EQUAL_OPEN, ${DUMMY_CERT}, 0) $(PYTHON) ${COM_TI_MCU_SDK_INSTALL_DIR}/tools/boot/signing/mcu_rom_image_gen.py --image-bin ${ProjName}.bin --core C29 --swrv 1 --loadaddr 0x200E1000 --sign-key ${COM_TI_MCU_SDK_INSTALL_DIR}/tools/boot/signing/mcu_gpkey.pem --out-image ${ProjName}_cert.bin --device f29h85x --boot RAM --img_integ no $(IF_EQUAL_CLOSE);
+
+
+        
+        ;$(call IF_EQUAL_OPEN, ${DUMMY_CERT}, 1) ${COM_TI_MCU_SDK_INSTALL_DIR}/tools/misc/$(UPDATEDUMMYCERT) $(DUMMY_CERT_RAM) ${ProjName}.bin $(IF_EQUAL_CLOSE);
+        ;$(call IF_EQUAL_OPEN, ${DUMMY_CERT}, 1) $(CONCAT) $(DUMMY_CERT_RAM) ${ProjName}.bin > ${ProjName}_cert.bin $(IF_EQUAL_CLOSE);
+
+
+     "
     />
     <configuration name="FLASH" compilerBuildOptions="-O1 -g -DDEBUG -Qunused-arguments -D_FLASH" linkerBuildOptions="--stack_size=0x2000 --heap_size=0x400 --diag_suppress=10325-D --diag_suppress=10063-D --define=_FLASH"
      postBuildStep=
-       "${CG_TOOL_OBJCOPY} --remove-section=cert -O binary ${ProjName}.out ${ProjName}.bin;
-        $(PYTHON) ${COM_TI_MCU_SDK_INSTALL_DIR}/tools/boot/signing/mcu_rom_image_gen.py --image-bin ${ProjName}.bin --core C29 --swrv 1 --loadaddr 0x10001000 --sign-key ${COM_TI_MCU_SDK_INSTALL_DIR}/tools/boot/signing/mcu_gpkey.pem --out-image ${ProjName}_cert.bin --device f29h85x --boot FLASH --img_integ no;
-        ${CG_TOOL_OBJCOPY} --update-section cert=C29-cert-pad.bin ${ProjName}.out ${ProjName}_cert.out;
-        $(DELETE) ${ProjName}.out C29-cert-pad.bin;
-        $(RENAME) ${ProjName}_cert.out ${ProjName}.out"
+     "
+        
+        ${CG_TOOL_OBJCOPY} --remove-section=cert -O binary ${ProjName}.out ${ProjName}.bin;
+
+        
+        ;$(call IF_EQUAL_OPEN, ${DUMMY_CERT}, 0) $(PYTHON) ${COM_TI_MCU_SDK_INSTALL_DIR}/tools/boot/signing/mcu_rom_image_gen.py --image-bin ${ProjName}.bin --core C29 --swrv 1 --loadaddr 0x10001000 --sign-key ${COM_TI_MCU_SDK_INSTALL_DIR}/tools/boot/signing/mcu_gpkey.pem --out-image ${ProjName}_cert.bin --device f29h85x --boot FLASH --img_integ no $(IF_EQUAL_CLOSE);
+
+        ;$(call IF_EQUAL_OPEN, ${DUMMY_CERT}, 0) ${CG_TOOL_OBJCOPY} --update-section cert=C29-cert-pad.bin ${ProjName}.out ${ProjName}.out $(IF_EQUAL_CLOSE);
+
+        
+        ;$(call IF_EQUAL_OPEN, ${DUMMY_CERT}, 1) ${COM_TI_MCU_SDK_INSTALL_DIR}/tools/misc/$(UPDATEDUMMYCERT) $(DUMMY_CERT_FLASH) ${ProjName}.bin $(IF_EQUAL_CLOSE);
+        ;$(call IF_EQUAL_OPEN, ${DUMMY_CERT}, 1) $(CONCAT) $(DUMMY_CERT_FLASH) ${ProjName}.bin > ${ProjName}_cert.bin $(IF_EQUAL_CLOSE);
+
+        ;$(call IF_EQUAL_OPEN, ${DUMMY_CERT}, 1) ${CG_TOOL_OBJCOPY} --update-section cert=$(DUMMY_CERT_FLASH) ${ProjName}.out ${ProjName}.out $(IF_EQUAL_CLOSE);
+
+     "
     />
+    <buildVariable name="DUMMY_CERT" value="1" scope="project" />
 
-    <file action="link" path="${COM_TI_MCU_SDK_INSTALL_DIR}/examples/device_support/source/codestartbranch.asm" targetDirectory="device" />
-    <file action="link" path="${COM_TI_MCU_SDK_INSTALL_DIR}/examples/device_support/include/driverlib.h"        targetDirectory="device" />
-    <file action="link" path="${COM_TI_MCU_SDK_INSTALL_DIR}/source/bitfields/bitfield_structs.c"                targetDirectory="device" />
-    <file action="copy" path="${COM_TI_MCU_SDK_INSTALL_DIR}/examples/device_support/makefile.defs"              targetDirectory="" />
+    <file action="link" path="${COM_TI_MCU_SDK_INSTALL_DIR}/examples/device_support/source/codestartbranch.asm"     targetDirectory="device" />
+    <file action="link" path="${COM_TI_MCU_SDK_INSTALL_DIR}/examples/device_support/include/driverlib.h"            targetDirectory="device" />
+    <file action="link" path="${COM_TI_MCU_SDK_INSTALL_DIR}/source/bitfields/bitfield_structs.c"                    targetDirectory="device" />
+    <file action="copy" path="${COM_TI_MCU_SDK_INSTALL_DIR}/examples/device_support/makefile.defs"                  targetDirectory="" />
+    <file action="copy" path="${COM_TI_MCU_SDK_INSTALL_DIR}/source/dummycert/dummy_cert_crypto_unlock_flash.cert"   targetDirectory="" />
+    <file action="copy" path="${COM_TI_MCU_SDK_INSTALL_DIR}/source/dummycert/dummy_cert_crypto_unlock_ram.cert"     targetDirectory="" />
 
-    <file action="copy" path="${COM_TI_MCU_SDK_GENERIC_LNK_CMD_RAM}"  targetDirectory="" applicableConfigurations="RAM" />
+    <file action="copy" path="${COM_TI_MCU_SDK_GENERIC_LNK_CMD_RAM}"    targetDirectory="" applicableConfigurations="RAM" />
     <file action="copy" path="${COM_TI_MCU_SDK_GENERIC_LNK_CMD_FLASH}"  targetDirectory="" applicableConfigurations="FLASH" />
 
     <file action="copy" path="../emif_ex1_16bit_sdram_syscfg.c" targetDirectory="" />

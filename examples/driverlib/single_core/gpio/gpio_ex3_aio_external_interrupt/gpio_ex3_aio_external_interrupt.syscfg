@@ -1,0 +1,73 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --device "F29H85x" --package "256ZEX" --part "F29H85x_256ZEX" --context "CPU1" --product "MCU_SDK_F29H85x@1.02.02.00"
+ * @v2CliArgs --device "F29H850TU" --package "256ZEX" --variant "TMS320F29H850TU9" --context "CPU1" --product "MCU_SDK_F29H85x@1.02.02.00"
+ * @versions {"tool":"1.25.0+4237"}
+ */
+
+    
+const divider15       = system.clockTree["PLL_REFDIV"];
+divider15.divideValue = 1;
+
+const multiplier1         = system.clockTree["PLL_IMULT"];
+multiplier1.multiplyValue = 40;
+
+const mux7       = system.clockTree["OSCCLKSRCSEL"];
+mux7.inputSelect = "INTOSC2";
+
+/**
+ * Import the modules used in this configuration.
+ */
+const aio              = scripting.addModule("/driverlib/aio.js", {}, false);
+const aio1             = aio.addInstance();
+const aio2             = aio.addInstance();
+const gpio             = scripting.addModule("/driverlib/gpio.js", {}, false);
+const gpio1            = gpio.addInstance();
+const gpio2            = gpio.addInstance();
+const gpio3            = gpio.addInstance();
+const inputxbar_input  = scripting.addModule("/driverlib/inputxbar_input.js", {}, false);
+const inputxbar_input1 = inputxbar_input.addInstance();
+const inputxbar_input2 = inputxbar_input.addInstance();
+const jtag             = scripting.addModule("/driverlib/jtag.js");
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+aio1.$name                   = "myAIO0";
+aio1.useInterrupt            = true;
+aio1.aioPin.$assign          = "AIO160";
+aio1.xint.enableInt          = true;
+aio1.xint.registerInterrupts = true;
+
+aio2.$name                   = "myAIO1";
+aio2.qualMode                = "GPIO_QUAL_6SAMPLE";
+aio2.useInterrupt            = true;
+aio2.aioPin.$assign          = "AIO161";
+aio2.xint.xintNum            = "GPIO_INT_XINT2";
+aio2.xint.intType            = "GPIO_INT_TYPE_RISING_EDGE";
+aio2.xint.enableInt          = true;
+aio2.xint.registerInterrupts = true;
+
+gpio1.$name             = "myGPIO0";
+gpio1.direction         = "GPIO_DIR_MODE_OUT";
+gpio1.writeInitialValue = true;
+gpio1.initialValue      = 1;
+gpio1.gpioPin.$assign   = "GPIO0";
+
+gpio2.$name             = "myGPIO1";
+gpio2.direction         = "GPIO_DIR_MODE_OUT";
+gpio2.writeInitialValue = true;
+gpio2.gpioPin.$assign   = "GPIO1";
+
+gpio3.$name           = "myGPIO5";
+gpio3.direction       = "GPIO_DIR_MODE_OUT";
+gpio3.gpioPin.$assign = "GPIO5";
+
+inputxbar_input1.$name         = "myINPUTXBARINPUT0";
+aio1.xint.inputxbar            = inputxbar_input1;
+inputxbar_input1.inputxbarGpio = "AIO160";
+
+inputxbar_input2.$name         = "myINPUTXBARINPUT1";
+aio2.xint.inputxbar            = inputxbar_input2;
+inputxbar_input2.inputxbarGpio = "AIO161";

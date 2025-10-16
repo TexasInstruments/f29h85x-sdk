@@ -3,6 +3,7 @@ let CONTEXT_CPU2 = "CPU2";
 let CONTEXT_CPU3 = "CPU3";
 let CONTEXT_SYSTEM = "system"
 // let Collateral = system.getScript("/driverlib/sysconfig_collateral_links.js");
+let json_import = system.getScript(`/driverlib/.meta/gpn/F29.json`);
 
 exports = {
     getBoard : getBoard,
@@ -22,6 +23,9 @@ exports = {
     getAIOs : getAIOs,
     peripheralListFromSysCtl : peripheralListFromSysCtl,
     getDeviceName: getDeviceName,
+    getVariant: getVariant,
+    is_instance_not_in_variant: is_instance_not_in_variant,
+    countinstances: countinstances,
     getDevicePart: getDevicePart,
     getDevicePackage: getDevicePackage,
 	getSDK: getSDK,
@@ -98,7 +102,12 @@ exports = {
     getSYSCLK: getSYSCLK,
     getClockTree : getClockTree,
     getC2000WarePath: getC2000WarePath,
-    modInstances : modInstances
+    modInstances : modInstances,
+    isAllocationSetupMode: isAllocationSetupMode,
+    isAllocationConfigureMode : isAllocationConfigureMode,
+    isAllocationOff: isAllocationOff,
+    filterConfigurationList: filterConfigurationList,
+    filterConfigsIfInSetupMode: filterConfigsIfInSetupMode
 };
 
 function modInstances(modName) {
@@ -113,7 +122,7 @@ function getSYSCLK(cpu)
     var clockTree = getClockTree();
     if (clockTree){
 
-        if (isMultiCoreDevice())
+        if (isMultiCoreDevice() || isAllocationSetupMode())
         {
             if (!cpu)
             {
@@ -271,7 +280,7 @@ function getClockTree()
         mainContext = "CPU1"
     }
     let context = system.contexts[mainContext];
-    let clocktree = context ? context.system.clockTree : null;
+    let clocktree = context && context.system ? context.system.clockTree : null;
 
     if (system.deviceData.clockTree)
     {
@@ -425,6 +434,26 @@ function getDeviceName()
 	return deviceName
 }
 
+function getVariant()
+{
+    let variant = system.deviceData.gpnVariant;
+    return variant
+}
+
+function normalizeVariant(variant) {
+    // Remove TMS320 prefix and Q1 suffix
+    let v = variant.replace(/^TMS320/, '');
+    return v;
+}
+function is_instance_not_in_variant(element) {
+    let variant = normalizeVariant(getVariant());
+    if (!json_import || !json_import[variant]) {
+        return false;
+    }
+    let supportTable = json_import[variant];
+    return (supportTable && element in supportTable && supportTable[element] == false);
+}
+
 function getDevicePart()
 {
     var devicePart = system.deviceData.part;
@@ -563,17 +592,41 @@ function peripheralListFromSysCtl(peripheralName, sysctl)
     });
     return peripherals
 }
-
+function checkinVar(peripheralName)
+{
+    let variant = normalizeVariant(getVariant());
+    if (!json_import || !json_import[variant]) {
+        return true;
+    }
+    let supportTable = json_import[variant];
+    if (supportTable && peripheralName.name in supportTable && supportTable[peripheralName.name] === 0) {
+        return false;
+    }
+    return true;
+}
+function countinstances(peripheralType,default_instances){//FOR peripherals where instance is selected without pinmux
+    let co=0;
+    let variant = normalizeVariant(getVariant());
+    if (!json_import || !json_import[variant]) {
+        return default_instances
+    }
+    let supportTable = json_import[variant];
+    if (supportTable) {
+        for (let key in supportTable) {
+            if (key.startsWith(peripheralType) && supportTable[key] === 1) {
+                co++;
+            }
+        }
+    }
+    return co;
+}
 function peripheralCount(peripheralType)
 {
 	let peripherals = system.deviceData.peripherals
 	let numberOfPeripherals = Object.keys(peripherals).length;
 	var count = 0;
 
-	//console.log(numberOfPeripherals);
-
 	for (var peripheral in peripherals) {
-
 	  	try
 	  	{
 	  		var interfaces = peripherals[peripheral]["interfaces"];
@@ -582,9 +635,9 @@ function peripheralCount(peripheralType)
 	  			if (peripheralType == interfaceType)
 	  			{
 	  				peripheralNames = interfaces[interfaceType].peripherals;
-	  				//console.log(peripheralNames);
-	  				count = peripheralNames.length;
-					//console.log(count);
+	  				for(let i = 0; i < peripheralNames.length; i++){
+                        if(checkinVar(peripheralNames[i]))count++;
+                    }
 	  				return count;
 	  			}
 			}
@@ -887,4 +940,67 @@ function getSysCfgCoreNames()
 function getSelfSysCfgCoreName() {
     if(system.deviceData.core)
         return system.deviceData.core.name;
+}
+
+//*********************************************************************
+// Resource Allocation functionality
+//*********************************************************************
+
+//
+// Check if tool is loaded in SETUP mode in system context
+//
+function isAllocationSetupMode() {
+    return (system.context == "system" && system.resourceAllocation.mode == "SETUP" );
+}
+
+//
+// Check if tool is loaded in CONFIGURE mode
+//
+function isAllocationConfigureMode() {
+    return (system.resourceAllocation.mode == "CONFIGURE");
+}
+
+function filterConfigsIfInSetupMode(configList) {
+    if(isAllocationSetupMode()){
+        return filterConfigurationList(configList, 'shouldBeAllocatedAsResource', ['default', 'buttonText']);
+    }
+    else {
+        return configList;
+    }
+}
+
+function filterConfigurationList(configList, keyY = 'shouldBeAllocatedAsResource', keyXList = ['default', 'buttonText']) {
+    let filteredList = [];
+    filterRecursiveUtil(configList, filteredList, keyY, keyXList);
+    return filteredList;
+}
+
+function filterRecursiveUtil(configList, finalList, keyY, keyXList) {
+    for (let i = 0; i < configList.length; i++) {
+        let config = configList[i];
+        if(!config)
+            continue;
+        if(config.name && config.name.startsWith("$")){
+            finalList.push(config);
+            continue;
+        }
+        keyXList.forEach(key => {
+            if (config.hasOwnProperty(key)) {
+                if (!config.hasOwnProperty(keyY) || !config[keyY])
+                    config.hidden = true;
+            }
+        })
+        if (config.hasOwnProperty('config')) {
+            config.config = filterConfigurationList(config.config, keyY, keyXList);
+        }
+
+        finalList.push(config);
+    }
+}
+
+//
+// Check if tool is loaded without Resource Allocation mode
+//
+function isAllocationOff() {
+    return (system.resourceAllocation.mode == "OFF");
 }

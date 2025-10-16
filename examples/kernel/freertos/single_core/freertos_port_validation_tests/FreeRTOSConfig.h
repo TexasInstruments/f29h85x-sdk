@@ -55,10 +55,9 @@ supported, or if both static and dynamic allocation are supported. */
 #define configMINIMAL_STACK_SIZE                ( ( uint16_t ) 300 )
 #define configMAX_TASK_NAME_LEN                 ( 12 )
 
-/* Note heap_5.c is used so this only defines the part of the heap that is in
-the first block of RAM on the LPC device.  See the initialisation of the heap
-in main.c. */
+
 #define configTOTAL_HEAP_SIZE                   ( ( size_t ) ( 180000 ) )
+#define configHEAP_CLEAR_MEMORY_ON_FREE         1
 
 /* configUSE_MINI_LIST_ITEM nust be defined as 0 for C29x port*/
 #define configUSE_MINI_LIST_ITEM                0
@@ -145,7 +144,7 @@ machine on which the test is developed). */
 #define configSTREAM_BUFFER_TRIGGER_LEVEL_TEST_MARGIN   4
 
 #define configTASK_NOTIFICATION_ARRAY_ENTRIES 3
-#define configPRINTF( X ) printf( X )
+#define configPRINTF( X ) myprintf( X )
 
 #define TESTGROUP 1
 #define TEST 100

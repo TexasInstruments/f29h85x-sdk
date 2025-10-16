@@ -40,7 +40,8 @@ let config = [
         description : 'Instance of the EQEP used.',
         hidden      : false,
         default     : EQEP_INSTANCE[0].name,
-        options     : EQEP_INSTANCE
+        options     : EQEP_INSTANCE,
+        shouldBeAllocatedAsResource : true,
     },
     {
         //
@@ -64,7 +65,7 @@ let config = [
             }
         }
     },
-    
+
 ];
 let conditionalConfig = [];
 conditionalConfig = conditionalConfig.concat([
@@ -93,7 +94,7 @@ conditionalConfig = conditionalConfig.concat([
                         should be hard-wired for a single direction with QEPA used for input.`,
         hidden      : false,
         default     : "EQEP_CONFIG_QUADRATURE",
-        options     : 
+        options     :
         [
             {name: "EQEP_CONFIG_QUADRATURE",    displayName: "Quadrature-clock mode"},
             {name: "EQEP_CONFIG_CLOCK_DIR",     displayName: "Direction-count mode"},
@@ -107,7 +108,7 @@ conditionalConfig = conditionalConfig.concat([
         description : "Specify if both rising and falling edges should be counted or just rising edges",
         hidden      : false,
         default     : "EQEP_CONFIG_2X_RESOLUTION",
-        options     : 
+        options     :
         [
             {name: "EQEP_CONFIG_2X_RESOLUTION", displayName: "2X Resolution: Count rising and falling edge"},
             {name: "EQEP_CONFIG_1X_RESOLUTION", displayName: "1X Resolution: Count rising edge only"},
@@ -116,7 +117,7 @@ conditionalConfig = conditionalConfig.concat([
     {
         name        : "eqepSwap",
         displayName : "Swap QEPA and QEPB",
-        description : `Specify if the signals provided on QEPA and QEPB should be swapped 
+        description : `Specify if the signals provided on QEPA and QEPB should be swapped
                         before being processed.`,
         hidden      : false,
         default     : "EQEP_CONFIG_NO_SWAP",
@@ -235,7 +236,7 @@ conditionalConfig = conditionalConfig.concat([
     //                     ]
     //                 },
     //             ]
-    //         }, 
+    //         },
     //         // setPositionInitMode
     //         {
     //             name        : "positionStrobeEvents",
@@ -351,7 +352,7 @@ conditionalConfig = conditionalConfig.concat([
     //                     default     : false
     //                 },
     //             ]
-    //         }, 
+    //         },
     //     ]
     // },
     // {
@@ -450,7 +451,7 @@ conditionalConfig = conditionalConfig.concat([
     //             name        : "unitTimerValNS",
     //             displayName : "Unit Timer Period [ns]",
     //             description : "Value of Unit Timer in nanoseconds.",
-    //             getValue    : (inst) => 
+    //             getValue    : (inst) =>
     //             {
     //                 return ((inst.unitTimerPeriod / Common.getSYSCLK()) * 1000);
     //             },
@@ -458,7 +459,7 @@ conditionalConfig = conditionalConfig.concat([
     //         },
     //     ]
     // },
-    
+
     // {
     //     name            : "GROUP_WATCHDOG",
     //     displayName     : "EQEP Watchdog Timer",
@@ -492,7 +493,7 @@ conditionalConfig = conditionalConfig.concat([
     //             name        : "watchdogTimerValueNS",
     //             displayName : "EQEP Watchdog Timer Value [ns]",
     //             description : "Value of EQEP Watchdog Timer in nanoseconds.",
-    //             getValue    : (inst) => 
+    //             getValue    : (inst) =>
     //             {
     //                 return ((1 / Common.getSYSCLK()) * 1000);
     //             },
@@ -500,7 +501,7 @@ conditionalConfig = conditionalConfig.concat([
     //         },
     //     ]
     // },
-    
+
 
 //]);
 config.push(
@@ -508,7 +509,7 @@ config.push(
         name : "Group_Peripheral",
         collapsed : false,
         displayName: "Peripheral Configuration",
-        config :[]  
+        config :[]
     }
 )
 config[config.length - 1].config.push(
@@ -520,7 +521,7 @@ config[config.length - 1].config.push(
         hidden      : false,
         default     : device_driverlib_peripheral.EQEP_EmulationMode[0].name,
         options     : device_driverlib_peripheral.EQEP_EmulationMode
-     
+
    }
 )
 
@@ -623,7 +624,7 @@ config[config.length-1].config.push(
                         ]
                     },
                 ]
-            }, 
+            },
             // setPositionInitMode
             {
                 name        : "positionStrobeEvents",
@@ -739,7 +740,7 @@ config[config.length-1].config.push(
                         default     : false
                     },
                 ]
-            }, 
+            },
         ]
     },
     {
@@ -838,7 +839,7 @@ config[config.length-1].config.push(
                 name        : "unitTimerValNS",
                 displayName : "Unit Timer Period [ns]",
                 description : "Value of Unit Timer in nanoseconds.",
-                getValue    : (inst) => 
+                getValue    : (inst) =>
                 {
                     return ((inst.unitTimerPeriod / Common.getSYSCLK()) * 1000);
                 },
@@ -846,7 +847,7 @@ config[config.length-1].config.push(
             },
         ]
     },
-    
+
     {
         name            : "GROUP_WATCHDOG",
         displayName     : "EQEP Watchdog Timer",
@@ -880,7 +881,7 @@ config[config.length-1].config.push(
                 name        : "watchdogTimerValueNS",
                 displayName : "EQEP Watchdog Timer Value [ns]",
                 description : "Value of EQEP Watchdog Timer in nanoseconds.",
-                getValue    : (inst) => 
+                getValue    : (inst) =>
                 {
                     return ((1 / Common.getSYSCLK()) * 1000);
                 },
@@ -888,7 +889,7 @@ config[config.length-1].config.push(
             },
         ]
     },
-    
+
 )
 
 config.push(
@@ -902,7 +903,7 @@ config.push(
 
 if (device_driverlib_peripheral.EQEP_Source){
         config[config.length - 1].config.push(
-            
+
             // selectSource
             {
                 name        : "selectSourceA",
@@ -931,7 +932,7 @@ if (device_driverlib_peripheral.EQEP_Source){
         )
     }
 if (device_driverlib_peripheral.EQEP_StrobeSource){
-    
+
     config[config.length - 1].config.push(
         // setStrobeSource
         {
@@ -986,7 +987,7 @@ config.push(
                 hidden      : false,
                 default     : [],
                 minSelections: 0,
-                options     : device_driverlib_peripheral.EQEP_INT 
+                options     : device_driverlib_peripheral.EQEP_INT
             },
         ]
     },
@@ -1002,6 +1003,15 @@ config.push(
 
 
 function onValidate(inst, validation) {
+    var selectedInstance = inst.eqepBase.replace("_BASE","");// e.g., "EQEP1"
+    if (Common.is_instance_not_in_variant(selectedInstance)) {
+        validation.logError(
+            `${selectedInstance} is not supported for ${Common.getVariant().replace(/^TMS320/, '')}.`,
+            inst,
+            "eqepBase"
+        );
+    }
+
     /* Validate Position Counter Max up to 32 bit unsigned int */
     var usedEQEPInsts = [];
     for (var instance_index in inst.$module.$instances)
@@ -1031,11 +1041,11 @@ function onValidate(inst, validation) {
         var allDuplicates = "";
         for (var duplicateNamesIndex in duplicatesResult.duplicates)
         {
-            allDuplicates = allDuplicates + Common.stringOrEmpty(allDuplicates, ", ") 
+            allDuplicates = allDuplicates + Common.stringOrEmpty(allDuplicates, ", ")
                             + duplicatesResult.duplicates[duplicateNamesIndex];
         }
         validation.logError(
-            "The EQEP Instance used. Duplicates: " + allDuplicates, 
+            "The EQEP Instance used. Duplicates: " + allDuplicates,
             inst, "eqepBase");
     }
 
@@ -1045,13 +1055,13 @@ function onValidate(inst, validation) {
     if (inst.positionCounterMax < 0 || inst.positionCounterMax > 4294967295)
     {
         validation.logError(
-            "Enter an integer for Position Counter Maximum between 0 and 4,294,967,295!", 
+            "Enter an integer for Position Counter Maximum between 0 and 4,294,967,295!",
             inst, "positionCounterMax");
     }
     if (!Number.isInteger(inst.positionCounterMax))
     {
         validation.logError(
-            "Position Counter Maximum must be an integer", 
+            "Position Counter Maximum must be an integer",
             inst, "positionCounterMax");
     }
 
@@ -1059,27 +1069,27 @@ function onValidate(inst, validation) {
     if (inst.initialPosition < 0 || inst.initialPosition > 4294967295)
     {
         validation.logError(
-            "Enter an integer for Position Counter Initialization Value between 0 and 4,294,967,295!", 
+            "Enter an integer for Position Counter Initialization Value between 0 and 4,294,967,295!",
             inst, "initialPosition");
     }
     if (!Number.isInteger(inst.initialPosition))
     {
         validation.logError(
-            "Position Counter Initialization Value must be an integer", 
+            "Position Counter Initialization Value must be an integer",
             inst, "initialPosition");
     }
-    
+
     /* Validate Unit Timer Period up to 32 bit unsigned int */
     if (inst.unitTimerPeriod < 0 || inst.unitTimerPeriod > 4294967295)
     {
         validation.logError(
-            "Enter an integer for Unit Timer Period between 0 and 4,294,967,295!", 
+            "Enter an integer for Unit Timer Period between 0 and 4,294,967,295!",
             inst, "unitTimerPeriod");
     }
     if (!Number.isInteger(inst.unitTimerPeriod))
     {
         validation.logError(
-            "Unit Timer Period must be an integer", 
+            "Unit Timer Period must be an integer",
             inst, "unitTimerPeriod");
     }
 
@@ -1087,41 +1097,41 @@ function onValidate(inst, validation) {
     if (inst.setPosition < 0 || inst.setPosition > 4294967295)
     {
         validation.logError(
-            "Enter an integer for Encoder Position between 0 and 4,294,967,295!", 
+            "Enter an integer for Encoder Position between 0 and 4,294,967,295!",
             inst, "setPosition");
     }
     if (!Number.isInteger(inst.setPosition))
     {
         validation.logError(
-            "Encoder Position must be an integer", 
+            "Encoder Position must be an integer",
             inst, "setPosition");
     }
-    
+
     /* Validate Watchdog Timer Period up to 16 bit unsigned int */
     if (inst.watchdogTimerPeriod < 0 || inst.watchdogTimerPeriod > 65535)
     {
         validation.logError(
-            "Enter an integer for EQEP Watchdog Timer Period between 0 and 65,535!", 
+            "Enter an integer for EQEP Watchdog Timer Period between 0 and 65,535!",
             inst, "watchdogTimerPeriod");
     }
     if (!Number.isInteger(inst.watchdogTimerPeriod))
     {
         validation.logError(
-            "EQEP Watchdog Timer Period must be an integer", 
+            "EQEP Watchdog Timer Period must be an integer",
             inst, "watchdogTimerPeriod");
     }
-    
+
     /* Validate Watchdog Timer Value up to 16 bit unsigned int */
     if (inst.watchdogTimerValue < 0 || inst.watchdogTimerValue > 65535)
     {
         validation.logError(
-            "Enter an integer for EQEP Watchdog Timer Value between 0 and 65,535!", 
+            "Enter an integer for EQEP Watchdog Timer Value between 0 and 65,535!",
             inst, "watchdogTimerValue");
     }
     if (!Number.isInteger(inst.watchdogTimerValue))
     {
         validation.logError(
-            "EQEP Watchdog Timer Value must be an integer", 
+            "EQEP Watchdog Timer Value must be an integer",
             inst, "watchdogTimerValue");
     }
 
@@ -1129,13 +1139,13 @@ function onValidate(inst, validation) {
     if (inst.compareValue < 0 || inst.compareValue > 4294967295)
     {
         validation.logError(
-            "Enter an integer for Compare Value between 0 and 4,294,967,295!", 
+            "Enter an integer for Compare Value between 0 and 4,294,967,295!",
             inst, "compareValue");
     }
     if (!Number.isInteger(inst.compareValue))
     {
         validation.logError(
-            "Compare Value between must be an integer", 
+            "Compare Value between must be an integer",
             inst, "compareValue");
     }
 
@@ -1143,13 +1153,13 @@ function onValidate(inst, validation) {
     if (inst.compareCycles < 0 || inst.compareCycles > 65535)
     {
         validation.logError(
-            "Enter an integer for Compare Cycles between 0 and 65,535!", 
+            "Enter an integer for Compare Cycles between 0 and 65,535!",
             inst, "compareCycles");
     }
     if (!Number.isInteger(inst.compareCycles))
     {
         validation.logError(
-            "Compare Cycles must be an integer", 
+            "Compare Cycles must be an integer",
             inst, "compareCycles");
     }
 
@@ -1175,24 +1185,25 @@ if (Common.onlyPinmux())
     config = [config[config.length - 1]];
 }
 var numberOfEQEPs = 6;
+
 var eqepModule = {
     peripheralName: "EQEP",
     displayName: "EQEP",
-    maxInstances: numberOfEQEPs,
+    totalMaxInstances: Common.countinstances("EQEP",numberOfEQEPs),
     defaultInstanceName: "myEQEP",
     description: "Enhanced Quadrature Encoder Peripheral",
     longDescription: longDescription,
     //longDescription: longDescription + "\n" + (Common.getCollateralFindabilityList("EQEP")),
     filterHardware : filterHardware,
-    config: config,
+    config: Common.filterConfigsIfInSetupMode(config),
     moduleInstances: (inst) => {
         var ownedInstances = []
-        
+
         if (inst.useInterrupts && inst.registerInterrupts)
         {
 	        ownedInstances = ownedInstances.concat([{
                 name: "eqepInt",
-                group : "GROUP_INTERRUPTS",      
+                group : "GROUP_INTERRUPTS",
                 displayName: "EQEP Interrupt",
                 moduleName: "/driverlib/interrupt.js",
                 collapsed: true,
@@ -1224,9 +1235,11 @@ var eqepModule = {
                 moduleName: "/driverlib/perConfig.js",
                 collapsed: false,
                 requiredArgs:{
+                    cpuSel: inst.$assignedContext ?? system.context,
                     pinmuxPeripheralModule : "",
                     peripheralInst: inst.eqepBase.replace("_BASE", "")
-                }
+                },
+                shouldBeAllocatedAsResource: true,
             },
         ])
     	return ownedInstances;
@@ -1235,6 +1248,7 @@ var eqepModule = {
         boardc : "/driverlib/eqep/eqep.board.c.xdt",
         boardh : "/driverlib/eqep/eqep.board.h.xdt"
     },
+    shouldBeAllocatedAsResource : true,
     validate    : onValidate,
 };
 

@@ -66,10 +66,11 @@ let globalConfig = [
         hidden      : false,
         readOnly    : true,
         default     : "ESMSYSTEM",
+        shouldBeAllocatedAsResource: true
     }
 ]
 
-if (Common.isContextCPU1())
+if (Common.isContextCPU1() || (system.resourceAllocation.mode != "OFF"))
 {
     globalConfig = globalConfig.concat([
         {
@@ -78,6 +79,7 @@ if (Common.isContextCPU1())
             description : 'Select to configure Error pin for use.',
             default     : true,
             onChange    : onChangeUseErrorPin,
+            shouldBeAllocatedAsResource: true
         },
         {
             name        : "errorPinCounterValue",
@@ -86,6 +88,7 @@ if (Common.isContextCPU1())
             hidden      : false,
             displayFormat: "hex",
             default     : 0xFFFFFF,
+            shouldBeAllocatedAsResource: true
         },
         {
             name        : "outputPinMode",
@@ -95,6 +98,7 @@ if (Common.isContextCPU1())
             default     : device_driverlib_peripheral.ESM_OutputPinMode[0].name,
             options     : device_driverlib_peripheral.ESM_OutputPinMode,
             onChange    : onChangeOutputPinMode,
+            shouldBeAllocatedAsResource: true
         },
         {
             name        : "levelModePolarity",
@@ -103,6 +107,7 @@ if (Common.isContextCPU1())
             hidden      : false,
             default     : device_driverlib_peripheral.ESM_LevelModePolarity[0].name,
             options     : device_driverlib_peripheral.ESM_LevelModePolarity,
+            shouldBeAllocatedAsResource: true
         },
         {
             name        : "pwmHighCounterValue",
@@ -111,6 +116,7 @@ if (Common.isContextCPU1())
             hidden      : true,
             displayFormat: "hex",
             default     : 0xFFFFFF,
+            shouldBeAllocatedAsResource: true
         },
         {
             name        : "pwmLowCounterValue",
@@ -119,12 +125,14 @@ if (Common.isContextCPU1())
             hidden      : true,
             displayFormat: "hex",
             default     : 0xFFFFFF,
+            shouldBeAllocatedAsResource: true
         },
         {
             name        : "errorPinMonitoring",
             displayName : "Error Pin Monitoring",
             description : 'Enable Error pin monitoring',
             default     : false,
+            shouldBeAllocatedAsResource: true
         },
     ])
 }
@@ -257,23 +265,27 @@ var esmSysModule = {
     defaultInstanceName: "myErrorSignalingSys",
     description: "Error Signaling module configuration",
     // longDescription : longDescription,
-    config: config,
-    sharedModuleInstances : sharedModuleInstances,
     templates: {
         boardh : "/driverlib/esm/esmsystem.board.h.xdt",
         boardc : "/driverlib/esm/esmsystem.board.c.xdt",
     },
-    validate    : onValidate,
     moduleStatic : {
         name: "esmSysGlobal",
         displayName: "Error Signaling Global",
         config: globalConfig,
         validate : onValidateStatic,
         pinmuxRequirements : Pinmux.esmPinmuxRequirements,
+        shouldBeAllocatedAsResource: true,
+        alwaysAllocateAsResource: true
     },
-    uiAdd : "staticAndInstance"
-    // uiAdd : "summary"
 };
+
+if(!Common.isAllocationSetupMode())
+{
+    esmSysModule.validate = onValidate;
+    esmSysModule.config   = Common.filterConfigsIfInSetupMode(config);
+    esmSysModule.uiAdd    = "staticAndInstance";
+}
 
 if (esmSysModule.maxInstances <= 0){
     delete esmSysModule.pinmuxRequirements;

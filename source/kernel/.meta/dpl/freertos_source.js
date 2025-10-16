@@ -5,12 +5,6 @@ exports = {
     moduleStatic:   {},
     config:         [],
     references: [
-        references.getReferencePath("CACHEP_NORTOS"),
-        references.getReferencePath("CPUID_C29"),
-        references.getReferencePath("CYCLECOUNTERP_NORTOS"),
-        references.getReferencePath("DEBUGP_LOG"),
-        references.getReferencePath("PRINTF"),
-        references.getReferencePath("TIMERP"),
         references.getReferencePath("CLOCKP_FREERTOS_C29"),
         references.getReferencePath("HWIP_FREERTOS_C29"),
         references.getReferencePath("HWIP_FREERTOS_C29_ASM"),

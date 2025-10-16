@@ -22,30 +22,35 @@ endif
 
 ifeq ($(CCS_HOST_OS),win32)
     CPU2APP_REL_PATH        := ..\\..\\cpu2App.bin
-    CPU3APP_PATH            := ..\\..\\cpu3App.bin
-    CPU3APP_REL_PATH        := ..\\..\\cpu3App.bin ..\\..\\cpu3App.cert.bin
+    CPU3APP_REL_PATH        := ..\\..\\cpu3App.bin
     CPU3APP_CERT_REL_PATH   := ..\\..\\cpu3App.cert.bin
     SECCFGCPU3_REL_PATH     := ..\\..\\seccfgCpu3.bin
     SECCFGCPU2_REL_PATH     := ..\\..\\seccfgCpu2.bin
-    DUMMY_CERT_RAM          := ..\\dummy_cert_ram.cert
-    DUMMY_CERT_FLASH        := ..\\dummy_cert_flash.cert
+    DUMMY_CERT_RAM          := ..\\dummy_cert_crypto_unlock_ram.cert
+    DUMMY_CERT_FLASH        := ..\\dummy_cert_crypto_unlock_flash.cert
     DUMMY_CERT_FLASH_CPU3   := ..\\dummy_cert_flash_cpu3.cert
     UPDATEDUMMYCERT         := updateDummyCert.exe
-    UPDATESYSCFG            := updateSysCfg.exe
+    UPDATECPUBINSIZE        := updateCpuBinSize.exe
     CONCAT                  := type
+    IF_EQUAL_CLOSE          :=
 else
     CPU2APP_REL_PATH        := ../../cpu2App.bin
-    CPU3APP_PATH            := ../../cpu3App.bin
-    CPU3APP_REL_PATH        := ../../cpu3App.bin ../../cpu3App.cert.bin
+    CPU3APP_REL_PATH        := ../../cpu3App.bin
     CPU3APP_CERT_REL_PATH   := ../../cpu3App.cert.bin
     SECCFGCPU3_REL_PATH     := ../../seccfgCpu3.bin
     SECCFGCPU2_REL_PATH     := ../../seccfgCpu2.bin
-    DUMMY_CERT_RAM          := ../dummy_cert_ram.cert
-    DUMMY_CERT_FLASH        := ../dummy_cert_flash.cert
+    DUMMY_CERT_RAM          := ../dummy_cert_crypto_unlock_ram.cert
+    DUMMY_CERT_FLASH        := ../dummy_cert_crypto_unlock_flash.cert
     DUMMY_CERT_FLASH_CPU3   := ../dummy_cert_flash_cpu3.cert
-    UPDATEDUMMYCERT         := updateDummyCert.bin
-    UPDATESYSCFG            := updateSysCfg.bin
     CONCAT                  := cat
+    IF_EQUAL_CLOSE          :=  || :
+    ifeq ($(CCS_HOST_OS),linux)
+        UPDATEDUMMYCERT         := updateDummyCert.bin
+        UPDATECPUBINSIZE        := updateCpuBinSize.bin
+    else
+        UPDATEDUMMYCERT         := updateDummyCert.mac.bin
+        UPDATECPUBINSIZE        := updateCpuBinSize.mac.bin
+    endif
 endif
 
 ifeq ($(CCS_HOST_OS),win32)
@@ -55,9 +60,14 @@ ifeq ($(CCS_HOST_OS),win32)
         $(eval $@_COM_TI_MCU_SDK_INSTALL_DIR= $(3))
         $(eval $@_BuildDirectory= $(4))
         if ${$@_FLAG} == 1  ${$@_NODE_TOOL} "${$@_COM_TI_MCU_SDK_INSTALL_DIR}/tools/clb_tool/clb_syscfg/dot_file_libraries/clbDotUtility.js"  "${$@_COM_TI_MCU_SDK_INSTALL_DIR}/tools/clb_tool/clb_syscfg/" "${$@_BuildDirectory}/syscfg" "${$@_BuildDirectory}/syscfg/clb.dot"
-        if ${$@_FLAG} == 1  rm -r "${$@_BuildDirectory}/diagrams"
+        if ${$@_FLAG} == 1  rd /s /q "${$@_BuildDirectory}/diagrams"
         if ${$@_FLAG} == 1  mkdir "${$@_BuildDirectory}/diagrams"
         if ${$@_FLAG} == 1  ${$@_NODE_TOOL} "${$@_COM_TI_MCU_SDK_INSTALL_DIR}/source/driverlib/.meta/generate_diagrams.js" "${$@_COM_TI_MCU_SDK_INSTALL_DIR}" "${$@_BuildDirectory}/diagrams" "${$@_BuildDirectory}/syscfg"
+    endef
+    define IF_EQUAL_OPEN
+        $(eval $@_LHS= $(1))
+        $(eval $@_RHS= $(2))
+        if ${$@_LHS} == ${$@_RHS}
     endef
 else
     define CREATE_DIAGRAM
@@ -69,6 +79,11 @@ else
         [ ${$@_FLAG} -eq 1 ] &&  rm -r "${$@_BuildDirectory}/diagrams" || :
         [ ${$@_FLAG} -eq 1 ] &&  mkdir "${$@_BuildDirectory}/diagrams" || :
         [ ${$@_FLAG} -eq 1 ] && ${$@_NODE_TOOL} "${$@_COM_TI_MCU_SDK_INSTALL_DIR}/source/driverlib/.meta/generate_diagrams.js" "${$@_COM_TI_MCU_SDK_INSTALL_DIR}" "${$@_BuildDirectory}/diagrams" "${$@_BuildDirectory}/syscfg" || :
+    endef
+    define IF_EQUAL_OPEN
+        $(eval $@_LHS= $(1))
+        $(eval $@_RHS= $(2))
+        [ ${$@_LHS} -eq ${$@_RHS} ] &&
     endef
 endif
 

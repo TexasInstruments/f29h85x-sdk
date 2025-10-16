@@ -810,6 +810,17 @@ typedef enum
 
 //*****************************************************************************
 //
+// Values that can be passed to EPWM_enableTripZone2Signals() and
+// EPWM_disableTripZone2Signals() as the tzSignal parameter.
+//
+//*****************************************************************************
+//! Cycle by cycle capture event
+#define EPWM_TZ_SIGNAL_CAPEVT_CBC    (0x1U)
+//! One-shot Capture event
+#define EPWM_TZ_SIGNAL_CAPEVT_OST    (0x100U)
+
+//*****************************************************************************
+//
 //! Values that can be passed to EPWM_setTripZoneDigitalCompareEventCondition()
 //! as the \e dcType parameter.
 //
@@ -967,61 +978,61 @@ typedef enum
     EPWM_XTBPRD_ACTIVE = 0x10U,
 
     //! XCMP1_SHADOW1
-    EPWM_XCMP1_SHADOW1 = 0x20U,
+    EPWM_XCMP1_SHADOW1 = 0x40U,
     //! XCMP2_SHADOW1
-    EPWM_XCMP2_SHADOW1 = 0x22U,
+    EPWM_XCMP2_SHADOW1 = 0x42U,
     //! XCMP3_SHADOW1
-    EPWM_XCMP3_SHADOW1 = 0x24U,
+    EPWM_XCMP3_SHADOW1 = 0x44U,
     //! XCMP4_SHADOW1
-    EPWM_XCMP4_SHADOW1 = 0x26U,
+    EPWM_XCMP4_SHADOW1 = 0x46U,
     //! XCMP5_SHADOW1
-    EPWM_XCMP5_SHADOW1 = 0x28U,
+    EPWM_XCMP5_SHADOW1 = 0x48U,
     //! XCMP6_SHADOW1
-    EPWM_XCMP6_SHADOW1 = 0x2AU,
+    EPWM_XCMP6_SHADOW1 = 0x4AU,
     //! XCMP7_SHADOW1
-    EPWM_XCMP7_SHADOW1 = 0x2CU,
+    EPWM_XCMP7_SHADOW1 = 0x4CU,
     //! XCMP8_SHADOW1
-    EPWM_XCMP8_SHADOW1 = 0x2EU,
+    EPWM_XCMP8_SHADOW1 = 0x4EU,
     //! XTBPRD_SHADOW1
-    EPWM_XTBPRD_SHADOW1 = 0x30U,
+    EPWM_XTBPRD_SHADOW1 = 0x50U,
 
     //! XCMP1_SHADOW2
-    EPWM_XCMP1_SHADOW2 = 0x40U,
+    EPWM_XCMP1_SHADOW2 = 0x80U,
     //! XCMP2_SHADOW2
-    EPWM_XCMP2_SHADOW2 = 0x42U,
+    EPWM_XCMP2_SHADOW2 = 0x82U,
     //! XCMP3_SHADOW2
-    EPWM_XCMP3_SHADOW2 = 0x44U,
+    EPWM_XCMP3_SHADOW2 = 0x84U,
     //! XCMP4_SHADOW2
-    EPWM_XCMP4_SHADOW2 = 0x46U,
+    EPWM_XCMP4_SHADOW2 = 0x86U,
     //! XCMP5_SHADOW2
-    EPWM_XCMP5_SHADOW2 = 0x48U,
+    EPWM_XCMP5_SHADOW2 = 0x88U,
     //! XCMP6_SHADOW2
-    EPWM_XCMP6_SHADOW2 = 0x4AU,
+    EPWM_XCMP6_SHADOW2 = 0x8AU,
     //! XCMP7_SHADOW2
-    EPWM_XCMP7_SHADOW2 = 0x4CU,
+    EPWM_XCMP7_SHADOW2 = 0x8CU,
     //! XCMP8_SHADOW2
-    EPWM_XCMP8_SHADOW2 = 0x4EU,
+    EPWM_XCMP8_SHADOW2 = 0x8EU,
     //! XTBPRD_SHADOW2
-    EPWM_XTBPRD_SHADOW2 = 0x50U,
+    EPWM_XTBPRD_SHADOW2 = 0x90U,
 
     //! XCMP1_SHADOW3
-    EPWM_XCMP1_SHADOW3 = 0x60U,
+    EPWM_XCMP1_SHADOW3 = 0xC0U,
     //! XCMP2_SHADOW3
-    EPWM_XCMP2_SHADOW3 = 0x62U,
+    EPWM_XCMP2_SHADOW3 = 0xC2U,
     //! XCMP3_SHADOW3
-    EPWM_XCMP3_SHADOW3 = 0x64U,
+    EPWM_XCMP3_SHADOW3 = 0xC4U,
     //! XCMP4_SHADOW3
-    EPWM_XCMP4_SHADOW3 = 0x66U,
+    EPWM_XCMP4_SHADOW3 = 0xC6U,
     //! XCMP5_SHADOW3
-    EPWM_XCMP5_SHADOW3 = 0x68U,
+    EPWM_XCMP5_SHADOW3 = 0xC8U,
     //! XCMP6_SHADOW3
-    EPWM_XCMP6_SHADOW3 = 0x6AU,
+    EPWM_XCMP6_SHADOW3 = 0xCAU,
     //! XCMP7_SHADOW3
-    EPWM_XCMP7_SHADOW3 = 0x6CU,
+    EPWM_XCMP7_SHADOW3 = 0xCCU,
     //! XCMP8_SHADOW3
-    EPWM_XCMP8_SHADOW3 = 0x6EU,
+    EPWM_XCMP8_SHADOW3 = 0xCEU,
     //! XTBPRD_SHADOW3
-    EPWM_XTBPRD_SHADOW3 = 0x70U,
+    EPWM_XTBPRD_SHADOW3 = 0xD0U,
 
 }EPWM_XCMPReg;
 
@@ -1038,13 +1049,13 @@ typedef enum
     //! CMPD_SHADOW1
     EPWM_CMPD_SHADOW1 = 0x2U,
     //! CMPC_SHADOW2
-    EPWM_CMPC_SHADOW2 = 0x20U,
+    EPWM_CMPC_SHADOW2 = 0x40U,
     //! CMPD_SHADOW2
-    EPWM_CMPD_SHADOW2 = 0x22U,
+    EPWM_CMPD_SHADOW2 = 0x42U,
     //! CMPC_SHADOW3
-    EPWM_CMPC_SHADOW3 = 0x40U,
+    EPWM_CMPC_SHADOW3 = 0x80U,
     //! CMPD_SHADOW3
-    EPWM_CMPD_SHADOW3 = 0x42U
+    EPWM_CMPD_SHADOW3 = 0x82U
 
 }EPWM_XCompareReg;
 
@@ -1061,17 +1072,17 @@ typedef enum
     //! XMIN_ACTIVE
     EPWM_XMIN_ACTIVE = 0x1U,
     //! XMAX_SHADOW1
-    EPWM_XMAX_SHADOW1 = 0x20U,
+    EPWM_XMAX_SHADOW1 = 0x40U,
     //! XMIN_SHADOW1
-    EPWM_XMIN_SHADOW1 = 0x21U,
+    EPWM_XMIN_SHADOW1 = 0x41U,
     //! XMAX_SHADOW2
-    EPWM_XMAX_SHADOW2 = 0x40U,
+    EPWM_XMAX_SHADOW2 = 0x80U,
     //! XMIN_SHADOW2
-    EPWM_XMIN_SHADOW2 = 0x41U,
+    EPWM_XMIN_SHADOW2 = 0x81U,
     //! XMAX_SHADOW3
-    EPWM_XMAX_SHADOW3 = 0x60U,
+    EPWM_XMAX_SHADOW3 = 0xC0U,
     //! XMIN_SHADOW3
-    EPWM_XMIN_SHADOW3 = 0x61U
+    EPWM_XMIN_SHADOW3 = 0xC1U
 
 }EPWM_XMinMaxReg;
 
@@ -2456,7 +2467,6 @@ typedef struct
 //
 //*****************************************************************************
 #ifdef DEBUG
-__attribute__((always_inline))
 static inline bool EPWM_isBaseValid(uint32_t base)
 {
     return(
@@ -2519,7 +2529,6 @@ static inline bool EPWM_isBaseValid(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_setTimeBaseCounter(uint32_t base, uint16_t count)
 {
@@ -2550,7 +2559,6 @@ EPWM_setTimeBaseCounter(uint32_t base, uint16_t count)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_setCountModeAfterSync(uint32_t base, EPWM_SyncCountMode mode)
 {
@@ -2598,7 +2606,6 @@ EPWM_setCountModeAfterSync(uint32_t base, EPWM_SyncCountMode mode)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_setClockPrescaler(uint32_t base, EPWM_ClockDivider prescaler,
                        EPWM_HSClockDivider highSpeedPrescaler)
@@ -2631,7 +2638,6 @@ EPWM_setClockPrescaler(uint32_t base, EPWM_ClockDivider prescaler,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_forceSyncPulse(uint32_t base)
 {
@@ -2673,7 +2679,6 @@ EPWM_forceSyncPulse(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_setSyncInPulseSource(uint32_t base, EPWM_SyncInPulseSource source)
 {
@@ -2725,7 +2730,6 @@ EPWM_setSyncInPulseSource(uint32_t base, EPWM_SyncInPulseSource source)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_enableSyncOutPulseSource(uint32_t base, uint16_t source)
 {
@@ -2772,7 +2776,6 @@ EPWM_enableSyncOutPulseSource(uint32_t base, uint16_t source)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_disableSyncOutPulseSource(uint32_t base, uint16_t source)
 {
@@ -2806,7 +2809,6 @@ EPWM_disableSyncOutPulseSource(uint32_t base, uint16_t source)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_setOneShotSyncOutTrigger(uint32_t base,
                               EPWM_OneShotSyncOutTrigger trigger)
@@ -2840,7 +2842,6 @@ EPWM_setOneShotSyncOutTrigger(uint32_t base,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_setPeriodLoadMode(uint32_t base, EPWM_PeriodLoadMode loadMode)
 {
@@ -2876,7 +2877,6 @@ EPWM_setPeriodLoadMode(uint32_t base, EPWM_PeriodLoadMode loadMode)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_enablePhaseShiftLoad(uint32_t base)
 {
@@ -2901,7 +2901,6 @@ EPWM_enablePhaseShiftLoad(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_disablePhaseShiftLoad(uint32_t base)
 {
@@ -2932,7 +2931,6 @@ EPWM_disablePhaseShiftLoad(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_setTimeBaseCounterMode(uint32_t base, EPWM_TimeBaseCountMode counterMode)
 {
@@ -2968,7 +2966,6 @@ EPWM_setTimeBaseCounterMode(uint32_t base, EPWM_TimeBaseCountMode counterMode)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_selectPeriodLoadEvent(uint32_t base,
                            EPWM_PeriodShadowLoadMode shadowLoadMode)
@@ -2996,7 +2993,6 @@ EPWM_selectPeriodLoadEvent(uint32_t base,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_enableOneShotSync(uint32_t base)
 {
@@ -3021,7 +3017,6 @@ EPWM_enableOneShotSync(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_disableOneShotSync(uint32_t base)
 {
@@ -3046,7 +3041,6 @@ EPWM_disableOneShotSync(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_startOneShotSync(uint32_t base)
 {
@@ -3071,7 +3065,6 @@ EPWM_startOneShotSync(uint32_t base)
 //! \return returns time base counter value
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline uint16_t
 EPWM_getTimeBaseCounterValue(uint32_t base)
 {
@@ -3097,7 +3090,6 @@ EPWM_getTimeBaseCounterValue(uint32_t base)
 //!         Returns false if the counter hasn't reached 0xFFFF.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline bool
 EPWM_getTimeBaseCounterOverflowStatus(uint32_t base)
 {
@@ -3124,7 +3116,6 @@ EPWM_getTimeBaseCounterOverflowStatus(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_clearTimeBaseCounterOverflowEvent(uint32_t base)
 {
@@ -3150,7 +3141,6 @@ EPWM_clearTimeBaseCounterOverflowEvent(uint32_t base)
 //!         Returns false if there is no event.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline bool
 EPWM_getSyncStatus(uint32_t base)
 {
@@ -3176,7 +3166,6 @@ EPWM_getSyncStatus(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_clearSyncEvent(uint32_t base)
 {
@@ -3203,7 +3192,6 @@ EPWM_clearSyncEvent(uint32_t base)
 //!                 counting down.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline uint16_t
 EPWM_getTimeBaseCounterDirection(uint32_t base)
 {
@@ -3233,7 +3221,6 @@ EPWM_getTimeBaseCounterDirection(uint32_t base)
 //
 //*****************************************************************************
 
-__attribute__((always_inline))
 static inline void
 EPWM_setPhaseShift(uint32_t base, uint16_t phaseCount)
 {
@@ -3265,7 +3252,6 @@ EPWM_setPhaseShift(uint32_t base, uint16_t phaseCount)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_setTimeBasePeriod(uint32_t base, uint16_t periodCount)
 {
@@ -3290,7 +3276,6 @@ EPWM_setTimeBasePeriod(uint32_t base, uint16_t periodCount)
 //! \return The period count value.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline uint16_t
 EPWM_getTimeBasePeriod(uint32_t base)
 {
@@ -3335,7 +3320,6 @@ EPWM_getTimeBasePeriod(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_setCounterCompareShadowLoadMode(uint32_t base,
                                      EPWM_CounterCompareModule compModule,
@@ -3400,7 +3384,6 @@ EPWM_setCounterCompareShadowLoadMode(uint32_t base,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_disableCounterCompareShadowLoadMode(uint32_t base,
                                          EPWM_CounterCompareModule compModule)
@@ -3454,7 +3437,6 @@ EPWM_disableCounterCompareShadowLoadMode(uint32_t base,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_setCounterCompareValue(uint32_t base, EPWM_CounterCompareModule compModule,
                             uint16_t compCount)
@@ -3507,7 +3489,6 @@ EPWM_setCounterCompareValue(uint32_t base, EPWM_CounterCompareModule compModule,
 //! \return The counter compare count value.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline uint16_t
 EPWM_getCounterCompareValue(uint32_t base, EPWM_CounterCompareModule compModule)
 {
@@ -3561,7 +3542,6 @@ EPWM_getCounterCompareValue(uint32_t base, EPWM_CounterCompareModule compModule)
 //!         Returns false if the shadow register is not full.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline bool
 EPWM_getCounterCompareShadowStatus(uint32_t base,
                                    EPWM_CounterCompareModule compModule)
@@ -3597,7 +3577,6 @@ EPWM_getCounterCompareShadowStatus(uint32_t base,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_enableLinkDutyHR(uint32_t base)
 {
@@ -3623,7 +3602,6 @@ EPWM_enableLinkDutyHR(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_disableLinkDutyHR(uint32_t base)
 {
@@ -3670,7 +3648,6 @@ EPWM_disableLinkDutyHR(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_setActionQualifierShadowLoadMode(uint32_t base,
                                       EPWM_ActionQualifierModule aqModule,
@@ -3715,7 +3692,6 @@ EPWM_setActionQualifierShadowLoadMode(uint32_t base,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_disableActionQualifierShadowLoadMode(uint32_t base,
                                           EPWM_ActionQualifierModule aqModule)
@@ -3757,7 +3733,6 @@ EPWM_disableActionQualifierShadowLoadMode(uint32_t base,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_setActionQualifierT1TriggerSource(uint32_t base,
                                      EPWM_ActionQualifierTriggerSource trigger)
@@ -3797,7 +3772,6 @@ EPWM_setActionQualifierT1TriggerSource(uint32_t base,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_setActionQualifierT2TriggerSource(uint32_t base,
                                       EPWM_ActionQualifierTriggerSource trigger)
@@ -3856,7 +3830,6 @@ EPWM_setActionQualifierT2TriggerSource(uint32_t base,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_setActionQualifierAction(uint32_t base,
                               EPWM_ActionQualifierOutputModule epwmOutput,
@@ -3983,7 +3956,6 @@ EPWM_setActionQualifierAction(uint32_t base,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_setActionQualifierActionComplete(uint32_t base,
                                    EPWM_ActionQualifierOutputModule epwmOutput,
@@ -4067,7 +4039,6 @@ EPWM_setActionQualifierActionComplete(uint32_t base,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_setAdditionalActionQualifierActionComplete(uint32_t base,
                                EPWM_ActionQualifierOutputModule epwmOutput,
@@ -4112,7 +4083,6 @@ EPWM_setAdditionalActionQualifierActionComplete(uint32_t base,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_setActionQualifierContSWForceShadowMode(uint32_t base,
                                              EPWM_ActionQualifierContForce mode)
@@ -4152,7 +4122,6 @@ EPWM_setActionQualifierContSWForceShadowMode(uint32_t base,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_setActionQualifierContSWForceAction(uint32_t base,
                                     EPWM_ActionQualifierOutputModule epwmOutput,
@@ -4203,7 +4172,6 @@ EPWM_setActionQualifierContSWForceAction(uint32_t base,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_setActionQualifierSWAction(uint32_t base,
                                 EPWM_ActionQualifierOutputModule epwmOutput,
@@ -4246,7 +4214,6 @@ EPWM_setActionQualifierSWAction(uint32_t base,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_forceActionQualifierSWAction(uint32_t base,
                                   EPWM_ActionQualifierOutputModule epwmOutput)
@@ -4293,7 +4260,6 @@ EPWM_forceActionQualifierSWAction(uint32_t base,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_setDeadBandOutputSwapMode(uint32_t base, EPWM_DeadBandOutput output,
                                bool enableSwapMode)
@@ -4344,7 +4310,6 @@ EPWM_setDeadBandOutputSwapMode(uint32_t base, EPWM_DeadBandOutput output,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_setDeadBandDelayMode(uint32_t base, EPWM_DeadBandDelayMode delayMode,
                           bool enableDelayMode)
@@ -4394,7 +4359,6 @@ EPWM_setDeadBandDelayMode(uint32_t base, EPWM_DeadBandDelayMode delayMode,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_setDeadBandDelayPolarity(uint32_t base,
                               EPWM_DeadBandDelayMode delayMode,
@@ -4433,7 +4397,6 @@ EPWM_setDeadBandDelayPolarity(uint32_t base,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_setRisingEdgeDeadBandDelayInput(uint32_t base, uint16_t input)
 {
@@ -4471,7 +4434,6 @@ EPWM_setRisingEdgeDeadBandDelayInput(uint32_t base, uint16_t input)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_setFallingEdgeDeadBandDelayInput(uint32_t base, uint16_t input)
 {
@@ -4524,7 +4486,6 @@ EPWM_setFallingEdgeDeadBandDelayInput(uint32_t base, uint16_t input)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_setDeadBandControlShadowLoadMode(uint32_t base,
                                       EPWM_DeadBandControlLoadMode loadMode)
@@ -4553,7 +4514,6 @@ EPWM_setDeadBandControlShadowLoadMode(uint32_t base,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_disableDeadBandControlShadowLoadMode(uint32_t base)
 {
@@ -4586,7 +4546,6 @@ EPWM_disableDeadBandControlShadowLoadMode(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_setRisingEdgeDelayCountShadowLoadMode(uint32_t base,
                                          EPWM_RisingEdgeDelayLoadMode loadMode)
@@ -4616,7 +4575,6 @@ EPWM_setRisingEdgeDelayCountShadowLoadMode(uint32_t base,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_disableRisingEdgeDelayCountShadowLoadMode(uint32_t base)
 {
@@ -4650,7 +4608,6 @@ EPWM_disableRisingEdgeDelayCountShadowLoadMode(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_setFallingEdgeDelayCountShadowLoadMode(uint32_t base,
                                         EPWM_FallingEdgeDelayLoadMode loadMode)
@@ -4681,7 +4638,6 @@ EPWM_setFallingEdgeDelayCountShadowLoadMode(uint32_t base,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_disableFallingEdgeDelayCountShadowLoadMode(uint32_t base)
 {
@@ -4714,7 +4670,6 @@ EPWM_disableFallingEdgeDelayCountShadowLoadMode(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_setDeadBandCounterClock(uint32_t base,
                              EPWM_DeadBandClockMode clockMode)
@@ -4744,7 +4699,6 @@ EPWM_setDeadBandCounterClock(uint32_t base,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_setRisingEdgeDelayCount(uint32_t base, uint16_t redCount)
 {
@@ -4772,7 +4726,6 @@ EPWM_setRisingEdgeDelayCount(uint32_t base, uint16_t redCount)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_setFallingEdgeDelayCount(uint32_t base, uint16_t fedCount)
 {
@@ -4801,7 +4754,6 @@ EPWM_setFallingEdgeDelayCount(uint32_t base, uint16_t fedCount)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_enableChopper(uint32_t base)
 {
@@ -4826,7 +4778,6 @@ EPWM_enableChopper(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_disableChopper(uint32_t base)
 {
@@ -4855,7 +4806,6 @@ EPWM_disableChopper(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_setChopperDutyCycle(uint32_t base, uint16_t dutyCycleCount)
 {
@@ -4887,7 +4837,6 @@ EPWM_setChopperDutyCycle(uint32_t base, uint16_t dutyCycleCount)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_setChopperFreq(uint32_t base, uint16_t freqDiv)
 {
@@ -4920,7 +4869,6 @@ EPWM_setChopperFreq(uint32_t base, uint16_t freqDiv)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_setChopperFirstPulseWidth(uint32_t base, uint16_t firstPulseWidth)
 {
@@ -4974,7 +4922,6 @@ EPWM_setChopperFirstPulseWidth(uint32_t base, uint16_t firstPulseWidth)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_enableTripZoneSignals(uint32_t base, uint16_t tzSignal)
 {
@@ -5023,7 +4970,6 @@ EPWM_enableTripZoneSignals(uint32_t base, uint16_t tzSignal)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_disableTripZoneSignals(uint32_t base, uint16_t tzSignal)
 {
@@ -5038,6 +4984,71 @@ EPWM_disableTripZoneSignals(uint32_t base, uint16_t tzSignal)
 
     HWREGH(base + EPWM_O_TZSEL) &= ~tzSignal;
 
+}
+//*****************************************************************************
+//
+//! Enables Trip Zone 2 signal (TZSEL2).
+//!
+//! \param base is the base address of the EPWM module.
+//! \param tzSignal is the Trip Zone signal.
+//!
+//! This function enables the Trip Zone signals specified by tzSignal as a
+//! source for the Trip Zone module.
+//! Valid values for tzSignal are:
+//!   - EPWM_TZ_SIGNAL_CAPEVT_OST    - One-shot CAPEVT
+//!   - EPWM_TZ_SIGNAL_CAPEVT_CBC    - Cycle By Cycle CAPEVT
+//!
+//! \b note:  A logical OR of the valid values can be passed as the tzSignal
+//!           parameter.
+//!
+//! \return None.
+//
+//*****************************************************************************
+static inline void
+EPWM_enableTripZone2Signals(uint32_t base, uint16_t tzSignal)
+{
+    //
+    // Check the arguments
+    //
+    ASSERT(EPWM_isBaseValid(base));
+
+    //
+    // Set the trip zone bits
+    //
+    HWREGH(base + EPWM_O_TZSEL2) |= tzSignal;
+}
+
+//*****************************************************************************
+//
+//! Disables Trip Zone 2 signal (TZSEL2).
+//!
+//! \param base is the base address of the EPWM module.
+//! \param tzSignal is the Trip Zone signal.
+//!
+//! This function disables the Trip Zone signals specified by tzSignal as a
+//! source for the Trip Zone module.
+//! Valid values for tzSignal are:
+//!   - EPWM_TZ_SIGNAL_CAPEVT_OST    - One-shot CAPEVT
+//!   - EPWM_TZ_SIGNAL_CAPEVT_CBC    - Cycle By Cycle CAPEVT
+//!
+//! \b note:  A logical OR of the valid values can be passed as the tzSignal
+//!           parameter.
+//!
+//! \return None.
+//
+//*****************************************************************************
+static inline void
+EPWM_disableTripZone2Signals(uint32_t base, uint16_t tzSignal)
+{
+    //
+    // Check the arguments
+    //
+    ASSERT(EPWM_isBaseValid(base));
+
+    //
+    // Clear the trip zone bits
+    //
+    HWREGH(base + EPWM_O_TZSEL2) &= ~tzSignal;
 }
 //*****************************************************************************
 //
@@ -5071,7 +5082,6 @@ EPWM_disableTripZoneSignals(uint32_t base, uint16_t tzSignal)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_setTripZoneDigitalCompareEventCondition(uint32_t base,
                                  EPWM_TripZoneDigitalCompareOutput dcType,
@@ -5105,7 +5115,6 @@ EPWM_setTripZoneDigitalCompareEventCondition(uint32_t base,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_enableTripZoneAdvAction(uint32_t base)
 {
@@ -5132,7 +5141,6 @@ EPWM_enableTripZoneAdvAction(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_disableTripZoneAdvAction(uint32_t base)
 {
@@ -5180,7 +5188,6 @@ EPWM_disableTripZoneAdvAction(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_setTripZoneAction(uint32_t base, EPWM_TripZoneEvent tzEvent,
                        EPWM_TripZoneAction tzAction)
@@ -5237,7 +5244,6 @@ EPWM_setTripZoneAction(uint32_t base, EPWM_TripZoneEvent tzEvent,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_setTripZoneAdvAction(uint32_t base, EPWM_TripZoneAdvancedEvent tzAdvEvent,
                           EPWM_TripZoneAdvancedAction tzAdvAction)
@@ -5293,7 +5299,6 @@ EPWM_setTripZoneAdvAction(uint32_t base, EPWM_TripZoneAdvancedEvent tzAdvEvent,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_setTripZoneAdvDigitalCompareActionA(uint32_t base,
                               EPWM_TripZoneAdvDigitalCompareEvent tzAdvDCEvent,
@@ -5350,7 +5355,6 @@ EPWM_setTripZoneAdvDigitalCompareActionA(uint32_t base,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void EPWM_setTripZoneAdvDigitalCompareActionB(uint32_t base,
                               EPWM_TripZoneAdvDigitalCompareEvent tzAdvDCEvent,
                               EPWM_TripZoneAdvancedAction tzAdvDCAction)
@@ -5394,7 +5398,6 @@ static inline void EPWM_setTripZoneAdvDigitalCompareActionB(uint32_t base,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_enableTripZoneInterrupt(uint32_t base, uint16_t tzInterrupt)
 {
@@ -5434,7 +5437,6 @@ EPWM_enableTripZoneInterrupt(uint32_t base, uint16_t tzInterrupt)
 //! \return None.
 //
 //***************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_disableTripZoneInterrupt(uint32_t base, uint16_t tzInterrupt)
 {
@@ -5472,7 +5474,6 @@ EPWM_disableTripZoneInterrupt(uint32_t base, uint16_t tzInterrupt)
 //!         - EPWM_TZ_FLAG_CAPEVT  - Trip Zones Capture Event flag
 //
 //***************************************************************************
-__attribute__((always_inline))
 static inline uint16_t
 EPWM_getTripZoneFlagStatus(uint32_t base)
 {
@@ -5510,7 +5511,6 @@ EPWM_getTripZoneFlagStatus(uint32_t base)
 //!                                                capture event
 //
 //***************************************************************************
-__attribute__((always_inline))
 static inline uint16_t
 EPWM_getCycleByCycleTripZoneFlagStatus(uint32_t base)
 {
@@ -5547,7 +5547,6 @@ EPWM_getCycleByCycleTripZoneFlagStatus(uint32_t base)
 //!                                                 capture event
 //
 //***************************************************************************
-__attribute__((always_inline))
 static inline uint16_t
 EPWM_getOneShotTripZoneFlagStatus(uint32_t base)
 {
@@ -5581,7 +5580,6 @@ EPWM_getOneShotTripZoneFlagStatus(uint32_t base)
 //!  \return None.
 //
 //**************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_selectCycleByCycleTripZoneClearEvent(uint32_t base,
                                  EPWM_CycleByCycleTripZoneClearMode clearEvent)
@@ -5624,7 +5622,6 @@ EPWM_selectCycleByCycleTripZoneClearEvent(uint32_t base,
 //! \return None.
 //
 //***************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_clearTripZoneFlag(uint32_t base, uint16_t tzFlags)
 {
@@ -5665,7 +5662,6 @@ EPWM_clearTripZoneFlag(uint32_t base, uint16_t tzFlags)
 //! \return None.
 //
 //***************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_clearCycleByCycleTripZoneFlag(uint32_t base, uint16_t tzCBCFlags)
 {
@@ -5704,7 +5700,6 @@ EPWM_clearCycleByCycleTripZoneFlag(uint32_t base, uint16_t tzCBCFlags)
 //! \return None.
 //
 //***************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_clearOneShotTripZoneFlag(uint32_t base, uint16_t tzOSTFlags)
 {
@@ -5741,7 +5736,6 @@ EPWM_clearOneShotTripZoneFlag(uint32_t base, uint16_t tzOSTFlags)
 //! \return None.
 //
 //***************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_forceTripZoneEvent(uint32_t base, uint16_t tzForceEvent)
 {
@@ -5778,7 +5772,6 @@ EPWM_forceTripZoneEvent(uint32_t base, uint16_t tzForceEvent)
 //! \return None.
 //
 //***************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_enableTripOutSource(uint32_t base, EPWM_selectTripOutSource tzTripOut)
 {
@@ -5814,7 +5807,6 @@ EPWM_enableTripOutSource(uint32_t base, EPWM_selectTripOutSource tzTripOut)
 //! \return None.
 //
 //***************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_disableTripOutSource(uint32_t base, EPWM_selectTripOutSource tzTripOut)
 {
@@ -5844,7 +5836,6 @@ EPWM_disableTripOutSource(uint32_t base, EPWM_selectTripOutSource tzTripOut)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_enableInterrupt(uint32_t base)
 {
@@ -5869,7 +5860,6 @@ EPWM_enableInterrupt(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_disableInterrupt(uint32_t base)
 {
@@ -5911,7 +5901,6 @@ EPWM_disableInterrupt(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_setInterruptSource(uint32_t base, uint16_t interruptSource)
 {
@@ -5977,7 +5966,6 @@ EPWM_setInterruptSource(uint32_t base, uint16_t interruptSource)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_setInterruptEventCount(uint32_t base, uint16_t eventCount)
 {
@@ -6008,7 +5996,6 @@ EPWM_setInterruptEventCount(uint32_t base, uint16_t eventCount)
 //!         Returns false if no interrupt was generated
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline bool
 EPWM_getEventTriggerInterruptStatus(uint32_t base)
 {
@@ -6033,7 +6020,6 @@ EPWM_getEventTriggerInterruptStatus(uint32_t base)
 //! \return None
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_clearEventTriggerInterruptFlag(uint32_t base)
 {
@@ -6061,7 +6047,6 @@ EPWM_clearEventTriggerInterruptFlag(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_enableInterruptEventCountInit(uint32_t base)
 {
@@ -6087,7 +6072,6 @@ EPWM_enableInterruptEventCountInit(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_disableInterruptEventCountInit(uint32_t base)
 {
@@ -6116,7 +6100,6 @@ EPWM_disableInterruptEventCountInit(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_forceInterruptEventCountInit(uint32_t base)
 {
@@ -6144,7 +6127,6 @@ EPWM_forceInterruptEventCountInit(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_setInterruptEventCountInitValue(uint32_t base, uint16_t eventCount)
 {
@@ -6172,7 +6154,6 @@ EPWM_setInterruptEventCountInitValue(uint32_t base, uint16_t eventCount)
 //! \return The interrupt event counts that have occurred.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline uint16_t
 EPWM_getInterruptEventCount(uint32_t base)
 {
@@ -6198,7 +6179,6 @@ EPWM_getInterruptEventCount(uint32_t base)
 //! \return None
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_forceEventTriggerInterrupt(uint32_t base)
 {
@@ -6242,7 +6222,6 @@ EPWM_forceEventTriggerInterrupt(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_setMixEvtTriggerSource(uint32_t base, EPWM_ETMixSignalSelect etmixSignal,
                                 EPWM_ETMixTriggerSource interruptSource)
@@ -6280,7 +6259,6 @@ EPWM_setMixEvtTriggerSource(uint32_t base, EPWM_ETMixSignalSelect etmixSignal,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_enableADCTrigger(uint32_t base, EPWM_ADCStartOfConversionType adcSOCType)
 {
@@ -6316,7 +6294,6 @@ EPWM_enableADCTrigger(uint32_t base, EPWM_ADCStartOfConversionType adcSOCType)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_disableADCTrigger(uint32_t base, EPWM_ADCStartOfConversionType adcSOCType)
 {
@@ -6368,7 +6345,6 @@ EPWM_disableADCTrigger(uint32_t base, EPWM_ADCStartOfConversionType adcSOCType)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_setADCTriggerSource(uint32_t base,
                          EPWM_ADCStartOfConversionType adcSOCType,
@@ -6495,7 +6471,6 @@ EPWM_setADCTriggerSource(uint32_t base,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_setADCTriggerEventPrescale(uint32_t base,
                                 EPWM_ADCStartOfConversionType adcSOCType,
@@ -6546,7 +6521,6 @@ EPWM_setADCTriggerEventPrescale(uint32_t base,
 //!         Returns false if the selected adcSOCType SOC was not generated.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline bool
 EPWM_getADCTriggerFlagStatus(uint32_t base,
                              EPWM_ADCStartOfConversionType adcSOCType)
@@ -6577,7 +6551,6 @@ EPWM_getADCTriggerFlagStatus(uint32_t base,
 //! \return None
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_clearADCTriggerFlag(uint32_t base,
                          EPWM_ADCStartOfConversionType adcSOCType)
@@ -6611,7 +6584,6 @@ EPWM_clearADCTriggerFlag(uint32_t base,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_enableADCTriggerEventCountInit(uint32_t base,
                                     EPWM_ADCStartOfConversionType adcSOCType)
@@ -6644,7 +6616,6 @@ EPWM_enableADCTriggerEventCountInit(uint32_t base,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_disableADCTriggerEventCountInit(uint32_t base,
                                      EPWM_ADCStartOfConversionType adcSOCType)
@@ -6676,7 +6647,6 @@ EPWM_disableADCTriggerEventCountInit(uint32_t base,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_forceADCTriggerEventCountInit(uint32_t base,
                                    EPWM_ADCStartOfConversionType adcSOCType)
@@ -6709,7 +6679,6 @@ EPWM_forceADCTriggerEventCountInit(uint32_t base,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_setADCTriggerEventCountInitValue(uint32_t base,
                                       EPWM_ADCStartOfConversionType adcSOCType,
@@ -6752,7 +6721,6 @@ EPWM_setADCTriggerEventCountInitValue(uint32_t base,
 //! \return The SOC event counts that have occurred.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline uint16_t
 EPWM_getADCTriggerEventCount(uint32_t base,
                              EPWM_ADCStartOfConversionType adcSOCType)
@@ -6794,7 +6762,6 @@ EPWM_getADCTriggerEventCount(uint32_t base,
 //! \return None
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_forceADCTrigger(uint32_t base, EPWM_ADCStartOfConversionType adcSOCType)
 {
@@ -6836,7 +6803,6 @@ EPWM_forceADCTrigger(uint32_t base, EPWM_ADCStartOfConversionType adcSOCType)
 //! \return None
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_selectDigitalCompareTripInput(uint32_t base,
                                    EPWM_DigitalCompareTripInput tripSource,
@@ -6870,7 +6836,6 @@ EPWM_selectDigitalCompareTripInput(uint32_t base,
 //! \return None
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_enableDigitalCompareBlankingWindow(uint32_t base)
 {
@@ -6897,7 +6862,6 @@ EPWM_enableDigitalCompareBlankingWindow(uint32_t base)
 //! \return None
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_disableDigitalCompareBlankingWindow(uint32_t base)
 {
@@ -6925,7 +6889,6 @@ EPWM_disableDigitalCompareBlankingWindow(uint32_t base)
 //! \return None
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_enableDigitalCompareWindowInverseMode(uint32_t base)
 {
@@ -6952,7 +6915,6 @@ EPWM_enableDigitalCompareWindowInverseMode(uint32_t base)
 //! \return None
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_disableDigitalCompareWindowInverseMode(uint32_t base)
 {
@@ -6987,7 +6949,6 @@ EPWM_disableDigitalCompareWindowInverseMode(uint32_t base)
 //! \return None
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_setDigitalCompareBlankingEvent(uint32_t base,
                                 EPWM_DigitalCompareBlankingPulse blankingPulse)
@@ -7024,7 +6985,6 @@ EPWM_setDigitalCompareBlankingEvent(uint32_t base,
 //! \return None
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_setDigitalCompareFilterInput(uint32_t base,
                                   EPWM_DigitalCompareFilterInput filterInput)
@@ -7058,7 +7018,6 @@ EPWM_setDigitalCompareFilterInput(uint32_t base,
 //! \return None
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_enableDigitalCompareEdgeFilter(uint32_t base)
 {
@@ -7085,7 +7044,6 @@ EPWM_enableDigitalCompareEdgeFilter(uint32_t base)
 //! \return None
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_disableDigitalCompareEdgeFilter(uint32_t base)
 {
@@ -7118,7 +7076,6 @@ EPWM_disableDigitalCompareEdgeFilter(uint32_t base)
 //! \return None
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_setDigitalCompareEdgeFilterMode(uint32_t base,
                                      EPWM_DigitalCompareEdgeFilterMode edgeMode)
@@ -7159,7 +7116,6 @@ EPWM_setDigitalCompareEdgeFilterMode(uint32_t base,
 //! \return None
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_setDigitalCompareEdgeFilterEdgeCount(uint32_t base, uint16_t edgeCount)
 {
@@ -7189,7 +7145,6 @@ EPWM_setDigitalCompareEdgeFilterEdgeCount(uint32_t base, uint16_t edgeCount)
 //! \return Returns the configured DigitalCompare Edge filter edge count.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline uint16_t
 EPWM_getDigitalCompareEdgeFilterEdgeCount(uint32_t base)
 {
@@ -7216,7 +7171,6 @@ EPWM_getDigitalCompareEdgeFilterEdgeCount(uint32_t base)
 //! \return Returns the count of captured edges
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline uint16_t
 EPWM_getDigitalCompareEdgeFilterEdgeStatus(uint32_t base)
 {
@@ -7245,7 +7199,6 @@ EPWM_getDigitalCompareEdgeFilterEdgeStatus(uint32_t base)
 //! \return None
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_setDigitalCompareWindowOffset(uint32_t base, uint16_t windowOffsetCount)
 {
@@ -7272,7 +7225,6 @@ EPWM_setDigitalCompareWindowOffset(uint32_t base, uint16_t windowOffsetCount)
 //! \return None
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_setDigitalCompareWindowLength(uint32_t base, uint16_t windowLengthCount)
 {
@@ -7297,7 +7249,6 @@ EPWM_setDigitalCompareWindowLength(uint32_t base, uint16_t windowLengthCount)
 //! \return None
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline uint16_t
 EPWM_getDigitalCompareBlankingWindowOffsetCount(uint32_t base)
 {
@@ -7322,7 +7273,6 @@ EPWM_getDigitalCompareBlankingWindowOffsetCount(uint32_t base)
 //! \return None
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline uint16_t
 EPWM_getDigitalCompareBlankingWindowLengthCount(uint32_t base)
 {
@@ -7365,7 +7315,6 @@ EPWM_getDigitalCompareBlankingWindowLengthCount(uint32_t base)
 //! \return None
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_setDigitalCompareEventSource(uint32_t base,
                                   EPWM_DigitalCompareModule dcModule,
@@ -7425,7 +7374,6 @@ EPWM_setDigitalCompareEventSource(uint32_t base,
 //! \return None
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_setDigitalCompareEventSyncMode(uint32_t base,
                                     EPWM_DigitalCompareModule dcModule,
@@ -7476,7 +7424,6 @@ EPWM_setDigitalCompareEventSyncMode(uint32_t base,
 //! \return None
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_enableDigitalCompareADCTrigger(uint32_t base,
                                     EPWM_DigitalCompareModule dcModule)
@@ -7514,7 +7461,6 @@ EPWM_enableDigitalCompareADCTrigger(uint32_t base,
 //! \return None
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_disableDigitalCompareADCTrigger(uint32_t base,
                                      EPWM_DigitalCompareModule dcModule)
@@ -7552,7 +7498,6 @@ EPWM_disableDigitalCompareADCTrigger(uint32_t base,
 //! \return None
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_enableDigitalCompareSyncEvent(uint32_t base,
                                    EPWM_DigitalCompareModule dcModule)
@@ -7590,7 +7535,6 @@ EPWM_enableDigitalCompareSyncEvent(uint32_t base,
 //! \return None
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_disableDigitalCompareSyncEvent(uint32_t base,
                                     EPWM_DigitalCompareModule dcModule)
@@ -7636,7 +7580,6 @@ EPWM_disableDigitalCompareSyncEvent(uint32_t base,
 //! \return None
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_setDigitalCompareCBCLatchMode(uint32_t base,
                                    EPWM_DigitalCompareModule dcModule,
@@ -7699,7 +7642,6 @@ EPWM_setDigitalCompareCBCLatchMode(uint32_t base,
 //! \return None
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_selectDigitalCompareCBCLatchClearEvent(uint32_t base,
                               EPWM_DigitalCompareModule dcModule,
@@ -7756,7 +7698,6 @@ EPWM_selectDigitalCompareCBCLatchClearEvent(uint32_t base,
 //! -\b false - CBC latch is disabled
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline bool
 EPWM_getDigitalCompareCBCLatchStatus(uint32_t base,
                                      EPWM_DigitalCompareModule dcModule,
@@ -7799,7 +7740,6 @@ EPWM_getDigitalCompareCBCLatchStatus(uint32_t base,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_enableDigitalCompareCounterCapture(uint32_t base)
 {
@@ -7826,7 +7766,6 @@ EPWM_enableDigitalCompareCounterCapture(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_disableDigitalCompareCounterCapture(uint32_t base)
 {
@@ -7857,7 +7796,6 @@ EPWM_disableDigitalCompareCounterCapture(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_setDigitalCompareCounterShadowMode(uint32_t base, bool enableShadowMode)
 {
@@ -7897,7 +7835,6 @@ EPWM_setDigitalCompareCounterShadowMode(uint32_t base, bool enableShadowMode)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline bool
 EPWM_getDigitalCompareCaptureStatus(uint32_t base)
 {
@@ -7929,7 +7866,6 @@ EPWM_getDigitalCompareCaptureStatus(uint32_t base)
 //!
 //! \return None.
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_configureDigitalCompareCounterCaptureMode(uint32_t base,
                                                bool disableClearMode)
@@ -7964,7 +7900,6 @@ EPWM_configureDigitalCompareCounterCaptureMode(uint32_t base,
 //!
 //! \return None.
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_clearDigitalCompareCaptureStatusFlag(uint32_t base)
 {
@@ -7992,7 +7927,6 @@ EPWM_clearDigitalCompareCaptureStatusFlag(uint32_t base)
 //! \return Returns the DC Time Base Counter Capture count value.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline uint16_t
 EPWM_getDigitalCompareCaptureCount(uint32_t base)
 {
@@ -8027,7 +7961,6 @@ EPWM_getDigitalCompareCaptureCount(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_enableDigitalCompareTripCombinationInput(uint32_t base,
                                               uint16_t tripInput,
@@ -8081,7 +8014,6 @@ EPWM_enableDigitalCompareTripCombinationInput(uint32_t base,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_disableDigitalCompareTripCombinationInput(uint32_t base,
                                                uint16_t tripInput,
@@ -8123,7 +8055,6 @@ EPWM_disableDigitalCompareTripCombinationInput(uint32_t base,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_enableCaptureInEvent(uint32_t base)
 {
@@ -8151,7 +8082,6 @@ EPWM_enableCaptureInEvent(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_disableCaptureInEvent(uint32_t base)
 {
@@ -8184,7 +8114,6 @@ EPWM_disableCaptureInEvent(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_configCaptureGateInputPolarity(uint32_t base,
                                     EPWM_selectCaptureGateInputPolarity polSel)
@@ -8218,7 +8147,6 @@ EPWM_configCaptureGateInputPolarity(uint32_t base,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_invertCaptureInputPolarity(uint32_t base,
                                 EPWM_selectCaptureInputPolarity polSel)
@@ -8248,7 +8176,6 @@ EPWM_invertCaptureInputPolarity(uint32_t base,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_enableIndependentPulseLogic(uint32_t base)
 {
@@ -8276,7 +8203,6 @@ EPWM_enableIndependentPulseLogic(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_disableIndependentPulseLogic(uint32_t base)
 {
@@ -8303,7 +8229,6 @@ EPWM_disableIndependentPulseLogic(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_forceCaptureEventLoad(uint32_t base)
 {
@@ -8342,7 +8267,6 @@ EPWM_forceCaptureEventLoad(uint32_t base)
 //! \return None
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_selectCaptureTripInput(uint32_t base,
                             EPWM_DigitalCompareTripInput tripSource,
@@ -8381,7 +8305,6 @@ EPWM_selectCaptureTripInput(uint32_t base,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_enableCaptureTripCombinationInput(uint32_t base,
                                             uint16_t tripInput,
@@ -8428,7 +8351,6 @@ EPWM_enableCaptureTripCombinationInput(uint32_t base,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_disableCaptureTripCombinationInput(uint32_t base,
                                          uint16_t tripInput,
@@ -8464,7 +8386,6 @@ EPWM_disableCaptureTripCombinationInput(uint32_t base,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_enableValleyCapture(uint32_t base)
 {
@@ -8491,7 +8412,6 @@ EPWM_enableValleyCapture(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_disableValleyCapture(uint32_t base)
 {
@@ -8522,7 +8442,6 @@ EPWM_disableValleyCapture(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_startValleyCapture(uint32_t base)
 {
@@ -8553,7 +8472,6 @@ EPWM_startValleyCapture(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_setValleyTriggerSource(uint32_t base, EPWM_ValleyTriggerSource trigger)
 {
@@ -8591,7 +8509,6 @@ EPWM_setValleyTriggerSource(uint32_t base, EPWM_ValleyTriggerSource trigger)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_setValleyTriggerEdgeCounts(uint32_t base, uint16_t startCount,
                                 uint16_t stopCount)
@@ -8623,7 +8540,6 @@ EPWM_setValleyTriggerEdgeCounts(uint32_t base, uint16_t startCount,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_enableValleyHWDelay(uint32_t base)
 {
@@ -8650,7 +8566,6 @@ EPWM_enableValleyHWDelay(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_disableValleyHWDelay(uint32_t base)
 {
@@ -8678,7 +8593,6 @@ EPWM_disableValleyHWDelay(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_setValleySWDelayValue(uint32_t base, uint16_t delayOffsetValue)
 {
@@ -8704,7 +8618,6 @@ EPWM_setValleySWDelayValue(uint32_t base, uint16_t delayOffsetValue)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_setValleyDelayDivider(uint32_t base, EPWM_ValleyDelayMode delayMode)
 {
@@ -8738,7 +8651,6 @@ EPWM_setValleyDelayDivider(uint32_t base, EPWM_ValleyDelayMode delayMode)
 //!         Returns false if the specified edge has not occurred.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline bool
 EPWM_getValleyEdgeStatus(uint32_t base, EPWM_ValleyCounterEdge edge)
 {
@@ -8778,7 +8690,6 @@ EPWM_getValleyEdgeStatus(uint32_t base, EPWM_ValleyCounterEdge edge)
 //! \return Returns the valley base time count.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline uint16_t
 EPWM_getValleyCount(uint32_t base)
 {
@@ -8803,7 +8714,6 @@ EPWM_getValleyCount(uint32_t base)
 //! \return Returns the valley delay count.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline uint16_t
 EPWM_getValleyHWDelay(uint32_t base)
 {
@@ -8830,7 +8740,6 @@ EPWM_getValleyHWDelay(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_enableGlobalLoad(uint32_t base)
 {
@@ -8858,7 +8767,6 @@ EPWM_enableGlobalLoad(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_disableGlobalLoad(uint32_t base)
 {
@@ -8911,7 +8819,6 @@ EPWM_disableGlobalLoad(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_setGlobalLoadTrigger(uint32_t base, EPWM_GlobalLoadTrigger loadTrigger)
 {
@@ -8944,7 +8851,6 @@ EPWM_setGlobalLoadTrigger(uint32_t base, EPWM_GlobalLoadTrigger loadTrigger)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_setGlobalLoadEventPrescale(uint32_t base, uint16_t prescalePulseCount)
 {
@@ -8977,7 +8883,6 @@ EPWM_setGlobalLoadEventPrescale(uint32_t base, uint16_t prescalePulseCount)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline uint16_t
 EPWM_getGlobalLoadEventCount(uint32_t base)
 {
@@ -9004,7 +8909,6 @@ EPWM_getGlobalLoadEventCount(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_disableGlobalLoadOneShotMode(uint32_t base)
 {
@@ -9033,7 +8937,6 @@ EPWM_disableGlobalLoadOneShotMode(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_enableGlobalLoadOneShotMode(uint32_t base)
 {
@@ -9062,7 +8965,6 @@ EPWM_enableGlobalLoadOneShotMode(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_setGlobalLoadOneShotLatch(uint32_t base)
 {
@@ -9090,7 +8992,6 @@ EPWM_setGlobalLoadOneShotLatch(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_forceGlobalLoadOneShotEvent(uint32_t base)
 {
@@ -9131,7 +9032,6 @@ EPWM_forceGlobalLoadOneShotEvent(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_enableGlobalLoadRegisters(uint32_t base, uint16_t loadRegister)
 {
@@ -9174,7 +9074,6 @@ EPWM_enableGlobalLoadRegisters(uint32_t base, uint16_t loadRegister)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_disableGlobalLoadRegisters(uint32_t base, uint16_t loadRegister)
 {
@@ -9200,7 +9099,6 @@ EPWM_disableGlobalLoadRegisters(uint32_t base, uint16_t loadRegister)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_lockRegisters(uint32_t base, EPWM_LockRegisterGroup registerGroup)
 {
@@ -9229,7 +9127,6 @@ EPWM_lockRegisters(uint32_t base, EPWM_LockRegisterGroup registerGroup)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_enableXCMPMode(uint32_t base)
 {
@@ -9256,7 +9153,6 @@ EPWM_enableXCMPMode(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_disableXCMPMode(uint32_t base)
 {
@@ -9283,7 +9179,6 @@ EPWM_disableXCMPMode(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_enableSplitXCMP(uint32_t base)
 {
@@ -9307,7 +9202,6 @@ EPWM_enableSplitXCMP(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_disableSplitXCMP(uint32_t base)
 {
@@ -9341,7 +9235,6 @@ EPWM_disableSplitXCMP(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_allocAXCMP(uint32_t base, EPWM_XCMP_ALLOC_CMPA alloctype)
 {
@@ -9365,14 +9258,13 @@ EPWM_allocAXCMP(uint32_t base, EPWM_XCMP_ALLOC_CMPA alloctype)
 //!
 //! This function gives us choice to allocate range of XCMP registers to CMPB
 //! Valid values for alloctype are:
-//!    EPWM_XCMP_1_CMPB         - Allocate XCMP5 register to CMPB
-//!    EPWM_XCMP_2_CMPB         - Allocate XCMP5- XCMP6 registers to CMPB
-//!    EPWM_XCMP_3_CMPB         - Allocate XCMP5- XCMP7 register to CMPB
-//!    EPWM_XCMP_4_CMPB         - Allocate XCMP5- XCMP8 registers to CMPB
+//!    EPWM_XCMP_5_CMPB         - Allocate XCMP5 register to CMPB
+//!    EPWM_XCMP_6_CMPB         - Allocate XCMP5- XCMP6 registers to CMPB
+//!    EPWM_XCMP_7_CMPB         - Allocate XCMP5- XCMP7 register to CMPB
+//!    EPWM_XCMP_8_CMPB         - Allocate XCMP5- XCMP8 registers to CMPB
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_allocBXCMP(uint32_t base, EPWM_XCMP_ALLOC_CMPB alloctype)
 {
@@ -9405,7 +9297,6 @@ EPWM_allocBXCMP(uint32_t base, EPWM_XCMP_ALLOC_CMPB alloctype)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_setXCMPRegValue(uint32_t base, EPWM_XCMPReg xcmpReg,
                             uint32_t xcmpvalue)
@@ -9441,7 +9332,6 @@ EPWM_setXCMPRegValue(uint32_t base, EPWM_XCMPReg xcmpReg,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_setCMPShadowRegValue(uint32_t base, EPWM_XCompareReg cmpReg,
                             uint32_t cmpvalue)
@@ -9478,7 +9368,6 @@ EPWM_setCMPShadowRegValue(uint32_t base, EPWM_XCompareReg cmpReg,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_setXMINMAXRegValue(uint32_t base, EPWM_XMinMaxReg xminmaxReg,
                             uint32_t xcmpvalue)
@@ -9535,7 +9424,6 @@ EPWM_setXMINMAXRegValue(uint32_t base, EPWM_XMinMaxReg xminmaxReg,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_setXCMPActionQualifierAction(uint32_t base, uint32_t shadowset,
                               EPWM_ActionQualifierOutputModule epwmOutput,
@@ -9605,7 +9493,6 @@ EPWM_setXCMPActionQualifierAction(uint32_t base, uint32_t shadowset,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_enableXLoad(uint32_t base)
 {
@@ -9630,7 +9517,6 @@ EPWM_enableXLoad(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_forceXLoad(uint32_t base)
 {
@@ -9657,7 +9543,6 @@ EPWM_forceXLoad(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_setXCMPLoadMode(uint32_t base, EPWM_XCMPXloadCtlLoadMode mode)
 {
@@ -9697,7 +9582,6 @@ EPWM_setXCMPLoadMode(uint32_t base, EPWM_XCMPXloadCtlLoadMode mode)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_setXCMPShadowLevel(uint32_t base, EPWM_XCMP_XLOADCTL_SHDWLEVEL level)
 {
@@ -9728,7 +9612,6 @@ EPWM_setXCMPShadowLevel(uint32_t base, EPWM_XCMP_XLOADCTL_SHDWLEVEL level)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_setXCMPShadowBufPtrLoadOnce(uint32_t base,
                                  EPWM_XCMP_XLOADCTL_SHDWBUFPTR ptr)
@@ -9763,7 +9646,6 @@ EPWM_setXCMPShadowBufPtrLoadOnce(uint32_t base,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_setXCMPShadowRepeatBufxCount(uint32_t base, uint32_t bufferset,
                                   uint32_t count)
@@ -9813,7 +9695,6 @@ EPWM_setXCMPShadowRepeatBufxCount(uint32_t base, uint32_t bufferset,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_enableMinimumDeadBand(uint32_t base, uint32_t block)
 {
@@ -9853,7 +9734,6 @@ EPWM_enableMinimumDeadBand(uint32_t base, uint32_t block)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_disableMinimumDeadBand(uint32_t base, uint32_t block)
 {
@@ -9897,7 +9777,6 @@ EPWM_disableMinimumDeadBand(uint32_t base, uint32_t block)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_invertMinimumDeadBandSignal(uint32_t base, uint32_t block,
                                  uint32_t invert)
@@ -9947,7 +9826,6 @@ EPWM_invertMinimumDeadBandSignal(uint32_t base, uint32_t block,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_selectMinimumDeadBandAndOrLogic(uint32_t base, uint32_t block,
                                      uint32_t logic)
@@ -9999,7 +9877,6 @@ EPWM_selectMinimumDeadBandAndOrLogic(uint32_t base, uint32_t block,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_selectMinimumDeadBandBlockingSignal(uint32_t base, uint32_t block,
                                          uint32_t blockingSignal)
@@ -10052,7 +9929,6 @@ EPWM_selectMinimumDeadBandBlockingSignal(uint32_t base, uint32_t block,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_selectMinimumDeadBandReferenceSignal(uint32_t base, uint32_t block,
                                           uint32_t referenceSignal)
@@ -10099,7 +9975,6 @@ EPWM_selectMinimumDeadBandReferenceSignal(uint32_t base, uint32_t block,
 //! \return Delay value of the Minimum DeadBand module.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline uint32_t
 EPWM_getMinDeadBandDelay(uint32_t base, uint32_t block)
 {
@@ -10148,7 +10023,6 @@ EPWM_getMinDeadBandDelay(uint32_t base, uint32_t block)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_setMinDeadBandDelay(uint32_t base, uint32_t block, uint32_t delay)
 {
@@ -10194,7 +10068,6 @@ EPWM_setMinDeadBandDelay(uint32_t base, uint32_t block, uint32_t delay)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_enableIllegalComboLogic(uint32_t base, uint32_t block)
 {
@@ -10240,7 +10113,6 @@ EPWM_enableIllegalComboLogic(uint32_t base, uint32_t block)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_disableIllegalComboLogic(uint32_t base, uint32_t block)
 {
@@ -10291,7 +10163,6 @@ EPWM_disableIllegalComboLogic(uint32_t base, uint32_t block)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_selectXbarInput(uint32_t base, uint32_t block, uint32_t xbarInput)
 {
@@ -10344,7 +10215,6 @@ EPWM_selectXbarInput(uint32_t base, uint32_t block, uint32_t xbarInput)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_setLutDecX(uint32_t base, uint32_t block, uint32_t decx, uint32_t force)
 {
@@ -10389,7 +10259,6 @@ EPWM_setLutDecX(uint32_t base, uint32_t block, uint32_t decx, uint32_t force)
 //
 //*****************************************************************************
 
-__attribute__((always_inline))
 static inline void
 EPWM_enableDiodeEmulationMode(uint32_t base)
 {
@@ -10417,7 +10286,6 @@ EPWM_enableDiodeEmulationMode(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_disableDiodeEmulationMode(uint32_t base)
 {
@@ -10449,7 +10317,6 @@ EPWM_disableDiodeEmulationMode(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_setDiodeEmulationMode(uint32_t base, EPWM_DiodeEmulationMode mode)
 {
@@ -10495,7 +10362,6 @@ EPWM_setDiodeEmulationMode(uint32_t base, EPWM_DiodeEmulationMode mode)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_setDiodeEmulationReentryDelay(uint32_t base, uint32_t delay)
 {
@@ -10526,7 +10392,6 @@ EPWM_setDiodeEmulationReentryDelay(uint32_t base, uint32_t delay)
 //!
 //! \return None.
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_configureDiodeEmulationTripLowSources(uint32_t base,
                                         EPWM_DiodeEmulationTripLSource source)
@@ -10559,7 +10424,6 @@ EPWM_configureDiodeEmulationTripLowSources(uint32_t base,
 //!
 //! \return None.
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_configureDiodeEmulationTripHighSources(uint32_t base,
                                         EPWM_DiodeEmulationTripHSource source)
@@ -10598,7 +10462,6 @@ EPWM_configureDiodeEmulationTripHighSources(uint32_t base,
 //!    EPWM_DE_HIGH              - a constant high signal
 //! \return None.
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_selectDiodeEmulationPWMsignal(uint32_t base, uint32_t channel,
                                    EPWM_DiodeEmulationSignal DEsignal)
@@ -10641,7 +10504,6 @@ EPWM_selectDiodeEmulationPWMsignal(uint32_t base, uint32_t channel,
 //!     1 for TRIPL
 //! \return None.
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_selectDiodeEmulationTripSignal(uint32_t base, uint32_t channel,
                                     uint32_t DEsignal)
@@ -10675,7 +10537,6 @@ EPWM_selectDiodeEmulationTripSignal(uint32_t base, uint32_t channel,
 //!
 //! \return None.
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_nobypassDiodeEmulationLogic(uint32_t base)
 {
@@ -10698,7 +10559,6 @@ EPWM_nobypassDiodeEmulationLogic(uint32_t base)
 //!
 //! \return None.
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_bypassDiodeEmulationLogic(uint32_t base)
 {
@@ -10721,7 +10581,6 @@ EPWM_bypassDiodeEmulationLogic(uint32_t base)
 //!
 //! \return None.
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_forceDiodeEmulationActive(uint32_t base)
 {
@@ -10743,7 +10602,6 @@ EPWM_forceDiodeEmulationActive(uint32_t base)
 //!
 //! \return None.
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_enableDiodeEmulationMonitorModeControl(uint32_t base)
 {
@@ -10766,7 +10624,6 @@ EPWM_enableDiodeEmulationMonitorModeControl(uint32_t base)
 //!
 //! \return None.
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_disableDiodeEmulationMonitorModeControl(uint32_t base)
 {
@@ -10797,7 +10654,6 @@ EPWM_disableDiodeEmulationMonitorModeControl(uint32_t base)
 //!
 //! \return None.
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_setDiodeEmulationMonitorModeStep(uint32_t base, uint32_t direction,
                                    uint32_t stepsize)
@@ -10838,7 +10694,6 @@ EPWM_setDiodeEmulationMonitorModeStep(uint32_t base, uint32_t direction,
 //! Max value of threshold is 2^16.
 //! \return None.
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_setDiodeEmulationMonitorCounterThreshold(uint32_t base,
                                                 uint32_t threshold)
@@ -10862,7 +10717,6 @@ EPWM_setDiodeEmulationMonitorCounterThreshold(uint32_t base,
 //!
 //! \return None.
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EPWM_clearDiodeEmulationActiveFlag(uint32_t base)
 {

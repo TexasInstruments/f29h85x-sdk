@@ -13,7 +13,7 @@
 //! by CPU1 application.
 //! The data to be transmitted is written by CPU1 application. This data is
 //! in an MPU region to which RTDMA2 channel has only read access.
-//! 
+//!
 //! The example triggers the DMA channel repeatedly until the transfer of 16
 //! bursts (where each burst is 4 8-bit words) has been completed. When the
 //! whole transfer is complete it will trigger the DMA interrupt.
@@ -38,7 +38,7 @@
 //!  - None.
 //!
 //! \b Watch \b Variables \n
-//!  - pass
+//!  - None.
 //!
 //
 //#############################################################################

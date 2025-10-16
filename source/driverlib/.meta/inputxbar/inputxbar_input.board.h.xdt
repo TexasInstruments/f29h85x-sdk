@@ -1,7 +1,8 @@
 % var moduleName = "inputxbar_input"
-% var module = system.modules['/driverlib/' + moduleName + '.js'];
 % let Common   = system.getScript("/driverlib/Common.js");
-% var nameOfPeripheral = module.peripheralName;
+%
+% if (Common.isAllocationOff()) {
+% var module = system.modules['/driverlib/' + moduleName + '.js'];
 %if (module != null)
 %{
 //*****************************************************************************
@@ -25,6 +26,32 @@
 #define `instance.$name`_SOURCE `gpioNumber`
 #define `instance.$name`_INPUT `instance.inputxbarInput`
 void `instance.$name`_init();
+
     % }
 %}
+%}
 %
+% else {
+//*****************************************************************************
+//
+// INPUTXBAR Configurations
+//
+//*****************************************************************************
+% let raData = system.resourceAllocation.data
+% for (let context of raData.contexts)
+	% {
+	    % module = context.modules.find(x => x.moduleName === '/driverlib/' + moduleName + '.js')
+		% if (module != null)
+		% {
+		%   for(let i = 0; i < module.instances.length; i++) 
+		%   {
+		%      let instance = module.instances[i];
+        %      let gpioNumber = Common.gpioNameToNumber(instance.requiredArgs.inputxbarGpio);
+#define `instance.allocationName`_SOURCE `gpioNumber`
+#define `instance.allocationName`_INPUT `instance.requiredArgs.inputxbarInput`
+void `instance.allocationName`_init();
+
+		%   }
+		% }
+	% }
+%}

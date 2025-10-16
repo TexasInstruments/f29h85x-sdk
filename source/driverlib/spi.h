@@ -428,7 +428,6 @@ typedef enum
 //
 //*****************************************************************************
 #ifdef DEBUG
-__attribute__((always_inline))
 static inline bool
 SPI_isBaseValid(uint32_t base)
 {
@@ -454,7 +453,6 @@ SPI_isBaseValid(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SPI_enableModule(uint32_t base)
 {
@@ -478,7 +476,6 @@ SPI_enableModule(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SPI_disableModule(uint32_t base)
 {
@@ -504,7 +501,6 @@ SPI_disableModule(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SPI_setcharLength(uint32_t base, uint16_t charLength)
 {
@@ -528,7 +524,6 @@ SPI_setcharLength(uint32_t base, uint16_t charLength)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SPI_enableFIFO(uint32_t base)
 {
@@ -555,7 +550,6 @@ SPI_enableFIFO(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SPI_disableFIFO(uint32_t base)
 {
@@ -583,7 +577,6 @@ SPI_disableFIFO(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SPI_resetTxFIFO(uint32_t base)
 {
@@ -611,7 +604,6 @@ SPI_resetTxFIFO(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SPI_resetRxFIFO(uint32_t base)
 {
@@ -645,7 +637,6 @@ SPI_resetRxFIFO(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SPI_setFIFOInterruptLevel(uint32_t base, SPI_TxFIFOLevel txLevel,
                           SPI_RxFIFOLevel rxLevel)
@@ -682,7 +673,6 @@ SPI_setFIFOInterruptLevel(uint32_t base, SPI_TxFIFOLevel txLevel,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SPI_getFIFOInterruptLevel(uint32_t base, SPI_TxFIFOLevel *txLevel,
                           SPI_RxFIFOLevel *rxLevel)
@@ -715,7 +705,6 @@ SPI_getFIFOInterruptLevel(uint32_t base, SPI_TxFIFOLevel *txLevel,
 //! ..., or \b SPI_FIFO_TX16
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline SPI_TxFIFOLevel
 SPI_getTxFIFOStatus(uint32_t base)
 {
@@ -746,7 +735,6 @@ SPI_getTxFIFOStatus(uint32_t base)
 //! ..., or \b SPI_FIFO_RX16
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline SPI_RxFIFOLevel
 SPI_getRxFIFOStatus(uint32_t base)
 {
@@ -779,7 +767,6 @@ SPI_getRxFIFOStatus(uint32_t base)
 //! transmissions are complete.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline bool
 SPI_isBusy(uint32_t base)
 {
@@ -812,7 +799,6 @@ SPI_isBusy(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SPI_writeDataNonBlocking(uint32_t base, uint16_t data)
 {
@@ -844,7 +830,6 @@ SPI_writeDataNonBlocking(uint32_t base, uint16_t data)
 //! \return Returns the word of data read from the SPI receive buffer.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline uint16_t
 SPI_readDataNonBlocking(uint32_t base)
 {
@@ -878,7 +863,6 @@ SPI_readDataNonBlocking(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SPI_writeDataBlockingFIFO(uint32_t base, uint16_t data)
 {
@@ -918,7 +902,6 @@ SPI_writeDataBlockingFIFO(uint32_t base, uint16_t data)
 //! \return Returns the word of data read from the SPI receive buffer.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline uint16_t
 SPI_readDataBlockingFIFO(uint32_t base)
 {
@@ -959,7 +942,6 @@ SPI_readDataBlockingFIFO(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SPI_writeDataBlockingNonFIFO(uint32_t base, uint16_t data)
 {
@@ -999,7 +981,6 @@ SPI_writeDataBlockingNonFIFO(uint32_t base, uint16_t data)
 //! \return Returns the word of data read from the SPI receive buffer.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline uint16_t
 SPI_readDataBlockingNonFIFO(uint32_t base)
 {
@@ -1035,7 +1016,6 @@ SPI_readDataBlockingNonFIFO(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SPI_enableTriWire(uint32_t base)
 {
@@ -1061,7 +1041,6 @@ SPI_enableTriWire(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SPI_disableTriWire(uint32_t base)
 {
@@ -1089,7 +1068,6 @@ SPI_disableTriWire(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SPI_enableLoopback(uint32_t base)
 {
@@ -1116,7 +1094,6 @@ SPI_enableLoopback(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SPI_disableLoopback(uint32_t base)
 {
@@ -1149,7 +1126,6 @@ SPI_disableLoopback(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SPI_setPTESignalPolarity(uint32_t base, SPI_PTEPolarity polarity)
 {
@@ -1177,7 +1153,6 @@ SPI_setPTESignalPolarity(uint32_t base, SPI_PTEPolarity polarity)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SPI_enableHighSpeedMode(uint32_t base)
 {
@@ -1204,7 +1179,6 @@ SPI_enableHighSpeedMode(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SPI_disableHighSpeedMode(uint32_t base)
 {
@@ -1241,7 +1215,6 @@ SPI_disableHighSpeedMode(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SPI_setEmulationMode(uint32_t base, SPI_EmulationMode mode)
 {
@@ -1272,7 +1245,6 @@ SPI_setEmulationMode(uint32_t base, SPI_EmulationMode mode)
 //! \return None
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SPI_setTxFifoTransmitDelay(uint32_t base, uint16_t delay)
 {
@@ -1299,7 +1271,6 @@ SPI_setTxFifoTransmitDelay(uint32_t base, uint16_t delay)
 //! \return Rx emulation buffer data
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline uint16_t
 SPI_readRxEmulationBuffer(uint32_t base)
 {
@@ -1327,7 +1298,6 @@ SPI_readRxEmulationBuffer(uint32_t base)
 //! \return None
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SPI_enableTalk(uint32_t base)
 {
@@ -1356,7 +1326,6 @@ SPI_enableTalk(uint32_t base)
 //! \return None
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SPI_disableTalk(uint32_t base)
 {
@@ -1382,7 +1351,6 @@ SPI_disableTalk(uint32_t base)
 //! \return None
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 SPI_reset(uint32_t base)
 {

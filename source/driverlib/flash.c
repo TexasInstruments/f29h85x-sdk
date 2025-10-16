@@ -92,13 +92,14 @@ Flash_initModule(uint16_t waitstates)
                      0, ASYSCTL_FLASHTRIMCOMMIT_FLC2TRIMCOMMITOTHER);
 
     //
-    // Enable data cache, code cache, prefetch, and data preread to improve performance of code
-    // executed from flash.
+    // Enable data cache, code cache, and prefetch to improve performance of code
+    // executed from flash. Data Preread is not enabled as it should only be used in 
+    // very specific cases where data is sequentially accessed.
     //
-    Flash_configFRI(FLASH_FRI1, FLASH_DATAPREREAD_ENABLE | FLASH_CODECACHE_ENABLE | FLASH_DATACACHE_ENABLE | FLASH_PREFETCH_ENABLE);
-    Flash_configFRI(FLASH_FRI2, FLASH_DATAPREREAD_ENABLE | FLASH_CODECACHE_ENABLE | FLASH_DATACACHE_ENABLE | FLASH_PREFETCH_ENABLE);
-    Flash_configFRI(FLASH_FRI3, FLASH_DATAPREREAD_ENABLE | FLASH_CODECACHE_ENABLE | FLASH_DATACACHE_ENABLE | FLASH_PREFETCH_ENABLE);
-    Flash_configFRI(FLASH_FRI4, FLASH_DATAPREREAD_ENABLE | FLASH_CODECACHE_ENABLE | FLASH_DATACACHE_ENABLE | FLASH_PREFETCH_ENABLE);
+    Flash_configFRI(FLASH_FRI1, FLASH_CODECACHE_ENABLE | FLASH_DATACACHE_ENABLE | FLASH_PREFETCH_ENABLE);
+    Flash_configFRI(FLASH_FRI2, FLASH_CODECACHE_ENABLE | FLASH_DATACACHE_ENABLE | FLASH_PREFETCH_ENABLE);
+    Flash_configFRI(FLASH_FRI3, FLASH_CODECACHE_ENABLE | FLASH_DATACACHE_ENABLE | FLASH_PREFETCH_ENABLE);
+    Flash_configFRI(FLASH_FRI4, FLASH_CODECACHE_ENABLE | FLASH_DATACACHE_ENABLE | FLASH_PREFETCH_ENABLE);
 
     //
     // Force a pipeline flush to ensure that the write to the last register

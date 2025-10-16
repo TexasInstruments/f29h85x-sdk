@@ -1,0 +1,19 @@
+<projectSpec>
+  <project
+        name="pmic_tps65036xx"
+        device="F29H850TU9"
+        cgtVersion="2.0.0"
+        toolChain="TICLANG"
+        launchWizard="False"
+        outputType="staticLibrary"
+        >
+    <configuration name="Debug"   compilerBuildOptions="-O1 -g -c -w -DDEBUG -Dtps65036xx -I${PMIC_ROOT} -I${PMIC_ROOT}/tps65036xx/pmic-lld/include" archiverBuildOptions="${PMIC_ROOT}/ccs/pmic_tps65036xx.lib" />
+
+    <pathVariable name="PMIC_ROOT" path="./../" scope="project" />
+
+    <file action="link"  path="${PMIC_ROOT}/pmic_tps65036xx.c"          targetDirectory="." />
+    <file action="link"  path="${PMIC_ROOT}/pmic_tps65036xx.h"          targetDirectory="." />
+    <file action="link"  path="${PMIC_ROOT}/tps65036xx/pmic-lld/src"    targetDirectory="." />
+
+  </project>
+</projectSpec>

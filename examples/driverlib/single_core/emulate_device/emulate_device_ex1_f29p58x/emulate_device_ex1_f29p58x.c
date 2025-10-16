@@ -7,10 +7,10 @@
 //! \addtogroup driver_example_list
 //! <h1> Emulate F29P58x example </h1>
 //!
-//! This example demonstrates how to emulate F29P58x on F29H85x. 
+//! This example demonstrates how to emulate F29P58x on F29H85x.
 //!
 //! The SysCtl API SysCtl_emulateDevice() must be called with the appropriate
-//! part number of the sub-set device to be emulated. 
+//! part number of the sub-set device to be emulated.
 //! The device GPIOs are configured through the SysConfig file. The initial
 //! values of GPIOs connected to LED0 and LED1 are set HIGH and LOW
 //! respectively. The GPIO pins are toggled in an infinite loop, making the
@@ -67,7 +67,7 @@ int main(void)
     //
     // Emulate F29P589DU5
     //
-    SysCtl_emulateDevice(SYSCTL_EMULATE_F29P589DU5);
+    SysCtl_emulateDevice(SYSCTL_EMULATE_F29P589DU5Q);
 
     //
     // Initialize device clock, peripheral clocks and interrupts

@@ -7,6 +7,14 @@ let longDescription = "Analog PinMux configuration";
 /* Array of CAN configurables that are common across device families */
 let config = [
     {
+        name        : "$assignedContext",
+        description : 'Override the assigned context to have only in CPU1',
+        hidden      : true,
+        default     : "CPU1",
+        options     : [{name:"CPU1"}],
+		readOnly    : true
+    },
+    {
         name: "useCase",
         displayName : "Use Case",
         description : 'Peripheral use case',
@@ -14,7 +22,7 @@ let config = [
         default     : 'ALL',
         options     : Pinmux.getPeripheralUseCaseNames("ANALOG"),
         onChange    : Pinmux.useCaseChanged,
-        
+        shouldBeAllocatedAsResource: true,
     },
 ];
 
@@ -41,7 +49,7 @@ if (Common.onlyPinmux())
 var analogModule = {
     peripheralName: "ANALOG",
     displayName: "ANALOG PinMux",
-    maxInstances: Common.peripheralCount("ANALOG"),
+    totalMaxInstances: Common.peripheralCount("ANALOG"),
     defaultInstanceName: "myANALOGPinMux",
     description: "Analog Configuration",
     filterHardware : filterHardware,
@@ -50,7 +58,9 @@ var analogModule = {
         boardc : "/driverlib/analog/analog.board.c.xdt",
         boardh : "/driverlib/analog/analog.board.h.xdt"
     },
-    pinmuxRequirements    : Pinmux.analogPinmuxRequirements
+    shouldBeAllocatedAsResource : true,
+    alwaysAllocateAsResource    : true,
+    pinmuxRequirements          : Pinmux.analogPinmuxRequirements
 };
 
 

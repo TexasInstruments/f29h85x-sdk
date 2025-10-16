@@ -10,8 +10,8 @@ let longDescription = "The I2C driver provides a simplified application"
         + " interface to access peripherals on an I2C bus.";
 
 var extended_clock_supported_devices = ['f29h85x'];
-var hide_extended_clock_stretching_options = null; 
-var extended_clock_stretching_support_available = null; 
+var hide_extended_clock_stretching_options = null;
+var extended_clock_stretching_support_available = null;
 var globalConfig = [
     {
         name: "sysClock",
@@ -25,11 +25,11 @@ var globalConfig = [
 ];
 function setupFlags()
 {
-    if (extended_clock_supported_devices.indexOf(Common.getDeviceName().toLowerCase()) === -1) 
+    if (extended_clock_supported_devices.indexOf(Common.getDeviceName().toLowerCase()) === -1)
     {
         hide_extended_clock_stretching_options = true;
         extended_clock_stretching_support_available = false;
-    } 
+    }
     else
     {
         hide_extended_clock_stretching_options = false;
@@ -92,7 +92,7 @@ function onValidate(inst, validation)
     var customModuleFrequencyError = false;
     if(customModuleFrequencyInt < 7000000 || customModuleFrequencyInt > 12000000)
     {
-       customModuleFrequencyError = true; 
+       customModuleFrequencyError = true;
     }
     if (bitRateInt < 1 || bitRateInt > 400000)
     {
@@ -113,31 +113,31 @@ function onValidate(inst, validation)
     if(inst.dataCount > 0xFFFF | inst.dataCount < 0)
     {
         validation.logError(
-            "Enter an integer for data count between 0 and 65535!", 
+            "Enter an integer for data count between 0 and 65535!",
             inst, "dataCount");
     }
     if(bitRateError)
     {
         validation.logError(
-            "Enter an integer for bit rates between 1 and 400000!", 
+            "Enter an integer for bit rates between 1 and 400000!",
             inst, "bitRate");
     }
     if(targetAddrError && inst.mode == "CONTROLLER")
     {
         validation.logError(
-            "Target address must be between 0 and " + maxAddress + "!", 
+            "Target address must be between 0 and " + maxAddress + "!",
             inst, "targetAddress");
     }
     if(ownAddrError && inst.mode != "CONTROLLER")
     {
         validation.logError(
-            "Own Target address must be between 0 and " + maxAddress + "!", 
+            "Own Target address must be between 0 and " + maxAddress + "!",
             inst, "ownAddress");
     }
     if(customModuleFrequencyError)
     {
         validation.logError(
-            "Module Clock Frequency must be between 7 MHz and 12 MHz", 
+            "Module Clock Frequency must be between 7 MHz and 12 MHz",
             inst, "customModuleFrequency");
     }
 
@@ -162,7 +162,7 @@ function I2C_InterruptList(hide_clock_stretching_option_flag)
         {name: "I2C_INT_STOP_CONDITION", displayName : "Stop condition detected"},
         {name: "I2C_INT_ADDR_TARGET", legacyNames: ["I2C_INT_ADDR_SLAVE"], displayName : "Addressed as target interrupt"}
     ];
-    if (hide_clock_stretching_option_flag == false) 
+    if (hide_clock_stretching_option_flag == false)
     {
         base_interrupt.push(
 	        {name: "I2C_INT_SCL_ECS", displayName: "Extended clock stretching interrupt"}
@@ -177,7 +177,7 @@ function onModuleClockChange(inst, ui)
     {
         ui.customModuleFrequency.hidden = true;
     }
-    else 
+    else
     {
         ui.customModuleFrequency.hidden = false;
     }
@@ -344,7 +344,7 @@ let config = [
                 hidden: hide_extended_clock_stretching_options,
                 default: false,
             },
-        
+
             {
                 name: "extendedClockStretchingSupport",
                 default: extended_clock_stretching_support_available,
@@ -381,7 +381,7 @@ let config = [
                 hidden      : false,
                 default     : [],
                 minSelections: 0,
-                options     : I2C_InterruptList(hide_extended_clock_stretching_options), 
+                options     : I2C_InterruptList(hide_extended_clock_stretching_options),
             },
             {
                 name        : "enabledFIFOInterrupts",
@@ -429,12 +429,12 @@ if (Common.onlyPinmux())
 var i2cModule = {
     peripheralName: "I2C",
     displayName: "I2C",
-    maxInstances: Common.peripheralCount("I2C"),
+    totalMaxInstances: Common.peripheralCount("I2C"),
     defaultInstanceName: "myI2C",
     description: "Inter-Integrated Circuit Peripheral",
     // longDescription: (Common.getCollateralFindabilityList("I2C")),
     filterHardware : filterHardware,
-    config: config,
+    config: Common.filterConfigsIfInSetupMode(config),
     moduleInstances: (inst) => {
         var ownedInstances = []
         var pinmuxQualMods = Pinmux.getGpioQualificationModInstDefinitions("I2C", inst)
@@ -493,7 +493,7 @@ var i2cModule = {
                 collapsed: false,
                 requiredArgs:{
                     pinmuxPeripheralModule : "i2c",
-                    peripheralInst: inst.$name,
+                    peripheralInst: "",
                 }
             },
             {
@@ -503,9 +503,11 @@ var i2cModule = {
                 moduleName: "/driverlib/perConfig.js",
                 collapsed: false,
                 requiredArgs:{
+                    cpuSel: inst.$assignedContext ?? system.context,
                     pinmuxPeripheralModule : "i2c",
-                    peripheralInst: inst.$name
-                }
+                    peripheralInst: ""
+                },
+                shouldBeAllocatedAsResource: true
             },
         ])
         return ownedInstances;
@@ -517,10 +519,11 @@ var i2cModule = {
     moduleStatic: {
         name: "I2CGlobal",
         displayName: "I2C Global",
-        config: globalConfig,
+        config: Common.filterConfigsIfInSetupMode(globalConfig),
     },
     pinmuxRequirements    : Pinmux.i2cPinmuxRequirements,
-    validate    : onValidate
+    validate    : onValidate,
+    shouldBeAllocatedAsResource: true
 };
 
 

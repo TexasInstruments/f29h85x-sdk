@@ -327,7 +327,6 @@ typedef struct
 //
 //*****************************************************************************
 #ifdef DEBUG
-__attribute__((always_inline))
 static inline bool
 EMIF_isBaseValid(uint32_t base)
 {
@@ -363,7 +362,6 @@ EMIF_isBaseValid(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EMIF_setAsyncMode(uint32_t base, EMIF_AsyncCSOffset offset,
                   EMIF_AsyncMode mode)
@@ -398,7 +396,6 @@ EMIF_setAsyncMode(uint32_t base, EMIF_AsyncCSOffset offset,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EMIF_enableAsyncExtendedWait(uint32_t base, EMIF_AsyncCSOffset offset)
 {
@@ -430,7 +427,6 @@ EMIF_enableAsyncExtendedWait(uint32_t base, EMIF_AsyncCSOffset offset)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EMIF_disableAsyncExtendedWait(uint32_t base, EMIF_AsyncCSOffset offset)
  {
@@ -461,7 +457,6 @@ EMIF_disableAsyncExtendedWait(uint32_t base, EMIF_AsyncCSOffset offset)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EMIF_setAsyncWaitPolarity(uint32_t base, EMIF_AsyncWaitPolarity polarity)
 {
@@ -492,7 +487,6 @@ EMIF_setAsyncWaitPolarity(uint32_t base, EMIF_AsyncWaitPolarity polarity)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EMIF_setAsyncMaximumWaitCycles(uint32_t base, uint16_t value)
 {
@@ -528,7 +522,6 @@ EMIF_setAsyncMaximumWaitCycles(uint32_t base, uint16_t value)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EMIF_setAsyncTimingParams(uint32_t base, EMIF_AsyncCSOffset offset,
                           const EMIF_AsyncTimingParams *tParam)
@@ -574,7 +567,6 @@ EMIF_setAsyncTimingParams(uint32_t base, EMIF_AsyncCSOffset offset,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EMIF_setAsyncDataBusWidth(uint32_t base, EMIF_AsyncCSOffset offset,
                            EMIF_AsyncDataWidth width)
@@ -613,7 +605,6 @@ EMIF_setAsyncDataBusWidth(uint32_t base, EMIF_AsyncCSOffset offset,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EMIF_enableAsyncInterrupt(uint32_t base, uint16_t intFlags)
 {
@@ -645,7 +636,6 @@ EMIF_enableAsyncInterrupt(uint32_t base, uint16_t intFlags)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EMIF_disableAsyncInterrupt(uint32_t base, uint16_t intFlags)
 {
@@ -673,7 +663,6 @@ EMIF_disableAsyncInterrupt(uint32_t base, uint16_t intFlags)
 //! \return Returns the current interrupt status.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline uint16_t
 EMIF_getAsyncInterruptStatus(uint32_t base)
 {
@@ -704,7 +693,6 @@ EMIF_getAsyncInterruptStatus(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EMIF_clearAsyncInterruptStatus(uint32_t base, uint16_t intFlags)
 {
@@ -739,7 +727,6 @@ EMIF_clearAsyncInterruptStatus(uint32_t base, uint16_t intFlags)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EMIF_setSyncTimingParams(uint32_t base, const EMIF_SyncTimingParams *tParam)
 {
@@ -786,7 +773,6 @@ EMIF_setSyncTimingParams(uint32_t base, const EMIF_SyncTimingParams *tParam)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EMIF_setSyncSelfRefreshExitTmng(uint32_t base, uint16_t tXs)
 {
@@ -819,7 +805,6 @@ EMIF_setSyncSelfRefreshExitTmng(uint32_t base, uint16_t tXs)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EMIF_setSyncRefreshRate(uint32_t base, uint16_t refRate)
 {
@@ -851,7 +836,6 @@ EMIF_setSyncRefreshRate(uint32_t base, uint16_t refRate)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EMIF_setSyncMemoryConfig(uint32_t base, const EMIF_SyncConfig *config)
 {
@@ -887,7 +871,6 @@ EMIF_setSyncMemoryConfig(uint32_t base, const EMIF_SyncConfig *config)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EMIF_enableSyncSelfRefresh(uint32_t base)
 {
@@ -913,7 +896,6 @@ EMIF_enableSyncSelfRefresh(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EMIF_disableSyncSelfRefresh(uint32_t base)
 {
@@ -940,7 +922,6 @@ EMIF_disableSyncSelfRefresh(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EMIF_enableSyncPowerDown(uint32_t base)
 {
@@ -967,7 +948,6 @@ EMIF_enableSyncPowerDown(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EMIF_disableSyncPowerDown(uint32_t base)
 {
@@ -994,7 +974,6 @@ EMIF_disableSyncPowerDown(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EMIF_enableSyncRefreshInPowerDown(uint32_t base)
 {
@@ -1021,7 +1000,6 @@ EMIF_enableSyncRefreshInPowerDown(uint32_t base)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 EMIF_disableSyncRefreshInPowerDown(uint32_t base)
 {
@@ -1048,7 +1026,6 @@ EMIF_disableSyncRefreshInPowerDown(uint32_t base)
 //! \return \e Returns total number of accesses to SDRAM.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline uint32_t
 EMIF_getSyncTotalAccesses(uint32_t base)
 {
@@ -1075,7 +1052,6 @@ EMIF_getSyncTotalAccesses(uint32_t base)
 //!\return \e Returns total number of accesses to SDRAM which require activate.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline uint32_t
 EMIF_getSyncTotalActivateAccesses(uint32_t base)
 {

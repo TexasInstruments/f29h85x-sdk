@@ -1,12 +1,12 @@
 let Common   = system.getScript("/driverlib/Common.js");
 let Pinmux   = system.getScript("/driverlib/pinmux.js");
 
-let device_driverlib_peripheral = 
-    system.getScript("/driverlib/device_driverlib_peripherals/" + 
+let device_driverlib_peripheral =
+    system.getScript("/driverlib/device_driverlib_peripherals/" +
         Common.getDeviceName().toLowerCase() + "_cputimer.js");
 
-let device_driverlib_clockconfig = 
-        system.getScript("/driverlib/device_driverlib_peripherals/" + 
+let device_driverlib_clockconfig =
+        system.getScript("/driverlib/device_driverlib_peripherals/" +
             Common.getDeviceName().toLowerCase() + "_clockconfig.js");
 
 /* Intro splash on GUI */
@@ -191,8 +191,8 @@ let config = [
 ];
 
 
-function onValidate(inst, validation) 
-{   
+function onValidate(inst, validation)
+{
     var usedCPUTIMERInsts = [];
     for (var instance_index in inst.$module.$instances)
     {
@@ -207,51 +207,51 @@ function onValidate(inst, validation)
         var allDuplicates = "";
         for (var duplicateNamesIndex in duplicatesResult.duplicates)
         {
-            allDuplicates = allDuplicates + Common.stringOrEmpty(allDuplicates, ", ") 
+            allDuplicates = allDuplicates + Common.stringOrEmpty(allDuplicates, ", ")
                             + duplicatesResult.duplicates[duplicateNamesIndex];
         }
         validation.logError(
-            "The CPUTIMER Instance used. Duplicates: " + allDuplicates, 
+            "The CPUTIMER Instance used. Duplicates: " + allDuplicates,
             inst, "cputimerBase");
     }
 
     if (inst.timerInputFreq < 2)
     {
         validation.logError(
-            "Minimum input frequency supported is 2 MHz", 
+            "Minimum input frequency supported is 2 MHz",
             inst, "timerInputFreq");
     }
     if (inst.timerPrescaler < 0 || inst.timerPrescaler > 65535)
     {
         validation.logError(
-            "Enter an integer for Timer Prescaler between 0 and 65535!", 
+            "Enter an integer for Timer Prescaler between 0 and 65535!",
             inst, "timerPrescaler");
     }
     if (!Number.isInteger(inst.timerPrescaler))
     {
         validation.logError(
-            "Timer Prescaler must be an integer", 
+            "Timer Prescaler must be an integer",
             inst, "timerPrescaler");
     }
-    if (inst.timerPeriod < 0 || inst.timerPeriod > 4294967295)
+    if (inst.timerPeriod < 2 || inst.timerPeriod > 4294967295)
     {
         validation.logError(
-            "Enter an integer for Timer Period between 0 and 4294967295!", 
+            "Enter an integer for Timer Period between 2 and 4294967295!",
             inst, "timerPeriod");
     }
     if (!Number.isInteger(inst.timerPeriod))
     {
         validation.logError(
-            "Timer Period must be an integer", 
+            "Timer Period must be an integer",
             inst, "timerPeriod");
     }
     if (inst.timerPeriod == 0)
     {
         validation.logWarning(
-            "Timer Period is currently set to 0", 
+            "Timer Period is currently set to 0",
             inst, "timerPeriod");
     }
-    
+
 }
 
 function moduleInstances(inst)

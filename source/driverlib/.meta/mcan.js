@@ -221,6 +221,7 @@ let config = [
     {
         name : "GROUP_PERCFG",
         displayName : "Peripheral Configuration",
+        collapsed: false,
         config: [
                 {
                     name: "GROUP_INIT",
@@ -317,7 +318,7 @@ let config = [
                     name: "GROUP_TDC",
                     displayName: "Transmitter Delay Compensation",
                     config: [
-                        
+
                         {
                             name        : "tdcConfig_tdcf",
                             displayName : "Transmitter Delay Compensation Filter Window Length (CAN Module Clk Cycles)",
@@ -536,7 +537,7 @@ let config = [
                             onChange    : onChangeMsgRamConfig,
                             default     : true,
                         },
-            
+
                         {
                             name        : "flssa",
                             displayName : "Standard ID Filter List Start Address",
@@ -727,7 +728,7 @@ let config = [
                                 },
                             ]
                         },
-            
+
                     ]
                 },
                 {
@@ -880,7 +881,7 @@ let config = [
 ]
 
 function moduleInstances(inst,ui) {
-    
+
     var components = []
 
     var pinmuxQualMods = Pinmux.getGpioQualificationModInstDefinitions("MCAN", inst)
@@ -965,7 +966,7 @@ function moduleInstances(inst,ui) {
             collapsed: false,
             requiredArgs:{
                 pinmuxPeripheralModule : "mcan",
-                peripheralInst: inst.$name,
+                peripheralInst: "",
             }
         },
         {
@@ -975,9 +976,11 @@ function moduleInstances(inst,ui) {
             moduleName: "/driverlib/perConfig.js",
             collapsed: false,
             requiredArgs:{
+                cpuSel: inst.$assignedContext ?? system.context,
                 pinmuxPeripheralModule : "mcan",
-                peripheralInst: inst.$name
-            }
+                peripheralInst: ""
+            },
+            shouldBeAllocatedAsResource: true
         }
     )
     if (inst.enableErrorSignal)
@@ -999,7 +1002,18 @@ function moduleInstances(inst,ui) {
     }
     return components;
 }
-
+function validatePinmux(inst,validation){
+    if (inst.mcan && inst.mcan.$solution) {
+        let selectedPeripheral = inst.mcan.$solution.peripheralName; // e.g., "MCAN"
+        if (Common.is_instance_not_in_variant(selectedPeripheral)) {
+            validation.logError(
+                `${selectedPeripheral} is not supported for ${Common.getVariant().replace(/^TMS320/, '')}.`,
+                inst,
+                "mcan"
+            );
+        }
+    }
+}
 function onValidate(inst, validation) {
     if (inst.tdcConfig_tdcf < 0 || inst.tdcConfig_tdcf > 0x7F)
     {
@@ -1242,20 +1256,21 @@ if (Common.onlyPinmux())
 var mcanModule = {
     peripheralName: "MCAN",
     displayName: "MCAN",
-    maxInstances: Common.peripheralCount("MCAN"),
+    totalMaxInstances: Common.peripheralCount("MCAN"),
     defaultInstanceName: "myMCAN",
     description: "MCAN Peripheral",
     //longDescription: (Common.getCollateralFindabilityList("MCAN")),
     filterHardware : filterHardware,
-    config: config,
+    config: Common.filterConfigsIfInSetupMode(config),
     validate: onValidate,
     moduleInstances: moduleInstances,
-    validate    : onValidate,
+    validatePinmux    : validatePinmux,
     templates: {
         boardc : "/driverlib/mcan/mcan.board.c.xdt",
         boardh : "/driverlib/mcan/mcan.board.h.xdt"
     },
-    pinmuxRequirements    : Pinmux.mcanPinmuxRequirements
+    pinmuxRequirements    : Pinmux.mcanPinmuxRequirements,
+    shouldBeAllocatedAsResource: true
 };
 
 

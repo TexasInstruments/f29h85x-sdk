@@ -2,8 +2,8 @@
 %%{
     const Common = system.getScript('/ti/security/Common.js');
     let idx = 0;
-    var linkID = Common.assignLinkID()
-    var stackID = Common.assignStackID()
+    let linkID = Common.assignLinkID()
+    let stackID = Common.assignStackID()
 %%}
 
 // C29x SSU LINKs
@@ -28,6 +28,7 @@
 % idx++
 % });
 % }
+
 // C29x SSU initialization function prototypes
 void Interrupt_SSU_Init();
 void DLT_SSU_EnableLinkPermissions();

@@ -4,7 +4,15 @@ exports = {
 		config: [{
 			name: "valueType",
 			default: "arrayRange",
-			options: [{ name: "singleValue" }, { name: "arraySame" }, { name: "arrayRange" }]
+			options: [{ name: "singleValue" }, { name: "arraySame" }, { name: "arrayRange" }],
+			shouldBeAllocatedAsResource : true,
+		},
+		{
+			name: "$assignedContext",
+			hidden: true,
+			options: [{name: "CPU1"}],
+			default: "CPU1",
+			readOnly: true
 		}]
 	},
 	getDefaultValue: (inst) => {
@@ -21,5 +29,6 @@ exports = {
 			case "arrayRange":
 				return [_.size(name), _.size(name) + 1];
 		}
-	}
+	},
+	shouldBeAllocatedAsResource : true,
 }

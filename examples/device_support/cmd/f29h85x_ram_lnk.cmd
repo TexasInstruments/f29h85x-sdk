@@ -26,10 +26,10 @@ SECTIONS
 
     .text         : {} > SRAM_LPAx
     .TI.ramfunc   : {} > SRAM_LPAx
-    .cinit        : {} > SRAM_LDAx
-    .const        : {} > SRAM_LDAx
-    .rodata       : {} > SRAM_LDAx
-    .init_array   : {} > SRAM_LDAx
+    .cinit        : {} > SRAM_LPAx
+    .const        : {} > SRAM_LPAx | SRAM_LDAx
+    .rodata       : {} > SRAM_LPAx | SRAM_LDAx
+    .init_array   : {} > SRAM_LPAx
 
     .data         : {} > SRAM_LDAx
     .bss          : {} > SRAM_LDAx

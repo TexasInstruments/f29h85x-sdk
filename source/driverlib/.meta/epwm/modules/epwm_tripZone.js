@@ -1,7 +1,7 @@
 let Common   = system.getScript("/driverlib/Common.js");
 let Pinmux   = system.getScript("/driverlib/pinmux.js");
-let device_driverlib_peripheral = 
-    system.getScript("/driverlib/device_driverlib_peripherals/" + 
+let device_driverlib_peripheral =
+    system.getScript("/driverlib/device_driverlib_peripherals/" +
         Common.getDeviceName().toLowerCase() + "_epwm.js");
 
 var TzEventConfigNames = [];
@@ -36,9 +36,9 @@ function onChangeUseAdvancedEPWMTripZoneActions(inst, ui)
         {
             ui[tzAdvEventConfigName].hidden = false;
         }
-        
+
     }
-    
+
 }
 
 /* Array of configurables that are common across device families */
@@ -119,6 +119,21 @@ var oneShotConfig = [
 
 ];
 
+if(["F29H85x"].includes(Common.getDeviceName()))
+{
+    oneShotConfig.push(
+        {
+            name: "epwmTripZone_oneShotSourceAdditional",
+            displayName : "Additional One-Shot Source",
+            description : 'Check to enable the source to the One-Shot OR gate',
+            hidden      : false,
+            minSelections : 0,
+            default     : [],
+            options     : [{ name: "EPWM_TZ_SIGNAL_CAPEVT_OST", displayName: "One-shot Capture event" }],
+        },
+    )
+}
+
 var cbcConfig = [
     {
         name: "epwmTripZone_cbcSource",
@@ -140,6 +155,21 @@ var cbcConfig = [
 
 ];
 
+if(["F29H85x"].includes(Common.getDeviceName()))
+{
+    cbcConfig.push(
+        {
+            name: "epwmTripZone_cbcSourceAdditional",
+            displayName : "Additional CBC Source",
+            description : 'Check to enable the source to the CBC OR gate',
+            hidden      : false,
+            minSelections : 0,
+            default     : [],
+            options     : [{ name: "EPWM_TZ_SIGNAL_CAPEVT_CBC", displayName: "Cycle By Cycle Capture event" }],
+        },
+    )
+}
+
 var interruptConfig = [
     {
         name: "epwmTripZone_tzInterruptSource",
@@ -156,7 +186,7 @@ var interruptConfig = [
         description : 'Whether or not to register interrupt handlers in the interrupt module.',
         hidden      : false,
         default     : false
-        
+
     },
 
 ]
@@ -196,7 +226,7 @@ var epwmTripZoneSubmodule = {
         if (inst.epwmTripZone_registerInterrupts)
         {
             return [{
-                name: "epwmTZInt",      
+                name: "epwmTZInt",
                 displayName: "EPWM TZ Interrupt ",
                 moduleName: "/driverlib/interrupt.js",
                 collapsed: true,

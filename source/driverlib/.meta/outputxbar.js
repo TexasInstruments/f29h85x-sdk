@@ -28,6 +28,7 @@ var config = [
                 minSelections: 0,
                 options      : noPrefixOptions,
                 description  : "This determines the output of the xbar",
+                shouldBeAllocatedAsResource : true,
             }]
     }
 ];
@@ -101,7 +102,7 @@ var outputxbarModule = {
     defaultInstanceName   : "myOUTPUTXBAR",
     description           : "Output X-bar",
     filterHardware        : filterHardware,
-    config                : config,
+    config                : Common.filterConfigsIfInSetupMode(config),
     moduleInstances       : moduleInstances,
     templates             : {
         boardc : "/driverlib/outputxbar/outputxbar.board.c.xdt",
@@ -113,7 +114,10 @@ var outputxbarModule = {
         name: "outputXbarGlobal",
         displayName: "OUTPUTXBAR Global",
         config: globalConfig,
+        shouldBeAllocatedAsResource : true,
     },
+    shouldBeAllocatedAsResource : true,
+    alwaysAllocateAsResource : true,
 };
 
 if (outputxbarModule.maxInstances <= 0)

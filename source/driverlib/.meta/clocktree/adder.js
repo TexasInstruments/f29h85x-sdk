@@ -5,6 +5,13 @@ exports = {
 		displayName: "Type",
 		default: "Adder",
 		readOnly: true,
+	},
+	{
+		name: "$assignedContext",
+		hidden: true,
+		options: [{name: "CPU1"}],
+		default: "CPU1",
+		readOnly: true
 	}],
 	extendConfig: ({ $ipInstance }) => [
 		{
@@ -40,5 +47,6 @@ exports = {
 				return value1 + value2;
 			},
 		}
-	]
+	],
+	shouldBeAllocatedAsResource : true,
 };

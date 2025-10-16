@@ -1,12 +1,16 @@
+% let Common   = system.getScript("/driverlib/Common.js");
 % var moduleName = "cmpss"
 % var module = system.modules['/driverlib/' + moduleName + '.js'];
-%if (module != null)
-%{
 //*****************************************************************************
 //
 // CMPSS Configurations
 //
 //*****************************************************************************
+% if (Common.isContextCPU1()){
+void CMPSS_MUX_config();
+% }
+%if (module != null)
+%{
     % for(var i = 0; i < module.$instances.length; i++) {
         % var instance = module.$instances[i];
 #define `instance.$name`_BASE `instance.cmpssBase`

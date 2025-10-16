@@ -103,6 +103,7 @@ void Interrupt_clearEsmEaFlags(Interrupt_NmiStatus *nmiStatus)
         ESM_clearGroupIntStatus(ESMCPU1_BASE, grp);
         ESM_clearGroupIntStatus(ESMCPU2_BASE, grp);
         ESM_clearGroupIntStatus(ESMCPU3_BASE, grp);
+        ESM_clearGroupIntStatus(ESMSYSTEM_BASE, grp);
     }
 
     //
@@ -158,29 +159,35 @@ void
 Interrupt_initModule(void)
 {
     uint16_t i;
+    static uint32_t initModuleDone = 0U;
 
-    //
-    // Initialize the MMR registers
-    //
-    HWREG(PIPE_BASE + PIPE_O_MMR_CLR) = 0x3U;
-
-    //
-    // Initialize the memory and wait for completion
-    //
-    HWREG(PIPE_BASE + PIPE_O_MEM_INIT) = PIPE_MEM_INIT_KEY | 0x3U;
-    while(HWREG(PIPE_BASE + PIPE_O_MEM_INIT_STS) != 0x2U)
+    if(0U == initModuleDone)
     {
-    }
+        //
+        // Initialize the MMR registers
+        //
+        HWREG(PIPE_BASE + PIPE_O_MMR_CLR) = 0x3U;
 
-    //
-    // Set all link owner of all interrupts to LINK2 and INTSP to STACK2
-    //
-    for(i = 0; i < INTERRUPT_NO_OF_CHANNELS; i++)
-    {
-        Interrupt_setLinkOwner(i, SSU_LINK2);
+        //
+        // Initialize the memory and wait for completion
+        //
+        HWREG(PIPE_BASE + PIPE_O_MEM_INIT) = PIPE_MEM_INIT_KEY | 0x3U;
+        while(HWREG(PIPE_BASE + PIPE_O_MEM_INIT_STS) != 0x2U)
+        {
+        }
+
+        //
+        // Set all link owner of all interrupts to LINK2 and INTSP to STACK2
+        //
+        for(i = 0; i < INTERRUPT_NO_OF_CHANNELS; i++)
+        {
+            Interrupt_setLinkOwner(i, SSU_LINK2);
+        }
+        Interrupt_setLinkOwner(INT_NMI, SSU_LINK2);
+        Interrupt_setINTSP(SSU_STACK2);
+
+        initModuleDone = 1U;
     }
-    Interrupt_setLinkOwner(INT_NMI, SSU_LINK2);
-    Interrupt_setINTSP(SSU_STACK2);
 }
 
 //*****************************************************************************
@@ -192,23 +199,28 @@ void
 Interrupt_initVectorTable(void)
 {
     uint16_t i;
+    static uint32_t initVectorTableDone = 0U;
 
-    //
-    //  Program the PIPE register for NMI vector only for CPU1
-    //  For CPU2 and CPU3, CPU1 programs the SSU NMI vector and
-    //  link settings
-    //
-    if(SSU_CPU1 == SSU_getCPUID())
+    if(0U == initVectorTableDone)
     {
-        HWREG(PIPE_BASE + PIPE_O_NMI_VECT) = (uint32_t)Interrupt_defaultNMIHandler;
-    }
+        //
+        //  Program the PIPE register for NMI vector only for CPU1
+        //  For CPU2 and CPU3, CPU1 programs the SSU NMI vector and
+        //  link settings
+        //
+        if(SSU_CPU1 == SSU_getCPUID())
+        {
+            HWREG(PIPE_BASE + PIPE_O_NMI_VECT) = (uint32_t)Interrupt_defaultNMIHandler;
+        }
 
-    for(i = 0U; i < INTERRUPT_NO_OF_CHANNELS; i++)
-    {
-        HWREG(PIPE_BASE + PIPE_O_INT_VECT_ADDR(i)) =
-                                            (uint32_t)Interrupt_defaultHandler;
-    }
+        for(i = 0U; i < INTERRUPT_NO_OF_CHANNELS; i++)
+        {
+            HWREG(PIPE_BASE + PIPE_O_INT_VECT_ADDR(i)) =
+                                                (uint32_t)Interrupt_defaultHandler;
+        }
 
+        initVectorTableDone = 1U;
+    }
 }
 
 //*****************************************************************************

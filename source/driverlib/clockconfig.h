@@ -761,17 +761,17 @@ typedef enum
 //
 //*****************************************************************************
 
-#define SYSCTL_CLB1CLKMODE_SYNC  0U,
-#define SYSCTL_CLB1CLKMODE_ASYNC SYSCTL_CLBCLKCTL_CLKMODECLB1,
-#define SYSCTL_CLB2CLKMODE_SYNC  0U,
-#define SYSCTL_CLB2CLKMODE_ASYNC SYSCTL_CLBCLKCTL_CLKMODECLB2,
-#define SYSCTL_CLB3CLKMODE_SYNC  0U,
-#define SYSCTL_CLB3CLKMODE_ASYNC SYSCTL_CLBCLKCTL_CLKMODECLB3,
-#define SYSCTL_CLB4CLKMODE_SYNC  0U,
-#define SYSCTL_CLB4CLKMODE_ASYNC SYSCTL_CLBCLKCTL_CLKMODECLB4,
-#define SYSCTL_CLB5CLKMODE_SYNC  0U,
-#define SYSCTL_CLB5CLKMODE_ASYNC SYSCTL_CLBCLKCTL_CLKMODECLB5,
-#define SYSCTL_CLB6CLKMODE_SYNC  0U,
+#define SYSCTL_CLB1CLKMODE_SYNC  0U
+#define SYSCTL_CLB1CLKMODE_ASYNC SYSCTL_CLBCLKCTL_CLKMODECLB1
+#define SYSCTL_CLB2CLKMODE_SYNC  0U
+#define SYSCTL_CLB2CLKMODE_ASYNC SYSCTL_CLBCLKCTL_CLKMODECLB2
+#define SYSCTL_CLB3CLKMODE_SYNC  0U
+#define SYSCTL_CLB3CLKMODE_ASYNC SYSCTL_CLBCLKCTL_CLKMODECLB3
+#define SYSCTL_CLB4CLKMODE_SYNC  0U
+#define SYSCTL_CLB4CLKMODE_ASYNC SYSCTL_CLBCLKCTL_CLKMODECLB4
+#define SYSCTL_CLB5CLKMODE_SYNC  0U
+#define SYSCTL_CLB5CLKMODE_ASYNC SYSCTL_CLBCLKCTL_CLKMODECLB5
+#define SYSCTL_CLB6CLKMODE_SYNC  0U
 #define SYSCTL_CLB6CLKMODE_ASYNC SYSCTL_CLBCLKCTL_CLKMODECLB6
 
 //
@@ -793,7 +793,6 @@ extern void SysCtl_pollSyncBusy(uint32_t mask);
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.SysCtl_enableMCD")))
-__attribute__((always_inline))
 static inline void
 SysCtl_enableMCD(void)
 {
@@ -808,7 +807,6 @@ SysCtl_enableMCD(void)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.SysCtl_disableMCD")))
-__attribute__((always_inline))
 static inline void
 SysCtl_disableMCD(void)
 {
@@ -826,7 +824,6 @@ SysCtl_disableMCD(void)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.SysCtl_isMCDClockFailureDetected")))
-__attribute__((always_inline))
 static inline bool
 SysCtl_isMCDClockFailureDetected(void)
 {
@@ -844,7 +841,6 @@ SysCtl_isMCDClockFailureDetected(void)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.SysCtl_resetMCD")))
-__attribute__((always_inline))
 static inline void
 SysCtl_resetMCD(void)
 {
@@ -860,7 +856,6 @@ SysCtl_resetMCD(void)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.SysCtl_connectMCDClockSource")))
-__attribute__((always_inline))
 static inline void
 SysCtl_connectMCDClockSource(void)
 {
@@ -876,7 +871,6 @@ SysCtl_connectMCDClockSource(void)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.SysCtl_disconnectMCDClockSource")))
-__attribute__((always_inline))
 static inline void
 SysCtl_disconnectMCDClockSource(void)
 {
@@ -902,7 +896,6 @@ SysCtl_disconnectMCDClockSource(void)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.SysCtl_setXClk")))
-__attribute__((always_inline))
 static inline void
 SysCtl_setXClk(SysCtl_XClkSource clksrc, SysCtl_XClkDivider divider)
 {
@@ -946,7 +939,6 @@ SysCtl_setXClk(SysCtl_XClkSource clksrc, SysCtl_XClkDivider divider)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.SysCtl_setMCANClock")))
-__attribute__((always_inline))
 static inline void
 SysCtl_setMCANClock(SysCtl_MCANInstance mcanInst, SysCtl_MCANClkSource clksrc,
                     SysCtl_MCANClkDivider divider)
@@ -962,7 +954,18 @@ SysCtl_setMCANClock(SysCtl_MCANInstance mcanInst, SysCtl_MCANClkSource clksrc,
              ~(SYSCTL_MCANCLKDIVSEL_MCANACLKDIV_M << bitpos)) |
             ((uint16_t)divider << bitpos);
 
-    SysCtl_pollSyncBusy(SYSCTL_SYNCBUSY_MCANCLKDIVSEL);
+    //
+    //  Provide delay of 3 X (Fsysclk/Fintosc1) + 9 = 69 SYSCLK cycles
+    //
+    __asm(" NOP #8");
+    __asm(" NOP #8");
+    __asm(" NOP #8");
+    __asm(" NOP #8");
+    __asm(" NOP #8");
+    __asm(" NOP #8");
+    __asm(" NOP #8");
+    __asm(" NOP #8");
+    __asm(" NOP #5");
 
     //
     // Configure the clock source
@@ -995,7 +998,6 @@ SysCtl_setMCANClock(SysCtl_MCANInstance mcanInst, SysCtl_MCANClkSource clksrc,
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.SysCtl_setCputimer2Clock")))
-__attribute__((always_inline))
 static inline void
 SysCtl_setCputimer2Clock(SysCtl_Cputimer2ClkSource source,
                          SysCtl_Cputimer2ClkDivider divider)
@@ -1023,7 +1025,6 @@ SysCtl_setCputimer2Clock(SysCtl_Cputimer2ClkSource source,
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.SysCtl_setEPWMClock")))
-__attribute__((always_inline))
 static inline void
 SysCtl_setEPWMClock(SysCtl_EPWMClkDivider divider)
 {
@@ -1049,7 +1050,6 @@ SysCtl_setEPWMClock(SysCtl_EPWMClkDivider divider)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.SysCtl_setEMIF1Clock")))
-__attribute__((always_inline))
 static inline void
 SysCtl_setEMIF1Clock(SysCtl_EMIFClkDivider divider)
 {
@@ -1075,7 +1075,6 @@ SysCtl_setEMIF1Clock(SysCtl_EMIFClkDivider divider)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.SysCtl_setLINAClock")))
-__attribute__((always_inline))
 static inline void
 SysCtl_setLINAClock(SysCtl_LINClkDivider divider)
 {
@@ -1101,7 +1100,6 @@ SysCtl_setLINAClock(SysCtl_LINClkDivider divider)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.SysCtl_setLINBClock")))
-__attribute__((always_inline))
 static inline void
 SysCtl_setLINBClock(SysCtl_LINClkDivider divider)
 {
@@ -1137,7 +1135,6 @@ SysCtl_setLINBClock(SysCtl_LINClkDivider divider)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.SysCtl_setECatClock")))
-__attribute__((always_inline))
 static inline void
 SysCtl_setECatClock(SysCtl_ECatClkDivider divider, SysCtl_ECatPhyClk phyEnable)
 {
@@ -1179,7 +1176,6 @@ SysCtl_setECatClock(SysCtl_ECatClkDivider divider, SysCtl_ECatPhyClk phyEnable)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.SysCtl_setCLBClock")))
-__attribute__((always_inline))
 static inline void
 SysCtl_setCLBClock(SysCtl_CLBClkDivider divider, SysCtl_CLBTClkDivider tdivider,
                    uint8_t clkMode)
@@ -1204,7 +1200,6 @@ SysCtl_setCLBClock(SysCtl_CLBClkDivider divider, SysCtl_CLBTClkDivider tdivider,
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.SysCtl_setHSMClock")))
-__attribute__((always_inline))
 static inline void
 SysCtl_setHSMClock(SysCtl_HSMClkDivider divider)
 {
@@ -1227,7 +1222,6 @@ SysCtl_setHSMClock(SysCtl_HSMClkDivider divider)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.SysCtl_getExternalOscCounterValue")))
-__attribute__((always_inline))
 static inline uint16_t
 SysCtl_getExternalOscCounterValue(void)
 {
@@ -1242,7 +1236,6 @@ SysCtl_getExternalOscCounterValue(void)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.SysCtl_clearExternalOscCounterValue")))
-__attribute__((always_inline))
 static inline void
 SysCtl_clearExternalOscCounterValue(void)
 {
@@ -1257,7 +1250,6 @@ SysCtl_clearExternalOscCounterValue(void)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.SysCtl_turnOnXTAL")))
-__attribute__((always_inline))
 static inline void
 SysCtl_turnOnXTAL(void)
 {
@@ -1273,7 +1265,6 @@ SysCtl_turnOnXTAL(void)
 //
 //*****************************************************************************
 __attribute__((section(".text.link2.SysCtl_turnOffXTAL")))
-__attribute__((always_inline))
 static inline void
 SysCtl_turnOffXTAL(void)
 {

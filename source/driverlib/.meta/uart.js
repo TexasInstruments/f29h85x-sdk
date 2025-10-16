@@ -1,8 +1,8 @@
 let Common   = system.getScript("/driverlib/Common.js");
 let Pinmux   = system.getScript("/driverlib/pinmux.js");
 
-let device_driverlib_peripheral = 
-    system.getScript("/driverlib/device_driverlib_peripherals/" + 
+let device_driverlib_peripheral =
+    system.getScript("/driverlib/device_driverlib_peripherals/" +
         Common.getDeviceName().toLowerCase() + "_uart.js");
 
 let device_driverlib_memmap =
@@ -20,35 +20,29 @@ for (var dma of device_driverlib_memmap.DMAMemoryMap) {
 /* Intro splash on GUI */
 let longDescription = "UART";
 
+function onChangeFIFO(inst, ui){
+    if( inst.fen ){
+        ui.txiflsel.hidden = false;
+        ui.rxiflsel.hidden = false;
+    }
+    else
+    {
+        ui.txiflsel.hidden = true;
+        ui.rxiflsel.hidden = true;
+    }
+}
 
-function onChangeFIFOInterrupts(inst, ui)
+function onChangeInterrupts(inst, ui)
 {
-    // If interrupt enabled, unhide everything, let later if-statements re-
-    // hide necessary items
-    if (inst.enInterrupt) 
+    if (inst.enInterrupt)
     {
         ui.registerInterrupts.hidden = false;
         ui.enabledInterrupts.hidden = false;
-        ui.txiflsel.hidden = false;
-        ui.rxiflsel.hidden = false;
     }
     else
     {
         ui.registerInterrupts.hidden = true;
         ui.enabledInterrupts.hidden = true;
-        ui.txiflsel.hidden = true;
-        ui.rxiflsel.hidden = true;
-    }
-    // Hide fifo-related interrupts based on FEN
-    if (inst.enInterrupt && inst.fen)
-    {
-        ui.txiflsel.hidden = false;
-        ui.rxiflsel.hidden = false;
-    }
-    else
-    {
-        ui.txiflsel.hidden = true;
-        ui.rxiflsel.hidden = true;
     }
 }
 
@@ -86,7 +80,7 @@ function onChangeUseDMARX(inst, ui)
         ui.DMARXInst.hidden = false;
         ui.disableDMARXonError.hidden = false;
     }
-    else 
+    else
     {
         ui.DMARXInst.hidden = true;
         ui.disableDMARXonError.hidden = true;
@@ -99,7 +93,7 @@ function onChangeUseDMATX(inst, ui)
     {
         ui.DMATXInst.hidden = false;
     }
-    else 
+    else
     {
         ui.DMATXInst.hidden = true;
     }
@@ -139,13 +133,24 @@ function burstSizeMapping(fifoLevel, inst){
           return 1;
     }
 }
-
+function validatePinmux(inst,validation){
+    if (inst.uart && inst.uart.$solution) {
+        let selectedPeripheral = inst.uart.$solution.peripheralName; // e.g., "UARTA"
+        if (Common.is_instance_not_in_variant(selectedPeripheral)) {
+            validation.logError(
+                `${selectedPeripheral} is not supported for ${Common.getVariant().replace(/^TMS320/, '')}.`,
+                inst,
+                "uart"
+            );
+        }
+    }
+}
 function onValidate(inst, validation)
 {
     if ((inst.enInterrupt) && (inst.enabledInterrupts.length <= 0) && (inst.txiflsel != "EOT"))
     {
         validation.logWarning(
-            "At least one interrupt should be enabled when 'Enable Interrupts' is checked. Either choose one here, or Enable FIFO and choose Transmit FIFO Interrupt Level 'End of Transmission'.", 
+            "At least one interrupt should be enabled when 'Enable Interrupts' is checked. Either choose one here, or Enable FIFO and choose Transmit FIFO Interrupt Level 'End of Transmission'.",
             inst, "enabledInterrupts");
     }
 
@@ -161,7 +166,7 @@ function onValidate(inst, validation)
             "Baud rate out of range, Max. baud rate given current UART source clock is " + String(maxBaud),
             inst, "baud");
     }
-    
+
     else if (inst.baud < minBaud)
     {
         validation.logError(
@@ -251,14 +256,14 @@ let config = [
                         baudrtDiv = baudrtDiv/2;
                     }
                     var div = parseInt((((inst.$module.$static["baudSYSCLK"] * 8) / baudrtDiv) + 1) / 2);
-                    
+
                     // High speed mode (source clock /8) if needed for this baud
                     var ClkDiv = ((baudrt * 16) > inst.$module.$static["baudSYSCLK"] ? 8 : 16)
 
                     // Get the values that would get stored into the regs
                     var integerBaudRateDivider = parseInt(div / 64);
                     var fractionalBaudRateDivider = parseInt(div % 64);
-                    
+
                     // Compute the resultant baud rate of the values that got put
                     // into the registers
                     var baudActual = (inst.$module.$static["baudSYSCLK"]/((integerBaudRateDivider + (fractionalBaudRateDivider/64))*ClkDiv));
@@ -283,14 +288,14 @@ let config = [
                         baudrtDiv = baudrtDiv/2;
                     }
                     var div = parseInt((((inst.$module.$static["baudSYSCLK"] * 8) / baudrtDiv) + 1) / 2);
-                    
+
                     // High speed mode (source clock /8) if needed for this baud
                     var ClkDiv = ((baudrt * 16) > inst.$module.$static["baudSYSCLK"] ? 8 : 16)
 
                     // get the values that would get stored into the regs
                     var integerBaudRateDivider = parseInt(div / 64);
                     var fractionalBaudRateDivider = parseInt(div % 64);
-                    
+
                     // Compute the resultant baud rate of the values that got put
                     // into the registers
                     var baudActual = (inst.$module.$static["baudSYSCLK"]/((integerBaudRateDivider + (fractionalBaudRateDivider/64))*ClkDiv));
@@ -300,7 +305,7 @@ let config = [
             },
             //**********************************************************************
             // Word Settings
-            {    
+            {
                 name        : "GROUP_WORD_SETTINGS",
                 displayName : "Word Settings",
                 collapsed   : false,
@@ -350,7 +355,7 @@ let config = [
                         default     : false,
                         onChange    : onChangeParity,
                     },
-                    // Output a value to user to show what the stick parity value will be, 
+                    // Output a value to user to show what the stick parity value will be,
                     // based on PEN, EPS, and SPS bits of UARTLCRH
                     {
                         name        : "stickParityVal",
@@ -361,7 +366,7 @@ let config = [
                             if (    inst.pen == true    &&  // parity enabled
                                     inst.sps == true    &&  // stick parity enabled
                                     inst.eps == "UART_CONFIG_PAR_EVEN")     // even parity selected
-                                
+
                             {
                                 return "0"; // Always output 0 for even stick parity
                             }
@@ -382,7 +387,7 @@ let config = [
                 displayName : "Enable FIFO",
                 description : 'Whether or not to use FIFO mode.',
                 hidden      : false,
-                onChange    : onChangeFIFOInterrupts,
+                onChange    : onChangeFIFO,
                 default     : false
             },
             //**********************************************************************
@@ -393,7 +398,7 @@ let config = [
                 description : 'Internal loopback mode for diagnostic or debug work.',
                 hidden      : false,
                 default     : false
-                
+
             },
             //**********************************************************************
             // Pinmux
@@ -404,7 +409,7 @@ let config = [
                 hidden      : false,
                 default     : 'ALL',
                 options     : Pinmux.getPeripheralUseCaseNames("UART"),
-                onChange    : Pinmux.useCaseChanged, 
+                onChange    : Pinmux.useCaseChanged,
             },
         ]
     },
@@ -419,8 +424,8 @@ let config = [
                 description : 'Choose whether or not to use interrupts.',
                 hidden      : false,
                 default     : true,
-                onChange    : onChangeFIFOInterrupts,
-                
+                onChange    : onChangeInterrupts,
+
             },
             {
                 name        : "registerInterrupts",
@@ -428,7 +433,7 @@ let config = [
                 description : 'Whether or not to register interrupt handlers in the interrupt module.',
                 hidden      : false,
                 default     : false,
-                
+
             },
             {
                 name        : "enabledInterrupts",
@@ -437,20 +442,20 @@ let config = [
                 hidden      : false,
                 default     : ["UART_INT_TX","UART_INT_RX",],
                 minSelections: 0,
-                options     : device_driverlib_peripheral.UART_INT 
+                options     : device_driverlib_peripheral.UART_INT
             },
             {
                 name        : "txiflsel",
-                displayName : "Transmit FIFO Interrupt Level",
-                description : 'Transmit FIFO interrupt level used. If End of Transmission (EOT) is chosen, then TXRIS bit and interrupt is set only after all transmitted data, including stop bits, have cleared the serializer.',
+                displayName : "Transmit FIFO Trigger Level",
+                description : 'Transmit FIFO trigger level used. UART will generate an interrupt at this level if module interrupts are enabled. If End of Transmission (EOT) is chosen, then TXRIS bit and interrupt is set only after all transmitted data, including stop bits, have cleared the serializer.',
                 hidden      : true,
                 default     : "UART_FIFO_TX4_8",
                 options     : device_driverlib_peripheral.UART_FIFO_TX
             },
             {
                 name        : "rxiflsel",
-                displayName : "Receive FIFO Interrupt Level",
-                description : 'Receive FIFO interrupt level used.',
+                displayName : "Receive FIFO Trigger Level",
+                description : 'Receive FIFO trigger level used. UART will generate an interrupt at this level if module interrupts are enabled.',
                 hidden      : true,
                 default     : "UART_FIFO_RX4_8",
                 options     : device_driverlib_peripheral.UART_FIFO_RX
@@ -469,6 +474,7 @@ let config = [
                 hidden      : false,
                 default     : false,
                 onChange    : onChangeUseDMARX,
+                shouldBeAllocatedAsResource : true
             },
             {
                 name        : "disableDMARXonError",
@@ -484,8 +490,9 @@ let config = [
                 hidden      : true,
                 default     : dma_instances[0].name,
                 options     : dma_instances,
+                shouldBeAllocatedAsResource : true
             },
-            
+
             {
                 name        : "useDMATX",
                 displayName : "Use RTDMA for Transmit",
@@ -493,6 +500,7 @@ let config = [
                 hidden      : false,
                 default     : false,
                 onChange    : onChangeUseDMATX,
+                shouldBeAllocatedAsResource : true
             },
             {
                 name        : "DMATXInst",
@@ -501,7 +509,8 @@ let config = [
                 hidden      : true,
                 default     : dma_instances[0].name,
                 options     : dma_instances,
-            },        
+                shouldBeAllocatedAsResource : true
+            },
         ]
     },
     {
@@ -535,13 +544,13 @@ if (Common.onlyPinmux())
 var uartModule = {
     peripheralName: "UART",
     displayName: "UART",
-    maxInstances: Common.peripheralCount("UART"),
+    totalMaxInstances: Common.peripheralCount("UART"),
     defaultInstanceName: "myUART",
     description: "UART Peripheral",
     filterHardware : filterHardware,
     moduleInstances: (inst) => {
         var ownedInstances = []
-        
+
         // Pinmux qualification
         var pinmuxQualMods = Pinmux.getGpioQualificationModInstDefinitions("UART", inst)
         for (var pinmuxQualMod of pinmuxQualMods)
@@ -568,7 +577,7 @@ var uartModule = {
     	{
 	        ownedInstances = ownedInstances.concat([{
 	            name: "uartInt",
-                group: "GROUP_ISR",  
+                group: "GROUP_ISR",
 	            displayName: "UART Interrupt",
 	            moduleName: "/driverlib/interrupt.js",
 	            collapsed: true,
@@ -603,12 +612,13 @@ var uartModule = {
                         databusWidthConfig: "DMA_CFG_READ_SIZE_8BIT",
                         writeDatasizeConfig: "DMA_CFG_WRT_SIZE_8BIT",
                         triggerSource: "DMA_TRIGGER_LINKED"
-                    }
+                    },
+                    shouldBeAllocatedAsResource : true
                 },
             ])
         }
 
-        if (inst.useDMATX) 
+        if (inst.useDMATX)
         {
             let dmaInst = inst.DMATXInst.split('_')[0].toLowerCase()
             ownedInstances = ownedInstances.concat([
@@ -628,7 +638,8 @@ var uartModule = {
                         databusWidthConfig: "DMA_CFG_READ_SIZE_8BIT",
                         writeDatasizeConfig: "DMA_CFG_WRT_SIZE_8BIT",
                         triggerSource: "DMA_TRIGGER_LINKED"
-                    }
+                    },
+                    shouldBeAllocatedAsResource : true
                 },
             ])
         }
@@ -642,7 +653,7 @@ var uartModule = {
                 collapsed: false,
                 requiredArgs:{
                     pinmuxPeripheralModule : "uart",
-                    peripheralInst: inst.$name,
+                    peripheralInst: ""
                 }
             },
             {
@@ -652,27 +663,30 @@ var uartModule = {
                 moduleName: "/driverlib/perConfig.js",
                 collapsed: false,
                 requiredArgs:{
+                    cpuSel: inst.$assignedContext ?? system.context,
                     pinmuxPeripheralModule : "uart",
-                    peripheralInst: inst.$name
-                }
+                    peripheralInst: ""
+                },
+                shouldBeAllocatedAsResource : true,
             },
         ])
-        
+
     	return ownedInstances;
     },
-    config: config,
+    config: Common.filterConfigsIfInSetupMode(config),
     templates: {
         boardc : "/driverlib/uart/uart.board.c.xdt",
         boardh : "/driverlib/uart/uart.board.h.xdt"
     },
     pinmuxRequirements    : Pinmux.uartPinmuxRequirements,
     validate : onValidate,
-
+    validatePinmux: validatePinmux,
+    shouldBeAllocatedAsResource : true,
     // Static module for all instances to hold SYSCLK for baud calculation
     moduleStatic: {
         name: "UartGlobal",
         displayName: "UART Global",
-        config: [
+        config: Common.filterConfigsIfInSetupMode([
             {
                 name: "baudSYSCLK",
                 displayName: "SYSCLK [Hz] for Baud Rate",
@@ -682,7 +696,7 @@ var uartModule = {
                 getValue: () => {return Common.getSYSCLK()*(1e6);},
                 readOnly : true,
             },
-        ],
+        ]),
         modules: undefined,
     },
 };

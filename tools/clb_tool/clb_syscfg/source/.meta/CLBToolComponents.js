@@ -64,4 +64,6 @@ if ([ "F2837xD",
     }
 }
 
-exports = clb_export
+const checkIfInResourceAllocationSetupMode =  Common.isAllocationSetupMode()
+
+exports = checkIfInResourceAllocationSetupMode ? {} : clb_export

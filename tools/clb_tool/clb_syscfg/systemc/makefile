@@ -1,4 +1,5 @@
 INCLUDES  = -Iinclude
+INCLUDES += -I../systemc-2.3.3/src
 
 FILES  = src/CLB_counter_SC_model.cpp
 FILES += src/CLB_LUT4_SC_model.cpp

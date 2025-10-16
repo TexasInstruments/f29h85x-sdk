@@ -1,0 +1,148 @@
+export C29SDK_ROOT?=$(abspath ../../../../../..)
+include $(C29SDK_ROOT)/imports.mak
+
+# To build a complete flash SBL project, use top-level flash_based_uart_sbl.mk instead
+# This makefile cpu1 firmware application (led_blinky) subproject needs to be built first
+
+Target = fota_uart_cpu1_application
+PROFILE?= release
+
+CFLAGS := $(CFLAGS_$(PROFILE)) $(CFLAGS_common)
+LFLAGS := $(LFLAGS_common) 
+INCLUDES_LIBS := $(addprefix -Wl$(comma)-i, $(dir $(LIBRARIES_common) $(INCLUDES_PATH_common))) $(addprefix -Wl$(comma)-l, $(notdir $(LIBRARIES_common)))
+INCLUDES_PATH := $(INCLUDES_common) $(INCLUDES_syscfg)
+INCLUDES = $(addprefix -I , $(INCLUDES_PATH) $(INCLUDES_PATH_common))
+FILES_PATH = $(FILES_PATH_common)
+LIBS = $(LIB) $(LIBRARIES_common)
+OBJS = $(CMD_SRCS)
+
+# Custom profile configuration
+CFLAGS_release = -O1 -ffast-math
+CFLAGS += -D_FLASH
+
+CMD_SRCS += ../cmd/f29h85x_flash_app_lnk_cpu1.cmd
+SYSCFG_FILE = ../led_blinky/uart/uart_led_blinky_cpu1.syscfg
+
+# Path to recognize all C-source files exhaustively
+FILES_PATH_common = \
+	../led_blinky/ \
+	../led_blinky/uart/ \
+
+# Addintional include path (-i) for the compiler
+INCLUDES_PATH_common = \
+	../led_blinky/ \
+	../led_blinky/uart/ \
+	${C29SDK_ROOT}/source \
+	${C29SDK_ROOT}/source/flash_api/include/FlashAPI \
+	${C29SDK_ROOT}/source/flash_api/include/Constants \
+
+# Addintional library path (-l) for the compiler
+LIBRARIES_common = \
+	"${C29SDK_ROOT}/source/flash_api/lib/F29H85x_NWFlashAPI_v21.00.00.00.lib" \
+	"${C29SDK_ROOT}/source/driverlib/ccs/driverlib_release.lib" \
+	"${C29SDK_ROOT}/source/kernel/nortos/ccs/dpl_nortos.lib" \
+	"${C29SDK_ROOT}/source/security/ccs/security_drivers.lib" \
+
+OBJDIR := $(abspath)
+
+build-syscfg: $(SYSCFG_FILE)
+	@echo 'Building file: "$<"'
+	@echo 'Invoking: SysConfig'
+	$(SYSCFG) -s "$(C29SDK_ROOT)/.metadata/sdk.json" --script "$(SYSCFG_FILE)" -o "syscfg" --compiler ticlang
+	@echo 'Finished building: "$<"'
+	@echo ' '
+
+syscfg/board.c: build-syscfg $(SYSCFG_FILE)
+syscfg/board.h: build-syscfg
+syscfg/board.cmd.genlibs: build-syscfg
+syscfg/pinmux.csv: build-syscfg
+
+"./syscfg/board.o": ./syscfg/board.c
+	@echo 'Building file: "$<"'
+	@echo 'Invoking: C2000 Compiler'
+	$(COMPILER) $(CFLAGS) $(INCLUDES) -MMD -MP -MF"syscfg/$(basename $(<F)).d" -MT"$(@)" -o"$@" "$<"
+	@echo 'Finished building: "$<"'
+	@echo ' '
+
+"./syscfg/device.o": ./syscfg/device.c
+	@echo 'Building file: "$<"'
+	@echo 'Invoking: C2000 Compiler'
+	$(COMPILER) $(CFLAGS) $(INCLUDES) -MMD -MP -MF"syscfg/$(basename $(<F)).d" -MT"$(@)" -o"$@" "$<"
+	@echo 'Finished building: "$<"'
+	@echo ' '
+
+"./syscfg/ti_drivers_config.o": ./syscfg/ti_drivers_config.c
+	@echo 'Building file: "$<"'
+	@echo 'Invoking: C2000 Compiler'
+	$(COMPILER) $(CFLAGS) $(INCLUDES) -MMD -MP -MF"syscfg/$(basename $(<F)).d" -MT"$(@)" -o"$@" "$<"
+	@echo 'Finished building: "$<"'
+	@echo ' '
+
+"./syscfg/ti_dpl_config.o": ./syscfg/ti_dpl_config.c
+	@echo 'Building file: "$<"'
+	@echo 'Invoking: C2000 Compiler'
+	$(COMPILER) $(CFLAGS) $(INCLUDES) -MMD -MP -MF"syscfg/$(basename $(<F)).d" -MT"$(@)" -o"$@" "$<"
+	@echo 'Finished building: "$<"'
+	@echo ' '
+
+OBJS  += \
+"./syscfg/board.o" \
+"./syscfg/device.o" \
+"./syscfg/ti_drivers_config.o"  \
+"./syscfg/ti_dpl_config.o"      \
+#$(wildcard ./syscfg/*.o)
+
+syscfg-gui:
+	$(SYSCFG_ROOT)/nw/nw $(SYSCFG_ROOT) --product $(C29SDK_ROOT)/.metadata/sdk.json --device F29H85x --context CPU1 --part F29H85x_256ZEX --package 256ZEX --output generated/  $(SYSCFG_FILE)
+
+
+C_SRCS += $(foreach dir, $(FILES_PATH), $(wildcard $(dir)/*.c))
+ASM_SRCS = $(foreach dir, $(FILES_PATH), $(wildcard $(dir)/*.asm))
+vpath %.c $(FILES_PATH)
+vpath %.asm $(FILES_PATH)
+
+OBJS += $(notdir $(C_SRCS:%.c=%.o))
+OBJS += $(notdir $(ASM_SRCS:%.asm=%.o))
+
+CFLAGS		+= $(APP_FLAG)
+CFLAGS      += -DSOC_F29H85X
+
+OBJS_CLEAN = $(filter-out $(CMD_SRCS), $(OBJS))
+
+$(OBJDIR)/%.o %.o: %.c
+	@echo 'Building file: $<'
+	@echo 'Invoking: Compiler'
+	$(COMPILER) $(CFLAGS) -MMD -MP $(INCLUDES) "$<"
+	@echo 'Finished building: $<'
+	@echo ' '
+
+$(OBJDIR)/%.o %.o: %.asm
+	@echo 'Building file: $<'
+	@echo 'Invoking: Compiler'
+	$(COMPILER) $(CFLAGS) $(INCLUDES) "$<"
+	@echo 'Finished building: $<'
+	@echo ' '
+
+# All Target
+all: $(Target).out
+$(Target).out: $(OBJS)
+	@echo 'Building target: $@'
+	@echo 'Invoking: C2000 Linker'
+	$(LINKER) $(INCLUDE_LIBS) -Wl,-m=$(Target).map $(LFLAGS) -o "$@" $(OBJS) $(LIBS)
+	@echo 'Finished building target: $@'
+	@echo 'Post build steps'
+	@echo 'Creating bin file'
+	$(CG_TOOL_OBJCOPY) -O binary $(Target).out ../../cpu1_firmware.bin
+	@echo 'Finished building raw binary: ../../cpu1_firmware.bin'
+	@echo ' '
+
+clean:
+	-$(RM) $(Target).out
+	-$(RM) $(Target).map
+	-$(RM) *.d
+	-$(RM) *.bin
+	-$(RM) ../../cpu1_firmware.bin
+	-$(RM) $(OBJS_CLEAN)
+	-$(RMDIR) syscfg
+	-@echo 'Finished clean for $(Target)'
+	-@echo ' '

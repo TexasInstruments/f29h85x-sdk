@@ -613,7 +613,6 @@ typedef struct
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ERAD_setOwnership(ERAD_Owner owner)
 {
@@ -672,7 +671,6 @@ ERAD_setOwnership(ERAD_Owner owner)
 //! \return Owner of ERAD.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline ERAD_Owner
 ERAD_getBusCompOwnership(ERAD_BusCompInstance instance)
 {
@@ -694,7 +692,6 @@ ERAD_getBusCompOwnership(ERAD_BusCompInstance instance)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ERAD_setBusCompOwnership(ERAD_BusCompInstance instance, ERAD_Owner owner)
 {
@@ -716,7 +713,6 @@ ERAD_setBusCompOwnership(ERAD_BusCompInstance instance, ERAD_Owner owner)
 //! \return Owner of ERAD.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline ERAD_Owner
 ERAD_getCounterOwnership(ERAD_CounterInstance instance)
 {
@@ -738,7 +734,6 @@ ERAD_getCounterOwnership(ERAD_CounterInstance instance)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ERAD_setCounterOwnership(ERAD_CounterInstance instance, ERAD_Owner owner)
 {
@@ -760,7 +755,6 @@ ERAD_setCounterOwnership(ERAD_CounterInstance instance, ERAD_Owner owner)
 //! \return Owner of AND / OR Mask.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline ERAD_Owner
 ERAD_getMaskOwnership(ERAD_Mask instance)
 {
@@ -793,7 +787,6 @@ ERAD_getMaskOwnership(ERAD_Mask instance)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ERAD_setMaskOwnership(ERAD_Mask instance, ERAD_Owner owner)
 {
@@ -838,7 +831,6 @@ ERAD_setMaskOwnership(ERAD_Mask instance, ERAD_Owner owner)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ERAD_enableModules(uint32_t instances)
 {
@@ -884,7 +876,6 @@ ERAD_enableModules(uint32_t instances)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ERAD_disableModules(uint32_t instances)
 {
@@ -917,7 +908,6 @@ ERAD_disableModules(uint32_t instances)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ERAD_enableBusCompModule(ERAD_BusCompInstance instance)
 {
@@ -940,7 +930,6 @@ ERAD_enableBusCompModule(ERAD_BusCompInstance instance)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ERAD_disableBusCompModule(ERAD_BusCompInstance instance)
 {
@@ -963,7 +952,6 @@ ERAD_disableBusCompModule(ERAD_BusCompInstance instance)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ERAD_enableCounterModule(ERAD_CounterInstance instance)
 {
@@ -986,7 +974,6 @@ ERAD_enableCounterModule(ERAD_CounterInstance instance)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ERAD_disableCounterModule(ERAD_CounterInstance instance)
 {
@@ -1010,7 +997,6 @@ ERAD_disableCounterModule(ERAD_CounterInstance instance)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ERAD_initModule(ERAD_Owner owner)
 {
@@ -1044,7 +1030,6 @@ ERAD_initModule(ERAD_Owner owner)
 //! register.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline uint32_t
 ERAD_getEventStatus(void)
 {
@@ -1086,7 +1071,6 @@ ERAD_getEventStatus(void)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ERAD_enableNMI(uint16_t instances)
 {
@@ -1138,7 +1122,6 @@ ERAD_enableNMI(uint16_t instances)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ERAD_disableNMI(uint16_t instances)
 {
@@ -1172,7 +1155,6 @@ ERAD_disableNMI(uint16_t instances)
 //! \return Status of bus comparator.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline ERAD_Status
 ERAD_getBusCompStatus(ERAD_BusCompInstance instance)
 {
@@ -1197,7 +1179,6 @@ ERAD_getBusCompStatus(ERAD_BusCompInstance instance)
 //! \return None
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ERAD_clearBusCompEvent(ERAD_BusCompInstance instance)
 {
@@ -1221,7 +1202,6 @@ ERAD_clearBusCompEvent(ERAD_BusCompInstance instance)
 //! \return Status of counter.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline ERAD_Status
 ERAD_getCounterStatus(ERAD_CounterInstance instance)
 {
@@ -1245,7 +1225,6 @@ ERAD_getCounterStatus(ERAD_CounterInstance instance)
 //! \return Watchpoint PC value.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline uint32_t
 ERAD_getWatchpointPC(ERAD_BusCompInstance instance)
 {
@@ -1403,7 +1382,6 @@ ERAD_configMask(ERAD_Mask mask, uint32_t instances, bool enable_int,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ERAD_enableCounterResetInput(ERAD_CounterInstance instance,
                             ERAD_Counter_Input_Event reset_event)
@@ -1430,7 +1408,6 @@ ERAD_enableCounterResetInput(ERAD_CounterInstance instance,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ERAD_disableCounterResetInput(ERAD_CounterInstance instance)
 {
@@ -1453,7 +1430,6 @@ ERAD_disableCounterResetInput(ERAD_CounterInstance instance)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ERAD_clearCounterEvent(ERAD_CounterInstance instance)
 {
@@ -1476,7 +1452,6 @@ ERAD_clearCounterEvent(ERAD_CounterInstance instance)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ERAD_clearCounterOverflow(ERAD_CounterInstance instance)
 {
@@ -1499,7 +1474,6 @@ ERAD_clearCounterOverflow(ERAD_CounterInstance instance)
 //! \return Returns the value of the current count of the counter.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline uint32_t
 ERAD_getCurrentCount(ERAD_CounterInstance instance)
 {
@@ -1523,7 +1497,6 @@ ERAD_getCurrentCount(ERAD_CounterInstance instance)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ERAD_setCurrentCount(ERAD_CounterInstance instance, uint32_t value)
 {
@@ -1550,7 +1523,6 @@ ERAD_setCurrentCount(ERAD_CounterInstance instance, uint32_t value)
 //! \return Returns the value of the current maximum count of the counter.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline uint32_t
 ERAD_getMaxCount(ERAD_CounterInstance instance)
 {
@@ -1573,7 +1545,6 @@ ERAD_getMaxCount(ERAD_CounterInstance instance)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ERAD_setMaxCount(ERAD_CounterInstance instance, uint32_t value)
 {
@@ -1600,7 +1571,6 @@ ERAD_setMaxCount(ERAD_CounterInstance instance, uint32_t value)
 //! \return Returns the value of the current minimum count of the counter.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline uint32_t
 ERAD_getMinCount(ERAD_CounterInstance instance)
 {
@@ -1623,7 +1593,6 @@ ERAD_getMinCount(ERAD_CounterInstance instance)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ERAD_setMinCount(ERAD_CounterInstance instance, uint32_t value)
 {
@@ -1654,7 +1623,6 @@ ERAD_setMinCount(ERAD_CounterInstance instance, uint32_t value)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ERAD_setCounterInputConditioning(ERAD_CounterInstance instance,
                                  ERAD_Counter_Input_Type input_type,
@@ -1677,7 +1645,6 @@ ERAD_setCounterInputConditioning(ERAD_CounterInstance instance,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ERAD_enablePCTrace(void)
 {
@@ -1694,7 +1661,6 @@ ERAD_enablePCTrace(void)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ERAD_disablePCTrace(void)
 {
@@ -1713,7 +1679,6 @@ ERAD_disablePCTrace(void)
 //! \return Owner of PC Trace.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline ERAD_Owner
 ERAD_getPCTraceOwnership(void)
 {
@@ -1735,7 +1700,6 @@ ERAD_getPCTraceOwnership(void)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ERAD_setPCTraceOwnership(ERAD_Owner owner)
 {
@@ -1757,7 +1721,6 @@ ERAD_setPCTraceOwnership(ERAD_Owner owner)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ERAD_initPCTraceBuffer(void)
 {
@@ -1766,12 +1729,11 @@ ERAD_initPCTraceBuffer(void)
 
 //*****************************************************************************
 //
-//! Configures the PC Trace submodule to trace without hardware qaulifiers
+//! Configures the PC Trace submodule to trace without hardware qualifiers
 //!
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ERAD_setPCTraceMode_NoQualifiers(void)
 {
@@ -1795,7 +1757,6 @@ ERAD_setPCTraceMode_NoQualifiers(void)
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ERAD_setPCTraceMode_Windowed(ERAD_PCTrace_Windowed_Qualifier qualifier,
                              uint32_t inputConditioning)
@@ -1822,7 +1783,6 @@ ERAD_setPCTraceMode_Windowed(ERAD_PCTrace_Windowed_Qualifier qualifier,
 //! \return None.
 //
 //*****************************************************************************
-__attribute__((always_inline))
 static inline void
 ERAD_setPCTraceMode_StartStop(ERAD_Counter_Input_Event startInput,
                              uint32_t startInputConditioning,

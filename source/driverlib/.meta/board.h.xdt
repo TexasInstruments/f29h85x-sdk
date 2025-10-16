@@ -59,6 +59,7 @@ extern "C"
 % let Common   = system.getScript("/driverlib/Common.js");
 % let pinmuxContent = system.getTemplate("/driverlib/pinmux/pinmux.board.c.xdt");
 % let modsAlwaysRunOnAllContexts = ['/driverlib/gpio.js', '/driverlib/aio.js']
+% var pmicconfig = system.modules['/driverlib/pmicconfig.js'];
 //*****************************************************************************
 //
 // PinMux Configurations
@@ -70,7 +71,7 @@ extern "C"
 %   var interruptCodeGenerated = false;
 %   for (let i = 0; i < keys.length; i++) {
 %       let mod = system.modules[keys[i]];
-%       if (["ANALOG", "RTDMA1_MPU", "RTDMA2_MPU"].includes(mod.peripheralName))
+%       if (["ANALOG", "INPUTXBAR", "RTDMA1_MPU", "RTDMA2_MPU", "RTDMA1", "RTDMA2", "GPIO", "AIO"].includes(mod.peripheralName))
 %           continue;
 %       if (mod.peripheralName == "INTERRUPT")
 %       {
@@ -99,6 +100,9 @@ extern "C"
 % }
 
 % if (Common.isContextCPU1()) {
+%   let inputxbarContent = system.getTemplate("/driverlib/inputxbar/inputxbar_input.board.h.xdt");
+`inputxbarContent("")`
+
 %   let rtdma1MpuContent = system.getTemplate("/driverlib/rtdma1_mpu/rtdma1_mpu.board.h.xdt");
 `rtdma1MpuContent("")`
 
@@ -106,6 +110,22 @@ extern "C"
 `rtdma2MpuContent("")`
 
 % }
+%
+%   let cmpssContent = system.getTemplate("/driverlib/cmpss/cmpss.board.h.xdt");
+`cmpssContent("")`
+%
+%   let rtdma1Content = system.getTemplate("/driverlib/rtdma1/rtdma1.board.h.xdt");
+`rtdma1Content("")`
+%
+%   let rtdma2Content = system.getTemplate("/driverlib/rtdma2/rtdma2.board.h.xdt");
+`rtdma2Content("")`
+%
+%   let gpioContent = system.getTemplate("/driverlib/gpio/gpio.board.h.xdt");
+`gpioContent("")`
+%
+%   let aioContent = system.getTemplate("/driverlib/aio/aio.board.h.xdt");
+`aioContent("")`
+%
 //*****************************************************************************
 //
 // Board Configurations
@@ -118,7 +138,7 @@ void	Board_init();
 %   var interruptCodeGenerated = false;
 %   for (let i = 0; i < keys.length; i++) {
 %       let mod = system.modules[keys[i]];
-%       if (["ANALOG", "PERCONFIG", "PERCLOCK", "XBARFLAGS", "ESM", "JTAG", "RTDMA1_MPU", "RTDMA2_MPU", "FSI"].includes(mod.peripheralName))
+%       if (["ANALOG", "PERCONFIG", "PERCLOCK", "XBARFLAGS", "ESM", "JTAG", "INPUTXBAR", "RTDMA1_MPU", "RTDMA2_MPU", "RTDMA1", "RTDMA2", "CMPSS", "GPIO", "AIO", "FSI"].includes(mod.peripheralName))
 %           continue;
 %       if (mod.peripheralName == "INTERRUPT")
 %       {
@@ -142,7 +162,7 @@ void	`mod.peripheralName.replace("-","_")`_init();
 %   for (let i = 0; i < keys.length; i++) {
 %       let mod = system.modules[keys[i]];
 %       if (mod.peripheralName == "INPUTXBAR") {
-void	`mod.peripheralName.replace("-","_")`_init();
+% //void	`mod.peripheralName.replace("-","_")`_init();
 %       }
 %   }
 % }
@@ -151,10 +171,18 @@ void	PinMux_init();
 void	PERCONFIG_init();
 void	RTDMA1_MPU_init();
 void	RTDMA2_MPU_init();
-% } 
+void    INPUTXBAR_init();
+% }
 void	GPIO_init();
+void	AIO_init();
+void    CMPSS_init();
+void	RTDMA1_init();
+void	RTDMA2_init();
 % if(system.modules['/ti/security/System_Security']) {
 void    SSU_init();
+% }
+% if(pmicconfig) {
+void    PMIC_init(void);
 % }
 
 //*****************************************************************************

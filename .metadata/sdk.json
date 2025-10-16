@@ -1,7 +1,7 @@
 {
     "name": "MCU_SDK_F29H85x",
     "displayName": "F29H85x-SDK",
-    "version": "1.01.00.00",
+    "version": "1.02.02.00",
     "documentationPath": "../tools/clb_tool/clb_syscfg/doc",
     "includePaths": [
         "../source",
@@ -18,13 +18,28 @@
         "/ti/security/security.component.js",
         "/transfer/TransferComponents.js",
         "/clb_syscfg/source/CLBToolComponents.js",
-        "/driverlib/multicore.js"
+        "/driverlib/pmic.js"
     ],
-    "devices": [
-        "F29H85x"
+    "gpns": [
+        "F29H850TU",
+        "F29H850DM",
+        "F29H850DU",
+        "F29H859TM-Q1",
+        "F29H859DU-Q1",
+        "F29H859TU-Q1",
+        "F29P580DM",
+        "F29P589DM",
+        "F29P589DU",
+        "F29P329SM-Q1",
+        "F29P329SJ-Q1"
     ],
+    "boardPath": "/boards/",
     "contexts": {
-        "F29H85x": [
+        "F29H850TU": [
+            {
+                "name": "system",
+                "displayName": "Resource Allocator"
+            },
             {
                 "name": "CPU1",
                 "targetdbId": "C29xx_CPU1"
@@ -37,7 +52,159 @@
                 "name": "CPU3",
                 "targetdbId": "C29xx_CPU3"
             }
+        ],
+        "F29H850DM": [
+            {
+                "name": "system",
+                "displayName": "Resource Allocator"
+            },
+            {
+                "name": "CPU1",
+                "targetdbId": "C29xx_CPU1"
+            },
+            {
+                "name": "CPU3",
+                "targetdbId": "C29xx_CPU3"
+            }
+        ],
+        "F29H850DU": [
+            {
+                "name": "system",
+                "displayName": "Resource Allocator"
+            },
+            {
+                "name": "CPU1",
+                "targetdbId": "C29xx_CPU1"
+            },
+            {
+                "name": "CPU3",
+                "targetdbId": "C29xx_CPU3"
+            }
+        ],
+        "F29H859TM-Q1": [
+            {
+                "name": "system",
+                "displayName": "Resource Allocator"
+            },
+            {
+                "name": "CPU1",
+                "targetdbId": "C29xx_CPU1"
+            },
+            {
+                "name": "CPU2",
+                "targetdbId": "C29xx_CPU2"
+            },
+            {
+                "name": "CPU3",
+                "targetdbId": "C29xx_CPU3"
+            }
+        ],
+        "F29H859DU-Q1": [
+            {
+                "name": "system",
+                "displayName": "Resource Allocator"
+            },
+            {
+                "name": "CPU1",
+                "targetdbId": "C29xx_CPU1"
+            },
+            {
+                "name": "CPU3",
+                "targetdbId": "C29xx_CPU3"
+            }
+        ],
+        "F29H859TU-Q1": [
+            {
+                "name": "system",
+                "displayName": "Resource Allocator"
+            },
+            {
+                "name": "CPU1",
+                "targetdbId": "C29xx_CPU1"
+            },
+            {
+                "name": "CPU2",
+                "targetdbId": "C29xx_CPU2"
+            },
+            {
+                "name": "CPU3",
+                "targetdbId": "C29xx_CPU3"
+            }
+        ],
+        "F29P580DM": [
+            {
+                "name": "system",
+                "displayName": "Resource Allocator"
+            },
+            {
+                "name": "CPU1",
+                "targetdbId": "C29xx_CPU1"
+            },
+            {
+                "name": "CPU2",
+                "targetdbId": "C29xx_CPU2"
+            }
+        ],
+        "F29P589DM": [
+            {
+                "name": "system",
+                "displayName": "Resource Allocator"
+            },
+            {
+                "name": "CPU1",
+                "targetdbId": "C29xx_CPU1"
+            },
+            {
+                "name": "CPU2",
+                "targetdbId": "C29xx_CPU2"
+            }
+        ],
+        "F29P589DU": [
+            {
+                "name": "system",
+                "displayName": "Resource Allocator"
+            },
+            {
+                "name": "CPU1",
+                "targetdbId": "C29xx_CPU1"
+            },
+            {
+                "name": "CPU2",
+                "targetdbId": "C29xx_CPU2"
+            }
+        ],
+        "F29P329SM-Q1": [
+            {
+                "name": "system",
+                "displayName": "Resource Allocator"
+            },
+            {
+                "name": "CPU1",
+                "targetdbId": "C29xx_CPU1"
+            },
+            {
+                "name": "CPU2",
+                "targetdbId": "C29xx_CPU2"
+            }
+        ],
+        "F29P329SJ-Q1": [
+            {
+                "name": "system",
+                "displayName": "Resource Allocator"
+            },
+            {
+                "name": "CPU1",
+                "targetdbId": "C29xx_CPU1"
+            },
+            {
+                "name": "CPU2",
+                "targetdbId": "C29xx_CPU2"
+            }
         ]
     },
-    "minToolVersion": "1.22.0"
+    "minToolVersion": "1.25.0",
+    "resourceAllocation": {
+        "enabled": true,
+        "displayNameOfAssignedContextConfigurable": "Assigned CPU"
+    }
 }

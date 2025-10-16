@@ -93,7 +93,7 @@ volatile uint32_t result = FAIL;
 //
 // Main
 //
-void main(void)
+int main(void)
 {
 
     //

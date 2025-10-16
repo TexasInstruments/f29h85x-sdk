@@ -1,7 +1,14 @@
-% var moduleName = "dlt"
-% var module = system.modules['/driverlib/' + moduleName + '.js'];
-% var inst = module.$static;
-%if (module != null)
+% let Common   = system.getScript("/driverlib/Common.js");
+%
+% if (Common.isAllocationOff()) {
+	% var module = system.modules['/driverlib/dlt.js'];
+	% var inst = module.$static;
+% }
+% else {
+	% var module = system.modules['/driverlib/dlt_inst.js'];
+	% var inst = module.$instances[0];
+% }
+% if (inst != null)
 %{
 //*****************************************************************************
 //

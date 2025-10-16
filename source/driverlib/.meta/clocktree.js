@@ -420,54 +420,54 @@ function moduleInstances(inst)
     return components;
 }
 
-function onValidate(inst, validation) 
+function onValidate(inst, validation)
 {
     if (result_100_XTAL_Default) {
-        validation.logInfo("100 MHz PLLSYSCLK with 20 MHz XTAL Clock Source is selected", 
+        validation.logInfo("100 MHz PLLSYSCLK with 20 MHz XTAL Clock Source is selected",
                             inst, "100_XTAL_Default");
     }
     else if (result_150_XTAL_Default) {
-        validation.logInfo("150 MHz PLLSYSCLK with 20 MHz XTAL Clock Source is selected", 
+        validation.logInfo("150 MHz PLLSYSCLK with 20 MHz XTAL Clock Source is selected",
                             inst, "150_XTAL_Default");
     }
     else if (result_200_XTAL_Default) {
-        validation.logInfo("200 MHz PLLSYSCLK with 20 MHz XTAL Clock Source is selected", 
+        validation.logInfo("200 MHz PLLSYSCLK with 20 MHz XTAL Clock Source is selected",
                             inst, "200_XTAL_Default");
     }
     else if (result_100_X1_Default) {
-        validation.logInfo("100 MHz PLLSYSCLK with 25 MHz X1 Clock Source is selected", 
+        validation.logInfo("100 MHz PLLSYSCLK with 25 MHz X1 Clock Source is selected",
                             inst, "100_X1_Default");
     }
     else if (result_150_X1_Default) {
-        validation.logInfo("150 MHz PLLSYSCLK with 25 MHz X1 Clock Source is selected", 
+        validation.logInfo("150 MHz PLLSYSCLK with 25 MHz X1 Clock Source is selected",
                             inst, "150_X1_Default");
     }
     else if (result_200_X1_Default) {
-        validation.logInfo("200 MHz PLLSYSCLK with 25 MHz X1 Clock Source is selected", 
+        validation.logInfo("200 MHz PLLSYSCLK with 25 MHz X1 Clock Source is selected",
                             inst, "200_X1_Default");
     }
     else if (result_100_INTOSC1_Default) {
-        validation.logInfo("100 MHz PLLSYSCLK with 10 MHz INTOSC1 Clock Source is selected", 
+        validation.logInfo("100 MHz PLLSYSCLK with 10 MHz INTOSC1 Clock Source is selected",
                             inst, "100_INTOSC1_Default");
     }
     else if (result_150_INTOSC1_Default) {
-        validation.logInfo("150 MHz PLLSYSCLK with 10 MHz INTOSC1 Clock Source is selected", 
+        validation.logInfo("150 MHz PLLSYSCLK with 10 MHz INTOSC1 Clock Source is selected",
                             inst, "150_INTOSC1_Default");
     }
     else if (result_200_INTOSC1_Default) {
-        validation.logInfo("200 MHz PLLSYSCLK with 10 MHz INTOSC1 Clock Source is selected", 
+        validation.logInfo("200 MHz PLLSYSCLK with 10 MHz INTOSC1 Clock Source is selected",
                             inst, "200_INTOSC1_Default");
     }
     else if (result_100_INTOSC2_Default) {
-        validation.logInfo("100 MHz PLLSYSCLK with 10 MHz INTOSC2 Clock Source is selected", 
+        validation.logInfo("100 MHz PLLSYSCLK with 10 MHz INTOSC2 Clock Source is selected",
                             inst, "100_INTOSC2_Default");
     }
     else if (result_150_INTOSC2_Default) {
-        validation.logInfo("150 MHz PLLSYSCLK with 10 MHz INTOSC2 Clock Source is selected", 
+        validation.logInfo("150 MHz PLLSYSCLK with 10 MHz INTOSC2 Clock Source is selected",
                             inst, "150_INTOSC2_Default");
     }
     else if (result_200_INTOSC2_Default) {
-        validation.logInfo("200 MHz PLLSYSCLK with 10 MHz INTOSC2 Clock Source is selected", 
+        validation.logInfo("200 MHz PLLSYSCLK with 10 MHz INTOSC2 Clock Source is selected",
                             inst, "200_INTOSC2_Default");
     }
 }

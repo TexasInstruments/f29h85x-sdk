@@ -1,7 +1,7 @@
 let Common   = system.getScript("/driverlib/Common.js");
 let Pinmux   = system.getScript("/driverlib/pinmux.js");
-let device_driverlib_peripheral = 
-    system.getScript("/driverlib/device_driverlib_peripherals/" + 
+let device_driverlib_peripheral =
+    system.getScript("/driverlib/device_driverlib_peripherals/" +
         Common.getDeviceName().toLowerCase() + "_epwm.js");
 var shadowRegisterReloadNumberofTimesOptions = [
     { name : "1", displayName: "One Period"},
@@ -36,7 +36,7 @@ function generateShadowRegisters1Config(reg_name)
 {
     let xcmp_RegArr = device_driverlib_peripheral.EPWM_XCMPReg.slice(9, 17);
     let xcmp_RegConfig = [];
-    
+
     for(var xcmp_Reg_Index in xcmp_RegArr)
     {
         xcmp_RegConfig = xcmp_RegConfig.concat(
@@ -55,7 +55,7 @@ function generateShadowRegisters2Config(reg_name)
 {
     let xcmp_RegArr = device_driverlib_peripheral.EPWM_XCMPReg.slice(18, 26);
     let xcmp_RegConfig = [];
-    
+
     for(var xcmp_Reg_Index in xcmp_RegArr)
     {
         xcmp_RegConfig = xcmp_RegConfig.concat(
@@ -74,7 +74,7 @@ function generateShadowRegisters3Config(reg_name)
 {
     let xcmp_RegArr = device_driverlib_peripheral.EPWM_XCMPReg.slice(27, 35);
     let xcmp_RegConfig = [];
-    
+
     for(var xcmp_Reg_Index in xcmp_RegArr)
     {
         xcmp_RegConfig = xcmp_RegConfig.concat(
@@ -177,13 +177,13 @@ function onChangeActiveAndShdwRegistersConfig(inst, ui, reg_name, startIndex, st
 
         }else
         {
-            ui["epwmXCMP_set" + reg_name + "_" + xcmp_RegArr[xcmp_Reg_Index].name.replace("EPWM_", "")].hidden = true; 
+            ui["epwmXCMP_set" + reg_name + "_" + xcmp_RegArr[xcmp_Reg_Index].name.replace("EPWM_", "")].hidden = true;
             ui["epwmXCMP_set" + reg_name + "_" + xcmp_Shdw1RegArr[xcmp_Reg_Index].name.replace("EPWM_", "")].hidden = true;
             ui["epwmXCMP_set" + reg_name + "_" + xcmp_Shdw2RegArr[xcmp_Reg_Index].name.replace("EPWM_", "")].hidden = true;
             ui["epwmXCMP_set" + reg_name + "_" + xcmp_Shdw3RegArr[xcmp_Reg_Index].name.replace("EPWM_", "")].hidden = true;
         }
     }
-    // show action qualifier events when user chooses 
+    // show action qualifier events when user chooses
     for(var xcmp_set_index in device_driverlib_peripheral.EPWM_XCMP)
     {
         let xcmp_set = device_driverlib_peripheral.EPWM_XCMP[xcmp_set_index];
@@ -297,7 +297,7 @@ function hideXCMPregisters(inst, ui, reg_name)
 
     }
 
-    xcmp_RegArr = device_driverlib_peripheral.EPWM_XCMPReg.slice(9,17);   
+    xcmp_RegArr = device_driverlib_peripheral.EPWM_XCMPReg.slice(9,17);
     // hide shadow buffer set 1
     for(var xcmp_Reg_Index in xcmp_RegArr)
     {
@@ -326,7 +326,7 @@ function hideXCMPregisters(inst, ui, reg_name)
             inst["epwmXCMP_set" + reg_name + "_" + xcmp_RegArr[xcmp_Reg_Index].name.replace("EPWM_", "")] = 0;
         }
     }
-    xcmp_RegArr = device_driverlib_peripheral.EPWM_XCMPReg.slice(27,35); 
+    xcmp_RegArr = device_driverlib_peripheral.EPWM_XCMPReg.slice(27,35);
     // hide shadow buffer set 3
     for(var xcmp_Reg_Index in xcmp_RegArr)
     {
@@ -341,7 +341,7 @@ function hideXCMPregisters(inst, ui, reg_name)
         }
     }
 
-    // Hide action qualifier events 
+    // Hide action qualifier events
     for(var xcmp_set_index in device_driverlib_peripheral.EPWM_XCMP)
     {
         let xcmp_set = device_driverlib_peripheral.EPWM_XCMP[xcmp_set_index];
@@ -376,7 +376,7 @@ function onChangeEnableDisable(inst, ui)
 {
     if(inst.epwmXCMP_enable)
     {
-        
+
         // show check box to enable split
         ui["epwmXCMP_RegisterSplit_enable"].hidden = false;
         // show XCMPA since that will be default option when split or no split is chosen
@@ -415,7 +415,7 @@ function onChangeEnableDisable(inst, ui)
         ui["epwmXCMP_setXCMPD"].hidden = false;
         ui["epwmXCMP_setShadowRegisters2XCMPD"].hidden = false;
         ui["epwmXCMP_setShadowRegisters3XCMPD"].hidden = false;
-        // show xcmp loading for all 
+        // show xcmp loading for all
         ui["epwmXCMP_RegisterLoad_enable"].hidden = false;
         if(inst.epwmXCMP_RegisterSplit_enable)
         {
@@ -430,10 +430,10 @@ function onChangeEnableDisable(inst, ui)
             ui["epwmXCMP_selectAllocationXCMPA_NoSplitorSplit"].hidden = false;
             // if split is not enabled, hide XCMPB options
             ui["epwmXCMP_selectAllocationXCMPB_Split"].hidden = true;
-            inst.epwmXCMP_selectAllocationXCMPB_Split = "EPWM_XCMP_5_CMPB";
+            inst.epwmXCMP_selectAllocationXCMPB_Split = "EPWM_XCMP_NONE_CMPB";
             setAllocateRegistersXCMPANoSplitorSplit(inst, ui);
             hideXCMPregisters(inst, ui, "XCMPB");
-            
+
         }
     }else
     {
@@ -441,12 +441,12 @@ function onChangeEnableDisable(inst, ui)
         // hide all the xcmpa split and no split options, set split enabled to false when XCMP mode is disabled
         inst.epwmXCMP_RegisterSplit_enable = false;
         inst.epwmXCMP_selectAllocationXCMPA_NoSplitorSplit = "EPWM_XCMP_NONE_CMPA";
-        inst.epwmXCMP_selectAllocationXCMPB_Split = "EPWM_XCMP_5_CMPB";
+        inst.epwmXCMP_selectAllocationXCMPB_Split = "EPWM_XCMP_NONE_CMPB";
         ui["epwmXCMP_selectAllocationXCMPA_NoSplitorSplit"].hidden = true;
         // hide all the xcmpb split options
         ui["epwmXCMP_selectAllocationXCMPB_Split"].hidden = true;
         ui["epwmXCMP_RegisterSplit_enable"].hidden = true;
-        
+
         // hide all the loading options XCMPA, set the default load mode to load once for all xcmpc registers
         inst.epwmXCMP_selectAllocationXCMPA_NoSplitorSplit = "EPWM_XCMP_NONE_CMPA";
         inst.epwmXCMP_selectNumberShadowRegisterLevels = "EPWM_XCMP_XLOADCTL_SHDWLEVEL_0";
@@ -466,7 +466,7 @@ function onChangeEnableDisable(inst, ui)
         hideXCMPregisters(inst, ui, "XCMPA");
         hideXCMPregisters(inst, ui, "XCMPB");
         hideXCMPregisters(inst, ui, "XCMPC");
-        hideXCMPregisters(inst, ui, "XCMPD");       
+        hideXCMPregisters(inst, ui, "XCMPD");
         // hide all tbprd options
         ui["epwmXCMP_setRegisters_XTBPRD"].hidden = true;
         ui["epwmXCMP_setShadowRegisters1_XTBPRD"].hidden = true;
@@ -731,7 +731,7 @@ var config = [
                 hidden: true,
                 default: 0,
             },
-            
+
         ]
     },
     {
@@ -768,7 +768,7 @@ var config = [
                 hidden: true,
                 default: 0,
             },
-            
+
         ]
     },
     {
@@ -865,14 +865,14 @@ var config = [
                 description: "Set XMINMAX Register to a value",
                 hidden: true,
                 default: 0,
-            },  
+            },
             {
                 name: "epwmXCMP_setShadowRegisters1_XMAX",
                 displayName: "XMAX Shadow 1",
                 description: "Set XMINMAX Shadow Buffer to a value",
                 hidden: true,
                 default: 0,
-            },     
+            },
             {
                 name: "epwmXCMP_setShadowRegisters2_XMAX",
                 displayName: "XMAX Shadow 2",
@@ -891,8 +891,8 @@ var config = [
     },
 
 ];
-// Generate the configuration for active, shadow buffers 
-let start_config_index = 1; 
+// Generate the configuration for active, shadow buffers
+let start_config_index = 1;
 let start_xcmpa_config_index = 9;
 let start_xcmpb_config_index = 10;
 let start_xaq_config_index = 14;

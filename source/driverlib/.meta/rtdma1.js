@@ -23,7 +23,7 @@ if (Common.isContextCPU1())
 function staticModuleInstances(inst, ui)
 {
     let components = []
-    if(!Common.isContextCPU1()) {
+    if((system.resourceAllocation.mode == "OFF") && !Common.isContextCPU1()) {
         return components
     }
     var rtdmaInstance = inst.$module.name.toUpperCase().replace("GLOBAL", "")
@@ -48,10 +48,12 @@ function staticModuleInstances(inst, ui)
             moduleName: "/driverlib/perConfig.js",
             collapsed: false,
             requiredArgs:{
+                cpuSel: inst.$assignedContext ?? system.context,
                 pinmuxPeripheralModule : "",
                 peripheralInst: inst.$module.name.toUpperCase().replace("GLOBAL", "CH"),
                 removeCpuSelStandbyDbgHalt: true,
-            }
+            },
+            shouldBeAllocatedAsResource: true,
         }
     )
 
@@ -98,9 +100,9 @@ function staticModuleInstances(inst, ui)
 var rtdma1Module = {
     peripheralName: "RTDMA1",
     displayName: "RTDMA1",
-    maxInstances: 10,
+    totalMaxInstances: 10,
     defaultInstanceName: "myRTDMA1Ch",
-    config: rtdma_shared.getRTDMAConfig("RTDMA1"),
+    config: Common.filterConfigsIfInSetupMode(rtdma_shared.getRTDMAConfig("RTDMA1")),
     sharedModuleInstances: sharedModuleInstances,
     moduleInstances: (inst) => {
         var submodules = []
@@ -132,11 +134,14 @@ var rtdma1Module = {
     moduleStatic: {
         name: "rtdma1Global",
         displayName: "RTDMA1 Global",
-        config: rtdma_shared.getRTDMAGlobalConfig("RTDMA1"),
+        config: Common.filterConfigsIfInSetupMode(rtdma_shared.getRTDMAGlobalConfig("RTDMA1")),
         moduleInstances: staticModuleInstances,
         validate: rtdma_shared.onValidateStatic,
+        shouldBeAllocatedAsResource: true,
+        alwaysAllocateAsResource: true,
     },
-
+    
+    shouldBeAllocatedAsResource: true,
     validate: rtdma_shared.onValidate,
     uiAdd   : uiAddOption,
 };

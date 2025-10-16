@@ -2,8 +2,8 @@ let Common   = system.getScript("/driverlib/Common.js");
 let Pinmux   = system.getScript("/driverlib/pinmux.js");
 let CLBSignals   = system.getScript("/driverlib/clb/clbSignals.js");
 
-let device_driverlib_peripheral = 
-    system.getScript("/driverlib/device_driverlib_peripherals/" + 
+let device_driverlib_peripheral =
+    system.getScript("/driverlib/device_driverlib_peripherals/" +
         Common.getDeviceName().toLowerCase() + "_clb.js");
 
 /* Intro splash on GUI */
@@ -11,10 +11,10 @@ let longDescription = `The Configurable Logic Block (CLB) is a collection of con
 
 let longDescriptionCLBInput = `
 The input type for the CLB can be from the local mux, the global mux, or the GPREG. For CLB type 1 and
-type 2, the pipelining option which adds an additional 
+type 2, the pipelining option which adds an additional
 flop for synchronized inputs is not included.
 
-Note: The synchronizer will add a delay of 2-3 cycles to the input path (the exact value of the 
+Note: The synchronizer will add a delay of 2-3 cycles to the input path (the exact value of the
 delay is 2 to 3 cycles, it is not predictable which delay value it will be).
 
 ![Image Missing](../../driverlib/.meta/clb/references/CLB_Input.png)
@@ -78,36 +78,16 @@ for (var i = 0; i < MAX_OUTPUTS; i++)
     })
 }
 
-var CLB_INSTANCE = [
+let CLB_INSTANCE = [
     { name: "CLB1_BASE", displayName: "CLB1"},
     { name: "CLB2_BASE", displayName: "CLB2"},
     { name: "CLB3_BASE", displayName: "CLB3"},
-    { name: "CLB4_BASE", displayName: "CLB4"}
+    { name: "CLB4_BASE", displayName: "CLB4"},
+    { name: "CLB5_BASE", displayName: "CLB5"},
+    { name: "CLB6_BASE", displayName: "CLB6"}
 ]
 
-var numberOfCLBs = 4;
-
-if (Common.getDeviceName().includes("F29H85x"))
-{
-    CLB_INSTANCE = [
-        { name: "CLB1_BASE", displayName: "CLB1"},
-        { name: "CLB2_BASE", displayName: "CLB2"},
-        { name: "CLB3_BASE", displayName: "CLB3"},
-        { name: "CLB4_BASE", displayName: "CLB4"},
-        { name: "CLB5_BASE", displayName: "CLB5"},
-        { name: "CLB6_BASE", displayName: "CLB6"}
-    ]
-    numberOfCLBs = 6;
-}
-else if (Common.getDeviceName().includes("F29H58x"))
-{
-    CLB_INSTANCE = [
-        { name: "CLB1_BASE", displayName: "CLB1"},
-        { name: "CLB2_BASE", displayName: "CLB2"},
-        { name: "CLB3_BASE", displayName: "CLB3"}
-    ]
-    numberOfCLBs = 3;
-}
+let numberOfCLBs = 6;
 
 let INPUT_TYPES = [
     {name: "GP", displayName: "Use Memory Mapped GPREG BIT"},
@@ -189,7 +169,8 @@ let config = [
         onChange    : onChangeCLBBase,
         hidden      : false,
         default     : CLB_INSTANCE[0].name,
-        options     : CLB_INSTANCE
+        options     : CLB_INSTANCE,
+        shouldBeAllocatedAsResource: true,
     },
     {
         name: "enableCLB",
@@ -250,8 +231,8 @@ if (Common.CLB_isType1_Type2())
             {
                 name: "strb",
                 displayName : "Enable Strobe Mode",
-                description : 'Enable the strobe mode. When disabled, a strobe output will be sent out whenever' + 
-                              ' the prescale counter value matches the Prescale Value.' +  
+                description : 'Enable the strobe mode. When disabled, a strobe output will be sent out whenever' +
+                              ' the prescale counter value matches the Prescale Value.' +
                               ' When enabled, the output is the prescale counter register bit position as selected by ' +
                               'TAP Select Bit.',
                 hidden      : false,
@@ -356,7 +337,7 @@ for (var clb_input_i in device_driverlib_peripheral.CLB_Inputs)
         default     : device_driverlib_peripheral.CLB_LocalInputMux[0].name,
         options     : device_driverlib_peripheral.CLB_LocalInputMux
     }
-    
+
     var globalConfig = {
         name: "globalConfig" + clbInputName,
         displayName : "Global Mux " + clbInputDisplayName,
@@ -365,7 +346,7 @@ for (var clb_input_i in device_driverlib_peripheral.CLB_Inputs)
         default     : device_driverlib_peripheral.CLB_GlobalInputMux[0].name,
         options     : device_driverlib_peripheral.CLB_GlobalInputMux
     }
-    
+
     var gpStartValueConfig = {
         name: "gpStartValueConfig" + clbInputName,
         displayName : "GPREG Initial Value " + clbInputDisplayName,
@@ -409,7 +390,7 @@ for (var clb_input_i in device_driverlib_peripheral.CLB_Inputs)
         inputConfigs.push(inputPipelineModeConfig);
     }
 
-    
+
     var clbInputGroupConfig = [{
         name: "GROUP_" + clbInputName,
         displayName: "CLB " + clbInputDisplayName,
@@ -419,7 +400,7 @@ for (var clb_input_i in device_driverlib_peripheral.CLB_Inputs)
     }];
 
     config = config.concat(clbInputGroupConfig);
-    
+
 }
 
 config = config.concat([
@@ -429,7 +410,7 @@ config = config.concat([
         description : 'Whether or not to register interrupt handlers in the interrupt module.',
         hidden      : false,
         default     : false
-        
+
     },
     {
         name        : "attachTile",
@@ -464,6 +445,14 @@ function findDuplicates(arrayToCheck)
 }
 
 function onValidate(inst, validation) {
+    var selectedInstance = inst.clbBase.replace("_BASE","");// e.g., "CLB1"
+    if (Common.is_instance_not_in_variant(selectedInstance)) {
+        validation.logError(
+            `${selectedInstance} is not supported for ${Common.getVariant().replace(/^TMS320/, '')}.`,
+            inst,
+            "clbBase"
+        );
+    }
     var usedCLBInsts = [];
     for (var instance_index in inst.$module.$instances)
     {
@@ -491,27 +480,27 @@ function onValidate(inst, validation) {
         var allDuplicates = "";
         for (var duplicateNamesIndex in duplicatesResult.duplicates)
         {
-            allDuplicates = allDuplicates + Common.stringOrEmpty(allDuplicates, ", ") 
+            allDuplicates = allDuplicates + Common.stringOrEmpty(allDuplicates, ", ")
                             + duplicatesResult.duplicates[duplicateNamesIndex];
         }
         validation.logError(
-            "The CLB Instance used. Duplicates: " + allDuplicates, 
+            "The CLB Instance used. Duplicates: " + allDuplicates,
             inst, "clbBase");
     }
 
     if (inst.prescale < 0 || inst.prescale > 0xFFFF)
     {
         validation.logError(
-            "The CLB prescale value must be a valid 16-bit number", 
+            "The CLB prescale value must be a valid 16-bit number",
             inst, "prescale");
     }
 
     var base = inst["clbBase"];
     var clb_1to4 = false;
     var clb_1 = false;
-    if (["CLB1_BASE", 
-        "CLB2_BASE", 
-        "CLB3_BASE", 
+    if (["CLB1_BASE",
+        "CLB2_BASE",
+        "CLB3_BASE",
         "CLB4_BASE", ].includes(base))
     {
         clb_1to4 = true;
@@ -542,7 +531,7 @@ function onValidate(inst, validation) {
             }
             else if (inst["inputType" + clbInputName] == "LOCAL")
             {
-                global_or_local = true; 
+                global_or_local = true;
                 config_pre = "localConfig";
                 enum_name = "CLB_LocalInputMux"
                 clbSyncCheck = clbSyncCheck["LOCAL_MUX"][inst["localConfigCLB_IN" + i]];
@@ -552,25 +541,25 @@ function onValidate(inst, validation) {
             if((clbSyncCheck == true) && (inst["synchronizeCLB_IN" + i] == false))  //When synchronization is required but not enabled, throw a warning
             {
                 validation.logWarning(
-                    "Synchronization is required for this signal to prevent metastability; this metastability can cause errors dependent on voltage, temperature, and wafer fab process (adds 2-3 cycle delay to input)", 
+                    "Synchronization is required for this signal to prevent metastability; this metastability can cause errors dependent on voltage, temperature, and wafer fab process (adds 2-3 cycle delay to input)",
                     inst, "synchronize" + clbInputName);
             }
             else if((clbSyncCheck == false) && (inst["inputPipelineConfigCLB_IN" + i] == false))  //When input pipeline is required but not enabled, throw a warning
             {
                 validation.logWarning(
-                    "Pipelining is required for synchronous signals (adds 1 cycle delay to input)", 
+                    "Pipelining is required for synchronous signals (adds 1 cycle delay to input)",
                     inst, "inputPipelineConfig" + clbInputName);
             }
             else if((config_pre != "") && (inst["synchronizeCLB_IN" + i] == false) && (inst["inputPipelineConfigCLB_IN" + i] == false))
             {
                 validation.logWarning(
-                    "Having both synchronization and pipeline disabled results in a purely asynchronous signal", 
+                    "Having both synchronization and pipeline disabled results in a purely asynchronous signal",
                     inst, config_pre + clbInputName);
             }
             else if((config_pre != "") && (inst["synchronizeCLB_IN" + i] == true) && (inst["inputPipelineConfigCLB_IN" + i] == true))
             {
                 validation.logWarning(
-                    "Having both synchronization and pipeline enabled results in a 3-4 cycle delay on the input", 
+                    "Having both synchronization and pipeline enabled results in a 3-4 cycle delay on the input",
                     inst, config_pre + clbInputName);
             }
 
@@ -601,7 +590,7 @@ function onValidate(inst, validation) {
             }
         }
     }
-    
+
     temp_arr.sort((s1, s2) => {
         return s1.clbOutputNum - s2.clbOutputNum;
     });
@@ -627,7 +616,7 @@ sharedModuleInstances = function (inst) {
         return (
             [
                 {
-                    name: "tile",      
+                    name: "tile",
                     displayName: "TILE Configuration",
                     moduleName: "/clb_syscfg/source/TILE.syscfg.js",
                     collapsed: true,
@@ -652,17 +641,18 @@ var clbModule = {
     displayName: "CLB",
     // longDescription : longDescription,
     //longDescription: longDescription + "\n" + (Common.getCollateralFindabilityList("CLB")),
-    maxInstances: numberOfCLBs,
+    totalMaxInstances: Common.countinstances("CLB",numberOfCLBs),
+    maxInstances: Common.countinstances("CLB",numberOfCLBs),
     defaultInstanceName: "myCLB",
     description: "Configurable Logic Block",
-    config: config,
+    config: Common.filterConfigsIfInSetupMode(config),
     moduleInstances: (inst) => {
 
         var intReturn = [];
         if (inst.registerInterrupts)
         {
             intReturn.push({
-                name: "clbInt",      
+                name: "clbInt",
                 displayName: "CLB Interrupt",
                 moduleName: "/driverlib/interrupt.js",
                 collapsed: true,
@@ -676,7 +666,7 @@ var clbModule = {
                 }
             })
         }
-        
+
         intReturn = intReturn.concat([
             {
                 name: "periphClock",
@@ -696,15 +686,18 @@ var clbModule = {
                 moduleName: "/driverlib/perConfig.js",
                 collapsed: false,
                 requiredArgs:{
+                    cpuSel: inst.$assignedContext ?? system.context,
                     pinmuxPeripheralModule : "",
                     peripheralInst: inst.clbBase.replace("_BASE", "")
-                }
+                },
+                shouldBeAllocatedAsResource: true,
             },
         ])
-        
+
         return intReturn;
     },
     sharedModuleInstances : sharedModuleInstances,
+    shouldBeAllocatedAsResource : true,
     templates: {
         boardc : "/driverlib/clb/clb.board.c.xdt",
         boardh : "/driverlib/clb/clb.board.h.xdt"

@@ -9,6 +9,11 @@ let Pinmux   = system.getScript("/driverlib/pinmux.js");
 
 let options = [];
 
+
+/* Intro splash on GUI */
+let longDescription = "The Transfer Bridge module provides a software layer to receive and (optionally) buffer messages with one communication peripheral and directly transmit the payload via another communication peripheral. " +
+"Messages are received using Communication Link B, (optionally buffered), and transmitted by Communication Link A.";
+
 let config = [
     {
         name: "mode",
@@ -46,7 +51,7 @@ let config = [
                         { name: "fsi", reason: "Not yet implemented" },
                     ]
                 },
-                default: transferCommon.hasFSISupport()?"fsi":"sci"
+                default: "sci"
             },
         ]
     },
@@ -123,6 +128,7 @@ function moduleInstances(inst)
                     registerInterrupts: true,
                     rxFifo: "SCI_FIFO_RX" + inst.packetLength,
                     txFifo: "SCI_FIFO_TX0",
+                    selectRegisteredInterrupts : ["registerRxInt", "registerTxInt"],
                     enabledFIFOInterrupts: ["SCI_INT_RXFF"],
                     sciRXInt : {
                         enableInterrupt: true
@@ -205,29 +211,57 @@ function moduleInstances(inst)
     
     if (inst.comsLinkB == "fsi")
     {
-        let fsiLinkBModInst = {
-            name: "comsLinkBModule",      
-            displayName: "FSI RX Communication Link B",
-            moduleName: "/driverlib/fsirx.js",
-            collapsed: true,
-            args: {
-                $name : inst.$name + "_FSIRX_LINKB",
-            },
-            requiredArgs: {
-                softwareFrameSize: inst.packetLength.toString(),
-                enableLoopback: false,
-                enableTagMatching: false,
-                enableInterrupt: true,
-                useInterrupts: ["FSI_INT1"],
-                enabledINT1Interrupts: ["FSI_RX_EVT_FRAME_DONE"],
-                registerInterruptLine1: true,
-                pingTimeout: false,
-                fsiRxInt1 : {
-                    enableInterrupt: true
-                }
-            },
-            group: "GROUP_COMS_LINK_B"
+        let fsiLinkBModInst = {}
+        if(transferCommon.getDeviceName() != "F28004x"){
+            fsiLinkBModInst = {
+                name: "comsLinkBModule",      
+                displayName: "FSI RX Communication Link B",
+                moduleName: "/driverlib/fsirx.js",
+                collapsed: true,
+                args: {
+                    $name : inst.$name + "_FSIRX_LINKB",
+                },
+                requiredArgs: {
+                    softwareFrameSize: inst.packetLength.toString(),
+                    enableLoopback: false,
+                    enableTagMatching: false,
+                    enableInterrupt: true,
+                    useInterrupts: ["FSI_INT1"],
+                    enabledINT1Interrupts: ["FSI_RX_EVT_FRAME_DONE"],
+                    registerInterruptLine1: true,
+                    pingTimeout: false,
+                    fsiRxInt1 : {
+                        enableInterrupt: true
+                    }
+                },
+                group: "GROUP_COMS_LINK_B"
+            }
         }
+        else{
+            fsiLinkBModInst = {
+                name: "comsLinkBModule",      
+                displayName: "FSI RX Communication Link B",
+                moduleName: "/driverlib/fsirx.js",
+                collapsed: true,
+                args: {
+                    $name : inst.$name + "_FSIRX_LINKB",
+                },
+                requiredArgs: {
+                    softwareFrameSize: inst.packetLength.toString(),
+                    enableLoopback: false,
+                    enableInterrupt: true,
+                    useInterrupts: ["FSI_INT1"],
+                    enabledINT1Interrupts: ["FSI_RX_EVT_FRAME_DONE"],
+                    registerInterruptLine1: true,
+                    pingTimeout: false,
+                    fsiRxInt1 : {
+                        enableInterrupt: true
+                    }
+                },
+                group: "GROUP_COMS_LINK_B"
+            }
+        }
+        
 
         if (inst.comsLinkBErrorHandler)
         {
@@ -415,11 +449,12 @@ var bridgeModule = {
     displayName: "Transfer Bridge (BETA)",
     maxInstances: 1,
     defaultInstanceName: "myBridge",
-    description: "Bridge Module",
+    description: "Transfer Bridge Module",
     filterHardware : filterHardware,
     config          : config,
     moduleInstances : moduleInstances,	
     modules: modules,
+    longDescription: longDescription,
     templates: {
 		[transferCommon.getTransferPath() + "transferbridge/bridge.c.xdt"] : "",
 		[transferCommon.getTransferPath() + "transferbridge/bridge.h.xdt"] : "",

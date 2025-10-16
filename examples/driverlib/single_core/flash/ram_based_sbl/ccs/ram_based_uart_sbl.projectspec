@@ -1,0 +1,100 @@
+<projectSpec>
+  <project
+        name="ram_based_uart_sbl"
+        device       = "F29H850TU9"
+        
+        cgtVersion   = "2.0.0"
+        toolChain    = "TICLANG"
+
+        products     = "sysconfig;f29h85x-sdk"
+        connection   = "TIXDS110_Connection.xml"
+        >
+    <configuration name="NONSECURE_DFU"   compilerBuildOptions="-O1 -gdwarf-3 -ffast-math -DNONSECURE_DFU -DSOC_F29H85X -Qunused-arguments -I${COM_TI_MCU_SDK_INSTALL_DIR}/source -I${FlashAPI_INCLUDE_ROOT} -I${FlashTech_INCLUDE_ROOT}" linkerBuildOptions="-i=${PROJECT_LOC}/device -l=driverlib_release.lib --stack_size=0x400 --heap_size=0x400 --copy_compression=lzss --diag_suppress=10325-D --diag_suppress=10063-D"
+     postBuildStep=
+       "${CG_TOOL_OBJCOPY} --strip-all -O binary ${ProjName}.out ${ProjName}.temp.bin;
+        $(PYTHON) ${COM_TI_MCU_SDK_INSTALL_DIR}/tools/boot/signing/mcu_rom_image_gen.py --image-bin ${ProjName}.temp.bin --core C29 --swrv 1 --loadaddr 0x200E1000 --sign-key ${COM_TI_MCU_SDK_INSTALL_DIR}/$(SIGNING_KEY) --out-image ${ProjName}.bin --boot RAM --device f29h85x --debug DBG_SOC_DEFAULT --img_integ yes;
+	      echo Finished building certificate appended binary: '${ProjName}.bin';"
+    />
+    <configuration name="SECURE_KP_AND_CP"   compilerBuildOptions="-O1 -gdwarf-3 -ffast-math -DSECURE_KP -DSECURE_CP -DSOC_F29H85X -Qunused-arguments -I${COM_TI_MCU_SDK_INSTALL_DIR}/source" linkerBuildOptions="-i=${PROJECT_LOC}/device -l=driverlib_release.lib --stack_size=0x400 --heap_size=0x400 --copy_compression=lzss --diag_suppress=10325-D --diag_suppress=10063-D"
+     postBuildStep=
+       "${CG_TOOL_OBJCOPY} --strip-all -O binary ${ProjName}.out ${ProjName}.temp.bin;
+        echo Note: JTAG Firewall is enabled by default via '--debug DBG_SOC_DEFAULT', to enable JTAG debugging, use '--debug DBG_PUBLIC_ENABLE' instead;
+        $(PYTHON) ${COM_TI_MCU_SDK_INSTALL_DIR}/tools/boot/signing/mcu_rom_image_gen.py --image-bin ${ProjName}.temp.bin --core C29 --swrv 1 --loadaddr 0x200E1000 --sign-key ${COM_TI_MCU_SDK_INSTALL_DIR}/$(SIGNING_KEY) --out-image ${ProjName}.bin --boot RAM --device f29h85x --debug DBG_SOC_DEFAULT --img_integ yes --enc-key ${COM_TI_MCU_SDK_INSTALL_DIR}/tools/boot/signing/mcu_custMek.key --kd-salt ${COM_TI_MCU_SDK_INSTALL_DIR}/tools/boot/signing/kd_salt.txt;
+	      echo Finished building certificate appended binary: '${ProjName}.bin';"
+    />
+    <configuration name="SECURE_ONLY_KP"   compilerBuildOptions="-O1 -gdwarf-3 -ffast-math -DSECURE_KP -DSOC_F29H85X -Qunused-arguments -I${COM_TI_MCU_SDK_INSTALL_DIR}/source" linkerBuildOptions="-i=${PROJECT_LOC}/device -l=driverlib_release.lib --stack_size=0x400 --heap_size=0x400 --copy_compression=lzss --diag_suppress=10325-D --diag_suppress=10063-D"
+     postBuildStep=
+       "${CG_TOOL_OBJCOPY} --strip-all -O binary ${ProjName}.out ${ProjName}.temp.bin;
+	      echo Note: JTAG Firewall is enabled by default via '--debug DBG_SOC_DEFAULT', to enable JTAG debugging, use '--debug DBG_PUBLIC_ENABLE' instead;
+        $(PYTHON) ${COM_TI_MCU_SDK_INSTALL_DIR}/tools/boot/signing/mcu_rom_image_gen.py --image-bin ${ProjName}.temp.bin --core C29 --swrv 1 --loadaddr 0x200E1000 --sign-key ${COM_TI_MCU_SDK_INSTALL_DIR}/$(SIGNING_KEY) --out-image ${ProjName}.bin --boot RAM --device f29h85x --debug DBG_SOC_DEFAULT --img_integ yes;
+	      echo Finished building certificate appended binary: '${ProjName}.bin';"
+    />
+    <configuration name="SECURE_ONLY_CP"   compilerBuildOptions="-O1 -gdwarf-3 -ffast-math -DSECURE_CP -DSOC_F29H85X -Qunused-arguments -I${COM_TI_MCU_SDK_INSTALL_DIR}/source" linkerBuildOptions="-i=${PROJECT_LOC}/device -l=driverlib_release.lib --stack_size=0x400 --heap_size=0x400 --copy_compression=lzss --diag_suppress=10325-D --diag_suppress=10063-D"
+     postBuildStep=
+       "${CG_TOOL_OBJCOPY} --strip-all -O binary ${ProjName}.out ${ProjName}.temp.bin;
+	      echo Note: JTAG Firewall is enabled by default via '--debug DBG_SOC_DEFAULT', to enable JTAG debugging, use '--debug DBG_PUBLIC_ENABLE' instead;
+        $(PYTHON) ${COM_TI_MCU_SDK_INSTALL_DIR}/tools/boot/signing/mcu_rom_image_gen.py --image-bin ${ProjName}.temp.bin --core C29 --swrv 1 --loadaddr 0x200E1000 --sign-key ${COM_TI_MCU_SDK_INSTALL_DIR}/$(SIGNING_KEY) --out-image ${ProjName}.bin --boot RAM --device f29h85x --debug DBG_SOC_DEFAULT --img_integ yes --sbl-enc --enc-key ${COM_TI_MCU_SDK_INSTALL_DIR}/tools/boot/signing/mcu_custMek.key --kd-salt ${COM_TI_MCU_SDK_INSTALL_DIR}/tools/boot/signing/kd_salt.txt;
+	      echo Finished building certificate appended binary: '${ProjName}.bin';"
+    />
+
+    <pathVariable name="FlashTech_INCLUDE_ROOT" path = "${COM_TI_MCU_SDK_INSTALL_DIR}/tools/flash_api/FlashAPI/Include/FlashTech" scope="project" />
+
+    <file action="copy" path="../sbl_codestartbranch.asm" targetDirectory="device" />
+    <file action="link" path="${COM_TI_MCU_SDK_INSTALL_DIR}/examples/device_support/include/driverlib.h"        targetDirectory="device" />
+    <file action="link" path="${COM_TI_MCU_SDK_INSTALL_DIR}/source/bitfields/bitfield_structs.c"                targetDirectory="device" />
+
+    <!-- Need to copy no-debug symbol driverlib into local project root instead -->
+    <file action="copy" path="${COM_TI_MCU_SDK_INSTALL_DIR}/source/driverlib/ccs/driverlib_release.lib" targetDirectory="device"/>
+
+    <file action="link" path="${COM_TI_MCU_SDK_INSTALL_DIR}/source/security/ccs/security_drivers.lib" targetDirectory="" />
+    <file action="link" path="${COM_TI_MCU_SDK_INSTALL_DIR}/source/flash_api/lib/F29H85x_NWFlashAPI_v21.00.00.00.lib" targetDirectory="" />
+
+    <file action="copy" path="${COM_TI_MCU_SDK_INSTALL_DIR}/examples/device_support/makefile.defs" targetDirectory="" />
+    <file action="copy" path="../cmd/f29h85x_sbl_ramopen_lnk.cmd"  targetDirectory="" />
+
+    <file action="copy" path="../cert.c" targetDirectory="" />
+    <file action="copy" path="../cert.h" targetDirectory="" />
+    <file action="copy" path="../bootload_cpu1.c" targetDirectory="" />
+    <file action="copy" path="../bootload_cpu1.h" targetDirectory="" />
+
+    <file action="copy" path="../cpubrom.h" targetDirectory="" />
+    <file action="copy" path="../cpubrom_bootload.h" targetDirectory="" />
+    <file action="copy" path="../cpubrom_utils.c" targetDirectory="" />
+    <file action="copy" path="../cpubrom_utils.h" targetDirectory="" />
+
+    <file action="copy" path="../ram_sbl_dpl_config.c" targetDirectory="" />
+    <file action="copy" path="../ram_sbl_dpl_config.h" targetDirectory="" />
+    <file action="copy" path="../ram_sbl_nmi_handler.c" targetDirectory="" />
+    <file action="copy" path="../ram_sbl_nmi_handler.h" targetDirectory="" />
+    <file action="copy" path="../sbl_device_utils.c" targetDirectory="" />
+    <file action="copy" path="../sbl_device_utils.h" targetDirectory="" />
+
+    <file action="copy" path="../uart/ram_based_uart_sbl.c" targetDirectory="" />
+    <file action="copy" path="../uart/ram_based_uart_sbl.h" targetDirectory="" />
+    <file action="copy" path="../uart/ram_based_uart_sbl.syscfg" targetDirectory="" />
+
+    <file action="copy" path="../sbl_code_provisioning.c" targetDirectory="" />
+    <file action="copy" path="../sbl_code_provisioning.h" targetDirectory="" />
+    <file action="copy" path="../sbl_key_provisioning.c" targetDirectory="" />
+    <file action="copy" path="../sbl_key_provisioning.h" targetDirectory="" />
+
+    <file action="copy" path="../uart/sbl_packet_dma_interrupt.c" targetDirectory="" />
+    <file action="copy" path="../uart/sbl_packet_dma_interrupt.h" targetDirectory="" />
+    <file action="copy" path="../uart/sbl_packet_config.h" targetDirectory="" />
+    <file action="copy" path="../uart/sbl_packet_uart_abstraction.h" targetDirectory="" />
+    <file action="copy" path="../sbl_packet_interface.c" targetDirectory="" />
+    <file action="copy" path="../sbl_packet_interface.h" targetDirectory="" />
+    <file action="copy" path="../f29x_packet_comm_protocol.h" targetDirectory="" />
+
+    <file action="copy" path="../flash_programming_F29H85x_C29.h" targetDirectory="" />
+
+    <file action="copy" path="../sbl_command_flow.c" targetDirectory="" />
+    <file action="copy" path="../sbl_command_flow.h" targetDirectory="" />
+    <file action="copy" path="../sbl_flash_programming.c" targetDirectory="" />
+    <file action="copy" path="../sbl_flash_programming.h" targetDirectory="" />
+
+	<file path="${COM_TI_MCU_SDK_INSTALL_DIR}/docs/html/EXAMPLES_DRIVERS_RAM_BASED_UART_SBL.html"
+         openOnCreation="false" excludeFromBuild="false" targetName="README.html" action="link">
+    </file>
+  </project>
+</projectSpec>

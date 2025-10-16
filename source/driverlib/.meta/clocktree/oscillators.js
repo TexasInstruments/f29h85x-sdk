@@ -7,14 +7,21 @@ exports = {
 		displayName: "Type",
 		default: "Internal Oscillators",
 		readOnly: true,
-	}, ],
+	},
+	{
+		name: "$assignedContext",
+		hidden: true,
+		options: [{name: "CPU1"}],
+		default: "CPU1",
+		readOnly: true
+	}],
 	extendConfig: ({ $ipInstance }) => {
 		if (!_.isEmpty($ipInstance.outPins)) {
 			return [{
 				name: $ipInstance.outPins[0].name,
 				default: 10,
 				getValue: (inst) => $ipInstance.outputValue,
-				readOnly: false
+				readOnly: false,
 			}];
 		} else {
 			// Override the input pin so it's visible with a tool tip
@@ -27,7 +34,7 @@ exports = {
 			}]
 		}
 	},
+	shouldBeAllocatedAsResource : true
 
-	
 
 };

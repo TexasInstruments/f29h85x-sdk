@@ -1,0 +1,241 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --device "F29H85x" --package "256ZEX" --part "F29H85x_256ZEX" --context "CPU1" --product "MCU_SDK_F29H85x@1.02.02.00"
+ * @v2CliArgs --device "F29H850TU" --package "256ZEX" --variant "TMS320F29H850TU9" --context "CPU1" --product "MCU_SDK_F29H85x@1.02.02.00"
+ * @versions {"tool":"1.25.0+4237"}
+ */
+
+    
+const divider15       = system.clockTree["PLL_REFDIV"];
+divider15.divideValue = 1;
+
+const multiplier1         = system.clockTree["PLL_IMULT"];
+multiplier1.multiplyValue = 40;
+
+const mux7       = system.clockTree["OSCCLKSRCSEL"];
+mux7.inputSelect = "INTOSC2";
+
+/**
+ * Import the modules used in this configuration.
+ */
+const cmpss  = scripting.addModule("/driverlib/cmpss.js", {}, false);
+const cmpss1 = cmpss.addInstance();
+const epwm   = scripting.addModule("/driverlib/epwm.js");
+const epwm1  = epwm.addInstance();
+const epwm2  = epwm.addInstance();
+const epwm3  = epwm.addInstance();
+const jtag   = scripting.addModule("/driverlib/jtag.js");
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+cmpss1.$name              = "myCMPSS1";
+cmpss1.dacValHigh         = 2500;
+cmpss1.enableModule       = true;
+cmpss1.periphClock.$name  = "driverlib_perClock0";
+cmpss1.periphConfig.$name = "driverlib_perConfig0";
+
+const analog  = scripting.addModule("/driverlib/analog.js", {}, false);
+const analog1 = analog.addInstance({}, false);
+analog1.$name = "myANALOGPinMux0";
+cmpss1.analog = analog1;
+
+epwm.generateInitFunctions = true;
+
+epwm1.epwmDeadband_polarityFED                                   = "EPWM_DB_POLARITY_ACTIVE_LOW";
+epwm1.epwmDeadband_enableFED                                     = true;
+epwm1.$name                                                      = "myEPWM1";
+epwm1.epwmTimebase_counterMode                                   = "EPWM_COUNTER_MODE_UP_DOWN";
+epwm1.epwmTimebase_syncOutPulseMode                              = ["EPWM_SYNC_OUT_PULSE_ON_CNTR_ZERO"];
+epwm1.epwmDeadband_enableRED                                     = true;
+epwm1.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_UP_CMPA   = "EPWM_AQ_OUTPUT_HIGH";
+epwm1.epwmTimebase_hsClockDiv                                    = "EPWM_HSCLOCK_DIVIDER_1";
+epwm1.epwmTimebase_period                                        = 125;
+epwm1.epwmEventTrigger_enableInterrupt                           = true;
+epwm1.epwmEventTrigger_registerInterrupts                        = true;
+epwm1.epwmEventTrigger_interruptSource                           = "EPWM_INT_TBCTR_ZERO";
+epwm1.epwmEventTrigger_interruptEventCount                       = "1";
+epwm1.epwmCounterCompare_cmpAGld                                 = true;
+epwm1.epwmCounterCompare_cmpBGld                                 = true;
+epwm1.epwmActionQualifier_EPWM_AQ_OUTPUT_A_gld                   = true;
+epwm1.epwmActionQualifier_EPWM_AQ_OUTPUT_A_shadowMode            = true;
+epwm1.epwmActionQualifier_EPWM_AQ_OUTPUT_B_shadowMode            = true;
+epwm1.epwmDeadband_delayRED                                      = 20;
+epwm1.epwmDeadband_delayFED                                      = 20;
+epwm1.epwmActionQualifier_EPWM_AQ_OUTPUT_B_gld                   = true;
+epwm1.epwmCounterCompare_cmpB                                    = 69;
+epwm1.epwmCounterCompare_cmpA                                    = 69;
+epwm1.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_DOWN_CMPA = "EPWM_AQ_OUTPUT_LOW";
+epwm1.epwmActionQualifier_EPWM_AQ_OUTPUT_B_ON_TIMEBASE_UP_CMPB   = "EPWM_AQ_OUTPUT_HIGH";
+epwm1.epwmActionQualifier_EPWM_AQ_OUTPUT_B_ON_TIMEBASE_DOWN_CMPB = "EPWM_AQ_OUTPUT_LOW";
+epwm1.epwmGlobalLoad_gld                                         = true;
+epwm1.epwmGlobalLoad_enableOneShot                               = true;
+epwm1.epwmGlobalLoad_oneShotMode                                 = true;
+epwm1.epwmTimebase_emulationMode                                 = "EPWM_EMULATION_FREE_RUN";
+epwm1.epwm.$assign                                               = "EPWM1";
+epwm1.periphClock.$name                                          = "driverlib_perClock1";
+epwm1.periphConfig.$name                                         = "driverlib_perConfig1";
+
+epwm2.epwmTimebase_hsClockDiv                                    = "EPWM_HSCLOCK_DIVIDER_1";
+epwm2.epwmTimebase_period                                        = 125;
+epwm2.epwmTimebase_counterMode                                   = "EPWM_COUNTER_MODE_UP_DOWN";
+epwm2.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_UP_CMPA   = "EPWM_AQ_OUTPUT_HIGH";
+epwm2.epwmDeadband_polarityFED                                   = "EPWM_DB_POLARITY_ACTIVE_LOW";
+epwm2.epwmDeadband_enableRED                                     = true;
+epwm2.epwmDeadband_enableFED                                     = true;
+epwm2.$name                                                      = "myEPWM2";
+epwm2.epwmTimebase_phaseEnable                                   = true;
+epwm2.epwmTimebase_phaseShift                                    = 42;
+epwm2.epwmDigitalCompare_EPWM_DC_TYPE_DCAH                       = "EPWM_DC_TRIP_TRIPIN4";
+epwm2.epwmDigitalCompare_EPWM_TZ_DC_OUTPUT_A2                    = "EPWM_TZ_EVENT_DCXH_HIGH";
+epwm2.epwmTripZone_EPWM_TZ_ACTION_EVENT_TZA                      = "EPWM_TZ_ACTION_LOW";
+epwm2.epwmTripZone_EPWM_TZ_ACTION_EVENT_TZB                      = "EPWM_TZ_ACTION_LOW";
+epwm2.epwmCounterCompare_cmpAGld                                 = true;
+epwm2.epwmCounterCompare_cmpBGld                                 = true;
+epwm2.epwmActionQualifier_EPWM_AQ_OUTPUT_A_gld                   = true;
+epwm2.epwmTripZone_tzInterruptSource                             = ["EPWM_TZ_INTERRUPT_CBC"];
+epwm2.epwmTripZone_registerInterrupts                            = true;
+epwm2.epwmCounterCompare_cmpA                                    = 69;
+epwm2.epwmDeadband_delayRED                                      = 20;
+epwm2.epwmDeadband_delayFED                                      = 20;
+epwm2.epwmCounterCompare_cmpB                                    = 69;
+epwm2.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_DOWN_CMPA = "EPWM_AQ_OUTPUT_LOW";
+epwm2.epwmActionQualifier_EPWM_AQ_OUTPUT_B_ON_TIMEBASE_UP_CMPB   = "EPWM_AQ_OUTPUT_HIGH";
+epwm2.epwmActionQualifier_EPWM_AQ_OUTPUT_B_ON_TIMEBASE_DOWN_CMPB = "EPWM_AQ_OUTPUT_LOW";
+epwm2.epwmTripZone_cbcSource                                     = ["EPWM_TZ_SIGNAL_DCAEVT2"];
+epwm2.epwmGlobalLoad_gld                                         = true;
+epwm2.epwmGlobalLoad_enableOneShot                               = true;
+epwm2.epwmGlobalLoad_oneShotMode                                 = true;
+epwm2.epwmTimebase_emulationMode                                 = "EPWM_EMULATION_FREE_RUN";
+epwm2.epwm.$assign                                               = "EPWM2";
+epwm2.periphClock.$name                                          = "driverlib_perClock2";
+epwm2.periphConfig.$name                                         = "driverlib_perConfig2";
+
+epwm3.epwmTimebase_hsClockDiv                                    = "EPWM_HSCLOCK_DIVIDER_1";
+epwm3.epwmTimebase_period                                        = 125;
+epwm3.epwmTimebase_counterMode                                   = "EPWM_COUNTER_MODE_UP_DOWN";
+epwm3.epwmTimebase_phaseEnable                                   = true;
+epwm3.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_UP_CMPA   = "EPWM_AQ_OUTPUT_HIGH";
+epwm3.epwmDeadband_polarityFED                                   = "EPWM_DB_POLARITY_ACTIVE_LOW";
+epwm3.epwmDeadband_enableRED                                     = true;
+epwm3.epwmDeadband_enableFED                                     = true;
+epwm3.$name                                                      = "myEPWM3";
+epwm3.epwmTimebase_phaseShift                                    = 83;
+epwm3.epwmTripZone_oneShotSource                                 = ["EPWM_TZ_SIGNAL_OSHT1"];
+epwm3.epwmTripZone_tzInterruptSource                             = ["EPWM_TZ_INTERRUPT_OST"];
+epwm3.epwmTripZone_registerInterrupts                            = true;
+epwm3.epwmTripZone_EPWM_TZ_ACTION_EVENT_TZA                      = "EPWM_TZ_ACTION_LOW";
+epwm3.epwmTripZone_EPWM_TZ_ACTION_EVENT_TZB                      = "EPWM_TZ_ACTION_LOW";
+epwm3.epwmActionQualifier_EPWM_AQ_OUTPUT_A_gld                   = true;
+epwm3.epwmCounterCompare_cmpA                                    = 69;
+epwm3.epwmDeadband_delayRED                                      = 20;
+epwm3.epwmDeadband_delayFED                                      = 20;
+epwm3.epwmCounterCompare_cmpB                                    = 69;
+epwm3.epwmActionQualifier_EPWM_AQ_OUTPUT_A_ON_TIMEBASE_DOWN_CMPA = "EPWM_AQ_OUTPUT_LOW";
+epwm3.epwmActionQualifier_EPWM_AQ_OUTPUT_B_ON_TIMEBASE_UP_CMPB   = "EPWM_AQ_OUTPUT_HIGH";
+epwm3.epwmActionQualifier_EPWM_AQ_OUTPUT_B_ON_TIMEBASE_DOWN_CMPB = "EPWM_AQ_OUTPUT_LOW";
+epwm3.epwmGlobalLoad_gld                                         = true;
+epwm3.epwmGlobalLoad_enableOneShot                               = true;
+epwm3.epwmGlobalLoad_oneShotMode                                 = true;
+epwm3.epwmTimebase_emulationMode                                 = "EPWM_EMULATION_FREE_RUN";
+epwm3.periphClock.$name                                          = "driverlib_perClock3";
+epwm3.periphConfig.$name                                         = "driverlib_perConfig3";
+
+
+/**
+ * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
+ * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
+ * re-solve from scratch.
+ */
+analog1.analog.$suggestSolution                           = "ANALOG";
+analog1.analog["a0/c24/daca_outPin"].$suggestSolution     = "A0/C24/DACA_OUT";
+analog1.analog["a1/c25Pin"].$suggestSolution              = "A1/C25";
+analog1.analog["a2/d24Pin"].$suggestSolution              = "A2/D24";
+analog1.analog["a3/d25Pin"].$suggestSolution              = "A3/D25";
+analog1.analog["a4/d28Pin"].$suggestSolution              = "A4/D28";
+analog1.analog["a5/d29Pin"].$suggestSolution              = "A5/D29";
+analog1.analog["a6/e24, gpio224Pin"].$suggestSolution     = "A6/E24, GPIO224";
+analog1.analog["a7/e25, gpio225Pin"].$suggestSolution     = "A7/E25, GPIO225";
+analog1.analog["a8, gpio226Pin"].$suggestSolution         = "A8, GPIO226";
+analog1.analog["a9, gpio227Pin"].$suggestSolution         = "A9, GPIO227";
+analog1.analog["a10, gpio228Pin"].$suggestSolution        = "A10, GPIO228";
+analog1.analog["a11, gpio229Pin"].$suggestSolution        = "A11, GPIO229";
+analog1.analog.a12Pin.$suggestSolution                    = "A12";
+analog1.analog.a13Pin.$suggestSolution                    = "A13";
+analog1.analog["a14/b14/c14/d14/e14Pin"].$suggestSolution = "A14/B14/C14/D14/E14";
+analog1.analog["a15/b15/c15/d15/e15Pin"].$suggestSolution = "A15/B15/C15/D15/E15";
+analog1.analog["b0/c26/vdacPin"].$suggestSolution         = "B0/C26/VDAC";
+analog1.analog["b1/c27Pin"].$suggestSolution              = "B1/C27";
+analog1.analog["b2/d26Pin"].$suggestSolution              = "B2/D26";
+analog1.analog["b3/d27Pin"].$suggestSolution              = "B3/D27";
+analog1.analog["b4/d30Pin"].$suggestSolution              = "B4/D30";
+analog1.analog["b5/d31Pin"].$suggestSolution              = "B5/D31";
+analog1.analog["b6/e26, gpio230Pin"].$suggestSolution     = "B6/E26, GPIO230";
+analog1.analog["b7/e27, gpio231Pin"].$suggestSolution     = "B7/E27, GPIO231";
+analog1.analog["b8, gpio232Pin"].$suggestSolution         = "B8, GPIO232";
+analog1.analog["b9, gpio233Pin"].$suggestSolution         = "B9, GPIO233";
+analog1.analog["b10, gpio234Pin"].$suggestSolution        = "B10, GPIO234";
+analog1.analog["b11, gpio235Pin"].$suggestSolution        = "B11, GPIO235";
+analog1.analog.b12Pin.$suggestSolution                    = "B12";
+analog1.analog.b13Pin.$suggestSolution                    = "B13";
+analog1.analog.b16Pin.$suggestSolution                    = "B16";
+analog1.analog.b17Pin.$suggestSolution                    = "B17";
+analog1.analog["c0/e28Pin"].$suggestSolution              = "C0/E28";
+analog1.analog["c1/e29Pin"].$suggestSolution              = "C1/E29";
+analog1.analog["c2/e30Pin"].$suggestSolution              = "C2/E30";
+analog1.analog["c3/e31Pin"].$suggestSolution              = "C3/E31";
+analog1.analog.c4Pin.$suggestSolution                     = "C4";
+analog1.analog.c5Pin.$suggestSolution                     = "C5";
+analog1.analog["c6, gpio236Pin"].$suggestSolution         = "C6, GPIO236";
+analog1.analog["c7, gpio237Pin"].$suggestSolution         = "C7, GPIO237";
+analog1.analog["c8, gpio238Pin"].$suggestSolution         = "C8, GPIO238";
+analog1.analog["c9, gpio239Pin"].$suggestSolution         = "C9, GPIO239";
+analog1.analog.c10Pin.$suggestSolution                    = "C10";
+analog1.analog.c11Pin.$suggestSolution                    = "C11";
+analog1.analog.c12Pin.$suggestSolution                    = "C12";
+analog1.analog.c13Pin.$suggestSolution                    = "C13";
+analog1.analog.c16Pin.$suggestSolution                    = "C16";
+analog1.analog.c17Pin.$suggestSolution                    = "C17";
+analog1.analog["d0/b24Pin"].$suggestSolution              = "D0/B24";
+analog1.analog["d1/b25Pin"].$suggestSolution              = "D1/B25";
+analog1.analog["d2/b26Pin"].$suggestSolution              = "D2/B26";
+analog1.analog["d3/b27Pin"].$suggestSolution              = "D3/B27";
+analog1.analog["d4/b28, gpio240Pin"].$suggestSolution     = "D4/B28, GPIO240";
+analog1.analog["d5/b29, gpio241Pin"].$suggestSolution     = "D5/B29, GPIO241";
+analog1.analog["d6/b30, gpio242Pin"].$suggestSolution     = "D6/B30, GPIO242";
+analog1.analog["d7/b31, gpio243Pin"].$suggestSolution     = "D7/B31, GPIO243";
+analog1.analog["d8/c28, gpio244Pin"].$suggestSolution     = "D8/C28, GPIO244";
+analog1.analog["d9/c29, gpio245Pin"].$suggestSolution     = "D9/C29, GPIO245";
+analog1.analog.d10Pin.$suggestSolution                    = "D10";
+analog1.analog.d11Pin.$suggestSolution                    = "D11";
+analog1.analog.d12Pin.$suggestSolution                    = "D12";
+analog1.analog.d13Pin.$suggestSolution                    = "D13";
+analog1.analog.d16Pin.$suggestSolution                    = "D16";
+analog1.analog.d17Pin.$suggestSolution                    = "D17";
+analog1.analog["e0/a24/dacb_outPin"].$suggestSolution     = "E0/A24/DACB_OUT";
+analog1.analog["e1/a25Pin"].$suggestSolution              = "E1/A25";
+analog1.analog["e2/a26Pin"].$suggestSolution              = "E2/A26";
+analog1.analog["e3/a27Pin"].$suggestSolution              = "E3/A27";
+analog1.analog["e4/a28, gpio246Pin"].$suggestSolution     = "E4/A28, GPIO246";
+analog1.analog["e5/a29, gpio247Pin"].$suggestSolution     = "E5/A29, GPIO247";
+analog1.analog["e6/a30, gpio248Pin"].$suggestSolution     = "E6/A30, GPIO248";
+analog1.analog["e7/a31, gpio249Pin"].$suggestSolution     = "E7/A31, GPIO249";
+analog1.analog["e8/c30Pin"].$suggestSolution              = "E8/C30";
+analog1.analog["e9/c31Pin"].$suggestSolution              = "E9/C31";
+analog1.analog.e10Pin.$suggestSolution                    = "E10";
+analog1.analog.e11Pin.$suggestSolution                    = "E11";
+analog1.analog.e12Pin.$suggestSolution                    = "E12";
+analog1.analog.e13Pin.$suggestSolution                    = "E13";
+analog1.analog.e16Pin.$suggestSolution                    = "E16";
+analog1.analog.e17Pin.$suggestSolution                    = "E17";
+epwm1.epwm.epwm_aPin.$suggestSolution                     = "GPIO0";
+epwm1.epwm.epwm_bPin.$suggestSolution                     = "GPIO1";
+epwm2.epwm.epwm_aPin.$suggestSolution                     = "GPIO2";
+epwm2.epwm.epwm_bPin.$suggestSolution                     = "GPIO25";
+epwm3.epwm.$suggestSolution                               = "EPWM3";
+epwm3.epwm.epwm_aPin.$suggestSolution                     = "GPIO4";
+epwm3.epwm.epwm_bPin.$suggestSolution                     = "GPIO34";
+jtag.JTAG.$suggestSolution                                = "JTAG";
+jtag.JTAG.tdoPin.$suggestSolution                         = "GPIO223/TDO";
+jtag.JTAG.tdiPin.$suggestSolution                         = "GPIO222/TDI";

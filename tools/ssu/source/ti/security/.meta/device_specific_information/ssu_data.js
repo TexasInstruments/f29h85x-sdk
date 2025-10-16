@@ -40,6 +40,21 @@ const aprTags = [
     {
         name: "link2_ram_code"
     },
+    {
+        name: "link2_rw_data"
+    },
+    {
+        name: "link2_ro_data"
+    },
+    {
+        name: "link2_data"
+    },
+    {
+        name: "commoncode_ram_code"
+    },
+    {
+        name: "commoncode_flash_code"
+    },
     //autoperiph
     //implicit ?
 
@@ -53,6 +68,7 @@ const bootPeriphMap = {
     "UART"      : ['ERR_AGG_REGS', 'ESM_CPU1_REGS', 'IPC_CPU1_SEND_REGS_HSM_CH0', 'IPC_CPU1_SEND_REGS_HSM_CH1', 'HSM_MAILBOX', 'PER_CFG_REGS_WD_REGS', 'GPIO_DATA_REGS', 'UARTA_REGS'],
     "MCAN"      : ['ERR_AGG_REGS', 'ESM_CPU1_REGS', 'IPC_CPU1_SEND_REGS_HSM_CH0', 'IPC_CPU1_SEND_REGS_HSM_CH1', 'HSM_MAILBOX', 'PER_CFG_REGS_WD_REGS', 'GPIO_DATA_REGS', 'MCANA_MSGRAM', 'MCANA_REGS', 'DCC1_REGS'],
     "Parallel"  : ['ERR_AGG_REGS', 'ESM_CPU1_REGS', 'IPC_CPU1_SEND_REGS_HSM_CH0', 'IPC_CPU1_SEND_REGS_HSM_CH1', 'HSM_MAILBOX', 'GPIO_DATA_REGS'],
+    "WAIT"      : [],
 }
 
 const link1BootPeripherals = {
@@ -82,6 +98,7 @@ const link1BootPeripherals = {
     "41" : bootPeriphMap["UART"],
     "61" : bootPeriphMap["UART"],
     "81" : bootPeriphMap["UART"],
+    "04" : bootPeriphMap["WAIT"],
 }
 
 const link2RequiredAprs = [

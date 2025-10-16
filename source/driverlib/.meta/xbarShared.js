@@ -19,13 +19,22 @@ function getXbarConfig(xbar){
         throw new Error("INVALID XBAR")
     }
 
-    let config = []
+    let config = [
+        {
+            name        : "$assignedContext",
+            hidden      : true,
+            default     : "CPU1",
+            options     : [{name:"CPU1"}],
+            readOnly    : true
+        }
+    ]
     
     var invertOutputBeforeLatchConfig = {
         name        : "invertOutputBeforeLatch",
         displayName : "Invert Output Before Latch",
         description : "Inverts the Xbar output before it is latched.",
         default     : false,
+        shouldBeAllocatedAsResource : true,
     }
 
     var selectLatchSignalSourceConfig = {
@@ -33,6 +42,7 @@ function getXbarConfig(xbar){
         displayName : "Select Latched Signal as Output",
         description : "Selects the latched signal as output.",
         default     : false,
+        shouldBeAllocatedAsResource : true,
     }
 
     var selectStretchedPulseSourceConfig = {
@@ -41,6 +51,7 @@ function getXbarConfig(xbar){
         description : "Selects the stretched pulse as the output.",
         default     : false,
         onChange    : onChangeStretchedPulseSource,
+        shouldBeAllocatedAsResource : true,
     }
     
     var selectStretchedPulseLengthConfig = {
@@ -50,6 +61,7 @@ function getXbarConfig(xbar){
         default     : device_driverlib_peripheral.XBAR_OutputStretchLength[0].name,
         options     : device_driverlib_peripheral.XBAR_OutputStretchLength,
         hidden      : true,
+        shouldBeAllocatedAsResource : true,
     }
 
     var invertOutputConfig = {
@@ -57,6 +69,7 @@ function getXbarConfig(xbar){
         displayName : "Invert XBAR Output",
         description : "Inverts the Xbar output",
         default     : false,
+        shouldBeAllocatedAsResource : true,
     }
 
     var useSourceSelectConfig = {
@@ -89,6 +102,7 @@ globalConfig.push(
         displayName : "Lock XBAR Configuration",
         description : "Locks the configuration of the XBAR",
         default     : false,
+        shouldBeAllocatedAsResource : true,
     }
 );
 

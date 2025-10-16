@@ -517,7 +517,7 @@ __attribute__((interrupt("RTINT"))) void aci_ctrlLoop_ISR(void)
     #endif
 
     #ifndef PROFILE_MODULES
-    timer_count_full_signal_chain = part3_count_start - CPUTimer_getTimerCount(CPUTIMER0_BASE) + timer_count_rtint_entry + part1_count_end;
+    timer_count_full_signal_chain = part3_count_start - CPUTimer_getTimerCount(CPUTIMER0_BASE) + timer_count_rtint_entry + ADC_SAMPLE_CYCLE_COUNT + part1_count_end;
     full_signal_chain_count_buf[ctrlLoopCount] = timer_count_full_signal_chain;
     __builtin_instrumentation_label("Signal_chian_Stop");
     #endif

@@ -8,16 +8,23 @@
 //! <h1>WADI Duty and Frequency check</h1>
 //!
 //! This example configures WADI1 Block 1 and Block 2 as follows
-//!  - WADI1 Block 1 has an input from the PWM using INPUTXBAR
+//!  - WADI1 Block 1 has an input from the PWM using INPUTXBAR which is connected to GPIO0.
 //!  - Pulse width checking is enabled with defined margin of error
-//!  - WADI1 Block 2 has an input from the PWM using INPUTXBAR
+//!  - WADI1 Block 2 has an input from the PWM using INPUTXBAR which is connected to GPIO1.
+//!  - Software trigger and synchronized triggers are enabled.
 //!  - Frequency checking is enabled with defined margin of error
+//! Expected Failures on WADI block 1/2
+//! Under WADI Block 1's BLKERRINFO.ERRCNT should be 0x3D6
+//! Measured pulse width of WADI is ~0x3D6
+//! Under WADI Block 2's BLKERRINFO.ERRCNT should be 0x1
+//! Measured Frequency counter is 1 edge occurence in timewindow
+//! of 2000
 //!
 //! The WADI block has error status register that can be used to
 //! monitor if any erroneous signals occur. (BLKERRSTS)
 //!
 //! This example also makes use of the Input X-BAR. GPIO0 (ePWM1A
-//! output) is routed to the input X-BAR, from which it is routed to 
+//! output) is routed to the input X-BAR, from which it is routed to
 //! WADI SIG1 input.
 //!
 //!
@@ -63,13 +70,12 @@
 // Included Files
 //
 #include "board.h"
-#include "inc/hw_memmap.h"
 #include "bitfield_structs.h"
 
 //
 // Globals
 //
-uint16_t wadi_error_count = 0;
+volatile uint16_t wadi_error_count = 0;
 uint32_t val1;
 uint32_t val2;
 uint32_t val3;
@@ -115,7 +121,7 @@ int main(void)
 
     WADI_DutyConfig();
     WADI_FreqConfig();
-    
+
     //
     // Enable PIPE Global Interrupt (for INTs and RTINTs) and INT enable in CPU.
     //
@@ -134,7 +140,7 @@ int main(void)
     //
     for(;;)
     {
-        if ((Wadi1Blk1ConfigRegs.BLKERRSTS.bit.SIG1CMPAERR != 0x0) || 
+        if ((Wadi1Blk1ConfigRegs.BLKERRSTS.bit.SIG1CMPAERR != 0x0) ||
         (Wadi1Blk2ConfigRegs.BLKERRSTS.bit.SIG1CMPAERR != 0x0))
         {
           wadi_error_count++;
@@ -145,11 +151,11 @@ int main(void)
 void WADI_DutyConfig()
 {
     //
-    // Duty Check 
+    // Duty Check
     //
     Wadi1Blk1ConfigRegs.BLKCFG.bit.SIG1IN = 0x10;
     Wadi1Blk1ConfigRegs.BLKCFG.bit.SIG2IN = 0x11;
-    
+
     //
     // SIG1 Configuration
     //
@@ -159,19 +165,19 @@ void WADI_DutyConfig()
     Wadi1Blk1ConfigRegs.SIG1CMPA.bit.CMPAMARGIN = 15;
     Wadi1Blk1ConfigRegs.SIG1CMPB.bit.CMPB = 500;
     Wadi1Blk1ConfigRegs.SIG1CMPB.bit.CMPBMARGIN = 15;
-    
+
     //
     // Trigger configuration
     //
     Wadi1Blk1ConfigRegs.BLKTRIGCFG.bit.TRIG1TYPE = 0x02;
     Wadi1Blk1ConfigRegs.BLKTRIGCFG.bit.TRIG2TYPE = 0x04;
 
-    // 
+    //
     // Select the signal to analyze for debug
     // SIG1 is selected
     //
     Wadi1Blk1ConfigRegs.BLKERRCFG.bit.ERRCNTSEL = 0x00;
-    
+
 
 }
 
@@ -182,23 +188,27 @@ void WADI_FreqConfig()
     //
     Wadi1Blk2ConfigRegs.BLKCFG.bit.SIG1IN = 0x10;
     Wadi1Blk2ConfigRegs.BLKCFG.bit.SIG2IN = 0x11;
-    
+    Wadi1Blk2ConfigRegs.SIG1EDGECFG.bit.CNTEN = 0x01;
+    Wadi1Blk2ConfigRegs.SIG1EDGECFG.bit.TIMEWNDOW = 2000;
     //
     // SIG1 Configuration
     //
     Wadi1Blk2ConfigRegs.SIG1CFG.bit.SIGPOL = 0x01;
     Wadi1Blk2ConfigRegs.SIG1CFG.bit.EDGESPAN = 0x02;
+    //
+    // Writing compare values to induce a Frequency count error
+    //
     Wadi1Blk2ConfigRegs.SIG1CMPA.bit.CMPA = 1000;
     Wadi1Blk2ConfigRegs.SIG1CMPA.bit.CMPAMARGIN = 10;
     Wadi1Blk2ConfigRegs.SIG1CMPB.bit.CMPB = 1000;
     Wadi1Blk2ConfigRegs.SIG1CMPB.bit.CMPBMARGIN = 10;
-    
+
     //
     // Trigger configuration
     //
     Wadi1Blk2ConfigRegs.BLKTRIGCFG.bit.TRIG1TYPE = 0x02;
     Wadi1Blk2ConfigRegs.BLKTRIGCFG.bit.TRIG2TYPE = 0x04;
-    
+
     //
     // Select the signal to analyze for debug
     // SIG1 is selected
@@ -207,15 +217,19 @@ void WADI_FreqConfig()
 }
 void WADI_Start()
 {
-    // 
+    //
     // Enable WADI 1 Block 1
     //
     Wadi1Blk1ConfigRegs.BLKCFG.bit.CLKEN = 0x01;
     Wadi1Blk1ConfigRegs.BLKTRIGCFG.bit.TRIG1SWEN = 0x01;
-    
-    // 
+
+    //
     // Enable WADI 1 Block 2
     //
     Wadi1Blk2ConfigRegs.BLKCFG.bit.CLKEN = 0x01;
+    //
+    // Enable BASETIMER to start Frequency Counter (different from Pulse Width Counter)
+    //
+    Wadi1OperSssRegs.BASETIMERHIGH.bit.ENBASETIMER = 0x01;
     Wadi1Blk2ConfigRegs.BLKTRIGCFG.bit.TRIG1SWEN = 0x01;
 }

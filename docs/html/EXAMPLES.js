@@ -5,5 +5,6 @@ var EXAMPLES =
     [ "Benchmark Examples", "EXAMPLES_Benchmarks.html", "EXAMPLES_Benchmarks" ],
     [ "FreeRTOS Examples", "EXAMPLES_FREERTOS.html", "EXAMPLES_FREERTOS" ],
     [ "Communication Stack User Guide and Examples", "COMMUNICATION.html", "COMMUNICATION" ],
-    [ "Driver Porting Layer", "DPL.html", "DPL" ]
+    [ "Driver Porting Layer", "DPL.html", "DPL" ],
+    [ "Power Management IC", "PMIC.html", "PMIC" ]
 ];
